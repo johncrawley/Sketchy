@@ -9,11 +9,13 @@ import android.graphics.EmbossMaskFilter;
 import android.graphics.MaskFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.SeekBar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +42,9 @@ public class PaintView extends View {
     private Canvas canvas;
     private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
+    private SettingsView settingsView;
+
+
     public PaintView(Context context) {
         this(context, null);
     }
@@ -51,6 +56,7 @@ public class PaintView extends View {
         paint.setDither(true);
         paint.setColor(DEFAULT_COLOR);
         paint.setStyle(Paint.Style.STROKE);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setXfermode(null);
@@ -61,13 +67,16 @@ public class PaintView extends View {
     }
 
 
-    public void init(DisplayMetrics metrics) {
+    public void init(DisplayMetrics metrics, SettingsView settingsView) {
         int height = metrics.heightPixels - (metrics.heightPixels / 6);
         int width = metrics.widthPixels;
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
+        paint.setColor(Color.WHITE);
+        canvas.drawRect(0,0,width,height,paint);
         currentColor = DEFAULT_COLOR;
         strokeWidth = BRUSH_SIZE;
+        this.settingsView = settingsView;
     }
 
     public void normal() {
@@ -99,9 +108,13 @@ public class PaintView extends View {
         canvas.drawColor(backgroundColor);
         canvas.drawBitmap(bitmap,0,0,paint);
 
-        paint.setColor(getNextColor());
+        //paint.setColor(getNextColor());
         canvas.drawBitmap(bitmap, 0, 0, mBitmapPaint);
         canvas.restore();
+    }
+
+    public void setCurrentColor(int color){
+        paint.setColor(color);
     }
 
     public Bitmap getBitmap(){
@@ -120,7 +133,7 @@ public class PaintView extends View {
         mX = x;
         mY = y;
 
-        drawCircleAt(x,y);
+        drawAt(x,y);
 
     }
 
@@ -128,7 +141,7 @@ public class PaintView extends View {
         float dx = Math.abs(x - mX);
         float dy = Math.abs(y - mY);
 
-        drawCircleAt(x,y);
+        drawAt(x,y);
         if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
             mPath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
             mX = x;
@@ -137,10 +150,30 @@ public class PaintView extends View {
 
     }
 
-    private void drawCircleAt(float x, float y){
+    private void drawAt(float x, float y){
+
+        int width = settingsView.getBrushWidth();
+
+        switch (settingsView.getBrushShape()){
+            case CIRCLE: canvas.drawCircle(x,y, width/2, paint); break;
+            case SQUARE: drawSquare(x, y, width);
+        }
+
+    }
 
 
-        canvas.drawCircle(x,y, 10, paint);
+    private void drawSquare(float x, float y, int width){
+        int halfWidth = width /2;
+        float startingX = x - halfWidth;
+        float startingY = y - halfWidth;
+        canvas.drawRect(startingX,startingY, startingX + width, startingY + width, paint);
+
+    }
+
+
+    private Rect getRect(float x, float y, int width, int height){
+        return new Rect((int)x, (int)y, (int)(x + width), (int)(y+height));
+
     }
 
     private void touchUp() {
