@@ -18,77 +18,127 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-
-    <LinearLayout
-        android:id="@+id/colorButtonGroup"
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="70dp"
+        android:id="@+id/colorScrollView"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_weight="1">
 
-        >
-
-
-        <ImageButton
-            android:id="@+id/redButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/colorButtonGroup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="0dp"
-            android:paddingEnd="0dp"
-            android:layout_margin="0dp"
+            android:orientation="horizontal"
 
-            app:srcCompat="@drawable/red_button" />
-
-        <ImageButton
-            android:id="@+id/greenButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="0dp"
-            android:paddingEnd="0dp"
-            app:srcCompat="@drawable/green_button" />
-
-        <ImageButton
-            android:id="@+id/blueButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="0dp"
-            android:paddingEnd="0dp"
-            app:srcCompat="@drawable/blue_button" />
-
-        <ImageButton
-            android:id="@+id/grayButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="0dp"
-            android:paddingEnd="0dp"
-            app:srcCompat="@drawable/gray_button" />
-
-        <ImageButton
-            android:id="@+id/yellowButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="0dp"
-            android:paddingEnd="0dp"
-            app:srcCompat="@drawable/yellow_button" />
+            >
 
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/redButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:layout_margin="0dp"
+
+                app:srcCompat="@drawable/red_button" />
+
+
+            <ImageButton
+                android:id="@+id/greenButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                app:srcCompat="@drawable/green_button" />
+
+            <ImageButton
+                android:id="@+id/blueButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                app:srcCompat="@drawable/blue_button" />
+
+            <ImageButton
+                android:id="@+id/grayButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                app:srcCompat="@drawable/gray_button" />
+
+            <ImageButton
+                android:id="@+id/yellowButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                app:srcCompat="@drawable/yellow_button" />
+
+            <ImageButton
+                android:id="@+id/orangeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                app:srcCompat="@drawable/orange_button" />
+            <ImageButton
+                android:id="@+id/whiteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                app:srcCompat="@drawable/white_button" />
+            <ImageButton
+                android:id="@+id/blackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                app:srcCompat="@drawable/black_button" />
+            <ImageButton
+                android:id="@+id/lightBlueButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                app:srcCompat="@drawable/light_blue_button" />
+            <ImageButton
+                android:id="@+id/purpleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                app:srcCompat="@drawable/purple_button" />
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
 
     <RadioGroup
         android:id="@+id/brushShapeRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/colorButtonGroup">
+        app:layout_constraintTop_toBottomOf="@id/colorScrollView">
 
 
         <RadioButton
@@ -125,7 +175,7 @@
     <com.jacstuff.sketchy.PaintView
         android:id="@+id/paintView"
         android:layout_width="match_parent"
-        android:layout_height="700px"
+        android:layout_height="380dp"
         app:layout_constraintBottom_toTopOf="@+id/saveButton"
 
         app:layout_constraintEnd_toEndOf="parent"

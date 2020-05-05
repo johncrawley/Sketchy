@@ -67,11 +67,12 @@ public class PaintView extends View {
     }
 
 
-    public void init(DisplayMetrics metrics, SettingsView settingsView) {
-        int height = metrics.heightPixels - (metrics.heightPixels / 6);
+    public void init(DisplayMetrics metrics, int viewHeight, SettingsView settingsView) {
+        int height = metrics.heightPixels - (metrics.heightPixels / 3);
         int width = metrics.widthPixels;
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
+
         paint.setColor(Color.WHITE);
         canvas.drawRect(0,0,width,height,paint);
         currentColor = DEFAULT_COLOR;

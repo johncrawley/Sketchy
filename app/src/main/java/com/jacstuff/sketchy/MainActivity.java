@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
             seekBar = findViewById(R.id.seekBar);
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            paintView.init(metrics, this);
+            int viewHeight = findViewById(R.id.paintView).getHeight();
+            paintView.init(metrics, viewHeight,this);
             Button saveButton = findViewById(R.id.saveButton);
             brushShapeRadioGroup = findViewById(R.id.brushShapeRadioGroup);
             deriveScreenDimensions();
@@ -73,6 +74,11 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
             colorButtonMap.put(R.id.greenButton, Color.GREEN);
             colorButtonMap.put(R.id.grayButton, Color.GRAY);
             colorButtonMap.put(R.id.yellowButton, Color.YELLOW);
+            colorButtonMap.put(R.id.orangeButton, Color.argb(255,255,106,0));
+            colorButtonMap.put(R.id.purpleButton, Color.argb(255,127,0,55));
+            colorButtonMap.put(R.id.blackButton, Color.BLACK);
+            colorButtonMap.put(R.id.whiteButton, Color.WHITE);
+            colorButtonMap.put(R.id.lightBlueButton, Color.argb(255,0,148,255));
 
 
             for(int key:  colorButtonMap.keySet()){
