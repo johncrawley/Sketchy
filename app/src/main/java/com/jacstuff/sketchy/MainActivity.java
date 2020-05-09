@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Environment;
@@ -31,26 +32,17 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
     //private StateManager stateManager;
     private int screenWidth;
     private int screenHeight;
-    private Context context;
     private SeekBar seekBar;
     private PaintView paintView;
     private int currentColor = Color.BLACK;
     private RadioGroup brushShapeRadioGroup;
 
 
-    /*
-        options: fill style
-                 size
-                 shape
-                 colour
-                 background
-
-     */
-
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+            //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             paintView = findViewById(R.id.paintView);
             seekBar = findViewById(R.id.seekBar);
             DisplayMetrics metrics = new DisplayMetrics();

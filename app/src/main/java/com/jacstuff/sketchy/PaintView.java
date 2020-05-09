@@ -15,9 +15,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.SeekBar;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -68,13 +65,13 @@ public class PaintView extends View {
 
 
     public void init(DisplayMetrics metrics, int viewHeight, SettingsView settingsView) {
-        int height = metrics.heightPixels - (metrics.heightPixels / 3);
-        int width = metrics.widthPixels;
-        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+             int widthHeight = Math.min(metrics.heightPixels, metrics.widthPixels) - 20;
+        bitmap = Bitmap.createBitmap(widthHeight, widthHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
 
         paint.setColor(Color.WHITE);
-        canvas.drawRect(0,0,width,height,paint);
+        canvas.drawRect(0,0,widthHeight,widthHeight, paint);
         currentColor = DEFAULT_COLOR;
         strokeWidth = BRUSH_SIZE;
         this.settingsView = settingsView;
