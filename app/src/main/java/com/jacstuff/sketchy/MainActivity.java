@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,9 +22,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class MainActivity extends AppCompatActivity implements SettingsView, View.OnClickListener{//} implements {// View.OnTouchListener {
 
@@ -35,8 +38,11 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
     private SeekBar seekBar;
     private PaintView paintView;
     private int currentColor = Color.BLACK;
-    private RadioGroup brushShapeRadioGroup;
+    private List<Integer> styleButtonIds = Arrays.asList(R.id.brokenOutlineStyleButton, R.id.fillStyleButton, R.id.outlineStyleButton);
+    private List<Integer> shapeButtonIds = Arrays.asList(R.id.squareShapeButton, R.id.circleShapeButton);
 
+
+    private Map<Integer, Consumer<String>> testMap;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +55,72 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
             int viewHeight = findViewById(R.id.paintView).getHeight();
             paintView.init(metrics, viewHeight,this);
-            Button saveButton = findViewById(R.id.saveButton);
-            brushShapeRadioGroup = findViewById(R.id.brushShapeRadioGroup);
             deriveScreenDimensions();
             paintView.setMinimumHeight(screenHeight / 2);
+            setupActionbar();
+
+            setupTestMap();
 
             setupButtonList();
-
-            saveButton.setOnClickListener(this);
+            setupStyleButtons();
+            setupShapeButtons();
+            switchSelection(R.id.fillStyleButton, styleButtonIds);
+            switchSelection(R.id.circleShapeButton, shapeButtonIds);
         }
+
+
+        private void setupTestMap(){
+            testMap = new HashMap<>();
+            testMap.put(1, (String i) -> System.out.println("hello"));
+
+            for(int key: testMap.keySet()){
+                testMap.get(key).accept("");
+            }
+
+        }
+        private void setupActionbar(){
+            setSupportActionBar(findViewById(R.id.toolbar));
+            getSupportActionBar();
+        }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menuitems, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                saveImage();
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+
+    private void setupShapeButtons(){
+            for(int id: shapeButtonIds){
+                findViewById(id).setOnClickListener(this);
+            }
+
+        }
+
+
+        private void setupStyleButtons(){
+
+            for(int id: styleButtonIds){
+
+                findViewById(id).setOnClickListener(this);
+            }
+        }
+
 
     Map<Integer, Integer> colorButtonMap = new HashMap<>();
         private void setupButtonList() {
@@ -84,26 +147,55 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
         }
 
 
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            MenuInflater menuInflater = getMenuInflater();
-            //menuInflater.inflate(R.menu.main, menu);
-            return super.onCreateOptionsMenu(menu);
-        }
 
         public void onClick(View v){
             int viewId = v.getId();
-            if(viewId == R.id.saveButton){
-                saveImage();
-            }
 
             for(int key : colorButtonMap.keySet()){
                 if(viewId == key){
                     paintView.setCurrentColor(colorButtonMap.get(key));
                 }
             }
-
+            switchSelection(v.getId(), styleButtonIds);
+            switchSelection(v.getId(), shapeButtonIds);
         }
+
+        private void switchSelection(int viewId, List<Integer> buttons){
+            for(int buttonId : buttons){
+                if(viewId == buttonId){
+                    switchSelectionToButton(buttonId, buttons);
+                    break;
+                }
+            }
+        }
+
+    private void switchSelectionToButton(int buttonId, List<Integer> buttonList){
+        selectButton(buttonId);
+        deselectOtherButtons(buttonId, buttonList);
+    }
+
+
+    private void selectButton(int buttonId){
+        ImageButton styleButton = findViewById(buttonId);
+        styleButton.setSelected(true);
+        styleButton.setBackgroundColor(Color.DKGRAY);
+    }
+
+
+    private void deselectOtherButtons(int selectedButtonId, List<Integer> buttonList){
+        for(int buttonId : buttonList){
+            if(buttonId == selectedButtonId){
+                continue;
+            }
+            deselectButton(buttonId);
+        }
+    }
+
+    private void deselectButton(int buttonId){
+        ImageButton button = findViewById(buttonId);
+        button.setSelected(false);
+        button.setBackgroundColor(Color.LTGRAY);
+    }
 
         private final String IMAGE_KEY = "image";
 
@@ -113,10 +205,11 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
         }
 
         public BrushShape getBrushShape(){
-            switch(brushShapeRadioGroup.getCheckedRadioButtonId()){
-                case R.id.squareRadioButton: return BrushShape.SQUARE;
-                case R.id.circularRadioButton: return BrushShape.CIRCLE;
-            }
+            //switch(brushShapeRadioGroup.getCheckedRadioButtonId()){
+            //    case R.id.squareRadioButton: return BrushShape.SQUARE;
+            //    case R.id.circularRadioButton: return BrushShape.CIRCLE;
+            //}
+            //return BrushShape.CIRCLE;
             return BrushShape.CIRCLE;
         }
 
