@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements SettingsView, View.OnClickListener{//} implements {// View.OnTouchListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{//} implements {// View.OnTouchListener {
 
 
     //private DrawSurface drawSurface;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
             int viewHeight = paintView.getHeight();
-            paintView.init(metrics, viewHeight,this);
+            paintView.init(metrics, viewHeight);
             deriveScreenDimensions();
             paintView.setMinimumHeight(screenHeight / 2);
             setupActionbar();
@@ -58,9 +58,33 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
             setupButtonListeners();
             setupPaintActionsMap();
             setupDefaultSelections();
+            setupBrushSizeSeekBar();
+        }
+
+        private void setupBrushSizeSeekBar(){
+            SeekBar seekBar = findViewById(R.id.seekBar);
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    // TODO Auto-generated method stub
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    // TODO Auto-generated method stub
+                }
+
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                   paintView.setBrushSize(seekBar.getProgress());
+                }
+            });
+
         }
 
         private void setupDefaultSelections(){
+            paintView.setBrushSize(seekBar.getProgress());
             switchSelection(R.id.fillStyleButton, styleButtonIds);
             paintView.setStyleToFill();
             switchSelection(R.id.circleShapeButton, shapeButtonIds);
@@ -124,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
         }
     }
 
-
     private void setupShapeButtons(){
             for(int id: shapeButtonIds){
                 findViewById(id).setOnClickListener(this);
@@ -158,8 +181,6 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
             colorButtonMap.put(R.id.lightBlueButton, Color.argb(255,0,148,255));
 
 
-
-
             for(int key:  colorButtonMap.keySet()){
                 colorButtonIds.add(key);
                 findViewById(key).setOnClickListener(this);
@@ -169,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
 
         public void onClick(View v){
             int viewId = v.getId();
-
             setCurrentColor(viewId);
 
             Procedure procedure = paintActionsMap.get(viewId);

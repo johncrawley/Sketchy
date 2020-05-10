@@ -44,8 +44,6 @@ public class PaintView extends View {
     private Canvas canvas;
     private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
-    private SettingsView settingsView;
-
 
     public PaintView(Context context) {
         this(context, null);
@@ -88,8 +86,13 @@ public class PaintView extends View {
         paint.setPathEffect(null);
 
     }
+    private int brushSize;
 
-    public void init(DisplayMetrics metrics, int viewHeight, SettingsView settingsView) {
+    public void setBrushSize(int brushSize){
+        this.brushSize = brushSize;
+    }
+
+    public void init(DisplayMetrics metrics, int viewHeight) {
 
              int widthHeight = Math.min(metrics.heightPixels, metrics.widthPixels) - 20;
         bitmap = Bitmap.createBitmap(widthHeight, widthHeight, Bitmap.Config.ARGB_8888);
@@ -99,7 +102,6 @@ public class PaintView extends View {
         canvas.drawRect(0,0,widthHeight,widthHeight, paint);
         currentColor = DEFAULT_COLOR;
         strokeWidth = BRUSH_SIZE;
-        this.settingsView = settingsView;
     }
 
     public void normal() {
@@ -182,11 +184,9 @@ public class PaintView extends View {
 
     private void drawAt(float x, float y){
 
-        int width = settingsView.getBrushWidth();
-
         switch (brushShape){
-            case CIRCLE: canvas.drawCircle(x,y, width/2, paint); break;
-            case SQUARE: drawSquare(x, y, width);
+            case CIRCLE: canvas.drawCircle(x,y, brushSize/2, paint); break;
+            case SQUARE: drawSquare(x, y, brushSize);
         }
 
     }
