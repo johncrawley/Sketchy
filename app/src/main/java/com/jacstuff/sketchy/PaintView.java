@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.EmbossMaskFilter;
 import android.graphics.MaskFilter;
 import android.graphics.Paint;
@@ -31,6 +32,10 @@ public class PaintView extends View {
     private int currentColor;
     private int backgroundColor = DEFAULT_BG_COLOR;
     private int strokeWidth;
+
+
+    private BrushShape brushShape;
+
     private boolean emboss;
     private boolean blur;
     private MaskFilter mEmboss;
@@ -63,6 +68,26 @@ public class PaintView extends View {
         mBlur = new BlurMaskFilter(5, BlurMaskFilter.Blur.NORMAL);
     }
 
+
+    public void setStyleToBrokenOutline(){
+
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setPathEffect(new DashPathEffect(new float[] {10,20}, 0));
+    }
+
+    public void setStyleToFill(){
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setPathEffect(null);
+       // Log.i("paintView", "setStyleToFill, current Path effect: " + paint.getPathEffect().getClass().getName());
+        //paint.setPathEffect(new )
+    }
+
+    public void setStyleToOutline(){
+
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setPathEffect(null);
+
+    }
 
     public void init(DisplayMetrics metrics, int viewHeight, SettingsView settingsView) {
 
@@ -148,11 +173,18 @@ public class PaintView extends View {
 
     }
 
+
+    public void setBrushShape(BrushShape brushShape){
+        this.brushShape = brushShape;
+    }
+
+
+
     private void drawAt(float x, float y){
 
         int width = settingsView.getBrushWidth();
 
-        switch (settingsView.getBrushShape()){
+        switch (brushShape){
             case CIRCLE: canvas.drawCircle(x,y, width/2, paint); break;
             case SQUARE: drawSquare(x, y, width);
         }

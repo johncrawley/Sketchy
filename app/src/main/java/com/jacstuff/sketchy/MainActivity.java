@@ -1,7 +1,6 @@
 package com.jacstuff.sketchy;
 
-import android.content.Context;
-import android.content.pm.ActivityInfo;
+
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Environment;
@@ -10,12 +9,9 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
 import java.io.File;
@@ -26,7 +22,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class MainActivity extends AppCompatActivity implements SettingsView, View.OnClickListener{//} implements {// View.OnTouchListener {
 
@@ -37,47 +32,72 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
     private int screenHeight;
     private SeekBar seekBar;
     private PaintView paintView;
-    private int currentColor = Color.BLACK;
     private List<Integer> styleButtonIds = Arrays.asList(R.id.brokenOutlineStyleButton, R.id.fillStyleButton, R.id.outlineStyleButton);
     private List<Integer> shapeButtonIds = Arrays.asList(R.id.squareShapeButton, R.id.circleShapeButton);
 
-
-    private Map<Integer, Consumer<String>> testMap;
+    Map<Integer, Integer> colorButtonMap = new HashMap<>();
+    private Map<Integer, Procedure> paintActionsMap;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
-            //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             paintView = findViewById(R.id.paintView);
             seekBar = findViewById(R.id.seekBar);
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            int viewHeight = findViewById(R.id.paintView).getHeight();
+            int viewHeight = paintView.getHeight();
             paintView.init(metrics, viewHeight,this);
             deriveScreenDimensions();
             paintView.setMinimumHeight(screenHeight / 2);
             setupActionbar();
 
-            setupTestMap();
-
             setupButtonList();
             setupStyleButtons();
             setupShapeButtons();
-            switchSelection(R.id.fillStyleButton, styleButtonIds);
-            switchSelection(R.id.circleShapeButton, shapeButtonIds);
+            setupButtonListeners();
+            setupPaintActionsMap();
+            setupDefaultSelections();
         }
 
+        private void setupDefaultSelections(){
+            switchSelection(R.id.fillStyleButton, styleButtonIds);
+            paintView.setStyleToFill();
+            switchSelection(R.id.circleShapeButton, shapeButtonIds);
+            paintView.setBrushShape(BrushShape.CIRCLE);
+            setCurrentColor(R.id.blackButton);
+            switchSelection(R.id.blackButton, colorButtonIds);
+        }
 
-        private void setupTestMap(){
-            testMap = new HashMap<>();
-            testMap.put(1, (String i) -> System.out.println("hello"));
+        private void setupButtonListeners(){
 
-            for(int key: testMap.keySet()){
-                testMap.get(key).accept("");
+            List<Integer> widgetIds = Arrays.asList(
+                    R.id.brokenOutlineStyleButton,
+                    R.id.fillStyleButton,
+                    R.id.outlineStyleButton,
+                    R.id.squareShapeButton,
+                    R.id.circleShapeButton,
+                    R.id.seekBar);
+
+            for(int id: widgetIds){
+                findViewById(id).setOnClickListener(this);
             }
 
+
         }
+
+        private void setupPaintActionsMap(){
+
+            paintActionsMap = new HashMap<>();
+
+            paintActionsMap.put(R.id.brokenOutlineStyleButton, () -> paintView.setStyleToBrokenOutline());
+            paintActionsMap.put(R.id.fillStyleButton, () -> paintView.setStyleToFill());
+            paintActionsMap.put(R.id.outlineStyleButton, () -> paintView.setStyleToOutline());
+            paintActionsMap.put(R.id.squareShapeButton, () -> paintView.setBrushShape(BrushShape.SQUARE));
+            paintActionsMap.put(R.id.circleShapeButton, () -> paintView.setBrushShape(BrushShape.CIRCLE));
+
+        }
+
         private void setupActionbar(){
             setSupportActionBar(findViewById(R.id.toolbar));
             getSupportActionBar();
@@ -121,9 +141,11 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
             }
         }
 
+        private List<Integer> colorButtonIds; // used to iterate through for selecting & deselecting buttons
 
-    Map<Integer, Integer> colorButtonMap = new HashMap<>();
         private void setupButtonList() {
+            colorButtonIds = new ArrayList<>();
+
             colorButtonMap.put(R.id.blueButton, Color.BLUE);
             colorButtonMap.put(R.id.redButton, Color.RED);
             colorButtonMap.put(R.id.greenButton, Color.GREEN);
@@ -136,28 +158,37 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
             colorButtonMap.put(R.id.lightBlueButton, Color.argb(255,0,148,255));
 
 
+
+
             for(int key:  colorButtonMap.keySet()){
+                colorButtonIds.add(key);
                 findViewById(key).setOnClickListener(this);
             }
         }
 
 
-        public int getCurrentColor(){
-            return currentColor;
-        }
-
-
-
         public void onClick(View v){
             int viewId = v.getId();
 
-            for(int key : colorButtonMap.keySet()){
-                if(viewId == key){
-                    paintView.setCurrentColor(colorButtonMap.get(key));
-                }
+            setCurrentColor(viewId);
+
+            Procedure procedure = paintActionsMap.get(viewId);
+            if(procedure != null){
+                procedure.execute();
             }
             switchSelection(v.getId(), styleButtonIds);
             switchSelection(v.getId(), shapeButtonIds);
+            switchSelection(v.getId(), colorButtonIds);
+
+        }
+
+        private void setCurrentColor(int viewId){
+            if(colorButtonMap.containsKey(viewId)){
+                Integer color = colorButtonMap.get(viewId);
+                if(color != null){
+                    paintView.setCurrentColor(color);
+                }
+            }
         }
 
         private void switchSelection(int viewId, List<Integer> buttons){
@@ -197,20 +228,9 @@ public class MainActivity extends AppCompatActivity implements SettingsView, Vie
         button.setBackgroundColor(Color.LTGRAY);
     }
 
-        private final String IMAGE_KEY = "image";
-
 
         public int getBrushWidth(){
             return seekBar.getProgress();
-        }
-
-        public BrushShape getBrushShape(){
-            //switch(brushShapeRadioGroup.getCheckedRadioButtonId()){
-            //    case R.id.squareRadioButton: return BrushShape.SQUARE;
-            //    case R.id.circularRadioButton: return BrushShape.CIRCLE;
-            //}
-            //return BrushShape.CIRCLE;
-            return BrushShape.CIRCLE;
         }
 
         /*
