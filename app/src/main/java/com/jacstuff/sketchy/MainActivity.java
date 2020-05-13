@@ -11,13 +11,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -26,17 +28,19 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{//} implements {// View.OnTouchListener {
 
 
-    //private DrawSurface drawSurface;
-    //private StateManager stateManager;
     private int screenWidth;
     private int screenHeight;
     private SeekBar seekBar;
     private PaintView paintView;
     private List<Integer> styleButtonIds = Arrays.asList(R.id.brokenOutlineStyleButton, R.id.fillStyleButton, R.id.outlineStyleButton);
     private List<Integer> shapeButtonIds = Arrays.asList(R.id.squareShapeButton, R.id.circleShapeButton);
-
+    private LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(120, 120);
+    private HorizontalScrollView shadeScrollLayout;
+    private Map<String, LinearLayout> shadeLayoutMap;
+    private Map<String, Color> colors;
     Map<Integer, Integer> colorButtonMap = new HashMap<>();
     private Map<Integer, Procedure> paintActionsMap;
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +56,121 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             paintView.setMinimumHeight(screenHeight / 2);
             setupActionbar();
 
-            setupButtonList();
             setupStyleButtons();
             setupShapeButtons();
             setupButtonListeners();
             setupPaintActionsMap();
             setupDefaultSelections();
             setupBrushSizeSeekBar();
+            setupShadeButtons();
         }
+
+
+        private void setupShadeButtons(){
+            shadeScrollLayout = findViewById(R.id.colorShadeScrollView);
+            shadeLayoutMap = new HashMap<>();
+            assignColors();
+
+            for(String key : colors.keySet()){
+                Color currentColor = colors.get(key);
+                addColorButton(currentColor, key);
+                LinearLayout shadeLayout = new LinearLayout(this);
+
+                for(int i = 0; i < 12; i++){
+                    if(currentColor == null){
+                        continue;
+                    }
+                    currentColor = createIncrementedColor(currentColor);
+                    String text = key.charAt(0) + " " + i;
+                    addShadeButton(shadeLayout, currentColor, text);
+                }
+                shadeLayoutMap.put(key, shadeLayout);
+            }
+        }
+
+
+        private void assignColors(){
+            colors = new HashMap<>();
+            addColor( "blue", Color.BLUE);
+            addColor( "red", Color.RED);
+            addColor( "yellow", Color.YELLOW);
+            addColor( "gray", Color.GRAY);
+            addColor( "black", Color.BLACK);
+            addColor( "white", Color.WHITE);
+            addColor( "green", Color.GREEN);
+            addColor( "magenta", Color.MAGENTA);
+            addColor( "cyan", Color.CYAN);
+        }
+
+
+        private void addColor(String key, int colorCode){
+            colors.put(key, Color.valueOf(colorCode));
+        }
+
+
+        private void addColorButton(Color currentColor, String key){
+
+            LinearLayout colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
+            Button button = new Button(this);
+            if(currentColor == null){
+                return;
+            }
+            int currentArgb = currentColor.toArgb();
+            button.setBackgroundColor(currentArgb);
+            button.setTag(key);
+            button.setTag(R.string.tag_button_type, R.string.button_type_color);
+            button.setOnClickListener(this);
+            button.setLayoutParams(layoutParams);
+            colorButtonGroupLayout.addView(button);
+        }
+
+        private void addShadeButton(LinearLayout layout, Color color, String text){
+            Button button = new Button(this);
+            button.setTag(R.string.tag_button_type, R.string.button_type_shade);
+            button.setTag(R.string.tag_button_color, color);
+            button.setLayoutParams(layoutParams);
+            button.setBackgroundColor(color.toArgb());
+            button.setText(text);
+            button.setOnClickListener(this);
+            layout.addView(button);
+        }
+
+
+        private Color createIncrementedColor(Color currentColor){
+           float r = incIfWithinLimit(currentColor.red());
+           float g = incIfWithinLimit(currentColor.green());
+           float b = incIfWithinLimit(currentColor.blue());
+           return Color.valueOf(r,g,b);
+        }
+
+
+        private void handleColorButtonClicks(View v){
+            Object tag = v.getTag(R.string.tag_button_type);
+            if(tag != null) {
+                if ((int)tag == (int) R.string.button_type_color) {
+                    String key = (String) v.getTag();
+                    LinearLayout shadeLayout = shadeLayoutMap.get(key);
+                    if (shadeLayout != null) {
+                        shadeScrollLayout.removeAllViews();
+                        shadeScrollLayout.addView(shadeLayout);
+                    }
+                }
+                else if((int)tag == (int)R.string.button_type_shade){
+                    Color color = (Color)v.getTag(R.string.tag_button_color);
+                    if(color == null){
+                        return;
+                    }
+                    paintView.setCurrentColor(color.toArgb());
+                }
+            }
+        }
+
+
+        private float incIfWithinLimit(float currentValue) {
+            currentValue += 0.08f;
+            return Math.min(1.0f, currentValue);
+        }
+
 
         private void setupBrushSizeSeekBar(){
             SeekBar seekBar = findViewById(R.id.seekBar);
@@ -67,12 +178,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
-                    // TODO Auto-generated method stub
                 }
 
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {
-                    // TODO Auto-generated method stub
                 }
 
                 @Override
@@ -80,8 +189,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                    paintView.setBrushSize(seekBar.getProgress());
                 }
             });
-
         }
+
 
         private void setupDefaultSelections(){
             paintView.setBrushSize(seekBar.getProgress());
@@ -89,9 +198,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             paintView.setStyleToFill();
             switchSelection(R.id.circleShapeButton, shapeButtonIds);
             paintView.setBrushShape(BrushShape.CIRCLE);
-            setCurrentColor(R.id.blackButton);
-            switchSelection(R.id.blackButton, colorButtonIds);
         }
+
 
         private void setupButtonListeners(){
 
@@ -106,49 +214,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for(int id: widgetIds){
                 findViewById(id).setOnClickListener(this);
             }
-
-
         }
 
+
         private void setupPaintActionsMap(){
-
             paintActionsMap = new HashMap<>();
-
             paintActionsMap.put(R.id.brokenOutlineStyleButton, () -> paintView.setStyleToBrokenOutline());
             paintActionsMap.put(R.id.fillStyleButton, () -> paintView.setStyleToFill());
             paintActionsMap.put(R.id.outlineStyleButton, () -> paintView.setStyleToOutline());
             paintActionsMap.put(R.id.squareShapeButton, () -> paintView.setBrushShape(BrushShape.SQUARE));
             paintActionsMap.put(R.id.circleShapeButton, () -> paintView.setBrushShape(BrushShape.CIRCLE));
-
         }
+
 
         private void setupActionbar(){
             setSupportActionBar(findViewById(R.id.toolbar));
             getSupportActionBar();
         }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menuitems, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_save:
-                saveImage();
-                return true;
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            getMenuInflater().inflate(R.menu.menuitems, menu);
+            return super.onCreateOptionsMenu(menu);
         }
-    }
 
-    private void setupShapeButtons(){
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_save:
+                    saveImage();
+                    return true;
+                default:
+                    // If we got here, the user's action was not recognized.
+                    // Invoke the superclass to handle it.
+                    return super.onOptionsItemSelected(item);
+
+            }
+        }
+
+        private void setupShapeButtons(){
             for(int id: shapeButtonIds){
                 findViewById(id).setOnClickListener(this);
             }
@@ -164,33 +270,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        private List<Integer> colorButtonIds; // used to iterate through for selecting & deselecting buttons
-
-        private void setupButtonList() {
-            colorButtonIds = new ArrayList<>();
-
-            colorButtonMap.put(R.id.blueButton, Color.BLUE);
-            colorButtonMap.put(R.id.redButton, Color.RED);
-            colorButtonMap.put(R.id.greenButton, Color.GREEN);
-            colorButtonMap.put(R.id.grayButton, Color.GRAY);
-            colorButtonMap.put(R.id.yellowButton, Color.YELLOW);
-            colorButtonMap.put(R.id.orangeButton, Color.argb(255,255,106,0));
-            colorButtonMap.put(R.id.purpleButton, Color.argb(255,127,0,55));
-            colorButtonMap.put(R.id.blackButton, Color.BLACK);
-            colorButtonMap.put(R.id.whiteButton, Color.WHITE);
-            colorButtonMap.put(R.id.lightBlueButton, Color.argb(255,0,148,255));
-
-
-            for(int key:  colorButtonMap.keySet()){
-                colorButtonIds.add(key);
-                findViewById(key).setOnClickListener(this);
-            }
-        }
-
 
         public void onClick(View v){
+            handleColorButtonClicks(v);
             int viewId = v.getId();
-            setCurrentColor(viewId);
 
             Procedure procedure = paintActionsMap.get(viewId);
             if(procedure != null){
@@ -198,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             switchSelection(v.getId(), styleButtonIds);
             switchSelection(v.getId(), shapeButtonIds);
-            switchSelection(v.getId(), colorButtonIds);
+            //switchSelection(v.getId(), colorButtonIds);
 
         }
 
@@ -249,9 +332,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-        public int getBrushWidth(){
-            return seekBar.getProgress();
-        }
 
         /*
         @Override
