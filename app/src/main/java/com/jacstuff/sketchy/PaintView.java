@@ -92,9 +92,9 @@ public class PaintView extends View {
         this.brushSize = brushSize;
     }
 
-    public void init(DisplayMetrics metrics, int viewHeight) {
+    public void init(int screenWidth, int screenHeight) {
 
-             int widthHeight = Math.min(metrics.heightPixels, metrics.widthPixels) - 20;
+        int widthHeight = Math.min(screenWidth, screenHeight) - 20;
         bitmap = Bitmap.createBitmap(widthHeight, widthHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
 

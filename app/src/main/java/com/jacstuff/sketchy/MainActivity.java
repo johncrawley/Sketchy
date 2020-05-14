@@ -25,8 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{//} implements {// View.OnTouchListener {
+import static android.os.Environment.DIRECTORY_PICTURES;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{//} implements {// View.OnTouchListener {
 
     private int screenWidth;
     private int screenHeight;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Map<Integer, Integer> colorButtonMap = new HashMap<>();
     private Map<Integer, Procedure> paintActionsMap;
 
+    private String SKETCHES_DIR;
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +51,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setContentView(R.layout.activity_main);
             paintView = findViewById(R.id.paintView);
             seekBar = findViewById(R.id.seekBar);
-            DisplayMetrics metrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            int viewHeight = paintView.getHeight();
-            paintView.init(metrics, viewHeight);
             deriveScreenDimensions();
-            paintView.setMinimumHeight(screenHeight / 2);
+            paintView.init(screenWidth, (screenHeight/2));
             setupActionbar();
+            SKETCHES_DIR = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES).getPath() + "/Sketches/";
 
             setupStyleButtons();
             setupShapeButtons();
@@ -357,9 +357,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         private void saveImage(){
 
-            Log.i("Main", "Save button clicked!");
-            String dirPath = Environment.getExternalStorageDirectory().getPath() + "/Sketches/";
-            String path = dirPath + "sketch.jpg";
+            String path = SKETCHES_DIR + "sketch.jpg";
             createSaveDirIfDoesntExist();
             try{
 
@@ -375,23 +373,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void createSaveDirIfDoesntExist(){
-        String path = Environment.getExternalStorageDirectory() + "/Sketches";
-        File folder = new File(path);
+        File folder = new File(SKETCHES_DIR);
         if(!folder.exists()){
             boolean result = folder.mkdirs();
-            Log.i("Main", "Attempted to make Sketches dir, result : "+ result);
         }
     }
 
 
     private void deriveScreenDimensions(){
-
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
-
-        Log.i("MainActivity", "derived dimensions : width : " + screenWidth + " height: " + screenHeight);
     }
 
 
