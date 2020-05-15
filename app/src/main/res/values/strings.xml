@@ -1,9 +1,24 @@
 <resources>
     <string name="app_name">Sketchy</string>
+    <string name="save_sketch_activity_label">Save Sketch</string>
     <string name="action_save">Save</string>
 
     <string name="tag_button_type">1</string>
     <string name="tag_button_color">2</string>
     <string name="button_type_color">3</string>
     <string name="button_type_shade">4</string>
+    <string name="title_activity_save_sketch">SaveSketchActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="save_dialogue_save_button">SAVE</string>
+    <string name="save_dialogue_cancel_button">CANCEL</string>
+
+    <string name="bitmap_intent_extra">bitmap_intent_extra</string>
 </resources>

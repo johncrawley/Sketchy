@@ -1,9 +1,12 @@
 package com.jacstuff.sketchy;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Environment;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -25,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.os.Environment.DIRECTORY_PICTURES;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{//} implements {// View.OnTouchListener {
 
@@ -42,19 +45,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Map<Integer, Integer> colorButtonMap = new HashMap<>();
     private Map<Integer, Procedure> paintActionsMap;
 
-    private String SKETCHES_DIR;
-
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
             paintView = findViewById(R.id.paintView);
+            PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
+            paintViewSingleton.setPaintView(paintView);
             seekBar = findViewById(R.id.seekBar);
             deriveScreenDimensions();
             paintView.init(screenWidth, (screenHeight/2));
             setupActionbar();
-            SKETCHES_DIR = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES).getPath() + "/Sketches/";
 
             setupStyleButtons();
             setupShapeButtons();
@@ -244,7 +246,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_save:
-                    saveImage();
+
+                    Intent intent = new Intent(this, SaveSketchActivity.class);
+                    startActivity(intent);
                     return true;
                 default:
                     // If we got here, the user's action was not recognized.
@@ -282,6 +286,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switchSelection(v.getId(), styleButtonIds);
             switchSelection(v.getId(), shapeButtonIds);
             //switchSelection(v.getId(), colorButtonIds);
+
+
 
         }
 
@@ -354,30 +360,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editor.commit();
         }
         */
-
-        private void saveImage(){
-
-            String path = SKETCHES_DIR + "sketch.jpg";
-            createSaveDirIfDoesntExist();
-            try{
-
-                FileOutputStream fos = new FileOutputStream(path, false);
-                Bitmap bitmap = paintView.getBitmap();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                fos.flush();
-                fos.close();
-            }catch ( IOException e){
-                Log.i("Main", e.getMessage());
-            }
-        }
-
-
-    private void createSaveDirIfDoesntExist(){
-        File folder = new File(SKETCHES_DIR);
-        if(!folder.exists()){
-            boolean result = folder.mkdirs();
-        }
-    }
 
 
     private void deriveScreenDimensions(){

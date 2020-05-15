@@ -3,5 +3,6 @@
 
     <dimen name="selector_button_width">40sp</dimen>
     <dimen name="selector_button_height">44sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>
