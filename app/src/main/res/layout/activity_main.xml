@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -14,11 +13,10 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <HorizontalScrollView
         android:id="@+id/colorScrollView"
@@ -33,21 +31,20 @@
             android:id="@+id/colorButtonGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
         </LinearLayout>
     </HorizontalScrollView>
 
 
     <HorizontalScrollView
+        android:id="@+id/colorShadeScrollView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:id="@+id/colorShadeScrollView"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_weight="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/colorScrollView"
-        android:layout_weight="1">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/colorScrollView">
 
     </HorizontalScrollView>
 
@@ -55,9 +52,9 @@
     <LinearLayout
 
         android:id="@+id/shapeOptionsLayout"
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:paddingTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,18 +78,18 @@
 
     </LinearLayout>
 
+
     <LinearLayout
 
         android:id="@+id/styleOptionsLayout"
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shapeOptionsLayout"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/shapeOptionsLayout">
 
         <ImageButton
             android:id="@+id/fillStyleButton"
@@ -117,34 +114,36 @@
 
     </LinearLayout>
 
-
-
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="177dp"
         android:layout_height="50dp"
         android:indeterminate="false"
+        android:min="2"
         android:max="300"
         android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:paddingTop="20dp"
+        android:paddingEnd="10dp"
         android:paddingBottom="20dp"
-        android:progress="50"
+        android:progress="150"
 
         app:layout_constraintBottom_toTopOf="@+id/paintView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/styleOptionsLayout" />
 
+
+
     <com.jacstuff.sketchy.PaintView
         android:id="@+id/paintView"
         android:layout_width="match_parent"
         android:layout_height="380dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="10dp"
+        android:layout_margin="10dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
 </android.support.constraint.ConstraintLayout>

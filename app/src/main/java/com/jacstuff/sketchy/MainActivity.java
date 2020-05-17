@@ -2,11 +2,8 @@ package com.jacstuff.sketchy;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Environment;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -20,14 +17,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.function.Function;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{//} implements {// View.OnTouchListener {
@@ -72,23 +68,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             shadeScrollLayout = findViewById(R.id.colorShadeScrollView);
             shadeLayoutMap = new HashMap<>();
             assignColors();
-
+            Color previousColor = null;
             for(String key : colors.keySet()){
                 Color currentColor = colors.get(key);
                 addColorButton(currentColor, key);
-                LinearLayout shadeLayout = new LinearLayout(this);
-
-                for(int i = 0; i < 12; i++){
-                    if(currentColor == null){
-                        continue;
-                    }
-                    currentColor = createIncrementedColor(currentColor);
-                    String text = key.charAt(0) + " " + i;
-                    addShadeButton(shadeLayout, currentColor, text);
-                }
-                shadeLayoutMap.put(key, shadeLayout);
+                addShadesToLayoutMap(key, currentColor);
             }
         }
+
+
+        private void addShadesToLayoutMap( String key, Color currentColor){
+            LinearLayout shadeLayout = new LinearLayout(this);
+            List<Color> darkShades = createShades(this::createDecrementedColor, currentColor);
+
+            Collections.reverse(darkShades);
+            darkShades.remove(darkShades.size()-1);
+            List<Color> lightShades= createShades(this::createIncrementedColor, currentColor);
+            darkShades.addAll(lightShades);
+            int index = 1;
+            for(Color color : darkShades) {
+                String text = " " + index;
+                addShadeButton(shadeLayout, color, text);
+                index++;
+            }
+            shadeLayoutMap.put(key, shadeLayout);
+
+        }
+
+
+        private List<Color> createShades(Function<Color, Color> colorCreator, Color baseColor){
+
+            final int NUMBER_OF_SHADES_PER_COLOR = 10;
+            List<Color> shades = new ArrayList<>();
+            Color currentColor = baseColor;
+            Color previousColor = null;
+            for(int i = 0; i < NUMBER_OF_SHADES_PER_COLOR; i++){
+                if(currentColor == null || currentColor.equals(previousColor)){
+                    break;
+                }
+                previousColor = currentColor;
+                shades.add(currentColor);
+                currentColor = colorCreator.apply(currentColor);
+            }
+            return shades;
+        }
+
+
 
 
         private void assignColors(){
@@ -102,6 +127,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             addColor( "green", Color.GREEN);
             addColor( "magenta", Color.MAGENTA);
             addColor( "cyan", Color.CYAN);
+            addColor("light_blue", Color.argb(255,0,130,255));
+            addColor("orange", Color.argb(255,255,106,0));
+            addColor("purple", Color.argb(255,178,0,255));
+            addColor("brown", Color.argb(255,127,51,0));
+            addColor("lime", Color.argb(255,0,255,144));
+            addColor("gold", Color.argb(255,255,215,0));
+            addColor("peach", Color.argb(255,255,229,180));
+            addColor("beige", Color.argb(255,245,245,220));
+            addColor("teal", Color.argb(255,0,128,128));
+            addColor("olive", Color.argb(255,128,128,0));
         }
 
 
@@ -133,45 +168,82 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setLayoutParams(layoutParams);
             button.setBackgroundColor(color.toArgb());
             button.setText(text);
+            button.setTextAppearance(R.style.ShadeButtonText);
             button.setOnClickListener(this);
             layout.addView(button);
         }
 
+        private final float SHADE_INCREMENT = 0.08f;
 
-        private Color createIncrementedColor(Color currentColor){
-           float r = incIfWithinLimit(currentColor.red());
-           float g = incIfWithinLimit(currentColor.green());
-           float b = incIfWithinLimit(currentColor.blue());
-           return Color.valueOf(r,g,b);
-        }
+    private Color modifyColor(Function<Float, Float> valueFunction, Color currentColor){
+        float r = valueFunction.apply(currentColor.red());
+        float g = valueFunction.apply(currentColor.green());
+        float b = valueFunction.apply(currentColor.blue());
+        return Color.valueOf(r,g,b);
+    }
+    private Color createIncrementedColor(Color currentColor){
+        return modifyColor(this::incIfWithinLimit, currentColor);
+    }
+
+    private Color createDecrementedColor(Color currentColor){
+        return modifyColor(this::decIfAboveZero, currentColor);
+    }
+
+    private float incIfWithinLimit(float currentValue) {
+        currentValue += SHADE_INCREMENT;
+        return Math.min(1.0f, currentValue);
+    }
+
+    private float decIfAboveZero(float currentValue) {
+        currentValue -= SHADE_INCREMENT;
+        return Math.max(0.0f, currentValue);
+    }
 
 
-        private void handleColorButtonClicks(View v){
-            Object tag = v.getTag(R.string.tag_button_type);
-            if(tag != null) {
-                if ((int)tag == (int) R.string.button_type_color) {
-                    String key = (String) v.getTag();
-                    LinearLayout shadeLayout = shadeLayoutMap.get(key);
-                    if (shadeLayout != null) {
-                        shadeScrollLayout.removeAllViews();
-                        shadeScrollLayout.addView(shadeLayout);
-                    }
-                }
-                else if((int)tag == (int)R.string.button_type_shade){
-                    Color color = (Color)v.getTag(R.string.tag_button_color);
-                    if(color == null){
-                        return;
-                    }
-                    paintView.setCurrentColor(color.toArgb());
-                }
+
+        private final int NO_TAG_FOUND = -1;
+
+        private void handleColorButtonClicks(View view){
+            int tag = getButtonTypeTag(view);
+            if(tag == NO_TAG_FOUND){
+                return;
+            }
+            if (tag == R.string.button_type_color) {
+                handleMainColorButtonClick(view);
+            }
+            else if(tag ==  R.string.button_type_shade){
+                handleShadeButtonClick(view);
             }
         }
 
 
-        private float incIfWithinLimit(float currentValue) {
-            currentValue += 0.08f;
-            return Math.min(1.0f, currentValue);
+        private int getButtonTypeTag(View view){
+            Object tagObj = view.getTag(R.string.tag_button_type);
+            if(tagObj == null) {
+                return NO_TAG_FOUND;
+            }
+            return (int)tagObj;
         }
+
+
+        private void handleMainColorButtonClick(View view){
+            String key = (String) view.getTag();
+            LinearLayout shadeLayout = shadeLayoutMap.get(key);
+            if (shadeLayout != null) {
+                shadeScrollLayout.removeAllViews();
+                shadeScrollLayout.addView(shadeLayout);
+            }
+        }
+
+        private void handleShadeButtonClick(View view){
+            Color color = (Color)view.getTag(R.string.tag_button_color);
+            if(color == null){
+                return;
+            }
+            paintView.setCurrentColor(color.toArgb());
+
+        }
+
 
 
         private void setupBrushSizeSeekBar(){
@@ -287,9 +359,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switchSelection(v.getId(), shapeButtonIds);
             //switchSelection(v.getId(), colorButtonIds);
 
-
-
         }
+
 
         private void setCurrentColor(int viewId){
             if(colorButtonMap.containsKey(viewId)){
