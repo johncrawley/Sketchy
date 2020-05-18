@@ -1,9 +1,12 @@
 package com.jacstuff.sketchy;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.annotation.StyleRes;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -16,7 +19,11 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -40,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Map<String, Color> colors;
     Map<Integer, Integer> colorButtonMap = new HashMap<>();
     private Map<Integer, Procedure> paintActionsMap;
+    Context context;
 
 
         @Override
@@ -47,13 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
             paintView = findViewById(R.id.paintView);
+            context = this;
             PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
             paintViewSingleton.setPaintView(paintView);
             seekBar = findViewById(R.id.seekBar);
-            deriveScreenDimensions();
-            paintView.init(screenWidth, (screenHeight/2));
             setupActionbar();
-
+            initPaintView();
             setupStyleButtons();
             setupShapeButtons();
             setupButtonListeners();
@@ -61,6 +68,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setupDefaultSelections();
             setupBrushSizeSeekBar();
             setupShadeButtons();
+        }
+
+        private void initPaintView(){
+            deriveScreenDimensions();
+            int paintViewLayoutMargin = getDimension(R.dimen.paint_view_layout_margin);
+            int paintViewMargin = getDimension(R.dimen.paint_view_margin);
+            int paintViewLayoutPadding = getDimension(R.dimen.paint_view_layout_padding);
+            int actionBarHeight = getDimension(R.dimen.action_bar_height);
+            int totalMargin = (paintViewMargin + paintViewLayoutMargin + paintViewLayoutPadding) * 2;
+            int paintViewWidth = screenWidth - totalMargin;
+            int paintViewHeight = ((screenHeight-actionBarHeight) /2) - ( (paintViewMargin + paintViewLayoutMargin) * 2 );
+            paintView.init(paintViewWidth, paintViewHeight);
+        }
+
+
+        private int getDimension(int dimensionCode){
+            return (int) getResources().getDimension(dimensionCode);
         }
 
 
@@ -313,14 +337,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return super.onCreateOptionsMenu(menu);
         }
 
+        final int SAVE_FILE_ACTIVITY_CODE = 101;
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_save:
 
-                    Intent intent = new Intent(this, SaveSketchActivity.class);
-                    startActivity(intent);
+                    //Intent intent = new Intent(this, SaveSketchActivity.class);
+                   // startActivity(intent);
+
+                    // save dialog test
+
+                    Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("image/jpeg"); //not needed, but maybe usefull
+                    intent.putExtra(Intent.EXTRA_TITLE, "sketch"); //not needed, but maybe usefull
+                    startActivityForResult(intent, SAVE_FILE_ACTIVITY_CODE);
                     return true;
                 default:
                     // If we got here, the user's action was not recognized.
@@ -329,6 +362,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SAVE_FILE_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
+            Uri uri = data.getData();
+
+            //just as an example, I am writing a String to the Uri I received from the user:
+
+            try {
+                OutputStream output = context.getContentResolver().openOutputStream(uri);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                paintView.getBitmap().compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                output.write(byteArray);
+                output.flush();
+                output.close();
+
+                Toast.makeText(context, "SKETCH SAVED", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                Toast.makeText(context, "ERROR, UNABLE TO SAVE FILE", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
         private void setupShapeButtons(){
             for(int id: shapeButtonIds){
