@@ -21,4 +21,6 @@
     <string name="save_dialogue_cancel_button">CANCEL</string>
 
     <string name="bitmap_intent_extra">bitmap_intent_extra</string>
+
+    <string name="selected_button_text">S</string>
 </resources>
