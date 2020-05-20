@@ -9,5 +9,8 @@
     <dimen name="paint_view_layout_margin">5dp</dimen>
     <dimen name="paint_view_layout_padding">5dp</dimen>
     <dimen name="action_bar_height">55dp</dimen>
+    <dimen name="about_text_padding">40dp</dimen>
+    <dimen name="about_text_primary_font_size">30sp</dimen>
+    <dimen name="about_text_secondary_font_size">22sp</dimen>
 
 </resources>

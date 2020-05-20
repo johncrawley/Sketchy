@@ -11,8 +11,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <activity
-            android:name=".SaveSketchActivity"
-            android:label="@string/save_sketch_activity_label"
+            android:name=".AboutDialogActivity"
+            android:label="@string/about_activity_label"
             android:theme="@android:style/Theme.Dialog"/>
 
         <activity android:name=".MainActivity">

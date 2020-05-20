@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int paintViewWidth = screenWidth - totalMargin;
             int paintViewHeight = ((screenHeight-actionBarHeight) /2) - ( (paintViewMargin + paintViewLayoutMargin) * 2 );
             paintView.init(paintViewWidth, paintViewHeight);
+            paintView.setCurrentColor(Color.BLACK);
         }
 
 
@@ -176,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             LinearLayout shadeLayout = new LinearLayout(this);
             for(int i = 0; i< shades.size(); i++){
                 int labelNumber = i + 1;
-                LinearLayout buttonLayout = createShadeButton(shades.get(i), labelNumber, R.string.button_type_shade);
+                LinearLayout buttonLayout = createShadeButton(shades.get(i), labelNumber);
                 shadeLayout.addView(buttonLayout);
             }
             return shadeLayout;
@@ -186,15 +187,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         private LinearLayout createMultiShadeLayoutWithButtonsFrom(List<Color> colors){
             LinearLayout layout = new LinearLayout(this);
             for(Color color : colors){
-                LinearLayout buttonLayout = createShadeButton(color, R.string.button_type_multi_shade);
+                LinearLayout buttonLayout = createMultiShadeButton(color);
                 layout.addView(buttonLayout);
             }
             return layout;
-        }
-
-        private void addMultiShadeButton(LinearLayout layout, Color color){
-
-
         }
 
 
@@ -301,15 +297,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-    private LinearLayout createShadeButton(Color color, int number, int type){
+    private LinearLayout createShadeButton(Color color, int number){
         Button button = createColorButton(color, number );
-        button.setTag(R.string.tag_button_type, type);
+        button.setTag(R.string.tag_button_type, R.string.button_type_shade);
         return putInLayout(button);
     }
 
-    private LinearLayout createShadeButton(Color color, int type){
+    private LinearLayout createMultiShadeButton(Color color){
         Button button = createColorButton(color );
-        button.setTag(R.string.tag_button_type, type);
+        button.setTag(R.string.tag_button_type, R.string.button_type_multi_shade);
         return putInLayout(button);
     }
 
@@ -440,11 +436,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case R.id.action_save:
                     startSaveDocumentActivity();
                     return true;
+
+                case R.id.action_about:
+                    startAboutActivity();
+                    return true;
                 default:
                     return super.onOptionsItemSelected(item);
             }
         }
 
+        private void startAboutActivity(){
+            Intent intent = new Intent(this, AboutDialogActivity.class);
+            startActivity(intent);
+        }
 
         private void startSaveDocumentActivity(){
             Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
@@ -552,30 +556,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
+        private void handleMultiButtonClick(Button button){
+
+            deselectPreviousButtons();
+            previouslySelectedColorButton = button;
+            selectButton(button);
+            List<Color> colorList = new ArrayList<>(colors.values());
+            assignShadeLayoutFrom(button);
+            paintView.setMultiColor(colorList);
+        }
 
 
-    private void handleMultiButtonClick(Button button){
-
-        deselectPreviousButtons();
-        previouslySelectedColorButton = button;
-        selectButton(button);
-        List<Color> colorList = new ArrayList<>(colors.values());
-        assignShadeLayoutFrom(button);
-        paintView.setMultiColor(colorList);
-    }
-
-
-    private void handleMultiShadeButtonClick(Button button){
-
-        deselectPreviousButtons();
-        previouslySelectedColorButton = button;
-        selectButton(button);
-        assignShadeLayoutFrom(button);
-        paintView.setMultiColor(multiColorShades.get((Color)button.getTag(R.string.tag_button_color)));
-    }
+        private void handleMultiShadeButtonClick(Button button){
+            deselectPreviousButtons();
+            previouslySelectedColorButton = button;
+            selectButton(button);
+            assignShadeLayoutFrom(button);
+            Color color = (Color)button.getTag(R.string.tag_button_color);
+            paintView.setMultiColor(multiColorShades.get(color));
+        }
 
 
-    private void handleMainColorButtonClick(Button button){
+        private void handleMainColorButtonClick(Button button){
             paintView.setSingleColorMode();
             setColorAndUpdateButtons(button);
             previouslySelectedColorButton = button;

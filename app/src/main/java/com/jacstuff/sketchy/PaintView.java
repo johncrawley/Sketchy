@@ -8,12 +8,8 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -26,14 +22,11 @@ public class PaintView extends View {
     private Path mPath;
     private Paint paint;
     private int brushSize;
-    private int currentColor;
-    private int backgroundColor = DEFAULT_BG_COLOR;
     private BrushShape brushShape;
     private Bitmap bitmap;
     private Canvas canvas;
     private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-    private List<Color> multiColorList;
-    private boolean isMultiColor = false;
+    private MulticolorHandler multicolorHandler;
 
 
     public PaintView(Context context) {
@@ -50,6 +43,7 @@ public class PaintView extends View {
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
+        multicolorHandler = new MulticolorHandler();
     }
 
 
@@ -79,42 +73,22 @@ public class PaintView extends View {
         canvas = new Canvas(bitmap);
         paint.setColor(Color.WHITE);
         canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
-        currentColor = DEFAULT_COLOR;
     }
 
     public void setMultiColor(List<Color> colors){
-        isMultiColor = true;
-        multiColorList = new ArrayList<>(colors);
+        multicolorHandler.enable(colors);
     }
 
     public void setSingleColorMode(){
-        isMultiColor = false;
+        multicolorHandler.disable();
     }
 
-
-    private List<Integer> colors = Arrays.asList(Color.RED,
-            Color.GREEN,
-            Color.BLUE,
-            Color.YELLOW,
-            Color.GRAY,
-            Color.MAGENTA);
-
-    private int colorIndex = 0;
-
-    private int getNextColor(){
-        colorIndex++;
-        if(colorIndex >= colors.size()){
-            colorIndex = 0;       }
-        return colors.get(colorIndex);
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.save();
-        canvas.drawColor(backgroundColor);
+        canvas.drawColor(DEFAULT_BG_COLOR);
         canvas.drawBitmap(bitmap,0,0,paint);
-
-        //paint.setColor(getNextColor());
         canvas.drawBitmap(bitmap, 0, 0, mBitmapPaint);
         canvas.restore();
     }
@@ -128,10 +102,6 @@ public class PaintView extends View {
         return Bitmap.createBitmap(bitmap, 0,0, bitmap.getWidth(), this.getHeight());
     }
 
-
-    private void log(String msg){
-        Log.i("PaintView", msg);
-    }
 
     private void touchStart(float x, float y) {
         mPath = new Path();
@@ -163,10 +133,9 @@ public class PaintView extends View {
     private void drawAt(float x, float y){
 
         switch (brushShape){
-            case CIRCLE: canvas.drawCircle(x,y, brushSize/2, paint); break;
+            case CIRCLE: canvas.drawCircle(x,y, brushSize/2.0f, paint); break;
             case SQUARE: drawSquare(x, y, brushSize);
         }
-
     }
 
 
@@ -180,19 +149,18 @@ public class PaintView extends View {
 
 
     private void touchUp() {
-        if(isMultiColor){
-            currentMultiColorIndex = 0;
-        }
+        multicolorHandler.resetIndex();
         mPath.lineTo(mX, mY);
     }
 
 
     @Override
+    @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        if(isMultiColor){
-            setNextColor();
+        if(multicolorHandler.isEnabled()){
+            paint.setColor(multicolorHandler.getNextColor());
         }
 
         switch(event.getAction()) {
@@ -212,43 +180,6 @@ public class PaintView extends View {
         return true;
     }
 
-    int currentMultiColorIndex;
 
-    private void setNextColor(){
-        setCurrentMultiColorIndex();
-        paint.setColor(multiColorList.get(currentMultiColorIndex).toArgb());
 
-    }
-
-    private void setCurrentMultiColorIndex(){
-        changeMultiColorIndex();
-        if(indexExceedsBounds()){
-            changeIndexDirection();
-            changeMultiColorIndex();
-        }
-    }
-
-    private boolean indexExceedsBounds(){
-        return currentMultiColorIndex < 0 || currentMultiColorIndex >= multiColorList.size();
-    }
-
-    private void changeIndexDirection(){
-        if(indexDirection == MultiColorIndexDirection.FORWARDS){
-            indexDirection = MultiColorIndexDirection.BACKWARDS;
-            return;
-        }
-        indexDirection = MultiColorIndexDirection.FORWARDS;
-    }
-
-    private enum MultiColorIndexDirection { FORWARDS, BACKWARDS};
-    private MultiColorIndexDirection indexDirection = MultiColorIndexDirection.FORWARDS;
-
-    private void changeMultiColorIndex(){
-        if(indexDirection == MultiColorIndexDirection.FORWARDS){
-            currentMultiColorIndex ++;
-            return;
-        }
-        currentMultiColorIndex --;
-
-    }
 }
