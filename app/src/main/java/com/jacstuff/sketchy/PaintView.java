@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class PaintView extends View {
     private Bitmap bitmap;
     private Canvas canvas;
     private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+    private List<Color> multiColorList;
+    private boolean isMultiColor = false;
 
 
     public PaintView(Context context) {
@@ -76,6 +80,15 @@ public class PaintView extends View {
         paint.setColor(Color.WHITE);
         canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
         currentColor = DEFAULT_COLOR;
+    }
+
+    public void setMultiColor(List<Color> colors){
+        isMultiColor = true;
+        multiColorList = new ArrayList<>(colors);
+    }
+
+    public void setSingleColorMode(){
+        isMultiColor = false;
     }
 
 
@@ -167,6 +180,9 @@ public class PaintView extends View {
 
 
     private void touchUp() {
+        if(isMultiColor){
+            currentMultiColorIndex = 0;
+        }
         mPath.lineTo(mX, mY);
     }
 
@@ -175,6 +191,9 @@ public class PaintView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
+        if(isMultiColor){
+            setNextColor();
+        }
 
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
@@ -191,5 +210,45 @@ public class PaintView extends View {
                 break;
         }
         return true;
+    }
+
+    int currentMultiColorIndex;
+
+    private void setNextColor(){
+        setCurrentMultiColorIndex();
+        paint.setColor(multiColorList.get(currentMultiColorIndex).toArgb());
+
+    }
+
+    private void setCurrentMultiColorIndex(){
+        changeMultiColorIndex();
+        if(indexExceedsBounds()){
+            changeIndexDirection();
+            changeMultiColorIndex();
+        }
+    }
+
+    private boolean indexExceedsBounds(){
+        return currentMultiColorIndex < 0 || currentMultiColorIndex >= multiColorList.size();
+    }
+
+    private void changeIndexDirection(){
+        if(indexDirection == MultiColorIndexDirection.FORWARDS){
+            indexDirection = MultiColorIndexDirection.BACKWARDS;
+            return;
+        }
+        indexDirection = MultiColorIndexDirection.FORWARDS;
+    }
+
+    private enum MultiColorIndexDirection { FORWARDS, BACKWARDS};
+    private MultiColorIndexDirection indexDirection = MultiColorIndexDirection.FORWARDS;
+
+    private void changeMultiColorIndex(){
+        if(indexDirection == MultiColorIndexDirection.FORWARDS){
+            currentMultiColorIndex ++;
+            return;
+        }
+        currentMultiColorIndex --;
+
     }
 }

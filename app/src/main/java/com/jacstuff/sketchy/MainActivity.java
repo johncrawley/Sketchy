@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout.LayoutParams buttonLayoutParams, selectedButtonLayoutParams, unselectedButtonLayoutParams;
     private Button previouslySelectedShadeButton, previouslySelectedColorButton;
 
+    private LinearLayout colorButtonGroupLayout;
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
             paintViewSingleton.setPaintView(paintView);
             seekBar = findViewById(R.id.seekBar);
+            colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
             setupActionbar();
             setupLayoutParams();
             initPaintView();
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setupPaintActionsMap();
             setupDefaultSelections();
             setupBrushSizeSeekBar();
-            setupShadeButtons();
+            setupColorAndShadeButtons();
         }
 
 
@@ -95,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int paintViewWidth = screenWidth - totalMargin;
             int paintViewHeight = ((screenHeight-actionBarHeight) /2) - ( (paintViewMargin + paintViewLayoutMargin) * 2 );
             paintView.init(paintViewWidth, paintViewHeight);
-
         }
 
 
@@ -104,77 +105,136 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        private void setupShadeButtons(){
+        private void setupColorAndShadeButtons(){
             shadeScrollLayout = findViewById(R.id.colorShadeScrollView);
             shadeLayoutMap = new HashMap<>();
             assignColors();
             for(String key : colors.keySet()){
-                Color currentColor = colors.get(key);
-                addColorButton(currentColor, key);
-                addShadesToLayoutMap(key, currentColor);
+                Color color = colors.get(key);
+                addColorButton(color, key);
+                List<Color> shades = createShades(color);
+                addShadesToLayoutMap(key, shades);
+                addMultiColorShades(color, shades);
             }
+            addMultiColorButton();
+            createMultiColorShadeButtons();
         }
 
 
-        private void addShadesToLayoutMap( String key, Color currentColor){
-            LinearLayout shadeLayout = new LinearLayout(this);
-            List<Color> darkShades = createShades(this::createDecrementedColor, currentColor);
+    private void assignColors(){
+        colors = new HashMap<>();
+        addColor( "blue", Color.BLUE);
+        addColor( "red", Color.RED);
+        addColor( "yellow", Color.YELLOW);
+        addColor( "gray", Color.GRAY);
+        addColor( "black", Color.BLACK);
+        addColor( "white", Color.WHITE);
+        addColor( "green", Color.GREEN);
+        addColor( "magenta", Color.MAGENTA);
+        addColor( "cyan", Color.CYAN);
+        addColor("light_blue",0,  130,255);
+        addColor("orange"   , 255,106,0);
+        addColor("purple"   , 178,0,255);
+        addColor("brown"    , 127,51,0);
+        addColor("lime"     , 0,  255,144);
+        addColor("gold"     , 255,215,0);
+        addColor("peach"    , 255,229,180);
+        addColor("beige"    , 245,245,220);
+        addColor("teal"     , 0,  128,128);
+        addColor("olive"    , 128,128,0);
+    }
 
+
+    private void addColor(String key, int r, int g, int b){
+        addColor(key, Color.argb(255, r,g,b));
+    }
+
+
+    private Map<Color, List<Color>> multiColorShades = new HashMap<>();
+    private final String MULTI_SHADE_KEY = "multi shade key";
+
+
+    private void createMultiColorShadeButtons(){
+
+        LinearLayout shadeLayout = createMultiShadeLayoutWithButtonsFrom(new ArrayList<>(colors.values()));
+        shadeLayoutMap.put(MULTI_SHADE_KEY, shadeLayout);
+    }
+
+
+        private void addShadesToLayoutMap(String key, List<Color> shades){
+            LinearLayout shadeLayout = createLayoutWithButtonsFrom(shades);
+            shadeLayoutMap.put(key, shadeLayout);
+        }
+
+        private void addMultiColorShades(Color color, List<Color> shades){
+            multiColorShades.put(color, shades);
+        }
+
+
+
+        private LinearLayout createLayoutWithButtonsFrom(List<Color> shades){
+            LinearLayout shadeLayout = new LinearLayout(this);
+            for(int i = 0; i< shades.size(); i++){
+                int labelNumber = i + 1;
+                LinearLayout buttonLayout = createShadeButton(shades.get(i), labelNumber, R.string.button_type_shade);
+                shadeLayout.addView(buttonLayout);
+            }
+            return shadeLayout;
+        }
+
+
+        private LinearLayout createMultiShadeLayoutWithButtonsFrom(List<Color> colors){
+            LinearLayout layout = new LinearLayout(this);
+            for(Color color : colors){
+                LinearLayout buttonLayout = createShadeButton(color, R.string.button_type_multi_shade);
+                layout.addView(buttonLayout);
+            }
+            return layout;
+        }
+
+        private void addMultiShadeButton(LinearLayout layout, Color color){
+
+
+        }
+
+
+        private List<Color> createShades(Color color){
+            List<Color> shades = getDarkShadesFrom(color);
+            List<Color> lightShades= createShades(this::createIncrementedColor, color);
+            shades.addAll(lightShades);
+            return shades;
+        }
+
+
+        private List<Color> getDarkShadesFrom(Color color){
+            List<Color> darkShades = createShades(this::createDecrementedColor, color);
             Collections.reverse(darkShades);
             darkShades.remove(darkShades.size()-1);
-            List<Color> lightShades= createShades(this::createIncrementedColor, currentColor);
-            darkShades.addAll(lightShades);
-            int index = 1;
-            for(Color color : darkShades) {
-                String text = " " + index;
-                addShadeButton(shadeLayout, color, text);
-                index++;
-            }
-            shadeLayoutMap.put(key, shadeLayout);
-
+            return darkShades;
         }
 
 
         private List<Color> createShades(Function<Color, Color> colorCreator, Color baseColor){
-
-            final int NUMBER_OF_SHADES_PER_COLOR = 10;
+            final int NUMBER_OF_SHADES = 10;
             List<Color> shades = new ArrayList<>();
-            Color currentColor = baseColor;
-            Color previousColor = null;
-            for(int i = 0; i < NUMBER_OF_SHADES_PER_COLOR; i++){
-                if(currentColor == null || currentColor.equals(previousColor)){
+            Color current = baseColor;
+            Color previous = null;
+            for(int i = 0; i < NUMBER_OF_SHADES; i++){
+                if(areTheSame(current, previous)){
                     break;
                 }
-                previousColor = currentColor;
-                shades.add(currentColor);
-                currentColor = colorCreator.apply(currentColor);
+                previous = current;
+                shades.add(current);
+                current = colorCreator.apply(current);
             }
             return shades;
         }
 
 
-        private void assignColors(){
-            colors = new HashMap<>();
-            addColor( "blue", Color.BLUE);
-            addColor( "red", Color.RED);
-            addColor( "yellow", Color.YELLOW);
-            addColor( "gray", Color.GRAY);
-            addColor( "black", Color.BLACK);
-            addColor( "white", Color.WHITE);
-            addColor( "green", Color.GREEN);
-            addColor( "magenta", Color.MAGENTA);
-            addColor( "cyan", Color.CYAN);
-            addColor("light_blue", Color.argb(255,0,130,255));
-            addColor("orange", Color.argb(255,255,106,0));
-            addColor("purple", Color.argb(255,178,0,255));
-            addColor("brown", Color.argb(255,127,51,0));
-            addColor("lime", Color.argb(255,0,255,144));
-            addColor("gold", Color.argb(255,255,215,0));
-            addColor("peach", Color.argb(255,255,229,180));
-            addColor("beige", Color.argb(255,245,245,220));
-            addColor("teal", Color.argb(255,0,128,128));
-            addColor("olive", Color.argb(255,128,128,0));
+        private boolean areTheSame(Color color, Color otherColor){
+            return color == null || color.equals(otherColor);
         }
+
 
 
         private void addColor(String key, int colorCode){
@@ -184,38 +244,75 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         private void addColorButton(Color currentColor, String key){
 
-            LinearLayout colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
             if(currentColor == null){
                 return;
             }
             Button button = createColorButton(currentColor);
             button.setTag(key);
             button.setTag(R.string.tag_button_type, R.string.button_type_color);
+            putButtonInColorLayout(button);
+        }
+
+
+        private void addMultiColorButton(){
+
+            Button button = createMultiColorButton();
+            putButtonInColorLayout(button);
+        }
+
+
+        private void putButtonInColorLayout(Button button){
             LinearLayout buttonLayout = putInLayout(button);
             colorButtonGroupLayout.addView(buttonLayout);
         }
 
+
         private Button createColorButton(Color color){
-           return createColorButton(color, "");
+            Button button = createGenericColorButton();
+            button.setTag(R.string.tag_button_color, color);
+            button.setBackgroundColor(color.toArgb());
+           return button;
         }
 
-        private Button createColorButton(Color color, String text){
-            Button button = new Button(this);
-            button.setTag(R.string.tag_button_color, color);
-            button.setLayoutParams(buttonLayoutParams);
-            button.setBackgroundColor(color.toArgb());
+
+        private Button createColorButton(Color color, int number){
+            Button button = createColorButton(color);
+            String text = "" + number;
             button.setText(text);
             button.setTextAppearance(R.style.ShadeButtonText);
+            return button;
+        }
+
+
+        private Button createMultiColorButton(){
+            Button button = createGenericColorButton();
+            button.setBackgroundResource(R.drawable.multi_color_button);
+            button.setTag(R.string.tag_button_type, R.string.button_type_multi_color);
+            button.setTag(MULTI_SHADE_KEY);
+            return button;
+        }
+
+
+        private Button createGenericColorButton(){
+            Button button = new Button(this);
+            button.setLayoutParams(buttonLayoutParams);
             button.setOnClickListener(this);
             return button;
         }
 
-        private void addShadeButton(LinearLayout layout, Color color, String text){
-            Button button = createColorButton(color, text);
-            button.setTag(R.string.tag_button_type, R.string.button_type_shade);
-            LinearLayout buttonLayout = putInLayout(button);
-            layout.addView(buttonLayout);
-        }
+
+    private LinearLayout createShadeButton(Color color, int number, int type){
+        Button button = createColorButton(color, number );
+        button.setTag(R.string.tag_button_type, type);
+        return putInLayout(button);
+    }
+
+    private LinearLayout createShadeButton(Color color, int type){
+        Button button = createColorButton(color );
+        button.setTag(R.string.tag_button_type, type);
+        return putInLayout(button);
+    }
+
 
 
     private LinearLayout putInLayout(Button button){
@@ -229,25 +326,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     private Color modifyColor(Function<Float, Float> valueFunction, Color currentColor){
         float r = valueFunction.apply(currentColor.red());
         float g = valueFunction.apply(currentColor.green());
         float b = valueFunction.apply(currentColor.blue());
         return Color.valueOf(r,g,b);
     }
+
+
     private Color createIncrementedColor(Color currentColor){
         return modifyColor(this::incIfWithinLimit, currentColor);
     }
+
 
     private Color createDecrementedColor(Color currentColor){
         return modifyColor(this::decIfAboveZero, currentColor);
     }
 
+
     private float incIfWithinLimit(float currentValue) {
         currentValue += SHADE_INCREMENT;
         return Math.min(1.0f, currentValue);
     }
+
 
     private float decIfAboveZero(float currentValue) {
         currentValue -= SHADE_INCREMENT;
@@ -354,7 +455,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SAVE_FILE_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
@@ -436,79 +536,107 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(tag == NO_TAG_FOUND){
                 return;
             }
+            Button button = (Button)view;
             if (tag == R.string.button_type_color) {
-                handleMainColorButtonClick(view);
+                handleMainColorButtonClick(button);
             }
             else if(tag ==  R.string.button_type_shade){
-                handleShadeButtonClick(view);
+                handleShadeButtonClick(button);
+            }
+            else if(tag == R.string.button_type_multi_color){
+                handleMultiButtonClick(button);
+            }
+            else if(tag == R.string.button_type_multi_shade){
+                handleMultiShadeButtonClick(button);
             }
         }
 
 
-            private void handleMainColorButtonClick(View view){
-                setColorAndUpdateButtons(view);
-                previouslySelectedColorButton = (Button)view;
-                assignShadeLayout((String)view.getTag());
+
+
+    private void handleMultiButtonClick(Button button){
+
+        deselectPreviousButtons();
+        previouslySelectedColorButton = button;
+        selectButton(button);
+        List<Color> colorList = new ArrayList<>(colors.values());
+        assignShadeLayoutFrom(button);
+        paintView.setMultiColor(colorList);
+    }
+
+
+    private void handleMultiShadeButtonClick(Button button){
+
+        deselectPreviousButtons();
+        previouslySelectedColorButton = button;
+        selectButton(button);
+        assignShadeLayoutFrom(button);
+        paintView.setMultiColor(multiColorShades.get((Color)button.getTag(R.string.tag_button_color)));
+    }
+
+
+    private void handleMainColorButtonClick(Button button){
+            paintView.setSingleColorMode();
+            setColorAndUpdateButtons(button);
+            previouslySelectedColorButton = button;
+            assignShadeLayoutFrom(button);
+        }
+
+
+        private void setColorAndUpdateButtons(Button button){
+            setPaintColorFrom(button);
+            deselectPreviousButtons();
+            selectButton(button);
+        }
+
+
+        private void setPaintColorFrom(Button button){
+            Color color = getColorOf(button);
+            if(color == null){
+                return;
             }
+            paintView.setCurrentColor(color.toArgb());
+        }
 
 
-            private void setColorAndUpdateButtons(View view){
-                Button button = (Button)view;
-                setPaintColorFrom(button);
-                deselectPreviousButtons();
-                selectButton(button);
+        private Color getColorOf(Button button){
+            return (Color)button.getTag(R.string.tag_button_color);
+        }
+
+
+        private void deselectPreviousButtons(){
+            deselectButton(previouslySelectedShadeButton);
+            deselectButton(previouslySelectedColorButton);
+        }
+
+
+        private void assignShadeLayoutFrom(Button button){
+            String key = (String)button.getTag();
+            LinearLayout shadeLayout = shadeLayoutMap.get(key);
+            if (shadeLayout != null) {
+                shadeScrollLayout.removeAllViews();
+                shadeScrollLayout.addView(shadeLayout);
             }
+        }
 
 
-            private void setPaintColorFrom(Button button){
-                Color color = getColorOf(button);
-                if(color == null){
-                    return;
-                }
-                paintView.setCurrentColor(color.toArgb());
+        private void handleShadeButtonClick(Button button){
+            setColorAndUpdateButtons(button);
+            previouslySelectedShadeButton = button;
+        }
+
+
+        private void deselectButton(Button button){
+            if(button == null){
+                return;
             }
+            button.setLayoutParams(unselectedButtonLayoutParams);
+        }
 
 
-            private Color getColorOf(Button button){
-                return (Color)button.getTag(R.string.tag_button_color);
-            }
-
-
-            private void deselectPreviousButtons(){
-                deselectButton(previouslySelectedShadeButton);
-                deselectButton(previouslySelectedColorButton);
-            }
-
-
-            private void assignShadeLayout(String key){
-                LinearLayout shadeLayout = shadeLayoutMap.get(key);
-                if (shadeLayout != null) {
-                    shadeScrollLayout.removeAllViews();
-                    shadeScrollLayout.addView(shadeLayout);
-                }
-            }
-
-
-
-
-            private void handleShadeButtonClick(View view){
-                setColorAndUpdateButtons(view);
-                previouslySelectedShadeButton = (Button)view;
-            }
-
-
-
-            private void deselectButton(Button button){
-                if(button == null){
-                    return;
-                }
-                button.setLayoutParams(unselectedButtonLayoutParams);
-            }
-
-
-            private void selectButton(Button button){
-                button.setLayoutParams(selectedButtonLayoutParams);
-            }
+        private void selectButton(Button button){
+            button.setLayoutParams(selectedButtonLayoutParams);
+        }
 
 
         private void switchSelection(int viewId, List<Integer> buttons){

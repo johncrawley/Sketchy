@@ -6,7 +6,9 @@
     <string name="tag_button_type">1</string>
     <string name="tag_button_color">2</string>
     <string name="button_type_color">3</string>
-    <string name="button_type_shade">4</string>
+    <string name="button_type_multi_color">4</string>
+    <string name="button_type_multi_shade">6</string>
+    <string name="button_type_shade">5</string>
     <string name="title_activity_save_sketch">SaveSketchActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
