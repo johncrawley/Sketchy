@@ -21,11 +21,11 @@ class ColorCreator {
         add(colors,"green", Color.GREEN);
         add(colors,"magenta", Color.MAGENTA);
         add(colors,"cyan", Color.CYAN);
+        add(colors,"slime_green"     , 0,  255,144);
         add(colors,"light_blue",0,  130,255);
         add(colors,"orange"   , 255,106,0);
         add(colors,"purple"   , 178,0,255);
         add(colors,"brown"    , 127,51,0);
-        add(colors,"lime"     , 0,  255,144);
         add(colors,"gold"     , 255,215,0);
         add(colors,"peach"    , 255,229,180);
         add(colors,"beige"    , 245,245,220);

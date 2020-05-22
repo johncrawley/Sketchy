@@ -97,14 +97,12 @@ class ColorButtonLayoutPopulator {
     }
 
 
-
     private Button createColorButton(Color color){
         Button button = createGenericColorButton();
         button.setTag(R.string.tag_button_color, color);
         button.setBackgroundColor(color.toArgb());
         return button;
     }
-
 
 
     private Button createGenericColorButton(){
@@ -132,14 +130,6 @@ class ColorButtonLayoutPopulator {
         return layout;
     }
 
-
-    private Button createColorButton(Color color, int number){
-        Button button = createColorButton(color);
-        String text = "" + number;
-        button.setText(text);
-        button.setTextAppearance(R.style.ShadeButtonText);
-        return button;
-    }
 
 
     private void createMultiColorShadeButtons(){
@@ -181,7 +171,7 @@ class ColorButtonLayoutPopulator {
 
 
     private LinearLayout createShadeButton(Color color, int number){
-        Button button = createColorButton(color, number );
+        Button button = createColorButton(color);
         button.setTag(R.string.tag_button_type, R.string.button_type_shade);
         return putInLayout(button);
     }

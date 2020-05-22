@@ -12,5 +12,7 @@
     <dimen name="about_text_padding">40dp</dimen>
     <dimen name="about_text_primary_font_size">30sp</dimen>
     <dimen name="about_text_secondary_font_size">22sp</dimen>
+    <dimen name="shade_scroll_view_bottom_margin">8dp</dimen>
+    <dimen name="shape_selector_group_top_margin">16dp</dimen>
 
 </resources>

@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:layout_marginBottom="@dimen/shade_scroll_view_bottom_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/colorScrollView">
@@ -36,35 +37,35 @@
         </HorizontalScrollView>
 
 
-        <LinearLayout
+    <LinearLayout
 
-            android:id="@+id/shapeOptionsLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/colorShadeScrollView"
-            >
+        android:id="@+id/shapeOptionsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/shape_selector_group_top_margin"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorShadeScrollView">
 
-            <ImageButton
-                android:id="@+id/squareShapeButton"
-                android:contentDescription="@string/content_description_square_shape_button"
-                android:layout_width="@dimen/selector_button_width"
-                android:layout_height="@dimen/selector_button_height"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/square_shape_button" />
+        <ImageButton
+            android:id="@+id/squareShapeButton"
+            android:layout_width="@dimen/selector_button_width"
+            android:layout_height="@dimen/selector_button_height"
+            android:layout_weight="1"
+            android:contentDescription="@string/content_description_square_shape_button"
+            app:srcCompat="@drawable/square_shape_button" />
 
-            <ImageButton
-                android:id="@+id/circleShapeButton"
-                android:contentDescription="@string/content_description_circle_shape_button"
-                android:layout_width="@dimen/selector_button_width"
-                android:layout_height="@dimen/selector_button_height"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/circle_shape_button" />
+        <ImageButton
+            android:id="@+id/circleShapeButton"
+            android:layout_width="@dimen/selector_button_width"
+            android:layout_height="@dimen/selector_button_height"
+            android:layout_weight="1"
+            android:contentDescription="@string/content_description_circle_shape_button"
+            app:srcCompat="@drawable/circle_shape_button" />
 
-        </LinearLayout>
+    </LinearLayout>
 
 
         <LinearLayout

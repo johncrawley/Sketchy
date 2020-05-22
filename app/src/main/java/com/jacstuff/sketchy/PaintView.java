@@ -9,6 +9,9 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.jacstuff.sketchy.multicolor.MulticolorHandler;
+
 import java.util.List;
 
 
@@ -23,6 +26,7 @@ public class PaintView extends View {
     private Canvas canvas;
     private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
     private MulticolorHandler multicolorHandler;
+
 
 
     public PaintView(Context context) {
@@ -78,7 +82,7 @@ public class PaintView extends View {
 
 
     public void setMultiColor(List<Color> colors){
-        multicolorHandler.enable(colors);
+        multicolorHandler.enable(colors );
     }
 
 
@@ -139,7 +143,9 @@ public class PaintView extends View {
 
 
     private void touchUp() {
-        multicolorHandler.resetIndex();
+        if(multicolorHandler.isEnabled()){
+            multicolorHandler.resetIndex();
+        }
     }
 
 
