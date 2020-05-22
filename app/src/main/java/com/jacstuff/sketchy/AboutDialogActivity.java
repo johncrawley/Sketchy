@@ -1,19 +1,8 @@
 package com.jacstuff.sketchy;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import static android.graphics.Bitmap.CompressFormat.JPEG;
-import static android.os.Environment.DIRECTORY_PICTURES;
 
 public class AboutDialogActivity extends Activity implements View.OnClickListener {
 

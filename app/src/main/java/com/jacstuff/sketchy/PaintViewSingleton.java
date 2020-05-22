@@ -1,22 +1,22 @@
 package com.jacstuff.sketchy;
 
-public class PaintViewSingleton  {
+class PaintViewSingleton  {
 
     private PaintView paintView;
     private static PaintViewSingleton instance;
 
-    public static PaintViewSingleton getInstance(){
+    static PaintViewSingleton getInstance(){
         if(instance == null){
             instance = new PaintViewSingleton();
         }
         return instance;
     }
 
-    public void setPaintView(PaintView paintView){
+    void setPaintView(PaintView paintView){
         this.paintView = paintView;
     }
 
-    public PaintView getPaintView(){
+    PaintView getPaintView(){
         return this.paintView;
     }
 

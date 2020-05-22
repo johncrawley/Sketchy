@@ -19,22 +19,27 @@ class MulticolorHandler {
         return colors.get(currentIndex).toArgb();
     }
 
+
     boolean isEnabled(){
         return isEnabled;
     }
+
 
     void resetIndex(){
         currentIndex = 0;
     }
 
+
     void disable(){
         isEnabled = false;
     }
+
 
     void enable(List<Color> inputList){
         isEnabled = true;
         colors = new ArrayList<>(inputList);
     }
+
 
     private void update(){
         udpateIndex();
@@ -44,9 +49,11 @@ class MulticolorHandler {
         }
     }
 
+
     private boolean indexExceedsBounds(){
         return currentIndex < 0 || currentIndex >= colors.size();
     }
+
 
     private void changeDirection(){
         if(indexDirection == Direction.FORWARDS){
