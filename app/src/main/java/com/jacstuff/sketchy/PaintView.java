@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,11 +16,8 @@ public class PaintView extends View {
 
     public static final int DEFAULT_COLOR = Color.RED;
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
-    private static final float TOUCH_TOLERANCE = 4;
-    private float mX, mY;
-    private Path mPath;
     private Paint paint;
-    private int brushSize;
+    private int brushSize, halfBrushSize;
     private BrushShape brushShape;
     private Bitmap bitmap;
     private Canvas canvas;
@@ -32,6 +28,7 @@ public class PaintView extends View {
     public PaintView(Context context) {
         this(context, null);
     }
+
 
     public PaintView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -58,6 +55,7 @@ public class PaintView extends View {
         paint.setPathEffect(null);
     }
 
+
     public void setStyleToOutline(){
         paint.setStyle(Paint.Style.STROKE);
         paint.setPathEffect(null);
@@ -65,8 +63,11 @@ public class PaintView extends View {
 
 
     public void setBrushSize(int brushSize){
+
         this.brushSize = brushSize;
+        this.halfBrushSize = brushSize / 2;
     }
+
 
     public void init(int canvasWidth, int canvasHeight) {
         bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
@@ -75,9 +76,11 @@ public class PaintView extends View {
         canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
     }
 
+
     public void setMultiColor(List<Color> colors){
         multicolorHandler.enable(colors);
     }
+
 
     public void setSingleColorMode(){
         multicolorHandler.disable();
@@ -98,30 +101,17 @@ public class PaintView extends View {
     }
 
     public Bitmap getBitmap(){
-
         return Bitmap.createBitmap(bitmap, 0,0, bitmap.getWidth(), this.getHeight());
     }
 
 
     private void touchStart(float x, float y) {
-        mPath = new Path();
-        mPath.reset();
-        mPath.moveTo(x, y);
-        mX = x;
-        mY = y;
         drawAt(x,y);
     }
 
-    private void touchMove(float x, float y) {
-        float dx = Math.abs(x - mX);
-        float dy = Math.abs(y - mY);
 
+    private void touchMove(float x, float y) {
         drawAt(x,y);
-        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-            mPath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
-            mX = x;
-            mY = y;
-        }
     }
 
 
@@ -133,24 +123,23 @@ public class PaintView extends View {
     private void drawAt(float x, float y){
 
         switch (brushShape){
-            case CIRCLE: canvas.drawCircle(x,y, brushSize/2.0f, paint); break;
-            case SQUARE: drawSquare(x, y, brushSize);
+            case CIRCLE: canvas.drawCircle(x,y, halfBrushSize, paint); break;
+            case SQUARE: drawSquare(x, y);
         }
     }
 
 
-    private void drawSquare(float x, float y, int width){
-        int halfWidth = width /2;
-        float startingX = x - halfWidth;
-        float startingY = y - halfWidth;
-        canvas.drawRect(startingX,startingY, startingX + width, startingY + width, paint);
-
+    private void drawSquare(float x, float y){
+        float left = x - halfBrushSize;
+        float top = y - halfBrushSize;
+        float right = left + brushSize;
+        float bottom = top + brushSize;
+        canvas.drawRect(left, top, right, bottom, paint);
     }
 
 
     private void touchUp() {
         multicolorHandler.resetIndex();
-        mPath.lineTo(mX, mY);
     }
 
 

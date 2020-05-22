@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,8 +22,6 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private int screenWidth;
-    private int screenHeight;
     private SeekBar seekBar;
     private PaintView paintView;
     private List<Integer> styleButtonIds = Arrays.asList(R.id.brokenOutlineStyleButton, R.id.fillStyleButton, R.id.outlineStyleButton);
@@ -42,11 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
             assignViews();
-            imageSaver = new ImageSaver(this);
-            PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
-            paintViewSingleton.setPaintView(paintView);
+            initImageSaver();
             setupActionbar();
-            initPaintView();
+            configurePaintView();
             setupButtonListeners();
             setupPaintActionsMap();
             setupDefaultSelections();
@@ -56,13 +51,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
+        private void initImageSaver(){
+            imageSaver = new ImageSaver(this);
+        }
+
+
+        private void configurePaintView(){
+            paintView = findViewById(R.id.paintView);
+            PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
+            paintViewSingleton.setPaintView(paintView);
+            PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, this.getWindowManager());
+            paintViewConfigurator.configure(paintView);
+        }
+
+
         private void setupButtonClickHandler(){
             buttonClickHandler = new ButtonClickHandler(paintView, buttonLayoutParams, shadesScrollView);
         }
 
 
         private void assignViews(){
-            paintView = findViewById(R.id.paintView);
             shadesScrollView =  findViewById(R.id.colorShadeScrollView);
             seekBar = findViewById(R.id.seekBar);
             colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
@@ -76,25 +84,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             buttonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
             layoutPopulator.addColorButtonLayoutsTo(colorButtonGroupLayout);
             buttonClickHandler.setShadesLayoutMap(layoutPopulator.getShadeLayoutsMap());
-        }
-
-
-        private void initPaintView(){
-            deriveScreenDimensions();
-            int paintViewLayoutMargin = getDimension(R.dimen.paint_view_layout_margin);
-            int paintViewMargin = getDimension(R.dimen.paint_view_margin);
-            int paintViewLayoutPadding = getDimension(R.dimen.paint_view_layout_padding);
-            int actionBarHeight = getDimension(R.dimen.action_bar_height);
-            int totalMargin = (paintViewMargin + paintViewLayoutMargin + paintViewLayoutPadding) * 2;
-            int paintViewWidth = screenWidth - totalMargin;
-            int paintViewHeight = ((screenHeight-actionBarHeight) /2) - ( (paintViewMargin + paintViewLayoutMargin) * 2 );
-            paintView.init(paintViewWidth, paintViewHeight);
-            paintView.setCurrentColor(Color.BLACK);
-        }
-
-
-        private int getDimension(int dimensionCode){
-            return (int) getResources().getDimension(dimensionCode);
         }
 
 
@@ -277,14 +266,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editor.commit();
         }
         */
-
-
-    private void deriveScreenDimensions(){
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        screenHeight = displayMetrics.heightPixels;
-        screenWidth = displayMetrics.widthPixels;
-    }
 
 
 }
