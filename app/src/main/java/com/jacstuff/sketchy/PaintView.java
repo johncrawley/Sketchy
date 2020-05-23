@@ -80,6 +80,11 @@ public class PaintView extends View {
         canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
     }
 
+    public void setBitmap(Bitmap bitmap){
+        this.bitmap = bitmap;
+        canvas = new Canvas(bitmap);
+        paint.setColor(Color.WHITE);
+    }
 
     public void setMultiColor(List<Color> colors){
         multicolorHandler.enable(colors );
@@ -105,7 +110,8 @@ public class PaintView extends View {
     }
 
     public Bitmap getBitmap(){
-        return Bitmap.createBitmap(bitmap, 0,0, bitmap.getWidth(), this.getHeight());
+       // return Bitmap.createBitmap(bitmap, 0,0, bitmap.getWidth(), this.getHeight());
+        return bitmap;
     }
 
 

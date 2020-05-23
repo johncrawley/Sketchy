@@ -3,12 +3,14 @@ package com.jacstuff.sketchy;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -32,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
     private ButtonLayoutParams buttonLayoutParams = new ButtonLayoutParams(120, 120, 15);
-    ButtonClickHandler buttonClickHandler;
+    private ButtonClickHandler buttonClickHandler;
+    private ColorButtonLayoutPopulator layoutPopulator;
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setupBrushSizeSeekBar();
             setupButtonClickHandler();
             setupColorAndShadeButtons();
+            assignRecentButtons();
         }
 
 
@@ -58,10 +62,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         private void configurePaintView(){
             paintView = findViewById(R.id.paintView);
-            PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
-            paintViewSingleton.setPaintView(paintView);
             PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, this.getWindowManager());
             paintViewConfigurator.configure(paintView);
+            assignSavedBitmap();
+        }
+
+
+        private void assignSavedBitmap(){
+            PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
+            Bitmap bitmap = paintViewSingleton.getBitmap();
+            if(bitmap != null){
+                paintView.setBitmap(bitmap);
+            }
+        }
+
+
+        private void assignRecentButtons(){
+            PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
+            Button mostRecentColorButton = layoutPopulator.getButton(paintViewSingleton.getMostRecentColor());
+            clickButtonIfNotNull(mostRecentColorButton);
+            if(paintViewSingleton.wasMostRecentClickAShade()){
+                Button mostRecentShadeButton = layoutPopulator.getButton(paintViewSingleton.getMostRecentShade());
+                clickButtonIfNotNull(mostRecentShadeButton);
+            }
+        }
+
+
+        private void clickButtonIfNotNull(Button button){
+            if(button == null){
+                return;
+            }
+            buttonClickHandler.handleColorButtonClicks(button);
         }
 
 
@@ -80,10 +111,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         void setupColorAndShadeButtons(){
             Map<String, Color> colors = ColorCreator.generate();
             buttonClickHandler.setColors(colors);
-            ColorButtonLayoutPopulator layoutPopulator = new ColorButtonLayoutPopulator(this, buttonLayoutParams, colors);
+            layoutPopulator = new ColorButtonLayoutPopulator(this, buttonLayoutParams, colors);
             buttonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
             layoutPopulator.addColorButtonLayoutsTo(colorButtonGroupLayout);
-            buttonClickHandler.setShadesLayoutMap(layoutPopulator.getShadeLayoutsMap());
+            buttonClickHandler.setShadeLayoutsMap(layoutPopulator.getShadeLayoutsMap());
         }
 
 
@@ -143,6 +174,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         private void setupActionbar(){
             setSupportActionBar(findViewById(R.id.toolbar));
             getSupportActionBar();
+        }
+
+
+        @Override
+        protected void onPause(){
+            super.onPause();
+            PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
+            paintViewSingleton.setBitmap(paintView.getBitmap());
+            paintViewSingleton.setMostRecentColor(buttonClickHandler.getMostRecentButtonKey());
+            paintViewSingleton.setMostRecentShade(buttonClickHandler.getMostRecentShadeKey());
+            paintViewSingleton.setWasMostRecentClickAShade(buttonClickHandler.isMostRecentClickAShade());
         }
 
 
@@ -243,29 +285,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setSelected(false);
             button.setBackgroundColor(Color.LTGRAY);
         }
-
-
-        /*
-        @Override
-        protected void onPause(){
-            super.onPause();
-            SharedPreferences settings = getSharedPreferences(IMAGE_KEY,0);
-            SharedPreferences.Editor editor = settings.edit();
-
-
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            paintView.getBitmap().compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            //bmp.recycle();
-
-            // Necessary to clear first if we save preferences onPause.
-            editor.clear();
-
-           editor.putString("Metric", paintView.getBitmap().);
-           editor.pu
-            editor.commit();
-        }
-        */
-
 
 }

@@ -16,13 +16,14 @@ class ColorButtonLayoutPopulator {
     private ColorShadeCreator colorShadeCreator;
     private Map<Color, List<Color>> multiColorShades = new HashMap<>();
     private List<LinearLayout> colorButtonLayouts = new ArrayList<>();
-    private final String MULTI_SHADE_KEY = "multi shade key";
     private Context context;
     private Map<String, Color> colors;
     private Map<String, LinearLayout> shadeLayoutsMap = new HashMap<>();
     private View.OnClickListener onClickListener;
     private ButtonLayoutParams buttonLayoutParams;
+    private Map<String, Button> buttonMap;
 
+    private final String MULTI_SHADE_KEY = "multi shade key";
 
     ColorButtonLayoutPopulator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, Map<String, Color> colors){
         this.context = mainActivity.getApplicationContext();
@@ -30,26 +31,13 @@ class ColorButtonLayoutPopulator {
         colorShadeCreator = new ColorShadeCreator();
         this.buttonLayoutParams = buttonLayoutParams;
         this.colors = colors;
+        buttonMap = new HashMap<>();
         setupColorAndShadeButtons();
     }
 
 
-    private void setupColorAndShadeButtons(){
-
-        for(String key : colors.keySet()){
-            createAndAddColorAndShadeButtons(key);
-        }
-        addMultiColorButton();
-        createMultiColorShadeButtons();
-    }
-
-
-    private void createAndAddColorAndShadeButtons(String key){
-        Color color = colors.get(key);
-        addColorButton(color, key);
-        List<Color> shades = colorShadeCreator.generateShadesFrom(color);
-        addShadesToLayoutMap(key, shades);
-        addMultiColorShades(color, shades);
+    Button getButton(String key){
+        return buttonMap.get(key);
     }
 
 
@@ -70,57 +58,104 @@ class ColorButtonLayoutPopulator {
     }
 
 
+    private void setupColorAndShadeButtons(){
+        for(String key : colors.keySet()){
+            createAndAddColorAndShadeButtons(key);
+        }
+        addMultiColorButton();
+        createMultiColorShadeButtons();
+    }
+
+
+    private void createAndAddColorAndShadeButtons(String key){
+        Color color = colors.get(key);
+        addColorButton(color, key);
+        List<Color> shades = colorShadeCreator.generateShadesFrom(color);
+        addShadesToLayoutMap(key, shades);
+        addMultiColorShades(color, shades);
+    }
+
+    private void addMultiColorShades(Color color, List<Color> shades){
+        multiColorShades.put(color, shades);
+    }
+
+    private void addShadesToLayoutMap(String key, List<Color> shades){
+        LinearLayout shadeLayout = createLayoutWithButtonsFrom(shades, ButtonType.SHADE);
+        shadeLayoutsMap.put(key, shadeLayout);
+    }
+
+
+    private LinearLayout createLayoutWithButtonsFrom(List<Color> shades, ButtonType buttonType){
+        LinearLayout shadeLayout = new LinearLayout(context);
+        for(Color shade: shades){
+            LinearLayout buttonLayout = createShadeButton(shade, buttonType);
+            shadeLayout.addView(buttonLayout);
+        }
+        return shadeLayout;
+    }
+
+
+    private LinearLayout createShadeButton(Color color, ButtonType buttonType){
+        String key = getKeyFrom(color);
+        Button button = createButton(color, buttonType, key);
+        return wrapInMarginLayout(button);
+    }
+
+
+    private String getKeyFrom(Color color){
+        return "" + color.red() + "_" + color.green() + "_" + color.blue() + "_a" + color.alpha();
+    }
+
+
     private void addColorButton(Color currentColor, String key){
         if(currentColor == null){
             return;
         }
-        Button button = createColorButton(currentColor);
-        button.setTag(key);
-        button.setTag(R.string.tag_button_type, R.string.button_type_color);
+        Button button = createButton(currentColor, ButtonType.COLOR, key);
         putButtonInLayoutAndAddToList(button);
     }
 
 
-    private void addMultiColorButton(){
-
-        Button button = createMultiColorButton();
-        putButtonInLayoutAndAddToList(button);
-    }
-
-
-    private Button createMultiColorButton(){
-        Button button = createGenericColorButton();
-        button.setBackgroundResource(R.drawable.multi_color_button);
-        button.setTag(R.string.tag_button_type, R.string.button_type_multi_color);
-        button.setTag(MULTI_SHADE_KEY);
-        return button;
-    }
-
-
-    private Button createColorButton(Color color){
-        Button button = createGenericColorButton();
+    private Button createButton(Color color, ButtonType type, String key){
+        Button button = createGenericColorButton(type, key);
         button.setTag(R.string.tag_button_color, color);
         button.setBackgroundColor(color.toArgb());
         return button;
     }
 
 
-    private Button createGenericColorButton(){
+    private Button createGenericColorButton(ButtonType type, String key){
         Button button = new Button(context);
         button.setLayoutParams(buttonLayoutParams.getUnselected());
+        button.setTag(R.string.tag_button_type, type);
+        button.setTag(R.string.tag_button_key, key);
+        button.setTag(R.string.tag_button_category, ButtonCategory.COLOR_SELECTION_BUTTON);
+        buttonMap.put(key, button);
         button.setOnClickListener(onClickListener);
         return button;
     }
 
 
+    private void addMultiColorButton(){
+        Button button = createMultiColorButton();
+        putButtonInLayoutAndAddToList(button);
+    }
+
+
+    private Button createMultiColorButton(){
+        Button button = createGenericColorButton(ButtonType.MULTICOLOR, MULTI_SHADE_KEY);
+        button.setBackgroundResource(R.drawable.multi_color_button);
+        return button;
+    }
+
+
     private void putButtonInLayoutAndAddToList(Button button){
-        LinearLayout buttonLayout = putInLayout(button);
+        LinearLayout buttonLayout = wrapInMarginLayout(button);
         colorButtonLayouts.add(buttonLayout);
     }
 
 
-
-    private LinearLayout putInLayout(Button button){
+    private LinearLayout wrapInMarginLayout(Button button){
         LinearLayout layout = new LinearLayout(context);
         layout.setGravity(Gravity.CENTER);
         layout.setBackgroundColor(Color.DKGRAY);
@@ -131,58 +166,10 @@ class ColorButtonLayoutPopulator {
     }
 
 
-
     private void createMultiColorShadeButtons(){
         List<Color> colorList = new ArrayList<>(colors.values());
-        LinearLayout shadeLayout = createMultiShadeLayoutWithButtonsFrom(colorList);
+        LinearLayout shadeLayout = createLayoutWithButtonsFrom(colorList, ButtonType.MULTISHADE);
         shadeLayoutsMap.put(MULTI_SHADE_KEY, shadeLayout);
     }
-
-
-    private void addShadesToLayoutMap(String key, List<Color> shades){
-        LinearLayout shadeLayout = createLayoutWithButtonsFrom(shades);
-        shadeLayoutsMap.put(key, shadeLayout);
-    }
-
-    private void addMultiColorShades(Color color, List<Color> shades){
-        multiColorShades.put(color, shades);
-    }
-
-
-    private LinearLayout createLayoutWithButtonsFrom(List<Color> shades){
-        LinearLayout shadeLayout = new LinearLayout(context);
-        for(int i = 0; i< shades.size(); i++){
-            int labelNumber = i + 1;
-            LinearLayout buttonLayout = createShadeButton(shades.get(i), labelNumber);
-            shadeLayout.addView(buttonLayout);
-        }
-        return shadeLayout;
-    }
-
-
-    private LinearLayout createMultiShadeLayoutWithButtonsFrom(List<Color> colors){
-        LinearLayout layout = new LinearLayout(context);
-        for(Color color : colors){
-            LinearLayout buttonLayout = createMultiShadeButton(color);
-            layout.addView(buttonLayout);
-        }
-        return layout;
-    }
-
-
-    private LinearLayout createShadeButton(Color color, int number){
-        Button button = createColorButton(color);
-        button.setTag(R.string.tag_button_type, R.string.button_type_shade);
-        return putInLayout(button);
-    }
-
-
-    private LinearLayout createMultiShadeButton(Color color){
-        Button button = createColorButton(color );
-        button.setTag(R.string.tag_button_type, R.string.button_type_multi_shade);
-        return putInLayout(button);
-    }
-
-
 
 }

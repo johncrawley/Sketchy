@@ -1,9 +1,21 @@
 package com.jacstuff.sketchy;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+
 class PaintViewSingleton  {
 
-    private PaintView paintView;
+
     private static PaintViewSingleton instance;
+    private Bitmap bitmap;
+    private String mostRecentColor, mostRecentShade;
+    private boolean wasMostRecentClickAShade = false;
+
+
+    private PaintViewSingleton(){
+
+    }
+
 
     static PaintViewSingleton getInstance(){
         if(instance == null){
@@ -12,16 +24,42 @@ class PaintViewSingleton  {
         return instance;
     }
 
-    void setPaintView(PaintView paintView){
-        this.paintView = paintView;
+
+    void setBitmap(Bitmap bitmap){
+        this.bitmap = bitmap;
     }
 
-    PaintView getPaintView(){
-        return this.paintView;
+
+    void setMostRecentColor(String key){
+        this.mostRecentColor = key;
     }
 
-    private PaintViewSingleton(){
-
+    void setMostRecentShade(String key){
+        this.mostRecentShade = key;
     }
+
+
+    void setWasMostRecentClickAShade(boolean b){
+        this.wasMostRecentClickAShade = b;
+    }
+
+    boolean wasMostRecentClickAShade(){
+        return this.wasMostRecentClickAShade;
+    }
+
+
+    String getMostRecentColor(){
+        return this.mostRecentColor;
+    }
+
+
+    String getMostRecentShade(){
+        return this.mostRecentShade;
+    }
+
+    Bitmap getBitmap(){
+        return this.bitmap;
+    }
+
 
 }

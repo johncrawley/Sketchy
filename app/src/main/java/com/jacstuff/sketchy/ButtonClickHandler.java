@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,13 +12,12 @@ import java.util.Map;
 
 class ButtonClickHandler {
 
-    private final int NO_TAG_FOUND = -1;
     private PaintView paintView;
     private Button previouslySelectedShadeButton, previouslySelectedColorButton;
     private Map<String, Color> colors;
     private ButtonLayoutParams buttonLayoutParams;
-    private Map<String, LinearLayout> shadesLayoutMap;
-
+    private Map<String, LinearLayout> shadeLayoutsMap;
+    private boolean isMostRecentClickAShade = false; //for use when selecting a button after rotate/resume
     private HorizontalScrollView shadesScrollView;
     private Map<Color, List<Color>> multiColorShades = new HashMap<>();
 
@@ -36,8 +34,31 @@ class ButtonClickHandler {
     }
 
 
-    void setShadesLayoutMap(Map<String, LinearLayout> shadesLayoutMap){
-        this.shadesLayoutMap = shadesLayoutMap;
+    String getMostRecentButtonKey(){
+        return getKey(previouslySelectedColorButton);
+    }
+
+
+    private String getKey(Button button){
+        if(button == null){
+            return "";
+        }
+        return (String)button.getTag(R.string.tag_button_key);
+    }
+
+
+    String getMostRecentShadeKey(){
+        return getKey(previouslySelectedShadeButton);
+    }
+
+
+    boolean isMostRecentClickAShade(){
+        return isMostRecentClickAShade;
+    }
+
+
+    void setShadeLayoutsMap(Map<String, LinearLayout> shadeLayoutsMap){
+        this.shadeLayoutsMap = shadeLayoutsMap;
     }
 
 
@@ -46,27 +67,30 @@ class ButtonClickHandler {
     }
 
 
-
     void handleColorButtonClicks(View view){
-        int tag = getButtonTypeTag(view);
-        if(tag == NO_TAG_FOUND){
+        if(ButtonCategory.COLOR_SELECTION_BUTTON != view.getTag(R.string.tag_button_category)){
             return;
         }
         Button button = (Button)view;
-        if (tag == R.string.button_type_color) {
-            handleMainColorButtonClick(button);
-        }
-        else if(tag ==  R.string.button_type_shade){
-            handleShadeButtonClick(button);
-        }
-        else if(tag == R.string.button_type_multi_color){
-            handleMultiButtonClick(button);
-        }
-        else if(tag == R.string.button_type_multi_shade){
-            handleMultiShadeButtonClick(button);
+        ButtonType type = (ButtonType)view.getTag(R.string.tag_button_type);
+        switch(type){
+            case COLOR:
+                onMainColorButtonClick(button);
+                break;
+
+            case MULTICOLOR:
+                onMultiButtonClick(button);
+                break;
+
+            case SHADE:
+                onShadeButtonClick(button);
+                break;
+
+            case MULTISHADE:
+                onMultiShadeButtonClick(button);
+                break;
         }
     }
-
 
 
     private void setColorAndUpdateButtons(Button button){
@@ -82,27 +106,16 @@ class ButtonClickHandler {
             return;
         }
         paintView.setCurrentColor(color.toArgb());
-
     }
+
 
     private Color getColorOf(Button button){
         return (Color)button.getTag(R.string.tag_button_color);
     }
 
 
-
-    private int getButtonTypeTag(View view){
-        Object tagObj = view.getTag(R.string.tag_button_type);
-        if(tagObj == null) {
-            return NO_TAG_FOUND;
-        }
-        return (int)tagObj;
-    }
-
-
-
-
-    private void handleMultiButtonClick(Button button){
+    private void onMultiButtonClick(Button button){
+        isMostRecentClickAShade = false;
         deselectPreviousButtons();
         previouslySelectedColorButton = button;
         selectButton(button);
@@ -116,16 +129,15 @@ class ButtonClickHandler {
         button.setLayoutParams(buttonLayoutParams.getSelected());
     }
 
+
     private void deselectPreviousButtons(){
         deselectButton(previouslySelectedShadeButton);
         deselectButton(previouslySelectedColorButton);
     }
 
 
-
     private void assignShadeLayoutFrom(Button button){
-        String key = (String)button.getTag();
-        LinearLayout shadeLayout = shadesLayoutMap.get(key);
+        LinearLayout shadeLayout = shadeLayoutsMap.get(getKeyFrom(button));
         if (shadeLayout != null) {
             shadesScrollView.removeAllViews();
             shadesScrollView.addView(shadeLayout);
@@ -133,11 +145,16 @@ class ButtonClickHandler {
     }
 
 
-    private void handleShadeButtonClick(Button button){
+    private String getKeyFrom(Button button){
+        return (String)button.getTag(R.string.tag_button_key);
+    }
+
+
+    private void onShadeButtonClick(Button button){
+        isMostRecentClickAShade = true;
         setColorAndUpdateButtons(button);
         previouslySelectedShadeButton = button;
     }
-
 
 
     private void deselectButton(Button button){
@@ -148,9 +165,10 @@ class ButtonClickHandler {
     }
 
 
-    private void handleMultiShadeButtonClick(Button button){
+    private void onMultiShadeButtonClick(Button button){
+        isMostRecentClickAShade = true;
         deselectPreviousButtons();
-        previouslySelectedColorButton = button;
+        previouslySelectedShadeButton = button;
         selectButton(button);
         assignShadeLayoutFrom(button);
         Color color = (Color)button.getTag(R.string.tag_button_color);
@@ -158,7 +176,8 @@ class ButtonClickHandler {
     }
 
 
-    private void handleMainColorButtonClick(Button button){
+    private void onMainColorButtonClick(Button button){
+        isMostRecentClickAShade = false;
         paintView.setSingleColorMode();
         setColorAndUpdateButtons(button);
         previouslySelectedColorButton = button;
