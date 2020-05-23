@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="selector_button_width">40sp</dimen>
+    <dimen name="selector_button_width">44sp</dimen>
     <dimen name="selector_button_height">44sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="paint_view_padding">3dp</dimen>

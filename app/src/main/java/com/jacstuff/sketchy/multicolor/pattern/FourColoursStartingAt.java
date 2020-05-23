@@ -1,31 +1,51 @@
 package com.jacstuff.sketchy.multicolor.pattern;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FourColoursStartingAt extends  AbstractMulticolorPattern implements MulticolorPattern {
 
     private int startingIndex;
-    private int currentIncCount;
+    private List<Integer> indexes;
+    private final int MAX_INCREMENTS = 4;
+    private int listIndex;
 
     public FourColoursStartingAt(int startingIndex){
+
         this.startingIndex = startingIndex;
+        currentIndex = startingIndex;
+        indexes = new ArrayList<>(MAX_INCREMENTS);
     }
+
+    private void fillList(int startingIndex, int numberOfColors){
+
+        int increment = numberOfColors / MAX_INCREMENTS;
+        int index = startingIndex;
+        indexes.add(startingIndex);
+        while(indexes.size() <= MAX_INCREMENTS){
+            indexes.add(index);
+            index = (index + increment) % (numberOfColors -1);
+        }
+    }
+
 
     @Override
     public int getNextIndex(int numberOfColors) {
-        final int MAX_INCREMENTS = 4;
-        int increment = numberOfColors / MAX_INCREMENTS;
-        if(currentIncCount == MAX_INCREMENTS){
-            resetIndex();
+
+        if(indexes.isEmpty()){
+            fillList(startingIndex, numberOfColors);
         }
-        else {
-            currentIndex = (currentIndex + increment) % (numberOfColors - 1);
+        if (listIndex >= indexes.size()) {
+            listIndex = 0;
         }
-        currentIncCount++;
+        currentIndex = indexes.get(listIndex);
+        listIndex++;
         return currentIndex;
     }
 
 
     public void resetIndex(){
         currentIndex = startingIndex;
-        currentIncCount = 0;
+        listIndex = 0;
     }
 }

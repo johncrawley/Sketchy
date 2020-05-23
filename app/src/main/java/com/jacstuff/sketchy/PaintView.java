@@ -26,6 +26,7 @@ public class PaintView extends View {
     private Canvas canvas;
     private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
     private MulticolorHandler multicolorHandler;
+    private BrushStyle currentBrushStyle = BrushStyle.FILL;
 
 
 
@@ -43,24 +44,38 @@ public class PaintView extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setStrokeCap(Paint.Cap.SQUARE);
         multicolorHandler = new MulticolorHandler();
     }
 
 
     public void setStyleToBrokenOutline(){
+        currentBrushStyle = BrushStyle.BROKEN_OUTLINE;
         paint.setStyle(Paint.Style.STROKE);
-        paint.setPathEffect(new DashPathEffect(new float[] {10,20}, 0));
+        float onStroke = 15;
+        float offStroke = 36;
+
+        paint.setPathEffect(new DashPathEffect(new float[] {onStroke, offStroke}, 0));
     }
 
 
+    public void setStyleToBrokenOutlineForLines(){
+        paint.setStyle(Paint.Style.STROKE);
+        float onStroke =  20 + (halfBrushSize /8f);
+        float offStroke = 40 + (halfBrushSize );
+
+        paint.setPathEffect(new DashPathEffect(new float[] {onStroke, offStroke}, 0));
+    }
+
     public void setStyleToFill(){
+        currentBrushStyle = BrushStyle.FILL;
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setPathEffect(null);
     }
 
 
     public void setStyleToOutline(){
+        currentBrushStyle = BrushStyle.OUTLINE;
         paint.setStyle(Paint.Style.STROKE);
         paint.setPathEffect(null);
     }
@@ -70,6 +85,8 @@ public class PaintView extends View {
 
         this.brushSize = brushSize;
         this.halfBrushSize = brushSize / 2;
+
+
     }
 
 
@@ -115,7 +132,11 @@ public class PaintView extends View {
     }
 
 
+    private float touchdownX, touchDownY;
+
     private void touchStart(float x, float y) {
+        touchdownX = x;
+        touchDownY = y;
         drawAt(x,y);
     }
 
@@ -148,9 +169,28 @@ public class PaintView extends View {
     }
 
 
-    private void touchUp() {
+    private void touchUp(float x, float y) {
         if(multicolorHandler.isEnabled()){
             multicolorHandler.resetIndex();
+        }
+        if(brushShape == BrushShape.LINE){
+            drawLine(x,y);
+        }
+    }
+
+
+    private void drawLine(float x, float y){
+        BrushStyle oldBrushStyle = currentBrushStyle;
+        if(currentBrushStyle == BrushStyle.BROKEN_OUTLINE){
+            setStyleToBrokenOutlineForLines();
+        }
+        float oldWidth = paint.getStrokeWidth();
+        paint.setStrokeWidth(halfBrushSize);
+        canvas.drawLine(touchdownX, touchDownY, x, y, paint);
+        paint.setStrokeWidth(oldWidth);
+
+        if(oldBrushStyle == BrushStyle.BROKEN_OUTLINE){
+            setStyleToBrokenOutline();
         }
     }
 
@@ -174,7 +214,7 @@ public class PaintView extends View {
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP :
-                touchUp();
+                touchUp(x, y);
                 invalidate();
                 break;
         }

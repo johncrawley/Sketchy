@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SeekBar seekBar;
     private PaintView paintView;
     private List<Integer> styleButtonIds = Arrays.asList(R.id.brokenOutlineStyleButton, R.id.fillStyleButton, R.id.outlineStyleButton);
-    private List<Integer> shapeButtonIds = Arrays.asList(R.id.squareShapeButton, R.id.circleShapeButton);
+    private List<Integer> shapeButtonIds = Arrays.asList(R.id.squareShapeButton, R.id.circleShapeButton, R.id.lineShapeButton);
     private HorizontalScrollView shadesScrollView;
     private Map<Integer, Procedure> paintActionsMap;
     final int SAVE_FILE_ACTIVITY_CODE = 101;
@@ -168,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             paintActionsMap.put(R.id.outlineStyleButton, () -> paintView.setStyleToOutline());
             paintActionsMap.put(R.id.squareShapeButton, () -> paintView.setBrushShape(BrushShape.SQUARE));
             paintActionsMap.put(R.id.circleShapeButton, () -> paintView.setBrushShape(BrushShape.CIRCLE));
+            paintActionsMap.put(R.id.lineShapeButton, () -> paintView.setBrushShape(BrushShape.LINE));
         }
 
 

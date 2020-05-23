@@ -6,7 +6,6 @@
     <string name="action_about">About</string>
     <string name="about_created_by">Created by John Crawley, 2020</string>
     <string name="about_version">Version 1.0</string>
-
     <string name="tag_button_type">1</string>
     <string name="tag_button_category">8</string>
     <string name="tag_button_color">2</string>
@@ -16,22 +15,17 @@
     <string name="button_type_multi_shade">6</string>
     <string name="button_type_shade">5</string>
     <string name="title_activity_save_sketch">SaveSketchActivity</string>
-
-
     <string name="save_dialogue_save_button">SAVE</string>
     <string name="save_dialogue_cancel_button">@android:string/cancel</string>
-
     <string name="bitmap_intent_extra">bitmap_intent_extra</string>
-
     <string name="selected_button_text">S</string>
-
     <string name="content_description_large_brush_indicator">Indicates a larger size for paint brush</string>
     <string name="content_description_small_brush_indicator">Indicates a smaller size for paint brush</string>
     <string name="content_description_square_shape_button">Select to paint with squares</string>
     <string name="content_description_circle_shape_button">Select to paint with circles</string>
+    <string name="content_description_line_shape_button">Select to draw lines</string>
     <string name="content_description_fill_style_button">Select to paint with solid shapes</string>
     <string name="content_description_broken_outline_style_button">Select to paint shapes with broken outlines</string>
     <string name="content_description_outline_style_button">Select to paint with shape outlines</string>
-
 
 </resources>
