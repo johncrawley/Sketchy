@@ -1,11 +1,13 @@
 package com.jacstuff.sketchy.controls.settingsbuttons;
 
 import android.graphics.Color;
+import android.view.View;
 import android.widget.ImageButton;
 
 import com.jacstuff.sketchy.BrushShape;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.PaintView;
+import com.jacstuff.sketchy.PaintViewSingleton;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 
@@ -49,19 +51,62 @@ public class SettingsButtonsConfigurator {
 
 
     public void handleButtonClick(int viewId){
+        handleButtonClick(viewId, true);
+    }
 
+    private void handleButtonClick(int viewId, boolean isNonDefaultClick){
+        ButtonCategory buttonCategory = getCategory(viewId);
+
+        switch (buttonCategory){
+
+            case SHAPE_SELECTION:
+                switchSelection(viewId, shapeButtonIds);
+                break;
+            case STYLE_SELECTION:
+                switchSelection(viewId, styleButtonIds);
+                break;
+            default:
+                return;
+        }
+        executeProcedureFor(viewId);
+        if(isNonDefaultClick){
+            saveSelectionToSingleton(viewId, buttonCategory);
+        }
+    }
+
+
+    private ButtonCategory getCategory(int viewId){
+        View view = findViewById(viewId);
+        if(view == null ){
+            return ButtonCategory.NULL;
+        }
+        return (ButtonCategory)view.getTag(R.string.tag_button_category);
+    }
+
+
+    private void executeProcedureFor(int viewId){
         Procedure procedure = paintActionsMap.get(viewId);
         if(procedure != null){
             procedure.execute();
         }
-        switchSelection(viewId, styleButtonIds);
-        switchSelection(viewId, shapeButtonIds);
     }
+
+
+    private void saveSelectionToSingleton(int viewId, ButtonCategory buttonCategory ){
+        PaintViewSingleton pvs = PaintViewSingleton.getInstance();
+        pvs.saveSetting(viewId, buttonCategory);
+    }
+
+
 
     private void assignCategoryTagTo(List<Integer> buttonIds, ButtonCategory buttonCategory){
         for(int buttonId : buttonIds){
             assignCategoryTagToButtonWith(buttonId, buttonCategory);
         }
+    }
+
+    public void clickOnView(int id){
+        handleButtonClick(id);
     }
 
     private void assignCategoryTagToButtonWith(int id, ButtonCategory buttonCategory){
@@ -82,8 +127,8 @@ public class SettingsButtonsConfigurator {
     }
 
     private void setupDefaultSelections(){
-        handleButtonClick(R.id.circleShapeButton);
-        handleButtonClick(R.id.fillStyleButton);
+        handleButtonClick(R.id.circleShapeButton, false);
+        handleButtonClick(R.id.fillStyleButton, false);
     }
 
 

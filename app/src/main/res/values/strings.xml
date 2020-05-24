@@ -8,12 +8,14 @@
     <string name="about_version">Version 1.0</string>
     <string name="tag_button_type">1</string>
     <string name="tag_button_category">8</string>
+    <string name="tag_button_default_color">9</string>
     <string name="tag_button_color">2</string>
     <string name="tag_button_key">7</string>
     <string name="button_type_color">3</string>
     <string name="button_type_multi_color">4</string>
     <string name="button_type_multi_shade">6</string>
     <string name="button_type_shade">5</string>
+    <string name="default_color">black</string>
     <string name="title_activity_save_sketch">SaveSketchActivity</string>
     <string name="save_dialogue_save_button">SAVE</string>
     <string name="save_dialogue_cancel_button">@android:string/cancel</string>

@@ -27,11 +27,12 @@ public class ColorButtonLayoutPopulator {
     private View.OnClickListener onClickListener;
     private ButtonLayoutParams buttonLayoutParams;
     private Map<String, Button> buttonMap;
-
+    private String defaultColor;
     private final String MULTI_SHADE_KEY = "multi shade key";
 
     public ColorButtonLayoutPopulator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, Map<String, Color> colors){
         this.context = mainActivity.getApplicationContext();
+        defaultColor = mainActivity.getString(R.string.default_color);
         this.onClickListener = mainActivity;
         colorShadeCreator = new ColorShadeCreator();
         this.buttonLayoutParams = buttonLayoutParams;
@@ -124,6 +125,9 @@ public class ColorButtonLayoutPopulator {
     private Button createButton(Color color, ButtonType type, String key){
         Button button = createGenericColorButton(type, key);
         button.setTag(R.string.tag_button_color, color);
+        if(defaultColor.equals(key)){
+            button.setTag(R.string.tag_button_default_color);
+        }
         button.setBackgroundColor(color.toArgb());
         return button;
     }
