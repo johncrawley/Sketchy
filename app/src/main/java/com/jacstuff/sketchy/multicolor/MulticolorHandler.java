@@ -42,6 +42,7 @@ public class MulticolorHandler {
         multicolorPatterns.add(new FourColoursStartingAt(1));
         multicolorPatterns.add(new FourColoursStartingAt(2));
         multicolorPatterns.add(new FourColoursStartingAt(3));
+        multicolorPatterns.add(new FourColoursStartingAt(4));
         multicolorPatterns.add(new RandomPattern());
         currentMulticolorPattern = multicolorPatterns.get(currentPatternIndex);
     }

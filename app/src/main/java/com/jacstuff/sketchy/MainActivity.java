@@ -12,13 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+
+import com.jacstuff.sketchy.controls.colorbuttons.ButtonClickHandler;
+import com.jacstuff.sketchy.controls.colorbuttons.ButtonLayoutParams;
+import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
+import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
+import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator;
+
 import java.util.Map;
 
 
@@ -26,16 +29,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private SeekBar seekBar;
     private PaintView paintView;
-    private List<Integer> styleButtonIds = Arrays.asList(R.id.brokenOutlineStyleButton, R.id.fillStyleButton, R.id.outlineStyleButton);
-    private List<Integer> shapeButtonIds = Arrays.asList(R.id.squareShapeButton, R.id.circleShapeButton, R.id.lineShapeButton);
     private HorizontalScrollView shadesScrollView;
-    private Map<Integer, Procedure> paintActionsMap;
     final int SAVE_FILE_ACTIVITY_CODE = 101;
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
     private ButtonLayoutParams buttonLayoutParams = new ButtonLayoutParams(120, 120, 15);
     private ButtonClickHandler buttonClickHandler;
     private ColorButtonLayoutPopulator layoutPopulator;
+
+    private SettingsButtonsConfigurator settingsButtonsConfigurator;
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +47,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             initImageSaver();
             setupActionbar();
             configurePaintView();
+            setupSettingsButtons();
             setupButtonListeners();
-            setupPaintActionsMap();
             setupDefaultSelections();
             setupBrushSizeSeekBar();
             setupButtonClickHandler();
@@ -57,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         private void initImageSaver(){
             imageSaver = new ImageSaver(this);
+        }
+
+        private void setupSettingsButtons(){
+            settingsButtonsConfigurator = new SettingsButtonsConfigurator(this);
+            settingsButtonsConfigurator.setupShapeAndStyleButtons(paintView);
         }
 
 
@@ -79,10 +86,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         private void assignRecentButtons(){
             PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
-            Button mostRecentColorButton = layoutPopulator.getButton(paintViewSingleton.getMostRecentColor());
+            selectRecentColorButton(paintViewSingleton);
+            selectRecentShadeButton(paintViewSingleton);
+        }
+
+        private void selectRecentColorButton(PaintViewSingleton pvs ){
+            Button mostRecentColorButton = layoutPopulator.getButton(pvs.getMostRecentColor());
             clickButtonIfNotNull(mostRecentColorButton);
-            if(paintViewSingleton.wasMostRecentClickAShade()){
-                Button mostRecentShadeButton = layoutPopulator.getButton(paintViewSingleton.getMostRecentShade());
+        }
+
+
+        private void selectRecentShadeButton(PaintViewSingleton pvs ){
+            if(pvs.wasMostRecentClickAShade()){
+                Button mostRecentShadeButton = layoutPopulator.getButton(pvs.getMostRecentShade());
                 clickButtonIfNotNull(mostRecentShadeButton);
             }
         }
@@ -140,35 +156,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         private void setupDefaultSelections(){
             paintView.setBrushSize(seekBar.getProgress());
-            switchSelection(R.id.fillStyleButton, styleButtonIds);
-            paintView.setStyleToFill();
-            switchSelection(R.id.circleShapeButton, shapeButtonIds);
-            paintView.setBrushShape(BrushShape.CIRCLE);
+            //paintView.setStyleToFill();
+            //paintView.setBrushShape(BrushShape.CIRCLE);
         }
 
 
         private void setupButtonListeners(){
-            setOnClickListenerFor(shapeButtonIds);
-            setOnClickListenerFor(styleButtonIds);
             findViewById(R.id.seekBar).setOnClickListener(this);
-        }
-
-
-        private void setOnClickListenerFor(List<Integer> ids){
-            for(int id: ids){
-                findViewById(id).setOnClickListener(this);
-            }
-        }
-
-
-        private void setupPaintActionsMap(){
-            paintActionsMap = new HashMap<>();
-            paintActionsMap.put(R.id.brokenOutlineStyleButton, () -> paintView.setStyleToBrokenOutline());
-            paintActionsMap.put(R.id.fillStyleButton, () -> paintView.setStyleToFill());
-            paintActionsMap.put(R.id.outlineStyleButton, () -> paintView.setStyleToOutline());
-            paintActionsMap.put(R.id.squareShapeButton, () -> paintView.setBrushShape(BrushShape.SQUARE));
-            paintActionsMap.put(R.id.circleShapeButton, () -> paintView.setBrushShape(BrushShape.CIRCLE));
-            paintActionsMap.put(R.id.lineShapeButton, () -> paintView.setBrushShape(BrushShape.LINE));
         }
 
 
@@ -238,53 +232,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onClick(View v){
             buttonClickHandler.handleColorButtonClicks(v);
             int viewId = v.getId();
-
-            Procedure procedure = paintActionsMap.get(viewId);
-            if(procedure != null){
-                procedure.execute();
-            }
-            switchSelection(viewId, styleButtonIds);
-            switchSelection(viewId, shapeButtonIds);
-        }
-
-
-        private void switchSelection(int viewId, List<Integer> buttons){
-            for(int buttonId : buttons){
-                if(viewId == buttonId){
-                    switchSelectionToButton(buttonId, buttons);
-                    break;
-                }
-            }
-        }
-
-
-        private void switchSelectionToButton(int buttonId, List<Integer> buttonList){
-            selectButton(buttonId);
-            deselectOtherButtons(buttonId, buttonList);
-        }
-
-
-        private void selectButton(int buttonId){
-            ImageButton styleButton = findViewById(buttonId);
-            styleButton.setSelected(true);
-            styleButton.setBackgroundColor(Color.DKGRAY);
-        }
-
-
-        private void deselectOtherButtons(int selectedButtonId, List<Integer> buttonList){
-            for(int buttonId : buttonList){
-                if(buttonId == selectedButtonId){
-                    continue;
-                }
-                deselectButton(buttonId);
-            }
-        }
-
-
-        private void deselectButton(int buttonId){
-            ImageButton button = findViewById(buttonId);
-            button.setSelected(false);
-            button.setBackgroundColor(Color.LTGRAY);
+            settingsButtonsConfigurator.handleButtonClick(viewId);
         }
 
 }

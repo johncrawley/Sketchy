@@ -1,49 +1,59 @@
 package com.jacstuff.sketchy.multicolor.pattern;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class FourColoursStartingAt extends  AbstractMulticolorPattern implements MulticolorPattern {
 
     private int startingIndex;
-    private List<Integer> indexes;
+    private List<Integer> savedIndexes;
     private final int MAX_INCREMENTS = 4;
     private int listIndex;
 
-    public FourColoursStartingAt(int startingIndex){
 
+    public FourColoursStartingAt(int startingIndex){
         this.startingIndex = startingIndex;
         currentIndex = startingIndex;
-        indexes = new ArrayList<>(MAX_INCREMENTS);
+        savedIndexes = new ArrayList<>(MAX_INCREMENTS);
     }
 
-    private void fillList(int startingIndex, int numberOfColors){
 
-        int increment = numberOfColors / MAX_INCREMENTS;
+    private void calculateAndSaveIndexesIfEmpty(int startingIndex){
+        if(!savedIndexes.isEmpty()){
+            return;
+        }
+
         int index = startingIndex;
-        indexes.add(startingIndex);
-        while(indexes.size() <= MAX_INCREMENTS){
-            indexes.add(index);
-            index = (index + increment) % (numberOfColors -1);
+        int increment = numberOfColors / MAX_INCREMENTS;
+        while(savedIndexes.size() < MAX_INCREMENTS){
+            savedIndexes.add(index);
+            index = incrementBy(index,increment);
+        }
+    }
+
+
+    private int incrementBy(int index, int increment){
+        return (index + increment) % (numberOfColors -1);
+    }
+
+    private void resetIndexIfOutOfBounds(){
+        if (listIndex >= savedIndexes.size()) {
+            listIndex = 0;
         }
     }
 
 
     @Override
     public int getNextIndex(int numberOfColors) {
-
-        if(indexes.isEmpty()){
-            fillList(startingIndex, numberOfColors);
-        }
-        if (listIndex >= indexes.size()) {
-            listIndex = 0;
-        }
-        currentIndex = indexes.get(listIndex);
-        listIndex++;
+        this.numberOfColors = numberOfColors;
+        calculateAndSaveIndexesIfEmpty(startingIndex);
+        resetIndexIfOutOfBounds();
+        currentIndex = savedIndexes.get(listIndex++);
         return currentIndex;
     }
 
-
+    @Override
     public void resetIndex(){
         currentIndex = startingIndex;
         listIndex = 0;

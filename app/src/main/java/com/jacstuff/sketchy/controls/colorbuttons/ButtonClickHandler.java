@@ -1,16 +1,21 @@
-package com.jacstuff.sketchy;
+package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+
+import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.PaintView;
+import com.jacstuff.sketchy.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class ButtonClickHandler {
+public class ButtonClickHandler {
 
     private PaintView paintView;
     private Button previouslySelectedShadeButton, previouslySelectedColorButton;
@@ -22,19 +27,19 @@ class ButtonClickHandler {
     private Map<Color, List<Color>> multiColorShades = new HashMap<>();
 
 
-    ButtonClickHandler(PaintView paintView,ButtonLayoutParams buttonLayoutParams, HorizontalScrollView shadesScrollView ){
+    public ButtonClickHandler(PaintView paintView,ButtonLayoutParams buttonLayoutParams, HorizontalScrollView shadesScrollView ){
         this.paintView = paintView;
         this.buttonLayoutParams = buttonLayoutParams;
         this.shadesScrollView = shadesScrollView;
     }
 
 
-    void setColors(Map<String, Color> colors){
+    public void setColors(Map<String, Color> colors){
         this.colors = colors;
     }
 
 
-    String getMostRecentButtonKey(){
+    public String getMostRecentButtonKey(){
         return getKey(previouslySelectedColorButton);
     }
 
@@ -47,28 +52,28 @@ class ButtonClickHandler {
     }
 
 
-    String getMostRecentShadeKey(){
+    public String getMostRecentShadeKey(){
         return getKey(previouslySelectedShadeButton);
     }
 
 
-    boolean isMostRecentClickAShade(){
+   public boolean isMostRecentClickAShade(){
         return isMostRecentClickAShade;
     }
 
 
-    void setShadeLayoutsMap(Map<String, LinearLayout> shadeLayoutsMap){
+    public void setShadeLayoutsMap(Map<String, LinearLayout> shadeLayoutsMap){
         this.shadeLayoutsMap = shadeLayoutsMap;
     }
 
 
-    void setMultiColorShades(Map<Color, List<Color>> multiColorShades){
+   public void setMultiColorShades(Map<Color, List<Color>> multiColorShades){
         this.multiColorShades = multiColorShades;
     }
 
 
-    void handleColorButtonClicks(View view){
-        if(ButtonCategory.COLOR_SELECTION_BUTTON != view.getTag(R.string.tag_button_category)){
+    public void handleColorButtonClicks(View view){
+        if(ButtonCategory.COLOR_SELECTION != view.getTag(R.string.tag_button_category)){
             return;
         }
         Button button = (Button)view;

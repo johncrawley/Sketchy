@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy;
+package com.jacstuff.sketchy.controls.settingsbuttons;
 
 @FunctionalInterface
 public interface Procedure {

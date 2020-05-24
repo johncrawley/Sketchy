@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy;
+package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -6,12 +6,17 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.MainActivity;
+import com.jacstuff.sketchy.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class ColorButtonLayoutPopulator {
+public class ColorButtonLayoutPopulator {
 
     private ColorShadeCreator colorShadeCreator;
     private Map<Color, List<Color>> multiColorShades = new HashMap<>();
@@ -25,7 +30,7 @@ class ColorButtonLayoutPopulator {
 
     private final String MULTI_SHADE_KEY = "multi shade key";
 
-    ColorButtonLayoutPopulator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, Map<String, Color> colors){
+    public ColorButtonLayoutPopulator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, Map<String, Color> colors){
         this.context = mainActivity.getApplicationContext();
         this.onClickListener = mainActivity;
         colorShadeCreator = new ColorShadeCreator();
@@ -36,24 +41,24 @@ class ColorButtonLayoutPopulator {
     }
 
 
-    Button getButton(String key){
+    public Button getButton(String key){
         return buttonMap.get(key);
     }
 
 
-    void addColorButtonLayoutsTo(LinearLayout layout){
+    public void addColorButtonLayoutsTo(LinearLayout layout){
         for(LinearLayout buttonLayout: colorButtonLayouts){
             layout.addView(buttonLayout);
         }
     }
 
 
-    Map<String, LinearLayout> getShadeLayoutsMap (){
+    public Map<String, LinearLayout> getShadeLayoutsMap (){
         return this.shadeLayoutsMap;
     }
 
 
-    Map<Color, List<Color>> getMultiColorShades(){
+    public Map<Color, List<Color>> getMultiColorShades(){
         return this.multiColorShades;
     }
 
@@ -129,7 +134,7 @@ class ColorButtonLayoutPopulator {
         button.setLayoutParams(buttonLayoutParams.getUnselected());
         button.setTag(R.string.tag_button_type, type);
         button.setTag(R.string.tag_button_key, key);
-        button.setTag(R.string.tag_button_category, ButtonCategory.COLOR_SELECTION_BUTTON);
+        button.setTag(R.string.tag_button_category, ButtonCategory.COLOR_SELECTION);
         buttonMap.put(key, button);
         button.setOnClickListener(onClickListener);
         return button;

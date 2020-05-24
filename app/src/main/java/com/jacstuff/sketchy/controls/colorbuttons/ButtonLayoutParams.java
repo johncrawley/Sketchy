@@ -1,13 +1,13 @@
-package com.jacstuff.sketchy;
+package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.widget.LinearLayout;
 
-class ButtonLayoutParams {
+public class ButtonLayoutParams {
 
     private int buttonWidth, buttonHeight;
     private LinearLayout.LayoutParams unselectedButtonLayoutParams, selectedButtonLayoutParams;
 
-    ButtonLayoutParams(int buttonWidth, int buttonHeight, int selectedButtonBorderWidth){
+    public ButtonLayoutParams(int buttonWidth, int buttonHeight, int selectedButtonBorderWidth){
         this.buttonWidth = buttonWidth;
         this.buttonHeight = buttonHeight;
 

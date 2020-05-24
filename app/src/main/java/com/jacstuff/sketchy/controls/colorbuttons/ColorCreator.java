@@ -1,16 +1,16 @@
-package com.jacstuff.sketchy;
+package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.graphics.Color;
 
 import java.util.HashMap;
 
-class ColorCreator {
+public class ColorCreator {
 
     // to prevent instantiation
     private ColorCreator(){}
 
 
-    static HashMap<String, Color> generate(){
+    public static HashMap<String, Color> generate(){
         HashMap<String, Color> colors = new HashMap<>();
         add(colors,"blue", Color.BLUE);
         add(colors,"red", Color.RED);
