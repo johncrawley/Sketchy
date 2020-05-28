@@ -29,6 +29,7 @@ public class ColorButtonLayoutPopulator {
     private Map<String, Button> buttonMap;
     private String defaultColor;
     private final String MULTI_SHADE_KEY = "multi shade key";
+    private final String RANDOM_SHADE_KEY = "random shade key";
 
     public ColorButtonLayoutPopulator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, Map<String, Color> colors){
         this.context = mainActivity.getApplicationContext();
@@ -68,8 +69,11 @@ public class ColorButtonLayoutPopulator {
         for(String key : colors.keySet()){
             createAndAddColorAndShadeButtons(key);
         }
-        addMultiColorButton();
+        createAndAddMultiColorButton();
+        createAndAddRandomButton();
+
         createMultiColorShadeButtons();
+        createRandomShadeButtons();
     }
 
 
@@ -145,16 +149,16 @@ public class ColorButtonLayoutPopulator {
     }
 
 
-    private void addMultiColorButton(){
-        Button button = createMultiColorButton();
+    private void createAndAddMultiColorButton(){
+        Button button = createGenericColorButton(ButtonType.MULTICOLOR, MULTI_SHADE_KEY);
+        button.setBackgroundResource(R.drawable.multi_color_button);
         putButtonInLayoutAndAddToList(button);
     }
 
-
-    private Button createMultiColorButton(){
-        Button button = createGenericColorButton(ButtonType.MULTICOLOR, MULTI_SHADE_KEY);
-        button.setBackgroundResource(R.drawable.multi_color_button);
-        return button;
+    private void createAndAddRandomButton(){
+        Button button = createGenericColorButton(ButtonType.RANDOM_COLOR, RANDOM_SHADE_KEY);
+        button.setBackgroundResource(R.drawable.random_color_button);
+        putButtonInLayoutAndAddToList(button);
     }
 
 
@@ -179,6 +183,12 @@ public class ColorButtonLayoutPopulator {
         List<Color> colorList = new ArrayList<>(colors.values());
         LinearLayout shadeLayout = createLayoutWithButtonsFrom(colorList, ButtonType.MULTISHADE);
         shadeLayoutsMap.put(MULTI_SHADE_KEY, shadeLayout);
+    }
+
+    private void createRandomShadeButtons(){
+        List<Color> colorList = new ArrayList<>(colors.values());
+        LinearLayout shadeLayout = createLayoutWithButtonsFrom(colorList, ButtonType.RANDOM_SHADE);
+        shadeLayoutsMap.put(RANDOM_SHADE_KEY, shadeLayout);
     }
 
 }

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.jacstuff.sketchy.BrushShape;
+import com.jacstuff.sketchy.BrushStyle;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.PaintView;
 import com.jacstuff.sketchy.PaintViewSingleton;
@@ -41,20 +42,22 @@ public class SettingsButtonsConfigurator {
 
     private void setupPaintActionsMap(PaintView paintView){
         paintActionsMap = new HashMap<>();
-        paintActionsMap.put(R.id.brokenOutlineStyleButton, paintView::setStyleToBrokenOutline);
-        paintActionsMap.put(R.id.fillStyleButton,  paintView::setStyleToFill);
-        paintActionsMap.put(R.id.outlineStyleButton,paintView::setStyleToOutline);
-        paintActionsMap.put(R.id.squareShapeButton, () -> paintView.setBrushShape(BrushShape.SQUARE));
-        paintActionsMap.put(R.id.circleShapeButton, () -> paintView.setBrushShape(BrushShape.CIRCLE));
-        paintActionsMap.put(R.id.lineShapeButton, () -> paintView.setBrushShape(BrushShape.LINE));
+        paintActionsMap.put(R.id.brokenOutlineStyleButton,  () -> paintView.set(BrushStyle.BROKEN_OUTLINE));
+        paintActionsMap.put(R.id.fillStyleButton,           () -> paintView.set(BrushStyle.FILL));
+        paintActionsMap.put(R.id.outlineStyleButton,        () -> paintView.set(BrushStyle.OUTLINE));
+
+        paintActionsMap.put(R.id.squareShapeButton, () -> paintView.set(BrushShape.SQUARE));
+        paintActionsMap.put(R.id.circleShapeButton, () -> paintView.set(BrushShape.CIRCLE));
+        paintActionsMap.put(R.id.lineShapeButton,   () -> paintView.set(BrushShape.LINE));
     }
 
 
     public void handleButtonClick(int viewId){
-        handleButtonClick(viewId, true);
+        handleButtonClick(viewId, false);
     }
 
-    private void handleButtonClick(int viewId, boolean isNonDefaultClick){
+
+    private void handleButtonClick(int viewId, boolean isDefaultClick){
         ButtonCategory buttonCategory = getCategory(viewId);
 
         switch (buttonCategory){
@@ -69,7 +72,7 @@ public class SettingsButtonsConfigurator {
                 return;
         }
         executeProcedureFor(viewId);
-        if(isNonDefaultClick){
+        if(!isDefaultClick){
             saveSelectionToSingleton(viewId, buttonCategory);
         }
     }
@@ -105,12 +108,14 @@ public class SettingsButtonsConfigurator {
         }
     }
 
-    public void clickOnView(int id){
-        handleButtonClick(id);
-    }
 
     private void assignCategoryTagToButtonWith(int id, ButtonCategory buttonCategory){
         findViewById(id).setTag(R.string.tag_button_category, buttonCategory);
+    }
+
+
+    public void clickOnView(int id){
+        handleButtonClick(id);
     }
 
 
@@ -127,8 +132,8 @@ public class SettingsButtonsConfigurator {
     }
 
     private void setupDefaultSelections(){
-        handleButtonClick(R.id.circleShapeButton, false);
-        handleButtonClick(R.id.fillStyleButton, false);
+        handleButtonClick(R.id.circleShapeButton, true);
+        handleButtonClick(R.id.fillStyleButton, true);
     }
 
 

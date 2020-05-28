@@ -14,5 +14,10 @@
     <dimen name="about_text_secondary_font_size">22sp</dimen>
     <dimen name="shade_scroll_view_bottom_margin">8dp</dimen>
     <dimen name="shape_selector_group_top_margin">16dp</dimen>
+    <dimen name="brush_size_min_default">2sp</dimen>
+    <dimen name="brush_size_max_default">230sp</dimen>
+    <dimen name="brush_size_min_line_outline">4sp</dimen>
+    <dimen name="brush_size_max_line_outline">30sp</dimen>
+
 
 </resources>

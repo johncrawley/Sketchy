@@ -15,6 +15,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
+import com.jacstuff.sketchy.controls.brushSize.BrushSizeConfig;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonClickHandler;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ButtonLayoutParams buttonLayoutParams = new ButtonLayoutParams(120, 120, 15);
     private ButtonClickHandler buttonClickHandler;
     private ColorButtonLayoutPopulator layoutPopulator;
+    private BrushSizeConfig brushSizeConfig;
 
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
 
@@ -45,11 +47,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         assignViews();
         initImageSaver();
         setupActionbar();
+        setupBrushSizeSeekBar();
         configurePaintView();
         setupSettingsButtons();
         setupButtonListeners();
         setupDefaultSelections();
-        setupBrushSizeSeekBar();
         setupButtonClickHandler();
         setupColorAndShadeButtons();
         assignRecentButtons();
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
         PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, this.getWindowManager());
-        paintViewConfigurator.configure(paintView);
+        paintViewConfigurator.configure(paintView, brushSizeConfig);
         assignSavedBitmap();
     }
 
@@ -134,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void setupColorAndShadeButtons(){
         Map<String, Color> colors = ColorCreator.generate();
-        buttonClickHandler.setColors(colors);
+        buttonClickHandler.setColorsMap(colors);
         layoutPopulator = new ColorButtonLayoutPopulator(this, buttonLayoutParams, colors);
         buttonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
         layoutPopulator.addColorButtonLayoutsTo(colorButtonGroupLayout);
@@ -145,6 +147,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupBrushSizeSeekBar(){
         SeekBar seekBar = findViewById(R.id.seekBar);
+        brushSizeConfig = new BrushSizeConfig(MainActivity.this, seekBar, BrushShape.CIRCLE, BrushStyle.FILL);
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -157,7 +161,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-               paintView.setBrushSize(seekBar.getProgress());
+                if(paintView != null){
+                    paintView.setBrushSize(seekBar.getProgress());
+                }
             }
         });
     }
