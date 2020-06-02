@@ -54,6 +54,8 @@
             android:id="@+id/squareShapeButton"
             android:layout_width="@dimen/selector_button_width"
             android:layout_height="@dimen/selector_button_height"
+            android:layout_marginStart="@dimen/selector_button_margin_start"
+            android:layout_marginEnd="@dimen/selector_button_margin_end"
             android:layout_weight="1"
             android:contentDescription="@string/content_description_square_shape_button"
             app:srcCompat="@drawable/square_shape_button" />
@@ -62,6 +64,8 @@
             android:id="@+id/circleShapeButton"
             android:layout_width="@dimen/selector_button_width"
             android:layout_height="@dimen/selector_button_height"
+            android:layout_marginStart="@dimen/selector_button_margin_start"
+            android:layout_marginEnd="@dimen/selector_button_margin_end"
             android:layout_weight="1"
             android:contentDescription="@string/content_description_circle_shape_button"
             app:srcCompat="@drawable/circle_shape_button" />
@@ -71,6 +75,8 @@
             android:id="@+id/lineShapeButton"
             android:layout_width="@dimen/selector_button_width"
             android:layout_height="@dimen/selector_button_height"
+            android:layout_marginStart="@dimen/selector_button_margin_start"
+            android:layout_marginEnd="@dimen/selector_button_margin_end"
             android:layout_weight="1"
             android:contentDescription="@string/content_description_line_shape_button"
             app:srcCompat="@drawable/line_shape_button" />
@@ -94,6 +100,8 @@
             android:id="@+id/fillStyleButton"
             android:layout_width="@dimen/selector_button_width"
             android:layout_height="@dimen/selector_button_height"
+            android:layout_marginStart="@dimen/selector_button_margin_start"
+            android:layout_marginEnd="@dimen/selector_button_margin_end"
             android:layout_weight="1"
             android:contentDescription="@string/content_description_fill_style_button"
             app:srcCompat="@drawable/fill_style_button" />
@@ -102,6 +110,8 @@
             android:id="@+id/brokenOutlineStyleButton"
             android:layout_width="@dimen/selector_button_width"
             android:layout_height="@dimen/selector_button_height"
+            android:layout_marginStart="@dimen/selector_button_margin_start"
+            android:layout_marginEnd="@dimen/selector_button_margin_end"
             android:layout_weight="1"
             android:contentDescription="@string/content_description_broken_outline_style_button"
             app:srcCompat="@drawable/broken_outline_style_button" />
@@ -110,6 +120,8 @@
             android:id="@+id/outlineStyleButton"
             android:layout_width="@dimen/selector_button_width"
             android:layout_height="@dimen/selector_button_height"
+            android:layout_marginStart="@dimen/selector_button_margin_start"
+            android:layout_marginEnd="@dimen/selector_button_margin_end"
             android:layout_weight="1"
             android:contentDescription="@string/content_description_outline_style_button"
             app:srcCompat="@drawable/outline_style_button" />

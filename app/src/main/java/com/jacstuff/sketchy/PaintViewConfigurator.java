@@ -33,7 +33,7 @@ class PaintViewConfigurator {
     }
 
 
-    void configure(PaintView paintView, BrushSizeConfig brushSizeConfig){
+    void configure(PaintView paintView, BrushSizeConfig brushSizeConfig, int brushSize){
         int paintViewWidth, paintViewHeight;
 
         if(isInLandscapeMode()){
@@ -46,6 +46,7 @@ class PaintViewConfigurator {
         }
         paintView.init(paintViewWidth, paintViewHeight, brushSizeConfig);
         paintView.setCurrentColor(Color.BLACK);
+        paintView.setBrushSize(brushSize);
     }
 
 

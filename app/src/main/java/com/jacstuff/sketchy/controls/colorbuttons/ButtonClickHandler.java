@@ -247,12 +247,9 @@ public class ButtonClickHandler {
 
 
     private void assignMultiSelector(Button button, List<Color> colorList){
-        log("Entered assignMultiColorSelector(), currentColorSelector : " + currentColorSelector.getClass().getName());
         if(button == previouslySelectedButton){
-            log("button is the same as previously selected button, selecting the next pattern in the same colorSelectorrr");
             currentColorSelector.nextPattern();
         }else{
-            log("button clicked is not the same as previous button, color selector should already be changed, reseting it and setting paint");
             currentColorSelector.reset();
             paintView.setColorSelector(currentColorSelector);
         }

@@ -29,9 +29,17 @@
 
     <style name="ToolBarStyle" parent="Theme.AppCompat">
         <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:background">@android:color/holo_green_dark</item>
+        <item name="android:background">@android:color/holo_blue_light</item>
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="actionMenuTextColor">@android:color/white</item>
+    </style>
+
+
+
+    <!-- Splash Screen theme -->
+    <style name="SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:background">@drawable/splash_screen</item>
+        <item name="android:windowAnimationStyle">@null</item>
     </style>
 
 </resources>

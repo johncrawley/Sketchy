@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
         PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, this.getWindowManager());
-        paintViewConfigurator.configure(paintView, brushSizeConfig);
+        paintViewConfigurator.configure(paintView, brushSizeConfig, getBrushSize());
         assignSavedBitmap();
     }
 
@@ -224,6 +224,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    public int getBrushSize(){
+        return seekBar.getProgress();
+    }
 
     private void startSaveDocumentActivity(){
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);

@@ -1,6 +1,5 @@
 package com.jacstuff.sketchy.multicolor.pattern;
 
-import java.util.concurrent.ThreadLocalRandom;
 
 public class FirstToLastPattern extends  AbstractMulticolorPattern implements MulticolorPattern {
 
