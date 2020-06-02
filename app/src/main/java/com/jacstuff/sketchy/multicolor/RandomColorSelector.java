@@ -31,6 +31,11 @@ public class RandomColorSelector implements ColorSelector {
         //do nothing
     }
 
+    @Override
+    public String getCurrentPatternLabel(){
+        return "";
+    }
+
 
     @Override
     public void set(List<Color> colors){

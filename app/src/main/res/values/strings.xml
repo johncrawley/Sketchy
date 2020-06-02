@@ -29,5 +29,22 @@
     <string name="content_description_fill_style_button">Select to paint with solid shapes</string>
     <string name="content_description_broken_outline_style_button">Select to paint shapes with broken outlines</string>
     <string name="content_description_outline_style_button">Select to paint with shape outlines</string>
+    <string name="pattern_toast_prefix">Pattern &#160;</string>
+    <string name="pattern_label_first_to_last">First To Last</string>
+    <string name="pattern_label_over_and_back">Over And Back</string>
+    <string name="pattern_label_middle_to_end">Middle To End</string>
+    <string name="pattern_label_middle_to_start">Middle To Start</string>
+    <string name="pattern_label_caterpillar">Caterpillar</string>
+    <string name="pattern_label_even_selection">Evens</string>
+    <string name="pattern_label_ice_cream">Ice Cream</string>
+    <string name="pattern_label_fresh">Fresh</string>
+    <string name="pattern_label_humbug">Humbug</string>
+    <string name="pattern_label_spooky">Spooky</string>
+    <string name="pattern_label_icing">Icing</string>
+    <string name="pattern_label_pulse">Pulse</string>
+    <string name="pattern_label_to_light">To Light</string>
+    <string name="pattern_label_to_dark">To Dark</string>
+    <string name="pattern_label_snake">Snake</string>
+    <string name="pattern_label_macaron">Macaron</string>
 
 </resources>

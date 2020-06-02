@@ -4,6 +4,16 @@ public class MiddleToEndPattern extends AbstractMulticolorPattern implements Mul
 
     private int defaultIndex;
 
+
+    public MiddleToEndPattern(String label){
+        this.label = label;
+    }
+
+
+    public MiddleToEndPattern(){
+    }
+
+
     @Override
     public int getNextIndex(int numberOfColors) {
         this.numberOfColors = numberOfColors;

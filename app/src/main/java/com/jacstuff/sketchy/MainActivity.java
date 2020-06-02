@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.jacstuff.sketchy.controls.brushSize.BrushSizeConfig;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonClickHandler;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ButtonClickHandler buttonClickHandler;
     private ColorButtonLayoutPopulator layoutPopulator;
     private BrushSizeConfig brushSizeConfig;
-
+    private Toast colorPatternToast;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
 
     @Override
@@ -65,6 +66,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setupSettingsButtons(){
         settingsButtonsConfigurator = new SettingsButtonsConfigurator(this);
         settingsButtonsConfigurator.setupShapeAndStyleButtons(paintView);
+    }
+
+
+    public void toast(String msg){
+        if(colorPatternToast != null){
+            colorPatternToast.cancel();
+        }
+        colorPatternToast = Toast.makeText(MainActivity.this, getString(R.string.pattern_toast_prefix) +  msg, Toast.LENGTH_SHORT);
+        colorPatternToast.show();
     }
 
 
@@ -123,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void setupButtonClickHandler(){
-        buttonClickHandler = new ButtonClickHandler(paintView, buttonLayoutParams, shadesScrollView);
+        buttonClickHandler = new ButtonClickHandler(this, paintView, buttonLayoutParams, shadesScrollView);
     }
 
 

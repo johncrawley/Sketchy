@@ -3,9 +3,14 @@ package com.jacstuff.sketchy.multicolor.pattern;
 public class ReversiblePattern extends AbstractMulticolorPattern implements MulticolorPattern {
 
 
-
     private enum Direction { FORWARDS, BACKWARDS}
     private Direction indexDirection = Direction.FORWARDS;
+
+
+    public ReversiblePattern(String label){
+        this();
+        this.label = label;
+    }
 
 
     public ReversiblePattern(){

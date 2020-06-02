@@ -12,6 +12,12 @@ public class FourColoursStartingAt extends  AbstractMulticolorPattern implements
     private int listIndex;
 
 
+    public FourColoursStartingAt(int startingIndex, String label){
+        this(startingIndex);
+        this.label = label;
+    }
+
+
     public FourColoursStartingAt(int startingIndex){
         this.startingIndex = startingIndex;
         currentIndex = startingIndex;

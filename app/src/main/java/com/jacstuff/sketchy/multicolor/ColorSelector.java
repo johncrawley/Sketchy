@@ -19,4 +19,6 @@ public interface ColorSelector {
 
     int getNextColor();
 
+    String getCurrentPatternLabel();
+
 }

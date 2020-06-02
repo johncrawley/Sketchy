@@ -29,6 +29,11 @@ public class SingleColorSelector implements ColorSelector {
     }
 
     @Override
+    public String getCurrentPatternLabel(){
+        return "";
+    }
+
+    @Override
     public int getNextColor() {
         return color;
     }

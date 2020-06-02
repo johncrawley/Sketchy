@@ -4,6 +4,16 @@ public class MiddleToStartPattern extends AbstractMulticolorPattern implements M
 
     private int defaultIndex;
 
+
+    public MiddleToStartPattern(String label){
+        this.label = label;
+    }
+
+
+    public MiddleToStartPattern(){
+
+    }
+
     @Override
     public int getNextIndex(int numberOfColors) {
         this.numberOfColors = numberOfColors;

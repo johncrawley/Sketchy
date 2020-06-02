@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class ColorButtonLayoutPopulator {
 
     private ColorShadeCreator colorShadeCreator;
@@ -30,6 +31,7 @@ public class ColorButtonLayoutPopulator {
     private String defaultColor;
     private final String MULTI_SHADE_KEY = "multi shade key";
     private final String RANDOM_SHADE_KEY = "random shade key";
+
 
     public ColorButtonLayoutPopulator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, Map<String, Color> colors){
         this.context = mainActivity.getApplicationContext();
@@ -85,9 +87,11 @@ public class ColorButtonLayoutPopulator {
         addMultiColorShades(color, shades);
     }
 
+
     private void addMultiColorShades(Color color, List<Color> shades){
         multiColorShades.put(color, shades);
     }
+
 
     private void addShadesToLayoutMap(String key, List<Color> shades){
         LinearLayout shadeLayout = createLayoutWithButtonsFrom(shades, ButtonType.SHADE);
@@ -155,6 +159,7 @@ public class ColorButtonLayoutPopulator {
         putButtonInLayoutAndAddToList(button);
     }
 
+
     private void createAndAddRandomButton(){
         Button button = createGenericColorButton(ButtonType.RANDOM_COLOR, RANDOM_SHADE_KEY);
         button.setBackgroundResource(R.drawable.random_color_button);
@@ -184,6 +189,7 @@ public class ColorButtonLayoutPopulator {
         LinearLayout shadeLayout = createLayoutWithButtonsFrom(colorList, ButtonType.MULTISHADE);
         shadeLayoutsMap.put(MULTI_SHADE_KEY, shadeLayout);
     }
+
 
     private void createRandomShadeButtons(){
         List<Color> colorList = new ArrayList<>(colors.values());

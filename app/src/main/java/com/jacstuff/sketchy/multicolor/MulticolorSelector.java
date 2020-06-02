@@ -63,15 +63,8 @@ public class MulticolorSelector implements ColorSelector {
         currentMulticolorPattern.resetIndex();
     }
 
-
-
-    private int getFirstColorInList(List<Color> colorList){
-        if(colorList == null){
-            return 0;
-        }
-        return colorList.get(0).toArgb();
+    @Override
+    public String getCurrentPatternLabel(){
+        return (currentPatternIndex + 1) + ": "  +currentMulticolorPattern.getLabel();
     }
-
-
-
 }
