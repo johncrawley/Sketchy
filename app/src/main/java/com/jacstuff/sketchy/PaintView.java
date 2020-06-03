@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -66,8 +67,7 @@ public class PaintView extends View {
         paint.setColor(Color.WHITE);
         canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
         this.brushSizeConfig = brushSizeConfig;
-        brushFactory = new BrushFactory(canvas, paint, brushSize);
-        currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle, brushSize);
+        initBrushes();
     }
 
 
@@ -75,6 +75,12 @@ public class PaintView extends View {
         this.bitmap = bitmap;
         canvas = new Canvas(bitmap);
         paint.setColor(Color.WHITE);
+        initBrushes();
+    }
+
+    private void initBrushes(){
+        brushFactory = new BrushFactory(canvas, paint, brushSize);
+        currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle, brushSize);
     }
 
 
@@ -103,14 +109,9 @@ public class PaintView extends View {
 
 
     public void set(BrushShape brushShape){
-        setStyle();
+        Log.i("PaintView", "Entered set() for setting brushShape");
         brushSizeConfig.set(brushShape);
         currentBrush = brushFactory.getResettedBrushFor(brushShape, currentBrushStyle, brushSize);
-    }
-
-
-    private void setStyle(){
-        currentBrush.setStyle(currentBrushStyle);
     }
 
 
@@ -120,8 +121,13 @@ public class PaintView extends View {
         float x = event.getX();
         float y = event.getY();
         paint.setColor(colorSelector.getNextColor());
+        performAction(x, y, event.getAction());
+        return true;
+    }
 
-        switch(event.getAction()) {
+
+    private void performAction(float x, float y, int action){
+        switch(action) {
             case MotionEvent.ACTION_DOWN :
                 currentBrush.onTouchDown(x,y);
                 invalidate();
@@ -133,8 +139,16 @@ public class PaintView extends View {
             case MotionEvent.ACTION_UP :
                 currentBrush.onTouchUp(x, y);
                 invalidate();
-                break;
         }
-        return true;
+
     }
+
+
+
+
 }
+
+
+
+
+

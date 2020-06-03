@@ -3,14 +3,10 @@ package com.jacstuff.sketchy.brushes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.jacstuff.sketchy.brushes.AbstractBrush;
-import com.jacstuff.sketchy.brushes.Brush;
-
 public class CircleBrush extends AbstractBrush implements Brush {
 
 
-
-    public CircleBrush(Canvas canvas, Paint paint, int brushSize){
+    CircleBrush(Canvas canvas, Paint paint, int brushSize){
        super(canvas, paint, brushSize);
     }
 

@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -106,14 +105,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void selectRecentColorButton(PaintViewSingleton pvs ){
         Button mostRecentColorButton = layoutPopulator.getButton(pvs.getMostRecentColor());
-        clickButtonIfNotNull(mostRecentColorButton);
+        buttonClickHandler.handleColorButtonClicks(mostRecentColorButton);
     }
 
 
     private void selectRecentShadeButton(PaintViewSingleton pvs ){
         if(pvs.wasMostRecentClickAShade()){
             Button mostRecentShadeButton = layoutPopulator.getButton(pvs.getMostRecentShade());
-            clickButtonIfNotNull(mostRecentShadeButton);
+            buttonClickHandler.handleColorButtonClicks(mostRecentShadeButton);
         }
     }
 
@@ -121,15 +120,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void selectRecentShapeAndStyle(PaintViewSingleton pvs){
         settingsButtonsConfigurator.clickOnView(pvs.getMostRecentBrushShapeId());
         settingsButtonsConfigurator.clickOnView(pvs.getMostRecentBrushStyleId());
-    }
-
-
-
-    private void clickButtonIfNotNull(Button button){
-            if(button == null){
-                return;
-            }
-            buttonClickHandler.handleColorButtonClicks(button);
     }
 
 

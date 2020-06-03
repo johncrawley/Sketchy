@@ -25,7 +25,6 @@ public class BrushFactory {
         brushMap.put(BrushShape.CIRCLE, circleBrush);
         brushMap.put(BrushShape.SQUARE, squareBrush);
         brushMap.put(BrushShape.LINE, lineBrush);
-
     }
 
     private void initBrushes(Canvas canvas, Paint paint, int brushSize){

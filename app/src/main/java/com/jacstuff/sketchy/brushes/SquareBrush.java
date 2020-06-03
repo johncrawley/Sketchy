@@ -3,9 +3,6 @@ package com.jacstuff.sketchy.brushes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.jacstuff.sketchy.brushes.AbstractBrush;
-import com.jacstuff.sketchy.brushes.Brush;
-
 public class SquareBrush extends AbstractBrush implements Brush {
 
 

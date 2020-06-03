@@ -99,7 +99,7 @@ public class ButtonClickHandler {
 
 
     public void handleColorButtonClicks(View view){
-        if(ButtonCategory.COLOR_SELECTION != view.getTag(R.string.tag_button_category)){
+        if(view == null || ButtonCategory.COLOR_SELECTION != view.getTag(R.string.tag_button_category)){
             return;
         }
         Button button = (Button)view;
