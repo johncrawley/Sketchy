@@ -29,18 +29,19 @@
         <include
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".5"
-            layout="@layout/control_panel" />
+            android:layout_weight=".15"
+            layout="@layout/color_controls" />
 
         <LinearLayout
             android:id="@+id/paintViewLayout"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:orientation="vertical"
-            android:layout_weight=".5"
-            android:padding="@dimen/paint_view_layout_padding"
             android:layout_margin="@dimen/paint_view_layout_margin"
-            android:background="#291F1F">
+            android:layout_marginTop="@dimen/paint_view_layout_portrait_margin_top"
+            android:layout_weight=".50"
+            android:background="#291F1F"
+            android:orientation="vertical"
+            android:padding="@dimen/paint_view_layout_padding">
 
             <com.jacstuff.sketchy.PaintView
                 android:id="@+id/paintView"
@@ -48,6 +49,12 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/paint_view_margin" />
         </LinearLayout>
+
+        <include
+            layout="@layout/selection_controls"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".30" />
 
     </LinearLayout>
 </LinearLayout>

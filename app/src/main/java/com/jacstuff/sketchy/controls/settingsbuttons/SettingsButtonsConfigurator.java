@@ -1,7 +1,6 @@
 package com.jacstuff.sketchy.controls.settingsbuttons;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -59,12 +58,8 @@ public class SettingsButtonsConfigurator {
         updateBrushSize();
     }
 
-    private void log(String msg){
 
-        Log.i("SettingsButtonsCfg", msg);
-    }
     private void set(BrushStyle brushStyle){
-        log("entered se");
         paintView.set(brushStyle);
         updateBrushSize();
     }
@@ -178,7 +173,7 @@ public class SettingsButtonsConfigurator {
     private void selectButton(int buttonId){
         ImageButton button = findViewById(buttonId);
         button.setSelected(true);
-        button.setBackgroundColor(Color.DKGRAY);
+        button.setBackgroundColor(activity.getResources().getColor(R.color.selected_button_border, null));
     }
 
 

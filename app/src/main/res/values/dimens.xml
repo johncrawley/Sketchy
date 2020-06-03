@@ -9,6 +9,7 @@
     <dimen name="paint_view_padding">3dp</dimen>
     <dimen name="paint_view_margin">3dp</dimen>
     <dimen name="paint_view_layout_margin">5dp</dimen>
+    <dimen name="paint_view_layout_portrait_margin_top">15dp</dimen>
     <dimen name="paint_view_layout_padding">5dp</dimen>
     <dimen name="action_bar_height">55dp</dimen>
     <dimen name="about_text_padding">40dp</dimen>
