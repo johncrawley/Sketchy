@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
-import com.jacstuff.sketchy.controls.brushSize.BrushSizeConfig;
-
 class PaintViewConfigurator {
 
     private int screenWidth, screenHeight;
@@ -33,7 +31,7 @@ class PaintViewConfigurator {
     }
 
 
-    void configure(PaintView paintView, BrushSizeConfig brushSizeConfig, int brushSize){
+    void configure(PaintView paintView, int brushSize){
         int paintViewWidth, paintViewHeight;
 
         if(isInLandscapeMode()){
@@ -44,7 +42,7 @@ class PaintViewConfigurator {
             paintViewWidth = screenWidth - totalMargin;
             paintViewHeight = ((screenHeight-actionBarHeight) /2) - totalPaintViewMargins;
         }
-        paintView.init(paintViewWidth, paintViewHeight, brushSizeConfig);
+        paintView.init(paintViewWidth, paintViewHeight);
         paintView.setCurrentColor(Color.BLACK);
         paintView.setBrushSize(brushSize);
     }

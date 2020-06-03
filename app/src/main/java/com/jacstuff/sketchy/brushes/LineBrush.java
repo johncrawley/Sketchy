@@ -44,6 +44,10 @@ public class LineBrush extends AbstractBrush implements Brush {
         super.setStyle(style);
         currentStyle = style;
         currentLineDrawer = lineDrawerMap.get(style);
+        if(currentLineDrawer == null){
+            return;
+        }
+        currentLineDrawer.initStrokeWidth(brushSize);
     }
 
     public void reset(int brushSize){
@@ -61,7 +65,7 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchUp(float x, float y) {
-        paint.setStrokeWidth(halfBrushSize);
+        //paint.setStrokeWidth(halfBrushSize);
         currentLineDrawer.draw(xDown, yDown, x, y, brushSize);
     }
 

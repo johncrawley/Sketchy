@@ -51,7 +51,7 @@ class ColorPatternsFactory {
     List<MulticolorPattern> createShadePatterns(){
         List<MulticolorPattern> shadePatterns = new ArrayList<>();
         shadePatterns.add(new FirstToLastPattern( get(R.string.pattern_label_first_to_last)));
-        shadePatterns.add(new ReversiblePattern( get(R.string.pattern_label_pulse)));
+        shadePatterns.add(new ReversiblePattern( get(R.string.pattern_label_strobe)));
         shadePatterns.add(new MiddleToEndPattern( get(R.string.pattern_label_to_light)));
         shadePatterns.add(new MiddleToStartPattern( get(R.string.pattern_label_to_dark)));
         shadePatterns.add(new OddNumbersPattern( get(R.string.pattern_label_snake)));

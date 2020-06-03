@@ -6,13 +6,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.jacstuff.sketchy.brushes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
-import com.jacstuff.sketchy.controls.brushSize.BrushSizeConfig;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 
 
@@ -27,7 +25,6 @@ public class PaintView extends View {
     private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
     private ColorSelector colorSelector;
     private BrushStyle currentBrushStyle = BrushStyle.FILL;
-    private  BrushSizeConfig brushSizeConfig;
     private Brush currentBrush;
     private BrushFactory brushFactory;
 
@@ -50,7 +47,6 @@ public class PaintView extends View {
 
     public void set(BrushStyle brushStyle){
         currentBrushStyle = brushStyle;
-        brushSizeConfig.set(brushStyle);
         currentBrush.setStyle(brushStyle);
     }
 
@@ -61,12 +57,11 @@ public class PaintView extends View {
     }
 
 
-    public void init(int canvasWidth, int canvasHeight, BrushSizeConfig brushSizeConfig) {
+    public void init(int canvasWidth, int canvasHeight) {
         bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         paint.setColor(Color.WHITE);
         canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
-        this.brushSizeConfig = brushSizeConfig;
         initBrushes();
     }
 
@@ -109,8 +104,6 @@ public class PaintView extends View {
 
 
     public void set(BrushShape brushShape){
-        Log.i("PaintView", "Entered set() for setting brushShape");
-        brushSizeConfig.set(brushShape);
         currentBrush = brushFactory.getResettedBrushFor(brushShape, currentBrushStyle, brushSize);
     }
 

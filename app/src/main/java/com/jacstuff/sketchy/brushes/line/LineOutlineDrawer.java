@@ -14,9 +14,18 @@ public class LineOutlineDrawer implements LineDrawer {
         this.canvas = canvas;
         this.paint = paint;
     }
+    private int minStrokeWidth = 4;
 
+    @Override
+    public void initStrokeWidth(int brushSize){
+        paint.setStrokeWidth(minStrokeWidth + (brushSize/5f));
+    }
+
+
+    @Override
     public void draw(float x1, float y1, float x2, float y2, int brushSize){
-        drawLineOutline(x1, y1, x2, y2, brushSize);
+        int adjustedBrushSize = (brushSize / 3) + minStrokeWidth;
+        drawLineOutline(x1, y1, x2, y2, adjustedBrushSize);
     }
 
 

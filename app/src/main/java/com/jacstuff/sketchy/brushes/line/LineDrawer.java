@@ -6,4 +6,5 @@ import android.graphics.Paint;
 public interface LineDrawer {
 
     void draw(float x1, float y1, float x2, float y2, int brushSize);
+    void initStrokeWidth(int brushSize);
 }

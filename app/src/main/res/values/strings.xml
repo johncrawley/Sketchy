@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sketchy</string>
+    <string name="app_name">Sketchty</string>
     <string name="save_sketch_activity_label">Save Sketch</string>
     <string name="about_activity_label">About</string>
     <string name="action_save">Save</string>
@@ -41,7 +41,7 @@
     <string name="pattern_label_humbug">Humbug</string>
     <string name="pattern_label_spooky">Spooky</string>
     <string name="pattern_label_icing">Icing</string>
-    <string name="pattern_label_pulse">Pulse</string>
+    <string name="pattern_label_strobe">Strobe</string>
     <string name="pattern_label_to_light">To Light</string>
     <string name="pattern_label_to_dark">To Dark</string>
     <string name="pattern_label_snake">Snake</string>
