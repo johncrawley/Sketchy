@@ -16,7 +16,6 @@
     <string name="button_type_multi_shade">6</string>
     <string name="button_type_shade">5</string>
     <string name="default_color">black</string>
-    <string name="title_activity_save_sketch">SaveSketchActivity</string>
     <string name="save_dialogue_save_button">SAVE</string>
     <string name="save_dialogue_cancel_button">@android:string/cancel</string>
     <string name="bitmap_intent_extra">bitmap_intent_extra</string>

@@ -75,7 +75,7 @@ public class PaintView extends View {
 
     private void initBrushes(){
         brushFactory = new BrushFactory(canvas, paint, brushSize);
-        currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle, brushSize);
+        currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
     }
 
 
@@ -104,7 +104,7 @@ public class PaintView extends View {
 
 
     public void set(BrushShape brushShape){
-        currentBrush = brushFactory.getResettedBrushFor(brushShape, currentBrushStyle, brushSize);
+        currentBrush = brushFactory.getResettedBrushFor(brushShape, currentBrushStyle);
     }
 
 

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ButtonClickHandler {
+public class ColorButtonClickHandler {
 
     private PaintView paintView;
     private Button previouslySelectedShadeButton, previouslySelectedColorButton, previouslySelectedButton;
@@ -35,7 +35,7 @@ public class ButtonClickHandler {
     private MainActivity mainActivity;
 
 
-    public ButtonClickHandler(MainActivity mainActivity, PaintView paintView, ButtonLayoutParams buttonLayoutParams, HorizontalScrollView shadesScrollView ){
+    public ColorButtonClickHandler(MainActivity mainActivity, PaintView paintView, ButtonLayoutParams buttonLayoutParams, HorizontalScrollView shadesScrollView ){
         this.mainActivity = mainActivity;
         this.paintView = paintView;
         this.buttonLayoutParams = buttonLayoutParams;

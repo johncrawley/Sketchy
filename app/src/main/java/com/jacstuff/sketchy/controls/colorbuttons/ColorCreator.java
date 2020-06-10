@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.controls.colorbuttons;
 import android.graphics.Color;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ColorCreator {
 
@@ -10,8 +11,8 @@ public class ColorCreator {
     private ColorCreator(){}
 
 
-    public static HashMap<String, Color> generate(){
-        HashMap<String, Color> colors = new HashMap<>();
+    public static Map<String, Color> generate(){
+        Map<String, Color> colors = new HashMap<>();
         add(colors,"blue", Color.BLUE);
         add(colors,"red", Color.RED);
         add(colors,"yellow", Color.YELLOW);
@@ -21,7 +22,7 @@ public class ColorCreator {
         add(colors,"green", Color.GREEN);
         add(colors,"magenta", Color.MAGENTA);
         add(colors,"cyan", Color.CYAN);
-        add(colors,"slime_green"     , 0,  255,144);
+        add(colors,"slime_green", 0,  255,144);
         add(colors,"light_blue",0,  130,255);
         add(colors,"orange"   , 255,106,0);
         add(colors,"purple"   , 178,0,255);
@@ -34,12 +35,12 @@ public class ColorCreator {
         return colors;
     }
 
-    private static void add(HashMap<String, Color> map, String key, int r, int g, int b){
+    private static void add(Map<String, Color> map, String key, int r, int g, int b){
         add(map, key, Color.argb(255, r,g,b));
     }
 
 
-    private static void add(HashMap<String, Color> map, String key, int colorCode){
+    private static void add(Map<String, Color> map, String key, int colorCode){
         map.put(key, Color.valueOf(colorCode));
     }
 

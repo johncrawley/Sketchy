@@ -70,26 +70,28 @@ public class BrushFactory {
         };
 
 
-        circleBrush = new CircleBrush(canvas, paint, brushSize);
+        circleBrush = new CircleBrush(canvas, paint);
         circleBrush.add(BrushStyle.FILL, fillStyle);
         circleBrush.add(BrushStyle.OUTLINE, outlineStyle);
         circleBrush.add(BrushStyle.BROKEN_OUTLINE, brokenOutlineStyle);
+        circleBrush.setBrushSize(brushSize);
 
-        squareBrush = new SquareBrush(canvas, paint, brushSize);
+        squareBrush = new SquareBrush(canvas, paint);
         squareBrush.add(BrushStyle.FILL, fillStyle);
         squareBrush.add(BrushStyle.OUTLINE, outlineStyle);
         squareBrush.add(BrushStyle.BROKEN_OUTLINE, brokenOutlineStyle);
+        squareBrush.setBrushSize(brushSize);
 
 
-        lineBrush = new LineBrush(canvas, paint, brushSize);
+        lineBrush = new LineBrush(canvas, paint);
         lineBrush.add(BrushStyle.FILL, fillStyle);
         lineBrush.add(BrushStyle.OUTLINE, lineOutlineStyle);
         lineBrush.add(BrushStyle.BROKEN_OUTLINE, brokenLineStyle);
+        lineBrush.setBrushSize(brushSize);
     }
 
-    public Brush getResettedBrushFor(BrushShape shape, BrushStyle brushStyle, int brushSize){
+    public Brush getResettedBrushFor(BrushShape shape, BrushStyle brushStyle){
         Brush brush =  brushMap.get(shape);
-        brush.reset(brushSize);
         brush.setStyle(brushStyle);
         return brush;
     }

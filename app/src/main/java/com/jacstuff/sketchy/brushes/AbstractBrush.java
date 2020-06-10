@@ -17,11 +17,10 @@ public abstract class AbstractBrush {
     private Map<BrushStyle, BiConsumer<Paint, Integer>> styleMap;
 
 
-    AbstractBrush(Canvas canvas, Paint paint, int brushSize){
+    AbstractBrush(Canvas canvas, Paint paint){
         this.canvas = canvas;
         this.paint = paint;
         styleMap = new HashMap<>();
-        setBrushSize(brushSize);
     }
 
     void add(BrushStyle style, BiConsumer<Paint, Integer> biConsumer){

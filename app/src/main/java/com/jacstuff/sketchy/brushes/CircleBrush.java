@@ -6,8 +6,8 @@ import android.graphics.Paint;
 public class CircleBrush extends AbstractBrush implements Brush {
 
 
-    CircleBrush(Canvas canvas, Paint paint, int brushSize){
-       super(canvas, paint, brushSize);
+    CircleBrush(Canvas canvas, Paint paint){
+       super(canvas, paint);
     }
 
 
@@ -15,12 +15,6 @@ public class CircleBrush extends AbstractBrush implements Brush {
     public void onTouchDown(float x, float y){
         canvas.drawCircle(x,y, halfBrushSize, paint);
     }
-
-    @Override
-    public void reset(){
-        paint.setStrokeWidth(1);
-    }
-
 
 
     @Override

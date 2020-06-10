@@ -18,8 +18,8 @@ public class LineBrush extends AbstractBrush implements Brush {
     private Map<BrushStyle, LineDrawer> lineDrawerMap;
     private BrushStyle currentStyle;
 
-    LineBrush(Canvas canvas, Paint paint, int brushSize) {
-        super(canvas, paint, brushSize);
+    LineBrush(Canvas canvas, Paint paint) {
+        super(canvas, paint);
         setupLineDrawers();
     }
 
@@ -39,15 +39,18 @@ public class LineBrush extends AbstractBrush implements Brush {
         yDown = y;
     }
 
+
+    @Override
+    public void onTouchUp(float x, float y) {
+        currentLineDrawer.draw(xDown, yDown, x, y, brushSize);
+    }
+
+
     @Override
     public void setStyle(BrushStyle style){
         super.setStyle(style);
         currentStyle = style;
-        currentLineDrawer = lineDrawerMap.get(style);
-        if(currentLineDrawer == null){
-            return;
-        }
-        currentLineDrawer.initStrokeWidth(brushSize);
+        setLineDrawerAndStrokeWidthFrom(style);
     }
 
     public void reset(int brushSize){
@@ -60,13 +63,15 @@ public class LineBrush extends AbstractBrush implements Brush {
     public void setBrushSize(int brushSize){
         super.setBrushSize(brushSize);
         super.setStyle(currentStyle);
+        setLineDrawerAndStrokeWidthFrom(currentStyle);
     }
 
-
-    @Override
-    public void onTouchUp(float x, float y) {
-        //paint.setStrokeWidth(halfBrushSize);
-        currentLineDrawer.draw(xDown, yDown, x, y, brushSize);
+    private void setLineDrawerAndStrokeWidthFrom(BrushStyle style){
+        currentLineDrawer = lineDrawerMap.get(style);
+        if(currentLineDrawer == null){
+            return;
+        }
+        currentLineDrawer.initStrokeWidth(brushSize);
     }
 
 }

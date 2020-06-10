@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-import com.jacstuff.sketchy.controls.colorbuttons.ButtonClickHandler;
+import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
     private ButtonLayoutParams buttonLayoutParams = new ButtonLayoutParams(120, 120, 15);
-    private ButtonClickHandler buttonClickHandler;
+    private ColorButtonClickHandler buttonClickHandler;
     private ColorButtonLayoutPopulator layoutPopulator;
     private Toast colorPatternToast;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void setupButtonClickHandler(){
-        buttonClickHandler = new ButtonClickHandler(this, paintView, buttonLayoutParams, shadesScrollView);
+        buttonClickHandler = new ColorButtonClickHandler(this, paintView, buttonLayoutParams, shadesScrollView);
     }
 
 

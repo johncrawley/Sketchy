@@ -64,6 +64,7 @@ public class SettingsButtonsConfigurator {
         updateBrushSize();
     }
 
+
     private void updateBrushSize(){
         paintView.setBrushSize(activity.getBrushSize());
     }
@@ -158,7 +159,7 @@ public class SettingsButtonsConfigurator {
         for(int buttonId : buttons){
             if(viewId == buttonId){
                 switchSelectionToButton(buttonId, buttons);
-                break;
+                return;
             }
         }
     }

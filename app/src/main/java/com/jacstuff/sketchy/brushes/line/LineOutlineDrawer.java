@@ -4,33 +4,33 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 
+
 public class LineOutlineDrawer implements LineDrawer {
 
     private Canvas canvas;
     private Paint paint;
-
+    private int minStrokeWidth = 1;
 
     public LineOutlineDrawer(Canvas canvas, Paint paint){
         this.canvas = canvas;
         this.paint = paint;
     }
-    private int minStrokeWidth = 4;
+
 
     @Override
     public void initStrokeWidth(int brushSize){
-        paint.setStrokeWidth(minStrokeWidth + (brushSize/5f));
+        paint.setStrokeWidth(minStrokeWidth ); //+ (brushSize/3f));
     }
 
 
     @Override
     public void draw(float x1, float y1, float x2, float y2, int brushSize){
-        int adjustedBrushSize = (brushSize / 3) + minStrokeWidth;
+        int adjustedBrushSize = (brushSize / 3) + (minStrokeWidth * 2);
         drawLineOutline(x1, y1, x2, y2, adjustedBrushSize);
     }
 
 
     private void drawLineOutline(float x1, float y1, float x2, float y2, int brushSize){
-
         Point p1 = new Point((int) x1, (int)y1);
         Point p2 = new Point((int) x2,(int) y2);
         Point p3 = getPointPerpendicularTo(x1, y1, x2, y2, false);
