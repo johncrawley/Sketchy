@@ -1,38 +1,39 @@
-package com.jacstuff.sketchy.brushes;
+package com.jacstuff.sketchy.brushes.shapes;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.BrushStyle;
+import com.jacstuff.sketchy.brushes.styles.FillStyle;
+import com.jacstuff.sketchy.brushes.styles.Style;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
+
 
 public abstract class AbstractBrush {
 
     Canvas canvas;
     Paint paint;
     int brushSize;
+    Style currentStyle;
     int halfBrushSize;
-    private Map<BrushStyle, BiConsumer<Paint, Integer>> styleMap;
+    private Map<BrushStyle, Style> styleMap;
 
 
     AbstractBrush(Canvas canvas, Paint paint){
         this.canvas = canvas;
         this.paint = paint;
         styleMap = new HashMap<>();
+        currentStyle = new FillStyle();
     }
 
-    void add(BrushStyle style, BiConsumer<Paint, Integer> biConsumer){
-        styleMap.put(style, biConsumer);
+    public void add(BrushStyle brushStyle, Style style){
+        styleMap.put(brushStyle, style);
     }
 
     public void setStyle(BrushStyle style){
-        BiConsumer<Paint, Integer> consumer = styleMap.get(style);
-        if(consumer != null){
-            consumer.accept(paint, brushSize);
-        }
-
+        currentStyle = styleMap.getOrDefault(style, new FillStyle());
+        currentStyle.init(paint, brushSize);
     }
 
     public void onTouchMove(float x, float y){
@@ -43,12 +44,5 @@ public abstract class AbstractBrush {
         this.brushSize = brushSize;
         this.halfBrushSize = brushSize / 2;
     }
-    public void reset(){
-
-    }
-    public void reset(int brushSize){
-        reset();
-    }
-
 
 }

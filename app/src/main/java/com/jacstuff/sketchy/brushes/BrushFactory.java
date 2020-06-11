@@ -1,15 +1,23 @@
 package com.jacstuff.sketchy.brushes;
 
 import android.graphics.Canvas;
-import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.BrushShape;
 import com.jacstuff.sketchy.BrushStyle;
+import com.jacstuff.sketchy.brushes.shapes.Brush;
+import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
+import com.jacstuff.sketchy.brushes.shapes.LineBrush;
+import com.jacstuff.sketchy.brushes.shapes.SquareBrush;
+import com.jacstuff.sketchy.brushes.styles.DashedStyle;
+import com.jacstuff.sketchy.brushes.styles.DashedStyleForLines;
+import com.jacstuff.sketchy.brushes.styles.FillStyle;
+import com.jacstuff.sketchy.brushes.styles.FillStyleForLines;
+import com.jacstuff.sketchy.brushes.styles.OutlineStyle;
+import com.jacstuff.sketchy.brushes.styles.Style;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 public class BrushFactory {
 
@@ -20,7 +28,6 @@ public class BrushFactory {
 
     public BrushFactory(Canvas canvas, Paint paint, int brushSize){
         initBrushes(canvas, paint, brushSize);
-
         brushMap = new HashMap<>();
         brushMap.put(BrushShape.CIRCLE, circleBrush);
         brushMap.put(BrushShape.SQUARE, squareBrush);
@@ -29,64 +36,26 @@ public class BrushFactory {
 
     private void initBrushes(Canvas canvas, Paint paint, int brushSize){
 
-        BiConsumer<Paint, Integer> fillStyle = (p, i)-> {
-            p.setStyle(Paint.Style.FILL_AND_STROKE);
-            p.setPathEffect(null);
-        };
-
-
-        BiConsumer<Paint, Integer> outlineStyle = (p,i)-> {
-            paint.setStrokeWidth(1);
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setPathEffect(null);
-        };
-
-
-        BiConsumer<Paint, Integer> lineOutlineStyle = (p,i)-> {
-            paint.setStrokeWidth(1);
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setPathEffect(null);
-        };
-
-
-        BiConsumer<Paint, Integer> brokenOutlineStyle = (p, i) -> {
-            paint.setStrokeWidth(1);
-            p.setStyle(Paint.Style.STROKE);
-            float onStroke = 15;
-            float offStroke = 36;
-            p.setPathEffect(new DashPathEffect(new float[] {onStroke, offStroke}, 0));
-        };
-
-
-        BiConsumer<Paint, Integer> brokenLineStyle = (p, i) -> {
-            int halfBrushSize = i /2;
-            paint.setStrokeWidth(halfBrushSize);
-            paint.setStyle(Paint.Style.STROKE);
-
-            float onStroke =  20 + (halfBrushSize /8f);
-            float offStroke = 60 + (halfBrushSize );
-
-            paint.setPathEffect(new DashPathEffect(new float[] {onStroke, offStroke}, 0));
-        };
-
+        Style fillStyle = new FillStyle();
+        Style dashedStyle = new DashedStyle();
+        Style outlineStyle = new OutlineStyle();
 
         circleBrush = new CircleBrush(canvas, paint);
         circleBrush.add(BrushStyle.FILL, fillStyle);
         circleBrush.add(BrushStyle.OUTLINE, outlineStyle);
-        circleBrush.add(BrushStyle.BROKEN_OUTLINE, brokenOutlineStyle);
+        circleBrush.add(BrushStyle.BROKEN_OUTLINE, dashedStyle);
         circleBrush.setBrushSize(brushSize);
 
         squareBrush = new SquareBrush(canvas, paint);
         squareBrush.add(BrushStyle.FILL, fillStyle);
         squareBrush.add(BrushStyle.OUTLINE, outlineStyle);
-        squareBrush.add(BrushStyle.BROKEN_OUTLINE, brokenOutlineStyle);
+        squareBrush.add(BrushStyle.BROKEN_OUTLINE, dashedStyle);
         squareBrush.setBrushSize(brushSize);
 
-
         lineBrush = new LineBrush(canvas, paint);
-        lineBrush.add(BrushStyle.FILL, fillStyle);
-        lineBrush.add(BrushStyle.OUTLINE, lineOutlineStyle);
-        lineBrush.add(BrushStyle.BROKEN_OUTLINE, brokenLineStyle);
+        lineBrush.add(BrushStyle.FILL, new FillStyleForLines());
+        lineBrush.add(BrushStyle.OUTLINE, outlineStyle);
+        lineBrush.add(BrushStyle.BROKEN_OUTLINE, new DashedStyleForLines(brushSize));
         lineBrush.setBrushSize(brushSize);
     }
 

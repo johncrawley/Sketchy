@@ -1,12 +1,12 @@
-package com.jacstuff.sketchy.brushes;
+package com.jacstuff.sketchy.brushes.shapes;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.BrushStyle;
-import com.jacstuff.sketchy.brushes.line.DefaultLineDrawer;
-import com.jacstuff.sketchy.brushes.line.LineDrawer;
-import com.jacstuff.sketchy.brushes.line.LineOutlineDrawer;
+import com.jacstuff.sketchy.brushes.shapes.line.DefaultLineDrawer;
+import com.jacstuff.sketchy.brushes.shapes.line.LineDrawer;
+import com.jacstuff.sketchy.brushes.shapes.line.LineOutlineDrawer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +16,8 @@ public class LineBrush extends AbstractBrush implements Brush {
     private float xDown, yDown;
     private LineDrawer currentLineDrawer;
     private Map<BrushStyle, LineDrawer> lineDrawerMap;
-    private BrushStyle currentStyle;
 
-    LineBrush(Canvas canvas, Paint paint) {
+    public LineBrush(Canvas canvas, Paint paint) {
         super(canvas, paint);
         setupLineDrawers();
     }
@@ -35,6 +34,7 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchDown(float x, float y) {
+        currentStyle.onDraw(paint);
         xDown = x;
         yDown = y;
     }
@@ -47,31 +47,16 @@ public class LineBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void setStyle(BrushStyle style){
-        super.setStyle(style);
-        currentStyle = style;
-        setLineDrawerAndStrokeWidthFrom(style);
-    }
-
-    public void reset(int brushSize){
-        setBrushSize(brushSize);
-        paint.setStrokeWidth(halfBrushSize);
+    public void setStyle(BrushStyle brushStyle){
+        super.setStyle(brushStyle);
+        currentLineDrawer = lineDrawerMap.get(brushStyle);
     }
 
 
     @Override
     public void setBrushSize(int brushSize){
         super.setBrushSize(brushSize);
-        super.setStyle(currentStyle);
-        setLineDrawerAndStrokeWidthFrom(currentStyle);
-    }
-
-    private void setLineDrawerAndStrokeWidthFrom(BrushStyle style){
-        currentLineDrawer = lineDrawerMap.get(style);
-        if(currentLineDrawer == null){
-            return;
-        }
-        currentLineDrawer.initStrokeWidth(brushSize);
+        currentStyle.setBrushSize(paint, brushSize);
     }
 
 }

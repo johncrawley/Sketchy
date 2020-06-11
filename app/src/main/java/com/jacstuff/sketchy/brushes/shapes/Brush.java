@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.brushes;
+package com.jacstuff.sketchy.brushes.shapes;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,7 +11,5 @@ public interface Brush {
     void onTouchMove(float x, float y);
     void onTouchUp(float x, float y);
     void setBrushSize(int brushSize);
-    void reset();
-    void reset(int brushSize);
     void setStyle(BrushStyle style);
 }

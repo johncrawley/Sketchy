@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.brushes.line;
+package com.jacstuff.sketchy.brushes.shapes.line;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -20,8 +20,4 @@ public class DefaultLineDrawer implements LineDrawer {
         canvas.drawLine(x1, y1, x2, y2, paint);
     }
 
-    @Override
-    public void initStrokeWidth(int brushSize){
-        paint.setStrokeWidth(brushSize/2f);
-    }
 }
