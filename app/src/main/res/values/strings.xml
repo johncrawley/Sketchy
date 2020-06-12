@@ -5,7 +5,7 @@
     <string name="action_save">Save</string>
     <string name="action_about">About</string>
     <string name="about_created_by">Created by John Crawley, 2020</string>
-    <string name="about_version">Version 1.0</string>
+    <string name="about_version">Version 1.01</string>
     <string name="tag_button_type">1</string>
     <string name="tag_button_category">8</string>
     <string name="tag_button_default_color">9</string>
