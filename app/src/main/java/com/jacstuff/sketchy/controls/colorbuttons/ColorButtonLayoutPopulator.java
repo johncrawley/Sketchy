@@ -37,11 +37,20 @@ public class ColorButtonLayoutPopulator {
         this.context = mainActivity.getApplicationContext();
         defaultColor = mainActivity.getString(R.string.default_color);
         this.onClickListener = mainActivity;
-        colorShadeCreator = new ColorShadeCreator();
+        setupColorShadeCreator();
         this.buttonLayoutParams = buttonLayoutParams;
         this.colors = colors;
         buttonMap = new HashMap<>();
         setupColorAndShadeButtons();
+    }
+
+
+    private void setupColorShadeCreator(){
+        int numberOfShades = context.getResources().getInteger(R.integer.number_of_shades);
+        int shadeIncrement = context.getResources().getInteger(R.integer.shade_increment);
+        int shadeDenominator = context.getResources().getInteger(R.integer.shade_increment_denominator);
+        float shadeInc = (float)shadeIncrement / shadeDenominator;
+        colorShadeCreator = new ColorShadeCreator(numberOfShades, shadeInc);
     }
 
 

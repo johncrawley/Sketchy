@@ -9,6 +9,14 @@ import java.util.function.Function;
 
 class ColorShadeCreator {
 
+    private final int NUMBER_OF_SHADES;
+    private final float SHADE_INCREMENT;
+
+    ColorShadeCreator(int numberOfShades, float shadeIncrement){
+        NUMBER_OF_SHADES = numberOfShades;
+        SHADE_INCREMENT = shadeIncrement;
+    }
+
 
     List<Color> generateShadesFrom(Color color){
         List<Color> shades = getDarkShadesFrom(color);
@@ -21,7 +29,6 @@ class ColorShadeCreator {
     private Color createIncrementedColor(Color currentColor){
         return modifyColor(this::incIfWithinLimit, currentColor);
     }
-
 
 
     private List<Color> getDarkShadesFrom(Color color){
@@ -38,7 +45,7 @@ class ColorShadeCreator {
 
 
     private List<Color> createShades(Function<Color, Color> colorCreator, Color baseColor){
-        final int NUMBER_OF_SHADES = 10;
+
         List<Color> shades = new ArrayList<>();
         Color current = baseColor;
         Color previous = null;
@@ -68,7 +75,6 @@ class ColorShadeCreator {
     }
 
 
-    private final float SHADE_INCREMENT = 0.08f;
 
     private float incIfWithinLimit(float currentValue) {
         currentValue += SHADE_INCREMENT;
