@@ -56,13 +56,28 @@ public class PaintView extends View {
         currentBrush.setBrushSize(brushSize);
     }
 
+    private int canvasWidth, canvasHeight;
 
     public void init(int canvasWidth, int canvasHeight) {
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
         bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         paint.setColor(Color.WHITE);
         canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
         initBrushes();
+    }
+
+
+    public void resetCanvas(){
+        int currentColor = paint.getColor();
+        paint.setColor(Color.WHITE);
+        paint.setPathEffect(null);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
+        invalidate();
+        currentBrush.setStyle(currentBrushStyle);
+        paint.setColor(currentColor);
     }
 
 
@@ -72,6 +87,7 @@ public class PaintView extends View {
         paint.setColor(Color.WHITE);
         initBrushes();
     }
+
 
     private void initBrushes(){
         brushFactory = new BrushFactory(canvas, paint, brushSize);

@@ -4,6 +4,7 @@
     <string name="about_activity_label">About</string>
     <string name="action_save">Save</string>
     <string name="action_about">About</string>
+    <string name="action_add">New</string>
     <string name="about_created_by">Created by John Crawley, 2020</string>
     <string name="about_version">Version 1.01</string>
     <string name="tag_button_type">1</string>

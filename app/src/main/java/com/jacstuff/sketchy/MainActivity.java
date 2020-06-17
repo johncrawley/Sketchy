@@ -205,6 +205,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_new:
+                createNewSketch();
+                return true;
             case R.id.action_save:
                 startSaveDocumentActivity();
                 return true;
@@ -215,6 +218,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void createNewSketch(){
+
+        paintView.resetCanvas();
+
     }
 
 
