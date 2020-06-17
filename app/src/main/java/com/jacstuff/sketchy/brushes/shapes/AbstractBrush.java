@@ -3,7 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.jacstuff.sketchy.BrushStyle;
+import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.styles.FillStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
 import java.util.HashMap;

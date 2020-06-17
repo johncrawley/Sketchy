@@ -4,8 +4,8 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.jacstuff.sketchy.BrushShape;
-import com.jacstuff.sketchy.BrushStyle;
+import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.PaintView;
 import com.jacstuff.sketchy.PaintViewSingleton;
@@ -22,7 +22,7 @@ public class SettingsButtonsConfigurator {
     private MainActivity activity;
 
     private List<Integer> styleButtonIds = Arrays.asList(R.id.brokenOutlineStyleButton, R.id.fillStyleButton, R.id.outlineStyleButton);
-    private List<Integer> shapeButtonIds = Arrays.asList(R.id.squareShapeButton, R.id.circleShapeButton, R.id.lineShapeButton);
+    private List<Integer> shapeButtonIds = Arrays.asList(R.id.squareShapeButton, R.id.circleShapeButton, R.id.lineShapeButton, R.id.roundedRectangleShapeButton);
     private Map<Integer, Procedure> paintActionsMap;
     private PaintView paintView;
 
@@ -51,7 +51,9 @@ public class SettingsButtonsConfigurator {
         paintActionsMap.put(R.id.squareShapeButton, () -> set(BrushShape.SQUARE));
         paintActionsMap.put(R.id.circleShapeButton, () -> set(BrushShape.CIRCLE));
         paintActionsMap.put(R.id.lineShapeButton,   () -> set(BrushShape.LINE));
+        paintActionsMap.put(R.id.roundedRectangleShapeButton, () -> set(BrushShape.ROUNDED_RECTANGLE));
     }
+
 
     private void set(BrushShape brushShape){
         paintView.set(brushShape);

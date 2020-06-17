@@ -26,6 +26,7 @@
     <string name="content_description_square_shape_button">Select to paint with squares</string>
     <string name="content_description_circle_shape_button">Select to paint with circles</string>
     <string name="content_description_line_shape_button">Select to draw lines</string>
+    <string name="content_description_rounded_rectangle_shape_button">Select to draw rounded squares</string>
     <string name="content_description_fill_style_button">Select to paint with solid shapes</string>
     <string name="content_description_broken_outline_style_button">Select to paint shapes with broken outlines</string>
     <string name="content_description_outline_style_button">Select to paint with shape outlines</string>

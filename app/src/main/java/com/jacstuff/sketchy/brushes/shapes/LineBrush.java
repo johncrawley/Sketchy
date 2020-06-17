@@ -3,7 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.jacstuff.sketchy.BrushStyle;
+import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.line.DefaultLineDrawer;
 import com.jacstuff.sketchy.brushes.shapes.line.LineDrawer;
 import com.jacstuff.sketchy.brushes.shapes.line.LineOutlineDrawer;
