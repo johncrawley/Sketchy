@@ -36,9 +36,16 @@ public abstract class AbstractBrush {
         currentStyle.init(paint, brushSize);
     }
 
+
     public void onTouchMove(float x, float y){
         //do nothing
     }
+
+
+    public void onTouchUp(float x, float y){
+        // do nothing
+    }
+
 
     public void setBrushSize(int brushSize) {
         this.brushSize = brushSize;

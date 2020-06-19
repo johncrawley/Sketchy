@@ -8,6 +8,7 @@ import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.LineBrush;
 import com.jacstuff.sketchy.brushes.shapes.RoundedRectangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.SquareBrush;
+import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.styles.DashedStyle;
 import com.jacstuff.sketchy.brushes.styles.DashedStyleForLines;
 import com.jacstuff.sketchy.brushes.styles.FillStyle;
@@ -16,16 +17,15 @@ import com.jacstuff.sketchy.brushes.styles.OutlineStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
 import com.jacstuff.sketchy.brushes.styles.ThickOutlineStyle;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BrushFactory {
 
     private Map<BrushShape, Brush> brushMap;
-    private CircleBrush circleBrush;
-    private SquareBrush squareBrush;
-    private LineBrush lineBrush;
-    private RoundedRectangleBrush roundedRectangleBrush;
+    private Brush circleBrush, squareBrush, lineBrush, roundedRectangleBrush, triangleBrush;
+
 
     public BrushFactory(Canvas canvas, Paint paint, int brushSize){
         initBrushes(canvas, paint, brushSize);
@@ -34,6 +34,7 @@ public class BrushFactory {
         brushMap.put(BrushShape.ROUNDED_RECTANGLE, roundedRectangleBrush);
         brushMap.put(BrushShape.SQUARE, squareBrush);
         brushMap.put(BrushShape.LINE, lineBrush);
+        brushMap.put(BrushShape.TRIANGLE, triangleBrush);
     }
 
     private void initBrushes(Canvas canvas, Paint paint, int brushSize){
@@ -44,25 +45,18 @@ public class BrushFactory {
         Style thickOutlineStyle = new ThickOutlineStyle();
 
         circleBrush = new CircleBrush(canvas, paint);
-        circleBrush.add(BrushStyle.FILL, fillStyle);
-        circleBrush.add(BrushStyle.OUTLINE, outlineStyle);
-        circleBrush.add(BrushStyle.BROKEN_OUTLINE, dashedStyle);
-        circleBrush.add(BrushStyle.THICK_OUTLINE, thickOutlineStyle);
-        circleBrush.setBrushSize(brushSize);
-
         squareBrush = new SquareBrush(canvas, paint);
-        squareBrush.add(BrushStyle.FILL, fillStyle);
-        squareBrush.add(BrushStyle.OUTLINE, outlineStyle);
-        squareBrush.add(BrushStyle.BROKEN_OUTLINE, dashedStyle);
-        squareBrush.add(BrushStyle.THICK_OUTLINE, thickOutlineStyle);
-        squareBrush.setBrushSize(brushSize);
-
         roundedRectangleBrush = new RoundedRectangleBrush(canvas, paint, brushSize);
-        roundedRectangleBrush.add(BrushStyle.FILL, fillStyle);
-        roundedRectangleBrush.add(BrushStyle.OUTLINE, outlineStyle);
-        roundedRectangleBrush.add(BrushStyle.BROKEN_OUTLINE, dashedStyle);
-        roundedRectangleBrush.add(BrushStyle.THICK_OUTLINE, thickOutlineStyle);
-        roundedRectangleBrush.setBrushSize(brushSize);
+        triangleBrush = new TriangleBrush(canvas, paint);
+
+        for(Brush brush : Arrays.asList(squareBrush, circleBrush, triangleBrush, roundedRectangleBrush)){
+            brush.add(BrushStyle.FILL, fillStyle);
+            brush.add(BrushStyle.OUTLINE, outlineStyle);
+            brush.add(BrushStyle.BROKEN_OUTLINE, dashedStyle);
+            brush.add(BrushStyle.THICK_OUTLINE, thickOutlineStyle);
+            brush.setBrushSize(brushSize);
+        }
+
 
         lineBrush = new LineBrush(canvas, paint);
         lineBrush.add(BrushStyle.FILL, new FillStyleForLines());
@@ -71,6 +65,7 @@ public class BrushFactory {
         lineBrush.add(BrushStyle.THICK_OUTLINE, new ThickOutlineStyle());
         lineBrush.setBrushSize(brushSize);
     }
+
 
     public Brush getResettedBrushFor(BrushShape shape, BrushStyle brushStyle){
         Brush brush =  brushMap.getOrDefault(shape,circleBrush);

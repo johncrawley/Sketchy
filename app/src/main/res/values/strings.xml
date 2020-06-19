@@ -27,9 +27,11 @@
     <string name="content_description_circle_shape_button">Select to paint with circles</string>
     <string name="content_description_line_shape_button">Select to draw lines</string>
     <string name="content_description_rounded_rectangle_shape_button">Select to draw rounded squares</string>
+    <string name="content_description_triangle_shape_button">Select to draw triangles</string>
     <string name="content_description_fill_style_button">Select to paint with solid shapes</string>
     <string name="content_description_broken_outline_style_button">Select to paint shapes with broken outlines</string>
     <string name="content_description_outline_style_button">Select to paint with shape outlines</string>
+    <string name="content_description_thick_outline_style_button">Select to paint with thick outlines</string>
     <string name="pattern_toast_prefix">Pattern &#160;</string>
     <string name="pattern_label_first_to_last">First To Last</string>
     <string name="pattern_label_over_and_back">Over And Back</string>

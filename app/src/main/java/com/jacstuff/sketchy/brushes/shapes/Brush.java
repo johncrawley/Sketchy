@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
 import com.jacstuff.sketchy.brushes.BrushStyle;
+import com.jacstuff.sketchy.brushes.styles.Style;
 
 public interface Brush {
 
@@ -9,4 +10,5 @@ public interface Brush {
     void onTouchUp(float x, float y);
     void setBrushSize(int brushSize);
     void setStyle(BrushStyle style);
+    void add(BrushStyle brushStyle, Style style);
 }

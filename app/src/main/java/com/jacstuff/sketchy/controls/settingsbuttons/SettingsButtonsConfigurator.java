@@ -12,18 +12,17 @@ import com.jacstuff.sketchy.PaintViewSingleton;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class SettingsButtonsConfigurator {
 
     private MainActivity activity;
 
-    private List<Integer> styleButtonIds = Arrays.asList(R.id.brokenOutlineStyleButton, R.id.fillStyleButton, R.id.outlineStyleButton, R.id.thickOutlineStyleButton);
-    private List<Integer> shapeButtonIds = Arrays.asList(R.id.squareShapeButton, R.id.circleShapeButton, R.id.lineShapeButton, R.id.roundedRectangleShapeButton);
-    private Map<Integer, Procedure> paintActionsMap;
+    private Set<Integer> styleButtonIds;
+    private Set<Integer> shapeButtonIds;
+    private Map<Integer, Procedure> shapeActionsMap, styleActionsMap;
     private PaintView paintView;
 
     public SettingsButtonsConfigurator(MainActivity mainActivity){
@@ -34,25 +33,29 @@ public class SettingsButtonsConfigurator {
     public void setupShapeAndStyleButtons(PaintView paintView){
 
         this.paintView = paintView;
+        setupActionsMaps();
         assignCategoryTagTo(styleButtonIds, ButtonCategory.STYLE_SELECTION);
         assignCategoryTagTo(shapeButtonIds, ButtonCategory.SHAPE_SELECTION);
         setupButtonListeners();
-        setupPaintActionsMap();
         setupDefaultSelections();
     }
 
 
-    private void setupPaintActionsMap(){
-        paintActionsMap = new HashMap<>();
-        paintActionsMap.put(R.id.brokenOutlineStyleButton,  () -> set(BrushStyle.BROKEN_OUTLINE));
-        paintActionsMap.put(R.id.fillStyleButton,           () -> set(BrushStyle.FILL));
-        paintActionsMap.put(R.id.outlineStyleButton,        () -> set(BrushStyle.OUTLINE));
-        paintActionsMap.put(R.id.thickOutlineStyleButton,   () -> set(BrushStyle.THICK_OUTLINE));
+    private void setupActionsMaps(){
+        styleActionsMap = new HashMap<>();
+        styleActionsMap.put(R.id.brokenOutlineStyleButton,  () -> set(BrushStyle.BROKEN_OUTLINE));
+        styleActionsMap.put(R.id.fillStyleButton,           () -> set(BrushStyle.FILL));
+        styleActionsMap.put(R.id.outlineStyleButton,        () -> set(BrushStyle.OUTLINE));
+        styleActionsMap.put(R.id.thickOutlineStyleButton,   () -> set(BrushStyle.THICK_OUTLINE));
+        styleButtonIds = styleActionsMap.keySet();
 
-        paintActionsMap.put(R.id.squareShapeButton, () -> set(BrushShape.SQUARE));
-        paintActionsMap.put(R.id.circleShapeButton, () -> set(BrushShape.CIRCLE));
-        paintActionsMap.put(R.id.lineShapeButton,   () -> set(BrushShape.LINE));
-        paintActionsMap.put(R.id.roundedRectangleShapeButton, () -> set(BrushShape.ROUNDED_RECTANGLE));
+        shapeActionsMap = new HashMap<>();
+        shapeActionsMap.put(R.id.squareShapeButton, () -> set(BrushShape.SQUARE));
+        shapeActionsMap.put(R.id.circleShapeButton, () -> set(BrushShape.CIRCLE));
+        shapeActionsMap.put(R.id.lineShapeButton,   () -> set(BrushShape.LINE));
+        shapeActionsMap.put(R.id.roundedRectangleShapeButton, () -> set(BrushShape.ROUNDED_RECTANGLE));
+        shapeActionsMap.put(R.id.triangleShapeButton, () -> set(BrushShape.TRIANGLE));
+        shapeButtonIds = shapeActionsMap.keySet();
     }
 
 
@@ -92,7 +95,9 @@ public class SettingsButtonsConfigurator {
             default:
                 return;
         }
-        executeProcedureFor(viewId);
+        executeProcedureFor(viewId, shapeActionsMap);
+        executeProcedureFor(viewId, styleActionsMap);
+
         if(!isDefaultClick){
             saveSelectionToSingleton(viewId, buttonCategory);
         }
@@ -108,8 +113,8 @@ public class SettingsButtonsConfigurator {
     }
 
 
-    private void executeProcedureFor(int viewId){
-        Procedure procedure = paintActionsMap.get(viewId);
+    private void executeProcedureFor(int viewId, Map<Integer, Procedure> procedureMap){
+        Procedure procedure = procedureMap.get(viewId);
         if(procedure != null){
             procedure.execute();
         }
@@ -123,7 +128,7 @@ public class SettingsButtonsConfigurator {
 
 
 
-    private void assignCategoryTagTo(List<Integer> buttonIds, ButtonCategory buttonCategory){
+    private void assignCategoryTagTo(Set<Integer> buttonIds, ButtonCategory buttonCategory){
         for(int buttonId : buttonIds){
             assignCategoryTagToButtonWith(buttonId, buttonCategory);
         }
@@ -146,7 +151,7 @@ public class SettingsButtonsConfigurator {
     }
 
 
-    private void setOnClickListenerFor(List<Integer> ids){
+    private void setOnClickListenerFor(Set<Integer> ids){
         for(int id: ids){
            findViewById(id).setOnClickListener(activity);
         }
@@ -158,7 +163,7 @@ public class SettingsButtonsConfigurator {
     }
 
 
-    private void switchSelection(int viewId, List<Integer> buttons){
+    private void switchSelection(int viewId, Set<Integer> buttons){
         for(int buttonId : buttons){
             if(viewId == buttonId){
                 switchSelectionToButton(buttonId, buttons);
@@ -168,7 +173,7 @@ public class SettingsButtonsConfigurator {
     }
 
 
-    private void switchSelectionToButton(int buttonId, List<Integer> buttonList){
+    private void switchSelectionToButton(int buttonId, Set<Integer> buttonList){
         selectButton(buttonId);
         deselectOtherButtons(buttonId, buttonList);
     }
@@ -181,7 +186,7 @@ public class SettingsButtonsConfigurator {
     }
 
 
-    private void deselectOtherButtons(int selectedButtonId, List<Integer> buttonList){
+    private void deselectOtherButtons(int selectedButtonId, Set<Integer> buttonList){
         for(int buttonId : buttonList){
             if(buttonId == selectedButtonId){
                 continue;
