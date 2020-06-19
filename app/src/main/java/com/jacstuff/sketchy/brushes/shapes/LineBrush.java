@@ -26,11 +26,14 @@ public class LineBrush extends AbstractBrush implements Brush {
     private void setupLineDrawers(){
         lineDrawerMap = new HashMap<>();
         LineDrawer defaultLineDrawer = new DefaultLineDrawer(canvas, paint);
+        LineDrawer outlineDrawer = new LineOutlineDrawer(canvas, paint);
         lineDrawerMap.put(BrushStyle.FILL, defaultLineDrawer);
         lineDrawerMap.put(BrushStyle.BROKEN_OUTLINE, defaultLineDrawer);
-        lineDrawerMap.put(BrushStyle.OUTLINE, new LineOutlineDrawer(canvas, paint));
+        lineDrawerMap.put(BrushStyle.OUTLINE,outlineDrawer );
+        lineDrawerMap.put(BrushStyle.THICK_OUTLINE,outlineDrawer );
         currentLineDrawer = lineDrawerMap.get(BrushStyle.FILL);
     }
+
 
     @Override
     public void onTouchDown(float x, float y) {
@@ -52,11 +55,5 @@ public class LineBrush extends AbstractBrush implements Brush {
         currentLineDrawer = lineDrawerMap.get(brushStyle);
     }
 
-
-    @Override
-    public void setBrushSize(int brushSize){
-        super.setBrushSize(brushSize);
-        currentStyle.setBrushSize(paint, brushSize);
-    }
 
 }

@@ -21,7 +21,7 @@ public class SettingsButtonsConfigurator {
 
     private MainActivity activity;
 
-    private List<Integer> styleButtonIds = Arrays.asList(R.id.brokenOutlineStyleButton, R.id.fillStyleButton, R.id.outlineStyleButton);
+    private List<Integer> styleButtonIds = Arrays.asList(R.id.brokenOutlineStyleButton, R.id.fillStyleButton, R.id.outlineStyleButton, R.id.thickOutlineStyleButton);
     private List<Integer> shapeButtonIds = Arrays.asList(R.id.squareShapeButton, R.id.circleShapeButton, R.id.lineShapeButton, R.id.roundedRectangleShapeButton);
     private Map<Integer, Procedure> paintActionsMap;
     private PaintView paintView;
@@ -47,6 +47,7 @@ public class SettingsButtonsConfigurator {
         paintActionsMap.put(R.id.brokenOutlineStyleButton,  () -> set(BrushStyle.BROKEN_OUTLINE));
         paintActionsMap.put(R.id.fillStyleButton,           () -> set(BrushStyle.FILL));
         paintActionsMap.put(R.id.outlineStyleButton,        () -> set(BrushStyle.OUTLINE));
+        paintActionsMap.put(R.id.thickOutlineStyleButton,   () -> set(BrushStyle.THICK_OUTLINE));
 
         paintActionsMap.put(R.id.squareShapeButton, () -> set(BrushShape.SQUARE));
         paintActionsMap.put(R.id.circleShapeButton, () -> set(BrushShape.CIRCLE));

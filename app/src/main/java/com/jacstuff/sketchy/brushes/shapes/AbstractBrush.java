@@ -43,6 +43,7 @@ public abstract class AbstractBrush {
     public void setBrushSize(int brushSize) {
         this.brushSize = brushSize;
         this.halfBrushSize = brushSize / 2;
+        currentStyle.setBrushSize(paint, brushSize);
     }
 
 }
