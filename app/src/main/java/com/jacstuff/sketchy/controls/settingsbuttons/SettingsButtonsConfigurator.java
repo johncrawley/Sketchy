@@ -7,8 +7,8 @@ import android.widget.ImageButton;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.PaintView;
-import com.jacstuff.sketchy.PaintViewSingleton;
+import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 
@@ -22,7 +22,8 @@ public class SettingsButtonsConfigurator {
 
     private Set<Integer> styleButtonIds;
     private Set<Integer> shapeButtonIds;
-    private Map<Integer, Procedure> shapeActionsMap, styleActionsMap;
+    private Map<Integer, BrushShape> shapeActionsMap;
+    private Map<Integer, BrushStyle> styleActionsMap;
     private PaintView paintView;
 
     public SettingsButtonsConfigurator(MainActivity mainActivity){
@@ -43,36 +44,19 @@ public class SettingsButtonsConfigurator {
 
     private void setupActionsMaps(){
         styleActionsMap = new HashMap<>();
-        styleActionsMap.put(R.id.brokenOutlineStyleButton,  () -> set(BrushStyle.BROKEN_OUTLINE));
-        styleActionsMap.put(R.id.fillStyleButton,           () -> set(BrushStyle.FILL));
-        styleActionsMap.put(R.id.outlineStyleButton,        () -> set(BrushStyle.OUTLINE));
-        styleActionsMap.put(R.id.thickOutlineStyleButton,   () -> set(BrushStyle.THICK_OUTLINE));
+        styleActionsMap.put(R.id.brokenOutlineStyleButton,  BrushStyle.BROKEN_OUTLINE);
+        styleActionsMap.put(R.id.fillStyleButton,           BrushStyle.FILL);
+        styleActionsMap.put(R.id.outlineStyleButton,        BrushStyle.OUTLINE);
+        styleActionsMap.put(R.id.thickOutlineStyleButton,   BrushStyle.THICK_OUTLINE);
         styleButtonIds = styleActionsMap.keySet();
 
         shapeActionsMap = new HashMap<>();
-        shapeActionsMap.put(R.id.squareShapeButton, () -> set(BrushShape.SQUARE));
-        shapeActionsMap.put(R.id.circleShapeButton, () -> set(BrushShape.CIRCLE));
-        shapeActionsMap.put(R.id.lineShapeButton,   () -> set(BrushShape.LINE));
-        shapeActionsMap.put(R.id.roundedRectangleShapeButton, () -> set(BrushShape.ROUNDED_RECTANGLE));
-        shapeActionsMap.put(R.id.triangleShapeButton, () -> set(BrushShape.TRIANGLE));
+        shapeActionsMap.put(R.id.squareShapeButton, BrushShape.SQUARE);
+        shapeActionsMap.put(R.id.circleShapeButton, BrushShape.CIRCLE);
+        shapeActionsMap.put(R.id.lineShapeButton,   BrushShape.LINE);
+        shapeActionsMap.put(R.id.roundedRectangleShapeButton, BrushShape.ROUNDED_RECTANGLE);
+        shapeActionsMap.put(R.id.triangleShapeButton, BrushShape.TRIANGLE);
         shapeButtonIds = shapeActionsMap.keySet();
-    }
-
-
-    private void set(BrushShape brushShape){
-        paintView.set(brushShape);
-        updateBrushSize();
-    }
-
-
-    private void set(BrushStyle brushStyle){
-        paintView.set(brushStyle);
-        updateBrushSize();
-    }
-
-
-    private void updateBrushSize(){
-        paintView.setBrushSize(activity.getBrushSize());
     }
 
 
@@ -88,15 +72,15 @@ public class SettingsButtonsConfigurator {
 
             case SHAPE_SELECTION:
                 switchSelection(viewId, shapeButtonIds);
+                setShape(viewId);
                 break;
             case STYLE_SELECTION:
                 switchSelection(viewId, styleButtonIds);
+                setStyle(viewId);
                 break;
             default:
                 return;
         }
-        executeProcedureFor(viewId, shapeActionsMap);
-        executeProcedureFor(viewId, styleActionsMap);
 
         if(!isDefaultClick){
             saveSelectionToSingleton(viewId, buttonCategory);
@@ -113,11 +97,22 @@ public class SettingsButtonsConfigurator {
     }
 
 
-    private void executeProcedureFor(int viewId, Map<Integer, Procedure> procedureMap){
-        Procedure procedure = procedureMap.get(viewId);
-        if(procedure != null){
-            procedure.execute();
-        }
+    private void setShape(int viewId){
+        BrushShape brushShape = shapeActionsMap.get(viewId);
+        paintView.set(brushShape);
+        updateBrushSize();
+    }
+
+
+    private void setStyle(int viewId){
+        BrushStyle brushStyle = styleActionsMap.get(viewId);
+        paintView.set(brushStyle);
+        updateBrushSize();
+    }
+
+
+    private void updateBrushSize(){
+        paintView.setBrushSize(activity.getBrushSize());
     }
 
 

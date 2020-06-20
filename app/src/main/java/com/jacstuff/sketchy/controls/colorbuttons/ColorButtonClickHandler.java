@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.controls.ButtonCategory;
-import com.jacstuff.sketchy.PaintView;
+import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.multicolor.MulticolorSelector;

@@ -42,7 +42,7 @@
             android:layout_margin="@dimen/paint_view_layout_margin"
             android:background="#291F1F">
 
-            <com.jacstuff.sketchy.PaintView
+            <com.jacstuff.sketchy.paintview.PaintView
                 android:id="@+id/paintView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

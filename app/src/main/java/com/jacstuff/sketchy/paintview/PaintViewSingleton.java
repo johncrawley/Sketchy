@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy;
+package com.jacstuff.sketchy.paintview;
 
 import android.graphics.Bitmap;
 
@@ -44,39 +44,39 @@ public class PaintViewSingleton  {
     }
 
 
-    void setBitmap(Bitmap bitmap){
+    public void setBitmap(Bitmap bitmap){
         this.bitmap = bitmap;
     }
 
 
-    void setMostRecentColor(String key){
+    public void setMostRecentColor(String key){
         this.mostRecentColor = key;
     }
 
-    void setMostRecentShade(String key){
+    public void setMostRecentShade(String key){
         this.mostRecentShade = key;
     }
 
 
-    void setWasMostRecentClickAShade(boolean b){
+    public void setWasMostRecentClickAShade(boolean b){
         this.wasMostRecentClickAShade = b;
     }
 
-    boolean wasMostRecentClickAShade(){
+    public boolean wasMostRecentClickAShade(){
         return this.wasMostRecentClickAShade;
     }
 
 
-    String getMostRecentColor(){
+    public String getMostRecentColor(){
         return this.mostRecentColor;
     }
 
 
-    String getMostRecentShade(){
+    public String getMostRecentShade(){
         return this.mostRecentShade;
     }
 
-    Bitmap getBitmap(){
+    public Bitmap getBitmap(){
         return this.bitmap;
     }
 

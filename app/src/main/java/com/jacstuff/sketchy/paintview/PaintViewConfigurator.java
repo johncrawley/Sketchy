@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy;
+package com.jacstuff.sketchy.paintview;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
-class PaintViewConfigurator {
+import com.jacstuff.sketchy.R;
+
+public class PaintViewConfigurator {
 
     private int screenWidth, screenHeight;
     private Context context;
@@ -14,7 +16,7 @@ class PaintViewConfigurator {
     private int actionBarHeight;
     private int totalMargin, totalPaintViewMargins;
 
-    PaintViewConfigurator(Context context, WindowManager windowManager){
+    public PaintViewConfigurator(Context context, WindowManager windowManager){
         this.context = context;
         deriveScreenDimensions(windowManager);
         getDimensionValues();
@@ -31,7 +33,7 @@ class PaintViewConfigurator {
     }
 
 
-    void configure(PaintView paintView, int brushSize){
+    public void configure(PaintView paintView, int brushSize){
         int paintViewWidth, paintViewHeight;
 
         if(isInLandscapeMode()){

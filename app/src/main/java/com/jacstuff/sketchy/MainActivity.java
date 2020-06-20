@@ -21,6 +21,9 @@ import com.jacstuff.sketchy.controls.colorbuttons.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator;
+import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
+import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
 import java.util.Map;
 

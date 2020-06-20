@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy;
+package com.jacstuff.sketchy.paintview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
