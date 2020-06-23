@@ -18,7 +18,7 @@ import com.jacstuff.sketchy.multicolor.ColorSelector;
 
 public class PaintView extends View {
 
-
+    private int canvasWidth, canvasHeight;
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
     private Paint paint;
     private int brushSize;
@@ -29,6 +29,8 @@ public class PaintView extends View {
     private BrushStyle currentBrushStyle = BrushStyle.FILL;
     private Brush currentBrush;
     private BrushFactory brushFactory;
+    private boolean wasCanvasModifiedSinceLastSaveOrReset;
+    private boolean isCanvasLocked;
 
 
     public PaintView(Context context) {
@@ -46,6 +48,13 @@ public class PaintView extends View {
         paint.setStrokeCap(Paint.Cap.SQUARE);
     }
 
+    public void notifyPictureSaved(){
+        wasCanvasModifiedSinceLastSaveOrReset = false;
+    }
+
+    public boolean canvasWasModifiedSinceLastSaveOrReset(){
+        return wasCanvasModifiedSinceLastSaveOrReset;
+    }
 
     public void set(BrushStyle brushStyle){
         currentBrushStyle = brushStyle;
@@ -58,35 +67,47 @@ public class PaintView extends View {
         currentBrush.setBrushSize(brushSize);
     }
 
-    private int canvasWidth, canvasHeight;
 
     public void init(int canvasWidth, int canvasHeight) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
         bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        paint.setColor(Color.WHITE);
-        canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
+        paint.setColor(DEFAULT_BG_COLOR);
+        drawPlainBackground();
         initBrushes();
     }
 
 
     public void resetCanvas(){
+        wasCanvasModifiedSinceLastSaveOrReset = false;
+        isCanvasLocked = true;
         int currentColor = paint.getColor();
-        paint.setColor(Color.WHITE);
-        paint.setPathEffect(null);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
+        resetStylesAndColors();
+        drawPlainBackground();
         invalidate();
         currentBrush.setStyle(currentBrushStyle);
         paint.setColor(currentColor);
+        isCanvasLocked = false;
+    }
+
+
+    private void resetStylesAndColors(){
+        paint.setColor(DEFAULT_BG_COLOR);
+        paint.setPathEffect(null);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+    }
+
+
+    private void drawPlainBackground(){
+        canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
     }
 
 
     public void setBitmap(Bitmap bitmap){
         this.bitmap = bitmap;
         canvas = new Canvas(bitmap);
-        paint.setColor(Color.WHITE);
+        paint.setColor(DEFAULT_BG_COLOR);
         initBrushes();
     }
 
@@ -138,6 +159,10 @@ public class PaintView extends View {
 
 
     private void performAction(float x, float y, int action){
+        wasCanvasModifiedSinceLastSaveOrReset = true;
+        if(isCanvasLocked){
+            return;
+        }
         switch(action) {
             case MotionEvent.ACTION_DOWN :
                 currentBrush.onTouchDown(x,y);

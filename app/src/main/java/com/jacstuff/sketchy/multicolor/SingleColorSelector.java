@@ -13,14 +13,14 @@ public class SingleColorSelector implements ColorSelector {
     }
 
     @Override
-    public void set(List<Color> colorList) {
+    public void set(List<Integer> colorList) {
 
     }
 
 
     @Override
-    public void set(Color color){
-        this.color = color.toArgb();
+    public void set(int color){
+        this.color = color;
     }
 
     @Override

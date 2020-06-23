@@ -8,21 +8,30 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+
+        <activity android:name=".MainActivity"/>
+
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".AboutDialogActivity"
             android:label="@string/about_activity_label"
-            android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".MainActivity">
+            android:theme="@style/dialogTheme" />
 
-        </activity>
+
+        <activity android:name=".ConfirmWipeDialogActivity"
+            android:label="@string/confirm_wipe_activity_label"
+            android:theme="@style/dialogTheme" />
+
     </application>
 
 </manifest>

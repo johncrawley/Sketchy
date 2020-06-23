@@ -1,90 +1,75 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
-import android.graphics.Color;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 class ColorShadeCreator {
 
     private final int NUMBER_OF_SHADES;
-    private final float SHADE_INCREMENT;
+    private final int SHADE_INCREMENT;
 
-    ColorShadeCreator(int numberOfShades, float shadeIncrement){
+    ColorShadeCreator(int numberOfShades, int shadeIncrement){
         NUMBER_OF_SHADES = numberOfShades;
         SHADE_INCREMENT = shadeIncrement;
     }
 
 
-    List<Color> generateShadesFrom(Color color){
-        List<Color> shades = getDarkShadesFrom(color);
-        List<Color> lightShades= createShades(this::createIncrementedColor, color);
+    List<Integer> generateShadesFrom(Integer color){
+        List<Integer> shades = getDarkShadesFrom(color);
+        List<Integer> lightShades= createShadesOf(color, true);
         shades.addAll(lightShades);
         return shades;
     }
 
 
-    private Color createIncrementedColor(Color currentColor){
-        return modifyColor(this::incIfWithinLimit, currentColor);
-    }
-
-
-    private List<Color> getDarkShadesFrom(Color color){
-        List<Color> darkShades = createShades(this::createDecrementedColor, color);
+    private List<Integer> getDarkShadesFrom(Integer color){
+        List<Integer> darkShades = createShadesOf(color, false);
         Collections.reverse(darkShades);
         darkShades.remove(darkShades.size()-1);
         return darkShades;
     }
 
 
-    private Color createDecrementedColor(Color currentColor){
-        return modifyColor(this::decIfAboveZero, currentColor);
-    }
+    private List<Integer> createShadesOf(int baseColor, boolean isLighter){
+        List<Integer> shades = new ArrayList<>();
+        int current = baseColor;
+        int previous = 0;
 
-
-    private List<Color> createShades(Function<Color, Color> colorCreator, Color baseColor){
-
-        List<Color> shades = new ArrayList<>();
-        Color current = baseColor;
-        Color previous = null;
         for(int i = 0; i < NUMBER_OF_SHADES; i++){
-            if(areTheSame(current, previous)){
+            if(current == previous){
                 break;
             }
             previous = current;
             shades.add(current);
-            current = colorCreator.apply(current);
+            current = getNextShadeOf(current, isLighter);
         }
         return shades;
     }
 
 
-    private boolean areTheSame(Color color, Color otherColor){
-        return color == null || color.equals(otherColor);
+    private int getNextShadeOf(int currentColor, boolean isIncremented){
+
+        int r1 = (currentColor >> 16) & 0xff;
+        int g1 = (currentColor >> 8) & 0xff;
+        int b1 = (currentColor      ) & 0xff;
+
+        int r = adjust(r1, isIncremented);
+        int g = adjust(g1, isIncremented);
+        int b = adjust(b1, isIncremented);
+
+        return ColorConverter.getIntFrom(r,g,b);
     }
 
 
-
-    private Color modifyColor(Function<Float, Float> valueFunction, Color currentColor){
-        float r = valueFunction.apply(currentColor.red());
-        float g = valueFunction.apply(currentColor.green());
-        float b = valueFunction.apply(currentColor.blue());
-        return Color.valueOf(r,g,b);
-    }
-
-
-
-    private float incIfWithinLimit(float currentValue) {
-        currentValue += SHADE_INCREMENT;
-        return Math.min(1.0f, currentValue);
-    }
-
-
-    private float decIfAboveZero(float currentValue) {
+    private int adjust(float currentValue, boolean isValueIncremented){
+        if(isValueIncremented){
+            currentValue += SHADE_INCREMENT;
+            return (int)Math.min(255, currentValue);
+        }
         currentValue -= SHADE_INCREMENT;
-        return Math.max(0.0f, currentValue);
+        return (int)Math.max(0, currentValue);
     }
 
 }

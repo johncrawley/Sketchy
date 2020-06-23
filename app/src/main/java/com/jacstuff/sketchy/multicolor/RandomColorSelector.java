@@ -1,6 +1,6 @@
 package com.jacstuff.sketchy.multicolor;
 
-import android.graphics.Color;
+
 import android.util.Log;
 
 import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
@@ -11,7 +11,7 @@ import java.util.List;
 public class RandomColorSelector implements ColorSelector {
 
     private MulticolorPattern pattern;
-    private List<Color> colors;
+    private List<Integer> colors;
 
     public RandomColorSelector(){
         pattern = new RandomPattern();
@@ -22,7 +22,7 @@ public class RandomColorSelector implements ColorSelector {
         //do nothing
     }
     @Override
-    public void set(Color color){
+    public void set(int color){
         //do nothing
     }
 
@@ -38,7 +38,7 @@ public class RandomColorSelector implements ColorSelector {
 
 
     @Override
-    public void set(List<Color> colors){
+    public void set(List<Integer> colors){
         this.colors = colors;
     }
 
@@ -47,7 +47,7 @@ public class RandomColorSelector implements ColorSelector {
     @Override
     public int getNextColor(){
         int index = pattern.getNextIndex(colors.size());
-        return colors.get(index).toArgb();
+        return colors.get(index);
 
     }
 

@@ -68,7 +68,7 @@ public class BrushFactory {
 
 
     public Brush getResettedBrushFor(BrushShape shape, BrushStyle brushStyle){
-        Brush brush =  brushMap.getOrDefault(shape,circleBrush);
+        Brush brush =  brushMap.get(shape);
         brush.setStyle(brushStyle);
         return brush;
     }

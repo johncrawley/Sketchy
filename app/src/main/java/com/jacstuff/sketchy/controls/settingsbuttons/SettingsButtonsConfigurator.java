@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.controls.settingsbuttons;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -131,6 +132,7 @@ public class SettingsButtonsConfigurator {
 
 
     private void assignCategoryTagToButtonWith(int id, ButtonCategory buttonCategory){
+        Log.i("sketchty btn cfg", " category : " + buttonCategory);
         findViewById(id).setTag(R.string.tag_button_category, buttonCategory);
     }
 

@@ -1,6 +1,6 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
-import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -16,7 +16,6 @@ import com.jacstuff.sketchy.multicolor.RandomColorSelector;
 import com.jacstuff.sketchy.multicolor.SingleColorSelector;
 import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +24,15 @@ public class ColorButtonClickHandler {
 
     private PaintView paintView;
     private Button previouslySelectedShadeButton, previouslySelectedColorButton, previouslySelectedButton;
-    private List<Color> colors;
+    private List<Integer> colors;
     private ButtonLayoutParams buttonLayoutParams;
     private Map<String, LinearLayout> shadeLayoutsMap;
     private boolean isMostRecentClickAShade = false; //for use when selecting a button after rotate/resume
     private HorizontalScrollView shadesScrollView;
-    private Map<Color, List<Color>> multiColorShades = new HashMap<>();
+    private Map<Integer, List<Integer>> multiColorShades = new HashMap<>();
     private Map<ButtonType, ColorSelector> colorSelectors;
     private MainActivity mainActivity;
+    private ColorSelector currentColorSelector;
 
 
     public ColorButtonClickHandler(MainActivity mainActivity, PaintView paintView, ButtonLayoutParams buttonLayoutParams, HorizontalScrollView shadesScrollView ){
@@ -60,8 +60,8 @@ public class ColorButtonClickHandler {
     }
 
 
-    public void setColorsMap(Map<String, Color> colorsMap){
-        colors = new ArrayList<>(colorsMap.values());
+    public void setColorsMap(final List<Integer> colors){
+       this.colors = colors;
     }
 
 
@@ -93,7 +93,7 @@ public class ColorButtonClickHandler {
     }
 
 
-   public void setMultiColorShades(Map<Color, List<Color>> multiColorShades){
+   public void setMultiColorShades(Map<Integer, List<Integer>> multiColorShades){
         this.multiColorShades = multiColorShades;
     }
 
@@ -163,8 +163,8 @@ public class ColorButtonClickHandler {
     }
 
 
-    private List<Color> getShadesFrom(Button button){
-        Color color = (Color)button.getTag(R.string.tag_button_color);
+    private List<Integer> getShadesFrom(Button button){
+        int color = (int)button.getTag(R.string.tag_button_color);
         return multiColorShades.get(color);
     }
 
@@ -196,22 +196,18 @@ public class ColorButtonClickHandler {
 
 
     private void setPaintColorFrom(Button button){
-        Color color = getColorOf(button);
-        if(color == null){
-            return;
-        }
+        int color = getColorOf(button);
         currentColorSelector.set(color);
     }
 
 
-    private Color getColorOf(Button button){
-        return (Color)button.getTag(R.string.tag_button_color);
+    private int getColorOf(Button button){
+        return (int)button.getTag(R.string.tag_button_color);
     }
 
-    private ColorSelector currentColorSelector;
 
 
-    private void assignMultiSelector(Button button, List<Color> colorList){
+    private void assignMultiSelector(Button button, List<Integer> colorList){
         if(button == previouslySelectedButton){
             currentColorSelector.nextPattern();
             mainActivity.toast(currentColorSelector.getCurrentPatternLabel());

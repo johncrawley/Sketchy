@@ -2,21 +2,23 @@
     <string name="app_name">Sketchty</string>
     <string name="save_sketch_activity_label">Save Sketch</string>
     <string name="about_activity_label">About</string>
+    <string name="confirm_wipe_activity_label">Confirm</string>
     <string name="action_save">Save</string>
     <string name="action_about">About</string>
-    <string name="action_add">New</string>
+    <string name="action_wipe">Wipe</string>
     <string name="about_created_by">Created by John Crawley, 2020</string>
-    <string name="about_version">Version 1.01</string>
+    <string name="about_version">Version 1.20</string>
     <string name="tag_button_type">1</string>
     <string name="tag_button_category">8</string>
     <string name="tag_button_default_color">9</string>
     <string name="tag_button_color">2</string>
+    <string name="tag_button_color_button">11</string>
     <string name="tag_button_key">7</string>
     <string name="button_type_color">3</string>
     <string name="button_type_multi_color">4</string>
     <string name="button_type_multi_shade">6</string>
     <string name="button_type_shade">5</string>
-    <string name="default_color">black</string>
+    <string name="default_color">_-16777216</string>
     <string name="save_dialogue_save_button">SAVE</string>
     <string name="save_dialogue_cancel_button">@android:string/cancel</string>
     <string name="bitmap_intent_extra">bitmap_intent_extra</string>
@@ -49,5 +51,8 @@
     <string name="pattern_label_to_dark">To Dark</string>
     <string name="pattern_label_snake">Snake</string>
     <string name="pattern_label_macaron">Macaron</string>
+    <string name="confirm_wipe_text">Clear the canvas without saving?</string>
+    <string name="confirm_wipe_confirm_button">Yes</string>
+    <string name="confirm_wipe_cancel_button">No</string>
 
 </resources>

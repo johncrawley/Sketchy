@@ -4,9 +4,9 @@ package com.jacstuff.sketchy;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +25,7 @@ import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
 import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
-import java.util.Map;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private PaintView paintView;
     private HorizontalScrollView shadesScrollView;
     final int SAVE_FILE_ACTIVITY_CODE = 101;
+    final int CLEAR_CANVAS_ACTIVITY_CODE = 102;
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
     private ButtonLayoutParams buttonLayoutParams = new ButtonLayoutParams(120, 120, 15);
@@ -138,13 +139,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     void setupColorAndShadeButtons(){
-        Map<String, Color> colors = ColorCreator.generate();
+        List<Integer> colors = ColorCreator.generate();
         buttonClickHandler.setColorsMap(colors);
         layoutPopulator = new ColorButtonLayoutPopulator(this, buttonLayoutParams, colors);
         buttonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
         layoutPopulator.addColorButtonLayoutsTo(colorButtonGroupLayout);
         buttonClickHandler.setShadeLayoutsMap(layoutPopulator.getShadeLayoutsMap());
-        buttonClickHandler.handleColorButtonClicks(colorButtonGroupLayout.findViewWithTag(R.string.tag_button_default_color));
+        buttonClickHandler.handleColorButtonClicks(getDefaultButton());
+    }
+
+
+    private View getDefaultButton(){
+        View defaultButton = colorButtonGroupLayout.findViewWithTag(R.string.tag_button_default_color);
+        if(defaultButton == null){
+            defaultButton = colorButtonGroupLayout.findViewWithTag(R.string.tag_button_color_button);
+        }
+        return defaultButton;
     }
 
 
@@ -183,7 +193,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void setupActionbar(){
-        setSupportActionBar(findViewById(R.id.toolbar));
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar();
     }
 
@@ -210,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_new:
-                createNewSketch();
+                startClearDialogIfChangesNotSaved();
                 return true;
             case R.id.action_save:
                 startSaveDocumentActivity();
@@ -224,21 +235,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    void startClearDialogIfChangesNotSaved(){
+        if(paintView.canvasWasModifiedSinceLastSaveOrReset()){
+            startConfirmClearActivity();
+            return;
+        }
+        createNewSketch();
+    }
+
+
     private void createNewSketch(){
-
         paintView.resetCanvas();
-
     }
 
 
     private void startAboutActivity(){
         Intent intent = new Intent(this, AboutDialogActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, CLEAR_CANVAS_ACTIVITY_CODE);
     }
+
 
     public int getBrushSize(){
         return seekBar.getProgress();
     }
+
 
     private void startSaveDocumentActivity(){
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
@@ -248,11 +269,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(intent, SAVE_FILE_ACTIVITY_CODE);
     }
 
+    private void startConfirmClearActivity(){
+
+        Intent intent = new Intent(this, ConfirmWipeDialogActivity.class);
+        startActivityForResult(intent, CLEAR_CANVAS_ACTIVITY_CODE);
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SAVE_FILE_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
             imageSaver.saveImageToFile(data, paintView);
+            paintView.notifyPictureSaved();
+        }
+        else if(requestCode == CLEAR_CANVAS_ACTIVITY_CODE && resultCode == Activity.RESULT_OK){
+            createNewSketch();
         }
     }
 

@@ -15,14 +15,13 @@
 
 
         <LinearLayout
-
             android:id="@+id/shapeOptionsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/shape_selector_group_top_margin"
             android:orientation="horizontal"
-            android:paddingTop="10dp">
+            android:paddingTop="@dimen/shape_options_padding_top">
 
             <ImageButton
                 android:id="@+id/squareShapeButton"
@@ -141,8 +140,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="0dp"
+            android:paddingTop="@dimen/seekbar_padding_top"
+            android:paddingBottom="@dimen/seekbar_padding_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/styleOptionsLayout">
@@ -162,7 +161,6 @@
                 android:layout_height="50dp"
                 android:indeterminate="false"
                 android:max="@integer/brush_size_max_default"
-                android:min="@integer/brush_size_min_default"
                 android:paddingStart="10dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="10dp"

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class MulticolorSelector implements ColorSelector {
 
-    private List<Color> colors;
+    private List<Integer> colors;
     private MulticolorPattern currentMulticolorPattern;
     private List<MulticolorPattern> multicolorPatterns;
     private int currentPatternIndex = 0;
@@ -25,7 +25,7 @@ public class MulticolorSelector implements ColorSelector {
 
     public int getNextColor(){
         int currentIndex = currentMulticolorPattern.getNextIndex(colors.size());
-        return colors.get(currentIndex).toArgb();
+        return colors.get(currentIndex);
     }
 
 
@@ -47,12 +47,12 @@ public class MulticolorSelector implements ColorSelector {
     }
 
 
-    public void set(List<Color> inputList){
+    public void set(List<Integer> inputList){
         colors = inputList;
     }
 
     @Override
-    public void set(Color color){
+    public void set(int color){
         // do nothing
     }
 

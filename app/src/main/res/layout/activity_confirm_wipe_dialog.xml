@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConfirmWipeDialogActivity">
+
+
+    <TextView
+        android:id="@+id/confirmWipeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/clear_canvas_dialog_text_padding"
+        android:text="@string/confirm_wipe_text"
+        android:textAlignment="center"
+        android:textSize="@dimen/clear_canvas_dialog_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/clear_canvas_dialog_buttons_layout_bottom_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/confirmWipeText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <Button
+            android:id="@+id/confirmClearCanvasButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/clear_canvas_dialog_buttons_padding"
+            android:paddingStart="@dimen/clear_canvas_dialog_buttons_side_padding"
+            android:paddingEnd="@dimen/clear_canvas_dialog_buttons_side_padding"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/clear_canvas_dialog_buttons_side_margin"
+            android:layout_marginEnd="@dimen/clear_canvas_dialog_buttons_side_margin"
+            android:text="@string/confirm_wipe_confirm_button"/>
+        <Button
+            android:id="@+id/cancelClearCanvasButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/clear_canvas_dialog_buttons_padding"
+            android:paddingStart="@dimen/clear_canvas_dialog_buttons_side_padding"
+            android:paddingEnd="@dimen/clear_canvas_dialog_buttons_side_padding"
+            android:layout_marginStart="@dimen/clear_canvas_dialog_buttons_side_margin"
+            android:layout_marginEnd="@dimen/clear_canvas_dialog_buttons_side_margin"
+            android:layout_weight="1"
+            android:text="@string/confirm_wipe_cancel_button" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

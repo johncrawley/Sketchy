@@ -32,7 +32,7 @@ public abstract class AbstractBrush {
     }
 
     public void setStyle(BrushStyle style){
-        currentStyle = styleMap.getOrDefault(style, new FillStyle());
+        currentStyle = styleMap.get(style);
         currentStyle.init(paint, brushSize);
     }
 

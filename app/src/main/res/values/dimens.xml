@@ -11,16 +11,28 @@
     <dimen name="paint_view_layout_margin">5dp</dimen>
     <dimen name="paint_view_layout_portrait_margin_top">15dp</dimen>
     <dimen name="paint_view_layout_padding">5dp</dimen>
+    <dimen name="color_button_height">40dp</dimen>
+    <dimen name="color_button_width">40dp</dimen>
     <dimen name="action_bar_height">55dp</dimen>
     <dimen name="about_text_padding">40dp</dimen>
     <dimen name="about_text_primary_font_size">30sp</dimen>
     <dimen name="about_text_secondary_font_size">22sp</dimen>
+    <dimen name="about_text_side_padding">14dp</dimen>
     <dimen name="shade_scroll_view_bottom_margin">8dp</dimen>
-    <dimen name="shape_selector_group_top_margin">16dp</dimen>
+    <dimen name="shape_selector_group_top_margin">12dp</dimen>
     <dimen name="brush_size_min_default">2sp</dimen>
     <dimen name="brush_size_max_default">230sp</dimen>
     <dimen name="brush_size_min_line_outline">4sp</dimen>
     <dimen name="brush_size_max_line_outline">30sp</dimen>
+    <dimen name="seekbar_padding_top">8dp</dimen>
+    <dimen name="seekbar_padding_bottom">8dp</dimen>
+    <dimen name="shape_options_padding_top">4dp</dimen>
+    <dimen name="clear_canvas_dialog_buttons_padding">16dp</dimen>
+    <dimen name="clear_canvas_dialog_buttons_layout_bottom_margin">12dp</dimen>
+    <dimen name="clear_canvas_dialog_buttons_side_padding">12dp</dimen>
+    <dimen name="clear_canvas_dialog_buttons_side_margin">12dp</dimen>
+    <dimen name="clear_canvas_dialog_text_padding">24dp</dimen>
+    <dimen name="clear_canvas_dialog_text_size">22sp</dimen>
 
 
 </resources>
