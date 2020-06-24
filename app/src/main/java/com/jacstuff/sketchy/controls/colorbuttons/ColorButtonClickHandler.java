@@ -1,6 +1,5 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -99,13 +98,15 @@ public class ColorButtonClickHandler {
 
 
     public void handleColorButtonClicks(View view){
+
         if(view == null || ButtonCategory.COLOR_SELECTION != view.getTag(R.string.tag_button_category)){
             return;
         }
         Button button = (Button)view;
-        ButtonType type = (ButtonType)view.getTag(R.string.tag_button_type);
-        currentColorSelector = colorSelectors.get(type);
-        switch(type){
+        ButtonType buttonType = (ButtonType)view.getTag(R.string.tag_button_type);
+        button.getParent().requestChildFocus(button,button);
+        currentColorSelector = colorSelectors.get(buttonType);
+        switch(buttonType){
             case COLOR:
                 onMainColorButtonClick(button);
                 break;
@@ -154,15 +155,6 @@ public class ColorButtonClickHandler {
     }
 
 
-    private void onMultiShadeButtonClick(Button button){
-        deselectButton(previouslySelectedShadeButton);
-        assignMultiSelector(button, getShadesFrom(button));
-        selectButton(button);
-        previouslySelectedShadeButton = button;
-        isMostRecentClickAShade = true;
-    }
-
-
     private List<Integer> getShadesFrom(Button button){
         int color = (int)button.getTag(R.string.tag_button_color);
         return multiColorShades.get(color);
@@ -180,12 +172,23 @@ public class ColorButtonClickHandler {
     }
 
     private void onRandomShadeButtonClick(Button button){
-        deselectButton(previouslySelectedShadeButton);
         currentColorSelector.set(getShadesFrom(button));
+        selectButtonAndSetRecent(button);
+    }
+
+    private void selectButtonAndSetRecent(Button button){
+        deselectButton(previouslySelectedShadeButton);
         previouslySelectedShadeButton = button;
         selectButton(button);
         isMostRecentClickAShade = true;
     }
+
+
+    private void onMultiShadeButtonClick(Button button){
+        assignMultiSelector(button, getShadesFrom(button));
+        selectButtonAndSetRecent(button);
+    }
+
 
 
     private void setColorAndUpdateButtons(Button button){

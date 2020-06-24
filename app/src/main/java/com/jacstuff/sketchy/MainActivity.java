@@ -100,7 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void assignRecentButtons(){
         PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
+        boolean wasMostRecentClickAShade = paintViewSingleton.wasMostRecentClickAShade();
         selectRecentColorButton(paintViewSingleton);
+        paintViewSingleton.setWasMostRecentClickAShade(wasMostRecentClickAShade);
         selectRecentShadeButton(paintViewSingleton);
         selectRecentShapeAndStyle(paintViewSingleton);
     }

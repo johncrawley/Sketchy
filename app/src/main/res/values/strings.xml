@@ -18,7 +18,7 @@
     <string name="button_type_multi_color">4</string>
     <string name="button_type_multi_shade">6</string>
     <string name="button_type_shade">5</string>
-    <string name="default_color">_-16777216</string>
+    <string name="default_color">COLOR_-16777216</string>
     <string name="save_dialogue_save_button">SAVE</string>
     <string name="save_dialogue_cancel_button">@android:string/cancel</string>
     <string name="bitmap_intent_extra">bitmap_intent_extra</string>

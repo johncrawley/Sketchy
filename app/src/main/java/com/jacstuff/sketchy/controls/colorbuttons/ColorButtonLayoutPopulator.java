@@ -64,6 +64,7 @@ public class ColorButtonLayoutPopulator {
     }
 
 
+
     public Map<String, LinearLayout> getShadeLayoutsMap (){
         return this.shadeLayoutsMap;
     }
@@ -86,7 +87,7 @@ public class ColorButtonLayoutPopulator {
 
 
     private void addColorAndShadeButtons(int color){
-        addColorButton(color, createColorKey(color));
+        addColorButton(color, createColorKey(color, ButtonType.COLOR));
         List<Integer> shades = colorShadeCreator.generateShadesFrom(color);
         addShadesToLayoutMap(color, shades);
         addMultiColorShades(color, shades);
@@ -100,11 +101,7 @@ public class ColorButtonLayoutPopulator {
 
     private void addShadesToLayoutMap(int color, List<Integer> shades){
         LinearLayout shadeLayout = createLayoutWithButtonsFrom(shades, ButtonType.SHADE);
-        shadeLayoutsMap.put(createColorKey(color), shadeLayout);
-    }
-
-    private String createColorKey(int color){
-        return "_" + color;
+        shadeLayoutsMap.put(createColorKey(color, ButtonType.COLOR), shadeLayout);
     }
 
 
@@ -119,15 +116,14 @@ public class ColorButtonLayoutPopulator {
 
 
     private LinearLayout createShadeButton(int color, ButtonType buttonType){
-        String key = getKeyFrom(color);
+        String key = createColorKey(color, buttonType);
         Button button = createButton(color, buttonType, key);
         return wrapInMarginLayout(button);
     }
 
 
-    private String getKeyFrom(int color){
-        return "_" + color;
-
+    private String createColorKey(int color, ButtonType buttonType){
+        return buttonType + "_" + color;
     }
 
 
@@ -151,8 +147,6 @@ public class ColorButtonLayoutPopulator {
     }
 
 
-
-
     private Button createGenericColorButton(ButtonType type, String key){
         Button button = new Button(context);
         button.setLayoutParams(buttonLayoutParams.getUnselected());
@@ -164,6 +158,7 @@ public class ColorButtonLayoutPopulator {
         button.setOnClickListener(onClickListener);
         return button;
     }
+
 
     private void setstandardWidthOn(Button button){
         float dps = context.getResources().getDimension(R.dimen.color_button_width);
