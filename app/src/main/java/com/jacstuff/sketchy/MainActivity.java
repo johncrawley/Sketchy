@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -42,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ColorButtonLayoutPopulator layoutPopulator;
     private Toast colorPatternToast;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
+    private ResumedActionsHelper resumedActionsHelper;
 
 
     @Override
@@ -53,8 +53,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupActionbar();
         setupBrushSizeSeekBar();
         configurePaintView();
+        setupButtons();
+    }
+
+
+    private void setupButtons(){
         setupSettingsButtons();
-        setupButtonListeners();
         setupDefaultSelections();
         setupButtonClickHandler();
         setupColorAndShadeButtons();
@@ -69,6 +73,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setupSettingsButtons(){
         settingsButtonsConfigurator = new SettingsButtonsConfigurator(this);
         settingsButtonsConfigurator.setupShapeAndStyleButtons(paintView);
+    }
+
+    private void assignRecentButtons(){
+        resumedActionsHelper = new ResumedActionsHelper( buttonClickHandler ,layoutPopulator, settingsButtonsConfigurator, paintView);
+        resumedActionsHelper.onResume();
     }
 
 
@@ -95,36 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(bitmap != null){
             paintView.setBitmap(bitmap);
         }
-    }
-
-
-    private void assignRecentButtons(){
-        PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
-        boolean wasMostRecentClickAShade = paintViewSingleton.wasMostRecentClickAShade();
-        selectRecentColorButton(paintViewSingleton);
-        paintViewSingleton.setWasMostRecentClickAShade(wasMostRecentClickAShade);
-        selectRecentShadeButton(paintViewSingleton);
-        selectRecentShapeAndStyle(paintViewSingleton);
-    }
-
-
-    private void selectRecentColorButton(PaintViewSingleton pvs ){
-        Button mostRecentColorButton = layoutPopulator.getButton(pvs.getMostRecentColor());
-        buttonClickHandler.handleColorButtonClicks(mostRecentColorButton);
-    }
-
-
-    private void selectRecentShadeButton(PaintViewSingleton pvs ){
-        if(pvs.wasMostRecentClickAShade()){
-            Button mostRecentShadeButton = layoutPopulator.getButton(pvs.getMostRecentShade());
-            buttonClickHandler.handleColorButtonClicks(mostRecentShadeButton);
-        }
-    }
-
-
-    private void selectRecentShapeAndStyle(PaintViewSingleton pvs){
-        settingsButtonsConfigurator.clickOnView(pvs.getMostRecentBrushShapeId());
-        settingsButtonsConfigurator.clickOnView(pvs.getMostRecentBrushStyleId());
     }
 
 
@@ -160,24 +139,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     private void setupBrushSizeSeekBar(){
-        SeekBar seekBar = findViewById(R.id.seekBar);
-
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
                 if(paintView != null){
-                    paintView.setBrushSize(seekBar.getProgress());
+                    paintView.setBrushSize(getBrushSize());
                 }
             }
         });
@@ -186,11 +159,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupDefaultSelections(){
         paintView.setBrushSize(seekBar.getProgress());
-    }
-
-
-    private void setupButtonListeners(){
-        findViewById(R.id.seekBar).setOnClickListener(this);
     }
 
 
@@ -204,11 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause(){
         super.onPause();
-        PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
-        paintViewSingleton.setBitmap(paintView.getBitmap());
-        paintViewSingleton.setMostRecentColor(buttonClickHandler.getMostRecentButtonKey());
-        paintViewSingleton.setMostRecentShade(buttonClickHandler.getMostRecentShadeKey());
-        paintViewSingleton.setWasMostRecentClickAShade(buttonClickHandler.isMostRecentClickAShade());
+        resumedActionsHelper.onPause();
     }
 
 
@@ -228,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_save:
                 startSaveDocumentActivity();
                 return true;
-
             case R.id.action_about:
                 startAboutActivity();
                 return true;
@@ -259,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public int getBrushSize(){
-        return seekBar.getProgress();
+        return getResources().getInteger(R.integer.brush_size_min_default) + seekBar.getProgress();
     }
 
 
@@ -271,8 +234,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(intent, SAVE_FILE_ACTIVITY_CODE);
     }
 
-    private void startConfirmClearActivity(){
 
+    private void startConfirmClearActivity(){
         Intent intent = new Intent(this, ConfirmWipeDialogActivity.class);
         startActivityForResult(intent, CLEAR_CANVAS_ACTIVITY_CODE);
     }
