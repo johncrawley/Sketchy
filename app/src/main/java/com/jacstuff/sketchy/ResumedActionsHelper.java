@@ -15,7 +15,10 @@ public class ResumedActionsHelper {
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
     private PaintView paintView;
 
-    public ResumedActionsHelper(ColorButtonClickHandler buttonClickHandler, ColorButtonLayoutPopulator layoutPopulator, SettingsButtonsConfigurator settingsButtonsConfigurator, PaintView paintView) {
+    public ResumedActionsHelper(ColorButtonClickHandler buttonClickHandler,
+                                ColorButtonLayoutPopulator layoutPopulator,
+                                SettingsButtonsConfigurator settingsButtonsConfigurator,
+                                PaintView paintView) {
         this.buttonClickHandler = buttonClickHandler;
         this.layoutPopulator = layoutPopulator;
         this.settingsButtonsConfigurator = settingsButtonsConfigurator;

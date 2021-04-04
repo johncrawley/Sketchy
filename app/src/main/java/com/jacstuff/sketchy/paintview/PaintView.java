@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,6 +33,7 @@ public class PaintView extends View {
     private BrushFactory brushFactory;
     private boolean wasCanvasModifiedSinceLastSaveOrReset;
     private boolean isCanvasLocked;
+    private int angle;
 
 
     public PaintView(Context context) {
@@ -48,13 +51,16 @@ public class PaintView extends View {
         paint.setStrokeCap(Paint.Cap.SQUARE);
     }
 
+
     public void notifyPictureSaved(){
         wasCanvasModifiedSinceLastSaveOrReset = false;
     }
 
+
     public boolean canvasWasModifiedSinceLastSaveOrReset(){
         return wasCanvasModifiedSinceLastSaveOrReset;
     }
+
 
     public void set(BrushStyle brushStyle){
         currentBrushStyle = brushStyle;
@@ -132,8 +138,17 @@ public class PaintView extends View {
         canvas.restore();
     }
 
+    private void log(String msg){
+        System.out.println("PaintView: " + msg);
+        System.out.flush();
+    }
+
     public void setCurrentColor(int color){
+        log("Entered setCurrentColor()");
         paint.setColor(color);
+        LinearGradient linearGradient = new LinearGradient(200, 200, 600, 600, color, Color.YELLOW, Shader.TileMode.MIRROR);
+        paint.setShader(linearGradient);
+       // paint.setShader(new LinearGradient(0, 50, 0, brushSize, color, Color.BLUE, Shader.TileMode.CLAMP));
     }
 
 
@@ -152,8 +167,19 @@ public class PaintView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        paint.setColor(colorSelector.getNextColor());
+        int color = colorSelector.getNextColor();
+        int oldColor = paint.getColor();
+        paint.setColor(color);
+        int x1 = (int)x + (this.brushSize /2);
+        int y1 = (int)y + (this.brushSize /2);
+        LinearGradient linearGradient = new LinearGradient(x, y, x1, y1, color, oldColor, Shader.TileMode.MIRROR);
+        paint.setShader(linearGradient);
+        angle += 15;
+        canvas.save();
+        canvas.translate(x,y);
+        canvas.rotate(angle);
         performAction(x, y, event.getAction());
+        canvas.restore();
         return true;
     }
 
@@ -165,15 +191,15 @@ public class PaintView extends View {
         }
         switch(action) {
             case MotionEvent.ACTION_DOWN :
-                currentBrush.onTouchDown(x,y);
+                currentBrush.onTouchDown(0,0);
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE :
-                currentBrush.onTouchMove(x, y);
+                currentBrush.onTouchMove(0,0);
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP :
-                currentBrush.onTouchUp(x, y);
+                currentBrush.onTouchUp(0,0);
                 invalidate();
         }
 
