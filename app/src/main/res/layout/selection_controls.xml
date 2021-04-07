@@ -4,135 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <HorizontalScrollView
-        android:id="@+id/shapeOptionsScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_gravity = "center">
 
-
-        <LinearLayout
-            android:id="@+id/shapeOptionsLayout"
+        <include
+            android:id="@+id/include_selector_panel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/shape_selector_group_top_margin"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/shape_options_padding_top">
-
-            <ImageButton
-                android:id="@+id/squareShapeButton"
-                android:layout_width="@dimen/selector_button_width"
-                android:layout_height="@dimen/selector_button_height"
-                android:layout_marginStart="@dimen/selector_button_margin_start"
-                android:layout_marginEnd="@dimen/selector_button_margin_end"
-                android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
-                app:srcCompat="@drawable/square_shape_button" />
-
-            <ImageButton
-                android:id="@+id/circleShapeButton"
-                android:layout_width="@dimen/selector_button_width"
-                android:layout_height="@dimen/selector_button_height"
-                android:layout_marginStart="@dimen/selector_button_margin_start"
-                android:layout_marginEnd="@dimen/selector_button_margin_end"
-                android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
-                app:srcCompat="@drawable/circle_shape_button" />
-
-
-            <ImageButton
-                android:id="@+id/lineShapeButton"
-                android:layout_width="@dimen/selector_button_width"
-                android:layout_height="@dimen/selector_button_height"
-                android:layout_marginStart="@dimen/selector_button_margin_start"
-                android:layout_marginEnd="@dimen/selector_button_margin_end"
-                android:layout_weight="1"
-                android:contentDescription="@string/content_description_line_shape_button"
-                app:srcCompat="@drawable/line_shape_button" />
-
-            <ImageButton
-                android:id="@+id/roundedRectangleShapeButton"
-                android:layout_width="@dimen/selector_button_width"
-                android:layout_height="@dimen/selector_button_height"
-                android:layout_marginStart="@dimen/selector_button_margin_start"
-                android:layout_marginEnd="@dimen/selector_button_margin_end"
-                android:layout_weight="1"
-                android:contentDescription="@string/content_description_rounded_rectangle_shape_button"
-                app:srcCompat="@drawable/rounded_rectangle_shape_button" />
-            <ImageButton
-                android:id="@+id/triangleShapeButton"
-                android:layout_width="@dimen/selector_button_width"
-                android:layout_height="@dimen/selector_button_height"
-                android:layout_marginStart="@dimen/selector_button_margin_start"
-                android:layout_marginEnd="@dimen/selector_button_margin_end"
-                android:layout_weight="1"
-                android:contentDescription="@string/content_description_triangle_shape_button"
-                app:srcCompat="@drawable/triangle_shape_button" />
-
-        </LinearLayout>
-
-
-
-    </HorizontalScrollView>
-
+            layout="@layout/control_selector_panel" />
 
         <LinearLayout
-
-            android:id="@+id/styleOptionsLayout"
+            android:id="@+id/control_detail_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/shapeOptionsScrollView">
+            app:layout_constraintTop_toBottomOf="@id/include_selector_panel">
 
-            <ImageButton
-                android:id="@+id/fillStyleButton"
-                android:layout_width="@dimen/selector_button_width"
-                android:layout_height="@dimen/selector_button_height"
-                android:layout_marginStart="@dimen/selector_button_margin_start"
-                android:layout_marginEnd="@dimen/selector_button_margin_end"
-                android:layout_weight="1"
-                android:contentDescription="@string/content_description_fill_style_button"
-                app:srcCompat="@drawable/fill_style_button" />
-
-            <ImageButton
-                android:id="@+id/brokenOutlineStyleButton"
-                android:layout_width="@dimen/selector_button_width"
-                android:layout_height="@dimen/selector_button_height"
-                android:layout_marginStart="@dimen/selector_button_margin_start"
-                android:layout_marginEnd="@dimen/selector_button_margin_end"
-                android:layout_weight="1"
-                android:contentDescription="@string/content_description_broken_outline_style_button"
-                app:srcCompat="@drawable/broken_outline_style_button" />
-
-            <ImageButton
-                android:id="@+id/outlineStyleButton"
-                android:layout_width="@dimen/selector_button_width"
-                android:layout_height="@dimen/selector_button_height"
-                android:layout_marginStart="@dimen/selector_button_margin_start"
-                android:layout_marginEnd="@dimen/selector_button_margin_end"
-                android:layout_weight="1"
-                android:contentDescription="@string/content_description_outline_style_button"
-                app:srcCompat="@drawable/outline_style_button" />
-
-            <ImageButton
-                android:id="@+id/thickOutlineStyleButton"
-                android:layout_width="@dimen/selector_button_width"
-                android:layout_height="@dimen/selector_button_height"
-                android:layout_marginStart="@dimen/selector_button_margin_start"
-                android:layout_marginEnd="@dimen/selector_button_margin_end"
-                android:layout_weight="1"
-                android:contentDescription="@string/content_description_thick_outline_style_button"
-                app:srcCompat="@drawable/thick_outline_style_button" />
+            <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                layout="@layout/shapes_controls" />
 
         </LinearLayout>
+        <!--
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/styles_controls" /> -->
+
+
+
 
         <LinearLayout
 
@@ -144,7 +44,7 @@
             android:paddingBottom="@dimen/seekbar_padding_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/styleOptionsLayout">
+            app:layout_constraintTop_toBottomOf="@+id/control_detail_layout">
 
             <ImageView
                 android:id="@+id/smallIndicator"

@@ -36,7 +36,7 @@ public class SettingsButtonsConfigurator {
 
         this.paintView = paintView;
         setupActionsMaps();
-        assignCategoryTagTo(styleButtonIds, ButtonCategory.STYLE_SELECTION);
+//        assignCategoryTagTo(styleButtonIds, ButtonCategory.STYLE_SELECTION);
         assignCategoryTagTo(shapeButtonIds, ButtonCategory.SHAPE_SELECTION);
         setupButtonListeners();
         setupDefaultSelections();
@@ -123,7 +123,6 @@ public class SettingsButtonsConfigurator {
     }
 
 
-
     private void assignCategoryTagTo(Set<Integer> buttonIds, ButtonCategory buttonCategory){
         for(int buttonId : buttonIds){
             assignCategoryTagToButtonWith(buttonId, buttonCategory);
@@ -132,7 +131,6 @@ public class SettingsButtonsConfigurator {
 
 
     private void assignCategoryTagToButtonWith(int id, ButtonCategory buttonCategory){
-        Log.i("sketchty btn cfg", " category : " + buttonCategory);
         findViewById(id).setTag(R.string.tag_button_category, buttonCategory);
     }
 
@@ -144,7 +142,7 @@ public class SettingsButtonsConfigurator {
 
     private void setupButtonListeners(){
         setOnClickListenerFor(shapeButtonIds);
-        setOnClickListenerFor(styleButtonIds);
+//        setOnClickListenerFor(styleButtonIds);
     }
 
 
