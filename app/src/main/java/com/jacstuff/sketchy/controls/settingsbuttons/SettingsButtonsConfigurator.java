@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.controls.settingsbuttons;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
@@ -26,20 +27,24 @@ public class SettingsButtonsConfigurator {
     private Map<Integer, BrushShape> shapeActionsMap;
     private Map<Integer, BrushStyle> styleActionsMap;
     private PaintView paintView;
+    private Context context;
 
     public SettingsButtonsConfigurator(MainActivity mainActivity){
         this.activity = mainActivity;
+        this.context = mainActivity;
     }
 
 
     public void setupShapeAndStyleButtons(PaintView paintView){
 
         this.paintView = paintView;
-        setupActionsMaps();
 //        assignCategoryTagTo(styleButtonIds, ButtonCategory.STYLE_SELECTION);
         assignCategoryTagTo(shapeButtonIds, ButtonCategory.SHAPE_SELECTION);
         setupButtonListeners();
         setupDefaultSelections();
+
+        new ShapeButtonsConfigurator(activity, paintView).configure();
+        new StyleButtonsConfigurator(activity, paintView).configure();
     }
 
 

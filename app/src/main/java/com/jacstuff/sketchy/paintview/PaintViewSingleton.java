@@ -35,6 +35,14 @@ public class PaintViewSingleton  {
         mostRecentBrushStyleId = viewId;
     }
 
+    public void saveShapeSelectionSetting(int viewId){
+        mostRecentBrushShapeId = viewId;
+    }
+
+    public void saveStyleSelectionSetting(int viewId){
+        mostRecentBrushStyleId = viewId;
+    }
+
     public int getMostRecentBrushStyleId(){
         return this.mostRecentBrushStyleId;
     }
