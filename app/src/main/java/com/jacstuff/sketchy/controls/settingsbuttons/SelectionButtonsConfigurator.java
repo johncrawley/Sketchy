@@ -15,6 +15,7 @@ public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer
 
     public SelectionButtonsConfigurator(MainActivity activity){
         this.activity = activity;
+        configure();
     }
 
 

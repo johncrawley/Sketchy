@@ -14,10 +14,10 @@ public class StyleButtonsConfigurator implements ButtonsConfigurator<BrushStyle>
     private PaintView paintView;
 
 
-
     public StyleButtonsConfigurator(MainActivity activity, PaintView paintView){
         this.activity = activity;
         this.paintView = paintView;
+        configure();
     }
 
 

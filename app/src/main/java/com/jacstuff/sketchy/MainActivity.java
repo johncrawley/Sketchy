@@ -71,8 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setupSettingsButtons(){
-        settingsButtonsConfigurator = new SettingsButtonsConfigurator(this);
-        settingsButtonsConfigurator.setupShapeAndStyleButtons(paintView);
+        settingsButtonsConfigurator = new SettingsButtonsConfigurator(this, paintView);
     }
 
     private void assignRecentButtons(){

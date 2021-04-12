@@ -16,6 +16,7 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
     public ShapeButtonsConfigurator(MainActivity activity, PaintView paintView){
         this.activity = activity;
         this.paintView = paintView;
+        configure();
     }
 
 

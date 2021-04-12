@@ -6,20 +6,11 @@ import com.jacstuff.sketchy.paintview.PaintView;
 
 public class SettingsButtonsConfigurator {
 
-    private MainActivity activity;
-
-    public SettingsButtonsConfigurator(MainActivity mainActivity){
-        this.activity = mainActivity;
-    }
-
-
-    public void setupShapeAndStyleButtons(PaintView paintView){
-
-
-        new ShapeButtonsConfigurator(activity, paintView).configure();
-        new StyleButtonsConfigurator(activity, paintView).configure();
-        new SelectionButtonsConfigurator(activity).configure();
-        new GradientButtonsConfigurator(activity,paintView).configure();
+    public SettingsButtonsConfigurator(MainActivity activity, PaintView paintView){
+        new ShapeButtonsConfigurator(activity, paintView);
+        new StyleButtonsConfigurator(activity, paintView);
+        new SelectionButtonsConfigurator(activity);
+        new GradientButtonsConfigurator(activity,paintView);
     }
 
 

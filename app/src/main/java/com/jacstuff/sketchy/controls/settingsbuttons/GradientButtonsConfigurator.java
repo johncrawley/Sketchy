@@ -2,7 +2,6 @@ package com.jacstuff.sketchy.controls.settingsbuttons;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.GradientType;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewSingleton;
@@ -16,6 +15,7 @@ public class GradientButtonsConfigurator implements ButtonsConfigurator<Gradient
     public GradientButtonsConfigurator(MainActivity activity, PaintView paintView){
         this.activity = activity;
         this.paintView = paintView;
+        configure();
     }
 
 
