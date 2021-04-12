@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
+import com.jacstuff.sketchy.brushes.GradientType;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
@@ -34,6 +35,7 @@ public class PaintView extends View {
     private boolean wasCanvasModifiedSinceLastSaveOrReset;
     private boolean isCanvasLocked;
     private int angle;
+    private GradientType gradientType = GradientType.NONE;
 
 
     public PaintView(Context context) {
@@ -65,6 +67,11 @@ public class PaintView extends View {
     public void set(BrushStyle brushStyle){
         currentBrushStyle = brushStyle;
         currentBrush.setStyle(brushStyle);
+    }
+
+
+    public void set(GradientType gradientType){
+        this.gradientType = gradientType;
     }
 
 
@@ -170,10 +177,7 @@ public class PaintView extends View {
         int color = colorSelector.getNextColor();
         int oldColor = paint.getColor();
         paint.setColor(color);
-        int x1 = (int)x + (this.brushSize /2);
-        int y1 = (int)y + (this.brushSize /2);
-        LinearGradient linearGradient = new LinearGradient(x, y, x1, y1, color, oldColor, Shader.TileMode.MIRROR);
-        paint.setShader(linearGradient);
+        assignGradient(x,y, color, oldColor);
         angle += 15;
         canvas.save();
         canvas.translate(x,y);
@@ -181,6 +185,19 @@ public class PaintView extends View {
         performAction(x, y, event.getAction());
         canvas.restore();
         return true;
+    }
+
+
+    private void assignGradient(float x, float y, int color, int oldColor){
+        switch(gradientType){
+            case NONE:
+                paint.setShader(null);
+                return;
+            case DIAGONAL_MIRROR:
+                int x1 = (int)x + (this.brushSize /2);
+                int y1 = (int)y + (this.brushSize /2);
+                paint.setShader(new LinearGradient(x, y, x1, y1, color, oldColor, Shader.TileMode.MIRROR));
+        }
     }
 
 

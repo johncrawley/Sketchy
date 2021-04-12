@@ -9,33 +9,67 @@
             android:id="@+id/include_selector_panel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/control_detail_layout"
             layout="@layout/control_selector_panel" />
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:id="@+id/control_detail_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/seekBarLayout"
             app:layout_constraintTop_toBottomOf="@id/include_selector_panel">
 
             <include
+                android:id="@+id/includeShapeControls"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 layout="@layout/shapes_controls" />
 
-        </LinearLayout>
-        <!--
-        <include
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            layout="@layout/styles_controls" /> -->
+            <include
+                android:visibility="gone"
+                android:id="@+id/includeStyleControls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                layout="@layout/styles_controls" />
 
+            <include
+                android:visibility="gone"
+                android:id="@+id/includeAngleControls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                layout="@layout/styles_controls" />
 
+            <include
+                android:visibility="gone"
+                android:id="@+id/includeGradientControls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                layout="@layout/gradient_controls" />
+        </android.support.constraint.ConstraintLayout>
 
 
         <LinearLayout
-
             android:id="@+id/seekBarLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

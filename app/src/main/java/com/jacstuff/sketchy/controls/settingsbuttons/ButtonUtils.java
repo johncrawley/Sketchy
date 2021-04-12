@@ -3,11 +3,7 @@ package com.jacstuff.sketchy.controls.settingsbuttons;
 import android.app.Activity;
 import android.graphics.Color;
 import android.widget.ImageButton;
-
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.controls.ButtonCategory;
-import com.jacstuff.sketchy.paintview.PaintViewSingleton;
-
 import java.util.Set;
 
 public class ButtonUtils {
@@ -27,7 +23,6 @@ public class ButtonUtils {
             }
         }
     }
-
 
 
     private void switchSelectionToButton(int buttonId, Set<Integer> buttonList){
