@@ -44,10 +44,3 @@ public class TriangleBrush extends AbstractBrush implements Brush {
     }
 
 }
-class Point{
-    float x, y;
-    void set(float x, float y){
-        this.x = x;
-        this.y = y;
-    }
-}

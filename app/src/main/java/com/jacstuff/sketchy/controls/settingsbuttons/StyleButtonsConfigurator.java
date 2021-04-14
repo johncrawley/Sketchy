@@ -22,13 +22,15 @@ public class StyleButtonsConfigurator implements ButtonsConfigurator<BrushStyle>
 
 
     void configure(){
-        ButtonClickHandler<BrushStyle> clickHandler = new ButtonClickHandler<>(activity, this);
-        clickHandler.put(R.id.brokenOutlineStyleButton,  BrushStyle.BROKEN_OUTLINE);
-        clickHandler.put(R.id.fillStyleButton,           BrushStyle.FILL);
-        clickHandler.put(R.id.outlineStyleButton,        BrushStyle.OUTLINE);
-        clickHandler.put(R.id.thickOutlineStyleButton,   BrushStyle.THICK_OUTLINE);
-        clickHandler.setupClickHandler();
-        clickHandler.setDefaultSelection(R.id.fillStyleButton);
+        ButtonConfigHandler<BrushStyle> buttonConfig = new ButtonConfigHandler<>(activity, this);
+        buttonConfig.put(R.id.brokenOutlineStyleButton, R.drawable.broken_outline_style_button, BrushStyle.BROKEN_OUTLINE);
+        buttonConfig.put(R.id.fillStyleButton,          R.drawable.fill_style_button,           BrushStyle.FILL);
+        buttonConfig.put(R.id.outlineStyleButton,       R.drawable.outline_style_button,        BrushStyle.OUTLINE);
+        buttonConfig.put(R.id.thickOutlineStyleButton,  R.drawable.thick_outline_style_button,  BrushStyle.THICK_OUTLINE);
+
+        buttonConfig.setupClickHandler();
+        buttonConfig.setParentButton(R.id.styleSelectionButton);
+        buttonConfig.setDefaultSelection(R.id.fillStyleButton);
     }
 
     @Override

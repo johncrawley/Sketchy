@@ -21,14 +21,15 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
 
 
     public void configure(){
-        ButtonClickHandler<BrushShape> clickHandler = new ButtonClickHandler<>(activity, this);
-        clickHandler.put(R.id.squareShapeButton, BrushShape.SQUARE);
-        clickHandler.put(R.id.circleShapeButton, BrushShape.CIRCLE);
-        clickHandler.put(R.id.lineShapeButton,   BrushShape.LINE);
-        clickHandler.put(R.id.roundedRectangleShapeButton, BrushShape.ROUNDED_RECTANGLE);
-        clickHandler.put(R.id.triangleShapeButton, BrushShape.TRIANGLE);
-        clickHandler.setupClickHandler();
-        clickHandler.setDefaultSelection(R.id.circleShapeButton);
+        ButtonConfigHandler<BrushShape> buttonConfig = new ButtonConfigHandler<>(activity, this);
+        buttonConfig.put(R.id.squareShapeButton,            R.drawable.square_shape_button,             BrushShape.SQUARE);
+        buttonConfig.put(R.id.circleShapeButton,            R.drawable.circle_shape_button,             BrushShape.CIRCLE);
+        buttonConfig.put(R.id.lineShapeButton,              R.drawable.line_shape_button,               BrushShape.LINE);
+        buttonConfig.put(R.id.roundedRectangleShapeButton,  R.drawable.rounded_rectangle_shape_button,  BrushShape.ROUNDED_RECTANGLE);
+        buttonConfig.put(R.id.triangleShapeButton,          R.drawable.triangle_shape_button,           BrushShape.TRIANGLE);
+        buttonConfig.setupClickHandler();
+        buttonConfig.setParentButton(R.id.shapeSelectionButton);
+        buttonConfig.setDefaultSelection(R.id.circleShapeButton);
     }
 
 

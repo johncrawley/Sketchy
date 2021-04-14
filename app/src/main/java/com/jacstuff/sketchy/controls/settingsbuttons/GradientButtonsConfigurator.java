@@ -20,11 +20,12 @@ public class GradientButtonsConfigurator implements ButtonsConfigurator<Gradient
 
 
     public void configure(){
-        ButtonClickHandler<GradientType> clickHandler = new ButtonClickHandler<>(activity, this);
-        clickHandler.put(R.id.noGradientButton, GradientType.NONE);
-        clickHandler.put(R.id.diagonalMirrorGradientButton, GradientType.DIAGONAL_MIRROR);
-        clickHandler.setupClickHandler();
-        clickHandler.setDefaultSelection(R.id.noGradientButton);
+        ButtonConfigHandler<GradientType> buttonConfig = new ButtonConfigHandler<>(activity, this);
+        buttonConfig.put(R.id.noGradientButton,             R.drawable.no_gradient_button,              GradientType.NONE);
+        buttonConfig.put(R.id.diagonalMirrorGradientButton, R.drawable.diagonal_mirror_gradient_button, GradientType.DIAGONAL_MIRROR);
+        buttonConfig.setupClickHandler();
+        buttonConfig.setParentButton(R.id.gradientSelectionButton);
+        buttonConfig.setDefaultSelection(R.id.noGradientButton);
     }
 
 

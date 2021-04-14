@@ -20,14 +20,14 @@ public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer
 
 
     public void configure(){
-        ButtonClickHandler<Integer> clickHandler = new ButtonClickHandler<>(activity, this);
-        clickHandler.put(R.id.gradientSelectionButton, R.id.includeGradientControls);
-        clickHandler.put(R.id.shapeSelectionButton, R.id.includeShapeControls);
-        clickHandler.put(R.id.styleSelectionButton,   R.id.includeStyleControls);
-        clickHandler.put(R.id.angleSelectionButton, R.id.includeAngleControls);
-        clickHandler.setupClickHandler();
-        layoutIds = clickHandler.getEntries();
-        clickHandler.setDefaultSelection(R.id.shapeSelectionButton);
+        ButtonConfigHandler<Integer> buttonConfig = new ButtonConfigHandler<>(activity, this);
+        buttonConfig.put(R.id.gradientSelectionButton,  R.id.includeGradientControls);
+        buttonConfig.put(R.id.shapeSelectionButton,     R.id.includeShapeControls);
+        buttonConfig.put(R.id.styleSelectionButton,     R.id.includeStyleControls);
+        buttonConfig.put(R.id.angleSelectionButton,     R.id.includeAngleControls);
+        buttonConfig.setupClickHandler();
+        layoutIds = buttonConfig.getEntries();
+        buttonConfig.setDefaultSelection(R.id.shapeSelectionButton);
     }
 
 

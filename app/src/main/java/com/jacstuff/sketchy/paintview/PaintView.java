@@ -36,6 +36,7 @@ public class PaintView extends View {
     private boolean isCanvasLocked;
     private int angle;
     private GradientType gradientType = GradientType.NONE;
+    private int previousColor = Color.WHITE;
 
 
     public PaintView(Context context) {
@@ -169,15 +170,18 @@ public class PaintView extends View {
     }
 
 
+
     @Override
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
         int color = colorSelector.getNextColor();
-        int oldColor = paint.getColor();
+        if(color != paint.getColor()){
+            previousColor = paint.getColor();
+        }
         paint.setColor(color);
-        assignGradient(x,y, color, oldColor);
+        assignGradient(x,y, color, previousColor);
         angle += 15;
         canvas.save();
         canvas.translate(x,y);
