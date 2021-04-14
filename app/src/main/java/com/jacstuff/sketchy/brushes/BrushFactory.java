@@ -5,6 +5,7 @@ import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
+import com.jacstuff.sketchy.brushes.shapes.HexagonBrush;
 import com.jacstuff.sketchy.brushes.shapes.LineBrush;
 import com.jacstuff.sketchy.brushes.shapes.RoundedRectangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.SquareBrush;
@@ -24,7 +25,7 @@ import java.util.Map;
 public class BrushFactory {
 
     private Map<BrushShape, Brush> brushMap;
-    private Brush circleBrush, squareBrush, lineBrush, roundedRectangleBrush, triangleBrush;
+    private Brush circleBrush, squareBrush, lineBrush, roundedRectangleBrush, triangleBrush, hexagonBrush;
 
 
     public BrushFactory(Canvas canvas, Paint paint, int brushSize){
@@ -48,8 +49,9 @@ public class BrushFactory {
         squareBrush = new SquareBrush(canvas, paint);
         roundedRectangleBrush = new RoundedRectangleBrush(canvas, paint, brushSize);
         triangleBrush = new TriangleBrush(canvas, paint);
+        hexagonBrush = new HexagonBrush(canvas, paint);
 
-        for(Brush brush : Arrays.asList(squareBrush, circleBrush, triangleBrush, roundedRectangleBrush)){
+        for(Brush brush : Arrays.asList(squareBrush, circleBrush, triangleBrush, roundedRectangleBrush, hexagonBrush)){
             brush.add(BrushStyle.FILL, fillStyle);
             brush.add(BrushStyle.OUTLINE, outlineStyle);
             brush.add(BrushStyle.BROKEN_OUTLINE, dashedStyle);
