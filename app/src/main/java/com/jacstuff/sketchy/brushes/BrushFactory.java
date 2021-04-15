@@ -7,6 +7,7 @@ import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.HexagonBrush;
 import com.jacstuff.sketchy.brushes.shapes.LineBrush;
+import com.jacstuff.sketchy.brushes.shapes.PentagonBrush;
 import com.jacstuff.sketchy.brushes.shapes.RoundedRectangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.SquareBrush;
 import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
@@ -25,7 +26,7 @@ import java.util.Map;
 public class BrushFactory {
 
     private Map<BrushShape, Brush> brushMap;
-    private Brush circleBrush, squareBrush, lineBrush, roundedRectangleBrush, triangleBrush, hexagonBrush;
+    private Brush circleBrush, squareBrush, lineBrush, roundedRectangleBrush, triangleBrush, hexagonBrush, pentagonBrush;
 
 
     public BrushFactory(Canvas canvas, Paint paint, int brushSize){
@@ -48,8 +49,9 @@ public class BrushFactory {
         circleBrush = new CircleBrush(canvas, paint);
         squareBrush = new SquareBrush(canvas, paint);
         roundedRectangleBrush = new RoundedRectangleBrush(canvas, paint, brushSize);
-        triangleBrush = new TriangleBrush(canvas, paint);
+        triangleBrush = new PentagonBrush(canvas, paint);
         hexagonBrush = new HexagonBrush(canvas, paint);
+        pentagonBrush = new PentagonBrush(canvas, paint);
 
         for(Brush brush : Arrays.asList(squareBrush, circleBrush, triangleBrush, roundedRectangleBrush, hexagonBrush)){
             brush.add(BrushStyle.FILL, fillStyle);

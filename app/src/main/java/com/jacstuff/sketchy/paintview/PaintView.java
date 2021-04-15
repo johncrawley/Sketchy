@@ -185,7 +185,7 @@ public class PaintView extends View {
         angle += 15;
         canvas.save();
         canvas.translate(x,y);
-        canvas.rotate(angle);
+        //canvas.rotate(angle);
         performAction(x, y, event.getAction());
         canvas.restore();
         return true;
