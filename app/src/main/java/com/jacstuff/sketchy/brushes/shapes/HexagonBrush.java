@@ -56,7 +56,6 @@ public class HexagonBrush extends AbstractBrush implements Brush {
         path.lineTo(rightPoint.x, rightPoint.y);
         path.lineTo(bottomRightPoint.x, bottomRightPoint.y);
         path.lineTo(bottomLeftPoint.x, bottomLeftPoint.y);
-        //path.lineTo(testPoint.x, testPoint.y);
         path.lineTo(leftPoint.x, leftPoint.y);
 
         path.close();

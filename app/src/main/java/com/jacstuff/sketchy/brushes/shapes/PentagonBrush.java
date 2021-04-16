@@ -4,84 +4,139 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
+
+/*
+
+       There are 5 points in a pentagon, and we start with the first one, which is directly above the midpoint.
+        - we want the height of the pentagon to be the brush size
+        - so the first point's y will be half a brush size less than the midpoint y
+
+       - next we will get the two points that make up the base of the pentagon
+        - there's an imaginary line that runs from the top point to these two points
+        - that line is always the pentagon height multiplied by 1.051414
+        - to get the actual points, we need the angles and then those points can be determined by:
+
+                x1 = x0 + distance*cos(angle)
+                y1 = y0 + distance*sin(angle)
+
+        - where x0,y0 is (in this case) the top point and (x1,y1) will be a base point
+
+        - Here's where it get's more complicated
+            - the above trig. equations are based on an x,y scale
+                    where x goes left-to-right
+                and where y goes down to up
+
+            - however in android canvas, while x does go left-to-right,
+               y goes up-to-down, i.e. y=0 is at the top of the screen
+
+            - so, to make things easier to calculate we switch the axis
+                - so the actual canvas y-axis serves as our trig x-axis
+                - and the actual canvas x-axis serves as our trig y-axis
+
+                -for this reason we switch the cos and sin operations to get the offset points
+                 to be pedantic, they are now
+                        x1 = x0 + distance*sin(angle)
+                        y1 = y0 + distance*cos(angle)
+
+                - also note that with this switch,
+                    - a line at 0 degrees is running North-to-South
+                    - a line at 45 degrees runs NW to SE
+                    - a line at 90 degrees runs horizontal, and so on...
+
+
+          - it's a given that, when you join the top point to the two base points
+            - the angle of the 2 lines is 36 degrees
+            - it then follows that the angle from our inverted axis to the right point is 18 degrees
+            - and the angle to the  left base point is -18 degrees
+
+
+          - now with the two base points, we can derive the left and right points in the same way
+            - using the left base point to get its opposite on the right side
+            - and the right base point to get its opposite on the left side
+
+            - the only thing that changes is the angle provided
+                -because the original +-18 degrees was relative to the switched x-axis
+                - the new angles work out at +-126
+
+            - NB we could have worked out out the left and right points with a different method
+               i.e. getting the ratio of a pentagon side to it's height
+               and getting the appropriate angles
+               but one's as easy as the other
+
+             - I adapted some information from the following:
+               https://www.instructables.com/Figuring-Measurements-of-a-5-pointed-Symmetrical-L/
+*/
+
 public class PentagonBrush extends AbstractBrush implements Brush {
 
 
-    private Point leftPoint, rightPoint, bottomLeftPoint, bottomRightPoint, topPoint;
-    private Point testPoint;
-    private double edgeDistanceRatio;
-    private int shortHeight;
-    private int quarterBrushSize;
-    private float heightToOppositePointRatio = 1.051414f;
-    private int angleFromTopPointToBottomLeft = 72;
-    private int angleFromTopPointToBottomRight = 288;
+    Point topPoint;
+    float bottomRightX, bottomRightY, bottomLeftX, bottomLeftY, leftX, leftY, rightX, rightY;
+    float heightToOppositePointRatio = 1.051414f;
+    private int angleFromTopPointToBottomLeft = -18;
+    private int angleFromTopPointToBottomRight = 18;
 
-    private int angleFromBottomRightPointToLeft = 144;
-    private int angleFromBottomLeftPointToRight = 36;
-    private float distanceToOppositePoint = 0f;
+    private int angleFromBottomRightPointToLeft = -126;
+    private int angleFromBottomLeftPointToRight = 126;
+    float distanceToOppositePoint = 0f;
+
+
+    double radsFromTopPointToBottomRight;
+    double radsFromTopPointToBottomLeft;
+    double radsFromBottomRightPointToLeft;
+    double radsFromBottomLeftPointToRight;
+
+    int xFromTopPointToBottomRight;
+    int yFromTopPointToBottomRight;
+    int xFromTopPointToBottomLeft;
+    int yFromTopPointToBottomLeft;
+    int xFromBottomRightPointToLeft;
+    int yFromBottomRightPointToLeft;
+    int xFromBottomLeftPointToRight;
+    int yFromBottomLeftPointToRight;
 
 
     public PentagonBrush(Canvas canvas, Paint paint){
         super(canvas, paint);
-        leftPoint = new Point();
-        rightPoint = new Point();
-        bottomLeftPoint = new Point();
-        bottomRightPoint = new Point();
+
         topPoint = new Point();
-        testPoint = new Point();
-
-        tempPoint = new Point();
+        radsFromTopPointToBottomRight  = Math.toRadians(angleFromTopPointToBottomRight);
+        radsFromTopPointToBottomLeft   = Math.toRadians(angleFromTopPointToBottomLeft);
+        radsFromBottomRightPointToLeft = Math.toRadians(angleFromBottomRightPointToLeft);
+        radsFromBottomLeftPointToRight = Math.toRadians(angleFromBottomLeftPointToRight);
     }
 
-    @Override
-    public void setBrushSize(int brushSize){
-        super.setBrushSize(brushSize);
-        shortHeight = (int)(halfBrushSize * edgeDistanceRatio);
-        quarterBrushSize = halfBrushSize / 2;
 
-        distanceToOppositePoint = brushSize * heightToOppositePointRatio;
-    }
-
-    private int getXPoint(float x0, int angle){
-        return (int) (distanceToOppositePoint * Math.cos(angle)) + (int)x0;
-    }
-
-    private int getYPoint(float y0, int angle){
-        return (int)(distanceToOppositePoint * Math.sin(angle)) + (int)y0;
-    }
-
-    Point tempPoint;
     @Override
     public void onTouchDown(float x, float y){
 
-        topPoint.set(x, y - halfBrushSize);
-
-        bottomLeftPoint.set(getXPoint(x, angleFromTopPointToBottomLeft), getYPoint(y, angleFromTopPointToBottomLeft));
-        bottomRightPoint.set(getXPoint(x, angleFromTopPointToBottomRight), getYPoint(y, angleFromTopPointToBottomRight));
-
-        leftPoint.set(getXPoint(bottomRightPoint.x, angleFromBottomRightPointToLeft ), getYPoint(bottomRightPoint.y, angleFromBottomRightPointToLeft));
-        rightPoint.set(getXPoint(bottomLeftPoint.x, angleFromBottomLeftPointToRight ), getYPoint(bottomLeftPoint.y, angleFromBottomLeftPointToRight));
-
-        tempPoint.set(x, y);
-
+        deriveOutsidePoints(x,y);
         Path path = new Path();
         path.moveTo(topPoint.x, topPoint.y);
-        //path.lineTo(rightPoint.x, rightPoint.y);
-        //path.lineTo(bottomRightPoint.x, bottomRightPoint.y);
-        path.lineTo(bottomLeftPoint.x, bottomLeftPoint.y);
-        //path.lineTo(leftPoint.x, leftPoint.y);
-        //path.lineTo(topPoint.x, topPoint.y);
-
-        path.close();
-
-        canvas.drawPath(path, paint);
-
-        path = new Path();
-        path.moveTo(topPoint.x, topPoint.y);
-        path.lineTo(tempPoint.x, tempPoint.y);
+        path.lineTo(rightX, rightY);
+        path.lineTo(bottomRightX, bottomRightY);
+        path.lineTo(bottomLeftX, bottomLeftY);
+        path.lineTo(leftX, leftY);
         path.close();
         canvas.drawPath(path, paint);
+    }
 
+
+    void deriveOutsidePoints(float x, float y){
+
+        float topY = y - halfBrushSize;
+        topPoint.set(x, topY );
+        bottomRightX = x    + xFromTopPointToBottomRight;
+        bottomRightY = topY + yFromTopPointToBottomRight;
+
+        bottomLeftX = x     + xFromTopPointToBottomLeft;
+        bottomLeftY = topY  + yFromTopPointToBottomLeft;
+
+        rightX = bottomLeftX + xFromBottomLeftPointToRight;
+        rightY = bottomLeftY + yFromBottomLeftPointToRight;
+
+        leftX = bottomRightX + xFromBottomRightPointToLeft;
+        leftY = bottomRightY + yFromBottomRightPointToLeft;
 
     }
 
@@ -90,6 +145,54 @@ public class PentagonBrush extends AbstractBrush implements Brush {
     @Override
     public void onTouchMove(float x, float y){
         onTouchDown(x ,y);
+    }
+
+
+    @Override
+    public void setBrushSize(int brushSize){
+        super.setBrushSize(brushSize);
+
+        distanceToOppositePoint = brushSize * heightToOppositePointRatio;
+
+        xFromTopPointToBottomRight  = getXPoint(radsFromTopPointToBottomRight);
+        yFromTopPointToBottomRight  = getYPoint(radsFromTopPointToBottomRight);
+
+        xFromTopPointToBottomLeft   = getXPoint(radsFromTopPointToBottomLeft);
+        yFromTopPointToBottomLeft   = getYPoint(radsFromTopPointToBottomLeft);
+
+        xFromBottomRightPointToLeft = getXPoint(radsFromBottomRightPointToLeft);
+        yFromBottomRightPointToLeft = getYPoint(radsFromBottomRightPointToLeft);
+
+        xFromBottomLeftPointToRight = getXPoint(radsFromBottomLeftPointToRight);
+        yFromBottomLeftPointToRight = getYPoint(radsFromBottomLeftPointToRight);
+
+    }
+
+
+
+    private int getXPoint(double rads){
+        return getXPoint(rads, distanceToOppositePoint);
+    }
+
+
+    private int getYPoint(double rads){
+        return getYPoint(rads, distanceToOppositePoint);
+    }
+
+
+    int getXPoint(double rads, float distance){
+        log("getXPoint(" + rads + ", " + distance + ") , distanceToOppositePoint: " + distanceToOppositePoint);
+        return (int) (distance * Math.sin(rads));
+    }
+
+    private void log(String msg){
+        System.out.println("PentagonBrush "  + msg);
+    }
+
+
+    int getYPoint(double rads, float distance){
+        log("getYPoint(" + rads + ", " + distance + ") , distanceToOppositePoint: " + distanceToOppositePoint);
+        return (int)(distance * Math.cos(rads));
     }
 
 }

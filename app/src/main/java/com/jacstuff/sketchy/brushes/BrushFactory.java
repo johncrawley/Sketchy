@@ -10,6 +10,7 @@ import com.jacstuff.sketchy.brushes.shapes.LineBrush;
 import com.jacstuff.sketchy.brushes.shapes.PentagonBrush;
 import com.jacstuff.sketchy.brushes.shapes.RoundedRectangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.SquareBrush;
+import com.jacstuff.sketchy.brushes.shapes.StarBrush;
 import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.styles.DashedStyle;
 import com.jacstuff.sketchy.brushes.styles.DashedStyleForLines;
@@ -26,7 +27,9 @@ import java.util.Map;
 public class BrushFactory {
 
     private Map<BrushShape, Brush> brushMap;
-    private Brush circleBrush, squareBrush, lineBrush, roundedRectangleBrush, triangleBrush, hexagonBrush, pentagonBrush;
+    private Brush circleBrush, squareBrush, lineBrush,
+            roundedRectangleBrush, triangleBrush, hexagonBrush,
+            pentagonBrush, starBrush;
 
 
     public BrushFactory(Canvas canvas, Paint paint, int brushSize){
@@ -37,6 +40,9 @@ public class BrushFactory {
         brushMap.put(BrushShape.SQUARE, squareBrush);
         brushMap.put(BrushShape.LINE, lineBrush);
         brushMap.put(BrushShape.TRIANGLE, triangleBrush);
+        brushMap.put(BrushShape.PENTAGON, pentagonBrush);
+        brushMap.put(BrushShape.HEXAGON, hexagonBrush);
+        brushMap.put(BrushShape.STAR, starBrush);
     }
 
     private void initBrushes(Canvas canvas, Paint paint, int brushSize){
@@ -49,11 +55,13 @@ public class BrushFactory {
         circleBrush = new CircleBrush(canvas, paint);
         squareBrush = new SquareBrush(canvas, paint);
         roundedRectangleBrush = new RoundedRectangleBrush(canvas, paint, brushSize);
-        triangleBrush = new PentagonBrush(canvas, paint);
+        triangleBrush = new TriangleBrush(canvas, paint);
         hexagonBrush = new HexagonBrush(canvas, paint);
         pentagonBrush = new PentagonBrush(canvas, paint);
+        starBrush = new StarBrush(canvas, paint);
 
-        for(Brush brush : Arrays.asList(squareBrush, circleBrush, triangleBrush, roundedRectangleBrush, hexagonBrush)){
+        for(Brush brush : Arrays.asList(squareBrush, circleBrush, triangleBrush,
+                roundedRectangleBrush, hexagonBrush, pentagonBrush, starBrush)){
             brush.add(BrushStyle.FILL, fillStyle);
             brush.add(BrushStyle.OUTLINE, outlineStyle);
             brush.add(BrushStyle.BROKEN_OUTLINE, dashedStyle);

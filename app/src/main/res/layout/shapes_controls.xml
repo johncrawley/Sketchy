@@ -67,6 +67,37 @@
         android:contentDescription="@string/content_description_triangle_shape_button"
         app:srcCompat="@drawable/triangle_shape_button" />
 
+    <ImageButton
+        android:id="@+id/pentagonShapeButton"
+        android:layout_width="@dimen/selector_button_width"
+        android:layout_height="@dimen/selector_button_height"
+        android:layout_marginStart="@dimen/selector_button_margin_start"
+        android:layout_marginEnd="@dimen/selector_button_margin_end"
+        android:layout_weight="1"
+        android:contentDescription="@string/content_description_triangle_shape_button"
+        app:srcCompat="@drawable/pentagon_shape_button" />
+
+
+    <ImageButton
+        android:id="@+id/starShapeButton"
+        android:layout_width="@dimen/selector_button_width"
+        android:layout_height="@dimen/selector_button_height"
+        android:layout_marginStart="@dimen/selector_button_margin_start"
+        android:layout_marginEnd="@dimen/selector_button_margin_end"
+        android:layout_weight="1"
+        android:contentDescription="@string/content_description_triangle_shape_button"
+        app:srcCompat="@drawable/star_shape_button" />
+
+    <ImageButton
+        android:id="@+id/hexagonShapeButton"
+        android:layout_width="@dimen/selector_button_width"
+        android:layout_height="@dimen/selector_button_height"
+        android:layout_marginStart="@dimen/selector_button_margin_start"
+        android:layout_marginEnd="@dimen/selector_button_margin_end"
+        android:layout_weight="1"
+        android:contentDescription="@string/content_description_triangle_shape_button"
+        app:srcCompat="@drawable/hexagon_shape_button" />
+
 </LinearLayout>
 
 </HorizontalScrollView>
