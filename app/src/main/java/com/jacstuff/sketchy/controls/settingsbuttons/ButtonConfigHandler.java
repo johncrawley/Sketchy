@@ -4,8 +4,6 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.R;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;

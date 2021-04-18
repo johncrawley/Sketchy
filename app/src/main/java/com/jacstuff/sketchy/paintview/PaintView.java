@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -21,10 +22,10 @@ import com.jacstuff.sketchy.multicolor.ColorSelector;
 
 public class PaintView extends View {
 
-    private int canvasWidth, canvasHeight;
+    private int canvasWidth, canvasHeight, canvasMidX, canvasMidY;
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
     private Paint paint;
-    private int brushSize;
+    private int brushSize, halfBrushSize, radialGradientRadius;
     private Bitmap bitmap;
     private Canvas canvas;
     private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
@@ -37,6 +38,10 @@ public class PaintView extends View {
     private int angle;
     private GradientType gradientType = GradientType.NONE;
     private int previousColor = Color.WHITE;
+
+    private int clampRadialGradientFactor = 12;
+    private int clampRadialGradientRadius = 10;
+
 
 
     public PaintView(Context context) {
@@ -52,6 +57,7 @@ public class PaintView extends View {
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.SQUARE);
+        radialGradientRadius = 10;
     }
 
 
@@ -78,13 +84,22 @@ public class PaintView extends View {
 
     public void setBrushSize(int brushSize){
         this.brushSize = brushSize;
+        halfBrushSize = brushSize /2;
         currentBrush.setBrushSize(brushSize);
+    }
+
+
+    public void setRadialGradientRadius(int radiusFactor){
+        radialGradientRadius = 1 + canvasWidth / radiusFactor;
+        clampRadialGradientRadius = 1 + radialGradientRadius * clampRadialGradientFactor;
     }
 
 
     public void init(int canvasWidth, int canvasHeight) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
+        canvasMidX = canvasWidth /2;
+        canvasMidY = canvasHeight / 2;
         bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         paint.setColor(DEFAULT_BG_COLOR);
@@ -182,10 +197,10 @@ public class PaintView extends View {
         }
         paint.setColor(color);
         assignGradient(x,y, color, previousColor);
-        angle += 15;
+        //angle += 15;
         canvas.save();
         canvas.translate(x,y);
-        canvas.rotate(angle);
+        //canvas.rotate(angle);
         performAction(x, y, event.getAction());
         canvas.restore();
         return true;
@@ -196,11 +211,21 @@ public class PaintView extends View {
         switch(gradientType){
             case NONE:
                 paint.setShader(null);
-                return;
+                break;
             case DIAGONAL_MIRROR:
-                int x1 = (int)x + (this.brushSize /2);
-                int y1 = (int)y + (this.brushSize /2);
+                int x1 = (int)x + (halfBrushSize);
+                int y1 = (int)y + (halfBrushSize);
                 paint.setShader(new LinearGradient(x, y, x1, y1, color, oldColor, Shader.TileMode.MIRROR));
+                break;
+            case RADIAL_CLAMP:
+                paint.setShader(new RadialGradient(0, 0, clampRadialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.CLAMP ));
+                break;
+            case RADIAL_REPEAT:
+                paint.setShader(new RadialGradient(0, 0, radialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.REPEAT ));
+                break;
+            case RADIAL_MIRROR:
+                paint.setShader(new RadialGradient(0, 0, radialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.MIRROR ));
+
         }
     }
 

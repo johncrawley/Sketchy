@@ -1,43 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<HorizontalScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/controlsScrollView"
-    android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:layout_gravity = "center">
+    android:layout_width="match_parent">
 
-    <LinearLayout
-        android:id="@+id/shapeOptionsLayout"
+    <HorizontalScrollView
+        android:id="@+id/controlsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity = "center">
+
+        <LinearLayout
+            android:id="@+id/shapeOptionsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/shape_selector_group_top_margin"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/shape_options_padding_top">
+
+
+            <ImageButton
+                android:id="@+id/noGradientButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/no_gradient_button" />
+
+            <ImageButton
+                android:id="@+id/diagonalMirrorGradientButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/diagonal_mirror_gradient_button" />
+
+            <ImageButton
+                android:id="@+id/gradientRadialClampButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/gradient_radial_clamp_button" />
+
+            <ImageButton
+                android:id="@+id/gradientRadialRepeatButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/gradient_radial_repeat_button" />
+
+            <ImageButton
+                android:id="@+id/gradientRadialMirrorButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/gradient_radial_mirror_button" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+        <include
+        android:id="@+id/gradientSeekBarInclude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/shape_selector_group_top_margin"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/shape_options_padding_top">
-
-        <ImageButton
-            android:id="@+id/diagonalMirrorGradientButton"
-            android:layout_width="@dimen/selector_button_width"
-            android:layout_height="@dimen/selector_button_height"
-            android:layout_marginStart="@dimen/selector_button_margin_start"
-            android:layout_marginEnd="@dimen/selector_button_margin_end"
-            android:layout_weight="1"
-            android:contentDescription="@string/content_description_square_shape_button"
-            app:srcCompat="@drawable/diagonal_mirror_gradient_button" />
-
-        <ImageButton
-            android:id="@+id/noGradientButton"
-            android:layout_width="@dimen/selector_button_width"
-            android:layout_height="@dimen/selector_button_height"
-            android:layout_marginStart="@dimen/selector_button_margin_start"
-            android:layout_marginEnd="@dimen/selector_button_margin_end"
-            android:layout_weight="1"
-            android:contentDescription="@string/content_description_circle_shape_button"
-            app:srcCompat="@drawable/no_gradient_button" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        layout="@layout/gradient_radius_seek_bar" />
 
 
-    </LinearLayout>
-
-</HorizontalScrollView>
+</LinearLayout>

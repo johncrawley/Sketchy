@@ -54,5 +54,6 @@
     <string name="confirm_wipe_text">Clear the canvas without saving?</string>
     <string name="confirm_wipe_confirm_button">Yes</string>
     <string name="confirm_wipe_cancel_button">No</string>
+    <string name="gradient_radius_seekbar_label">Gradient Radius</string>
 
 </resources>

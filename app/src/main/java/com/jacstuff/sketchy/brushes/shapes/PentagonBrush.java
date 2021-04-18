@@ -181,17 +181,11 @@ public class PentagonBrush extends AbstractBrush implements Brush {
 
 
     int getXPoint(double rads, float distance){
-        log("getXPoint(" + rads + ", " + distance + ") , distanceToOppositePoint: " + distanceToOppositePoint);
         return (int) (distance * Math.sin(rads));
-    }
-
-    private void log(String msg){
-        System.out.println("PentagonBrush "  + msg);
     }
 
 
     int getYPoint(double rads, float distance){
-        log("getYPoint(" + rads + ", " + distance + ") , distanceToOppositePoint: " + distanceToOppositePoint);
         return (int)(distance * Math.cos(rads));
     }
 

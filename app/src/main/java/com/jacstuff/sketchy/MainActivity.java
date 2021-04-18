@@ -29,7 +29,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private SeekBar seekBar;
+    private SeekBar brushSizeSeekBar;
+    private SeekBar gradientRadiusSeekBar;
     private PaintView paintView;
     private HorizontalScrollView shadesScrollView;
     final int SAVE_FILE_ACTIVITY_CODE = 101;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initImageSaver();
         setupActionbar();
         setupBrushSizeSeekBar();
+        setupGradientRadiusSeekBar();
         configurePaintView();
         setupButtons();
     }
@@ -113,7 +115,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void assignViews(){
         shadesScrollView =  findViewById(R.id.colorShadeScrollView);
-        seekBar = findViewById(R.id.seekBar);
+        brushSizeSeekBar = findViewById(R.id.seekBar);
+        gradientRadiusSeekBar = findViewById(R.id.gradientRadiusSeekBar);
         colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
     }
 
@@ -139,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void setupBrushSizeSeekBar(){
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        brushSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
@@ -155,9 +158,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    private void setupGradientRadiusSeekBar(){
+        gradientRadiusSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                if(paintView != null){
+                    paintView.setRadialGradientRadius(progress);
+                }
+            }
+        });
+
+
+    }
+
 
     private void setupDefaultSelections(){
-        paintView.setBrushSize(seekBar.getProgress());
+        paintView.setBrushSize(brushSizeSeekBar.getProgress());
     }
 
 
@@ -221,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public int getBrushSize(){
-        return getResources().getInteger(R.integer.brush_size_min_default) + seekBar.getProgress();
+        return getResources().getInteger(R.integer.brush_size_min_default) + brushSizeSeekBar.getProgress();
     }
 
 

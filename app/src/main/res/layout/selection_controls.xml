@@ -32,6 +32,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingHorizontal="12dp"
                 layout="@layout/shapes_controls" />
 
             <include
@@ -43,6 +44,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingHorizontal="12dp"
                 layout="@layout/styles_controls" />
 
             <include
