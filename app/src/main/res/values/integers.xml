@@ -3,6 +3,10 @@
 
     <integer name="brush_size_min_default">2</integer>
     <integer name="brush_size_max_default">380</integer>
+    <integer name="brush_size_default">150</integer>
+    <integer name="blur_radius_min_default">1</integer>
+    <integer name="blur_radius_max_default">150</integer>
+    <integer name="blur_radius_default">10</integer>
     <integer name="brush_size_min_line_outline">4</integer>
     <integer name="brush_size_max_line_outline">70</integer>
     <integer name="number_of_shades">15</integer>
@@ -10,5 +14,7 @@
     <integer name="shade_increment_denominator">100</integer>
     <integer name="gradient_radius_max">150</integer>
     <integer name="gradient_radius_min">1</integer>
+    <integer name="line_width_max">100</integer>
+    <integer name="line_width_min">1</integer>
 
 </resources>

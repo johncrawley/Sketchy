@@ -18,13 +18,15 @@ public abstract class AbstractBrush {
     Style currentStyle;
     int halfBrushSize;
     private Map<BrushStyle, Style> styleMap;
+    private FillStyle fillStyle;
 
 
     AbstractBrush(Canvas canvas, Paint paint){
         this.canvas = canvas;
         this.paint = paint;
         styleMap = new HashMap<>();
-        currentStyle = new FillStyle();
+        fillStyle = new FillStyle();
+        currentStyle = fillStyle;
     }
 
     public void add(BrushStyle brushStyle, Style style){
@@ -33,6 +35,9 @@ public abstract class AbstractBrush {
 
     public void setStyle(BrushStyle style){
         currentStyle = styleMap.get(style);
+        if(currentStyle == null){
+            currentStyle = fillStyle;
+        }
         currentStyle.init(paint, brushSize);
     }
 

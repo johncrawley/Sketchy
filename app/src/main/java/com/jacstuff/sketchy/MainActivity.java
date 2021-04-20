@@ -12,13 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
+import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
@@ -29,8 +29,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private SeekBar brushSizeSeekBar;
-    private SeekBar gradientRadiusSeekBar;
     private PaintView paintView;
     private HorizontalScrollView shadesScrollView;
     final int SAVE_FILE_ACTIVITY_CODE = 101;
@@ -52,10 +50,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         assignViews();
         initImageSaver();
         setupActionbar();
-        setupBrushSizeSeekBar();
-        setupGradientRadiusSeekBar();
         configurePaintView();
         setupButtons();
+        new SeekBarConfigurator(this, paintView);
     }
 
 
@@ -94,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
         PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, this.getWindowManager());
-        paintViewConfigurator.configure(paintView, getBrushSize());
+        paintViewConfigurator.configure(paintView);
         assignSavedBitmap();
     }
 
@@ -115,8 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void assignViews(){
         shadesScrollView =  findViewById(R.id.colorShadeScrollView);
-        brushSizeSeekBar = findViewById(R.id.seekBar);
-        gradientRadiusSeekBar = findViewById(R.id.gradientRadiusSeekBar);
         colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
     }
 
@@ -141,45 +136,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void setupBrushSizeSeekBar(){
-        brushSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-                if(paintView != null){
-                    paintView.setBrushSize(getBrushSize());
-                }
-            }
-        });
-    }
-
-    private void setupGradientRadiusSeekBar(){
-        gradientRadiusSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-                if(paintView != null){
-                    paintView.setRadialGradientRadius(progress);
-                }
-            }
-        });
-
-
-    }
-
 
     private void setupDefaultSelections(){
-        paintView.setBrushSize(brushSizeSeekBar.getProgress());
+      //  paintView.setBrushSize(brushSizeSeekBar.getProgress());
     }
 
 
@@ -239,11 +198,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void startAboutActivity(){
         Intent intent = new Intent(this, AboutDialogActivity.class);
         startActivityForResult(intent, CLEAR_CANVAS_ACTIVITY_CODE);
-    }
-
-
-    public int getBrushSize(){
-        return getResources().getInteger(R.integer.brush_size_min_default) + brushSizeSeekBar.getProgress();
     }
 
 

@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.paintview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -12,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.jacstuff.sketchy.brushes.BlurType;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.GradientType;
@@ -41,6 +43,8 @@ public class PaintView extends View {
 
     private int clampRadialGradientFactor = 12;
     private int clampRadialGradientRadius = 10;
+    private int blurRadius = 1;
+    private BlurType blurType;
 
 
 
@@ -58,6 +62,7 @@ public class PaintView extends View {
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.SQUARE);
         radialGradientRadius = 10;
+        paint.setDither(true);
     }
 
 
@@ -74,6 +79,10 @@ public class PaintView extends View {
     public void set(BrushStyle brushStyle){
         currentBrushStyle = brushStyle;
         currentBrush.setStyle(brushStyle);
+    }
+
+    public void set(BlurType blurType){
+        this.blurType = blurType;
     }
 
 
@@ -94,6 +103,13 @@ public class PaintView extends View {
         clampRadialGradientRadius = 1 + radialGradientRadius * clampRadialGradientFactor;
     }
 
+    public void setLineWidth(int lineWidth){
+        paint.setStrokeWidth(lineWidth);
+    }
+
+    public void setBlurRadius(int blurRadius){
+        this.blurRadius = blurRadius;
+    }
 
     public void init(int canvasWidth, int canvasHeight) {
         this.canvasWidth = canvasWidth;
@@ -182,6 +198,7 @@ public class PaintView extends View {
 
     public void set(BrushShape brushShape){
         currentBrush = brushFactory.getResettedBrushFor(brushShape, currentBrushStyle);
+        currentBrush.setBrushSize(brushSize);
     }
 
 
@@ -196,6 +213,7 @@ public class PaintView extends View {
             previousColor = paint.getColor();
         }
         paint.setColor(color);
+        assignBlur();
         assignGradient(x,y, color, previousColor);
         //angle += 15;
         canvas.save();
@@ -225,8 +243,34 @@ public class PaintView extends View {
                 break;
             case RADIAL_MIRROR:
                 paint.setShader(new RadialGradient(0, 0, radialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.MIRROR ));
+                break;
+                //paint.setShadowLayer(halfBrushSize, 20, 20, oldColor);
 
         }
+    }
+
+    private void assignBlur(){
+        switch (blurType){
+            case NONE:
+                paint.setMaskFilter(null);
+                break;
+            case INNER:
+                paint.setMaskFilter(new BlurMaskFilter(10 + blurRadius, BlurMaskFilter.Blur.INNER));
+                break;
+            case NORMAL:
+                paint.setMaskFilter(new BlurMaskFilter(blurRadius, BlurMaskFilter.Blur.NORMAL));
+                break;
+            case OUTER:
+                paint.setMaskFilter(new BlurMaskFilter(blurRadius, BlurMaskFilter.Blur.OUTER));
+                break;
+            case SOLID:
+                paint.setMaskFilter(new BlurMaskFilter(10 + blurRadius, BlurMaskFilter.Blur.SOLID));
+        }
+
+
+
+
+
     }
 
 

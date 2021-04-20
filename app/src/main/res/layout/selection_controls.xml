@@ -68,6 +68,17 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 layout="@layout/gradient_controls" />
+
+            <include
+                android:visibility="gone"
+                android:id="@+id/includeBlurControls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                layout="@layout/blur_controls" />
         </android.support.constraint.ConstraintLayout>
 
 
@@ -92,7 +103,7 @@
 
 
             <SeekBar
-                android:id="@+id/seekBar"
+                android:id="@+id/brushSizeSeekBar"
                 android:layout_width="177dp"
                 android:layout_height="50dp"
                 android:indeterminate="false"
@@ -101,7 +112,7 @@
                 android:paddingTop="10dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="20dp"
-                android:progress="150" />
+                android:progress="@integer/brush_size_default" />
 
             <ImageView
                 android:id="@+id/largeIndicator"

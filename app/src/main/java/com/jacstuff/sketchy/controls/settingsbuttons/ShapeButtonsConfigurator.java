@@ -25,6 +25,7 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
         buttonConfig.put(R.id.squareShapeButton,            R.drawable.square_shape_button,             BrushShape.SQUARE);
         buttonConfig.put(R.id.circleShapeButton,            R.drawable.circle_shape_button,             BrushShape.CIRCLE);
         buttonConfig.put(R.id.lineShapeButton,              R.drawable.line_shape_button,               BrushShape.LINE);
+        buttonConfig.put(R.id.straightLineShapeButton,      R.drawable.straight_line_shape_button,      BrushShape.STRAIGHT_LINE);
         buttonConfig.put(R.id.roundedRectangleShapeButton,  R.drawable.rounded_rectangle_shape_button,  BrushShape.ROUNDED_RECTANGLE);
         buttonConfig.put(R.id.triangleShapeButton,          R.drawable.triangle_shape_button,           BrushShape.TRIANGLE);
         buttonConfig.put(R.id.pentagonShapeButton,          R.drawable.pentagon_shape_button,           BrushShape.PENTAGON);
@@ -39,7 +40,6 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
     @Override
     public void handleClick(int viewId, BrushShape brushShape){
         paintView.set(brushShape);
-        paintView.setBrushSize(activity.getBrushSize());
     }
 
 

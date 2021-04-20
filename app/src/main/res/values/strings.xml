@@ -55,5 +55,7 @@
     <string name="confirm_wipe_confirm_button">Yes</string>
     <string name="confirm_wipe_cancel_button">No</string>
     <string name="gradient_radius_seekbar_label">Gradient Radius</string>
+    <string name="line_width_seekbar_label">Line Width</string>
+    <string name="blur_intensity_seekbar_label">Blur Intensity</string>
 
 </resources>

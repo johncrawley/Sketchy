@@ -10,7 +10,8 @@ public class SettingsButtonsConfigurator {
         new ShapeButtonsConfigurator(activity, paintView);
         new StyleButtonsConfigurator(activity, paintView);
         new SelectionButtonsConfigurator(activity);
-        new GradientButtonsConfigurator(activity,paintView);
+        new GradientButtonsConfigurator(activity, paintView);
+        new BlurButtonsConfigurator(activity, paintView);
     }
 
 

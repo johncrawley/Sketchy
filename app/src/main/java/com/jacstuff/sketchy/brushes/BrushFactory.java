@@ -11,6 +11,7 @@ import com.jacstuff.sketchy.brushes.shapes.PentagonBrush;
 import com.jacstuff.sketchy.brushes.shapes.RoundedRectangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.SquareBrush;
 import com.jacstuff.sketchy.brushes.shapes.StarBrush;
+import com.jacstuff.sketchy.brushes.shapes.StraightLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.styles.DashedStyle;
 import com.jacstuff.sketchy.brushes.styles.DashedStyleForLines;
@@ -29,7 +30,7 @@ public class BrushFactory {
     private Map<BrushShape, Brush> brushMap;
     private Brush circleBrush, squareBrush, lineBrush,
             roundedRectangleBrush, triangleBrush, hexagonBrush,
-            pentagonBrush, starBrush;
+            pentagonBrush, starBrush, straightLineBrush;
 
 
     public BrushFactory(Canvas canvas, Paint paint, int brushSize){
@@ -43,6 +44,7 @@ public class BrushFactory {
         brushMap.put(BrushShape.PENTAGON, pentagonBrush);
         brushMap.put(BrushShape.HEXAGON, hexagonBrush);
         brushMap.put(BrushShape.STAR, starBrush);
+        brushMap.put(BrushShape.STRAIGHT_LINE, straightLineBrush);
     }
 
     private void initBrushes(Canvas canvas, Paint paint, int brushSize){
@@ -59,9 +61,10 @@ public class BrushFactory {
         hexagonBrush = new HexagonBrush(canvas, paint);
         pentagonBrush = new PentagonBrush(canvas, paint);
         starBrush = new StarBrush(canvas, paint);
+        straightLineBrush = new StraightLineBrush(canvas, paint);
 
         for(Brush brush : Arrays.asList(squareBrush, circleBrush, triangleBrush,
-                roundedRectangleBrush, hexagonBrush, pentagonBrush, starBrush)){
+                roundedRectangleBrush, hexagonBrush, pentagonBrush, starBrush, straightLineBrush)){
             brush.add(BrushStyle.FILL, fillStyle);
             brush.add(BrushStyle.OUTLINE, outlineStyle);
             brush.add(BrushStyle.BROKEN_OUTLINE, dashedStyle);
@@ -81,6 +84,9 @@ public class BrushFactory {
 
     public Brush getResettedBrushFor(BrushShape shape, BrushStyle brushStyle){
         Brush brush =  brushMap.get(shape);
+        if(brush == null){
+            brush = circleBrush;
+        }
         brush.setStyle(brushStyle);
         return brush;
     }

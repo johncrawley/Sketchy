@@ -13,16 +13,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-        android:id="@+id/gradientRadiusSeekBarLabel"
+        android:id="@+id/lineWidthSeekBarLabel"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:text="@string/gradient_radius_seekbar_label"
+        android:text="@string/line_width_seekbar_label"
         />
 
     <SeekBar
-        android:id="@+id/gradientSizeSeekBar"
+        android:id="@+id/lineWidthSeekBar"
         android:layout_width="177dp"
         android:layout_height="50dp"
         android:indeterminate="false"
