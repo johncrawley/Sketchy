@@ -17,6 +17,7 @@ import com.jacstuff.sketchy.brushes.BlurType;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.GradientType;
+import com.jacstuff.sketchy.brushes.ShadowType;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
@@ -104,6 +105,7 @@ public class PaintView extends View {
     }
 
     public void setLineWidth(int lineWidth){
+        log("Entered setLineWidth(" + lineWidth + ")");
         paint.setStrokeWidth(lineWidth);
     }
 
@@ -244,8 +246,6 @@ public class PaintView extends View {
             case RADIAL_MIRROR:
                 paint.setShader(new RadialGradient(0, 0, radialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.MIRROR ));
                 break;
-                //paint.setShadowLayer(halfBrushSize, 20, 20, oldColor);
-
         }
     }
 
@@ -267,14 +267,76 @@ public class PaintView extends View {
                 paint.setMaskFilter(new BlurMaskFilter(10 + blurRadius, BlurMaskFilter.Blur.SOLID));
         }
 
-
-
-
-
     }
 
 
-    private void performAction(float x, float y, int action){
+    private ShadowType shadowType;
+    private int shadowSize;
+    private int shadowOffsetX;
+    private int shadowOffsetY;
+    private int shadowOffsetFactor;
+
+    public void setShadowSize(int size){
+        shadowSize = halfBrushSize + size;
+        shadowOffsetFactor = shadowSize / 3;
+    }
+
+    public void set(ShadowType shadowType){
+        this.shadowType = shadowType;
+    }
+
+
+    private void assignShadow() {
+        if(shadowType == ShadowType.NONE){
+            return;
+        }
+
+        switch (shadowType) {
+            case CENTER:
+                shadowOffsetX = 0;
+                shadowOffsetY = 0;
+                break;
+            case NORTH:
+                shadowOffsetX = 0;
+                shadowOffsetY = -shadowOffsetFactor;
+                break;
+            case NORTH_WEST:
+                shadowOffsetX = -shadowOffsetFactor;
+                shadowOffsetY = -shadowOffsetFactor;
+                break;
+            case WEST:
+                shadowOffsetX = -shadowOffsetFactor;
+                shadowOffsetY = 0;
+                break;
+            case SOUTH_WEST:
+                shadowOffsetX = -shadowOffsetFactor;
+                shadowOffsetY = shadowOffsetFactor;
+                break;
+            case SOUTH:
+                shadowOffsetX = 0;
+                shadowOffsetY = shadowOffsetFactor;
+                break;
+            case SOUTH_EAST:
+                shadowOffsetX = shadowOffsetFactor;
+                shadowOffsetY = shadowOffsetFactor;
+                break;
+            case EAST:
+                shadowOffsetX = shadowOffsetFactor;
+                shadowOffsetY = 0;
+                break;
+            case NORTH_EAST:
+                shadowOffsetX = shadowOffsetFactor;
+                shadowOffsetY = -shadowOffsetFactor;
+                break;
+        }
+
+        paint.setShadowLayer(shadowSize, shadowOffsetX, shadowOffsetY, Color.BLACK);
+    }
+
+
+
+
+        private void performAction(float x, float y, int action){
         wasCanvasModifiedSinceLastSaveOrReset = true;
         if(isCanvasLocked){
             return;

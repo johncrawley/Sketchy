@@ -7,7 +7,7 @@
 
         <include
             android:id="@+id/include_selector_panel"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -17,16 +17,15 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/control_detail_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/seekBarLayout"
             app:layout_constraintTop_toBottomOf="@id/include_selector_panel">
 
             <include
                 android:id="@+id/includeShapeControls"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +80,7 @@
                 layout="@layout/blur_controls" />
         </android.support.constraint.ConstraintLayout>
 
-
+<!--
         <LinearLayout
             android:id="@+id/seekBarLayout"
             android:layout_width="wrap_content"
@@ -124,6 +123,6 @@
 
         </LinearLayout>
 
-
+-->
 
 </android.support.constraint.ConstraintLayout>

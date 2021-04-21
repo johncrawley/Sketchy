@@ -15,8 +15,6 @@ public class ThickOutlineStyle  extends AbstractStyle implements Style {
 
     @Override
     public void setBrushSize(Paint paint, int brushSize) {
-        float width = 2f + (brushSize / 7f);
-        paint.setStrokeWidth(width);
     }
 
 }

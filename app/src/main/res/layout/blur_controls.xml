@@ -31,7 +31,7 @@
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_circle_shape_button"
-                app:srcCompat="@drawable/no_gradient_button" />
+                app:srcCompat="@drawable/no_blur_button" />
 
             <ImageButton
                 android:id="@+id/outerBlurButton"
@@ -41,7 +41,7 @@
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_square_shape_button"
-                app:srcCompat="@drawable/diagonal_mirror_gradient_button" />
+                app:srcCompat="@drawable/outer_blur_button" />
 
             <ImageButton
                 android:id="@+id/normalBlurButton"
@@ -51,7 +51,7 @@
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_square_shape_button"
-                app:srcCompat="@drawable/gradient_radial_clamp_button" />
+                app:srcCompat="@drawable/normal_blur_button" />
 
             <ImageButton
                 android:id="@+id/solidBlurButton"
@@ -61,7 +61,7 @@
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_square_shape_button"
-                app:srcCompat="@drawable/gradient_radial_repeat_button" />
+                app:srcCompat="@drawable/solid_blur_button" />
 
             <ImageButton
                 android:id="@+id/innerBlurButton"
@@ -71,7 +71,7 @@
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_square_shape_button"
-                app:srcCompat="@drawable/gradient_radial_mirror_button" />
+                app:srcCompat="@drawable/inner_blur_button" />
 
         </LinearLayout>
 

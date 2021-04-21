@@ -57,5 +57,6 @@
     <string name="gradient_radius_seekbar_label">Gradient Radius</string>
     <string name="line_width_seekbar_label">Line Width</string>
     <string name="blur_intensity_seekbar_label">Blur Intensity</string>
+    <string name="brush_size_seekbar_label">Brush Size</string>
 
 </resources>

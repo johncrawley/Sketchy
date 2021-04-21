@@ -39,7 +39,6 @@ public class DashedStyleForLines extends DashedStyle implements Style {
     @Override
     public void setBrushSize(Paint paint, int brushSize) {
         this.brushSize = brushSize;
-        paint.setStrokeWidth(calculate(brushSize));
         hasBrushSizeChanged = true;
     }
 

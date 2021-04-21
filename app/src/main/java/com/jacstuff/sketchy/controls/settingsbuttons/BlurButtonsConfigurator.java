@@ -21,11 +21,11 @@ public class BlurButtonsConfigurator implements ButtonsConfigurator<BlurType>{
 
     public void configure(){
         ButtonConfigHandler<BlurType> buttonConfig = new ButtonConfigHandler<>(activity, this);
-        buttonConfig.put(R.id.noBlurButton,             R.drawable.no_gradient_button,              BlurType.NONE);
-        buttonConfig.put(R.id.innerBlurButton,          R.drawable.diagonal_mirror_gradient_button, BlurType.INNER);
-        buttonConfig.put(R.id.normalBlurButton,         R.drawable.gradient_radial_clamp_button,    BlurType.NORMAL);
-        buttonConfig.put(R.id.outerBlurButton,   R.drawable.gradient_radial_repeat_button,   BlurType.OUTER);
-        buttonConfig.put(R.id.solidBlurButton,   R.drawable.gradient_radial_mirror_button,   BlurType.SOLID);
+        buttonConfig.put(R.id.noBlurButton,      R.drawable.no_blur_button,      BlurType.NONE);
+        buttonConfig.put(R.id.innerBlurButton,   R.drawable.inner_blur_button,   BlurType.INNER);
+        buttonConfig.put(R.id.normalBlurButton,  R.drawable.normal_blur_button,  BlurType.NORMAL);
+        buttonConfig.put(R.id.outerBlurButton,   R.drawable.outer_blur_button,   BlurType.OUTER);
+        buttonConfig.put(R.id.solidBlurButton,   R.drawable.solid_blur_button,   BlurType.SOLID);
 
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.blurSelectionButton);

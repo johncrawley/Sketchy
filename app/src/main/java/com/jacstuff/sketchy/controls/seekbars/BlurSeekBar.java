@@ -8,7 +8,7 @@ public class BlurSeekBar  extends AbstractSeekBarConfig {
 
 
     public BlurSeekBar(MainActivity mainActivity, PaintView paintView){
-        super(mainActivity, paintView, R.id.lineWidthSeekBar);
+        super(mainActivity, paintView, R.id.blurSeekBar);
     }
 
 

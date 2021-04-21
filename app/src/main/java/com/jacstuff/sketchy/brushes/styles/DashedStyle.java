@@ -23,7 +23,6 @@ public class DashedStyle extends AbstractStyle implements Style {
 
     @Override
     public void init(Paint p, int brushSize) {
-        p.setStrokeWidth(1);
         p.setStyle(Paint.Style.STROKE);
         p.setPathEffect(dashPathEffect2);
     }
