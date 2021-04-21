@@ -26,6 +26,7 @@ public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer
         buttonConfig.put(R.id.styleSelectionButton,     R.id.includeStyleControls);
         buttonConfig.put(R.id.angleSelectionButton,     R.id.includeAngleControls);
         buttonConfig.put(R.id.blurSelectionButton,      R.id.includeBlurControls);
+        buttonConfig.put(R.id.shadowSelectionButton,    R.id.includeShadowControls);
         buttonConfig.setupClickHandler();
         layoutIds = buttonConfig.getEntries();
         buttonConfig.setDefaultSelection(R.id.shapeSelectionButton);

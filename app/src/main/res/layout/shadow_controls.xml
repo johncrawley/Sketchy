@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+
+<HorizontalScrollView
+        android:id="@+id/controlsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/shadowOptionsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/shape_selector_group_top_margin"
+            android:paddingHorizontal="20dp"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/shape_options_padding_top">
+
+            <ImageButton
+                android:id="@+id/noShadowButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/no_shadow_button" />
+
+            <ImageButton
+                android:id="@+id/centreShadowButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/center_shadow_button" />
+
+            <ImageButton
+                android:id="@+id/northShadowButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/north_shadow_button" />
+
+            <ImageButton
+                android:id="@+id/northEastShadowButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/north_east_shadow_button" />
+
+            <ImageButton
+                android:id="@+id/eastShadowButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/east_shadow_button" />
+
+            <ImageButton
+                android:id="@+id/southEastShadowButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/south_east_shadow_button" />
+
+            <ImageButton
+                android:id="@+id/southShadowButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/south_shadow_button" />
+
+            <ImageButton
+                android:id="@+id/southWestShadowButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/south_west_shadow_button" />
+
+            <ImageButton
+                android:id="@+id/westShadowButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/west_shadow_button" />
+
+            <ImageButton
+                android:id="@+id/northWestShadowButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/north_west_shadow_button" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+    <include
+        android:id="@+id/shadowSeekBarInclude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_gravity="center_horizontal"
+        layout="@layout/shadow_radius_seek_bar" />
+
+
+
+</LinearLayout>

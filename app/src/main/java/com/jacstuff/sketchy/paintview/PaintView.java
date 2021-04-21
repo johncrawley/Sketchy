@@ -216,16 +216,23 @@ public class PaintView extends View {
         }
         paint.setColor(color);
         assignBlur();
+        assignShadow();
         assignGradient(x,y, color, previousColor);
-        //angle += 15;
+        assignShadow();
+        updateAngle();
         canvas.save();
         canvas.translate(x,y);
-        //canvas.rotate(angle);
+       // canvas.rotate(angle);
         performAction(x, y, event.getAction());
         canvas.restore();
         return true;
     }
 
+
+    private void updateAngle(){
+        angle+= 15;
+        angle = angle % 360;
+    }
 
     private void assignGradient(float x, float y, int color, int oldColor){
         switch(gradientType){
@@ -270,15 +277,15 @@ public class PaintView extends View {
     }
 
 
-    private ShadowType shadowType;
+    private ShadowType shadowType = ShadowType.NONE;
     private int shadowSize;
     private int shadowOffsetX;
     private int shadowOffsetY;
     private int shadowOffsetFactor;
 
     public void setShadowSize(int size){
-        shadowSize = halfBrushSize + size;
-        shadowOffsetFactor = shadowSize / 3;
+        shadowSize = size;
+        shadowOffsetFactor = halfBrushSize / 4;
     }
 
     public void set(ShadowType shadowType){
@@ -288,6 +295,7 @@ public class PaintView extends View {
 
     private void assignShadow() {
         if(shadowType == ShadowType.NONE){
+            paint.clearShadowLayer();
             return;
         }
 
