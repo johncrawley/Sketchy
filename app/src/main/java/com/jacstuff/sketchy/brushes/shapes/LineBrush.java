@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.line.DefaultLineDrawer;
 import com.jacstuff.sketchy.brushes.shapes.line.LineDrawer;
@@ -18,7 +19,7 @@ public class LineBrush extends AbstractBrush implements Brush {
     private Map<BrushStyle, LineDrawer> lineDrawerMap;
 
     public LineBrush(Canvas canvas, Paint paint) {
-        super(canvas, paint);
+        super(canvas, paint, BrushShape.LINE);
         setupLineDrawers();
     }
 
@@ -41,6 +42,14 @@ public class LineBrush extends AbstractBrush implements Brush {
         xDown = x;
         yDown = y;
     }
+
+
+
+    @Override
+    public void onTouchMove(float x, float y) {
+    }
+
+
 
 
     @Override

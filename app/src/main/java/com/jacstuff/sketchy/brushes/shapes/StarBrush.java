@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
+import com.jacstuff.sketchy.brushes.BrushShape;
+
 
 /*
 
@@ -25,6 +27,7 @@ public class StarBrush extends PentagonBrush {
 
     public StarBrush(Canvas canvas, Paint paint){
         super(canvas, paint);
+        brushShape = BrushShape.STAR;
     }
 
 

@@ -2,13 +2,9 @@ package com.jacstuff.sketchy.paintview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Paint;
-import android.graphics.RadialGradient;
-import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,17 +17,19 @@ import com.jacstuff.sketchy.brushes.ShadowType;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
+import com.jacstuff.sketchy.paintview.helpers.BlurHelper;
+import com.jacstuff.sketchy.paintview.helpers.GradientHelper;
+import com.jacstuff.sketchy.paintview.helpers.ShadowHelper;
 
 
 public class PaintView extends View {
 
-    private int canvasWidth, canvasHeight, canvasMidX, canvasMidY;
+    private int canvasWidth, canvasHeight;
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
     private Paint paint;
-    private int brushSize, halfBrushSize, radialGradientRadius;
+    private int brushSize, halfBrushSize;
     private Bitmap bitmap;
     private Canvas canvas;
-    private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
     private ColorSelector colorSelector;
     private BrushStyle currentBrushStyle = BrushStyle.FILL;
     private Brush currentBrush;
@@ -39,14 +37,11 @@ public class PaintView extends View {
     private boolean wasCanvasModifiedSinceLastSaveOrReset;
     private boolean isCanvasLocked;
     private int angle;
-    private GradientType gradientType = GradientType.NONE;
     private int previousColor = Color.WHITE;
 
-    private int clampRadialGradientFactor = 12;
-    private int clampRadialGradientRadius = 10;
-    private int blurRadius = 1;
-    private BlurType blurType;
-
+    private ShadowHelper shadowHelper;
+    private BlurHelper blurHelper;
+    private GradientHelper gradientHelper;
 
 
     public PaintView(Context context) {
@@ -62,8 +57,10 @@ public class PaintView extends View {
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.SQUARE);
-        radialGradientRadius = 10;
         paint.setDither(true);
+        shadowHelper = new ShadowHelper(paint);
+        blurHelper = new BlurHelper(paint);
+        gradientHelper = new GradientHelper(paint);
     }
 
 
@@ -83,12 +80,12 @@ public class PaintView extends View {
     }
 
     public void set(BlurType blurType){
-        this.blurType = blurType;
+        blurHelper.setBlurType(blurType);
     }
 
 
     public void set(GradientType gradientType){
-        this.gradientType = gradientType;
+        gradientHelper.setGradientType(gradientType);
     }
 
 
@@ -96,33 +93,36 @@ public class PaintView extends View {
         this.brushSize = brushSize;
         halfBrushSize = brushSize /2;
         currentBrush.setBrushSize(brushSize);
+        gradientHelper.updateBrushSize(brushSize);
     }
 
 
     public void setRadialGradientRadius(int radiusFactor){
-        radialGradientRadius = 1 + canvasWidth / radiusFactor;
-        clampRadialGradientRadius = 1 + radialGradientRadius * clampRadialGradientFactor;
+        gradientHelper.setGradientRadius(radiusFactor, canvasWidth);
     }
 
     public void setLineWidth(int lineWidth){
-        log("Entered setLineWidth(" + lineWidth + ")");
         paint.setStrokeWidth(lineWidth);
     }
 
     public void setBlurRadius(int blurRadius){
-        this.blurRadius = blurRadius;
+        blurHelper.setBlurRadius(blurRadius);
     }
+
+    public void set(ShadowType shadowType){
+        shadowHelper.set(shadowType);
+    }
+
 
     public void init(int canvasWidth, int canvasHeight) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
-        canvasMidX = canvasWidth /2;
-        canvasMidY = canvasHeight / 2;
         bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        paint.setColor(DEFAULT_BG_COLOR);
+
         drawPlainBackground();
         initBrushes();
+
     }
 
 
@@ -147,7 +147,10 @@ public class PaintView extends View {
 
 
     private void drawPlainBackground(){
+        int currentColor = paint.getColor();
+        paint.setColor(Color.WHITE);
         canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
+        paint.setColor(currentColor);
     }
 
 
@@ -171,25 +174,16 @@ public class PaintView extends View {
 
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        canvas.save();
-        canvas.drawColor(DEFAULT_BG_COLOR);
-        canvas.drawBitmap(bitmap,0,0,paint);
-        canvas.drawBitmap(bitmap, 0, 0, mBitmapPaint);
-        canvas.restore();
+    protected void onDraw(Canvas viewCanvas) {
+        viewCanvas.save();
+        viewCanvas.drawColor(DEFAULT_BG_COLOR);
+        viewCanvas.drawBitmap(bitmap,0,0,paint);
+        viewCanvas.restore();
     }
 
-    private void log(String msg){
-        System.out.println("PaintView: " + msg);
-        System.out.flush();
-    }
 
     public void setCurrentColor(int color){
-        log("Entered setCurrentColor()");
         paint.setColor(color);
-        LinearGradient linearGradient = new LinearGradient(200, 200, 600, 600, color, Color.YELLOW, Shader.TileMode.MIRROR);
-        paint.setShader(linearGradient);
-       // paint.setShader(new LinearGradient(0, 50, 0, brushSize, color, Color.BLUE, Shader.TileMode.CLAMP));
     }
 
 
@@ -204,26 +198,35 @@ public class PaintView extends View {
     }
 
 
-
     @Override
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        int color = colorSelector.getNextColor();
-        if(color != paint.getColor()){
-            previousColor = paint.getColor();
+        if(!(event.getAction() != MotionEvent.ACTION_DOWN && currentBrush.getBrushShape() == BrushShape.LINE)){
+            int color = colorSelector.getNextColor();
+            if(color != paint.getColor()){
+                previousColor = paint.getColor();
+            }
+            paint.setColor(color);
+
+            blurHelper.assignBlur();
+            shadowHelper.assignShadow();
+            gradientHelper.assignGradient(x,y, color, previousColor);
         }
-        paint.setColor(color);
-        assignBlur();
-        assignShadow();
-        assignGradient(x,y, color, previousColor);
-        assignShadow();
+
+        if(BrushShape.LINE == currentBrush.getBrushShape()){
+            canvas.save();
+            performAction(x, y, event.getAction());
+            canvas.restore();
+            return true;
+        }
         updateAngle();
         canvas.save();
         canvas.translate(x,y);
        // canvas.rotate(angle);
-        performAction(x, y, event.getAction());
+        performAction(event.getAction());
+
         canvas.restore();
         return true;
     }
@@ -234,139 +237,36 @@ public class PaintView extends View {
         angle = angle % 360;
     }
 
-    private void assignGradient(float x, float y, int color, int oldColor){
-        switch(gradientType){
-            case NONE:
-                paint.setShader(null);
-                break;
-            case DIAGONAL_MIRROR:
-                int x1 = (int)x + (halfBrushSize);
-                int y1 = (int)y + (halfBrushSize);
-                paint.setShader(new LinearGradient(x, y, x1, y1, color, oldColor, Shader.TileMode.MIRROR));
-                break;
-            case RADIAL_CLAMP:
-                paint.setShader(new RadialGradient(0, 0, clampRadialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.CLAMP ));
-                break;
-            case RADIAL_REPEAT:
-                paint.setShader(new RadialGradient(0, 0, radialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.REPEAT ));
-                break;
-            case RADIAL_MIRROR:
-                paint.setShader(new RadialGradient(0, 0, radialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.MIRROR ));
-                break;
-        }
-    }
-
-    private void assignBlur(){
-        switch (blurType){
-            case NONE:
-                paint.setMaskFilter(null);
-                break;
-            case INNER:
-                paint.setMaskFilter(new BlurMaskFilter(10 + blurRadius, BlurMaskFilter.Blur.INNER));
-                break;
-            case NORMAL:
-                paint.setMaskFilter(new BlurMaskFilter(blurRadius, BlurMaskFilter.Blur.NORMAL));
-                break;
-            case OUTER:
-                paint.setMaskFilter(new BlurMaskFilter(blurRadius, BlurMaskFilter.Blur.OUTER));
-                break;
-            case SOLID:
-                paint.setMaskFilter(new BlurMaskFilter(10 + blurRadius, BlurMaskFilter.Blur.SOLID));
-        }
-
-    }
-
-
-    private ShadowType shadowType = ShadowType.NONE;
-    private int shadowSize;
-    private int shadowOffsetX;
-    private int shadowOffsetY;
-    private int shadowOffsetFactor;
 
     public void setShadowSize(int size){
-        shadowSize = size;
-        shadowOffsetFactor = halfBrushSize / 4;
-    }
-
-    public void set(ShadowType shadowType){
-        this.shadowType = shadowType;
+        shadowHelper.setShadowSize(size, halfBrushSize);
     }
 
 
-    private void assignShadow() {
-        if(shadowType == ShadowType.NONE){
-            paint.clearShadowLayer();
-            return;
-        }
-
-        switch (shadowType) {
-            case CENTER:
-                shadowOffsetX = 0;
-                shadowOffsetY = 0;
-                break;
-            case NORTH:
-                shadowOffsetX = 0;
-                shadowOffsetY = -shadowOffsetFactor;
-                break;
-            case NORTH_WEST:
-                shadowOffsetX = -shadowOffsetFactor;
-                shadowOffsetY = -shadowOffsetFactor;
-                break;
-            case WEST:
-                shadowOffsetX = -shadowOffsetFactor;
-                shadowOffsetY = 0;
-                break;
-            case SOUTH_WEST:
-                shadowOffsetX = -shadowOffsetFactor;
-                shadowOffsetY = shadowOffsetFactor;
-                break;
-            case SOUTH:
-                shadowOffsetX = 0;
-                shadowOffsetY = shadowOffsetFactor;
-                break;
-            case SOUTH_EAST:
-                shadowOffsetX = shadowOffsetFactor;
-                shadowOffsetY = shadowOffsetFactor;
-                break;
-            case EAST:
-                shadowOffsetX = shadowOffsetFactor;
-                shadowOffsetY = 0;
-                break;
-            case NORTH_EAST:
-                shadowOffsetX = shadowOffsetFactor;
-                shadowOffsetY = -shadowOffsetFactor;
-                break;
-        }
-
-        paint.setShadowLayer(shadowSize, shadowOffsetX, shadowOffsetY, Color.BLACK);
+    private void performAction(int action){
+        performAction(0,0, action);
     }
 
 
-
-
-        private void performAction(float x, float y, int action){
+    private void performAction(float x, float y, int action){
         wasCanvasModifiedSinceLastSaveOrReset = true;
         if(isCanvasLocked){
             return;
         }
         switch(action) {
             case MotionEvent.ACTION_DOWN :
-                currentBrush.onTouchDown(0,0);
+                currentBrush.onTouchDown(x,y);
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE :
-                currentBrush.onTouchMove(0,0);
+                currentBrush.onTouchMove(x,y);
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP :
-                currentBrush.onTouchUp(0,0);
+                currentBrush.onTouchUp(x,y);
                 invalidate();
         }
-
     }
-
-
-
 
 }
 

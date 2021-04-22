@@ -5,13 +5,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
+import com.jacstuff.sketchy.brushes.BrushShape;
+
 public class RoundedRectangleBrush extends AbstractBrush implements Brush {
 
     private RectF rect;
     private int rounding;
 
     public RoundedRectangleBrush(Canvas canvas, Paint paint, int brushSize){
-        super(canvas, paint);
+        super(canvas, paint, BrushShape.ROUNDED_RECTANGLE);
         rect = new RectF(1,1,1,1);
         setBrushSize(brushSize);
     }

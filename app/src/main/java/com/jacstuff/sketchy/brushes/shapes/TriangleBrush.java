@@ -4,13 +4,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
+import com.jacstuff.sketchy.brushes.BrushShape;
+
 public class TriangleBrush extends AbstractBrush implements Brush {
 
 
     private Point leftPoint, rightPoint, topPoint, centreBottom;
 
     public TriangleBrush(Canvas canvas, Paint paint){
-        super(canvas, paint);
+        super(canvas, paint, BrushShape.TRIANGLE);
         leftPoint = new Point();
         rightPoint = new Point();
         topPoint = new Point();

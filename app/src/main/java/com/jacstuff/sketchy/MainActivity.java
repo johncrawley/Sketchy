@@ -20,6 +20,7 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator;
+import com.jacstuff.sketchy.paintview.PaintPreviewView;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
 import com.jacstuff.sketchy.paintview.PaintViewSingleton;
@@ -30,9 +31,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private PaintView paintView;
+    private PaintPreviewView paintPreviewView;
     private HorizontalScrollView shadesScrollView;
-    final int SAVE_FILE_ACTIVITY_CODE = 101;
-    final int CLEAR_CANVAS_ACTIVITY_CODE = 102;
+    private final int SAVE_FILE_ACTIVITY_CODE = 101;
+    private final int CLEAR_CANVAS_ACTIVITY_CODE = 102;
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
     private ButtonLayoutParams buttonLayoutParams = new ButtonLayoutParams(120, 120, 15);
@@ -92,6 +94,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintView = findViewById(R.id.paintView);
         PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, this.getWindowManager());
         paintViewConfigurator.configure(paintView);
+        paintPreviewView = findViewById(R.id.paintPreview);
+        paintViewConfigurator.configure(paintPreviewView);
+       // paintPreviewView.setPaintView(paintView);
         assignSavedBitmap();
     }
 
@@ -134,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return defaultButton;
     }
-
 
 
     private void setupDefaultSelections(){

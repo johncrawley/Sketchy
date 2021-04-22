@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
+import com.jacstuff.sketchy.brushes.BrushShape;
+
 public class HexagonBrush extends AbstractBrush implements Brush {
 
 
@@ -15,7 +17,7 @@ public class HexagonBrush extends AbstractBrush implements Brush {
 
 
     public HexagonBrush(Canvas canvas, Paint paint){
-        super(canvas, paint);
+        super(canvas, paint, BrushShape.HEXAGON);
         leftPoint = new Point();
         rightPoint = new Point();
         bottomLeftPoint = new Point();

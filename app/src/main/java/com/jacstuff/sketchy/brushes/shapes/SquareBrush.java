@@ -3,11 +3,13 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.jacstuff.sketchy.brushes.BrushShape;
+
 public class SquareBrush extends AbstractBrush implements Brush {
 
 
    public SquareBrush(Canvas canvas, Paint paint){
-        super(canvas, paint);
+        super(canvas, paint, BrushShape.SQUARE);
     }
 
     @Override

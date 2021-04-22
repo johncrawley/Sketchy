@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.styles.FillStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
@@ -17,20 +18,26 @@ public abstract class AbstractBrush {
     int brushSize;
     Style currentStyle;
     int halfBrushSize;
+    BrushShape brushShape;
     private Map<BrushStyle, Style> styleMap;
     private FillStyle fillStyle;
 
 
-    AbstractBrush(Canvas canvas, Paint paint){
+    AbstractBrush(Canvas canvas, Paint paint, BrushShape brushShape){
         this.canvas = canvas;
         this.paint = paint;
         styleMap = new HashMap<>();
         fillStyle = new FillStyle();
         currentStyle = fillStyle;
+        this.brushShape = brushShape;
     }
 
     public void add(BrushStyle brushStyle, Style style){
         styleMap.put(brushStyle, style);
+    }
+
+    public BrushShape getBrushShape(){
+        return this.brushShape;
     }
 
     public void setStyle(BrushStyle style){

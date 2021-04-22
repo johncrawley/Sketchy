@@ -14,7 +14,7 @@ public class FillStyleForLines extends AbstractStyle implements Style {
 
     @Override
     public void setBrushSize(Paint paint, int brushSize) {
-        paint.setStrokeWidth(getAdjusted(brushSize) );
+      //  paint.setStrokeWidth(getAdjusted(brushSize) );
     }
 
     private float getAdjusted(int brushSize){
