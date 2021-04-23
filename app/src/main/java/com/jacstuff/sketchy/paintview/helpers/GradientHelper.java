@@ -14,7 +14,7 @@ public class GradientHelper {
     private int halfBrushSize = 10;
     private int clampRadialGradientFactor = 12;
     private int clampRadialGradientRadius = 10;
-    private int radialGradientRadius;
+    private int radialGradientRadius = 1;
 
     public GradientHelper(Paint paint){
         this.paint = paint;

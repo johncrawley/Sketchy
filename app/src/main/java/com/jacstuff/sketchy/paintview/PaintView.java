@@ -42,7 +42,8 @@ public class PaintView extends View {
     private ShadowHelper shadowHelper;
     private BlurHelper blurHelper;
     private GradientHelper gradientHelper;
-
+    private int midCanvasX, midCanvasY;
+    private Paint previewPaint;
 
     public PaintView(Context context) {
         this(context, null);
@@ -57,10 +58,18 @@ public class PaintView extends View {
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.SQUARE);
-        paint.setDither(true);
+
         shadowHelper = new ShadowHelper(paint);
         blurHelper = new BlurHelper(paint);
         gradientHelper = new GradientHelper(paint);
+
+
+        previewPaint = new Paint();
+        previewPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        previewPaint.setStrokeJoin(Paint.Join.ROUND);
+        previewPaint.setStrokeCap(Paint.Cap.SQUARE);
+        previewPaint.setColor(Color.GRAY);
+
     }
 
 
@@ -119,10 +128,10 @@ public class PaintView extends View {
         this.canvasHeight = canvasHeight;
         bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-
+        midCanvasX = canvasWidth/2;
+        midCanvasY = canvasHeight /2;
         drawPlainBackground();
         initBrushes();
-
     }
 
 
@@ -205,8 +214,6 @@ public class PaintView extends View {
     }
 
 
-    boolean isCanvasSaved = false;
-
     @Override
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
@@ -266,42 +273,54 @@ public class PaintView extends View {
 
     private void performAction(float x, float y, int action){
         wasCanvasModifiedSinceLastSaveOrReset = true;
-        int currentColor = Color.BLACK;
         if(isCanvasLocked){
             return;
         }
         switch(action) {
             case MotionEvent.ACTION_DOWN :
-                drawToCanvas(x,y);
+                drawToCanvas(x,y, paint);
                 break;
 
             case MotionEvent.ACTION_MOVE :
                 displayPreviewLayer = false;
                 canvas.setBitmap(bitmap);
-                drawToCanvas(x,y);
+                drawToCanvas(x,y, paint);
                 displayPreviewLayer = true;
                 previewBitmap = Bitmap.createBitmap(bitmap);
-                currentColor = paint.getColor();
-                paint.setColor(Color.GRAY);
                 canvas.setBitmap(previewBitmap);
-                drawToCanvas(x,y);
+                drawToCanvas(x,y, previewPaint);
                 break;
 
             case MotionEvent.ACTION_UP :
-                paint.setColor(currentColor);
                 displayPreviewLayer = false;
                 canvas.setBitmap(bitmap);
                 invalidate();
         }
     }
 
-    private void drawToCanvas(float x, float y){
+    private void drawToCanvas(float x, float y, Paint paint){
+
         canvas.save();
-        canvas.translate(x,y);
+        canvas.translate(midCanvasX + x, midCanvasY + y);
         // canvas.rotate(angle);
         currentBrush.onTouchDown(0,0);
         canvas.restore();
-        invalidate();
+
+    }
+
+
+    private void drawKaleidescope(float x, float y, Paint paint, int numberOfDivisions){
+        final int TOTAL_DEGREES = 360;
+        final int DEGREE_INCREMENT = TOTAL_DEGREES / numberOfDivisions;
+        canvas.save();
+        canvas.translate(midCanvasX, midCanvasY);
+        for(int angle=0; angle <= TOTAL_DEGREES; angle+= DEGREE_INCREMENT){
+            canvas.save();
+            drawToCanvas(x,y, paint);
+            canvas.restore();
+            invalidate();
+        }
+        canvas.restore();
     }
 
 }

@@ -19,8 +19,14 @@ public class TriangleBrush extends AbstractBrush implements Brush {
         centreBottom = new Point();
     }
 
+
     @Override
     public void onTouchDown(float x, float y){
+        onTouchDown(x,y, paint);
+    }
+
+    @Override
+    public void onTouchDown(float x, float y, Paint paint){
 
         centreBottom.set(x, y + halfBrushSize);
 

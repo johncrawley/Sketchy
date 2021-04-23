@@ -36,8 +36,14 @@ public class LineBrush extends AbstractBrush implements Brush {
     }
 
 
+
     @Override
-    public void onTouchDown(float x, float y) {
+    public void onTouchDown(float x, float y){
+        onTouchDown(x,y, paint);
+    }
+
+    @Override
+    public void onTouchDown(float x, float y, Paint paint){
         currentStyle.onDraw(paint);
         xDown = x;
         yDown = y;

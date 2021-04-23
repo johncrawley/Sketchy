@@ -15,6 +15,11 @@ public class CircleBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchDown(float x, float y){
+        onTouchDown(x,y, paint);
+    }
+
+    @Override
+    public void onTouchDown(float x, float y, Paint paint){
         canvas.drawCircle(x,y, halfBrushSize, paint);
     }
 

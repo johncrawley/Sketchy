@@ -25,8 +25,14 @@ public class RoundedRectangleBrush extends AbstractBrush implements Brush {
         rounding = brushSize < 5 ? 1 : brushSize / ROUNDING_FACTOR;
     }
 
+
     @Override
     public void onTouchDown(float x, float y){
+        onTouchDown(x,y, paint);
+    }
+
+    @Override
+    public void onTouchDown(float x, float y, Paint paint){
         int left = (int) x - halfBrushSize;
         int top =  (int)y - halfBrushSize;
 
