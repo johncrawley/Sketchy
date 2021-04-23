@@ -47,6 +47,7 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchMove(float x, float y) {
+        currentLineDrawer.draw(xDown, yDown, x, y, brushSize);
     }
 
 

@@ -9,7 +9,7 @@ public class BlurHelper {
 
     private BlurType blurType;
     private Paint paint;
-    private int blurRadius;
+    private int blurRadius = 1;
 
     public BlurHelper(Paint paint){
         this.paint = paint;

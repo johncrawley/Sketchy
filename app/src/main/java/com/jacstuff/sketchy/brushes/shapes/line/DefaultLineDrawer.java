@@ -3,8 +3,6 @@ package com.jacstuff.sketchy.brushes.shapes.line;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.jacstuff.sketchy.paintview.CompositeCanvas;
-
 public class DefaultLineDrawer implements LineDrawer {
 
     private Canvas canvas;

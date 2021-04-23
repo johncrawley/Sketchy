@@ -49,25 +49,6 @@ public class PaintViewConfigurator {
     }
 
 
-    public void configure(PaintPreviewView paintView){
-        int paintViewWidth, paintViewHeight;
-
-        if(isInLandscapeMode()){
-            paintViewHeight = screenHeight - (actionBarHeight + totalMargin);
-            paintViewWidth = (screenWidth / 2) - totalPaintViewMargins;
-
-        } else {
-            paintViewWidth = screenWidth - totalMargin;
-            paintViewHeight = ((screenHeight-actionBarHeight) /2) - totalPaintViewMargins;
-        }
-        paintView.init(paintViewWidth, paintViewHeight);
-        paintView.setCurrentColor(Color.BLACK);
-    }
-
-
-
-
-
     private boolean isInLandscapeMode(){
         int orientation = context.getResources().getConfiguration().orientation;
         return orientation == Configuration.ORIENTATION_LANDSCAPE;

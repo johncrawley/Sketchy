@@ -20,7 +20,6 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator;
-import com.jacstuff.sketchy.paintview.PaintPreviewView;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
 import com.jacstuff.sketchy.paintview.PaintViewSingleton;
@@ -31,7 +30,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private PaintView paintView;
-    private PaintPreviewView paintPreviewView;
     private HorizontalScrollView shadesScrollView;
     private final int SAVE_FILE_ACTIVITY_CODE = 101;
     private final int CLEAR_CANVAS_ACTIVITY_CODE = 102;
@@ -94,9 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintView = findViewById(R.id.paintView);
         PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, this.getWindowManager());
         paintViewConfigurator.configure(paintView);
-        paintPreviewView = findViewById(R.id.paintPreview);
-        paintViewConfigurator.configure(paintPreviewView);
-       // paintPreviewView.setPaintView(paintView);
         assignSavedBitmap();
     }
 

@@ -172,12 +172,19 @@ public class PaintView extends View {
         this.colorSelector = colorSelector;
     }
 
+    boolean displayPreviewLayer;
+    Bitmap previewBitmap;
 
     @Override
     protected void onDraw(Canvas viewCanvas) {
         viewCanvas.save();
         viewCanvas.drawColor(DEFAULT_BG_COLOR);
-        viewCanvas.drawBitmap(bitmap,0,0,paint);
+        if(displayPreviewLayer){
+            viewCanvas.drawBitmap(previewBitmap,0,0,paint);
+        }
+        else {
+            viewCanvas.drawBitmap(bitmap, 0, 0, paint);
+        }
         viewCanvas.restore();
     }
 
@@ -198,6 +205,8 @@ public class PaintView extends View {
     }
 
 
+    boolean isCanvasSaved = false;
+
     @Override
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
@@ -216,18 +225,30 @@ public class PaintView extends View {
         }
 
         if(BrushShape.LINE == currentBrush.getBrushShape()){
-            canvas.save();
-            performAction(x, y, event.getAction());
-            canvas.restore();
+
+            switch(event.getAction()) {
+                case MotionEvent.ACTION_DOWN :
+                    currentBrush.onTouchDown(x,y);
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_MOVE :
+                    displayPreviewLayer = true;
+                    previewBitmap = Bitmap.createBitmap(bitmap);
+                    canvas.setBitmap(previewBitmap);
+                    currentBrush.onTouchMove(x,y);
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_UP :
+                    displayPreviewLayer = false;
+                    canvas.setBitmap(bitmap);
+                    currentBrush.onTouchUp(x,y);
+                    invalidate();
+            }
             return true;
         }
         updateAngle();
-        canvas.save();
-        canvas.translate(x,y);
-       // canvas.rotate(angle);
-        performAction(event.getAction());
+        performAction(x,y,event.getAction());
 
-        canvas.restore();
         return true;
     }
 
@@ -243,29 +264,44 @@ public class PaintView extends View {
     }
 
 
-    private void performAction(int action){
-        performAction(0,0, action);
-    }
-
-
     private void performAction(float x, float y, int action){
         wasCanvasModifiedSinceLastSaveOrReset = true;
+        int currentColor = Color.BLACK;
         if(isCanvasLocked){
             return;
         }
         switch(action) {
             case MotionEvent.ACTION_DOWN :
-                currentBrush.onTouchDown(x,y);
-                invalidate();
+                drawToCanvas(x,y);
                 break;
+
             case MotionEvent.ACTION_MOVE :
-                currentBrush.onTouchMove(x,y);
-                invalidate();
+                displayPreviewLayer = false;
+                canvas.setBitmap(bitmap);
+                drawToCanvas(x,y);
+                displayPreviewLayer = true;
+                previewBitmap = Bitmap.createBitmap(bitmap);
+                currentColor = paint.getColor();
+                paint.setColor(Color.GRAY);
+                canvas.setBitmap(previewBitmap);
+                drawToCanvas(x,y);
                 break;
+
             case MotionEvent.ACTION_UP :
-                currentBrush.onTouchUp(x,y);
+                paint.setColor(currentColor);
+                displayPreviewLayer = false;
+                canvas.setBitmap(bitmap);
                 invalidate();
         }
+    }
+
+    private void drawToCanvas(float x, float y){
+        canvas.save();
+        canvas.translate(x,y);
+        // canvas.rotate(angle);
+        currentBrush.onTouchDown(0,0);
+        canvas.restore();
+        invalidate();
     }
 
 }
