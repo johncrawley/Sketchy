@@ -27,6 +27,8 @@ public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer
         buttonConfig.put(R.id.angleSelectionButton,     R.id.includeAngleControls);
         buttonConfig.put(R.id.blurSelectionButton,      R.id.includeBlurControls);
         buttonConfig.put(R.id.shadowSelectionButton,    R.id.includeShadowControls);
+        buttonConfig.put(R.id.kaleidoscopeSelectionButton, R.id.includeKaleidoScopeControls);
+        buttonConfig.put(R.id.angleSelectionButton,     R.id.includeAngleControls);
         buttonConfig.setupClickHandler();
         layoutIds = buttonConfig.getEntries();
         buttonConfig.setDefaultSelection(R.id.shapeSelectionButton);

@@ -87,7 +87,7 @@ public class ButtonConfigHandler<T>{
 
     void setDefaultSelection(int id){
         buttonUtils.switchSelection(id, buttonIds);
-        buttonsConfigurator.handleClick(id,buttonActionMap.get(id));
+        buttonsConfigurator.handleClick(id, buttonActionMap.get(id));
     }
 
 }

@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.brushes.BlurType;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
@@ -17,6 +18,7 @@ import com.jacstuff.sketchy.brushes.ShadowType;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
+import com.jacstuff.sketchy.paintview.helpers.AngleHelper;
 import com.jacstuff.sketchy.paintview.helpers.BlurHelper;
 import com.jacstuff.sketchy.paintview.helpers.GradientHelper;
 import com.jacstuff.sketchy.paintview.helpers.ShadowHelper;
@@ -36,14 +38,19 @@ public class PaintView extends View {
     private BrushFactory brushFactory;
     private boolean wasCanvasModifiedSinceLastSaveOrReset;
     private boolean isCanvasLocked;
-    private int angle;
     private int previousColor = Color.WHITE;
 
     private ShadowHelper shadowHelper;
     private BlurHelper blurHelper;
     private GradientHelper gradientHelper;
+    private AngleHelper angleHelper;
+
     private int midCanvasX, midCanvasY;
     private Paint previewPaint;
+
+    private final int TOTAL_DEGREES = 360;
+    private int degree_increment = 30;
+    private boolean isKaleidoscopeEnabled = false;
 
     public PaintView(Context context) {
         this(context, null);
@@ -62,14 +69,12 @@ public class PaintView extends View {
         shadowHelper = new ShadowHelper(paint);
         blurHelper = new BlurHelper(paint);
         gradientHelper = new GradientHelper(paint);
-
-
+        angleHelper = new AngleHelper();
         previewPaint = new Paint();
         previewPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         previewPaint.setStrokeJoin(Paint.Join.ROUND);
         previewPaint.setStrokeCap(Paint.Cap.SQUARE);
         previewPaint.setColor(Color.GRAY);
-
     }
 
 
@@ -86,6 +91,16 @@ public class PaintView extends View {
     public void set(BrushStyle brushStyle){
         currentBrushStyle = brushStyle;
         currentBrush.setStyle(brushStyle);
+    }
+
+    public void setKaleidoScopeSegments(int segments){
+        isKaleidoscopeEnabled = segments > 1;
+        this.degree_increment = TOTAL_DEGREES / segments;
+    }
+
+
+    public void setAnglePreset(AngleType angleType){
+        angleHelper.setAngle(angleType);
     }
 
     public void set(BlurType blurType){
@@ -111,7 +126,9 @@ public class PaintView extends View {
     }
 
     public void setLineWidth(int lineWidth){
+
         paint.setStrokeWidth(lineWidth);
+        previewPaint.setStrokeWidth(lineWidth);
     }
 
     public void setBlurRadius(int blurRadius){
@@ -253,17 +270,12 @@ public class PaintView extends View {
             }
             return true;
         }
-        updateAngle();
+        angleHelper.updateAngle();
         performAction(x,y,event.getAction());
 
         return true;
     }
 
-
-    private void updateAngle(){
-        angle+= 15;
-        angle = angle % 360;
-    }
 
 
     public void setShadowSize(int size){
@@ -298,25 +310,33 @@ public class PaintView extends View {
         }
     }
 
+
     private void drawToCanvas(float x, float y, Paint paint){
-
-        canvas.save();
-        canvas.translate(midCanvasX + x, midCanvasY + y);
-        // canvas.rotate(angle);
-        currentBrush.onTouchDown(0,0);
-        canvas.restore();
-
+        if(isKaleidoscopeEnabled){
+            drawKaleidoscope(x,y, paint);
+            return;
+        }
+        rotateAndDraw(x,y, paint);
+        invalidate();
     }
 
 
-    private void drawKaleidescope(float x, float y, Paint paint, int numberOfDivisions){
-        final int TOTAL_DEGREES = 360;
-        final int DEGREE_INCREMENT = TOTAL_DEGREES / numberOfDivisions;
+    private void rotateAndDraw(float x, float y, Paint paint){
+        canvas.save();
+        canvas.translate(x, y);
+        canvas.rotate(angleHelper.getAngle());
+        currentBrush.onTouchDown(0,0, paint);
+        canvas.restore();
+    }
+
+
+    private void drawKaleidoscope(float x, float y, Paint paint){
         canvas.save();
         canvas.translate(midCanvasX, midCanvasY);
-        for(int angle=0; angle <= TOTAL_DEGREES; angle+= DEGREE_INCREMENT){
+        for(int angle=0; angle < TOTAL_DEGREES; angle+= degree_increment){
             canvas.save();
-            drawToCanvas(x,y, paint);
+            canvas.rotate(angle);
+            rotateAndDraw(x - midCanvasX, y- midCanvasY, paint);
             canvas.restore();
             invalidate();
         }

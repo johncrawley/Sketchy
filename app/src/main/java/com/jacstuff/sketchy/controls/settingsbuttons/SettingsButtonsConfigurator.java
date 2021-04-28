@@ -13,6 +13,8 @@ public class SettingsButtonsConfigurator {
         new GradientButtonsConfigurator(activity, paintView);
         new BlurButtonsConfigurator(activity, paintView);
         new ShadowButtonsConfigurator(activity, paintView);
+        new KaleidoscopeButtonsConfigurator(activity, paintView);
+        new AngleButtonsConfigurator(activity, paintView);
     }
 
 

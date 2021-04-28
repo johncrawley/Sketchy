@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+
+    <HorizontalScrollView
+        android:id="@+id/angleControlsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/angleOptionsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/shape_selector_group_top_margin"
+            android:paddingHorizontal="20dp"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/shape_options_padding_top">
+
+
+            <ImageButton
+                android:id="@+id/zeroDegreesButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/zero_degrees_button" />
+
+
+            <ImageButton
+                android:id="@+id/degrees30Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_30_button" />
+
+
+            <ImageButton
+                android:id="@+id/degrees45Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_45_button" />
+
+            <ImageButton
+                android:id="@+id/degrees60Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_60_button" />
+
+            <ImageButton
+                android:id="@+id/degrees90Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_90_button" />
+
+            <ImageButton
+                android:id="@+id/degrees135Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_135_button" />
+
+            <ImageButton
+                android:id="@+id/degrees150Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_150_button" />
+
+            <ImageButton
+                android:id="@+id/degrees180Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_180_button" />
+
+            <ImageButton
+                android:id="@+id/degrees225Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_225_button" />
+
+            <ImageButton
+                android:id="@+id/degrees270Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_270_button" />
+
+            <ImageButton
+                android:id="@+id/degrees315Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_315_button" />
+
+            <ImageButton
+                android:id="@+id/degreesMinus15Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_minus_15_button" />
+
+            <ImageButton
+                android:id="@+id/degreesPlus15Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_plus_15_button" />
+
+            <ImageButton
+                android:id="@+id/degreesMinus30Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_minus_30_button" />
+
+            <ImageButton
+                android:id="@+id/degreesPlus30Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_plus_30_button" />
+
+            <ImageButton
+                android:id="@+id/degreesMinus90Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_minus_90_button" />
+
+            <ImageButton
+                android:id="@+id/degreesPlus90Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_plus_90_button" />
+
+            <ImageButton
+                android:id="@+id/degreesRandomButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_circle_shape_button"
+                app:srcCompat="@drawable/degrees_random_button" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+    <include
+        android:id="@+id/angleSeekBarInclude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        layout="@layout/seek_bar_angle" />
+
+
+</LinearLayout>
