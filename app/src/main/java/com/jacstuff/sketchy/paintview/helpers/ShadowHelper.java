@@ -29,14 +29,20 @@ public class ShadowHelper {
     }
 
 
+    public boolean isShadowEnabled(){
+        return shadowType != ShadowType.NONE;
+    }
+
     public void set(ShadowType shadowType){
         this.shadowType = shadowType;
+        assignShadow();
     }
 
 
     public void assignShadow() {
         if(shadowType == ShadowType.NONE){
             paint.clearShadowLayer();
+            //paint.setShadowLayer(1, 0, 0, Color.TRANSPARENT);
             return;
         }
 

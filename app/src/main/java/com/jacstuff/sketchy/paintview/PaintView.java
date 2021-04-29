@@ -26,9 +26,9 @@ import com.jacstuff.sketchy.paintview.helpers.ShadowHelper;
 
 public class PaintView extends View {
 
-    private int canvasWidth, canvasHeight;
+    private int canvasWidth, canvasHeight, midCanvasX, midCanvasY;
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
-    private Paint paint;
+    private Paint paint, shadowPaint, previewPaint;
     private int brushSize, halfBrushSize;
     private Bitmap bitmap;
     private Canvas canvas;
@@ -45,12 +45,12 @@ public class PaintView extends View {
     private GradientHelper gradientHelper;
     private AngleHelper angleHelper;
 
-    private int midCanvasX, midCanvasY;
-    private Paint previewPaint;
-
     private final int TOTAL_DEGREES = 360;
     private int degree_increment = 30;
     private boolean isKaleidoscopeEnabled = false;
+    private boolean displayPreviewLayer;
+    private Bitmap previewBitmap;
+    private Paint drawPaint = new Paint();
 
     public PaintView(Context context) {
         this(context, null);
@@ -66,15 +66,23 @@ public class PaintView extends View {
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.SQUARE);
 
-        shadowHelper = new ShadowHelper(paint);
-        blurHelper = new BlurHelper(paint);
-        gradientHelper = new GradientHelper(paint);
-        angleHelper = new AngleHelper();
         previewPaint = new Paint();
         previewPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         previewPaint.setStrokeJoin(Paint.Join.ROUND);
         previewPaint.setStrokeCap(Paint.Cap.SQUARE);
-        previewPaint.setColor(Color.GRAY);
+        previewPaint.setColor(Color.DKGRAY);
+
+        shadowPaint = new Paint();
+        shadowPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        shadowPaint.setStrokeJoin(Paint.Join.ROUND);
+        shadowPaint.setStrokeCap(Paint.Cap.SQUARE);
+        shadowPaint.setColor(Color.BLACK);
+
+
+        shadowHelper = new ShadowHelper(shadowPaint);
+        blurHelper = new BlurHelper(paint);
+        gradientHelper = new GradientHelper(paint);
+        angleHelper = new AngleHelper();
     }
 
 
@@ -129,6 +137,7 @@ public class PaintView extends View {
 
         paint.setStrokeWidth(lineWidth);
         previewPaint.setStrokeWidth(lineWidth);
+        shadowPaint.setStrokeWidth(lineWidth);
     }
 
     public void setBlurRadius(int blurRadius){
@@ -198,18 +207,16 @@ public class PaintView extends View {
         this.colorSelector = colorSelector;
     }
 
-    boolean displayPreviewLayer;
-    Bitmap previewBitmap;
 
     @Override
     protected void onDraw(Canvas viewCanvas) {
         viewCanvas.save();
         viewCanvas.drawColor(DEFAULT_BG_COLOR);
         if(displayPreviewLayer){
-            viewCanvas.drawBitmap(previewBitmap,0,0,paint);
+            viewCanvas.drawBitmap(previewBitmap,0,0, drawPaint);
         }
         else {
-            viewCanvas.drawBitmap(bitmap, 0, 0, paint);
+            viewCanvas.drawBitmap(bitmap, 0, 0, drawPaint);
         }
         viewCanvas.restore();
     }
@@ -242,9 +249,7 @@ public class PaintView extends View {
                 previousColor = paint.getColor();
             }
             paint.setColor(color);
-
             blurHelper.assignBlur();
-            shadowHelper.assignShadow();
             gradientHelper.assignGradient(x,y, color, previousColor);
         }
 
@@ -325,6 +330,9 @@ public class PaintView extends View {
         canvas.save();
         canvas.translate(x, y);
         canvas.rotate(angleHelper.getAngle());
+        if(shadowHelper.isShadowEnabled()){
+            currentBrush.onTouchDown(0,0, shadowPaint);
+        }
         currentBrush.onTouchDown(0,0, paint);
         canvas.restore();
     }
