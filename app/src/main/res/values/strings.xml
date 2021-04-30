@@ -27,13 +27,71 @@
     <string name="content_description_small_brush_indicator">Indicates a smaller size for paint brush</string>
     <string name="content_description_square_shape_button">Select to paint with squares</string>
     <string name="content_description_circle_shape_button">Select to paint with circles</string>
-    <string name="content_description_line_shape_button">Select to draw lines</string>
+    <string name="content_description_line_shape_button">Select to drag and draw lines</string>
+    <string name="content_description_straight_line">Select to paint a straight line with one press</string>
+    <string name="content_description_pentagon_shape_button">Select to paint with pentagons</string>
+    <string name="content_description_hexagon_shape_button">Select to paint with hexagons</string>
+    <string name="content_description_star_shape_button">Select to paint with stars</string>
     <string name="content_description_rounded_rectangle_shape_button">Select to draw rounded squares</string>
     <string name="content_description_triangle_shape_button">Select to draw triangles</string>
     <string name="content_description_fill_style_button">Select to paint with solid shapes</string>
     <string name="content_description_broken_outline_style_button">Select to paint shapes with broken outlines</string>
     <string name="content_description_outline_style_button">Select to paint with shape outlines</string>
     <string name="content_description_thick_outline_style_button">Select to paint with thick outlines</string>
+    <string name="content_description_no_blur_button">Disables the blur effect</string>
+    <string name="content_description_outside_blur_button">Switches blur mode to outside</string>
+    <string name="content_description_normal_blur_button">Switches blur mode to normal</string>
+    <string name="content_description_inside_blur_button">Switches blur mode to inside</string>
+    <string name="content_description_solid_blur_button">Switches blur mode to solid</string>
+
+    <string name="content_description_kaleidoscope_5_button">Switches to kaleidoscope mode with 5 sides</string>
+    <string name="content_description_kaleidoscope_6_button">Switches to kaleidoscope mode with 6 sides</string>
+    <string name="content_description_kaleidoscope_7_button">Switches to kaleidoscope mode with 7 sides</string>
+    <string name="content_description_kaleidoscope_8_button">Switches to kaleidoscope mode with 8 sides</string>
+    <string name="content_description_kaleidoscope_9_button">Switches to kaleidoscope mode with 9 sides</string>
+    <string name="content_description_kaleidoscope_10_button">Switches to kaleidoscope mode with 10 sides</string>
+    <string name="content_description_kaleidoscope_12_button">Switches to kaleidoscope mode with 12 sides</string>
+    <string name="content_description_kaleidoscope_16_button">Switches to kaleidoscope mode with 16 sides</string>
+
+    <string name="content_description_angle_zero_button">new shapes will be drawn at their original angle</string>
+    <string name="content_description_angle_15_button">new shapes will be drawn at an angle of 15 degrees</string>
+    <string name="content_description_angle_30_button">new shapes will be drawn at an angle of 30 degrees</string>
+    <string name="content_description_angle_45_button">new shapes will be drawn at an angle of 45 degrees</string>
+    <string name="content_description_angle_60_button">new shapes will be drawn at an angle of 60 degrees</string>
+    <string name="content_description_angle_90_button">new shapes will be drawn at an angle of 90 degrees</string>
+    <string name="content_description_angle_135_button">new shapes will be drawn at an angle of 135 degrees</string>
+    <string name="content_description_angle_150_button">new shapes will be drawn at an angle of 150 degrees</string>
+    <string name="content_description_angle_180_button">new shapes will be drawn at an angle of 180 degrees</string>
+    <string name="content_description_angle_225_button">new shapes will be drawn at an angle of 225 degrees</string>
+    <string name="content_description_angle_270_button">new shapes will be drawn at an angle of 270 degrees</string>
+    <string name="content_description_angle_315_button">new shapes will be drawn at an angle of 315 degrees</string>
+    <string name="content_description_angle_minus_15_button">each new shape will be drawn at an angle of 15 degrees less than the last</string>
+    <string name="content_description_angle_plus_15_button">each new shape will be drawn at an angle of at 15 degrees greater than the last</string>
+    <string name="content_description_angle_minus_30_button">each new shape will be drawn at an angle of at 30 degrees less than the last</string>
+    <string name="content_description_angle_plus_30_button">each new shape will be drawn at an angle of at 30 degrees greater than the last</string>
+    <string name="content_description_angle_minus_90_button">each new shape will be drawn at an angle of 90 degrees less than the last</string>
+    <string name="content_description_angle_plus_90_button">each new shape will be drawn at an angle of 90 degrees greater than the last</string>
+    <string name="content_description_angle_specified_angle_button">new shapes will be drawn at the angle specified by the slider</string>
+
+    <string name="content_description_angle_random_button">every new shape will be painted at a random angle</string>
+    <string name="content_description_shadow_off_button">No shadow will be applied to drawn shapes</string>
+    <string name="content_description_shadow_center_button">A central shadow will be applied to new shapes</string>
+    <string name="content_description_shadow_north_button">A top shadow will be applied to new shapes</string>
+    <string name="content_description_shadow_north_east_button">A top-right will be applied to new shapes</string>
+    <string name="content_description_shadow_east_button">A right shadow will be applied to new shapes</string>
+    <string name="content_description_shadow_south_east_button">A bottom-right shadow will be applied to new shapes</string>
+    <string name="content_description_shadow_south_button">A bottom shadow will be applied to new shapes</string>
+    <string name="content_description_shadow_south_west_button">A bottom-left shadow will be applied to new shapes</string>
+    <string name="content_description_shadow_west_button">A left shadow will be applied to new shapes</string>
+    <string name="content_description_shadow_north_west_button">A top-left shadow will be applied to new shapes</string>
+
+
+    <string name="content_description_no_gradient_button">No gradient will be applied</string>
+    <string name="content_description_diagonal_gradient_button">A diagonal gradient will be applied</string>
+    <string name="content_description_radial_clamp_gradient_button">A clamped gradient will be applied</string>
+    <string name="content_description_radial_mirror_gradient_button">A mirrored radial gradient will be applied</string>
+    <string name="content_description_radial_repeat_gradient_button">A repeated radial gradient will be applied</string>
+
     <string name="pattern_toast_prefix">Pattern &#160;</string>
     <string name="pattern_label_first_to_last">First To Last</string>
     <string name="pattern_label_over_and_back">Over And Back</string>
