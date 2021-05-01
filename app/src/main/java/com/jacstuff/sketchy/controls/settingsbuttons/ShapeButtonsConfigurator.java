@@ -29,7 +29,7 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
         buttonConfig.put(R.id.roundedRectangleShapeButton,  R.drawable.rounded_rectangle_shape_button,  BrushShape.ROUNDED_RECTANGLE);
         buttonConfig.put(R.id.triangleShapeButton,          R.drawable.triangle_shape_button,           BrushShape.TRIANGLE);
         buttonConfig.put(R.id.pentagonShapeButton,          R.drawable.pentagon_shape_button,           BrushShape.PENTAGON);
-        buttonConfig.put(R.id.starShapeButton,              R.drawable.star_shape_button,            BrushShape.STAR);
+        buttonConfig.put(R.id.starShapeButton,              R.drawable.star_shape_button,               BrushShape.STAR);
         buttonConfig.put(R.id.hexagonShapeButton,           R.drawable.hexagon_shape_button,            BrushShape.HEXAGON);
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.shapeSelectionButton);
@@ -39,7 +39,7 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
 
     @Override
     public void handleClick(int viewId, BrushShape brushShape){
-        paintView.set(brushShape);
+        paintView.setBrushShape(brushShape);
     }
 
 
