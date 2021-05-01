@@ -5,6 +5,7 @@ import com.jacstuff.sketchy.paintview.PaintView;
 
 public class SeekBarConfigurator {
 
+
     public SeekBarConfigurator(MainActivity mainActivity, PaintView paintView){
         new LineWidthSeekBar(mainActivity, paintView);
         new BrushSizeSeekBar(mainActivity, paintView);

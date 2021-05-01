@@ -8,8 +8,7 @@ public class ShadowRadiusSeekBar extends AbstractSeekBarConfig {
 
 
     public ShadowRadiusSeekBar(MainActivity mainActivity, PaintView paintView){
-        super(mainActivity, paintView, R.id.shadowRadiusSeekBar);
-        paintView.setShadowSize(getValueOf(R.integer.shadow_radius_default));
+        super(mainActivity, paintView, R.id.shadowRadiusSeekBar, R.integer.shadow_radius_default);
     }
 
 

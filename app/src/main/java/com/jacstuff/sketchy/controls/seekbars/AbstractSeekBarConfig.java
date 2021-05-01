@@ -11,13 +11,13 @@ public abstract class AbstractSeekBarConfig {
     MainActivity mainActivity;
     PaintView paintView;
 
-    AbstractSeekBarConfig(MainActivity mainActivity, PaintView paintView, int seekBarId){
+    AbstractSeekBarConfig(MainActivity mainActivity, PaintView paintView, int seekBarId, int defaultValueId){
         this.mainActivity = mainActivity;
         this.paintView = paintView;
         log("AbstractSeekBarConfig constructor, about to look for id: " + seekBarId);
         seekBar = mainActivity.findViewById(seekBarId);
-
         setupListener();
+        adjustSetting(getValueOf(defaultValueId));
     }
 
     private void setupListener(){

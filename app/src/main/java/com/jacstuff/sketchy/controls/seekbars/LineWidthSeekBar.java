@@ -8,8 +8,7 @@ public class LineWidthSeekBar extends AbstractSeekBarConfig {
 
 
     public LineWidthSeekBar(MainActivity mainActivity, PaintView paintView){
-        super(mainActivity, paintView, R.id.lineWidthSeekBar);
-        paintView.setLineWidth(getValueOf(R.integer.line_width_default));
+        super(mainActivity, paintView, R.id.lineWidthSeekBar, R.integer.line_width_default);
     }
 
 

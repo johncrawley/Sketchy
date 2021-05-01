@@ -12,8 +12,7 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
     private ImageButton parentButton;
 
     public AngleSeekBar(MainActivity mainActivity, PaintView paintView){
-        super(mainActivity, paintView, R.id.angleSeekBar);
-        paintView.setAngle(getValueOf(R.integer.angle_default));
+        super(mainActivity, paintView, R.id.angleSeekBar, R.integer.angle_default);
         parentButton = mainActivity.findViewById(R.id.angleSelectionButton);
     }
 
@@ -22,7 +21,9 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
         if(paintView != null){
             paintView.setAnglePreset(AngleType.OTHER);
             paintView.setAngle(progress);
-            parentButton.setImageResource(R.drawable.degrees_button);
+            if(parentButton != null){
+                parentButton.setImageResource(R.drawable.degrees_button);
+            }
         }
     }
 }

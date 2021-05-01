@@ -6,8 +6,9 @@ import com.jacstuff.sketchy.paintview.PaintView;
 
 public class GradientSizeSeekBar extends AbstractSeekBarConfig {
 
+
     public GradientSizeSeekBar(MainActivity mainActivity, PaintView paintView){
-        super(mainActivity, paintView, R.id.gradientSizeSeekBar);
+        super(mainActivity, paintView, R.id.gradientSizeSeekBar, R.integer.gradient_radius_default);
     }
 
 
