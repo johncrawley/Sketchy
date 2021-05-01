@@ -21,7 +21,6 @@
             android:orientation="horizontal"
             android:paddingTop="@dimen/shape_options_padding_top">
 
-
             <ImageButton
                 android:id="@+id/kOffButton"
                 android:layout_width="@dimen/selector_button_width"
@@ -31,6 +30,16 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_circle_shape_button"
                 app:srcCompat="@drawable/k_off_button" />
+
+            <ImageButton
+                android:id="@+id/k2Button"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_square_shape_button"
+                app:srcCompat="@drawable/k_2_button" />
 
             <ImageButton
                 android:id="@+id/k5Button"
@@ -51,6 +60,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_square_shape_button"
                 app:srcCompat="@drawable/k_6_button" />
+
             <ImageButton
                 android:id="@+id/k7Button"
                 android:layout_width="@dimen/selector_button_width"
@@ -60,6 +70,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_square_shape_button"
                 app:srcCompat="@drawable/k_7_button" />
+
             <ImageButton
                 android:id="@+id/k8Button"
                 android:layout_width="@dimen/selector_button_width"
@@ -69,6 +80,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_square_shape_button"
                 app:srcCompat="@drawable/k_8_button" />
+
             <ImageButton
                 android:id="@+id/k9Button"
                 android:layout_width="@dimen/selector_button_width"
@@ -78,6 +90,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_square_shape_button"
                 app:srcCompat="@drawable/k_9_button" />
+
             <ImageButton
                 android:id="@+id/k10Button"
                 android:layout_width="@dimen/selector_button_width"
@@ -87,6 +100,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_square_shape_button"
                 app:srcCompat="@drawable/k_10_button" />
+
             <ImageButton
                 android:id="@+id/k12Button"
                 android:layout_width="@dimen/selector_button_width"
@@ -96,6 +110,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_square_shape_button"
                 app:srcCompat="@drawable/k_12_button" />
+
             <ImageButton
                 android:id="@+id/k16Button"
                 android:layout_width="@dimen/selector_button_width"
@@ -118,6 +133,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_gravity="center_horizontal"
         layout="@layout/gradient_radius_seek_bar" />
 
 

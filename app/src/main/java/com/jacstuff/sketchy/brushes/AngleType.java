@@ -12,6 +12,8 @@ public enum AngleType {
     TWO_TWENTY_FIVE(225),
     TWO_SEVENTY(270),
     THREE_FIFTEEN(315),
+    MINUS_ONE(-1,true),
+    PLUS_ONE(1,true),
     MINUS_FIFTEEN(-15,true),
     PLUS_FIFTEEN(15,true),
     MINUS_THIRTY(-30, true),

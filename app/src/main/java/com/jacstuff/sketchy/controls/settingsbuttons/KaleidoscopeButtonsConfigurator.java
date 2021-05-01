@@ -22,6 +22,7 @@ public class KaleidoscopeButtonsConfigurator implements ButtonsConfigurator<Inte
     public void configure(){
         ButtonConfigHandler<Integer> buttonConfig = new ButtonConfigHandler<>(activity, this);
         buttonConfig.put(R.id.kOffButton, R.drawable.k_off_button,1);
+        buttonConfig.put(R.id.k2Button,   R.drawable.k_2_button,  2);
         buttonConfig.put(R.id.k5Button,   R.drawable.k_5_button,  5);
         buttonConfig.put(R.id.k6Button,   R.drawable.k_6_button,  6);
         buttonConfig.put(R.id.k7Button,   R.drawable.k_7_button,  7);

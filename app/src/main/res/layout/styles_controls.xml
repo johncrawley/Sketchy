@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,74 +7,73 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent">
 
-
         <HorizontalScrollView
             android:id="@+id/controlsScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity = "center">
-<LinearLayout
-    android:id="@+id/styleOptionsLayout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/shapeOptionsScrollView">
 
-        <ImageButton
-            android:id="@+id/fillStyleButton"
-            android:layout_width="@dimen/selector_button_width"
-            android:layout_height="@dimen/selector_button_height"
-            android:layout_marginStart="@dimen/selector_button_margin_start"
-            android:layout_marginEnd="@dimen/selector_button_margin_end"
-            android:layout_weight="1"
-            android:contentDescription="@string/content_description_fill_style_button"
-            app:srcCompat="@drawable/fill_style_button" />
+                <LinearLayout
+                    android:id="@+id/styleOptionsLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/shape_selector_group_top_margin"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/shape_options_padding_top">
 
-        <ImageButton
-            android:id="@+id/brokenOutlineStyleButton"
-            android:layout_width="@dimen/selector_button_width"
-            android:layout_height="@dimen/selector_button_height"
-            android:layout_marginStart="@dimen/selector_button_margin_start"
-            android:layout_marginEnd="@dimen/selector_button_margin_end"
-            android:layout_weight="1"
-            android:contentDescription="@string/content_description_broken_outline_style_button"
-            app:srcCompat="@drawable/broken_outline_style_button" />
+                <ImageButton
+                    android:id="@+id/fillStyleButton"
+                    android:layout_width="@dimen/selector_button_width"
+                    android:layout_height="@dimen/selector_button_height"
+                    android:layout_marginStart="@dimen/selector_button_margin_start"
+                    android:layout_marginEnd="@dimen/selector_button_margin_end"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/content_description_fill_style_button"
+                    app:srcCompat="@drawable/fill_style_button" />
 
-        <ImageButton
-            android:id="@+id/outlineStyleButton"
-            android:layout_width="@dimen/selector_button_width"
-            android:layout_height="@dimen/selector_button_height"
-            android:layout_marginStart="@dimen/selector_button_margin_start"
-            android:layout_marginEnd="@dimen/selector_button_margin_end"
-            android:layout_weight="1"
-            android:contentDescription="@string/content_description_outline_style_button"
-            app:srcCompat="@drawable/outline_style_button" />
+                <ImageButton
+                    android:id="@+id/brokenOutlineStyleButton"
+                    android:layout_width="@dimen/selector_button_width"
+                    android:layout_height="@dimen/selector_button_height"
+                    android:layout_marginStart="@dimen/selector_button_margin_start"
+                    android:layout_marginEnd="@dimen/selector_button_margin_end"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/content_description_broken_outline_style_button"
+                    app:srcCompat="@drawable/broken_outline_style_button" />
 
-        <ImageButton
-            android:id="@+id/thickOutlineStyleButton"
-            android:layout_width="@dimen/selector_button_width"
-            android:layout_height="@dimen/selector_button_height"
-            android:layout_marginStart="@dimen/selector_button_margin_start"
-            android:layout_marginEnd="@dimen/selector_button_margin_end"
-            android:layout_weight="1"
-            android:contentDescription="@string/content_description_thick_outline_style_button"
-            app:srcCompat="@drawable/thick_outline_style_button" />
+                <ImageButton
+                    android:id="@+id/outlineStyleButton"
+                    android:layout_width="@dimen/selector_button_width"
+                    android:layout_height="@dimen/selector_button_height"
+                    android:layout_marginStart="@dimen/selector_button_margin_start"
+                    android:layout_marginEnd="@dimen/selector_button_margin_end"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/content_description_outline_style_button"
+                    app:srcCompat="@drawable/outline_style_button" />
 
-                </LinearLayout>
+                <ImageButton
+                    android:id="@+id/thickOutlineStyleButton"
+                    android:layout_width="@dimen/selector_button_width"
+                    android:layout_height="@dimen/selector_button_height"
+                    android:layout_marginStart="@dimen/selector_button_margin_start"
+                    android:layout_marginEnd="@dimen/selector_button_margin_end"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/content_description_thick_outline_style_button"
+                    app:srcCompat="@drawable/thick_outline_style_button" />
+
+             </LinearLayout>
         </HorizontalScrollView>
         <include
-                android:id="@+id/lineWidthSeekBarInclude"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                 layout="@layout/line_width_seek_bar" />
+            android:id="@+id/lineWidthSeekBarInclude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/line_width_seek_bar" />
 
 
     </LinearLayout>

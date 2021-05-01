@@ -33,6 +33,8 @@ public class AngleButtonsConfigurator implements ButtonsConfigurator<AngleType>{
         buttonConfig.put(R.id.degrees270Button,  R.drawable.degrees_270_button,  AngleType.TWO_SEVENTY);
         buttonConfig.put(R.id.degrees315Button,  R.drawable.degrees_315_button,  AngleType.THREE_FIFTEEN);
         buttonConfig.put(R.id.degreesMinus15Button, R.drawable.degrees_minus_15_button, AngleType.MINUS_FIFTEEN);
+        buttonConfig.put(R.id.degreesPlus1Button,  R.drawable.degrees_plus_1_button,  AngleType.PLUS_ONE);
+        buttonConfig.put(R.id.degreesMinus1Button, R.drawable.degrees_minus_1_button, AngleType.MINUS_ONE);
         buttonConfig.put(R.id.degreesPlus15Button,  R.drawable.degrees_plus_15_button,  AngleType.PLUS_FIFTEEN);
         buttonConfig.put(R.id.degreesMinus30Button, R.drawable.degrees_minus_30_button, AngleType.MINUS_THIRTY);
         buttonConfig.put(R.id.degreesPlus30Button,  R.drawable.degrees_plus_30_button,  AngleType.PLUS_THIRTY);
