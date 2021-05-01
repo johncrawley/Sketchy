@@ -115,6 +115,10 @@ public class PaintView extends View {
         angleHelper.setAngle(angleType);
     }
 
+    public void setAngle(int angle){
+        angleHelper.setAngle(angle);
+    }
+
     public void setBlurType(BlurType blurType){
         blurHelper.setBlurType(blurType);
     }

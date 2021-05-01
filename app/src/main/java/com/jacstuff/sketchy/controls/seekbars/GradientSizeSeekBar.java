@@ -10,6 +10,7 @@ public class GradientSizeSeekBar extends AbstractSeekBarConfig {
         super(mainActivity, paintView, R.id.gradientSizeSeekBar);
     }
 
+
     void adjustSetting(int progress){
         if(paintView != null){
             paintView.setRadialGradientRadius(progress);

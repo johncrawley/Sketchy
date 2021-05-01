@@ -28,10 +28,7 @@
         android:indeterminate="false"
         android:max="@integer/line_width_max"
         android:min="@integer/line_width_min"
-        android:paddingStart="10dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="20dp"
+        android:padding="@dimen/seekbar_padding"
         android:progress="@integer/line_width_default" />
 
 </LinearLayout>

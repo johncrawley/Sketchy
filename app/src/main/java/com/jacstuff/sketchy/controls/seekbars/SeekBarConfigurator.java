@@ -11,5 +11,6 @@ public class SeekBarConfigurator {
         new GradientSizeSeekBar(mainActivity, paintView);
         new BlurSeekBar(mainActivity, paintView);
         new ShadowRadiusSeekBar(mainActivity, paintView);
+        new AngleSeekBar(mainActivity, paintView);
     }
 }

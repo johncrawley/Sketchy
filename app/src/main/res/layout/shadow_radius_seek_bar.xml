@@ -28,10 +28,7 @@
         android:indeterminate="false"
         android:max="@integer/shadow_radius_max"
         android:min="@integer/shadow_radius_min"
-        android:paddingStart="10dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="20dp"
+        android:padding="@dimen/seekbar_padding"
         android:progress="@integer/shadow_radius_default" />
 
 </LinearLayout>

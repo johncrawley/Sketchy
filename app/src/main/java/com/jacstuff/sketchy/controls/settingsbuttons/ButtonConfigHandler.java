@@ -24,7 +24,7 @@ public class ButtonConfigHandler<T>{
         buttonBackgroundResourceMap = new HashMap<>();
         this.activity = activity;
         this.buttonsConfigurator = buttonsConfigurator;
-        this.buttonUtils = new ButtonUtils(activity);;
+        this.buttonUtils = new ButtonUtils(activity);
     }
 
 

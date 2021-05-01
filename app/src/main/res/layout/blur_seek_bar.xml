@@ -30,10 +30,7 @@
         android:indeterminate="false"
         android:max="@integer/blur_radius_max_default"
         android:min="@integer/blur_radius_min_default"
-        android:paddingStart="10dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="20dp"
+        android:padding="@dimen/seekbar_padding"
         android:progress="@integer/blur_radius_default" />
 
 </LinearLayout>
