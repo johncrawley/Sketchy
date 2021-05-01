@@ -34,7 +34,7 @@ public class GradientButtonsConfigurator implements ButtonsConfigurator<Gradient
 
     @Override
     public void handleClick(int viewId, GradientType gradientType){
-        paintView.set(gradientType);
+        paintView.setGradientType(gradientType);
     }
 
 

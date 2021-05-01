@@ -96,7 +96,7 @@ public class PaintView extends View {
     }
 
 
-    public void set(BrushStyle brushStyle){
+    public void setBrushStyle(BrushStyle brushStyle){
         currentBrushStyle = brushStyle;
         currentBrush.setStyle(brushStyle);
     }
@@ -111,12 +111,12 @@ public class PaintView extends View {
         angleHelper.setAngle(angleType);
     }
 
-    public void set(BlurType blurType){
+    public void setBlurType(BlurType blurType){
         blurHelper.setBlurType(blurType);
     }
 
 
-    public void set(GradientType gradientType){
+    public void setGradientType(GradientType gradientType){
         gradientHelper.setGradientType(gradientType);
     }
 
@@ -126,12 +126,14 @@ public class PaintView extends View {
         halfBrushSize = brushSize /2;
         currentBrush.setBrushSize(brushSize);
         gradientHelper.updateBrushSize(brushSize);
+        shadowHelper.updateOffsetFactor(halfBrushSize);
     }
 
 
     public void setRadialGradientRadius(int radiusFactor){
         gradientHelper.setGradientRadius(radiusFactor, canvasWidth);
     }
+
 
     public void setLineWidth(int lineWidth){
 
@@ -140,12 +142,19 @@ public class PaintView extends View {
         shadowPaint.setStrokeWidth(lineWidth);
     }
 
+
     public void setBlurRadius(int blurRadius){
         blurHelper.setBlurRadius(blurRadius);
     }
 
-    public void set(ShadowType shadowType){
+
+    public void setShadowType(ShadowType shadowType){
         shadowHelper.set(shadowType);
+    }
+
+
+    public void setShadowSize(int size){
+        shadowHelper.setShadowSize(size, halfBrushSize);
     }
 
 
@@ -281,11 +290,6 @@ public class PaintView extends View {
         return true;
     }
 
-
-
-    public void setShadowSize(int size){
-        shadowHelper.setShadowSize(size, halfBrushSize);
-    }
 
 
     private void performAction(float x, float y, int action){

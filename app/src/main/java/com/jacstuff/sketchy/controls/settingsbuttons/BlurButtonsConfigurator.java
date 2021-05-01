@@ -35,7 +35,7 @@ public class BlurButtonsConfigurator implements ButtonsConfigurator<BlurType>{
 
     @Override
     public void handleClick(int viewId, BlurType blurType){
-        paintView.set(blurType);
+        paintView.setBlurType(blurType);
     }
 
 

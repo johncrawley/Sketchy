@@ -20,12 +20,19 @@ public class ShadowHelper {
     public ShadowHelper(Paint paint){
         this.paint = paint;
         this.halfBrushSize = 10;
-
     }
+
 
     public void setShadowSize(int size, int halfBrushSize){
         shadowSize = size;
         shadowOffsetFactor = halfBrushSize / 4;
+        assignShadow();
+    }
+
+
+    public void updateOffsetFactor(int halfBrushSize){
+        shadowOffsetFactor = halfBrushSize / 4;
+        assignShadow();
     }
 
 

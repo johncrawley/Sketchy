@@ -39,7 +39,7 @@ public class ShadowButtonsConfigurator implements ButtonsConfigurator<ShadowType
 
     @Override
     public void handleClick(int viewId, ShadowType shadowType){
-        paintView.set(shadowType);
+        paintView.setShadowType(shadowType);
     }
 
 

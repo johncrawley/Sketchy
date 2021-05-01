@@ -35,7 +35,7 @@ public class StyleButtonsConfigurator implements ButtonsConfigurator<BrushStyle>
 
     @Override
     public void handleClick(int viewId, BrushStyle brushStyle) {
-        paintView.set(brushStyle);
+        paintView.setBrushStyle(brushStyle);
     }
 
     @Override
