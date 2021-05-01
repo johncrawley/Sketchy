@@ -4,19 +4,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class SquareBrush extends AbstractBrush implements Brush {
 
 
-   public SquareBrush(Canvas canvas, Paint paint){
-        super(canvas, paint, BrushShape.SQUARE);
+   public SquareBrush(Canvas canvas, PaintGroup paintGroup){
+        super(canvas, paintGroup, BrushShape.SQUARE);
     }
 
-
-    @Override
-    public void onTouchDown(float x, float y){
-        onTouchDown(x,y, paint);
-    }
 
     @Override
     public void onTouchDown(float x, float y, Paint paint){
@@ -25,18 +21,6 @@ public class SquareBrush extends AbstractBrush implements Brush {
         float right = left + brushSize;
         float bottom = top + brushSize;
         canvas.drawRect(left, top, right, bottom, paint);
-    }
-
-
-    @Override
-    public void onTouchMove(float x, float y){
-        onTouchDown(x ,y);
-    }
-
-
-    @Override
-    public void onTouchUp(float x, float y){
-        // do nothing
     }
 
 }

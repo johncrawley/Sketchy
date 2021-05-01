@@ -52,6 +52,8 @@ public class PaintView extends View {
     private Bitmap previewBitmap;
     private Paint drawPaint = new Paint();
 
+    private PaintGroup paintGroup;
+
     public PaintView(Context context) {
         this(context, null);
     }
@@ -77,6 +79,8 @@ public class PaintView extends View {
         shadowPaint.setStrokeJoin(Paint.Join.ROUND);
         shadowPaint.setStrokeCap(Paint.Cap.SQUARE);
         shadowPaint.setColor(Color.BLACK);
+
+        paintGroup = new PaintGroup(paint, previewPaint, shadowPaint);
 
 
         shadowHelper = new ShadowHelper(shadowPaint);
@@ -207,7 +211,7 @@ public class PaintView extends View {
 
 
     private void initBrushes(){
-        brushFactory = new BrushFactory(canvas, paint, brushSize);
+        brushFactory = new BrushFactory(canvas, paintGroup, brushSize);
         currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
     }
 
@@ -266,20 +270,20 @@ public class PaintView extends View {
 
             switch(event.getAction()) {
                 case MotionEvent.ACTION_DOWN :
-                    currentBrush.onTouchDown(x,y);
+                    currentBrush.onTouchDown(x,y, paint);
                     invalidate();
                     break;
                 case MotionEvent.ACTION_MOVE :
                     displayPreviewLayer = true;
                     previewBitmap = Bitmap.createBitmap(bitmap);
                     canvas.setBitmap(previewBitmap);
-                    currentBrush.onTouchMove(x,y);
+                    currentBrush.onTouchMove(x,y, paint);
                     invalidate();
                     break;
                 case MotionEvent.ACTION_UP :
                     displayPreviewLayer = false;
                     canvas.setBitmap(bitmap);
-                    currentBrush.onTouchUp(x,y);
+                    currentBrush.onTouchUp(x,y, paint);
                     invalidate();
             }
             return true;

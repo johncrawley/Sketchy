@@ -7,6 +7,8 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.styles.FillStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
+import com.jacstuff.sketchy.paintview.PaintGroup;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ import java.util.Map;
 public abstract class AbstractBrush {
 
     Canvas canvas;
-    Paint paint;
+    PaintGroup paintGroup;
     int brushSize;
     Style currentStyle;
     int halfBrushSize;
@@ -23,9 +25,9 @@ public abstract class AbstractBrush {
     private FillStyle fillStyle;
 
 
-    AbstractBrush(Canvas canvas, Paint paint, BrushShape brushShape){
+    AbstractBrush(Canvas canvas, PaintGroup paintGroup, BrushShape brushShape){
         this.canvas = canvas;
-        this.paint = paint;
+        this.paintGroup = paintGroup;
         styleMap = new HashMap<>();
         fillStyle = new FillStyle();
         currentStyle = fillStyle;
@@ -45,24 +47,28 @@ public abstract class AbstractBrush {
         if(currentStyle == null){
             currentStyle = fillStyle;
         }
-        currentStyle.init(paint, brushSize);
+        currentStyle.init(paintGroup, brushSize);
     }
 
 
-    public void onTouchMove(float x, float y){
+    public void onTouchDown(float x, float y, Paint paint){
         //do nothing
     }
 
+    public void onTouchMove(float x, float y, Paint paint){
+        onTouchDown(x ,y, paint);
+    }
 
-    public void onTouchUp(float x, float y){
-        // do nothing
+
+    public void onTouchUp(float x, float y, Paint paint){
+        //do nothing
     }
 
 
     public void setBrushSize(int brushSize) {
         this.brushSize = brushSize;
         this.halfBrushSize = brushSize / 2;
-        currentStyle.setBrushSize(paint, brushSize);
+        currentStyle.setBrushSize(paintGroup, brushSize);
     }
 
 }

@@ -3,6 +3,8 @@ package com.jacstuff.sketchy.brushes.styles;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 
+import com.jacstuff.sketchy.paintview.PaintGroup;
+
 public class DashedStyleForLines extends DashedStyle implements Style {
 
     private int brushSize;
@@ -29,7 +31,7 @@ public class DashedStyleForLines extends DashedStyle implements Style {
 
 
     @Override
-    public void init(Paint paint, int brushSize) {
+    public void init(PaintGroup paint, int brushSize) {
         paint.setStrokeWidth(calculate(brushSize));
         paint.setStyle(Paint.Style.STROKE);
         paint.setPathEffect(dashPathEffect);
@@ -37,7 +39,7 @@ public class DashedStyleForLines extends DashedStyle implements Style {
 
 
     @Override
-    public void setBrushSize(Paint paint, int brushSize) {
+    public void setBrushSize(PaintGroup paint, int brushSize) {
         this.brushSize = brushSize;
         hasBrushSizeChanged = true;
     }
@@ -49,7 +51,7 @@ public class DashedStyleForLines extends DashedStyle implements Style {
 
 
     @Override
-    public void onDraw(Paint paint){
+    public void onDraw(PaintGroup paint){
        if(hasBrushSizeChanged){
            dashPathEffect = calculateDashPath(brushSize);
            paint.setPathEffect(dashPathEffect);

@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.paintview.PaintGroup;
 
 
 /*
@@ -98,8 +99,8 @@ public class PentagonBrush extends AbstractBrush implements Brush {
     int yFromBottomLeftPointToRight;
 
 
-    public PentagonBrush(Canvas canvas, Paint paint){
-        super(canvas, paint, BrushShape.PENTAGON);
+    public PentagonBrush(Canvas canvas, PaintGroup paintGroup){
+        super(canvas, paintGroup, BrushShape.PENTAGON);
 
         topPoint = new Point();
         radsFromTopPointToBottomRight  = Math.toRadians(angleFromTopPointToBottomRight);
@@ -108,12 +109,6 @@ public class PentagonBrush extends AbstractBrush implements Brush {
         radsFromBottomLeftPointToRight = Math.toRadians(angleFromBottomLeftPointToRight);
     }
 
-
-
-    @Override
-    public void onTouchDown(float x, float y){
-        onTouchDown(x,y, paint);
-    }
 
     @Override
     public void onTouchDown(float x, float y, Paint paint){
@@ -146,13 +141,6 @@ public class PentagonBrush extends AbstractBrush implements Brush {
         leftX = bottomRightX + xFromBottomRightPointToLeft;
         leftY = bottomRightY + yFromBottomRightPointToLeft;
 
-    }
-
-
-
-    @Override
-    public void onTouchMove(float x, float y){
-        onTouchDown(x ,y);
     }
 
 

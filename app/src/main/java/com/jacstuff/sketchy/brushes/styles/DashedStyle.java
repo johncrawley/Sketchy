@@ -6,6 +6,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathDashPathEffect;
 
+import com.jacstuff.sketchy.paintview.PaintGroup;
+
 public class DashedStyle extends AbstractStyle implements Style {
 
     DashPathEffect dashPathEffect, dashPathEffect2;
@@ -22,7 +24,7 @@ public class DashedStyle extends AbstractStyle implements Style {
     }
 
     @Override
-    public void init(Paint p, int brushSize) {
+    public void init(PaintGroup p, int brushSize) {
         p.setStyle(Paint.Style.STROKE);
         p.setPathEffect(dashPathEffect2);
     }

@@ -8,22 +8,20 @@ import android.graphics.Point;
 public class LineOutlineDrawer implements LineDrawer {
 
     private Canvas canvas;
-    private Paint paint;
 
-    public LineOutlineDrawer(Canvas canvas, Paint paint){
+    public LineOutlineDrawer(Canvas canvas){
         this.canvas = canvas;
-        this.paint = paint;
     }
 
 
     @Override
-    public void draw(float x1, float y1, float x2, float y2, int brushSize){
+    public void draw(float x1, float y1, float x2, float y2, int brushSize, Paint paint){
         int adjustedBrushSize = (brushSize / 3) +  2;
-        drawLineOutline(x1, y1, x2, y2, adjustedBrushSize);
+        drawLineOutline(x1, y1, x2, y2, adjustedBrushSize, paint);
     }
 
 
-    private void drawLineOutline(float x1, float y1, float x2, float y2, int brushSize){
+    private void drawLineOutline(float x1, float y1, float x2, float y2, int brushSize, Paint paint){
         Point p1 = new Point((int) x1, (int)y1);
         Point p2 = new Point((int) x2,(int) y2);
         Point p3 = getPointPerpendicularTo(x1, y1, x2, y2, false);
@@ -39,13 +37,13 @@ public class LineOutlineDrawer implements LineDrawer {
             p5 = getPointFromPerpLine(p1, p3, divisor);
             p6 = getPointFromPerpLine(p2, p4, divisor);
         }
-        drawLineFrom(p1, p2);
-        drawLineFrom(p1, p5);
-        drawLineFrom(p2, p6);
-        drawLineFrom(p5, p6);
+        drawLineFrom(p1, p2, paint);
+        drawLineFrom(p1, p5, paint);
+        drawLineFrom(p2, p6, paint);
+        drawLineFrom(p5, p6, paint);
     }
 
-    private void drawLineFrom(Point p1, Point p2){
+    private void drawLineFrom(Point p1, Point p2, Paint paint){
         canvas.drawLine(p1.x, p1.y, p2.x, p2.y, paint);
     }
 

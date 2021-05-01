@@ -6,14 +6,15 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class RoundedRectangleBrush extends AbstractBrush implements Brush {
 
     private RectF rect;
     private int rounding;
 
-    public RoundedRectangleBrush(Canvas canvas, Paint paint, int brushSize){
-        super(canvas, paint, BrushShape.ROUNDED_RECTANGLE);
+    public RoundedRectangleBrush(Canvas canvas, PaintGroup paintGroup, int brushSize){
+        super(canvas, paintGroup, BrushShape.ROUNDED_RECTANGLE);
         rect = new RectF(1,1,1,1);
         setBrushSize(brushSize);
     }
@@ -27,11 +28,6 @@ public class RoundedRectangleBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onTouchDown(float x, float y){
-        onTouchDown(x,y, paint);
-    }
-
-    @Override
     public void onTouchDown(float x, float y, Paint paint){
         int left = (int) x - halfBrushSize;
         int top =  (int)y - halfBrushSize;
@@ -42,18 +38,6 @@ public class RoundedRectangleBrush extends AbstractBrush implements Brush {
         rect.bottom = top + brushSize;
 
         canvas.drawRoundRect(rect, rounding, rounding, paint);
-    }
-
-
-    @Override
-    public void onTouchMove(float x, float y){
-        onTouchDown(x ,y);
-    }
-
-
-    @Override
-    public void onTouchUp(float x, float y){
-        // do nothing
     }
 
 

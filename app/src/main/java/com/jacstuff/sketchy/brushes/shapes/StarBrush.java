@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.paintview.PaintGroup;
 
 
 /*
@@ -25,17 +26,11 @@ public class StarBrush extends PentagonBrush {
     private float insideBottomPointYOffset, insideBottomLeftPointYOffset, insideTopLeftPointYOffset, insideTopRightPointYOffset, insideBottomRightPointYOffset;
 
 
-    public StarBrush(Canvas canvas, Paint paint){
-        super(canvas, paint);
+    public StarBrush(Canvas canvas, PaintGroup paintGroup){
+        super(canvas, paintGroup);
         brushShape = BrushShape.STAR;
     }
 
-
-
-    @Override
-    public void onTouchDown(float x, float y){
-        onTouchDown(x,y, paint);
-    }
 
     @Override
     public void onTouchDown(float x, float y, Paint paint){
@@ -104,9 +99,7 @@ public class StarBrush extends PentagonBrush {
 
         insideTopLeftPointXOffset = getXPoint(radsFromTopPointToBottomLeft, starPointSideLength);
         insideTopLeftPointYOffset = getYPoint(radsFromTopPointToBottomLeft, starPointSideLength);
-
     }
-
 
 
 }

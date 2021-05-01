@@ -4,19 +4,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class CircleBrush extends AbstractBrush implements Brush {
 
 
-    public CircleBrush(Canvas canvas, Paint paint){
-       super(canvas, paint, BrushShape.CIRCLE);
+    public CircleBrush(Canvas canvas, PaintGroup paintGroup){
+       super(canvas, paintGroup, BrushShape.CIRCLE);
     }
 
-
-    @Override
-    public void onTouchDown(float x, float y){
-        onTouchDown(x,y, paint);
-    }
 
     @Override
     public void onTouchDown(float x, float y, Paint paint){
@@ -25,13 +21,9 @@ public class CircleBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onTouchMove(float x, float y){
-        onTouchDown(x, y);
+    public void onTouchMove(float x, float y, Paint paint){
+        onTouchDown(x, y, paint);
     }
 
-    @Override
-    public void onTouchUp(float x, float y){
-        //do nothing
-    }
 
 }

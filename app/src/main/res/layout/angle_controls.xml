@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_gravity = "center"
     android:layout_height="wrap_content"
     android:layout_width="match_parent">
 
@@ -11,14 +12,14 @@
     <HorizontalScrollView
         android:id="@+id/angleControlsScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity = "center">
 
         <LinearLayout
             android:id="@+id/angleOptionsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/shape_selector_group_top_margin"
-            android:paddingHorizontal="20dp"
             android:orientation="horizontal"
             android:paddingTop="@dimen/shape_options_padding_top">
 

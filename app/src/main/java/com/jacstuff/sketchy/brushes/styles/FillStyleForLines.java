@@ -2,18 +2,20 @@ package com.jacstuff.sketchy.brushes.styles;
 
 import android.graphics.Paint;
 
+import com.jacstuff.sketchy.paintview.PaintGroup;
+
 public class FillStyleForLines extends AbstractStyle implements Style {
 
 
     @Override
-    public void init(Paint paint, int brushSize) {
+    public void init(PaintGroup paint, int brushSize) {
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setPathEffect(null);
         paint.setStrokeWidth(getAdjusted(brushSize));
     }
 
     @Override
-    public void setBrushSize(Paint paint, int brushSize) {
+    public void setBrushSize(PaintGroup paint, int brushSize) {
       //  paint.setStrokeWidth(getAdjusted(brushSize) );
     }
 

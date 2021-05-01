@@ -8,6 +8,7 @@ import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.line.DefaultLineDrawer;
 import com.jacstuff.sketchy.brushes.shapes.line.LineDrawer;
 import com.jacstuff.sketchy.brushes.shapes.line.LineOutlineDrawer;
+import com.jacstuff.sketchy.paintview.PaintGroup;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,16 +19,16 @@ public class LineBrush extends AbstractBrush implements Brush {
     private LineDrawer currentLineDrawer;
     private Map<BrushStyle, LineDrawer> lineDrawerMap;
 
-    public LineBrush(Canvas canvas, Paint paint) {
-        super(canvas, paint, BrushShape.LINE);
+    public LineBrush(Canvas canvas, PaintGroup paintGroup) {
+        super(canvas, paintGroup, BrushShape.LINE);
         setupLineDrawers();
     }
 
 
     private void setupLineDrawers(){
         lineDrawerMap = new HashMap<>();
-        LineDrawer defaultLineDrawer = new DefaultLineDrawer(canvas, paint);
-        LineDrawer outlineDrawer = new LineOutlineDrawer(canvas, paint);
+        LineDrawer defaultLineDrawer = new DefaultLineDrawer(canvas);
+        LineDrawer outlineDrawer = new LineOutlineDrawer(canvas);
         lineDrawerMap.put(BrushStyle.FILL, defaultLineDrawer);
         lineDrawerMap.put(BrushStyle.BROKEN_OUTLINE, defaultLineDrawer);
         lineDrawerMap.put(BrushStyle.OUTLINE,outlineDrawer );
@@ -36,15 +37,9 @@ public class LineBrush extends AbstractBrush implements Brush {
     }
 
 
-
-    @Override
-    public void onTouchDown(float x, float y){
-        onTouchDown(x,y, paint);
-    }
-
     @Override
     public void onTouchDown(float x, float y, Paint paint){
-        currentStyle.onDraw(paint);
+        currentStyle.onDraw(paintGroup);
         xDown = x;
         yDown = y;
     }
@@ -52,16 +47,16 @@ public class LineBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onTouchMove(float x, float y) {
-        currentLineDrawer.draw(xDown, yDown, x, y, brushSize);
+    public void onTouchMove(float x, float y, Paint paint) {
+        currentLineDrawer.draw(xDown, yDown, x, y, brushSize, paint);
     }
 
 
 
 
     @Override
-    public void onTouchUp(float x, float y) {
-        currentLineDrawer.draw(xDown, yDown, x, y, brushSize);
+    public void onTouchUp(float x, float y, Paint paint) {
+        currentLineDrawer.draw(xDown, yDown, x, y, brushSize, paint);
     }
 
 

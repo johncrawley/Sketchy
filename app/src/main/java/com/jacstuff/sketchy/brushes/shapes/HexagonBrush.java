@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class HexagonBrush extends AbstractBrush implements Brush {
 
@@ -16,8 +17,8 @@ public class HexagonBrush extends AbstractBrush implements Brush {
     private int quarterBrushSize;
 
 
-    public HexagonBrush(Canvas canvas, Paint paint){
-        super(canvas, paint, BrushShape.HEXAGON);
+    public HexagonBrush(Canvas canvas, PaintGroup paintGroup){
+        super(canvas, paintGroup, BrushShape.HEXAGON);
         leftPoint = new Point();
         rightPoint = new Point();
         bottomLeftPoint = new Point();
@@ -35,11 +36,6 @@ public class HexagonBrush extends AbstractBrush implements Brush {
         quarterBrushSize = halfBrushSize / 2;
     }
 
-
-    @Override
-    public void onTouchDown(float x, float y){
-        onTouchDown(x,y, paint);
-    }
 
     @Override
     public void onTouchDown(float x, float y, Paint paint){
@@ -68,13 +64,6 @@ public class HexagonBrush extends AbstractBrush implements Brush {
         path.close();
 
         canvas.drawPath(path, paint);
-    }
-
-
-
-    @Override
-    public void onTouchMove(float x, float y){
-        onTouchDown(x ,y);
     }
 
 }
