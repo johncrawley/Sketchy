@@ -19,6 +19,7 @@ public class LineBrush extends AbstractBrush implements Brush {
     private LineDrawer currentLineDrawer;
     private Map<BrushStyle, LineDrawer> lineDrawerMap;
 
+
     public LineBrush(Canvas canvas, PaintGroup paintGroup) {
         super(canvas, paintGroup, BrushShape.LINE);
         setupLineDrawers();
@@ -53,6 +54,12 @@ public class LineBrush extends AbstractBrush implements Brush {
 
 
     @Override
+    public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint) {
+        currentLineDrawer.draw(xDown - offsetX, yDown - offsetY, x -offsetX, y - offsetY, brushSize, paint);
+    }
+
+
+    @Override
     public void onTouchUp(float x, float y, Paint paint) {
         currentLineDrawer.draw(xDown, yDown, x, y, brushSize, paint);
     }
@@ -63,6 +70,4 @@ public class LineBrush extends AbstractBrush implements Brush {
         super.setStyle(brushStyle);
         currentLineDrawer = lineDrawerMap.get(brushStyle);
     }
-
-
 }

@@ -26,7 +26,6 @@ public class StyleButtonsConfigurator implements ButtonsConfigurator<BrushStyle>
         buttonConfig.put(R.id.brokenOutlineStyleButton, R.drawable.broken_outline_style_button, BrushStyle.BROKEN_OUTLINE);
         buttonConfig.put(R.id.fillStyleButton,          R.drawable.fill_style_button,           BrushStyle.FILL);
         buttonConfig.put(R.id.outlineStyleButton,       R.drawable.outline_style_button,        BrushStyle.OUTLINE);
-        buttonConfig.put(R.id.thickOutlineStyleButton,  R.drawable.thick_outline_style_button,  BrushStyle.THICK_OUTLINE);
 
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.styleSelectionButton);

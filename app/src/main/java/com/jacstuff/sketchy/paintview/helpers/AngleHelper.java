@@ -10,6 +10,7 @@ public class AngleHelper {
     private int increment;
     private int isRandom;
     private AngleType angleType;
+    private int currentPresetViewId;
 
     public AngleHelper(){
         angleType = AngleType.ZERO;
@@ -22,8 +23,17 @@ public class AngleHelper {
             increment = angleType.get();
             return;
         }
-
     }
+
+    public void setCurrentPresetViewId(int viewId){
+        this.currentPresetViewId = viewId;
+    }
+
+
+    public int getCurrentPresetViewId(){
+        return currentPresetViewId;
+    }
+
 
     public void updateAngle(){
         if(angleType.isIncremental()){

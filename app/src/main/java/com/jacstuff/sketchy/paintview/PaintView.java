@@ -46,9 +46,9 @@ public class PaintView extends View {
     private AngleHelper angleHelper;
 
     private final int TOTAL_DEGREES = 360;
-    private int degree_increment = 30;
+    private float degree_increment = 30;
     private boolean isKaleidoscopeEnabled = false;
-    private boolean displayPreviewLayer;
+    private boolean isPreviewLayerToBeDrawn;
     private Bitmap previewBitmap;
     private Paint drawPaint = new Paint();
 
@@ -61,32 +61,29 @@ public class PaintView extends View {
 
     public PaintView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        paint = new Paint();
+        paint = createPaint(Color.WHITE);
+        previewPaint =  createPaint(Color.DKGRAY);
+        shadowPaint = createPaint(Color.BLACK);
+
         paint.setAntiAlias(true);
         paint.setDither(true);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeCap(Paint.Cap.SQUARE);
-
-        previewPaint = new Paint();
-        previewPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        previewPaint.setStrokeJoin(Paint.Join.ROUND);
-        previewPaint.setStrokeCap(Paint.Cap.SQUARE);
-        previewPaint.setColor(Color.DKGRAY);
-
-        shadowPaint = new Paint();
-        shadowPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        shadowPaint.setStrokeJoin(Paint.Join.ROUND);
-        shadowPaint.setStrokeCap(Paint.Cap.SQUARE);
-        shadowPaint.setColor(Color.BLACK);
 
         paintGroup = new PaintGroup(paint, previewPaint, shadowPaint);
-
 
         shadowHelper = new ShadowHelper(shadowPaint);
         blurHelper = new BlurHelper(paint);
         gradientHelper = new GradientHelper(paint);
         angleHelper = new AngleHelper();
+    }
+
+
+    private Paint createPaint(int color){
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.SQUARE);
+        paint.setColor(color);
+        return paint;
     }
 
 
@@ -123,12 +120,21 @@ public class PaintView extends View {
 
     public void setKaleidoScopeSegments(int segments){
         isKaleidoscopeEnabled = segments > 1;
-        this.degree_increment = TOTAL_DEGREES / segments;
+        this.degree_increment = (float)TOTAL_DEGREES / segments;
     }
 
 
+    public void setAnglePreset(AngleType angleType, int viewId){
+        setAnglePreset(angleType);
+        angleHelper.setCurrentPresetViewId(viewId);
+    }
+
     public void setAnglePreset(AngleType angleType){
         angleHelper.setAngle(angleType);
+    }
+
+    public int getCurrentAngleButtonViewId(){
+        return angleHelper.getCurrentPresetViewId();
     }
 
     public void setAngle(int angle){
@@ -197,28 +203,18 @@ public class PaintView extends View {
     public void resetCanvas(){
         wasCanvasModifiedSinceLastSaveOrReset = false;
         isCanvasLocked = true;
-        int currentColor = paint.getColor();
-        resetStylesAndColors();
         drawPlainBackground();
         invalidate();
-        currentBrush.setStyle(currentBrushStyle);
-        paint.setColor(currentColor);
         isCanvasLocked = false;
     }
 
 
-    private void resetStylesAndColors(){
-        paint.setColor(DEFAULT_BG_COLOR);
-        paint.setPathEffect(null);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-    }
-
-
     private void drawPlainBackground(){
-        int currentColor = paint.getColor();
-        paint.setColor(Color.WHITE);
-        canvas.drawRect(0,0, canvasWidth, canvasHeight, paint);
-        paint.setColor(currentColor);
+        Paint blankPaint = new Paint();
+        blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        blankPaint.setColor(DEFAULT_BG_COLOR);
+        canvas.drawRect(0,0, canvasWidth, canvasHeight, blankPaint);
+        invalidate();
     }
 
 
@@ -245,12 +241,7 @@ public class PaintView extends View {
     protected void onDraw(Canvas viewCanvas) {
         viewCanvas.save();
         viewCanvas.drawColor(DEFAULT_BG_COLOR);
-        if(displayPreviewLayer){
-            viewCanvas.drawBitmap(previewBitmap,0,0, drawPaint);
-        }
-        else {
-            viewCanvas.drawBitmap(bitmap, 0, 0, drawPaint);
-        }
+        viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, drawPaint);
         viewCanvas.restore();
     }
 
@@ -263,6 +254,11 @@ public class PaintView extends View {
 
         if(!isTouchDownEventWithLineShape(event)){
             assignColorsBlursAndGradients(x,y);
+        }
+
+        wasCanvasModifiedSinceLastSaveOrReset = true;
+        if(isCanvasLocked){
+            return true;
         }
 
         if(BrushShape.LINE == currentBrush.getBrushShape()){
@@ -297,36 +293,23 @@ public class PaintView extends View {
                 currentBrush.onTouchDown(x,y, paint);
                 break;
             case MotionEvent.ACTION_MOVE :
-                setPreviewLayerEnabled(true);
-                currentBrush.onTouchMove(x,y, shadowPaint);
+                enablePreviewLayer();
                 currentBrush.onTouchMove(x,y, paint);
                 break;
             case MotionEvent.ACTION_UP :
-                setPreviewLayerEnabled(false);
-                currentBrush.onTouchUp(x,y,shadowPaint);
-                currentBrush.onTouchUp(x,y, paint);
+                disablePreviewLayer();
+                if(isKaleidoscopeEnabled){
+                    drawKaleidoscope(x, y, paint,true);
+                }
+                else{
+                    drawDragLine(x,y);
+                }
         }
         invalidate();
     }
 
 
-    private void setPreviewLayerEnabled(boolean enabled){
-        if(enabled){
-            displayPreviewLayer = true;
-            previewBitmap = Bitmap.createBitmap(bitmap);
-            canvas.setBitmap(previewBitmap);
-            return;
-        }
-        displayPreviewLayer = false;
-        canvas.setBitmap(bitmap);
-    }
-
-
     private void handleDrawing(float x, float y, int action){
-        wasCanvasModifiedSinceLastSaveOrReset = true;
-        if(isCanvasLocked){
-            return;
-        }
         angleHelper.updateAngle();
         switch(action) {
             case MotionEvent.ACTION_DOWN :
@@ -334,17 +317,14 @@ public class PaintView extends View {
                 break;
 
             case MotionEvent.ACTION_MOVE :
-                displayPreviewLayer = false;
-                canvas.setBitmap(bitmap);
+                disablePreviewLayer();
                 drawToCanvas(x,y, paint);
-                displayPreviewLayer = true;
-                previewBitmap = Bitmap.createBitmap(bitmap);
-                canvas.setBitmap(previewBitmap);
+                enablePreviewLayer();
                 drawToCanvas(x,y, previewPaint);
                 break;
 
             case MotionEvent.ACTION_UP :
-                displayPreviewLayer = false;
+                isPreviewLayerToBeDrawn = false;
                 canvas.setBitmap(bitmap);
                 invalidate();
         }
@@ -361,17 +341,54 @@ public class PaintView extends View {
     }
 
 
+    private void enablePreviewLayer(){
+        isPreviewLayerToBeDrawn = true;
+        previewBitmap = Bitmap.createBitmap(bitmap);
+        canvas.setBitmap(previewBitmap);
+    }
+
+
+    private void disablePreviewLayer(){
+        isPreviewLayerToBeDrawn = false;
+        canvas.setBitmap(bitmap);
+    }
+
+
     private void drawKaleidoscope(float x, float y, Paint paint){
+        drawKaleidoscope(x,y, paint, false);
+    }
+
+
+    private void drawKaleidoscope(float x, float y, Paint paint, boolean isDragLine){
         canvas.save();
         canvas.translate(midCanvasX, midCanvasY);
-        for(int angle = 0; angle < TOTAL_DEGREES; angle += degree_increment){
+        final int REMAINDER_OF_ANGLE_DIVISON = 5; //accounts for divisions of 360 that don't fit into 360 exactly
+        for(float angle = 0; angle < TOTAL_DEGREES - REMAINDER_OF_ANGLE_DIVISON; angle += degree_increment){
             canvas.save();
             canvas.rotate(angle);
-            rotateAndDraw(x - midCanvasX, y- midCanvasY, paint);
+            if(isDragLine){
+                drawDragLine(x , y, midCanvasX, midCanvasY);
+            }
+            else {
+                rotateAndDraw(x - midCanvasX, y - midCanvasY, paint);
+            }
             canvas.restore();
             invalidate();
         }
         canvas.restore();
+    }
+
+
+    private void drawDragLine(float x, float y){
+        drawDragLine(x,y,0,0);
+    }
+
+
+    private void drawDragLine(float x, float y, int offsetX, int offsetY){
+        if(shadowHelper.isShadowEnabled()){
+            currentBrush.onTouchUp(x,y, offsetX, offsetY, shadowPaint);
+        }
+        currentBrush.onTouchUp(x,y, offsetX, offsetY, paint);
     }
 
 

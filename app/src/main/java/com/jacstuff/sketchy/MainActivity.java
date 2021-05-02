@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private HorizontalScrollView shadesScrollView;
     private final int SAVE_FILE_ACTIVITY_CODE = 101;
     private final int CLEAR_CANVAS_ACTIVITY_CODE = 102;
+    private final int LOAD_FILE_ACTIVITY_CODE = 103;
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
     private ButtonLayoutParams buttonLayoutParams = new ButtonLayoutParams(120, 120, 15);
@@ -206,6 +207,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.setType("image/png");
         intent.putExtra(Intent.EXTRA_TITLE, "sketch");
         startActivityForResult(intent, SAVE_FILE_ACTIVITY_CODE);
+    }
+
+    private void startOpenDocumentActivity(){
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent, LOAD_FILE_ACTIVITY_CODE);
     }
 
 

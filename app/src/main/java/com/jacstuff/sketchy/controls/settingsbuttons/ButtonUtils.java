@@ -53,7 +53,7 @@ public class ButtonUtils {
     }
 
 
-    private void deselectButton(int buttonId){
+    public void deselectButton(int buttonId){
         ImageButton button = findViewById(buttonId);
         button.setSelected(false);
         button.setBackgroundColor(Color.LTGRAY);

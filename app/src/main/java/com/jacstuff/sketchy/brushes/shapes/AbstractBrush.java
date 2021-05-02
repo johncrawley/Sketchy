@@ -55,12 +55,17 @@ public abstract class AbstractBrush {
         //do nothing
     }
 
+
     public void onTouchMove(float x, float y, Paint paint){
         onTouchDown(x ,y, paint);
     }
 
 
     public void onTouchUp(float x, float y, Paint paint){
+        //do nothing
+    }
+
+    public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint){
         //do nothing
     }
 

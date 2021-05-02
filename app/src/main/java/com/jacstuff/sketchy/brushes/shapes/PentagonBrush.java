@@ -58,8 +58,8 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
             - and the right base point to get its opposite on the left side
 
             - the only thing that changes is the angle provided
-                -because the original +-18 degrees was relative to the switched x-axis
-                - the new angles work out at +-126
+                -because the original +/-18 degrees was relative to the switched x-axis
+                - the new angles work out at +/-126
 
             - NB we could have worked out out the left and right points with a different method
                i.e. getting the ratio of a pentagon side to it's height

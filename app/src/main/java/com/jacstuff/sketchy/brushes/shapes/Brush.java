@@ -11,6 +11,7 @@ public interface Brush {
     void onTouchDown(float x, float y, Paint paint);
     void onTouchMove(float x, float y, Paint paint);
     void onTouchUp(float x, float y, Paint paint);
+    void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint);
     void setBrushSize(int brushSize);
     void setStyle(BrushStyle style);
     void add(BrushStyle brushStyle, Style style);

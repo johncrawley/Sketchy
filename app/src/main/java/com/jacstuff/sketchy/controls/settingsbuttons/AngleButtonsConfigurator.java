@@ -49,7 +49,7 @@ public class AngleButtonsConfigurator implements ButtonsConfigurator<AngleType>{
 
     @Override
     public void handleClick(int viewId, AngleType angleType){
-        paintView.setAnglePreset(angleType);
+        paintView.setAnglePreset(angleType, viewId);
     }
 
 
