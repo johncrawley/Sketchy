@@ -10,9 +10,14 @@ public class BlurHelper {
     private BlurType blurType;
     private Paint paint;
     private int blurRadius = 1;
+    private RefreshableBlurFilter outer, normal, solid, inner;
 
     public BlurHelper(Paint paint){
         this.paint = paint;
+        outer = new RefreshableBlurFilter(BlurMaskFilter.Blur.OUTER, blurRadius, 0);
+        inner = new RefreshableBlurFilter(BlurMaskFilter.Blur.INNER, blurRadius, 0);
+        normal = new RefreshableBlurFilter(BlurMaskFilter.Blur.NORMAL, blurRadius, 10);
+        solid = new RefreshableBlurFilter(BlurMaskFilter.Blur.SOLID, blurRadius, 10);
     }
 
 
@@ -23,27 +28,31 @@ public class BlurHelper {
 
     public void setBlurRadius(int blurRadius){
         this.blurRadius = blurRadius;
+        outer.setSize(blurRadius);
+        inner.setSize(blurRadius);
+        normal.setSize(blurRadius);
+        solid.setSize(blurRadius);
     }
 
 
     public void assignBlur(){
+        BlurMaskFilter blur = null;
         switch (blurType){
             case NONE:
-                paint.setMaskFilter(null);
                 break;
             case OUTER:
-                paint.setMaskFilter(new BlurMaskFilter(blurRadius, BlurMaskFilter.Blur.OUTER));
+                blur = outer.getBlur();
                 break;
             case NORMAL:
-                paint.setMaskFilter(new BlurMaskFilter(blurRadius, BlurMaskFilter.Blur.NORMAL));
+                blur = normal.getBlur();
                 break;
             case SOLID:
-                paint.setMaskFilter(new BlurMaskFilter(10 + blurRadius, BlurMaskFilter.Blur.SOLID));
+                blur = solid.getBlur();
                 break;
             case INNER:
-                paint.setMaskFilter(new BlurMaskFilter(10 + blurRadius, BlurMaskFilter.Blur.INNER));
-
+                blur = inner.getBlur();
         }
+        paint.setMaskFilter(blur);
     }
 
 }
