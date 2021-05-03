@@ -15,10 +15,14 @@ public class GradientHelper {
     private int clampRadialGradientFactor = 12;
     private int clampRadialGradientRadius = 10;
     private int radialGradientRadius = 1;
+    private int linearGradientLength = 100;
+    private final int MAX_GRADIENT_FACTOR;
 
-    public GradientHelper(Paint paint){
+
+    public GradientHelper(Paint paint, int maxGradientFactor){
         this.paint = paint;
         gradientType = GradientType.NONE;
+        MAX_GRADIENT_FACTOR = maxGradientFactor;
     }
 
     public void updateBrushSize(int brushSize){
@@ -30,22 +34,28 @@ public class GradientHelper {
     }
 
 
-
     public void setGradientRadius(int radiusFactor, int canvasWidth){
         radialGradientRadius = 1 + canvasWidth / radiusFactor;
         clampRadialGradientRadius = 1 + radialGradientRadius * clampRadialGradientFactor;
+        linearGradientLength = 1 +  halfBrushSize  - ((halfBrushSize * radiusFactor)/MAX_GRADIENT_FACTOR);
+
     }
 
 
     public void assignGradient(float x, float y, int color, int oldColor){
         switch(gradientType){
+
             case NONE:
                 paint.setShader(null);
                 break;
             case DIAGONAL_MIRROR:
-                int x1 = (int)x + (halfBrushSize);
-                int y1 = (int)y + (halfBrushSize);
-                paint.setShader(new LinearGradient(x, y, x1, y1, color, oldColor, Shader.TileMode.MIRROR));
+                paint.setShader(new LinearGradient(-linearGradientLength, -linearGradientLength,  linearGradientLength, linearGradientLength, color, oldColor, Shader.TileMode.MIRROR));
+                break;
+            case HORIZONTAL_MIRROR:
+                paint.setShader(new LinearGradient( - linearGradientLength, y, linearGradientLength, y, color, oldColor, Shader.TileMode.MIRROR));
+                break;
+            case VERTICAL_MIRROR:
+                paint.setShader(new LinearGradient(x, - linearGradientLength, x,  + linearGradientLength, color, oldColor, Shader.TileMode.MIRROR));
                 break;
             case RADIAL_CLAMP:
                 paint.setShader(new RadialGradient(0, 0, clampRadialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.CLAMP ));

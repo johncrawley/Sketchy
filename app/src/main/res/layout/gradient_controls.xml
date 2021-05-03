@@ -34,6 +34,26 @@
                 app:srcCompat="@drawable/no_gradient_button" />
 
             <ImageButton
+                android:id="@+id/gradientVerticallMirrorButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_vertical_mirror_gradient_button"
+                app:srcCompat="@drawable/gradient_vertical_mirror_button" />
+
+            <ImageButton
+                android:id="@+id/gradientHorizontalMirrorButton"
+                android:layout_width="@dimen/selector_button_width"
+                android:layout_height="@dimen/selector_button_height"
+                android:layout_marginStart="@dimen/selector_button_margin_start"
+                android:layout_marginEnd="@dimen/selector_button_margin_end"
+                android:layout_weight="1"
+                android:contentDescription="@string/content_description_horizontal_mirror_gradient_button"
+                app:srcCompat="@drawable/gradient_horizontal_mirror_button" />
+
+            <ImageButton
                 android:id="@+id/diagonalMirrorGradientButton"
                 android:layout_width="@dimen/selector_button_width"
                 android:layout_height="@dimen/selector_button_height"

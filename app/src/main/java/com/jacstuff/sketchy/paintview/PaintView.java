@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.brushes.BlurType;
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -28,6 +29,7 @@ public class PaintView extends View {
 
     private int canvasWidth, canvasHeight, midCanvasX, midCanvasY;
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
+    private int previousColor = Color.WHITE;
     private Paint paint, shadowPaint, previewPaint;
     private int brushSize, halfBrushSize;
     private Bitmap bitmap;
@@ -38,7 +40,6 @@ public class PaintView extends View {
     private BrushFactory brushFactory;
     private boolean wasCanvasModifiedSinceLastSaveOrReset;
     private boolean isCanvasLocked;
-    private int previousColor = Color.WHITE;
 
     private ShadowHelper shadowHelper;
     private BlurHelper blurHelper;
@@ -72,7 +73,7 @@ public class PaintView extends View {
 
         shadowHelper = new ShadowHelper(shadowPaint);
         blurHelper = new BlurHelper(paint);
-        gradientHelper = new GradientHelper(paint);
+        gradientHelper = new GradientHelper(paint, context.getResources().getInteger(R.integer.gradient_radius_max));
         angleHelper = new AngleHelper();
     }
 

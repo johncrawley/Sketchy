@@ -22,6 +22,8 @@ public class GradientButtonsConfigurator implements ButtonsConfigurator<Gradient
     public void configure(){
         ButtonConfigHandler<GradientType> buttonConfig = new ButtonConfigHandler<>(activity, this);
         buttonConfig.put(R.id.noGradientButton,             R.drawable.no_gradient_button,              GradientType.NONE);
+        buttonConfig.put(R.id.gradientVerticallMirrorButton,   R.drawable.gradient_vertical_mirror_button,   GradientType.VERTICAL_MIRROR);
+        buttonConfig.put(R.id.gradientHorizontalMirrorButton,   R.drawable.gradient_horizontal_mirror_button,   GradientType.HORIZONTAL_MIRROR);
         buttonConfig.put(R.id.diagonalMirrorGradientButton, R.drawable.diagonal_mirror_gradient_button, GradientType.DIAGONAL_MIRROR);
         buttonConfig.put(R.id.gradientRadialClampButton,    R.drawable.gradient_radial_clamp_button,    GradientType.RADIAL_CLAMP);
         buttonConfig.put(R.id.gradientRadialRepeatButton,   R.drawable.gradient_radial_repeat_button,   GradientType.RADIAL_REPEAT);

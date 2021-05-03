@@ -102,6 +102,8 @@
 
 
     <string name="content_description_no_gradient_button">No gradient will be applied</string>
+    <string name="content_description_vertical_mirror_gradient_button">A vertical gradient will be applied</string>
+    <string name="content_description_horizontal_mirror_gradient_button">A horizontal gradient will be applied</string>
     <string name="content_description_diagonal_gradient_button">A diagonal gradient will be applied</string>
     <string name="content_description_radial_clamp_gradient_button">A clamped gradient will be applied</string>
     <string name="content_description_radial_mirror_gradient_button">A mirrored radial gradient will be applied</string>
@@ -127,9 +129,9 @@
     <string name="confirm_wipe_text">Clear the canvas without saving?</string>
     <string name="confirm_wipe_confirm_button">Yes</string>
     <string name="confirm_wipe_cancel_button">No</string>
-    <string name="gradient_radius_seekbar_label">Gradient Radius</string>
+    <string name="gradient_size_seekbar_label">Gradient Factor</string>
     <string name="angle_seekbar_label">Rotation</string>
-    <string name="shadow_radius_seekbar_label">Shadow Radius</string>
+    <string name="shadow_radius_seekbar_label">Shadow Focus</string>
     <string name="line_width_seekbar_label">Line Width</string>
     <string name="blur_intensity_seekbar_label">Blur Intensity</string>
     <string name="brush_size_seekbar_label">Brush Size</string>
