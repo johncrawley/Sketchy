@@ -48,7 +48,7 @@
             android:layout_marginStart="@dimen/selector_button_margin_start"
             android:layout_marginEnd="@dimen/selector_button_margin_end"
             android:layout_weight="1"
-            android:contentDescription="@string/content_description_circle_shape_button"
+            android:contentDescription="@string/content_description_straight_line_shape_button"
             app:srcCompat="@drawable/straight_line_shape_button" />
 
 
@@ -88,7 +88,7 @@
             android:layout_marginStart="@dimen/selector_button_margin_start"
             android:layout_marginEnd="@dimen/selector_button_margin_end"
             android:layout_weight="1"
-            android:contentDescription="@string/content_description_triangle_shape_button"
+            android:contentDescription="@string/content_description_pentagon_shape_button"
             app:srcCompat="@drawable/pentagon_shape_button" />
 
 
@@ -99,7 +99,7 @@
             android:layout_marginStart="@dimen/selector_button_margin_start"
             android:layout_marginEnd="@dimen/selector_button_margin_end"
             android:layout_weight="1"
-            android:contentDescription="@string/content_description_triangle_shape_button"
+            android:contentDescription="@string/content_description_star_shape_button"
             app:srcCompat="@drawable/star_shape_button" />
 
         <ImageButton
@@ -109,7 +109,7 @@
             android:layout_marginStart="@dimen/selector_button_margin_start"
             android:layout_marginEnd="@dimen/selector_button_margin_end"
             android:layout_weight="1"
-            android:contentDescription="@string/content_description_triangle_shape_button"
+            android:contentDescription="@string/content_description_hexagon_shape_button"
             app:srcCompat="@drawable/hexagon_shape_button" />
 
     </LinearLayout>

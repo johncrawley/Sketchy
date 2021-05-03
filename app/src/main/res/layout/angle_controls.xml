@@ -27,7 +27,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_zero_button"
                 app:srcCompat="@drawable/zero_degrees_button" />
 
 
@@ -38,7 +38,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_30_button"
                 app:srcCompat="@drawable/degrees_30_button" />
 
 
@@ -49,7 +49,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_45_button"
                 app:srcCompat="@drawable/degrees_45_button" />
 
             <ImageButton
@@ -59,7 +59,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_60_button"
                 app:srcCompat="@drawable/degrees_60_button" />
 
             <ImageButton
@@ -69,7 +69,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_90_button"
                 app:srcCompat="@drawable/degrees_90_button" />
 
             <ImageButton
@@ -79,7 +79,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_135_button"
                 app:srcCompat="@drawable/degrees_135_button" />
 
             <ImageButton
@@ -89,7 +89,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_150_button"
                 app:srcCompat="@drawable/degrees_150_button" />
 
             <ImageButton
@@ -99,7 +99,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_180_button"
                 app:srcCompat="@drawable/degrees_180_button" />
 
             <ImageButton
@@ -109,7 +109,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_225_button"
                 app:srcCompat="@drawable/degrees_225_button" />
 
             <ImageButton
@@ -119,7 +119,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_270_button"
                 app:srcCompat="@drawable/degrees_270_button" />
 
             <ImageButton
@@ -129,7 +129,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_315_button"
                 app:srcCompat="@drawable/degrees_315_button" />
 
             <ImageButton
@@ -139,7 +139,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_minus_1_button"
                 app:srcCompat="@drawable/degrees_minus_1_button" />
 
             <ImageButton
@@ -149,7 +149,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_plus_1_button"
                 app:srcCompat="@drawable/degrees_plus_1_button" />
 
             <ImageButton
@@ -159,7 +159,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_minus_15_button"
                 app:srcCompat="@drawable/degrees_minus_15_button" />
 
             <ImageButton
@@ -169,7 +169,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_plus_15_button"
                 app:srcCompat="@drawable/degrees_plus_15_button" />
 
             <ImageButton
@@ -179,7 +179,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_minus_30_button"
                 app:srcCompat="@drawable/degrees_minus_30_button" />
 
             <ImageButton
@@ -189,7 +189,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_plus_30_button"
                 app:srcCompat="@drawable/degrees_plus_30_button" />
 
             <ImageButton
@@ -199,7 +199,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_90_button"
                 app:srcCompat="@drawable/degrees_minus_90_button" />
 
             <ImageButton
@@ -209,7 +209,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_90_button"
                 app:srcCompat="@drawable/degrees_plus_90_button" />
 
             <ImageButton
@@ -219,7 +219,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_angle_random_button"
                 app:srcCompat="@drawable/degrees_random_button" />
 
         </LinearLayout>

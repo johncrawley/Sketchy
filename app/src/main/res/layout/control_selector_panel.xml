@@ -30,8 +30,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_shapes_button"
                 app:srcCompat="@drawable/square_shape_button" />
 
             <ImageButton
@@ -41,7 +40,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_styles_button"
                 app:srcCompat="@drawable/fill_style_button" />
 
 
@@ -52,7 +51,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_line_shape_button"
+                android:contentDescription="@string/content_description_gradient_button"
                 app:srcCompat="@drawable/no_gradient_button" />
 
             <ImageButton
@@ -62,7 +61,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_rounded_rectangle_shape_button"
+                android:contentDescription="@string/content_description_angle_button"
                 app:srcCompat="@drawable/zero_degrees_button" />
 
             <ImageButton
@@ -72,7 +71,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_rounded_rectangle_shape_button"
+                android:contentDescription="@string/content_description_blur_button"
                 app:srcCompat="@drawable/no_gradient_button" />
 
 
@@ -84,7 +83,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_rounded_rectangle_shape_button"
+                android:contentDescription="@string/content_description_shadow_button"
                 app:srcCompat="@drawable/no_shadow_button" />
 
             <ImageButton
@@ -94,7 +93,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_rounded_rectangle_shape_button"
+                android:contentDescription="@string/content_description_kaleidoscope_button"
                 app:srcCompat="@drawable/k_off_button" />
 
         </LinearLayout>

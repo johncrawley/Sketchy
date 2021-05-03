@@ -28,7 +28,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_kaleidoscope_off_button"
                 app:srcCompat="@drawable/k_off_button" />
 
             <ImageButton
@@ -38,7 +38,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_kaleidoscope_2_button"
                 app:srcCompat="@drawable/k_2_button" />
 
             <ImageButton
@@ -48,7 +48,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_kaleidoscope_5_button"
                 app:srcCompat="@drawable/k_5_button" />
 
             <ImageButton
@@ -58,7 +58,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_kaleidoscope_6_button"
                 app:srcCompat="@drawable/k_6_button" />
 
             <ImageButton
@@ -68,7 +68,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_kaleidoscope_7_button"
                 app:srcCompat="@drawable/k_7_button" />
 
             <ImageButton
@@ -78,7 +78,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_kaleidoscope_8_button"
                 app:srcCompat="@drawable/k_8_button" />
 
             <ImageButton
@@ -88,7 +88,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_kaleidoscope_9_button"
                 app:srcCompat="@drawable/k_9_button" />
 
             <ImageButton
@@ -98,7 +98,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_kaleidoscope_10_button"
                 app:srcCompat="@drawable/k_10_button" />
 
             <ImageButton
@@ -108,7 +108,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_kaleidoscope_12_button"
                 app:srcCompat="@drawable/k_12_button" />
 
             <ImageButton
@@ -118,7 +118,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_kaleidoscope_16_button"
                 app:srcCompat="@drawable/k_16_button" />
 
         </LinearLayout>

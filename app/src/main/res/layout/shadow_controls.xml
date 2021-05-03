@@ -27,7 +27,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_shadow_off_button"
                 app:srcCompat="@drawable/no_shadow_button" />
 
             <ImageButton
@@ -37,7 +37,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_shadow_center_button"
                 app:srcCompat="@drawable/center_shadow_button" />
 
             <ImageButton
@@ -47,7 +47,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_shadow_north_button"
                 app:srcCompat="@drawable/north_shadow_button" />
 
             <ImageButton
@@ -57,7 +57,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_shadow_north_east_button"
                 app:srcCompat="@drawable/north_east_shadow_button" />
 
             <ImageButton
@@ -67,7 +67,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_shadow_east_button"
                 app:srcCompat="@drawable/east_shadow_button" />
 
             <ImageButton
@@ -77,7 +77,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_shadow_south_east_button"
                 app:srcCompat="@drawable/south_east_shadow_button" />
 
             <ImageButton
@@ -87,7 +87,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_shadow_south_button"
                 app:srcCompat="@drawable/south_shadow_button" />
 
             <ImageButton
@@ -97,7 +97,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_shadow_south_west_button"
                 app:srcCompat="@drawable/south_west_shadow_button" />
 
             <ImageButton
@@ -107,7 +107,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_shadow_west_button"
                 app:srcCompat="@drawable/west_shadow_button" />
 
             <ImageButton
@@ -117,7 +117,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_shadow_north_west_button"
                 app:srcCompat="@drawable/north_west_shadow_button" />
 
         </LinearLayout>

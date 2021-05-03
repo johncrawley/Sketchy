@@ -29,7 +29,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_circle_shape_button"
+                android:contentDescription="@string/content_description_no_blur_button"
                 app:srcCompat="@drawable/no_blur_button" />
 
             <ImageButton
@@ -39,7 +39,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_outer_blur_button"
                 app:srcCompat="@drawable/outer_blur_button" />
 
             <ImageButton
@@ -49,7 +49,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_normal_blur_button"
                 app:srcCompat="@drawable/normal_blur_button" />
 
             <ImageButton
@@ -59,7 +59,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_solid_blur_button"
                 app:srcCompat="@drawable/solid_blur_button" />
 
             <ImageButton
@@ -69,7 +69,7 @@
                 android:layout_marginStart="@dimen/selector_button_margin_start"
                 android:layout_marginEnd="@dimen/selector_button_margin_end"
                 android:layout_weight="1"
-                android:contentDescription="@string/content_description_square_shape_button"
+                android:contentDescription="@string/content_description_inner_blur_button"
                 app:srcCompat="@drawable/inner_blur_button" />
 
         </LinearLayout>

@@ -23,35 +23,48 @@
     <string name="save_dialogue_cancel_button">@android:string/cancel</string>
     <string name="bitmap_intent_extra">bitmap_intent_extra</string>
     <string name="selected_button_text">S</string>
+
     <string name="content_description_large_brush_indicator">Indicates a larger size for paint brush</string>
     <string name="content_description_small_brush_indicator">Indicates a smaller size for paint brush</string>
     <string name="content_description_square_shape_button">Select to paint with squares</string>
     <string name="content_description_circle_shape_button">Select to paint with circles</string>
     <string name="content_description_line_shape_button">Select to drag and draw lines</string>
-    <string name="content_description_straight_line">Select to paint a straight line with one press</string>
+    <string name="content_description_straight_line_shape_button">Select to paint a straight line with one press</string>
     <string name="content_description_pentagon_shape_button">Select to paint with pentagons</string>
     <string name="content_description_hexagon_shape_button">Select to paint with hexagons</string>
     <string name="content_description_star_shape_button">Select to paint with stars</string>
     <string name="content_description_rounded_rectangle_shape_button">Select to draw rounded squares</string>
     <string name="content_description_triangle_shape_button">Select to draw triangles</string>
+
     <string name="content_description_fill_style_button">Select to paint with solid shapes</string>
     <string name="content_description_broken_outline_style_button">Select to paint shapes with broken outlines</string>
     <string name="content_description_outline_style_button">Select to paint with shape outlines</string>
     <string name="content_description_thick_outline_style_button">Select to paint with thick outlines</string>
+
     <string name="content_description_no_blur_button">Disables the blur effect</string>
-    <string name="content_description_outside_blur_button">Switches blur mode to outside</string>
+    <string name="content_description_outer_blur_button">Switches blur mode to outer</string>
     <string name="content_description_normal_blur_button">Switches blur mode to normal</string>
-    <string name="content_description_inside_blur_button">Switches blur mode to inside</string>
+    <string name="content_description_inner_blur_button">Switches blur mode to inner</string>
     <string name="content_description_solid_blur_button">Switches blur mode to solid</string>
 
-    <string name="content_description_kaleidoscope_5_button">Switches to kaleidoscope mode with 5 sides</string>
-    <string name="content_description_kaleidoscope_6_button">Switches to kaleidoscope mode with 6 sides</string>
-    <string name="content_description_kaleidoscope_7_button">Switches to kaleidoscope mode with 7 sides</string>
-    <string name="content_description_kaleidoscope_8_button">Switches to kaleidoscope mode with 8 sides</string>
-    <string name="content_description_kaleidoscope_9_button">Switches to kaleidoscope mode with 9 sides</string>
-    <string name="content_description_kaleidoscope_10_button">Switches to kaleidoscope mode with 10 sides</string>
-    <string name="content_description_kaleidoscope_12_button">Switches to kaleidoscope mode with 12 sides</string>
-    <string name="content_description_kaleidoscope_16_button">Switches to kaleidoscope mode with 16 sides</string>
+    <string name="content_description_shapes_button">Selects shape to draw with</string>
+    <string name="content_description_styles_button">Selects style of line to draw with</string>
+    <string name="content_description_gradient_button">Selects gradient</string>
+    <string name="content_description_angle_button">Selects the angle to draw at</string>
+    <string name="content_description_blur_button">Selects blur</string>
+    <string name="content_description_shadow_button">Selects shadow</string>
+    <string name="content_description_kaleidoscope_button">Selects kaleidoscope modes</string>
+
+    <string name="content_description_kaleidoscope_off_button">Turns off kaleidoscope mode</string>
+    <string name="content_description_kaleidoscope_2_button">Switches to kaleidoscope mode with 2 segments</string>
+    <string name="content_description_kaleidoscope_5_button">Switches to kaleidoscope mode with 5 segments</string>
+    <string name="content_description_kaleidoscope_6_button">Switches to kaleidoscope mode with 6 segments</string>
+    <string name="content_description_kaleidoscope_7_button">Switches to kaleidoscope mode with 7 segments</string>
+    <string name="content_description_kaleidoscope_8_button">Switches to kaleidoscope mode with 8 segments</string>
+    <string name="content_description_kaleidoscope_9_button">Switches to kaleidoscope mode with 9 segments</string>
+    <string name="content_description_kaleidoscope_10_button">Switches to kaleidoscope mode with 10 segments</string>
+    <string name="content_description_kaleidoscope_12_button">Switches to kaleidoscope mode with 12 segments</string>
+    <string name="content_description_kaleidoscope_16_button">Switches to kaleidoscope mode with 16 segments</string>
 
     <string name="content_description_angle_zero_button">new shapes will be drawn at their original angle</string>
     <string name="content_description_angle_15_button">new shapes will be drawn at an angle of 15 degrees</string>
@@ -65,6 +78,8 @@
     <string name="content_description_angle_225_button">new shapes will be drawn at an angle of 225 degrees</string>
     <string name="content_description_angle_270_button">new shapes will be drawn at an angle of 270 degrees</string>
     <string name="content_description_angle_315_button">new shapes will be drawn at an angle of 315 degrees</string>
+    <string name="content_description_angle_minus_1_button">each new shape will be drawn at an angle of 1 degree less than the last</string>
+    <string name="content_description_angle_plus_1_button">each new shape will be drawn at an angle of at 1 degree greater than the last</string>
     <string name="content_description_angle_minus_15_button">each new shape will be drawn at an angle of 15 degrees less than the last</string>
     <string name="content_description_angle_plus_15_button">each new shape will be drawn at an angle of at 15 degrees greater than the last</string>
     <string name="content_description_angle_minus_30_button">each new shape will be drawn at an angle of at 30 degrees less than the last</string>
