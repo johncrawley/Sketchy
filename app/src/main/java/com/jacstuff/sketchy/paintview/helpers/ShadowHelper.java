@@ -13,19 +13,18 @@ public class ShadowHelper {
     private int shadowOffsetX;
     private int shadowOffsetY;
     private int shadowOffsetFactor;
-
+    private boolean hasSizeBeenUpdated;
     private Paint paint;
-    private int halfBrushSize;
 
     public ShadowHelper(Paint paint){
         this.paint = paint;
-        this.halfBrushSize = 10;
     }
 
 
     public void setShadowSize(int size, int halfBrushSize){
         shadowSize = size;
         shadowOffsetFactor = halfBrushSize / 4;
+        hasSizeBeenUpdated = true;
         assignShadow();
     }
 
@@ -49,49 +48,19 @@ public class ShadowHelper {
     public void assignShadow() {
         if(shadowType == ShadowType.NONE){
             paint.clearShadowLayer();
-            //paint.setShadowLayer(1, 0, 0, Color.TRANSPARENT);
             return;
         }
 
-        switch (shadowType) {
-            case CENTER:
-                shadowOffsetX = 0;
-                shadowOffsetY = 0;
-                break;
-            case NORTH:
-                shadowOffsetX = 0;
-                shadowOffsetY = -shadowOffsetFactor;
-                break;
-            case NORTH_WEST:
-                shadowOffsetX = -shadowOffsetFactor;
-                shadowOffsetY = -shadowOffsetFactor;
-                break;
-            case WEST:
-                shadowOffsetX = -shadowOffsetFactor;
-                shadowOffsetY = 0;
-                break;
-            case SOUTH_WEST:
-                shadowOffsetX = -shadowOffsetFactor;
-                shadowOffsetY = shadowOffsetFactor;
-                break;
-            case SOUTH:
-                shadowOffsetX = 0;
-                shadowOffsetY = shadowOffsetFactor;
-                break;
-            case SOUTH_EAST:
-                shadowOffsetX = shadowOffsetFactor;
-                shadowOffsetY = shadowOffsetFactor;
-                break;
-            case EAST:
-                shadowOffsetX = shadowOffsetFactor;
-                shadowOffsetY = 0;
-                break;
-            case NORTH_EAST:
-                shadowOffsetX = shadowOffsetFactor;
-                shadowOffsetY = -shadowOffsetFactor;
-                break;
-        }
+        int previousX = shadowOffsetX;
+        int previousY = shadowOffsetY;
 
+        shadowOffsetX = shadowOffsetFactor * shadowType.offsetX;
+        shadowOffsetY = shadowOffsetFactor * shadowType.offsetY;
+
+        if(previousX == shadowOffsetX && previousY == shadowOffsetY && !hasSizeBeenUpdated){
+            return;
+        }
+        hasSizeBeenUpdated = false;
         paint.setShadowLayer(shadowSize, shadowOffsetX, shadowOffsetY, Color.BLACK);
     }
 
