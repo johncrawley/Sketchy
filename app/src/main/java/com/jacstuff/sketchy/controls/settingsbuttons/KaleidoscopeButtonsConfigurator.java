@@ -1,5 +1,9 @@
 package com.jacstuff.sketchy.controls.settingsbuttons;
 
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.ShadowType;
@@ -34,6 +38,16 @@ public class KaleidoscopeButtonsConfigurator implements ButtonsConfigurator<Inte
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.kaleidoscopeSelectionButton);
         buttonConfig.setDefaultSelection(R.id.kOffButton);
+        setupKaleidoScopeOptions();
+    }
+
+    public void setupKaleidoScopeOptions(){
+       Switch kaleidoscopeCentredSwitch = activity.findViewById(R.id.kaleidoscopeCentredSwitch);
+       kaleidoscopeCentredSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               paintView.setKaleidoscopeFixed(isChecked);
+           }
+       });
     }
 
 

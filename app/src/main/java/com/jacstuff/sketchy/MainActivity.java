@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
     private ResumedActionsHelper resumedActionsHelper;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

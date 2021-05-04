@@ -22,12 +22,14 @@ import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.paintview.helpers.AngleHelper;
 import com.jacstuff.sketchy.paintview.helpers.BlurHelper;
 import com.jacstuff.sketchy.paintview.helpers.GradientHelper;
+import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.ShadowHelper;
 
 
 public class PaintView extends View {
 
-    private int canvasWidth, canvasHeight, midCanvasX, midCanvasY;
+    private int canvasWidth, canvasHeight;
+
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
     private int previousColor = Color.WHITE;
     private Paint paint, shadowPaint, previewPaint;
@@ -45,10 +47,8 @@ public class PaintView extends View {
     private BlurHelper blurHelper;
     private GradientHelper gradientHelper;
     private AngleHelper angleHelper;
+    private KaleidoscopeHelper kaleidoHelper;
 
-    private final int TOTAL_DEGREES = 360;
-    private float degree_increment = 30;
-    private boolean isKaleidoscopeEnabled = false;
     private boolean isPreviewLayerToBeDrawn;
     private Bitmap previewBitmap;
     private Paint drawPaint = new Paint();
@@ -75,6 +75,8 @@ public class PaintView extends View {
         blurHelper = new BlurHelper(paint);
         gradientHelper = new GradientHelper(paint, context.getResources().getInteger(R.integer.gradient_radius_max));
         angleHelper = new AngleHelper();
+        kaleidoHelper = new KaleidoscopeHelper(0,0);
+
     }
 
 
@@ -119,9 +121,8 @@ public class PaintView extends View {
         currentBrush.setBrushSize(brushSize);
     }
 
-    public void setKaleidoScopeSegments(int segments){
-        isKaleidoscopeEnabled = segments > 1;
-        this.degree_increment = (float)TOTAL_DEGREES / segments;
+    public void setKaleidoScopeSegments(int numberOfSegments){
+        kaleidoHelper.setSegments(numberOfSegments);
     }
 
 
@@ -165,6 +166,9 @@ public class PaintView extends View {
         gradientHelper.setGradientRadius(radiusFactor, canvasWidth);
     }
 
+    public void setKaleidoscopeFixed(boolean isFixed){
+        kaleidoHelper.setFixed(isFixed);
+    }
 
     public void setLineWidth(int lineWidth){
 
@@ -194,10 +198,9 @@ public class PaintView extends View {
         this.canvasHeight = canvasHeight;
         bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        midCanvasX = canvasWidth/2;
-        midCanvasY = canvasHeight /2;
         drawPlainBackground();
         initBrushes();
+        kaleidoHelper = new KaleidoscopeHelper(canvasWidth/2, canvasHeight/2);
     }
 
 
@@ -299,7 +302,7 @@ public class PaintView extends View {
                 break;
             case MotionEvent.ACTION_UP :
                 disablePreviewLayer();
-                if(isKaleidoscopeEnabled){
+                if(kaleidoHelper.isEnabled()){
                     drawKaleidoscope(x, y, paint,true);
                 }
                 else{
@@ -314,6 +317,7 @@ public class PaintView extends View {
         angleHelper.updateAngle();
         switch(action) {
             case MotionEvent.ACTION_DOWN :
+                kaleidoHelper.setCenter(x,y);
                 drawToCanvas(x,y, paint);
                 break;
 
@@ -325,15 +329,14 @@ public class PaintView extends View {
                 break;
 
             case MotionEvent.ACTION_UP :
-                isPreviewLayerToBeDrawn = false;
-                canvas.setBitmap(bitmap);
+                disablePreviewLayer();
                 invalidate();
         }
     }
 
 
     private void drawToCanvas(float x, float y, Paint paint){
-        if(isKaleidoscopeEnabled){
+        if(kaleidoHelper.isEnabled()){
             drawKaleidoscope(x,y, paint);
             return;
         }
@@ -362,21 +365,26 @@ public class PaintView extends View {
 
     private void drawKaleidoscope(float x, float y, Paint paint, boolean isDragLine){
         canvas.save();
-        canvas.translate(midCanvasX, midCanvasY);
-        final int REMAINDER_OF_ANGLE_DIVISON = 5; //accounts for divisions of 360 that don't fit into 360 exactly
-        for(float angle = 0; angle < TOTAL_DEGREES - REMAINDER_OF_ANGLE_DIVISON; angle += degree_increment){
-            canvas.save();
-            canvas.rotate(angle);
-            if(isDragLine){
-                drawDragLine(x , y, midCanvasX, midCanvasY);
-            }
-            else {
-                rotateAndDraw(x - midCanvasX, y - midCanvasY, paint);
-            }
-            canvas.restore();
-            invalidate();
+        canvas.translate(kaleidoHelper.getCenterX(), kaleidoHelper.getCenterY());
+
+        for(float angle = 0; angle < kaleidoHelper.getMaxDegrees(); angle += kaleidoHelper.getDegreeIncrement()){
+            drawKaleidoSegment(x,y, angle, isDragLine, paint);
         }
         canvas.restore();
+    }
+
+
+    private void drawKaleidoSegment(float x, float y, float angle, boolean isDragLine, Paint paint){
+        canvas.save();
+        canvas.rotate(angle);
+        if(isDragLine){
+            drawDragLine(x , y, kaleidoHelper.getCenterX(), kaleidoHelper.getCenterY());
+        }
+        else {
+            rotateAndDraw(x - kaleidoHelper.getCenterX(), y - kaleidoHelper.getCenterY(), paint);
+        }
+        canvas.restore();
+        invalidate();
     }
 
 
@@ -403,8 +411,6 @@ public class PaintView extends View {
         currentBrush.onTouchDown(0,0, paint);
         canvas.restore();
     }
-
-
 
 }
 

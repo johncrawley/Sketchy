@@ -27,6 +27,7 @@
     <dimen name="seekbar_padding_top">8dp</dimen>
     <dimen name="seekbar_padding_bottom">8dp</dimen>
     <dimen name="seekbar_padding">10dp</dimen>
+    <dimen name="swith_option_padding">16dp</dimen>
     <dimen name="shape_options_padding_top">4dp</dimen>
     <dimen name="clear_canvas_dialog_buttons_padding">16dp</dimen>
     <dimen name="clear_canvas_dialog_buttons_layout_bottom_margin">12dp</dimen>

@@ -125,8 +125,7 @@
 
     </HorizontalScrollView>
     <include
-        android:id="@+id/gradientSeekBarInclude"
-        android:visibility="invisible"
+        android:id="@+id/kaleidoscopeOptionsInclude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +133,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_gravity="center_horizontal"
-        layout="@layout/gradient_radius_seek_bar" />
+        layout="@layout/kaleidoscope_options" />
 
 
 </LinearLayout>
