@@ -42,6 +42,15 @@ public abstract class AbstractBrush {
         return this.brushShape;
     }
 
+
+    public void setBrushSize(int brushSize) {
+        this.brushSize = brushSize;
+        this.halfBrushSize = brushSize / 2;
+        currentStyle.setBrushSize(paintGroup, brushSize);
+        currentStyle.notifyStyleChange();
+    }
+
+
     public void setStyle(BrushStyle style){
         currentStyle = styleMap.get(style);
         if(currentStyle == null){
@@ -51,8 +60,13 @@ public abstract class AbstractBrush {
     }
 
 
+    public void notifyStyleChange(){
+        currentStyle.notifyStyleChange();
+    }
+
+
     public void onTouchDown(float x, float y, Paint paint){
-        //do nothing
+        currentStyle.onDraw(paintGroup);
     }
 
 
@@ -67,13 +81,6 @@ public abstract class AbstractBrush {
 
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint){
         //do nothing
-    }
-
-
-    public void setBrushSize(int brushSize) {
-        this.brushSize = brushSize;
-        this.halfBrushSize = brushSize / 2;
-        currentStyle.setBrushSize(paintGroup, brushSize);
     }
 
 }

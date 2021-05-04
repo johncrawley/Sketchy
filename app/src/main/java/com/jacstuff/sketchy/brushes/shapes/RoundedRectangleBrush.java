@@ -29,6 +29,7 @@ public class RoundedRectangleBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchDown(float x, float y, Paint paint){
+        currentStyle.onDraw(paintGroup);
         int left = (int) x - halfBrushSize;
         int top =  (int)y - halfBrushSize;
 

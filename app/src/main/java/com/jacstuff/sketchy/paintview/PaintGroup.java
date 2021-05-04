@@ -3,19 +3,16 @@ package com.jacstuff.sketchy.paintview;
 import android.graphics.Paint;
 import android.graphics.PathEffect;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 
 public class PaintGroup {
 
 
-    private Collection<Paint> paints;
+    private List<Paint> paints;
 
     public PaintGroup(Paint...paintItems){
-
         paints = Arrays.asList(paintItems);
-
     }
 
 
@@ -23,7 +20,10 @@ public class PaintGroup {
         for(Paint p : paints){
             p.setStyle(style);
         }
+    }
 
+    public float getLineWidth(){
+       return paints.get(0).getStrokeWidth();
     }
 
     public void setPathEffect(PathEffect pathEffect){

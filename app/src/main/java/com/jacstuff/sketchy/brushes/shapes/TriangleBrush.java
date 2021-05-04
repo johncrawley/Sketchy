@@ -23,7 +23,7 @@ public class TriangleBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchDown(float x, float y, Paint paint){
-
+        currentStyle.onDraw(paintGroup);
         centreBottom.set(x, y + halfBrushSize);
         leftPoint.set(centreBottom.x - halfBrushSize, centreBottom.y);
         rightPoint.set(centreBottom.x + halfBrushSize, centreBottom.y);
@@ -36,6 +36,4 @@ public class TriangleBrush extends AbstractBrush implements Brush {
         path.close();
         canvas.drawPath(path, paint);
     }
-
-
 }

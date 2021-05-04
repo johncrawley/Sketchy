@@ -8,41 +8,38 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 public class DashedStyleForLines extends DashedStyle implements Style {
 
     private int brushSize;
-    private boolean hasBrushSizeChanged = false;
+    private PaintGroup paintGroup;
 
     public DashedStyleForLines(int initialBrushSize){
-
-        dashPathEffect = calculateDashPath(initialBrushSize);
-    }
-
-    private DashPathEffect calculateDashPath(int brushSize){
-        float onStroke = calculateOnStroke(brushSize);
-        float offStroke = calculateOffStroke(brushSize);
-        return new DashPathEffect(new float[] {onStroke, offStroke}, 0);
-    }
-
-    private float calculateOnStroke(int brushSize){
-        return 20 + (brushSize /16f);
-    }
-
-    private float calculateOffStroke(int brushSize){
-        return 60 + (brushSize /2f );
+        brushSize = initialBrushSize;
+        dashPathEffect = calculateDashPath();
     }
 
 
     @Override
-    public void init(PaintGroup paint, int brushSize) {
-        paint.setStrokeWidth(calculate(brushSize));
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setPathEffect(dashPathEffect);
+    public void init(PaintGroup paintGroup, int brushSize) {
+        this.paintGroup = paintGroup;
+        paintGroup.setStrokeWidth(calculate(brushSize));
+        paintGroup.setStyle(Paint.Style.STROKE);
+
+        dashPathEffect = calculateDashPath();
+        paintGroup.setPathEffect(dashPathEffect);
     }
 
 
     @Override
     public void setBrushSize(PaintGroup paint, int brushSize) {
         this.brushSize = brushSize;
-        hasBrushSizeChanged = true;
+        haveSettingsChanged = true;
     }
+
+
+    @Override
+    public void onDrawAfterSettingsChanged(){
+           dashPathEffect = calculateDashPath();
+           paintGroup.setPathEffect(dashPathEffect);
+    }
+
 
 
     private float calculate(int brushSize){
@@ -50,12 +47,17 @@ public class DashedStyleForLines extends DashedStyle implements Style {
     }
 
 
-    @Override
-    public void onDraw(PaintGroup paint){
-       if(hasBrushSizeChanged){
-           dashPathEffect = calculateDashPath(brushSize);
-           paint.setPathEffect(dashPathEffect);
-           hasBrushSizeChanged = false;
-       }
+    private DashPathEffect calculateDashPath(){
+        float onStroke = calculateOnStroke();
+        float offStroke = calculateOffStroke();
+        return new DashPathEffect(new float[] {onStroke, offStroke}, 0);
+    }
+
+    private float calculateOnStroke(){
+        return 20 + (brushSize /16f);
+    }
+
+    private float calculateOffStroke(){
+        return 60 + (brushSize /2f );
     }
 }

@@ -9,13 +9,11 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 
 
 /*
-
      inside length = starPointSide * 2 + ( innerChord)
      innerChord =  2 * startPointSide * 0.309
      inside_length = (2 * starPointSide) + (2 * starPointSide * 0.309)
      inside_length = 2 * starPointSide + 0.618 * starPointSide
      inside_length / 2.618 = starPointSide
-
  */
 public class StarBrush extends PentagonBrush {
 
@@ -34,7 +32,7 @@ public class StarBrush extends PentagonBrush {
 
     @Override
     public void onTouchDown(float x, float y, Paint paint){
-
+        currentStyle.onDraw(paintGroup);
         deriveOutsidePoints(x,y);
         deriveInsidePoints(x,y);
         Path path = new Path();

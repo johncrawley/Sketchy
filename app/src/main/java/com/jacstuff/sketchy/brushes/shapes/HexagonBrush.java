@@ -11,7 +11,6 @@ public class HexagonBrush extends AbstractBrush implements Brush {
 
 
     private Point leftPoint, rightPoint, bottomLeftPoint, bottomRightPoint, topLeftPoint, topRightPoint;
-    private Point testPoint;
     private double edgeDistanceRatio;
     private int shortHeight;
     private int quarterBrushSize;
@@ -25,9 +24,9 @@ public class HexagonBrush extends AbstractBrush implements Brush {
         bottomRightPoint = new Point();
         topLeftPoint = new Point();
         topRightPoint = new Point();
-        testPoint = new Point();
         edgeDistanceRatio = Math.sqrt(3f) / 2;
     }
+
 
     @Override
     public void setBrushSize(int brushSize){
@@ -39,18 +38,15 @@ public class HexagonBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchDown(float x, float y, Paint paint){
-
+        currentStyle.onDraw(paintGroup);
         leftPoint.set(x - halfBrushSize, y);
         rightPoint.set(x + halfBrushSize, y);
 
         bottomLeftPoint.set(x - quarterBrushSize, y + shortHeight);
         bottomRightPoint.set(x + quarterBrushSize, y + shortHeight);
 
-
         topLeftPoint.set(x - quarterBrushSize, y - shortHeight);
         topRightPoint.set(x + quarterBrushSize, y - shortHeight);
-
-        testPoint.set(x - brushSize, y + brushSize);
 
         Path path = new Path();
         path.moveTo(leftPoint.x, leftPoint.y);

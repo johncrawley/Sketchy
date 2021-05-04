@@ -121,6 +121,7 @@ public class PaintView extends View {
         currentBrush.setBrushSize(brushSize);
     }
 
+
     public void setKaleidoScopeSegments(int numberOfSegments){
         kaleidoHelper.setSegments(numberOfSegments);
     }
@@ -166,15 +167,15 @@ public class PaintView extends View {
         gradientHelper.setGradientRadius(radiusFactor, canvasWidth);
     }
 
+
     public void setKaleidoscopeFixed(boolean isFixed){
         kaleidoHelper.setFixed(isFixed);
     }
 
-    public void setLineWidth(int lineWidth){
 
-        paint.setStrokeWidth(lineWidth);
-        previewPaint.setStrokeWidth(lineWidth);
-        shadowPaint.setStrokeWidth(lineWidth);
+    public void setLineWidth(int lineWidth){
+        paintGroup.setStrokeWidth(lineWidth);
+        currentBrush.notifyStyleChange();
     }
 
 

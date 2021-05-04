@@ -1,7 +1,6 @@
 package com.jacstuff.sketchy.brushes;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
@@ -19,7 +18,6 @@ import com.jacstuff.sketchy.brushes.styles.FillStyle;
 import com.jacstuff.sketchy.brushes.styles.FillStyleForLines;
 import com.jacstuff.sketchy.brushes.styles.OutlineStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
-import com.jacstuff.sketchy.brushes.styles.ThickOutlineStyle;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 
 import java.util.Arrays;
@@ -53,7 +51,6 @@ public class BrushFactory {
         Style fillStyle = new FillStyle();
         Style dashedStyle = new DashedStyle();
         Style outlineStyle = new OutlineStyle();
-        Style thickOutlineStyle = new ThickOutlineStyle();
 
         circleBrush = new CircleBrush(canvas, paintGroup);
         squareBrush = new SquareBrush(canvas, paintGroup);
@@ -69,7 +66,6 @@ public class BrushFactory {
             brush.add(BrushStyle.FILL, fillStyle);
             brush.add(BrushStyle.OUTLINE, outlineStyle);
             brush.add(BrushStyle.BROKEN_OUTLINE, dashedStyle);
-            brush.add(BrushStyle.THICK_OUTLINE, thickOutlineStyle);
             brush.setBrushSize(brushSize);
         }
 
@@ -78,7 +74,6 @@ public class BrushFactory {
         lineBrush.add(BrushStyle.FILL, new FillStyleForLines());
         lineBrush.add(BrushStyle.OUTLINE, outlineStyle);
         lineBrush.add(BrushStyle.BROKEN_OUTLINE, new DashedStyleForLines(brushSize));
-        lineBrush.add(BrushStyle.THICK_OUTLINE, new ThickOutlineStyle());
         lineBrush.setBrushSize(brushSize);
     }
 

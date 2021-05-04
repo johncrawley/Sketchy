@@ -72,15 +72,9 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class PentagonBrush extends AbstractBrush implements Brush {
 
-
     Point topPoint;
     float bottomRightX, bottomRightY, bottomLeftX, bottomLeftY, leftX, leftY, rightX, rightY;
     float heightToOppositePointRatio = 1.051414f;
-    private int angleFromTopPointToBottomLeft = -18;
-    private int angleFromTopPointToBottomRight = 18;
-
-    private int angleFromBottomRightPointToLeft = -126;
-    private int angleFromBottomLeftPointToRight = 126;
     float distanceToOppositePoint = 0f;
 
 
@@ -101,18 +95,17 @@ public class PentagonBrush extends AbstractBrush implements Brush {
 
     public PentagonBrush(Canvas canvas, PaintGroup paintGroup){
         super(canvas, paintGroup, BrushShape.PENTAGON);
-
         topPoint = new Point();
-        radsFromTopPointToBottomRight  = Math.toRadians(angleFromTopPointToBottomRight);
-        radsFromTopPointToBottomLeft   = Math.toRadians(angleFromTopPointToBottomLeft);
-        radsFromBottomRightPointToLeft = Math.toRadians(angleFromBottomRightPointToLeft);
-        radsFromBottomLeftPointToRight = Math.toRadians(angleFromBottomLeftPointToRight);
+        radsFromTopPointToBottomRight  = Math.toRadians(18);
+        radsFromTopPointToBottomLeft   = Math.toRadians(-18);
+        radsFromBottomRightPointToLeft = Math.toRadians(-126);
+        radsFromBottomLeftPointToRight = Math.toRadians(126);
     }
 
 
     @Override
     public void onTouchDown(float x, float y, Paint paint){
-
+        currentStyle.onDraw(paintGroup);
         deriveOutsidePoints(x,y);
         Path path = new Path();
         path.moveTo(topPoint.x, topPoint.y);

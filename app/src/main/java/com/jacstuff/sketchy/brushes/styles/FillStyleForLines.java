@@ -13,12 +13,4 @@ public class FillStyleForLines extends AbstractStyle implements Style {
         paint.setPathEffect(null);
     }
 
-    @Override
-    public void setBrushSize(PaintGroup paint, int brushSize) {
-      //  paint.setStrokeWidth(getAdjusted(brushSize) );
-    }
-
-    private float getAdjusted(int brushSize){
-        return brushSize / 2f;
-    }
 }
