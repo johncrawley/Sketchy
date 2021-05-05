@@ -22,8 +22,7 @@ public class TriangleBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onTouchDown(float x, float y, Paint paint){
-        currentStyle.onDraw(paintGroup);
+    public void onBrushTouchDown(float x, float y, Paint paint){
         centreBottom.set(x, y + halfBrushSize);
         leftPoint.set(centreBottom.x - halfBrushSize, centreBottom.y);
         rightPoint.set(centreBottom.x + halfBrushSize, centreBottom.y);

@@ -7,7 +7,7 @@ public class AbstractStyle {
     boolean haveSettingsChanged = false;
     int brushSize;
 
-    public void onDraw(PaintGroup paint){
+    public void onDraw(){
         if(haveSettingsChanged){
             onDrawAfterSettingsChanged();
             haveSettingsChanged = false;

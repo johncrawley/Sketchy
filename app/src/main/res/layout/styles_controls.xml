@@ -42,15 +42,56 @@
                     android:contentDescription="@string/content_description_broken_outline_style_button"
                     app:srcCompat="@drawable/broken_outline_style_button" />
 
-                <ImageButton
-                    android:id="@+id/outlineStyleButton"
-                    android:layout_width="@dimen/selector_button_width"
-                    android:layout_height="@dimen/selector_button_height"
-                    android:layout_marginStart="@dimen/selector_button_margin_start"
-                    android:layout_marginEnd="@dimen/selector_button_margin_end"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/content_description_outline_style_button"
-                    app:srcCompat="@drawable/outline_style_button" />
+                    <ImageButton
+                        android:id="@+id/jaggedStyleButton"
+                        android:layout_width="@dimen/selector_button_width"
+                        android:layout_height="@dimen/selector_button_height"
+                        android:layout_marginStart="@dimen/selector_button_margin_start"
+                        android:layout_marginEnd="@dimen/selector_button_margin_end"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/content_description_jagged_outline_style_button"
+                        app:srcCompat="@drawable/jagged_style_button" />
+
+                    <ImageButton
+                        android:id="@+id/doubleEdgeStyleButton"
+                        android:layout_width="@dimen/selector_button_width"
+                        android:layout_height="@dimen/selector_button_height"
+                        android:layout_marginStart="@dimen/selector_button_margin_start"
+                        android:layout_marginEnd="@dimen/selector_button_margin_end"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/content_description_double_edge_style_button"
+                        app:srcCompat="@drawable/double_edge_style_button" />
+
+                    <ImageButton
+                        android:id="@+id/spikedStyleButton"
+                        android:layout_width="@dimen/selector_button_width"
+                        android:layout_height="@dimen/selector_button_height"
+                        android:layout_marginStart="@dimen/selector_button_margin_start"
+                        android:layout_marginEnd="@dimen/selector_button_margin_end"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/content_description_spiked_style_button"
+                        app:srcCompat="@drawable/spiked_style_button" />
+
+                    <ImageButton
+                        android:id="@+id/outlineStyleButton"
+                        android:layout_width="@dimen/selector_button_width"
+                        android:layout_height="@dimen/selector_button_height"
+                        android:layout_marginStart="@dimen/selector_button_margin_start"
+                        android:layout_marginEnd="@dimen/selector_button_margin_end"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/content_description_outline_style_button"
+                        app:srcCompat="@drawable/outline_style_button" />
+
+
+                    <ImageButton
+                        android:id="@+id/translateStyleButton"
+                        android:layout_width="@dimen/selector_button_width"
+                        android:layout_height="@dimen/selector_button_height"
+                        android:layout_marginStart="@dimen/selector_button_margin_start"
+                        android:layout_marginEnd="@dimen/selector_button_margin_end"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/content_description_outline_style_button"
+                        app:srcCompat="@drawable/translate_outline_style_button" />
 
              </LinearLayout>
         </HorizontalScrollView>

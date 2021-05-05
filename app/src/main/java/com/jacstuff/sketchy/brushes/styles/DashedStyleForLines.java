@@ -9,8 +9,11 @@ public class DashedStyleForLines extends DashedStyle implements Style {
 
     private int brushSize;
     private PaintGroup paintGroup;
+    private DashPathEffect dashPathEffect;
 
-    public DashedStyleForLines(int initialBrushSize){
+    public DashedStyleForLines(PaintGroup paintGroup, int initialBrushSize){
+        super(paintGroup);
+        this.paintGroup = paintGroup;
         brushSize = initialBrushSize;
         dashPathEffect = calculateDashPath();
     }
@@ -19,18 +22,10 @@ public class DashedStyleForLines extends DashedStyle implements Style {
     @Override
     public void init(PaintGroup paintGroup, int brushSize) {
         this.paintGroup = paintGroup;
-        paintGroup.setStrokeWidth(calculate(brushSize));
         paintGroup.setStyle(Paint.Style.STROKE);
 
         dashPathEffect = calculateDashPath();
         paintGroup.setPathEffect(dashPathEffect);
-    }
-
-
-    @Override
-    public void setBrushSize(PaintGroup paint, int brushSize) {
-        this.brushSize = brushSize;
-        haveSettingsChanged = true;
     }
 
 
@@ -41,12 +36,6 @@ public class DashedStyleForLines extends DashedStyle implements Style {
     }
 
 
-
-    private float calculate(int brushSize){
-        return brushSize / 2f;
-    }
-
-
     private DashPathEffect calculateDashPath(){
         float onStroke = calculateOnStroke();
         float offStroke = calculateOffStroke();
@@ -54,10 +43,10 @@ public class DashedStyleForLines extends DashedStyle implements Style {
     }
 
     private float calculateOnStroke(){
-        return 20 + (brushSize /16f);
+        return 20 + (paintGroup.getLineWidth() /16f);
     }
 
     private float calculateOffStroke(){
-        return 60 + (brushSize /2f );
+        return 60 + (paintGroup.getLineWidth() );
     }
 }

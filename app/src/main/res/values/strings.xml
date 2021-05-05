@@ -39,7 +39,10 @@
     <string name="content_description_fill_style_button">Select to paint with solid shapes</string>
     <string name="content_description_broken_outline_style_button">Select to paint shapes with broken outlines</string>
     <string name="content_description_outline_style_button">Select to paint with shape outlines</string>
-    <string name="content_description_thick_outline_style_button">Select to paint with thick outlines</string>
+    <string name="content_description_jagged_outline_style_button">Select to paint with a jagged outline</string>
+    <string name="content_description_spiked_style_button">Select to paint with a spikey outline</string>
+    <string name="content_description_double_edge_style_button">Select to paint with double outlines</string>
+    <string name="content_description_translate_style_button">Select to paint with a translated outline</string>
 
     <string name="content_description_no_blur_button">Disables the blur effect</string>
     <string name="content_description_outer_blur_button">Switches blur mode to outer</string>

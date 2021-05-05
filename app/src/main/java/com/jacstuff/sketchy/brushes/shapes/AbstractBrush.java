@@ -65,9 +65,13 @@ public abstract class AbstractBrush {
     }
 
 
-    public void onTouchDown(float x, float y, Paint paint){
-        currentStyle.onDraw(paintGroup);
+    public final void onTouchDown(float x, float y, Paint paint){
+        currentStyle.onDraw();
+        onBrushTouchDown(x, y, paint);
     }
+
+
+    void onBrushTouchDown(float x, float y, Paint paint){}
 
 
     public void onTouchMove(float x, float y, Paint paint){

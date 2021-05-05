@@ -8,7 +8,7 @@ public interface Style {
 
     void init(PaintGroup p, int brushSize);
     void setBrushSize(PaintGroup paintGroup, int brushSize);
-    void onDraw(PaintGroup paintGroup);
+    void onDraw();
     void notifyStyleChange();
 
 }

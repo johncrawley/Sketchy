@@ -33,14 +33,16 @@ public class LineBrush extends AbstractBrush implements Brush {
         lineDrawerMap.put(BrushStyle.FILL, defaultLineDrawer);
         lineDrawerMap.put(BrushStyle.BROKEN_OUTLINE, defaultLineDrawer);
         lineDrawerMap.put(BrushStyle.OUTLINE,outlineDrawer );
-        lineDrawerMap.put(BrushStyle.THICK_OUTLINE,outlineDrawer );
+        lineDrawerMap.put(BrushStyle.JAGGED,outlineDrawer );
+        lineDrawerMap.put(BrushStyle.SPIKED,outlineDrawer );
+        lineDrawerMap.put(BrushStyle.DOUBLE_EDGE,outlineDrawer );
+        lineDrawerMap.put(BrushStyle.TRANSLATE, outlineDrawer );
         currentLineDrawer = lineDrawerMap.get(BrushStyle.FILL);
     }
 
 
     @Override
-    public void onTouchDown(float x, float y, Paint paint){
-        currentStyle.onDraw(paintGroup);
+    public void onBrushTouchDown(float x, float y, Paint paint){
         xDown = x;
         yDown = y;
     }

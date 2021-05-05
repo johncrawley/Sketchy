@@ -104,8 +104,7 @@ public class PentagonBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onTouchDown(float x, float y, Paint paint){
-        currentStyle.onDraw(paintGroup);
+    public void onBrushTouchDown(float x, float y, Paint paint){
         deriveOutsidePoints(x,y);
         Path path = new Path();
         path.moveTo(topPoint.x, topPoint.y);

@@ -15,8 +15,7 @@ public class SquareBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onTouchDown(float x, float y, Paint paint){
-        currentStyle.onDraw(paintGroup);
+    public void onBrushTouchDown(float x, float y, Paint paint){
         float left = x - halfBrushSize;
         float top = y - halfBrushSize;
         float right = left + brushSize;

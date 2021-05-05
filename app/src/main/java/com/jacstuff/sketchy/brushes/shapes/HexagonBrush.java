@@ -37,8 +37,7 @@ public class HexagonBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onTouchDown(float x, float y, Paint paint){
-        currentStyle.onDraw(paintGroup);
+    public void onBrushTouchDown(float x, float y, Paint paint){
         leftPoint.set(x - halfBrushSize, y);
         rightPoint.set(x + halfBrushSize, y);
 
