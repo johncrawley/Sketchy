@@ -11,7 +11,9 @@ public class TranslateStyle extends AbstractStyle implements Style {
     PathDashPathEffect pathDashPathEffect;
     private PaintGroup paintGroup;
 
+
     public TranslateStyle(PaintGroup paintGroup){
+        this.paintGroup = paintGroup;
         pathDashPathEffect = new PathDashPathEffect(createPath(20, 10), 12, 5, PathDashPathEffect.Style.ROTATE);
     }
 
