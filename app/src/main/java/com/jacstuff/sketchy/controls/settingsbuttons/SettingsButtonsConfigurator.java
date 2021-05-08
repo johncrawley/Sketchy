@@ -1,12 +1,17 @@
 package com.jacstuff.sketchy.controls.settingsbuttons;
 
+import android.view.View;
+
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 
 public class SettingsButtonsConfigurator {
 
+    private MainActivity activity;
+
     public SettingsButtonsConfigurator(MainActivity activity, PaintView paintView){
+        this.activity = activity;
         new ShapeButtonsConfigurator(activity, paintView);
         new StyleButtonsConfigurator(activity, paintView);
         new SelectionButtonsConfigurator(activity);
@@ -18,13 +23,14 @@ public class SettingsButtonsConfigurator {
     }
 
 
-    public void handleButtonClick(int viewId){
-
-    }
-
-
     public void clickOnView(int id){
-
+        if(activity == null){
+            return;
+        }
+        View view = activity.findViewById(id);
+        if(view != null){
+            view.callOnClick();
+        }
     }
 
 }

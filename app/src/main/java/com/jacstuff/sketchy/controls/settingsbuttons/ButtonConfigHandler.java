@@ -4,6 +4,9 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.jacstuff.sketchy.MainActivity;
+import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.paintview.PaintViewSingleton;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,18 +16,22 @@ public class ButtonConfigHandler<T>{
 
     private Map<Integer, T> buttonActionMap;
     private Map<Integer, Integer> buttonBackgroundResourceMap;
+    private Map<Integer, Integer> toastMessageIdMap;
     private ButtonsConfigurator<T> buttonsConfigurator;
     private MainActivity activity;
     private ButtonUtils buttonUtils;
     private Set<Integer> buttonIds;
     private ImageButton imageButton;
+    private ButtonCategory buttonCategory;
 
-    public ButtonConfigHandler(MainActivity activity, ButtonsConfigurator<T> buttonsConfigurator){
+    public ButtonConfigHandler(MainActivity activity, ButtonsConfigurator<T> buttonsConfigurator, ButtonCategory buttonCategory){
         buttonActionMap = new HashMap<>();
         buttonBackgroundResourceMap = new HashMap<>();
+        toastMessageIdMap = new HashMap<>();
         this.activity = activity;
         this.buttonsConfigurator = buttonsConfigurator;
         this.buttonUtils = new ButtonUtils(activity);
+        this.buttonCategory = buttonCategory;
     }
 
 
@@ -35,6 +42,11 @@ public class ButtonConfigHandler<T>{
     public void put(int id, int drawableId, T action){
         buttonActionMap.put(id, action);
         buttonBackgroundResourceMap.put(id, drawableId);
+    }
+
+    public void put(int id, int drawableID, T action, int toastMessageId){
+        put(id, drawableID, action);
+        toastMessageIdMap.put(id, toastMessageId);
     }
 
     public Collection<T> getEntries(){
@@ -57,9 +69,17 @@ public class ButtonConfigHandler<T>{
                 return;
             }
             imageButton.setImageResource(resId);
-
+        }
+        if(toastMessageIdMap.containsKey(selectedButtonId)){
+            Integer id = toastMessageIdMap.get(selectedButtonId);
+            if(id != null) {
+                activity.toast(id);
+            }
         }
     }
+
+
+
 
     private void log(String msg){
         System.out.println("ButtonClickHandler: " +  msg);
@@ -73,7 +93,7 @@ public class ButtonConfigHandler<T>{
                 int viewId = view.getId();
                 buttonUtils.switchSelection(view.getId(), buttonIds);
                 buttonsConfigurator.handleClick(viewId,buttonActionMap.get(viewId));
-                buttonsConfigurator.saveSelection(viewId);
+                PaintViewSingleton.getInstance().saveSetting(viewId, buttonCategory);
                 setBackgroundOfParentButton(viewId);
             }
         };

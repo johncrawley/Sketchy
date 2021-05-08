@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.controls.settingsbuttons;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
@@ -21,7 +22,7 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
 
 
     public void configure(){
-        ButtonConfigHandler<BrushShape> buttonConfig = new ButtonConfigHandler<>(activity, this);
+        ButtonConfigHandler<BrushShape> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.SHAPE);
         buttonConfig.put(R.id.squareShapeButton,            R.drawable.square_shape_button,             BrushShape.SQUARE);
         buttonConfig.put(R.id.circleShapeButton,            R.drawable.circle_shape_button,             BrushShape.CIRCLE);
         buttonConfig.put(R.id.lineShapeButton,              R.drawable.line_shape_button,               BrushShape.LINE);
@@ -40,12 +41,6 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
     @Override
     public void handleClick(int viewId, BrushShape brushShape){
         paintView.setBrushShape(brushShape);
-    }
-
-
-    @Override
-    public void saveSelection(int viewId){
-        PaintViewSingleton.getInstance().saveShapeSelectionSetting(viewId);
     }
 
 }

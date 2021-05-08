@@ -4,6 +4,7 @@ package com.jacstuff.sketchy.controls.settingsbuttons;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushStyle;
+import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
@@ -22,7 +23,7 @@ public class StyleButtonsConfigurator implements ButtonsConfigurator<BrushStyle>
 
 
     void configure(){
-        ButtonConfigHandler<BrushStyle> buttonConfig = new ButtonConfigHandler<>(activity, this);
+        ButtonConfigHandler<BrushStyle> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.STYLE);
         buttonConfig.put(R.id.brokenOutlineStyleButton, R.drawable.broken_outline_style_button, BrushStyle.BROKEN_OUTLINE);
         buttonConfig.put(R.id.fillStyleButton,          R.drawable.fill_style_button,           BrushStyle.FILL);
         buttonConfig.put(R.id.outlineStyleButton,       R.drawable.outline_style_button,        BrushStyle.OUTLINE);
@@ -41,8 +42,4 @@ public class StyleButtonsConfigurator implements ButtonsConfigurator<BrushStyle>
         paintView.setBrushStyle(brushStyle);
     }
 
-    @Override
-    public void saveSelection(int viewId) {
-        PaintViewSingleton.getInstance().saveStyleSelectionSetting(viewId);
-    }
 }

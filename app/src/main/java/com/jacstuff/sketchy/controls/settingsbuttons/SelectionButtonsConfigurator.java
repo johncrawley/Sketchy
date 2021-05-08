@@ -4,6 +4,8 @@ import android.view.View;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
 import java.util.Collection;
 
@@ -20,7 +22,7 @@ public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer
 
 
     public void configure(){
-        ButtonConfigHandler<Integer> buttonConfig = new ButtonConfigHandler<>(activity, this);
+        ButtonConfigHandler<Integer> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.CATEGORIES);
         buttonConfig.put(R.id.gradientSelectionButton,  R.id.includeGradientControls);
         buttonConfig.put(R.id.shapeSelectionButton,     R.id.includeShapeControls);
         buttonConfig.put(R.id.styleSelectionButton,     R.id.includeStyleControls);
@@ -39,12 +41,10 @@ public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer
     public void handleClick(int viewId, Integer layoutId) {
         hideAllPanels();
         activity.findViewById(layoutId).setVisibility(View.VISIBLE);
+        PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
+        paintViewSingleton.saveSelectedCategoryButton(viewId);
     }
 
-    @Override
-    public void saveSelection(int viewId) {
-
-    }
 
     private void hideAllPanels(){
         for(int layoutId : layoutIds){

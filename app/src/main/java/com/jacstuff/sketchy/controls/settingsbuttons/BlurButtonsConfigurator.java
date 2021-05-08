@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.controls.settingsbuttons;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BlurType;
+import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
@@ -20,7 +21,7 @@ public class BlurButtonsConfigurator implements ButtonsConfigurator<BlurType>{
 
 
     public void configure(){
-        ButtonConfigHandler<BlurType> buttonConfig = new ButtonConfigHandler<>(activity, this);
+        ButtonConfigHandler<BlurType> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.BLUR);
         buttonConfig.put(R.id.noBlurButton,      R.drawable.no_blur_button,      BlurType.NONE);
         buttonConfig.put(R.id.innerBlurButton,   R.drawable.inner_blur_button,   BlurType.INNER);
         buttonConfig.put(R.id.normalBlurButton,  R.drawable.normal_blur_button,  BlurType.NORMAL);
@@ -38,10 +39,5 @@ public class BlurButtonsConfigurator implements ButtonsConfigurator<BlurType>{
         paintView.setBlurType(blurType);
     }
 
-
-    @Override
-    public void saveSelection(int viewId){
-        PaintViewSingleton.getInstance().saveShapeSelectionSetting(viewId);
-    }
 
 }

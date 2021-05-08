@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.controls.settingsbuttons;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.AngleType;
+import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
@@ -20,7 +21,7 @@ public class AngleButtonsConfigurator implements ButtonsConfigurator<AngleType>{
 
 
     public void configure(){
-        ButtonConfigHandler<AngleType> buttonConfig = new ButtonConfigHandler<>(activity, this);
+        ButtonConfigHandler<AngleType> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.ANGLE);
         buttonConfig.put(R.id.zeroDegreesButton, R.drawable.zero_degrees_button, AngleType.ZERO);
         buttonConfig.put(R.id.degrees30Button,   R.drawable.degrees_30_button,   AngleType.THIRTY);
         buttonConfig.put(R.id.degrees45Button,   R.drawable.degrees_45_button,   AngleType.FORTY_FIVE);
@@ -51,11 +52,4 @@ public class AngleButtonsConfigurator implements ButtonsConfigurator<AngleType>{
     public void handleClick(int viewId, AngleType angleType){
         paintView.setAnglePreset(angleType, viewId);
     }
-
-
-    @Override
-    public void saveSelection(int viewId){
-        PaintViewSingleton.getInstance().saveShapeSelectionSetting(viewId);
-    }
-
 }

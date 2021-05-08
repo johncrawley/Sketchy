@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.controls.settingsbuttons;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.ShadowType;
+import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
@@ -20,7 +21,7 @@ public class ShadowButtonsConfigurator implements ButtonsConfigurator<ShadowType
 
 
     public void configure(){
-        ButtonConfigHandler<ShadowType> buttonConfig = new ButtonConfigHandler<>(activity, this);
+        ButtonConfigHandler<ShadowType> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.SHADOW);
         buttonConfig.put(R.id.noShadowButton,             R.drawable.no_shadow_button,              ShadowType.NONE);
         buttonConfig.put(R.id.centreShadowButton,         R.drawable.center_shadow_button,          ShadowType.CENTER);
         buttonConfig.put(R.id.northShadowButton,          R.drawable.north_shadow_button,           ShadowType.NORTH);
@@ -42,10 +43,5 @@ public class ShadowButtonsConfigurator implements ButtonsConfigurator<ShadowType
         paintView.setShadowType(shadowType);
     }
 
-
-    @Override
-    public void saveSelection(int viewId){
-        PaintViewSingleton.getInstance().saveShapeSelectionSetting(viewId);
-    }
 
 }

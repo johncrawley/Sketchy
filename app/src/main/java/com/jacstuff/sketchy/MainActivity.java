@@ -4,9 +4,11 @@ package com.jacstuff.sketchy;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
 import com.jacstuff.sketchy.paintview.PaintViewSingleton;
+import com.jacstuff.sketchy.paintview.TransparentArrowView;
 
 import java.util.List;
 
@@ -42,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toast colorPatternToast;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
     private ResumedActionsHelper resumedActionsHelper;
+    private TransparentArrowView transparentView;
+
+
+    private HorizontalScrollView colorScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +60,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         configurePaintView();
         setupButtons();
         new SeekBarConfigurator(this, paintView);
+        colorScrollView = findViewById(R.id.colorScrollView);
+        colorScrollView.smoothScrollTo(1500,0);
+       // colorScrollView.setScrollX(250);
+      //  colorScrollView.setScrollY(250);
+        colorScrollView.post(new Runnable() {
+            public void run() {
+                colorScrollView.smoothScrollTo(1000, 0);
+
+                colorScrollView.post(new Runnable() {
+                    public void run() {
+                       // colorScrollView.smoothScrollTo(0, 0);
+                    }
+                });
+            }
+        });
+    }
+
+    protected  void onStart(){
+        super.onStart();
+        //colorScrollView.scrollTo(0,300);
     }
 
 
@@ -65,13 +92,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+
     private void initImageSaver(){
         imageSaver = new ImageSaver(this);
     }
 
+
     private void setupSettingsButtons(){
         settingsButtonsConfigurator = new SettingsButtonsConfigurator(this, paintView);
     }
+
 
     private void assignRecentButtons(){
         resumedActionsHelper = new ResumedActionsHelper( buttonClickHandler ,layoutPopulator, settingsButtonsConfigurator, paintView);
@@ -79,11 +109,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void toast(String msg){
+    public void toastPattern(String msg){
         if(colorPatternToast != null){
             colorPatternToast.cancel();
         }
         colorPatternToast = Toast.makeText(MainActivity.this, getString(R.string.pattern_toast_prefix) +  msg, Toast.LENGTH_SHORT);
+        colorPatternToast.show();
+    }
+
+
+    public void toast(int messageId){
+        if(colorPatternToast != null){
+            colorPatternToast.cancel();
+        }
+        colorPatternToast = Toast.makeText(MainActivity.this,  getResources().getString(messageId), Toast.LENGTH_SHORT);
         colorPatternToast.show();
     }
 
@@ -94,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintViewConfigurator.configure(paintView);
         assignSavedBitmap();
     }
+
 
 
     private void assignSavedBitmap(){
@@ -223,6 +263,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SAVE_FILE_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
             imageSaver.saveImageToFile(data, paintView);
             paintView.notifyPictureSaved();
@@ -235,8 +276,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View v){
         buttonClickHandler.handleColorButtonClicks(v);
-        int viewId = v.getId();
-        settingsButtonsConfigurator.handleButtonClick(viewId);
     }
 
 }

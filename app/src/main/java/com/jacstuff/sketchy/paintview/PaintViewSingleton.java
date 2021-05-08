@@ -4,18 +4,22 @@ import android.graphics.Bitmap;
 
 import com.jacstuff.sketchy.controls.ButtonCategory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PaintViewSingleton  {
 
 
     private static PaintViewSingleton instance;
     private Bitmap bitmap;
     private String mostRecentColor, mostRecentShade;
-    private int mostRecentBrushStyleId, mostRecentBrushShapeId;
+    private int mostRecentSettingButtonId, mostRecentCategoryButtonId;
     private boolean wasMostRecentClickAShade = false;
+    private Map<ButtonCategory, Integer> mostRecentlyClickedButtons;
 
 
     private PaintViewSingleton(){
-
+        mostRecentlyClickedButtons = new HashMap<>();
     }
 
 
@@ -28,27 +32,24 @@ public class PaintViewSingleton  {
 
 
     public void saveSetting(int viewId, ButtonCategory buttonCategory){
-        if(buttonCategory == ButtonCategory.SHAPE_SELECTION){
-            mostRecentBrushShapeId = viewId;
-            return;
+        mostRecentlyClickedButtons.put(buttonCategory, viewId);
+     }
+
+    public void saveSelectedCategoryButton(int viewId){
+        mostRecentCategoryButtonId = viewId;
+    }
+
+    public void saveSelectedSettingButton(int viewId){
+        mostRecentSettingButtonId = viewId;
+    }
+
+
+    public int getMostRecentSettingButtonId(ButtonCategory buttonCategory){
+        Integer id = mostRecentlyClickedButtons.get(buttonCategory);
+        if(id == null){
+            id = -1;
         }
-        mostRecentBrushStyleId = viewId;
-    }
-
-    public void saveShapeSelectionSetting(int viewId){
-        mostRecentBrushShapeId = viewId;
-    }
-
-    public void saveStyleSelectionSetting(int viewId){
-        mostRecentBrushStyleId = viewId;
-    }
-
-    public int getMostRecentBrushStyleId(){
-        return this.mostRecentBrushStyleId;
-    }
-
-    public int getMostRecentBrushShapeId(){
-        return this.mostRecentBrushShapeId;
+        return id;
     }
 
 

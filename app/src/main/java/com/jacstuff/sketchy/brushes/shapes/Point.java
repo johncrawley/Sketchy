@@ -1,6 +1,6 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 class Point{
     float x, y;

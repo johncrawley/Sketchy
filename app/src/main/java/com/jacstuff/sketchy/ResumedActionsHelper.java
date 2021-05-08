@@ -2,6 +2,7 @@ package com.jacstuff.sketchy;
 
 import android.widget.Button;
 
+import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
 import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator;
@@ -51,8 +52,12 @@ public class ResumedActionsHelper {
 
 
     private void selectRecentShapeAndStyle(PaintViewSingleton pvs) {
-        settingsButtonsConfigurator.clickOnView(pvs.getMostRecentBrushShapeId());
-        settingsButtonsConfigurator.clickOnView(pvs.getMostRecentBrushStyleId());
+        for(ButtonCategory buttonCategory : ButtonCategory.values()){
+            if(buttonCategory == ButtonCategory.COLOR_SELECTION){
+                continue;
+            }
+            settingsButtonsConfigurator.clickOnView(pvs.getMostRecentSettingButtonId(buttonCategory));
+        }
     }
 
 

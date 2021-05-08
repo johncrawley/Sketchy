@@ -1,12 +1,11 @@
 package com.jacstuff.sketchy.controls.settingsbuttons;
 
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.brushes.ShadowType;
+import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
@@ -24,7 +23,7 @@ public class KaleidoscopeButtonsConfigurator implements ButtonsConfigurator<Inte
 
 
     public void configure(){
-        ButtonConfigHandler<Integer> buttonConfig = new ButtonConfigHandler<>(activity, this);
+        ButtonConfigHandler<Integer> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.KALEIDOSCOPE);
         buttonConfig.put(R.id.kOffButton, R.drawable.k_off_button,1);
         buttonConfig.put(R.id.k2Button,   R.drawable.k_2_button,  2);
         buttonConfig.put(R.id.k5Button,   R.drawable.k_5_button,  5);
@@ -54,12 +53,6 @@ public class KaleidoscopeButtonsConfigurator implements ButtonsConfigurator<Inte
     @Override
     public void handleClick(int viewId, Integer numberOfSegments){
         paintView.setKaleidoScopeSegments(numberOfSegments);
-    }
-
-
-    @Override
-    public void saveSelection(int viewId){
-        PaintViewSingleton.getInstance().saveShapeSelectionSetting(viewId);
     }
 
 }

@@ -213,7 +213,7 @@ public class ColorButtonClickHandler {
     private void assignMultiSelector(Button button, List<Integer> colorList){
         if(button == previouslySelectedButton){
             currentColorSelector.nextPattern();
-            mainActivity.toast(currentColorSelector.getCurrentPatternLabel());
+            mainActivity.toastPattern(currentColorSelector.getCurrentPatternLabel());
         }else{
             currentColorSelector.reset();
             paintView.setColorSelector(currentColorSelector);

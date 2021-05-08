@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.controls.settingsbuttons;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.GradientType;
+import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
@@ -20,7 +21,7 @@ public class GradientButtonsConfigurator implements ButtonsConfigurator<Gradient
 
 
     public void configure(){
-        ButtonConfigHandler<GradientType> buttonConfig = new ButtonConfigHandler<>(activity, this);
+        ButtonConfigHandler<GradientType> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.GRADIENT);
         buttonConfig.put(R.id.noGradientButton,             R.drawable.no_gradient_button,              GradientType.NONE);
         buttonConfig.put(R.id.gradientVerticallMirrorButton,   R.drawable.gradient_vertical_mirror_button,   GradientType.VERTICAL_MIRROR);
         buttonConfig.put(R.id.gradientHorizontalMirrorButton,   R.drawable.gradient_horizontal_mirror_button,   GradientType.HORIZONTAL_MIRROR);
@@ -37,12 +38,6 @@ public class GradientButtonsConfigurator implements ButtonsConfigurator<Gradient
     @Override
     public void handleClick(int viewId, GradientType gradientType){
         paintView.setGradientType(gradientType);
-    }
-
-
-    @Override
-    public void saveSelection(int viewId){
-        PaintViewSingleton.getInstance().saveShapeSelectionSetting(viewId);
     }
 
 }
