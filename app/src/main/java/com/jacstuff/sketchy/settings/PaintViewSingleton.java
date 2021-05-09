@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.paintview;
+package com.jacstuff.sketchy.settings;
 
 import android.graphics.Bitmap;
 
@@ -35,12 +35,9 @@ public class PaintViewSingleton  {
         mostRecentlyClickedButtons.put(buttonCategory, viewId);
      }
 
+
     public void saveSelectedCategoryButton(int viewId){
         mostRecentCategoryButtonId = viewId;
-    }
-
-    public void saveSelectedSettingButton(int viewId){
-        mostRecentSettingButtonId = viewId;
     }
 
 

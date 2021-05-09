@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy;
+package com.jacstuff.sketchy.io;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,16 +12,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-class ImageSaver {
+public class ImageSaver {
 
 
     private Context context;
 
-    ImageSaver(Context context){
+    public ImageSaver(Context context){
         this.context = context;
     }
 
-    void saveImageToFile(Intent data, PaintView paintView){
+    public void saveImageToFile(Intent data, PaintView paintView){
         Uri uri = data.getData();
         if(uri == null){
             return;

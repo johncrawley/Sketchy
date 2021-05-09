@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
@@ -22,10 +21,12 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator;
+import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
-import com.jacstuff.sketchy.paintview.PaintViewSingleton;
-import com.jacstuff.sketchy.paintview.TransparentArrowView;
+import com.jacstuff.sketchy.settings.PaintViewSingleton;
+import com.jacstuff.sketchy.settings.ResumedActionsHelper;
+import com.jacstuff.sketchy.tasks.ColorAutoScroller;
 
 import java.util.List;
 
@@ -45,10 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toast colorPatternToast;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
     private ResumedActionsHelper resumedActionsHelper;
-    private TransparentArrowView transparentView;
 
 
-    private HorizontalScrollView colorScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,26 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         configurePaintView();
         setupButtons();
         new SeekBarConfigurator(this, paintView);
-        colorScrollView = findViewById(R.id.colorScrollView);
-        colorScrollView.smoothScrollTo(1500,0);
-       // colorScrollView.setScrollX(250);
-      //  colorScrollView.setScrollY(250);
-        colorScrollView.post(new Runnable() {
-            public void run() {
-                colorScrollView.smoothScrollTo(1000, 0);
-
-                colorScrollView.post(new Runnable() {
-                    public void run() {
-                       // colorScrollView.smoothScrollTo(0, 0);
-                    }
-                });
-            }
-        });
-    }
-
-    protected  void onStart(){
-        super.onStart();
-        //colorScrollView.scrollTo(0,300);
+        setupColorAutoScroll();
     }
 
 
@@ -91,7 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         assignRecentButtons();
     }
 
-
+    private void setupColorAutoScroll(){
+        new ColorAutoScroller((HorizontalScrollView)findViewById(R.id.colorScrollView));
+    }
 
     private void initImageSaver(){
         imageSaver = new ImageSaver(this);

@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy;
+package com.jacstuff.sketchy.settings;
 
 import android.widget.Button;
 
@@ -7,7 +7,6 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
 import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
 public class ResumedActionsHelper {
 
@@ -27,7 +26,16 @@ public class ResumedActionsHelper {
     }
 
 
-    void onResume() {
+    public void onPause(){
+        PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
+        paintViewSingleton.setBitmap(paintView.getBitmap());
+        paintViewSingleton.setMostRecentColor(buttonClickHandler.getMostRecentButtonKey());
+        paintViewSingleton.setMostRecentShade(buttonClickHandler.getMostRecentShadeKey());
+        paintViewSingleton.setWasMostRecentClickAShade(buttonClickHandler.isMostRecentClickAShade());
+    }
+
+
+    public void onResume() {
         PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
         boolean wasMostRecentClickAShade = paintViewSingleton.wasMostRecentClickAShade();
         selectRecentColorButton(paintViewSingleton);
@@ -58,15 +66,6 @@ public class ResumedActionsHelper {
             }
             settingsButtonsConfigurator.clickOnView(pvs.getMostRecentSettingButtonId(buttonCategory));
         }
-    }
-
-
-    void onPause(){
-        PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
-        paintViewSingleton.setBitmap(paintView.getBitmap());
-        paintViewSingleton.setMostRecentColor(buttonClickHandler.getMostRecentButtonKey());
-        paintViewSingleton.setMostRecentShade(buttonClickHandler.getMostRecentShadeKey());
-        paintViewSingleton.setWasMostRecentClickAShade(buttonClickHandler.isMostRecentClickAShade());
     }
 
 }

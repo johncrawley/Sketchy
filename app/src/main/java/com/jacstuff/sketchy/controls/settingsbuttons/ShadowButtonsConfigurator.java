@@ -5,7 +5,6 @@ import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.ShadowType;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
 public class ShadowButtonsConfigurator implements ButtonsConfigurator<ShadowType>{
 

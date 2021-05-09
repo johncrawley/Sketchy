@@ -5,7 +5,7 @@ import android.view.View;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
-import com.jacstuff.sketchy.paintview.PaintViewSingleton;
+import com.jacstuff.sketchy.settings.PaintViewSingleton;
 
 import java.util.Collection;
 

@@ -6,7 +6,6 @@ import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.PaintViewSingleton;
 
 
 public class StyleButtonsConfigurator implements ButtonsConfigurator<BrushStyle>{
