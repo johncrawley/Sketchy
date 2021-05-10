@@ -16,7 +16,7 @@ public class BlurHelper {
         this.paint = paint;
         outer = new RefreshableBlurFilter(BlurMaskFilter.Blur.OUTER, blurRadius, 0);
         inner = new RefreshableBlurFilter(BlurMaskFilter.Blur.INNER, blurRadius, 0);
-        normal = new RefreshableBlurFilter(BlurMaskFilter.Blur.NORMAL, blurRadius, 10);
+        normal = new RefreshableBlurFilter(BlurMaskFilter.Blur.NORMAL, blurRadius, 2);
         solid = new RefreshableBlurFilter(BlurMaskFilter.Blur.SOLID, blurRadius, 10);
     }
 

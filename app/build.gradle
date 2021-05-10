@@ -6,8 +6,8 @@ android {
         applicationId "com.jacstuff.sketchy"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 4
-        versionName "1.8"
+        versionCode 5
+        versionName "1.9"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     compileOptions {

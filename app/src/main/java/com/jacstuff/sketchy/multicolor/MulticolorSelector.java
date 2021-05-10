@@ -1,6 +1,5 @@
 package com.jacstuff.sketchy.multicolor;
 
-import android.graphics.Color;
 
 import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
 import java.util.List;
@@ -34,7 +33,6 @@ public class MulticolorSelector implements ColorSelector {
     }
 
 
-
     @Override
     public void resetCurrentIndex(){
         currentMulticolorPattern.resetIndex();
@@ -66,5 +64,16 @@ public class MulticolorSelector implements ColorSelector {
     @Override
     public String getCurrentPatternLabel(){
         return (currentPatternIndex + 1) + ": "  +currentMulticolorPattern.getLabel();
+    }
+
+
+    @Override
+    public void add(int id, List<Integer> shades){
+        //do nothing
+    }
+
+    @Override
+    public void remove(int id){
+       //do nothing
     }
 }

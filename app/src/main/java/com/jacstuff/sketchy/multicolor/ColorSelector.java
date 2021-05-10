@@ -14,6 +14,9 @@ public interface ColorSelector {
 
     void nextPattern();
 
+    void add(int id, List<Integer> shades);
+
+    void remove(int id);
 
     void resetCurrentIndex();
 

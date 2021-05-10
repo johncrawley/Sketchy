@@ -1,6 +1,5 @@
 package com.jacstuff.sketchy.multicolor;
 
-import android.graphics.Color;
 
 import java.util.List;
 
@@ -41,6 +40,16 @@ public class SingleColorSelector implements ColorSelector {
 
     @Override
     public void nextPattern(){
+        //do nothing
+    }
+
+    @Override
+    public void add(int id, List<Integer> shades){
+        //do nothing
+    }
+
+    @Override
+    public void remove(int id){
         //do nothing
     }
 

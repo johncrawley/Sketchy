@@ -64,7 +64,6 @@ public class ColorButtonLayoutPopulator {
     }
 
 
-
     public Map<String, LinearLayout> getShadeLayoutsMap (){
         return this.shadeLayoutsMap;
     }

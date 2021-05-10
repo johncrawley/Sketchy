@@ -7,7 +7,7 @@
     <string name="action_about">About</string>
     <string name="action_wipe">Wipe</string>
     <string name="about_created_by">Created by John Crawley, 2020, 2021</string>
-    <string name="about_version">Version 1.8</string>
+    <string name="about_version">Version 1.9</string>
     <string name="tag_button_type">1</string>
     <string name="tag_button_category">8</string>
     <string name="tag_button_default_color">9</string>
@@ -112,7 +112,7 @@
     <string name="content_description_radial_mirror_gradient_button">A mirrored radial gradient will be applied</string>
     <string name="content_description_radial_repeat_gradient_button">A repeated radial gradient will be applied</string>
 
-    <string name="pattern_toast_prefix">Pattern &#160;</string>
+    <string name="pattern_toast_prefix">Sequence &#160;</string>
     <string name="pattern_label_first_to_last">First To Last</string>
     <string name="pattern_label_over_and_back">Over And Back</string>
     <string name="pattern_label_middle_to_end">Middle To End</string>
@@ -139,5 +139,8 @@
     <string name="line_width_seekbar_label">Line Width</string>
     <string name="blur_intensity_seekbar_label">Blur Intensity</string>
     <string name="brush_size_seekbar_label">Brush Size</string>
+
+    <string name="color_checked">✔</string>
+    <string name="multi_random_button_checked_tag">123</string>
 
 </resources>
