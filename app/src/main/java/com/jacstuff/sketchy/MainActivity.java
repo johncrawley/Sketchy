@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
-import com.jacstuff.sketchy.controls.colorbuttons.ButtonLayoutParams;
+import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
@@ -66,14 +66,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setupButtons(){
         setupSettingsButtons();
         setupDefaultSelections();
-        setupButtonClickHandler();
         setupColorAndShadeButtons();
         assignRecentButtons();
     }
 
+
     private void setupColorAutoScroll(){
         new ColorAutoScroller((HorizontalScrollView)findViewById(R.id.colorScrollView));
     }
+
 
     private void initImageSaver(){
         imageSaver = new ImageSaver(this);
@@ -117,18 +118,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     private void assignSavedBitmap(){
         PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
         Bitmap bitmap = paintViewSingleton.getBitmap();
         if(bitmap != null){
             paintView.setBitmap(bitmap);
         }
-    }
-
-
-    private void setupButtonClickHandler(){
-        buttonClickHandler = new ColorButtonClickHandler(this, paintView, buttonLayoutParams, shadesScrollView);
     }
 
 
@@ -140,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void setupColorAndShadeButtons(){
         List<Integer> colors = ColorCreator.generate();
+        buttonClickHandler = new ColorButtonClickHandler(this, paintView, buttonLayoutParams, shadesScrollView);
         buttonClickHandler.setColorsMap(colors);
         layoutPopulator = new ColorButtonLayoutPopulator(this, buttonLayoutParams, colors);
         buttonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
@@ -229,6 +225,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra(Intent.EXTRA_TITLE, "sketch");
         startActivityForResult(intent, SAVE_FILE_ACTIVITY_CODE);
     }
+
 
     private void startOpenDocumentActivity(){
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);

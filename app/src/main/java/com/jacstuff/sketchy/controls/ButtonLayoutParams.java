@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.controls.colorbuttons;
+package com.jacstuff.sketchy.controls;
 
 import android.widget.LinearLayout;
 
@@ -16,20 +16,22 @@ public class ButtonLayoutParams {
     }
 
 
-    int getButtonWidth(){
+    public int getButtonWidth(){
         return buttonWidth;
     }
 
-    int getButtonHeight(){
+
+    public int getButtonHeight(){
         return buttonHeight;
     }
 
-    LinearLayout.LayoutParams getSelected(){
+
+    public LinearLayout.LayoutParams getSelected(){
         return selectedButtonLayoutParams;
     }
 
 
-    LinearLayout.LayoutParams getUnselected(){
+    public LinearLayout.LayoutParams getUnselected(){
         return unselectedButtonLayoutParams;
     }
 

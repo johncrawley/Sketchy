@@ -72,6 +72,7 @@
                         android:contentDescription="@string/content_description_spiked_style_button"
                         app:srcCompat="@drawable/spiked_style_button" />
 
+
                     <ImageButton
                         android:id="@+id/outlineStyleButton"
                         android:layout_width="@dimen/selector_button_width"

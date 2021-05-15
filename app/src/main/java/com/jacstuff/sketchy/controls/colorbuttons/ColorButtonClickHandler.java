@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.multicolor.RandomMultiColorSelector;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.R;

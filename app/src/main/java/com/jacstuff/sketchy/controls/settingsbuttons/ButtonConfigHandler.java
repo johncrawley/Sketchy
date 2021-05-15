@@ -5,6 +5,7 @@ import android.widget.ImageButton;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.settings.PaintViewSingleton;
 
 import java.util.Collection;
@@ -24,6 +25,7 @@ public class ButtonConfigHandler<T>{
     private ImageButton imageButton;
     private ButtonCategory buttonCategory;
 
+
     public ButtonConfigHandler(MainActivity activity, ButtonsConfigurator<T> buttonsConfigurator, ButtonCategory buttonCategory){
         buttonActionMap = new HashMap<>();
         buttonBackgroundResourceMap = new HashMap<>();
@@ -39,15 +41,19 @@ public class ButtonConfigHandler<T>{
         buttonActionMap.put(id, action);
     }
 
+
     public void put(int id, int drawableId, T action){
         buttonActionMap.put(id, action);
+       // buttonUtils.setStandardWidthOn(id);
         buttonBackgroundResourceMap.put(id, drawableId);
     }
+
 
     public void put(int id, int drawableID, T action, int toastMessageId){
         put(id, drawableID, action);
         toastMessageIdMap.put(id, toastMessageId);
     }
+
 
     public Collection<T> getEntries(){
         return buttonActionMap.values();
@@ -79,8 +85,6 @@ public class ButtonConfigHandler<T>{
     }
 
 
-
-
     private void log(String msg){
         System.out.println("ButtonClickHandler: " +  msg);
     }
@@ -92,7 +96,7 @@ public class ButtonConfigHandler<T>{
             public void onClick(View view) {
                 int viewId = view.getId();
                 buttonUtils.switchSelection(view.getId(), buttonIds);
-                buttonsConfigurator.handleClick(viewId,buttonActionMap.get(viewId));
+                buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
                 PaintViewSingleton.getInstance().saveSetting(viewId, buttonCategory);
                 setBackgroundOfParentButton(viewId);
             }
@@ -104,6 +108,7 @@ public class ButtonConfigHandler<T>{
             buttonView.setOnClickListener(shapeListener);
         }
     }
+
 
     void setDefaultSelection(int id){
         buttonUtils.switchSelection(id, buttonIds);

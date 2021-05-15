@@ -5,7 +5,7 @@ import android.widget.ImageButton;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.AngleType;
-import com.jacstuff.sketchy.controls.settingsbuttons.ButtonUtils;
+import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 public class AngleSeekBar extends AbstractSeekBarConfig {
@@ -26,7 +26,6 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
             paintView.setAngle(progress);
             if(parentButton != null){
                 parentButton.setImageResource(R.drawable.degrees_button);
-
                 buttonUtils.deselectButton(paintView.getCurrentAngleButtonViewId());
             }
         }
