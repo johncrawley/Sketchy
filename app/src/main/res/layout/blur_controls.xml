@@ -21,9 +21,9 @@
             android:layout_marginTop="@dimen/shape_selector_group_top_margin"
             android:orientation="horizontal"
             android:paddingTop="@dimen/shape_options_padding_top">
-
+<!--
             <ImageButton
-                android:id="@+id/noBlurButton"
+                android:id="@+id/noBlurButton1"
                 android:layout_width="@dimen/selector_button_width"
                 android:layout_height="@dimen/selector_button_height"
                 android:layout_marginStart="@dimen/selector_button_margin_start"
@@ -71,7 +71,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_inner_blur_button"
                 app:srcCompat="@drawable/inner_blur_button" />
-
+-->
         </LinearLayout>
 
     </HorizontalScrollView>

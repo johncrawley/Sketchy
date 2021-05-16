@@ -20,7 +20,10 @@ public class ShadowButtonsConfigurator implements ButtonsConfigurator<ShadowType
 
 
     public void configure(){
-        ButtonConfigHandler<ShadowType> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.SHADOW);
+        ButtonConfigHandler<ShadowType> buttonConfig = new ButtonConfigHandler<>(activity,
+                this,
+                ButtonCategory.SHADOW,
+                R.id.shadowOptionsLayout);
         buttonConfig.put(R.id.noShadowButton,             R.drawable.no_shadow_button,              ShadowType.NONE);
         buttonConfig.put(R.id.centreShadowButton,         R.drawable.center_shadow_button,          ShadowType.CENTER);
         buttonConfig.put(R.id.northShadowButton,          R.drawable.north_shadow_button,           ShadowType.NORTH);

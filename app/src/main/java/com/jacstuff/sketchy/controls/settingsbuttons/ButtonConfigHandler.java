@@ -1,10 +1,12 @@
 package com.jacstuff.sketchy.controls.settingsbuttons;
 
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.settings.PaintViewSingleton;
 
@@ -22,11 +24,13 @@ public class ButtonConfigHandler<T>{
     private MainActivity activity;
     private ButtonUtils buttonUtils;
     private Set<Integer> buttonIds;
-    private ImageButton imageButton;
+    private Button button;
     private ButtonCategory buttonCategory;
+    private LinearLayout linearLayout;
+    private ButtonLayoutParams buttonLayoutParams;
 
 
-    public ButtonConfigHandler(MainActivity activity, ButtonsConfigurator<T> buttonsConfigurator, ButtonCategory buttonCategory){
+    public ButtonConfigHandler(MainActivity activity, ButtonsConfigurator<T> buttonsConfigurator, ButtonCategory buttonCategory, int layoutId){
         buttonActionMap = new HashMap<>();
         buttonBackgroundResourceMap = new HashMap<>();
         toastMessageIdMap = new HashMap<>();
@@ -34,6 +38,9 @@ public class ButtonConfigHandler<T>{
         this.buttonsConfigurator = buttonsConfigurator;
         this.buttonUtils = new ButtonUtils(activity);
         this.buttonCategory = buttonCategory;
+
+        linearLayout = activity.findViewById(layoutId);
+        buttonLayoutParams = activity.getButtonLayoutParams();
     }
 
 
@@ -44,6 +51,7 @@ public class ButtonConfigHandler<T>{
 
     public void put(int id, int drawableId, T action){
         buttonActionMap.put(id, action);
+        linearLayout.addView(buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams));
        // buttonUtils.setStandardWidthOn(id);
         buttonBackgroundResourceMap.put(id, drawableId);
     }
@@ -61,12 +69,12 @@ public class ButtonConfigHandler<T>{
 
 
     void setParentButton(int id){
-        this.imageButton = activity.findViewById(id);
+        this.button = activity.findViewById(id);
     }
 
 
     private void setBackgroundOfParentButton(int selectedButtonId){
-        if(imageButton == null){
+        if(button == null){
             return;
         }
         if(buttonBackgroundResourceMap.containsKey(selectedButtonId)){
@@ -74,7 +82,8 @@ public class ButtonConfigHandler<T>{
             if( resId == null){
                 return;
             }
-            imageButton.setImageResource(resId);
+            //button.setImageResource(resId);
+            button.setBackgroundResource(resId);
         }
         if(toastMessageIdMap.containsKey(selectedButtonId)){
             Integer id = toastMessageIdMap.get(selectedButtonId);
@@ -91,27 +100,28 @@ public class ButtonConfigHandler<T>{
 
 
     void setupClickHandler(){
-        View.OnClickListener shapeListener = new View.OnClickListener(){
+        View.OnClickListener clickListener = new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 int viewId = view.getId();
-                buttonUtils.switchSelection(view.getId(), buttonIds);
+                buttonUtils.switchSelection(view.getId(), buttonIds, buttonLayoutParams);
                 buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
                 PaintViewSingleton.getInstance().saveSetting(viewId, buttonCategory);
                 setBackgroundOfParentButton(viewId);
             }
         };
         buttonIds = buttonActionMap.keySet();
-
-        for(int id: buttonIds){
-            View buttonView = activity.findViewById(id);
-            buttonView.setOnClickListener(shapeListener);
+        for(int buttonId : buttonIds){
+           View view =  activity.findViewById(buttonId);
+           if(view != null){
+               view.setOnClickListener(clickListener);
+           }
         }
     }
 
 
     void setDefaultSelection(int id){
-        buttonUtils.switchSelection(id, buttonIds);
+        buttonUtils.switchSelection(id, buttonIds, buttonLayoutParams);
         buttonsConfigurator.handleClick(id, buttonActionMap.get(id));
     }
 

@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.controls;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -23,26 +24,30 @@ public class ButtonUtils {
     }
 
 
-   public void switchSelection(int viewId, Set<Integer> buttons){
+   public void switchSelection(int viewId, Set<Integer> buttons, ButtonLayoutParams buttonLayoutParams){
         for(int buttonId : buttons){
             if(viewId == buttonId){
-                switchSelectionToButton(buttonId, buttons);
+                switchSelectionToButton(buttonId, buttons, buttonLayoutParams);
                 return;
             }
         }
     }
 
 
-    private void switchSelectionToButton(int buttonId, Set<Integer> buttonList){
-        selectButton(buttonId);
-        deselectOtherButtons(buttonId, buttonList);
+    private void switchSelectionToButton(int buttonId, Set<Integer> buttonList, ButtonLayoutParams buttonLayoutParams){
+        selectButton(buttonId, buttonLayoutParams);
+        deselectOtherButtons(buttonId, buttonList, buttonLayoutParams);
     }
 
 
-    private void selectButton(int buttonId){
+    private void selectButton(int buttonId, ButtonLayoutParams buttonLayoutParams){
         View button = findViewById(buttonId);
+        if(button == null){
+            return;
+        }
         button.setSelected(true);
-        button.setBackgroundColor(getColor(R.color.selected_button_border));
+        button.setLayoutParams(buttonLayoutParams.getSelected());
+      //  button.setBackgroundColor(getColor(R.color.selected_button_border));
     }
 
 
@@ -51,20 +56,24 @@ public class ButtonUtils {
     }
 
 
-    private void deselectOtherButtons(int selectedButtonId, Set<Integer> buttonList){
+    private void deselectOtherButtons(int selectedButtonId, Set<Integer> buttonList, ButtonLayoutParams buttonLayoutParams){
         for(int buttonId : buttonList){
             if(buttonId == selectedButtonId){
                 continue;
             }
-            deselectButton(buttonId);
+            deselectButton(buttonId, buttonLayoutParams);
         }
     }
 
 
-    public void deselectButton(int buttonId){
+    public void deselectButton(int buttonId, ButtonLayoutParams buttonLayoutParams){
         View button = findViewById(buttonId);
+        if(button == null){
+            return;
+        }
         button.setSelected(false);
-        button.setBackgroundColor(Color.LTGRAY);
+        button.setLayoutParams(buttonLayoutParams.getUnselected());
+       // button.setBackgroundColor(Color.LTGRAY);
     }
 
 
@@ -80,8 +89,17 @@ public class ButtonUtils {
     }
 
 
-    private Button createGenericButton(ButtonType type, String key, ButtonLayoutParams layoutParams){
+    public LinearLayout createWrappedButton(int id, int backgroundId, ButtonLayoutParams layoutParams){
+        Button button = createButton(id, backgroundId, layoutParams);
+        return wrapInMarginLayout(layoutParams, button);
+    }
+
+
+    public Button createButton(int id, int backgroundId, ButtonLayoutParams layoutParams){
         Button button = new Button(activity);
+        button.setId(id);
+        button.setBackgroundResource(backgroundId);
+        button.setPadding(10,10,10,10);
         button.setLayoutParams(layoutParams.getUnselected());
         setStandardWidthOn(button);
         return button;

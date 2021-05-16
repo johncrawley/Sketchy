@@ -12,9 +12,11 @@ public class SettingsButtonsConfigurator {
 
     public SettingsButtonsConfigurator(MainActivity activity, PaintView paintView){
         this.activity = activity;
+        // needs to be instantiated first, otherwise parent button icons won't get updated
+        new SelectionButtonsConfigurator(activity);
+
         new ShapeButtonsConfigurator(activity, paintView);
         new StyleButtonsConfigurator(activity, paintView);
-        new SelectionButtonsConfigurator(activity);
         new GradientButtonsConfigurator(activity, paintView);
         new BlurButtonsConfigurator(activity, paintView);
         new ShadowButtonsConfigurator(activity, paintView);

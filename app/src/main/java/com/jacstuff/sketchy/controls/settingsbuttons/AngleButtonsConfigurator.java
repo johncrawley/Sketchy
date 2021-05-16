@@ -20,7 +20,7 @@ public class AngleButtonsConfigurator implements ButtonsConfigurator<AngleType>{
 
 
     public void configure(){
-        ButtonConfigHandler<AngleType> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.ANGLE);
+        ButtonConfigHandler<AngleType> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.ANGLE, R.id.angleOptionsLayout);
         buttonConfig.put(R.id.zeroDegreesButton, R.drawable.zero_degrees_button, AngleType.ZERO);
         buttonConfig.put(R.id.degrees30Button,   R.drawable.degrees_30_button,   AngleType.THIRTY);
         buttonConfig.put(R.id.degrees45Button,   R.drawable.degrees_45_button,   AngleType.FORTY_FIVE);

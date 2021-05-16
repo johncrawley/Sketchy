@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="gradientSelectionButton" type="id"/>
+    <item name="shapeSelectionButton" type="id"/>
+    <item name="styleSelectionButton" type="id"/>
+    <item name="angleSelectionButton" type="id"/>
+    <item name="blurSelectionButton" type="id"/>
+    <item name="shadowSelectionButton" type="id"/>
+    <item name="kaleidoscopeSelectionButton" type="id"/>
+
+    <item name="zeroDegreesButton" type="id"/>
+    <item name="degrees30Button" type="id"/>
+    <item name="degrees45Button" type="id"/>
+    <item name="degrees60Button" type="id"/>
+    <item name="degrees90Button" type="id"/>
+    <item name="degrees135Button" type="id"/>
+    <item name="degrees150Button" type="id"/>
+    <item name="degrees180Button" type="id"/>
+    <item name="degrees225Button" type="id"/>
+    <item name="degrees270Button" type="id"/>
+    <item name="degrees315Button" type="id"/>
+    <item name="degreesMinus15Button" type="id"/>
+    <item name="degreesPlus1Button" type="id"/>
+    <item name="degreesMinus1Button" type="id"/>
+    <item name="degreesPlus15Button" type="id"/>
+    <item name="degreesMinus30Button" type="id"/>
+    <item name="degreesPlus30Button" type="id"/>
+    <item name="degreesMinus90Button" type="id"/>
+    <item name="degreesPlus90Button" type="id"/>
+    <item name="degreesRandomButton" type="id"/>
+
+
+    <item name="noBlurButton" type="id"/>
+    <item name="innerBlurButton" type="id"/>
+    <item name="normalBlurButton" type="id"/>
+    <item name="outerBlurButton" type="id"/>
+    <item name="solidBlurButton" type="id"/>
+
+
+    <item name="noGradientButton" type="id"/>
+    <item name="gradientVerticallMirrorButton" type="id"/>
+    <item name="gradientHorizontalMirrorButton" type="id"/>
+    <item name="diagonalMirrorGradientButton" type="id"/>
+    <item name="gradientRadialClampButton" type="id"/>
+    <item name="gradientRadialRepeatButton" type="id"/>
+    <item name="gradientRadialMirrorButton" type="id"/>
+
+    <item name="kOffButton" type="id"/>
+    <item name="k2Button" type="id"/>
+    <item name="k5Button" type="id"/>
+    <item name="k6Button" type="id"/>
+    <item name="k7Button" type="id"/>
+    <item name="k8Button" type="id"/>
+    <item name="k9Button" type="id"/>
+    <item name="k10Button" type="id"/>
+    <item name="k12Button" type="id"/>
+    <item name="k16Button" type="id"/>
+
+    <item name="noShadowButton" type="id"/>
+    <item name="centreShadowButton" type="id"/>
+    <item name="northShadowButton" type="id"/>
+    <item name="northEastShadowButton" type="id"/>
+    <item name="eastShadowButton" type="id"/>
+    <item name="southEastShadowButton" type="id"/>
+    <item name="southShadowButton" type="id"/>
+    <item name="southWestShadowButton" type="id"/>
+    <item name="westShadowButton" type="id"/>
+    <item name="northWestShadowButton" type="id"/>
+
+
+    <item name="squareShapeButton" type="id"/>
+    <item name="circleShapeButton" type="id"/>
+    <item name="lineShapeButton" type="id"/>
+    <item name="straightLineShapeButton" type="id"/>
+    <item name="roundedRectangleShapeButton" type="id"/>
+    <item name="triangleShapeButton" type="id"/>
+    <item name="pentagonShapeButton" type="id"/>
+    <item name="starShapeButton" type="id"/>
+    <item name="hexagonShapeButton" type="id"/>
+
+    <item name="brokenOutlineStyleButton" type="id"/>
+    <item name="fillStyleButton" type="id"/>
+    <item name="outlineStyleButton" type="id"/>
+    <item name="jaggedStyleButton" type="id"/>
+    <item name="doubleEdgeStyleButton" type="id"/>
+    <item name="spikedStyleButton" type="id"/>
+    <item name="translateStyleButton" type="id"/>
+
+
+
+
+</resources>

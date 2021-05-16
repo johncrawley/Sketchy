@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.controls.seekbars;
 
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.jacstuff.sketchy.MainActivity;
@@ -10,7 +11,7 @@ import com.jacstuff.sketchy.paintview.PaintView;
 
 public class AngleSeekBar extends AbstractSeekBarConfig {
 
-    private ImageButton parentButton;
+    private Button parentButton;
     private ButtonUtils buttonUtils;
 
     public AngleSeekBar(MainActivity mainActivity, PaintView paintView){
@@ -25,8 +26,8 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
             paintView.setAnglePreset(AngleType.OTHER);
             paintView.setAngle(progress);
             if(parentButton != null){
-                parentButton.setImageResource(R.drawable.degrees_button);
-                buttonUtils.deselectButton(paintView.getCurrentAngleButtonViewId());
+                parentButton.setBackgroundResource(R.drawable.degrees_button);
+                buttonUtils.deselectButton(paintView.getCurrentAngleButtonViewId(), mainActivity.getButtonLayoutParams());
             }
         }
     }

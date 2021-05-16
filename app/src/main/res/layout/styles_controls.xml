@@ -22,6 +22,7 @@
                     android:orientation="horizontal"
                     android:paddingTop="@dimen/shape_options_padding_top">
 
+                    <!--
                 <ImageButton
                     android:id="@+id/fillStyleButton"
                     android:layout_width="@dimen/selector_button_width"
@@ -93,7 +94,7 @@
                         android:layout_weight="1"
                         android:contentDescription="@string/content_description_outline_style_button"
                         app:srcCompat="@drawable/translate_outline_style_button" />
-
+            -->
              </LinearLayout>
         </HorizontalScrollView>
         <include

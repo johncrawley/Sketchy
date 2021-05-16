@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupColorAutoScroll();
     }
 
+    public ButtonLayoutParams getButtonLayoutParams(){
+        return buttonLayoutParams;
+    }
+
 
     private void setupButtons(){
         setupSettingsButtons();

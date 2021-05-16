@@ -23,6 +23,7 @@
         android:orientation="horizontal"
         android:paddingTop="@dimen/shape_options_padding_top">
 
+        <!--
         <ImageButton
             android:id="@+id/squareShapeButton"
             android:layout_width="@dimen/selector_button_width"
@@ -43,7 +44,6 @@
             android:contentDescription="@string/content_description_circle_shape_button"
             app:srcCompat="@drawable/circle_shape_button" />
 
-
         <ImageButton
             android:id="@+id/straightLineShapeButton"
             android:layout_width="@dimen/selector_button_width"
@@ -53,7 +53,6 @@
             android:layout_weight="1"
             android:contentDescription="@string/content_description_straight_line_shape_button"
             app:srcCompat="@drawable/straight_line_shape_button" />
-
 
         <ImageButton
             android:id="@+id/lineShapeButton"
@@ -74,6 +73,7 @@
             android:layout_weight="1"
             android:contentDescription="@string/content_description_rounded_rectangle_shape_button"
             app:srcCompat="@drawable/rounded_rectangle_shape_button" />
+
         <ImageButton
             android:id="@+id/triangleShapeButton"
             android:layout_width="@dimen/selector_button_width"
@@ -94,7 +94,6 @@
             android:contentDescription="@string/content_description_pentagon_shape_button"
             app:srcCompat="@drawable/pentagon_shape_button" />
 
-
         <ImageButton
             android:id="@+id/starShapeButton"
             android:layout_width="@dimen/selector_button_width"
@@ -114,7 +113,7 @@
             android:layout_weight="1"
             android:contentDescription="@string/content_description_hexagon_shape_button"
             app:srcCompat="@drawable/hexagon_shape_button" />
-
+-->
     </LinearLayout>
 
     </HorizontalScrollView>

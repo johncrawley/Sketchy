@@ -19,7 +19,7 @@
             android:layout_marginTop="@dimen/shape_selector_group_top_margin"
             android:orientation="horizontal"
             android:paddingTop="@dimen/shape_options_padding_top">
-
+    <!--
             <ImageButton
                 android:id="@+id/zeroDegreesButton"
                 android:layout_width="@dimen/selector_button_width"
@@ -221,7 +221,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/content_description_angle_random_button"
                 app:srcCompat="@drawable/degrees_random_button" />
-
+-->
         </LinearLayout>
 
     </HorizontalScrollView>

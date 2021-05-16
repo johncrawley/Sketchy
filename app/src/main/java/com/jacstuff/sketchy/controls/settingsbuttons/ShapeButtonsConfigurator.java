@@ -21,7 +21,10 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
 
 
     public void configure(){
-        ButtonConfigHandler<BrushShape> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.SHAPE);
+        ButtonConfigHandler<BrushShape> buttonConfig = new ButtonConfigHandler<>(activity,
+                this,
+                ButtonCategory.SHAPE,
+                R.id.shapeOptionsLayout);
         buttonConfig.put(R.id.squareShapeButton,            R.drawable.square_shape_button,             BrushShape.SQUARE);
         buttonConfig.put(R.id.circleShapeButton,            R.drawable.circle_shape_button,             BrushShape.CIRCLE);
         buttonConfig.put(R.id.lineShapeButton,              R.drawable.line_shape_button,               BrushShape.LINE);

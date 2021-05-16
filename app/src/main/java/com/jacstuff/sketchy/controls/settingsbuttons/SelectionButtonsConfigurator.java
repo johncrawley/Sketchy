@@ -22,15 +22,17 @@ public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer
 
 
     public void configure(){
-        ButtonConfigHandler<Integer> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.CATEGORIES);
-        buttonConfig.put(R.id.gradientSelectionButton,  R.id.includeGradientControls);
-        buttonConfig.put(R.id.shapeSelectionButton,     R.id.includeShapeControls);
-        buttonConfig.put(R.id.styleSelectionButton,     R.id.includeStyleControls);
-        buttonConfig.put(R.id.angleSelectionButton,     R.id.includeAngleControls);
-        buttonConfig.put(R.id.blurSelectionButton,      R.id.includeBlurControls);
-        buttonConfig.put(R.id.shadowSelectionButton,    R.id.includeShadowControls);
-        buttonConfig.put(R.id.kaleidoscopeSelectionButton, R.id.includeKaleidoScopeControls);
-        buttonConfig.put(R.id.angleSelectionButton,     R.id.includeAngleControls);
+        ButtonConfigHandler<Integer> buttonConfig = new ButtonConfigHandler<>(activity,
+                this,
+                ButtonCategory.CATEGORIES,
+                R.id.controlPanelLayout);
+        buttonConfig.put(R.id.shapeSelectionButton, R.drawable.square_shape_button,    R.id.includeShapeControls);
+        buttonConfig.put(R.id.styleSelectionButton,  R.drawable.fill_style_button,      R.id.includeStyleControls);
+        buttonConfig.put(R.id.gradientSelectionButton, R.drawable.no_gradient_button,  R.id.includeGradientControls);
+        buttonConfig.put(R.id.angleSelectionButton, R.drawable.zero_degrees_button,     R.id.includeAngleControls);
+        buttonConfig.put(R.id.blurSelectionButton,  R.drawable.no_blur_button,          R.id.includeBlurControls);
+        buttonConfig.put(R.id.shadowSelectionButton, R.drawable.no_shadow_button,       R.id.includeShadowControls);
+        buttonConfig.put(R.id.kaleidoscopeSelectionButton, R.drawable.k_off_button,     R.id.includeKaleidoScopeControls);
         buttonConfig.setupClickHandler();
         layoutIds = buttonConfig.getEntries();
         buttonConfig.setDefaultSelection(R.id.shapeSelectionButton);
@@ -51,7 +53,6 @@ public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer
             activity.findViewById(layoutId).setVisibility(View.INVISIBLE);
         }
     }
-
 
 
 }
