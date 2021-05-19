@@ -2,16 +2,12 @@ package com.jacstuff.sketchy.controls;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.controls.colorbuttons.ButtonType;
-
 import java.util.List;
 import java.util.Set;
 
@@ -47,12 +43,6 @@ public class ButtonUtils {
         }
         button.setSelected(true);
         button.setLayoutParams(buttonLayoutParams.getSelected());
-      //  button.setBackgroundColor(getColor(R.color.selected_button_border));
-    }
-
-
-    private int getColor(int colorId){
-        return activity.getResources().getColor(R.color.selected_button_border, null);
     }
 
 
@@ -73,13 +63,6 @@ public class ButtonUtils {
         }
         button.setSelected(false);
         button.setLayoutParams(buttonLayoutParams.getUnselected());
-       // button.setBackgroundColor(Color.LTGRAY);
-    }
-
-
-    public void setStandardWidthOn(int id){
-        Button button = (Button)findViewById(id);
-        setStandardWidthOn(button);
     }
 
 
@@ -91,7 +74,7 @@ public class ButtonUtils {
 
     public LinearLayout createWrappedButton(int id, int backgroundId, ButtonLayoutParams layoutParams){
         Button button = createButton(id, backgroundId, layoutParams);
-        return wrapInMarginLayout(layoutParams, button);
+        return wrapInSpacingLayout(wrapInMarginLayout(layoutParams, button));
     }
 
 
@@ -99,10 +82,19 @@ public class ButtonUtils {
         Button button = new Button(activity);
         button.setId(id);
         button.setBackgroundResource(backgroundId);
-        button.setPadding(10,10,10,10);
         button.setLayoutParams(layoutParams.getUnselected());
         setStandardWidthOn(button);
         return button;
+    }
+
+
+    public LinearLayout wrapInSpacingLayout(View view){
+        LinearLayout layout = new LinearLayout(activity);
+        layout.setGravity(Gravity.CENTER);
+        int padding = 10;
+        layout.setPadding(padding, padding, padding, padding);
+        layout.addView(view);
+        return layout;
     }
 
 
@@ -115,6 +107,7 @@ public class ButtonUtils {
         layout.addView(button);
         return layout;
     }
+
 
     public void setStandardWidthOn(Button button){
         float dps = activity.getResources().getDimension(R.dimen.color_button_width);

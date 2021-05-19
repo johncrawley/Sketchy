@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final int LOAD_FILE_ACTIVITY_CODE = 103;
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
-    private ButtonLayoutParams buttonLayoutParams = new ButtonLayoutParams(120, 120, 15);
+    private ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 15);
+    private ButtonLayoutParams settingsButtonLayoutParams = new ButtonLayoutParams(120, 120, 15, 2);
     private ColorButtonClickHandler buttonClickHandler;
     private ColorButtonLayoutPopulator layoutPopulator;
     private Toast colorPatternToast;
@@ -62,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupColorAutoScroll();
     }
 
-    public ButtonLayoutParams getButtonLayoutParams(){
-        return buttonLayoutParams;
+    public ButtonLayoutParams getSettingsButtonsLayoutParams(){
+        return settingsButtonLayoutParams;
     }
 
 
@@ -139,9 +140,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void setupColorAndShadeButtons(){
         List<Integer> colors = ColorCreator.generate();
-        buttonClickHandler = new ColorButtonClickHandler(this, paintView, buttonLayoutParams, shadesScrollView);
+        buttonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams, shadesScrollView);
         buttonClickHandler.setColorsMap(colors);
-        layoutPopulator = new ColorButtonLayoutPopulator(this, buttonLayoutParams, colors);
+        layoutPopulator = new ColorButtonLayoutPopulator(this, colorButtonLayoutParams, colors);
         buttonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
         layoutPopulator.addColorButtonLayoutsTo(colorButtonGroupLayout);
         buttonClickHandler.setShadeLayoutsMap(layoutPopulator.getShadeLayoutsMap());

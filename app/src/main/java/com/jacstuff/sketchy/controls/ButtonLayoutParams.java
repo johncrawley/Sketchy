@@ -8,11 +8,15 @@ public class ButtonLayoutParams {
     private LinearLayout.LayoutParams unselectedButtonLayoutParams, selectedButtonLayoutParams;
 
     public ButtonLayoutParams(int buttonWidth, int buttonHeight, int selectedButtonBorderWidth){
+        this(buttonWidth, buttonHeight, selectedButtonBorderWidth, 0);
+    }
+
+    public ButtonLayoutParams(int buttonWidth, int buttonHeight, int selectedButtonBorderWidth, int unselectedButtonBorderWidth){
         this.buttonWidth = buttonWidth;
         this.buttonHeight = buttonHeight;
 
         selectedButtonLayoutParams = new LinearLayout.LayoutParams(buttonWidth - selectedButtonBorderWidth, buttonHeight - selectedButtonBorderWidth);
-        unselectedButtonLayoutParams = new LinearLayout.LayoutParams(buttonWidth, buttonHeight);
+        unselectedButtonLayoutParams = new LinearLayout.LayoutParams(buttonWidth - unselectedButtonBorderWidth, buttonHeight - unselectedButtonBorderWidth);
     }
 
 

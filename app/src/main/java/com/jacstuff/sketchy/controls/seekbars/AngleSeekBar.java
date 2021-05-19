@@ -27,7 +27,7 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
             paintView.setAngle(progress);
             if(parentButton != null){
                 parentButton.setBackgroundResource(R.drawable.degrees_button);
-                buttonUtils.deselectButton(paintView.getCurrentAngleButtonViewId(), mainActivity.getButtonLayoutParams());
+                buttonUtils.deselectButton(paintView.getCurrentAngleButtonViewId(), mainActivity.getSettingsButtonsLayoutParams());
             }
         }
     }

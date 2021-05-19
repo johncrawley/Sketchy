@@ -40,7 +40,7 @@ public class ButtonConfigHandler<T>{
         this.buttonCategory = buttonCategory;
 
         linearLayout = activity.findViewById(layoutId);
-        buttonLayoutParams = activity.getButtonLayoutParams();
+        buttonLayoutParams = activity.getSettingsButtonsLayoutParams();
     }
 
 
