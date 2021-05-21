@@ -52,7 +52,14 @@ public class ButtonConfigHandler<T>{
     public void put(int id, int drawableId, T action){
         buttonActionMap.put(id, action);
         linearLayout.addView(buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams));
-       // buttonUtils.setStandardWidthOn(id);
+        // buttonUtils.setStandardWidthOn(id);
+        buttonBackgroundResourceMap.put(id, drawableId);
+    }
+
+    public void putButtonWithText(int id, int drawableId, T action, String text){
+        buttonActionMap.put(id, action);
+        linearLayout.addView(buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams, text));
+        // buttonUtils.setStandardWidthOn(id);
         buttonBackgroundResourceMap.put(id, drawableId);
     }
 

@@ -78,12 +78,24 @@ public class ButtonUtils {
     }
 
 
+    public LinearLayout createWrappedButton(int id, int backgroundId, ButtonLayoutParams layoutParams, String text){
+        Button button = createButton(id, backgroundId, layoutParams, text);
+        return wrapInSpacingLayout(wrapInMarginLayout(layoutParams, button));
+    }
+
+
     public Button createButton(int id, int backgroundId, ButtonLayoutParams layoutParams){
+        return createButton(id,backgroundId,layoutParams, "");
+    }
+
+
+    public Button createButton(int id, int backgroundId, ButtonLayoutParams layoutParams, String text){
         Button button = new Button(activity);
         button.setId(id);
         button.setBackgroundResource(backgroundId);
         button.setLayoutParams(layoutParams.getUnselected());
         setStandardWidthOn(button);
+        button.setText(text);
         return button;
     }
 
