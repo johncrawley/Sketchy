@@ -35,6 +35,7 @@ public class PaintViewConfigurator {
 
     public void configure(PaintView paintView){
         int paintViewWidth, paintViewHeight;
+        paintViewHeight = paintView.getHeight();
 
         if(isInLandscapeMode()){
             paintViewHeight = screenHeight - (actionBarHeight + totalMargin);
@@ -42,7 +43,7 @@ public class PaintViewConfigurator {
 
         } else {
             paintViewWidth = screenWidth - totalMargin;
-            paintViewHeight = ((screenHeight-actionBarHeight) /2) - totalPaintViewMargins;
+           // paintViewHeight = ((screenHeight-actionBarHeight) /2) - totalPaintViewMargins;
         }
         paintView.init(paintViewWidth, paintViewHeight);
         paintView.setCurrentColor(Color.BLACK);

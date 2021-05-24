@@ -89,7 +89,6 @@ public class ButtonConfigHandler<T>{
             if( resId == null){
                 return;
             }
-            //button.setImageResource(resId);
             button.setBackgroundResource(resId);
         }
         if(toastMessageIdMap.containsKey(selectedButtonId)){

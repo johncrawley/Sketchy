@@ -76,7 +76,7 @@ public class PaintView extends View {
         gradientHelper = new GradientHelper(paint, context.getResources().getInteger(R.integer.gradient_radius_max));
         angleHelper = new AngleHelper();
         kaleidoHelper = new KaleidoscopeHelper(0,0);
-
+        System.out.println("PaintView height at end of constructor: " + this.getHeight());
     }
 
 
@@ -197,6 +197,13 @@ public class PaintView extends View {
     public void init(int canvasWidth, int canvasHeight) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
+        if(canvasHeight <= 0){
+            canvasHeight = this.getHeight();
+        }
+        if(canvasHeight <= 0){
+            System.out.println("Couldn't get height from view!");
+            canvasHeight = 1000;
+        }
         bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         drawPlainBackground();

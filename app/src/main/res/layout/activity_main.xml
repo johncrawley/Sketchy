@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginBottom="0dp"
     android:background="@color/backgroundColor"
@@ -11,50 +12,69 @@
 
 
     <include
+        android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         layout="@layout/toolbar" />
 
 
-    <LinearLayout
+    <include
+        android:id="@+id/includeColorControls"
         android:layout_width="match_parent"
-        android:baselineAligned="false"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/mainToolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        layout="@layout/color_controls" />
+
+    <LinearLayout
+        android:id="@+id/paintViewLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/paint_view_layout_margin"
+        android:layout_marginTop="@dimen/paint_view_layout_portrait_margin_top"
+        android:background="@color/paint_view_border"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/includeSelectionControls"
+        app:layout_constraintTop_toBottomOf="@id/includeColorControls"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:weightSum="1"
-        tools:context=".MainActivity">
+        android:padding="@dimen/paint_view_layout_padding">
 
-        <include
+        <com.jacstuff.sketchy.paintview.PaintView
+            android:id="@+id/paintView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".15"
-            layout="@layout/color_controls" />
-
-        <LinearLayout
-            android:id="@+id/paintViewLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/paint_view_layout_margin"
-            android:layout_marginTop="@dimen/paint_view_layout_portrait_margin_top"
-            android:layout_weight=".49"
-            android:background="#291F1F"
-            android:orientation="vertical"
-            android:padding="@dimen/paint_view_layout_padding">
-
-            <com.jacstuff.sketchy.paintview.PaintView
-                android:id="@+id/paintView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/paint_view_margin"  />
-
-        </LinearLayout>
-
-        <include
-            layout="@layout/selection_controls"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".35" />
+            android:layout_weight="1"
+            android:layout_margin="@dimen/paint_view_margin"  />
 
     </LinearLayout>
-</LinearLayout>
+
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/settingsMenuLayout"
+        layout="@layout/selection_controls"
+        app:layout_constraintBottom_toTopOf="@id/includeSelectionControls"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"/>
+
+    <include
+        android:id="@+id/includeSelectionControls"
+        layout="@layout/control_selector_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <!--
+        android:layout_weight=".15"
+        android:layout_weight=".49"
+        android:layout_weight=".35" -->
+</androidx.constraintlayout.widget.ConstraintLayout>
