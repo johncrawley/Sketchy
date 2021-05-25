@@ -24,6 +24,7 @@ import com.jacstuff.sketchy.paintview.helpers.BlurHelper;
 import com.jacstuff.sketchy.paintview.helpers.GradientHelper;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.ShadowHelper;
+import com.jacstuff.sketchy.ui.SettingsPopup;
 
 
 public class PaintView extends View {
@@ -54,6 +55,8 @@ public class PaintView extends View {
     private Paint drawPaint = new Paint();
 
     private PaintGroup paintGroup;
+    private SettingsPopup settingsPopup;
+
 
     public PaintView(Context context) {
         this(context, null);
@@ -78,6 +81,27 @@ public class PaintView extends View {
         kaleidoHelper = new KaleidoscopeHelper(0,0);
         System.out.println("PaintView height at end of constructor: " + this.getHeight());
     }
+
+
+    public void init(int canvasWidth, int canvasHeight, SettingsPopup settingsPopup) {
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
+        this.settingsPopup = settingsPopup;
+        if(canvasHeight <= 0){
+            canvasHeight = this.getHeight();
+        }
+        if(canvasHeight <= 0){
+            System.out.println("Couldn't get height from view!");
+            canvasHeight = 1000;
+        }
+        bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(bitmap);
+        drawPlainBackground();
+        initBrushes();
+        kaleidoHelper = new KaleidoscopeHelper(canvasWidth/2, canvasHeight/2);
+    }
+
+
 
 
     private Paint createPaint(int color){
@@ -194,24 +218,6 @@ public class PaintView extends View {
     }
 
 
-    public void init(int canvasWidth, int canvasHeight) {
-        this.canvasWidth = canvasWidth;
-        this.canvasHeight = canvasHeight;
-        if(canvasHeight <= 0){
-            canvasHeight = this.getHeight();
-        }
-        if(canvasHeight <= 0){
-            System.out.println("Couldn't get height from view!");
-            canvasHeight = 1000;
-        }
-        bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(bitmap);
-        drawPlainBackground();
-        initBrushes();
-        kaleidoHelper = new KaleidoscopeHelper(canvasWidth/2, canvasHeight/2);
-    }
-
-
     public void resetCanvas(){
         wasCanvasModifiedSinceLastSaveOrReset = false;
         isCanvasLocked = true;
@@ -261,6 +267,10 @@ public class PaintView extends View {
     @Override
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
+        if(settingsPopup.isVisible()){
+            settingsPopup.dismiss();
+            return true;
+        }
         float x = event.getX();
         float y = event.getY();
 

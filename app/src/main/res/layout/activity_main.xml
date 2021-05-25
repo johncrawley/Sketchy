@@ -32,23 +32,22 @@
 
     <LinearLayout
         android:id="@+id/paintViewLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/paint_view_layout_margin"
         android:layout_marginTop="@dimen/paint_view_layout_portrait_margin_top"
         android:background="@color/paint_view_border"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/includeSelectionControls"
         app:layout_constraintTop_toBottomOf="@id/includeColorControls"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/includedSelectionControls"
+
         android:weightSum="1"
         android:padding="@dimen/paint_view_layout_padding">
 
         <com.jacstuff.sketchy.paintview.PaintView
             android:id="@+id/paintView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="@dimen/paint_view_margin"  />
 
@@ -58,15 +57,16 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/settingsMenuLayout"
+        android:id="@+id/includedSettingsLayout"
         layout="@layout/selection_controls"
-        app:layout_constraintBottom_toTopOf="@id/includeSelectionControls"
+        app:layout_constraintBottom_toTopOf="@id/includedSelectionControls"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
         android:orientation="vertical"/>
 
     <include
-        android:id="@+id/includeSelectionControls"
+        android:id="@+id/includedSelectionControls"
         layout="@layout/control_selector_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

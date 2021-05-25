@@ -8,9 +8,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -27,6 +30,7 @@ import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
 import com.jacstuff.sketchy.settings.PaintViewSingleton;
 import com.jacstuff.sketchy.settings.ResumedActionsHelper;
 import com.jacstuff.sketchy.tasks.ColorAutoScroller;
+import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.util.List;
 
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toast colorPatternToast;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
     private ResumedActionsHelper resumedActionsHelper;
-
+    private SettingsPopup settingsPopup;
 
 
     @Override
@@ -62,6 +66,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         new SeekBarConfigurator(this, paintView);
         setupColorAutoScroll();
     }
+
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        resumedActionsHelper.onPause();
+    }
+
+
+    @Override
+    public void onClick(View v){
+        settingsPopup.dismiss();
+        buttonClickHandler.handleColorButtonClicks(v);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menuitems, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_new:
+                startClearDialogIfChangesNotSaved();
+                return true;
+            case R.id.action_save:
+                startSaveDocumentActivity();
+                return true;
+            case R.id.action_about:
+                startAboutActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SAVE_FILE_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
+            imageSaver.saveImageToFile(data, paintView);
+            paintView.notifyPictureSaved();
+        }
+        else if(requestCode == CLEAR_CANVAS_ACTIVITY_CODE && resultCode == Activity.RESULT_OK){
+            createNewSketch();
+        }
+    }
+
 
     public ButtonLayoutParams getSettingsButtonsLayoutParams(){
         return settingsButtonLayoutParams;
@@ -87,7 +144,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void setupSettingsButtons(){
+        settingsPopup = new SettingsPopup((ViewGroup)findViewById(R.id.includedSettingsLayout), this);
         settingsButtonsConfigurator = new SettingsButtonsConfigurator(this, paintView);
+    }
+
+
+    public SettingsPopup getSettingsPopup(){
+        return this.settingsPopup;
     }
 
 
@@ -117,9 +180,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
-        PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, this.getWindowManager());
-        paintViewConfigurator.configure(paintView);
+        PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, getWindowManager(), 1000, 1000);
+        paintViewConfigurator.configure(paintView, settingsPopup);
+        getAssignHeight(this);
         assignSavedBitmap();
+    }
+
+
+    private void getAssignHeight(final MainActivity mainActivity){
+        final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
+        ViewTreeObserver vto = linearLayout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                int width  = linearLayout.getMeasuredWidth();
+                int height = linearLayout.getMeasuredHeight();
+
+                PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(mainActivity, mainActivity.getWindowManager(), width, height);
+                paintViewConfigurator.configure(paintView, settingsPopup);
+            }
+        });
+
     }
 
 
@@ -171,38 +253,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @Override
-    protected void onPause(){
-        super.onPause();
-        resumedActionsHelper.onPause();
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menuitems, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_new:
-                startClearDialogIfChangesNotSaved();
-                return true;
-            case R.id.action_save:
-                startSaveDocumentActivity();
-                return true;
-            case R.id.action_about:
-                startAboutActivity();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
     void startClearDialogIfChangesNotSaved(){
         if(paintView.canvasWasModifiedSinceLastSaveOrReset()){
             startConfirmClearActivity();
@@ -242,24 +292,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void startConfirmClearActivity(){
         Intent intent = new Intent(this, ConfirmWipeDialogActivity.class);
         startActivityForResult(intent, CLEAR_CANVAS_ACTIVITY_CODE);
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SAVE_FILE_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
-            imageSaver.saveImageToFile(data, paintView);
-            paintView.notifyPictureSaved();
-        }
-        else if(requestCode == CLEAR_CANVAS_ACTIVITY_CODE && resultCode == Activity.RESULT_OK){
-            createNewSketch();
-        }
-    }
-
-
-    public void onClick(View v){
-        buttonClickHandler.handleColorButtonClicks(v);
     }
 
 }

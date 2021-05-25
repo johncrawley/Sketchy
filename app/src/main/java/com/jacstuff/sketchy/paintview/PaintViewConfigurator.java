@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.ui.SettingsPopup;
 
 public class PaintViewConfigurator {
 
@@ -16,10 +17,14 @@ public class PaintViewConfigurator {
     private int actionBarHeight;
     private int totalMargin, totalPaintViewMargins;
 
-    public PaintViewConfigurator(Context context, WindowManager windowManager){
+    private int layoutWidth, layoutHeight;
+
+    public PaintViewConfigurator(Context context, WindowManager windowManager, int layoutWidth, int layoutHeight){
         this.context = context;
         deriveScreenDimensions(windowManager);
         getDimensionValues();
+        this.layoutWidth = layoutWidth;
+        this.layoutHeight = layoutHeight;
     }
 
     private void getDimensionValues(){
@@ -33,9 +38,9 @@ public class PaintViewConfigurator {
     }
 
 
-    public void configure(PaintView paintView){
+    public void configure(PaintView paintView, SettingsPopup settingsPopup){
         int paintViewWidth, paintViewHeight;
-        paintViewHeight = paintView.getHeight();
+        paintViewHeight = layoutHeight;
 
         if(isInLandscapeMode()){
             paintViewHeight = screenHeight - (actionBarHeight + totalMargin);
@@ -45,7 +50,7 @@ public class PaintViewConfigurator {
             paintViewWidth = screenWidth - totalMargin;
            // paintViewHeight = ((screenHeight-actionBarHeight) /2) - totalPaintViewMargins;
         }
-        paintView.init(paintViewWidth, paintViewHeight);
+        paintView.init(paintViewWidth, paintViewHeight,settingsPopup);
         paintView.setCurrentColor(Color.BLACK);
     }
 

@@ -9,6 +9,7 @@ import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.settings.PaintViewSingleton;
+import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class ButtonConfigHandler<T>{
     private ButtonCategory buttonCategory;
     private LinearLayout linearLayout;
     private ButtonLayoutParams buttonLayoutParams;
+    private SettingsPopup settingsPopup;
 
 
     public ButtonConfigHandler(MainActivity activity, ButtonsConfigurator<T> buttonsConfigurator, ButtonCategory buttonCategory, int layoutId){
@@ -35,26 +37,29 @@ public class ButtonConfigHandler<T>{
         buttonBackgroundResourceMap = new HashMap<>();
         toastMessageIdMap = new HashMap<>();
         this.activity = activity;
+        this.settingsPopup = activity.getSettingsPopup();
         this.buttonsConfigurator = buttonsConfigurator;
         this.buttonUtils = new ButtonUtils(activity);
         this.buttonCategory = buttonCategory;
-
         linearLayout = activity.findViewById(layoutId);
         buttonLayoutParams = activity.getSettingsButtonsLayoutParams();
     }
 
 
     public void put(int id, T action){
+        settingsPopup.registerToIgnore(id);
         buttonActionMap.put(id, action);
     }
 
 
     public void put(int id, int drawableId, T action){
         buttonActionMap.put(id, action);
+        settingsPopup.registerToIgnore(id);
         linearLayout.addView(buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams));
         // buttonUtils.setStandardWidthOn(id);
         buttonBackgroundResourceMap.put(id, drawableId);
     }
+
 
     public void putButtonWithText(int id, int drawableId, T action, String text){
         buttonActionMap.put(id, action);
@@ -77,6 +82,8 @@ public class ButtonConfigHandler<T>{
 
     void setParentButton(int id){
         this.button = activity.findViewById(id);
+        settingsPopup.registerParentButton(id);
+
     }
 
 
@@ -112,17 +119,24 @@ public class ButtonConfigHandler<T>{
                 int viewId = view.getId();
                 buttonUtils.switchSelection(view.getId(), buttonIds, buttonLayoutParams);
                 buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
+                settingsPopup.click(viewId);
                 PaintViewSingleton.getInstance().saveSetting(viewId, buttonCategory);
                 setBackgroundOfParentButton(viewId);
             }
         };
+        setClickListenerForButtons(clickListener);
+    }
+
+
+    private void setClickListenerForButtons(View.OnClickListener clickListener){
         buttonIds = buttonActionMap.keySet();
         for(int buttonId : buttonIds){
-           View view =  activity.findViewById(buttonId);
-           if(view != null){
-               view.setOnClickListener(clickListener);
-           }
+            View view =  activity.findViewById(buttonId);
+            if(view != null){
+                view.setOnClickListener(clickListener);
+            }
         }
+
     }
 
 

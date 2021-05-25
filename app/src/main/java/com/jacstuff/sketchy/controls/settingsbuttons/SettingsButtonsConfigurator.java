@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.ui.SettingsPopup;
 
 
 public class SettingsButtonsConfigurator {
