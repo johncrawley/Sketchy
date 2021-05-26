@@ -9,13 +9,27 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        layout="@layout/toolbar" />
+
+
+    <include
+        android:id="@+id/includedSelectionControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         layout="@layout/color_controls" />
 
 
     <include
+        android:id="@+id/includedSelectionControls"
+        layout="@layout/control_selector_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/selection_controls" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
 
 
 </LinearLayout>

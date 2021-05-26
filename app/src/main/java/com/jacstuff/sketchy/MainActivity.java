@@ -182,12 +182,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintView = findViewById(R.id.paintView);
         PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, getWindowManager(), 1000, 1000);
         paintViewConfigurator.configure(paintView, settingsPopup);
-        getAssignHeight(this);
-        assignSavedBitmap();
+        reconfigurePaintViewWithAssignedLayoutHeight(this);
+        //assignSavedBitmap();
     }
 
 
-    private void getAssignHeight(final MainActivity mainActivity){
+    private void reconfigurePaintViewWithAssignedLayoutHeight(final MainActivity mainActivity){
         final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
         ViewTreeObserver vto = linearLayout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(mainActivity, mainActivity.getWindowManager(), width, height);
                 paintViewConfigurator.configure(paintView, settingsPopup);
+                assignSavedBitmap();
             }
         });
 
