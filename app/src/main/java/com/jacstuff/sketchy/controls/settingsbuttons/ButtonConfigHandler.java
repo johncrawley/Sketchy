@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.jacstuff.sketchy.MainActivity;
+import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.ButtonUtils;
@@ -19,13 +20,11 @@ import java.util.Set;
 public class ButtonConfigHandler<T>{
 
     private Map<Integer, T> buttonActionMap;
-    private Map<Integer, Integer> buttonBackgroundResourceMap;
-    private Map<Integer, Integer> toastMessageIdMap;
     private ButtonsConfigurator<T> buttonsConfigurator;
     private MainActivity activity;
     private ButtonUtils buttonUtils;
     private Set<Integer> buttonIds;
-    private Button button;
+    private Button parentButton;
     private ButtonCategory buttonCategory;
     private LinearLayout linearLayout;
     private ButtonLayoutParams buttonLayoutParams;
@@ -34,8 +33,6 @@ public class ButtonConfigHandler<T>{
 
     public ButtonConfigHandler(MainActivity activity, ButtonsConfigurator<T> buttonsConfigurator, ButtonCategory buttonCategory, int layoutId){
         buttonActionMap = new HashMap<>();
-        buttonBackgroundResourceMap = new HashMap<>();
-        toastMessageIdMap = new HashMap<>();
         this.activity = activity;
         this.settingsPopup = activity.getSettingsPopup();
         this.buttonsConfigurator = buttonsConfigurator;
@@ -46,32 +43,21 @@ public class ButtonConfigHandler<T>{
     }
 
 
-    public void put(int id, T action){
+    public void add(int id, T action){
         settingsPopup.registerToIgnore(id);
         buttonActionMap.put(id, action);
     }
 
 
-    public void put(int id, int drawableId, T action){
-        buttonActionMap.put(id, action);
-        settingsPopup.registerToIgnore(id);
+    public void add(int id, int drawableId, T action){
+        add(id, action);
         linearLayout.addView(buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams));
-        // buttonUtils.setStandardWidthOn(id);
-        buttonBackgroundResourceMap.put(id, drawableId);
     }
 
 
-    public void putButtonWithText(int id, int drawableId, T action, String text){
-        buttonActionMap.put(id, action);
-        linearLayout.addView(buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams, text));
-        // buttonUtils.setStandardWidthOn(id);
-        buttonBackgroundResourceMap.put(id, drawableId);
-    }
-
-
-    public void put(int id, int drawableID, T action, int toastMessageId){
-        put(id, drawableID, action);
-        toastMessageIdMap.put(id, toastMessageId);
+    public void add(int id, T action, String text){
+        add(id, action);
+        linearLayout.addView(buttonUtils.createWrappedButton(id, R.drawable.blank_button, buttonLayoutParams, text));
     }
 
 
@@ -81,29 +67,9 @@ public class ButtonConfigHandler<T>{
 
 
     void setParentButton(int id){
-        this.button = activity.findViewById(id);
+        this.parentButton = activity.findViewById(id);
         settingsPopup.registerParentButton(id);
 
-    }
-
-
-    private void setBackgroundOfParentButton(int selectedButtonId){
-        if(button == null){
-            return;
-        }
-        if(buttonBackgroundResourceMap.containsKey(selectedButtonId)){
-            Integer resId = buttonBackgroundResourceMap.get(selectedButtonId);
-            if( resId == null){
-                return;
-            }
-            button.setBackgroundResource(resId);
-        }
-        if(toastMessageIdMap.containsKey(selectedButtonId)){
-            Integer id = toastMessageIdMap.get(selectedButtonId);
-            if(id != null) {
-                activity.toast(id);
-            }
-        }
     }
 
 
@@ -121,10 +87,19 @@ public class ButtonConfigHandler<T>{
                 buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
                 settingsPopup.click(viewId);
                 PaintViewSingleton.getInstance().saveSetting(viewId, buttonCategory);
-                setBackgroundOfParentButton(viewId);
+                assignBackgroundAndTextToParentButtonFrom(view);
             }
         };
         setClickListenerForButtons(clickListener);
+    }
+
+    private void assignBackgroundAndTextToParentButtonFrom(View view){
+        Button clickedButton = (Button)view;
+        if(parentButton == null){
+            return;
+        }
+        parentButton.setBackground(clickedButton.getBackground());
+        parentButton.setText(clickedButton.getText());
     }
 
 

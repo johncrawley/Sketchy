@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.controls;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -91,6 +92,7 @@ public class ButtonUtils {
 
     public Button createButton(int id, int backgroundId, ButtonLayoutParams layoutParams, String text){
         Button button = new Button(activity);
+        button.setTextColor(Color.DKGRAY);
         button.setId(id);
         button.setBackgroundResource(backgroundId);
         button.setLayoutParams(layoutParams.getUnselected());
