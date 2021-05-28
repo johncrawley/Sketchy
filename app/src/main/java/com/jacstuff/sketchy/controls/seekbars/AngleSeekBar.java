@@ -9,15 +9,20 @@ import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.paintview.PaintView;
 
+import java.util.Set;
+
 public class AngleSeekBar extends AbstractSeekBarConfig {
 
     private Button parentButton;
     private ButtonUtils buttonUtils;
+    private Set<Integer> buttonIds;
 
-    public AngleSeekBar(MainActivity mainActivity, PaintView paintView){
+
+    public AngleSeekBar(MainActivity mainActivity, PaintView paintView, Set<Integer> buttonIds ){
         super(mainActivity, paintView, R.id.angleSeekBar, R.integer.angle_default);
         parentButton = mainActivity.findViewById(R.id.angleSelectionButton);
         buttonUtils = new ButtonUtils(mainActivity);
+        this.buttonIds = buttonIds;
     }
 
 
@@ -26,8 +31,9 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
             paintView.setAnglePreset(AngleType.OTHER);
             paintView.setAngle(progress);
             if(parentButton != null){
-                parentButton.setBackgroundResource(R.drawable.degrees_button);
-                buttonUtils.deselectButton(paintView.getCurrentAngleButtonViewId(), mainActivity.getSettingsButtonsLayoutParams());
+                String buttonText = "" + progress + mainActivity.getString(R.string.degrees_symbol);
+                parentButton.setText(buttonText);
+                buttonUtils.switchSelection(R.id.angleSeekBar, buttonIds, mainActivity.getSettingsButtonsLayoutParams());
             }
         }
     }

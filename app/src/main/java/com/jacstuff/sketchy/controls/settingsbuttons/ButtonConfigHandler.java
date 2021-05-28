@@ -69,9 +69,11 @@ public class ButtonConfigHandler<T>{
     void setParentButton(int id){
         this.parentButton = activity.findViewById(id);
         settingsPopup.registerParentButton(id);
-
     }
 
+    Set<Integer> getButtonIds(){
+        return buttonIds;
+    }
 
     private void log(String msg){
         System.out.println("ButtonClickHandler: " +  msg);
@@ -93,6 +95,7 @@ public class ButtonConfigHandler<T>{
         setClickListenerForButtons(clickListener);
     }
 
+
     private void assignBackgroundAndTextToParentButtonFrom(View view){
         Button clickedButton = (Button)view;
         if(parentButton == null){
@@ -111,7 +114,6 @@ public class ButtonConfigHandler<T>{
                 view.setOnClickListener(clickListener);
             }
         }
-
     }
 
 

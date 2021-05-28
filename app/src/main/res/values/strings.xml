@@ -141,6 +141,7 @@
     <string name="brush_size_seekbar_label">Brush Size</string>
 
     <string name="color_checked">✔</string>
+    <string name="degrees_symbol">°</string>
     <string name="multi_random_button_checked_tag">123</string>
 
 </resources>

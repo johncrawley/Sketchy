@@ -26,13 +26,13 @@ public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer
                 this,
                 ButtonCategory.CATEGORIES,
                 R.id.controlPanelLayout);
-        buttonConfig.add(R.id.shapeSelectionButton, R.drawable.square_shape_button,    R.id.includeShapeControls);
-        buttonConfig.add(R.id.styleSelectionButton,  R.drawable.fill_style_button,      R.id.includeStyleControls);
-        buttonConfig.add(R.id.gradientSelectionButton, R.drawable.no_gradient_button,  R.id.includeGradientControls);
-        buttonConfig.add(R.id.angleSelectionButton, R.drawable.zero_degrees_button,     R.id.includeAngleControls);
-        buttonConfig.add(R.id.blurSelectionButton,  R.drawable.no_blur_button,          R.id.includeBlurControls);
-        buttonConfig.add(R.id.shadowSelectionButton, R.drawable.no_shadow_button,       R.id.includeShadowControls);
-        buttonConfig.add(R.id.kaleidoscopeSelectionButton, R.drawable.k_off_button,     R.id.includeKaleidoScopeControls);
+        buttonConfig.add(R.id.shapeSelectionButton,     R.drawable.square_shape_button,     R.id.includeShapeControls);
+        buttonConfig.add(R.id.styleSelectionButton,     R.drawable.fill_style_button,       R.id.includeStyleControls);
+        buttonConfig.add(R.id.gradientSelectionButton,  R.drawable.no_gradient_button,      R.id.includeGradientControls);
+        buttonConfig.add(R.id.angleSelectionButton, R.id.includeAngleControls, "0" + activity.getString(R.string.degrees_symbol));
+        buttonConfig.add(R.id.blurSelectionButton,      R.drawable.no_blur_button,          R.id.includeBlurControls);
+        buttonConfig.add(R.id.shadowSelectionButton,    R.drawable.no_shadow_button,        R.id.includeShadowControls);
+        buttonConfig.add(R.id.kaleidoscopeSelectionButton, R.drawable.k_off_button,         R.id.includeKaleidoScopeControls);
         buttonConfig.setupClickHandler();
         layoutIds = buttonConfig.getEntries();
         buttonConfig.setDefaultSelection(R.id.shapeSelectionButton);

@@ -56,6 +56,7 @@ public class PaintView extends View {
 
     private PaintGroup paintGroup;
     private SettingsPopup settingsPopup;
+    private boolean ignoreMoveAndUpActions = false;
 
 
     public PaintView(Context context) {
@@ -160,13 +161,11 @@ public class PaintView extends View {
         angleHelper.setAngle(angleType);
     }
 
-    public int getCurrentAngleButtonViewId(){
-        return angleHelper.getCurrentPresetViewId();
-    }
 
     public void setAngle(int angle){
         angleHelper.setAngle(angle);
     }
+
 
     public void setBlurType(BlurType blurType){
         blurHelper.setBlurType(blurType);
@@ -267,16 +266,19 @@ public class PaintView extends View {
     @Override
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
-        if(settingsPopup.isVisible()){
-            settingsPopup.dismiss();
+
+        if(isPopupDismissBeingHandled(event)){
             return true;
         }
+
+
         float x = event.getX();
         float y = event.getY();
 
         if(!isTouchDownEventWithLineShape(event)){
             assignColorsBlursAndGradients(x,y);
         }
+        System.out.println("PaintView onTouchEvent() event action: " + event.getAction());
 
         wasCanvasModifiedSinceLastSaveOrReset = true;
         if(isCanvasLocked){
@@ -291,6 +293,23 @@ public class PaintView extends View {
 
         return true;
     }
+
+
+    private boolean isPopupDismissBeingHandled(MotionEvent event){
+        if(settingsPopup.isVisible()){
+            settingsPopup.dismiss();
+            ignoreMoveAndUpActions = true;
+            return true;
+        }
+        if(ignoreMoveAndUpActions){
+            if (event.getAction() == MotionEvent.ACTION_UP){
+                ignoreMoveAndUpActions = false;
+            }
+            return true;
+        }
+        return false;
+    }
+
 
 
     private void assignColorsBlursAndGradients(float x, float y){

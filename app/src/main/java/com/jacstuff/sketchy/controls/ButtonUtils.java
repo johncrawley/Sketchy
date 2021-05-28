@@ -2,7 +2,6 @@ package com.jacstuff.sketchy.controls;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -21,49 +20,35 @@ public class ButtonUtils {
     }
 
 
-   public void switchSelection(int viewId, Set<Integer> buttons, ButtonLayoutParams buttonLayoutParams){
+    public void switchSelection(int viewId, Set<Integer> buttons, ButtonLayoutParams buttonLayoutParams){
         for(int buttonId : buttons){
             if(viewId == buttonId){
-                switchSelectionToButton(buttonId, buttons, buttonLayoutParams);
-                return;
+                selectButton(buttonId, buttonLayoutParams);
+            }
+            else{
+                deselectButton(buttonId, buttonLayoutParams);
             }
         }
-    }
-
-
-    private void switchSelectionToButton(int buttonId, Set<Integer> buttonList, ButtonLayoutParams buttonLayoutParams){
-        selectButton(buttonId, buttonLayoutParams);
-        deselectOtherButtons(buttonId, buttonList, buttonLayoutParams);
     }
 
 
     private void selectButton(int buttonId, ButtonLayoutParams buttonLayoutParams){
-        View button = findViewById(buttonId);
-        if(button == null){
+        View view = findViewById(buttonId);
+        if(view == null){
             return;
         }
-        button.setSelected(true);
-        button.setLayoutParams(buttonLayoutParams.getSelected());
-    }
-
-
-    private void deselectOtherButtons(int selectedButtonId, Set<Integer> buttonList, ButtonLayoutParams buttonLayoutParams){
-        for(int buttonId : buttonList){
-            if(buttonId == selectedButtonId){
-                continue;
-            }
-            deselectButton(buttonId, buttonLayoutParams);
-        }
+        view.setSelected(true);
+        view.setLayoutParams(buttonLayoutParams.getSelected());
     }
 
 
     public void deselectButton(int buttonId, ButtonLayoutParams buttonLayoutParams){
-        View button = findViewById(buttonId);
-        if(button == null){
+        View view = findViewById(buttonId);
+        if(view == null){
             return;
         }
-        button.setSelected(false);
-        button.setLayoutParams(buttonLayoutParams.getUnselected());
+        view.setSelected(false);
+        view.setLayoutParams(buttonLayoutParams.getUnselected());
     }
 
 
