@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.controls.settingsbuttons;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -101,10 +102,14 @@ public class ButtonConfigHandler<T>{
         if(parentButton == null){
             return;
         }
-        parentButton.setBackground(clickedButton.getBackground());
+        parentButton.setBackground(getCopyOfDrawableFrom(clickedButton));
+
         parentButton.setText(clickedButton.getText());
     }
 
+    private Drawable getCopyOfDrawableFrom(Button button){
+       return button.getBackground().getConstantState().newDrawable().mutate();
+    }
 
     private void setClickListenerForButtons(View.OnClickListener clickListener){
         buttonIds = buttonActionMap.keySet();

@@ -30,13 +30,13 @@ public class SettingsPopup {
     }
 
 
-
     public void registerParentButton(int parentButtonId){
        parentIds.add(parentButtonId);
        ignoreIds.remove(parentButtonId);
     }
 
-
+    // ignored views won't trigger a dismiss when clicked
+    // we really just want to ignore views that are in the popup itself
     public void registerToIgnore(int id){
         ignoreIds.add(id);
     }
@@ -53,16 +53,10 @@ public class SettingsPopup {
 
 
     public void click(int id){
-        printParentButtonIdsAndCurrentId(id);
         if(ignoreIds.contains(id)){
-            System.out.println("id ignored!");
             return;
         }
-        if(!parentIds.contains(id)){
-            setInvisible();
-            return;
-        }
-        if(isPoppedUp && currentParentButtonId == id){
+        if(isCurrentParentOrNotAParent(id)){
             setInvisible();
             return;
         }
@@ -70,18 +64,10 @@ public class SettingsPopup {
         setVisible();
     }
 
-    private void printParentButtonIdsAndCurrentId(int currentId){
-        for(int id : parentIds){
-            System.out.println("SettingsPopup: currentParentId: " + id);
-        }
-        for(int id : ignoreIds){
-            System.out.println("SettingsPopup: currentIgnoreId: " + id);
-        }
-        System.out.println("SettingsPopup: current id: " + currentId);
 
-
+    boolean isCurrentParentOrNotAParent(int id){
+        return (isPoppedUp && currentParentButtonId == id) || !parentIds.contains(id);
     }
-
 
 
     private void setVisible(){

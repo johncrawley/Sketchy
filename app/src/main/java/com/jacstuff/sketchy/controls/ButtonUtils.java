@@ -15,19 +15,19 @@ public class ButtonUtils {
 
     private Activity activity;
 
+
     public ButtonUtils(Activity activity){
         this.activity = activity;
     }
 
 
-    public void switchSelection(int viewId, Set<Integer> buttons, ButtonLayoutParams buttonLayoutParams){
-        for(int buttonId : buttons){
+    public void switchSelection(int viewId, Set<Integer> buttonIds, ButtonLayoutParams buttonLayoutParams){
+        for(int buttonId : buttonIds){
             if(viewId == buttonId){
                 selectButton(buttonId, buttonLayoutParams);
+                continue;
             }
-            else{
-                deselectButton(buttonId, buttonLayoutParams);
-            }
+            deselectButton(buttonId, buttonLayoutParams);
         }
     }
 

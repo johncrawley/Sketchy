@@ -14,7 +14,6 @@ public abstract class AbstractSeekBarConfig {
     AbstractSeekBarConfig(MainActivity mainActivity, PaintView paintView, int seekBarId, int defaultValueId){
         this.mainActivity = mainActivity;
         this.paintView = paintView;
-        log("AbstractSeekBarConfig constructor, about to look for id: " + seekBarId);
         seekBar = mainActivity.findViewById(seekBarId);
         setupListener();
         adjustSetting(getValueOf(defaultValueId));
@@ -27,19 +26,22 @@ public abstract class AbstractSeekBarConfig {
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                onStartTracking();
             }
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 adjustSetting(progress);
             }
+
         });
     }
 
-    private void log(String msg){
-        System.out.println("AbstractSeekBar: " + msg);
-    }
 
     abstract void adjustSetting(int progress);
+
+    void onStartTracking(){
+        //do nothing
+    }
 
 
     protected int getValueOf(int id){

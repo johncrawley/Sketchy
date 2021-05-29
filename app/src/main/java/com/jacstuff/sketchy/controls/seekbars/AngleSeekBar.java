@@ -26,6 +26,7 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
     }
 
 
+    @Override
     void adjustSetting(int progress){
         if(paintView != null){
             paintView.setAnglePreset(AngleType.OTHER);
@@ -33,8 +34,13 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
             if(parentButton != null){
                 String buttonText = "" + progress + mainActivity.getString(R.string.degrees_symbol);
                 parentButton.setText(buttonText);
-                buttonUtils.switchSelection(R.id.angleSeekBar, buttonIds, mainActivity.getSettingsButtonsLayoutParams());
             }
         }
+    }
+
+
+    @Override
+    void onStartTracking(){
+        buttonUtils.switchSelection(R.id.angleSeekBar, buttonIds, mainActivity.getSettingsButtonsLayoutParams());
     }
 }
