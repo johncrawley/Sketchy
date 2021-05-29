@@ -41,6 +41,6 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
 
     @Override
     void onStartTracking(){
-        buttonUtils.switchSelection(R.id.angleSeekBar, buttonIds, mainActivity.getSettingsButtonsLayoutParams());
+        buttonUtils.switchSelection(R.id.angleSeekBar, buttonIds);
     }
 }

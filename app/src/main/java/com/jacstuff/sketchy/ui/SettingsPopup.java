@@ -79,7 +79,7 @@ public class SettingsPopup {
     private void setInvisible(){
         isPoppedUp = false;
         popupLayout.setVisibility(View.INVISIBLE);
-        buttonUtils.deselectButton(currentParentButtonId, activity.getSettingsButtonsLayoutParams());
+        buttonUtils.deselectButton(currentParentButtonId);
     }
 
 }

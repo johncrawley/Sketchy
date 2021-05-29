@@ -1,38 +1,39 @@
 package com.jacstuff.sketchy.controls;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import java.util.List;
 import java.util.Set;
 
 public class ButtonUtils {
 
-    private Activity activity;
+    private MainActivity activity;
+    private  ButtonLayoutParams buttonLayoutParams;
 
-
-    public ButtonUtils(Activity activity){
+    public ButtonUtils(MainActivity activity){
         this.activity = activity;
+        buttonLayoutParams = activity.getSettingsButtonsLayoutParams();
     }
 
 
-    public void switchSelection(int viewId, Set<Integer> buttonIds, ButtonLayoutParams buttonLayoutParams){
+    public void switchSelection(int viewId, Set<Integer> buttonIds){
         for(int buttonId : buttonIds){
             if(viewId == buttonId){
-                selectButton(buttonId, buttonLayoutParams);
+                selectButton(buttonId);
                 continue;
             }
-            deselectButton(buttonId, buttonLayoutParams);
+            deselectButton(buttonId);
         }
     }
 
 
-    private void selectButton(int buttonId, ButtonLayoutParams buttonLayoutParams){
+    private void selectButton(int buttonId){
         View view = findViewById(buttonId);
         if(view == null){
             return;
@@ -42,7 +43,7 @@ public class ButtonUtils {
     }
 
 
-    public void deselectButton(int buttonId, ButtonLayoutParams buttonLayoutParams){
+    public void deselectButton(int buttonId){
         View view = findViewById(buttonId);
         if(view == null){
             return;
@@ -58,15 +59,15 @@ public class ButtonUtils {
     }
 
 
-    public LinearLayout createWrappedButton(int id, int backgroundId, ButtonLayoutParams layoutParams){
-        Button button = createButton(id, backgroundId, layoutParams);
-        return wrapInSpacingLayout(wrapInMarginLayout(layoutParams, button));
+    public LinearLayout createWrappedButton(int id, int backgroundId){
+        Button button = createButton(id, backgroundId, buttonLayoutParams);
+        return wrapInSpacingLayout(wrapInMarginLayout(buttonLayoutParams, button));
     }
 
 
-    public LinearLayout createWrappedButton(int id, int backgroundId, ButtonLayoutParams layoutParams, String text){
-        Button button = createButton(id, backgroundId, layoutParams, text);
-        return wrapInSpacingLayout(wrapInMarginLayout(layoutParams, button));
+    public LinearLayout createWrappedButton(int id, int backgroundId, String text){
+        Button button = createButton(id, backgroundId, buttonLayoutParams, text);
+        return wrapInSpacingLayout(wrapInMarginLayout(buttonLayoutParams, button));
     }
 
 

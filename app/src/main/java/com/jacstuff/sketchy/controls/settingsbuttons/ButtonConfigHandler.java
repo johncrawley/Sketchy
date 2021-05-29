@@ -28,19 +28,19 @@ public class ButtonConfigHandler<T>{
     private Button parentButton;
     private ButtonCategory buttonCategory;
     private LinearLayout linearLayout;
-    private ButtonLayoutParams buttonLayoutParams;
     private SettingsPopup settingsPopup;
+    private Map<Drawable, Drawable> drawableCopyMap;
 
 
     public ButtonConfigHandler(MainActivity activity, ButtonsConfigurator<T> buttonsConfigurator, ButtonCategory buttonCategory, int layoutId){
         buttonActionMap = new HashMap<>();
+        drawableCopyMap = new HashMap<>();
         this.activity = activity;
         this.settingsPopup = activity.getSettingsPopup();
         this.buttonsConfigurator = buttonsConfigurator;
         this.buttonUtils = new ButtonUtils(activity);
         this.buttonCategory = buttonCategory;
         linearLayout = activity.findViewById(layoutId);
-        buttonLayoutParams = activity.getSettingsButtonsLayoutParams();
     }
 
 
@@ -52,13 +52,13 @@ public class ButtonConfigHandler<T>{
 
     public void add(int id, int drawableId, T action){
         add(id, action);
-        linearLayout.addView(buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams));
+        linearLayout.addView(buttonUtils.createWrappedButton(id, drawableId));
     }
 
 
     public void add(int id, T action, String text){
         add(id, action);
-        linearLayout.addView(buttonUtils.createWrappedButton(id, R.drawable.blank_button, buttonLayoutParams, text));
+        linearLayout.addView(buttonUtils.createWrappedButton(id, R.drawable.blank_button, text));
     }
 
 
@@ -72,12 +72,9 @@ public class ButtonConfigHandler<T>{
         settingsPopup.registerParentButton(id);
     }
 
+
     Set<Integer> getButtonIds(){
         return buttonIds;
-    }
-
-    private void log(String msg){
-        System.out.println("ButtonClickHandler: " +  msg);
     }
 
 
@@ -86,7 +83,7 @@ public class ButtonConfigHandler<T>{
             @Override
             public void onClick(View view) {
                 int viewId = view.getId();
-                buttonUtils.switchSelection(view.getId(), buttonIds, buttonLayoutParams);
+                buttonUtils.switchSelection(view.getId(), buttonIds);
                 buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
                 settingsPopup.click(viewId);
                 PaintViewSingleton.getInstance().saveSetting(viewId, buttonCategory);
@@ -107,9 +104,21 @@ public class ButtonConfigHandler<T>{
         parentButton.setText(clickedButton.getText());
     }
 
+
     private Drawable getCopyOfDrawableFrom(Button button){
-       return button.getBackground().getConstantState().newDrawable().mutate();
+        Drawable drawable = button.getBackground();
+        if(!drawableCopyMap.containsKey(drawable)){
+            Drawable.ConstantState constantState = drawable.getConstantState();
+            if(constantState != null){
+                drawableCopyMap.put(drawable, constantState.newDrawable().mutate());
+            }
+            else{
+                drawableCopyMap.put(drawable, drawable);
+            }
+        }
+       return drawableCopyMap.get(drawable);
     }
+
 
     private void setClickListenerForButtons(View.OnClickListener clickListener){
         buttonIds = buttonActionMap.keySet();
@@ -123,7 +132,7 @@ public class ButtonConfigHandler<T>{
 
 
     void setDefaultSelection(int id){
-        buttonUtils.switchSelection(id, buttonIds, buttonLayoutParams);
+        buttonUtils.switchSelection(id, buttonIds);
         buttonsConfigurator.handleClick(id, buttonActionMap.get(id));
     }
 
