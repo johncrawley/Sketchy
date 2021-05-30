@@ -24,7 +24,7 @@ public class ShadowButtonsConfigurator implements ButtonsConfigurator<ShadowType
                 this,
                 ButtonCategory.SHADOW,
                 R.id.shadowOptionsLayout);
-        buttonConfig.add(R.id.noShadowButton,             R.drawable.no_shadow_button,              ShadowType.NONE);
+        buttonConfig.add(R.id.noShadowButton,             R.drawable.button_shadow_disabled,              ShadowType.NONE);
         buttonConfig.add(R.id.centreShadowButton,         R.drawable.center_shadow_button,          ShadowType.CENTER);
         buttonConfig.add(R.id.northShadowButton,          R.drawable.north_shadow_button,           ShadowType.NORTH);
         buttonConfig.add(R.id.northEastShadowButton,      R.drawable.north_east_shadow_button,      ShadowType.NORTH_EAST);

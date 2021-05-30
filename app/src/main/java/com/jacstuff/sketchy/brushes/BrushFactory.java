@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.brushes;
 
 import android.graphics.Canvas;
 
+import com.jacstuff.sketchy.brushes.shapes.ArcBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.HexagonBrush;
@@ -33,9 +34,15 @@ public class BrushFactory {
 
     public BrushFactory(Canvas canvas, PaintGroup paintGroup, int brushSize){
 
-        brushMap = new HashMap<>();
         circleBrush = new CircleBrush(canvas, paintGroup);
+        setupBrushMap(canvas, paintGroup, brushSize);
+        handleStyles(brushSize, paintGroup);
+        addLineBrushAndStyles(paintGroup, brushSize);
+    }
 
+
+    private void setupBrushMap(Canvas canvas, PaintGroup paintGroup, int brushSize){
+        brushMap = new HashMap<>();
         brushMap.put(BrushShape.CIRCLE,            circleBrush);
         brushMap.put(BrushShape.ROUNDED_RECTANGLE, new RoundedRectangleBrush(canvas, paintGroup, brushSize));
         brushMap.put(BrushShape.SQUARE,             new SquareBrush(canvas, paintGroup));
@@ -45,8 +52,7 @@ public class BrushFactory {
         brushMap.put(BrushShape.STAR,               new StarBrush(canvas, paintGroup));
         brushMap.put(BrushShape.LINE,               new LineBrush(canvas, paintGroup));
         brushMap.put(BrushShape.STRAIGHT_LINE,      new StraightLineBrush(canvas, paintGroup));
-        handleStyles(brushSize, paintGroup);
-        addLineBrushAndStyles(paintGroup, brushSize);
+        brushMap.put(BrushShape.ARC,                new ArcBrush(canvas, paintGroup));
     }
 
 

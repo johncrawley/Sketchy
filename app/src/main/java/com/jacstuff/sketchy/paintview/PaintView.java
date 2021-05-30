@@ -147,7 +147,7 @@ public class PaintView extends View {
     }
 
 
-    public void setKaleidoScopeSegments(int numberOfSegments){
+    public void setKaleidoscopeSegments(int numberOfSegments){
         kaleidoHelper.setSegments(numberOfSegments);
     }
 
@@ -267,10 +267,9 @@ public class PaintView extends View {
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
 
-        if(isPopupDismissBeingHandled(event)){
+        if(isPopupBeingDismissed(event) | isCanvasLocked){
             return true;
         }
-
 
         float x = event.getX();
         float y = event.getY();
@@ -278,24 +277,20 @@ public class PaintView extends View {
         if(!isTouchDownEventWithLineShape(event)){
             assignColorsBlursAndGradients(x,y);
         }
-        System.out.println("PaintView onTouchEvent() event action: " + event.getAction());
-
         wasCanvasModifiedSinceLastSaveOrReset = true;
-        if(isCanvasLocked){
-            return true;
-        }
 
         if(BrushShape.LINE == currentBrush.getBrushShape()){
             handleLineDrawing(event, x,y);
-            return true;
         }
-        handleDrawing(x,y,event.getAction());
+        else{
+            handleDrawing(x,y,event.getAction());
+        }
 
         return true;
     }
 
 
-    private boolean isPopupDismissBeingHandled(MotionEvent event){
+    private boolean isPopupBeingDismissed(MotionEvent event){
         if(settingsPopup.isVisible()){
             settingsPopup.dismiss();
             ignoreMoveAndUpActions = true;

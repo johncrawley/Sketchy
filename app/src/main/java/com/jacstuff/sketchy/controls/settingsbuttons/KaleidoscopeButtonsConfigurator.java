@@ -54,7 +54,7 @@ public class KaleidoscopeButtonsConfigurator implements ButtonsConfigurator<Inte
 
     @Override
     public void handleClick(int viewId, Integer numberOfSegments){
-        paintView.setKaleidoScopeSegments(numberOfSegments);
+        paintView.setKaleidoscopeSegments(numberOfSegments);
     }
 
 }
