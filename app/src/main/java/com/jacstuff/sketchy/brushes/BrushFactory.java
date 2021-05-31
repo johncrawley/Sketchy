@@ -12,6 +12,7 @@ import com.jacstuff.sketchy.brushes.shapes.RoundedRectangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.SquareBrush;
 import com.jacstuff.sketchy.brushes.shapes.StarBrush;
 import com.jacstuff.sketchy.brushes.shapes.StraightLineBrush;
+import com.jacstuff.sketchy.brushes.shapes.TextBrush;
 import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.styles.DashedStyle;
 import com.jacstuff.sketchy.brushes.styles.DashedStyleForLines;
@@ -53,6 +54,7 @@ public class BrushFactory {
         brushMap.put(BrushShape.LINE,               new LineBrush(canvas, paintGroup));
         brushMap.put(BrushShape.STRAIGHT_LINE,      new StraightLineBrush(canvas, paintGroup));
         brushMap.put(BrushShape.ARC,                new ArcBrush(canvas, paintGroup));
+        brushMap.put(BrushShape.TEXT,                new TextBrush(canvas, paintGroup));
     }
 
 

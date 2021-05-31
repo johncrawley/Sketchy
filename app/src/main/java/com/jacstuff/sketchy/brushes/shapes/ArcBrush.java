@@ -12,7 +12,7 @@ public class ArcBrush extends AbstractBrush implements Brush {
     private int arcHeight;
 
     public ArcBrush(Canvas canvas, PaintGroup paintGroup){
-        super(canvas, paintGroup, BrushShape.CIRCLE);
+        super(canvas, paintGroup, BrushShape.TEXT);
     }
 
 
