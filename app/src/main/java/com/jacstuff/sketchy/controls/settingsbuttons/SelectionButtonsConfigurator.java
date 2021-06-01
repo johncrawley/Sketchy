@@ -6,6 +6,7 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.settings.PaintViewSingleton;
+import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.util.Collection;
 
@@ -13,11 +14,13 @@ public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer
 
     private MainActivity activity;
     private Collection<Integer> layoutIds;
+    private SettingsPopup settingsPopup;
 
 
     public SelectionButtonsConfigurator(MainActivity activity){
         this.activity = activity;
         configure();
+        settingsPopup = activity.getSettingsPopup();
     }
 
 
@@ -42,15 +45,19 @@ public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer
     @Override
     public void handleClick(int viewId, Integer layoutId) {
         hideAllPanels();
+        if(settingsPopup != null) {
+            settingsPopup.click(viewId);
+        }
         activity.findViewById(layoutId).setVisibility(View.VISIBLE);
         PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
         paintViewSingleton.saveSelectedCategoryButton(viewId);
+
     }
 
 
     private void hideAllPanels(){
         for(int layoutId : layoutIds){
-            activity.findViewById(layoutId).setVisibility(View.INVISIBLE);
+            activity.findViewById(layoutId).setVisibility(View.GONE);
         }
     }
 

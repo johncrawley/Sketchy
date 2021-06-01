@@ -18,6 +18,8 @@ import com.jacstuff.sketchy.brushes.GradientType;
 import com.jacstuff.sketchy.brushes.ShadowType;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
+import com.jacstuff.sketchy.controls.shapecontrols.TextControls;
+import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.paintview.helpers.AngleHelper;
 import com.jacstuff.sketchy.paintview.helpers.BlurHelper;
@@ -57,6 +59,8 @@ public class PaintView extends View {
     private PaintGroup paintGroup;
     private SettingsPopup settingsPopup;
     private boolean ignoreMoveAndUpActions = false;
+    private TextControlsDto textControlsDto;
+
 
 
     public PaintView(Context context) {
@@ -80,19 +84,18 @@ public class PaintView extends View {
         gradientHelper = new GradientHelper(paint, context.getResources().getInteger(R.integer.gradient_radius_max));
         angleHelper = new AngleHelper();
         kaleidoHelper = new KaleidoscopeHelper(0,0);
-        System.out.println("PaintView height at end of constructor: " + this.getHeight());
     }
 
 
-    public void init(int canvasWidth, int canvasHeight, SettingsPopup settingsPopup) {
+    public void init(int canvasWidth, int canvasHeight, SettingsPopup settingsPopup, TextControlsDto textControlsDto) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
         this.settingsPopup = settingsPopup;
+        this.textControlsDto = textControlsDto;
         if(canvasHeight <= 0){
             canvasHeight = this.getHeight();
         }
         if(canvasHeight <= 0){
-            System.out.println("Couldn't get height from view!");
             canvasHeight = 1000;
         }
         bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
@@ -103,7 +106,13 @@ public class PaintView extends View {
     }
 
 
+    public void setTextControlsDto(TextControlsDto textControlsDto){
+        this.textControlsDto = textControlsDto;
+    }
 
+    public TextControlsDto getTextControlsDto(){
+        return this.textControlsDto;
+    }
 
     private Paint createPaint(int color){
         Paint paint = new Paint();
@@ -244,7 +253,7 @@ public class PaintView extends View {
 
 
     private void initBrushes(){
-        brushFactory = new BrushFactory(canvas, paintGroup, brushSize);
+        brushFactory = new BrushFactory(canvas, paintGroup, brushSize, textControlsDto);
         currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
     }
 

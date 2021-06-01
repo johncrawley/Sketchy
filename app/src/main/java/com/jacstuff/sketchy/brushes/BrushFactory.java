@@ -23,6 +23,7 @@ import com.jacstuff.sketchy.brushes.styles.JaggedStyle;
 import com.jacstuff.sketchy.brushes.styles.OutlineStyle;
 import com.jacstuff.sketchy.brushes.styles.SpikedStyle;
 import com.jacstuff.sketchy.brushes.styles.TranslateStyle;
+import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 
 import java.util.HashMap;
@@ -32,17 +33,21 @@ public class BrushFactory {
 
     private Map<BrushShape, Brush> brushMap;
     private Brush circleBrush;
+    private TextControlsDto textControlsDto;
 
-    public BrushFactory(Canvas canvas, PaintGroup paintGroup, int brushSize){
+    public BrushFactory(Canvas canvas, PaintGroup paintGroup, int brushSize, TextControlsDto textControlsDto){
 
         circleBrush = new CircleBrush(canvas, paintGroup);
         setupBrushMap(canvas, paintGroup, brushSize);
         handleStyles(brushSize, paintGroup);
         addLineBrushAndStyles(paintGroup, brushSize);
+        this.textControlsDto = textControlsDto;
+
     }
 
 
     private void setupBrushMap(Canvas canvas, PaintGroup paintGroup, int brushSize){
+
         brushMap = new HashMap<>();
         brushMap.put(BrushShape.CIRCLE,            circleBrush);
         brushMap.put(BrushShape.ROUNDED_RECTANGLE, new RoundedRectangleBrush(canvas, paintGroup, brushSize));
@@ -54,7 +59,7 @@ public class BrushFactory {
         brushMap.put(BrushShape.LINE,               new LineBrush(canvas, paintGroup));
         brushMap.put(BrushShape.STRAIGHT_LINE,      new StraightLineBrush(canvas, paintGroup));
         brushMap.put(BrushShape.ARC,                new ArcBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.TEXT,                new TextBrush(canvas, paintGroup));
+        brushMap.put(BrushShape.TEXT,               new TextBrush(canvas, paintGroup, textControlsDto));
     }
 
 

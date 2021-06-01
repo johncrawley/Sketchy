@@ -85,7 +85,6 @@ public class ButtonConfigHandler<T>{
                 int viewId = view.getId();
                 buttonUtils.switchSelection(view.getId(), buttonIds);
                 buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
-                settingsPopup.click(viewId);
                 PaintViewSingleton.getInstance().saveSetting(viewId, buttonCategory);
                 assignBackgroundAndTextToParentButtonFrom(view);
             }

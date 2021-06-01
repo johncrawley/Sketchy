@@ -26,6 +26,53 @@
     </LinearLayout>
 
     </HorizontalScrollView>
+
+    <!--
+
+        android:imeOptions="actionDone"
+        -->
+
+    <EditText
+        android:id="@+id/textShapeInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </EditText>
+
+    <LinearLayout
+        android:id="@+id/brushSizeBarLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/seekbar_padding_top"
+        android:paddingBottom="@dimen/seekbar_padding_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/control_detail_layout"
+        >
+
+        <TextView
+            android:id="@+id/brushSizeSeekBarLabel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/brush_size_seekbar_label"
+            />
+
+        <SeekBar
+            android:id="@+id/brushSizeSeekBar2"
+            android:layout_width="177dp"
+            android:layout_height="50dp"
+            android:indeterminate="false"
+            android:max="@integer/brush_size_max_default"
+            android:min="@integer/brush_size_min_default"
+            android:padding="@dimen/seekbar_padding"
+            android:progress="@integer/brush_size_default" />
+
+    </LinearLayout>
+
+
 <!--
     <include
         android:id="@+id/brushSizeSeekBarInclude"
