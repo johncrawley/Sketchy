@@ -25,4 +25,8 @@
     <integer name="angle_min">0</integer>
     <integer name="angle_default">0</integer>
 
+    <fraction name="skew_seekbar_min">-1</fraction>
+    <fraction name="skew_seekbar_max">1.1</fraction>
+    <fraction name="skew_seekbar_default">0</fraction>
+
 </resources>

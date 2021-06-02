@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.controls.shapecontrols.TextControls;
 import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
@@ -40,7 +41,7 @@ public class PaintViewConfigurator {
 
     private TextControlsDto textControlsDto;
 
-    public void configure(PaintView paintView, SettingsPopup settingsPopup){
+    public void configure(PaintView paintView, SettingsPopup settingsPopup, TextControlsDto textControlsDto){
         int paintViewWidth, paintViewHeight;
         paintViewHeight = layoutHeight;
 
@@ -52,8 +53,6 @@ public class PaintViewConfigurator {
             paintViewWidth = screenWidth - totalMargin;
            // paintViewHeight = ((screenHeight-actionBarHeight) /2) - totalPaintViewMargins;
         }
-
-        textControlsDto = new TextControlsDto();
 
         paintView.init(paintViewWidth, paintViewHeight,settingsPopup, textControlsDto);
         paintView.setCurrentColor(Color.BLACK);

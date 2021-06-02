@@ -18,7 +18,6 @@ import com.jacstuff.sketchy.brushes.GradientType;
 import com.jacstuff.sketchy.brushes.ShadowType;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
-import com.jacstuff.sketchy.controls.shapecontrols.TextControls;
 import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.paintview.helpers.AngleHelper;
@@ -60,7 +59,6 @@ public class PaintView extends View {
     private SettingsPopup settingsPopup;
     private boolean ignoreMoveAndUpActions = false;
     private TextControlsDto textControlsDto;
-
 
 
     public PaintView(Context context) {
@@ -105,14 +103,6 @@ public class PaintView extends View {
         kaleidoHelper = new KaleidoscopeHelper(canvasWidth/2, canvasHeight/2);
     }
 
-
-    public void setTextControlsDto(TextControlsDto textControlsDto){
-        this.textControlsDto = textControlsDto;
-    }
-
-    public TextControlsDto getTextControlsDto(){
-        return this.textControlsDto;
-    }
 
     private Paint createPaint(int color){
         Paint paint = new Paint();
@@ -244,8 +234,9 @@ public class PaintView extends View {
     }
 
 
-    public void setBitmap(Bitmap bitmap){
+    public void setBitmap(Bitmap bitmap, TextControlsDto textControlsDto){
         this.bitmap = bitmap;
+        this.textControlsDto = textControlsDto;
         canvas = new Canvas(bitmap);
         paint.setColor(DEFAULT_BG_COLOR);
         initBrushes();

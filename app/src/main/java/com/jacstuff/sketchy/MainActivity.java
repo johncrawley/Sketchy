@@ -24,7 +24,9 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator;
+import com.jacstuff.sketchy.controls.shapecontrols.TextControls;
 import com.jacstuff.sketchy.io.ImageSaver;
+import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
 import com.jacstuff.sketchy.settings.PaintViewSingleton;
@@ -52,12 +54,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
     private ResumedActionsHelper resumedActionsHelper;
     private SettingsPopup settingsPopup;
+    private TextControlsDto textControlsDto;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textControlsDto = new TextControlsDto();
+        new TextControls(this, textControlsDto);
         assignViews();
         initImageSaver();
         setupActionbar();
@@ -181,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
         PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, getWindowManager(), 1000, 1000);
-        paintViewConfigurator.configure(paintView, settingsPopup);
+        paintViewConfigurator.configure(paintView, settingsPopup, textControlsDto);
         reconfigurePaintViewWithAssignedLayoutHeight(this);
         //assignSavedBitmap();
     }
@@ -198,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int height = linearLayout.getMeasuredHeight();
 
                 PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(mainActivity, mainActivity.getWindowManager(), width, height);
-                paintViewConfigurator.configure(paintView, settingsPopup);
+                paintViewConfigurator.configure(paintView, settingsPopup, textControlsDto);
                 assignSavedBitmap();
             }
         });
@@ -210,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
         Bitmap bitmap = paintViewSingleton.getBitmap();
         if(bitmap != null){
-            paintView.setBitmap(bitmap);
+            paintView.setBitmap(bitmap, textControlsDto);
         }
     }
 

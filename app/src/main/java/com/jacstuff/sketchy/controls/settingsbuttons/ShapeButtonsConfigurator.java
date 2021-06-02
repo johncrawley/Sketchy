@@ -25,7 +25,7 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
                 this,
                 ButtonCategory.SHAPE,
                 R.id.shapeOptionsLayout);
-        buttonConfig.add(R.id.squareShapeButton,            R.drawable.square_shape_button,             BrushShape.SQUARE);
+        buttonConfig.add(R.id.squareShapeButton,            R.drawable.square_shape_button,             BrushShape.TEXT);
         buttonConfig.add(R.id.circleShapeButton,            R.drawable.circle_shape_button,             BrushShape.CIRCLE);
         buttonConfig.add(R.id.lineShapeButton,              R.drawable.line_shape_button,               BrushShape.LINE);
         buttonConfig.add(R.id.straightLineShapeButton,      R.drawable.straight_line_shape_button,      BrushShape.STRAIGHT_LINE);

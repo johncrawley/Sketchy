@@ -139,6 +139,10 @@
     <string name="line_width_seekbar_label">Line Width</string>
     <string name="blur_intensity_seekbar_label">Blur Intensity</string>
     <string name="brush_size_seekbar_label">Brush Size</string>
+    <string name="text_skew_seekbar_label">Skew</string>
+    <string name="text_bold_checkbox_label">Bold</string>
+    <string name="text_underline_checkbox_label">Underline</string>
+    <string name="text_strikethrough_checkbox_label">Strikethrough</string>
 
     <string name="color_checked">✔</string>
     <string name="degrees_symbol">°</string>

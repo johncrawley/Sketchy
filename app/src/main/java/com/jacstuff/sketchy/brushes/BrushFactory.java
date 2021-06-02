@@ -38,10 +38,10 @@ public class BrushFactory {
     public BrushFactory(Canvas canvas, PaintGroup paintGroup, int brushSize, TextControlsDto textControlsDto){
 
         circleBrush = new CircleBrush(canvas, paintGroup);
+        this.textControlsDto = textControlsDto;
         setupBrushMap(canvas, paintGroup, brushSize);
         handleStyles(brushSize, paintGroup);
         addLineBrushAndStyles(paintGroup, brushSize);
-        this.textControlsDto = textControlsDto;
 
     }
 
