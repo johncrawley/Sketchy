@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
-import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.settings.PaintViewSingleton;
 import com.jacstuff.sketchy.ui.SettingsPopup;

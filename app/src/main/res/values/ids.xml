@@ -75,16 +75,20 @@
     <item name="circleShapeButton" type="id"/>
     <item name="lineShapeButton" type="id"/>
     <item name="straightLineShapeButton" type="id"/>
+    <item name="waveyLineShapeButton" type="id"/>
     <item name="roundedRectangleShapeButton" type="id"/>
     <item name="triangleShapeButton" type="id"/>
     <item name="pentagonShapeButton" type="id"/>
     <item name="starShapeButton" type="id"/>
     <item name="hexagonShapeButton" type="id"/>
+    <item name="textShapeButton" type="id"/>
+    <item name="arcShapeButton" type="id"/>
 
     <item name="brokenOutlineStyleButton" type="id"/>
     <item name="fillStyleButton" type="id"/>
     <item name="outlineStyleButton" type="id"/>
     <item name="jaggedStyleButton" type="id"/>
+    <item name="wavyStyleButton" type="id"/>
     <item name="doubleEdgeStyleButton" type="id"/>
     <item name="spikedStyleButton" type="id"/>
     <item name="translateStyleButton" type="id"/>

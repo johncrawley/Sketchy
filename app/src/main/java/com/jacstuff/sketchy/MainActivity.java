@@ -174,15 +174,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void toast(int messageId){
-        if(colorPatternToast != null){
-            colorPatternToast.cancel();
-        }
-        colorPatternToast = Toast.makeText(MainActivity.this,  getResources().getString(messageId), Toast.LENGTH_SHORT);
-        colorPatternToast.show();
-    }
-
-
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
         PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, getWindowManager(), 1000, 1000);

@@ -35,6 +35,7 @@ public class StarBrush extends PentagonBrush {
         deriveOutsidePoints(x,y);
         deriveInsidePoints(x,y);
         Path path = new Path();
+
         path.moveTo(topPoint.x, topPoint.y);
         path.lineTo(insideTopRightPointX, insideTopRightPointY);
         path.lineTo(rightX, rightY);

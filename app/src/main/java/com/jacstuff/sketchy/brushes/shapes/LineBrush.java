@@ -34,6 +34,7 @@ public class LineBrush extends AbstractBrush implements Brush {
         lineDrawerMap.put(BrushStyle.BROKEN_OUTLINE, defaultLineDrawer);
         lineDrawerMap.put(BrushStyle.OUTLINE,outlineDrawer );
         lineDrawerMap.put(BrushStyle.JAGGED,outlineDrawer );
+        lineDrawerMap.put(BrushStyle.WAVY, defaultLineDrawer );
         lineDrawerMap.put(BrushStyle.SPIKED,outlineDrawer );
         lineDrawerMap.put(BrushStyle.DOUBLE_EDGE,outlineDrawer );
         lineDrawerMap.put(BrushStyle.TRANSLATE, outlineDrawer );

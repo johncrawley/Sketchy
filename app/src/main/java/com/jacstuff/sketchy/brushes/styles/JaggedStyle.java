@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.brushes.styles;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathDashPathEffect;
+import android.graphics.PathEffect;
 
 import com.jacstuff.sketchy.paintview.PaintGroup;
 
@@ -12,8 +13,9 @@ public class JaggedStyle  extends AbstractStyle implements Style {
         private PaintGroup paintGroup;
 
     public JaggedStyle(PaintGroup paintGroup){
-            pathDashPathEffect = new PathDashPathEffect(createPath(20, 10), 12, 5, PathDashPathEffect.Style.ROTATE);
-        }
+        this.paintGroup = paintGroup;
+        pathDashPathEffect = new PathDashPathEffect(createPath(20, 10), 12, 5, PathDashPathEffect.Style.ROTATE);
+    }
 
 
         @Override

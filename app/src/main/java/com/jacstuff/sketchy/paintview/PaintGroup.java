@@ -37,6 +37,11 @@ public class PaintGroup {
             p.setStrokeWidth(strokeWidth);
         }
     }
+    public void setTextSize(float textSize){
+        for(Paint p: paints){
+            p.setTextSize(textSize);
+        }
+    }
 
 
 }

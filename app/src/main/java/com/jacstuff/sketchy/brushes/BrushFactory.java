@@ -13,7 +13,9 @@ import com.jacstuff.sketchy.brushes.shapes.SquareBrush;
 import com.jacstuff.sketchy.brushes.shapes.StarBrush;
 import com.jacstuff.sketchy.brushes.shapes.StraightLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextBrush;
+import com.jacstuff.sketchy.brushes.shapes.TextOnCircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
+import com.jacstuff.sketchy.brushes.shapes.WaveyLineBrush;
 import com.jacstuff.sketchy.brushes.styles.DashedStyle;
 import com.jacstuff.sketchy.brushes.styles.DashedStyleForLines;
 import com.jacstuff.sketchy.brushes.styles.DoubleEdgeStyle;
@@ -23,6 +25,7 @@ import com.jacstuff.sketchy.brushes.styles.JaggedStyle;
 import com.jacstuff.sketchy.brushes.styles.OutlineStyle;
 import com.jacstuff.sketchy.brushes.styles.SpikedStyle;
 import com.jacstuff.sketchy.brushes.styles.TranslateStyle;
+import com.jacstuff.sketchy.brushes.styles.WavyStyle;
 import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 
@@ -58,8 +61,10 @@ public class BrushFactory {
         brushMap.put(BrushShape.STAR,               new StarBrush(canvas, paintGroup));
         brushMap.put(BrushShape.LINE,               new LineBrush(canvas, paintGroup));
         brushMap.put(BrushShape.STRAIGHT_LINE,      new StraightLineBrush(canvas, paintGroup));
+        brushMap.put(BrushShape.WAVEY_LINE,         new WaveyLineBrush(canvas, paintGroup));
         brushMap.put(BrushShape.ARC,                new ArcBrush(canvas, paintGroup));
         brushMap.put(BrushShape.TEXT,               new TextBrush(canvas, paintGroup, textControlsDto));
+        brushMap.put(BrushShape.TEXT_ON_CIRCLE,     new TextOnCircleBrush(canvas, paintGroup, textControlsDto));
     }
 
 
@@ -69,6 +74,7 @@ public class BrushFactory {
             brush.add(BrushStyle.OUTLINE, new OutlineStyle());
             brush.add(BrushStyle.BROKEN_OUTLINE, new DashedStyle(paintGroup));
             brush.add(BrushStyle.JAGGED, new JaggedStyle(paintGroup));
+            brush.add(BrushStyle.WAVY, new WavyStyle(paintGroup));
             brush.add(BrushStyle.SPIKED, new SpikedStyle(paintGroup));
             brush.add(BrushStyle.DOUBLE_EDGE, new DoubleEdgeStyle(paintGroup));
             brush.add(BrushStyle.TRANSLATE, new TranslateStyle(paintGroup));

@@ -25,15 +25,18 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
                 this,
                 ButtonCategory.SHAPE,
                 R.id.shapeOptionsLayout);
-        buttonConfig.add(R.id.squareShapeButton,            R.drawable.square_shape_button,             BrushShape.TEXT);
-        buttonConfig.add(R.id.circleShapeButton,            R.drawable.circle_shape_button,             BrushShape.CIRCLE);
-        buttonConfig.add(R.id.lineShapeButton,              R.drawable.line_shape_button,               BrushShape.LINE);
-        buttonConfig.add(R.id.straightLineShapeButton,      R.drawable.straight_line_shape_button,      BrushShape.STRAIGHT_LINE);
-        buttonConfig.add(R.id.roundedRectangleShapeButton,  R.drawable.rounded_rectangle_shape_button,  BrushShape.ROUNDED_RECTANGLE);
+        buttonConfig.add(R.id.squareShapeButton,            R.drawable.button_shape_square,             BrushShape.SQUARE);
+        buttonConfig.add(R.id.circleShapeButton,            R.drawable.button_shape_circle,             BrushShape.CIRCLE);
+        buttonConfig.add(R.id.lineShapeButton,              R.drawable.button_shape_line,               BrushShape.LINE);
+        buttonConfig.add(R.id.straightLineShapeButton,      R.drawable.button_shape_straight_line,      BrushShape.STRAIGHT_LINE);
+        buttonConfig.add(R.id.waveyLineShapeButton,         R.drawable.button_shape_circle,             BrushShape.WAVEY_LINE);
+        buttonConfig.add(R.id.roundedRectangleShapeButton,  R.drawable.button_shape_rounded_rectangle,  BrushShape.ROUNDED_RECTANGLE);
         buttonConfig.add(R.id.triangleShapeButton,          R.drawable.triangle_shape_button,           BrushShape.TRIANGLE);
         buttonConfig.add(R.id.pentagonShapeButton,          R.drawable.pentagon_shape_button,           BrushShape.PENTAGON);
         buttonConfig.add(R.id.starShapeButton,              R.drawable.star_shape_button,               BrushShape.STAR);
         buttonConfig.add(R.id.hexagonShapeButton,           R.drawable.hexagon_shape_button,            BrushShape.HEXAGON);
+        buttonConfig.add(R.id.textShapeButton,              R.drawable.button_shape_text,               BrushShape.TEXT);
+        buttonConfig.add(R.id.arcShapeButton,              R.drawable.button_shape_arc,                 BrushShape.ARC);
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.shapeSelectionButton);
         buttonConfig.setDefaultSelection(R.id.circleShapeButton);
