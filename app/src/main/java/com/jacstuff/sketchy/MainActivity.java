@@ -62,13 +62,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textControlsDto = new TextControlsDto();
-        new TextControls(this, textControlsDto);
         assignViews();
         initImageSaver();
         setupActionbar();
         configurePaintView();
         setupButtons();
         new SeekBarConfigurator(this, paintView);
+        new TextControls(this, textControlsDto, paintView.getPaintGroup());
         setupColorAutoScroll();
     }
 

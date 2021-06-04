@@ -4,6 +4,7 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.controls.childpanel.ChildSettingsPanelManager;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 
@@ -11,11 +12,14 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
 
     private MainActivity activity;
     private PaintView paintView;
+    private ChildSettingsPanelManager childSettingsPanelManager;
 
 
     public ShapeButtonsConfigurator(MainActivity activity, PaintView paintView){
         this.activity = activity;
         this.paintView = paintView;
+        childSettingsPanelManager = new ChildSettingsPanelManager(activity);
+        childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
         configure();
     }
 
@@ -29,14 +33,14 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
         buttonConfig.add(R.id.circleShapeButton,            R.drawable.button_shape_circle,             BrushShape.CIRCLE);
         buttonConfig.add(R.id.lineShapeButton,              R.drawable.button_shape_line,               BrushShape.LINE);
         buttonConfig.add(R.id.straightLineShapeButton,      R.drawable.button_shape_straight_line,      BrushShape.STRAIGHT_LINE);
-        buttonConfig.add(R.id.waveyLineShapeButton,         R.drawable.button_shape_wavy_line,             BrushShape.WAVY_LINE);
+        buttonConfig.add(R.id.waveyLineShapeButton,         R.drawable.button_shape_wavy_line,          BrushShape.WAVY_LINE);
         buttonConfig.add(R.id.roundedRectangleShapeButton,  R.drawable.button_shape_rounded_rectangle,  BrushShape.ROUNDED_RECTANGLE);
         buttonConfig.add(R.id.triangleShapeButton,          R.drawable.triangle_shape_button,           BrushShape.TRIANGLE);
         buttonConfig.add(R.id.pentagonShapeButton,          R.drawable.pentagon_shape_button,           BrushShape.PENTAGON);
         buttonConfig.add(R.id.starShapeButton,              R.drawable.star_shape_button,               BrushShape.STAR);
         buttonConfig.add(R.id.hexagonShapeButton,           R.drawable.hexagon_shape_button,            BrushShape.HEXAGON);
         buttonConfig.add(R.id.textShapeButton,              R.drawable.button_shape_text,               BrushShape.TEXT);
-        buttonConfig.add(R.id.arcShapeButton,              R.drawable.button_shape_arc,                 BrushShape.ARC);
+        buttonConfig.add(R.id.arcShapeButton,               R.drawable.button_shape_arc,                BrushShape.ARC);
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.shapeSelectionButton);
         buttonConfig.setDefaultSelection(R.id.circleShapeButton);
@@ -46,6 +50,9 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
     @Override
     public void handleClick(int viewId, BrushShape brushShape){
         paintView.setBrushShape(brushShape);
+        if(childSettingsPanelManager != null){
+            childSettingsPanelManager.select(viewId);
+        }
     }
 
 }

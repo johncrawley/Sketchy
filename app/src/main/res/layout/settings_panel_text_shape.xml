@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:paddingHorizontal="@dimen/paint_view_layout_margin"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/textInputEditTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/seekbar_padding_top"
+        android:paddingBottom="@dimen/seekbar_padding_bottom">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_edit_text_label"
+            android:labelFor="@+id/textShapeInput"/>
+
+        <EditText
+            android:id="@+id/textShapeInput"
+            android:imeOptions="actionDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/textSkewSeekBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/seekbar_padding_top"
+        android:paddingBottom="@dimen/seekbar_padding_bottom">
+
+        <TextView
+            android:id="@+id/textSkewSeekBarLabel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/text_skew_seekbar_label"
+            />
+
+        <SeekBar
+            android:id="@+id/textSkewSeekBar"
+            android:layout_width="177dp"
+            android:layout_height="50dp"
+            android:indeterminate="false"
+            android:max="200"
+            android:min="0"
+            android:padding="@dimen/seekbar_padding"
+            android:progress="100" />
+
+
+
+
+    </LinearLayout>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_bold_checkbox_label">
+
+    </CheckBox>
+
+</LinearLayout>

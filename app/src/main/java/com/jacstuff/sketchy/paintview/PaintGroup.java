@@ -36,6 +36,12 @@ public class PaintGroup {
         }
     }
 
+    public void setTextSkewX(float value){
+        for(Paint p: paints){
+            p.setTextSkewX(value);
+        }
+    }
+
     public void setStrokeWidth(float strokeWidth){
         for(Paint p: paints){
             p.setStrokeWidth(strokeWidth);

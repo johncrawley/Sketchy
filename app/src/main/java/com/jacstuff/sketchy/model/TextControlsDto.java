@@ -19,7 +19,7 @@ public class TextControlsDto {
 
 
     public void setTextSkew(float skew){
-        this.skew = (skew - 100) / 100;
+        this.skew = (skew - 100) / -100;
     }
 
     public float getTextSkew(){

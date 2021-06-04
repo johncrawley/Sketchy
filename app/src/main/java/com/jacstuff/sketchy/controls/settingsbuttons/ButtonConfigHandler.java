@@ -81,14 +81,20 @@ public class ButtonConfigHandler<T>{
         View.OnClickListener clickListener = new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                int viewId = view.getId();
-                buttonUtils.switchSelection(view.getId(), buttonIds);
-                buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
-                PaintViewSingleton.getInstance().saveSetting(viewId, buttonCategory);
-                assignBackgroundAndTextToParentButtonFrom(view);
+                handleClick(view);
             }
         };
         setClickListenerForButtons(clickListener);
+    }
+
+
+    private void handleClick(View view){
+        int viewId = view.getId();
+        buttonUtils.switchSelection(view.getId(), buttonIds);
+
+        buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
+        PaintViewSingleton.getInstance().saveSetting(viewId, buttonCategory);
+        assignBackgroundAndTextToParentButtonFrom(view);
     }
 
 

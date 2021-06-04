@@ -20,14 +20,7 @@ public class TextBrush  extends AbstractBrush implements Brush {
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
         paint.setTextSize(halfBrushSize);
-       // paint.setFakeBoldText(true);
-
-       // paint.setSubpixelText(true);
-       // paint.setLetterSpacing(0.5f);
-       // paint.setElegantTextHeight(true);
-        paint.setLinearText(true);
         String text = textControlsDto.getText();
-        paint.setTextSkewX(textControlsDto.getTextSkew());
         canvas.drawText(text, getCentreX(x,text, paint), y, paint);
     }
 

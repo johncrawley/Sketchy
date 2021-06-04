@@ -11,23 +11,23 @@ import android.widget.TextView;
 
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.model.TextControlsDto;
+import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class TextControls {
 
     private EditText textInput;
-    private SeekBar skewSeekBar;
     private Activity activity;
     private TextControlsDto textControlsDto;
 
 
-     public TextControls(Activity activity, TextControlsDto textControlsDto){
+     public TextControls(Activity activity, TextControlsDto textControlsDto, PaintGroup paintGroup) {
          this.activity = activity;
          textInput = activity.findViewById(R.id.textShapeInput);
-         skewSeekBar = activity.findViewById(R.id.textSkewSeekBar);
+         SeekBar skewSeekBar = activity.findViewById(R.id.textSkewSeekBar);
          this.textControlsDto = textControlsDto;
 
          setupEditTextActionListener();
-         setupListener(skewSeekBar);
+         setupListener(skewSeekBar, paintGroup);
      }
 
 
@@ -54,13 +54,19 @@ public class TextControls {
          });
      }
 
+    // paint.setLinearText(true);
+    // paint.setFakeBoldText(true);
+    // paint.setSubpixelText(true);
+    // paint.setLetterSpacing(0.5f);
+    // paint.setElegantTextHeight(true);
 
 
-    private void setupListener(SeekBar seekBar){
+    private void setupListener(SeekBar seekBar, final PaintGroup paintGroup){
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                textControlsDto.setTextSkew(seekBar.getProgress());
+                float skew = (seekBar.getProgress() - 100) / -100f;
+                paintGroup.setTextSkewX(skew);
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -73,6 +79,7 @@ public class TextControls {
 
         });
     }
+
 
 
 }

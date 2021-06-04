@@ -114,6 +114,11 @@ public class PaintView extends View {
     }
 
 
+    public PaintGroup getPaintGroup(){
+        return this.paintGroup;
+    }
+
+
     public void notifyPictureSaved(){
         wasCanvasModifiedSinceLastSaveOrReset = false;
     }
