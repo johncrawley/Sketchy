@@ -29,7 +29,7 @@ public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>
         buttonConfig.add(R.id.circleShapeButton,            R.drawable.button_shape_circle,             BrushShape.CIRCLE);
         buttonConfig.add(R.id.lineShapeButton,              R.drawable.button_shape_line,               BrushShape.LINE);
         buttonConfig.add(R.id.straightLineShapeButton,      R.drawable.button_shape_straight_line,      BrushShape.STRAIGHT_LINE);
-        buttonConfig.add(R.id.waveyLineShapeButton,         R.drawable.button_shape_circle,             BrushShape.WAVEY_LINE);
+        buttonConfig.add(R.id.waveyLineShapeButton,         R.drawable.button_shape_wavy_line,             BrushShape.WAVY_LINE);
         buttonConfig.add(R.id.roundedRectangleShapeButton,  R.drawable.button_shape_rounded_rectangle,  BrushShape.ROUNDED_RECTANGLE);
         buttonConfig.add(R.id.triangleShapeButton,          R.drawable.triangle_shape_button,           BrushShape.TRIANGLE);
         buttonConfig.add(R.id.pentagonShapeButton,          R.drawable.pentagon_shape_button,           BrushShape.PENTAGON);

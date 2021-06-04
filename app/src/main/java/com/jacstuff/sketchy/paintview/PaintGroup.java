@@ -26,6 +26,10 @@ public class PaintGroup {
        return paints.get(0).getStrokeWidth();
     }
 
+    public String getStyle(){
+        return paints.get(0).getStyle().toString();
+    }
+
     public void setPathEffect(PathEffect pathEffect){
         for(Paint p: paints){
             p.setPathEffect(pathEffect);

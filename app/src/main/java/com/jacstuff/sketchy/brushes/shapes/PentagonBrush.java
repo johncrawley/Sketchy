@@ -132,7 +132,6 @@ public class PentagonBrush extends AbstractBrush implements Brush {
 
         leftX = bottomRightX + xFromBottomRightPointToLeft;
         leftY = bottomRightY + yFromBottomRightPointToLeft;
-
     }
 
 

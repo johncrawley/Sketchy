@@ -53,7 +53,7 @@ public class BrushFactory {
 
         brushMap = new HashMap<>();
         brushMap.put(BrushShape.CIRCLE,            circleBrush);
-        brushMap.put(BrushShape.ROUNDED_RECTANGLE, new RoundedRectangleBrush(canvas, paintGroup, brushSize));
+        brushMap.put(BrushShape.ROUNDED_RECTANGLE,  new RoundedRectangleBrush(canvas, paintGroup, brushSize));
         brushMap.put(BrushShape.SQUARE,             new SquareBrush(canvas, paintGroup));
         brushMap.put(BrushShape.TRIANGLE,           new TriangleBrush(canvas, paintGroup));
         brushMap.put(BrushShape.PENTAGON,           new PentagonBrush(canvas, paintGroup));
@@ -61,7 +61,7 @@ public class BrushFactory {
         brushMap.put(BrushShape.STAR,               new StarBrush(canvas, paintGroup));
         brushMap.put(BrushShape.LINE,               new LineBrush(canvas, paintGroup));
         brushMap.put(BrushShape.STRAIGHT_LINE,      new StraightLineBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.WAVEY_LINE,         new WavyLineBrush(canvas, paintGroup));
+        brushMap.put(BrushShape.WAVY_LINE,         new WavyLineBrush(canvas, paintGroup));
         brushMap.put(BrushShape.ARC,                new ArcBrush(canvas, paintGroup));
         brushMap.put(BrushShape.TEXT,               new TextBrush(canvas, paintGroup, textControlsDto));
         brushMap.put(BrushShape.TEXT_ON_CIRCLE,     new TextOnCircleBrush(canvas, paintGroup, textControlsDto));
@@ -70,14 +70,14 @@ public class BrushFactory {
 
     private void handleStyles(int brushSize, PaintGroup paintGroup) {
         for (Brush brush : brushMap.values()) {
-            brush.add(BrushStyle.FILL, new FillStyle());
-            brush.add(BrushStyle.OUTLINE, new OutlineStyle());
-            brush.add(BrushStyle.BROKEN_OUTLINE, new DashedStyle(paintGroup));
-            brush.add(BrushStyle.JAGGED, new JaggedStyle(paintGroup));
-            brush.add(BrushStyle.WAVY, new WavyStyle(paintGroup));
-            brush.add(BrushStyle.SPIKED, new SpikedStyle(paintGroup));
-            brush.add(BrushStyle.DOUBLE_EDGE, new DoubleEdgeStyle(paintGroup));
-            brush.add(BrushStyle.TRANSLATE, new TranslateStyle(paintGroup));
+            brush.add(BrushStyle.FILL,              new FillStyle());
+            brush.add(BrushStyle.OUTLINE,           new OutlineStyle());
+            brush.add(BrushStyle.BROKEN_OUTLINE,    new DashedStyle(paintGroup));
+            brush.add(BrushStyle.JAGGED,            new JaggedStyle(paintGroup));
+            brush.add(BrushStyle.WAVY,              new WavyStyle(paintGroup));
+            brush.add(BrushStyle.SPIKED,            new SpikedStyle(paintGroup));
+            brush.add(BrushStyle.DOUBLE_EDGE,       new DoubleEdgeStyle(paintGroup));
+            brush.add(BrushStyle.TRANSLATE,         new TranslateStyle(paintGroup));
             brush.setBrushSize(brushSize);
         }
     }
