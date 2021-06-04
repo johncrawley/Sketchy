@@ -14,7 +14,7 @@ public class WavyStyle extends AbstractStyle implements Style {
     public WavyStyle(PaintGroup paintGroup){
         this.paintGroup = paintGroup;
         paintGroup.setStyle(Paint.Style.STROKE);
-        pathDashPathEffect = new PathDashPathEffect(createPath(20, 10), 12, 5, PathDashPathEffect.Style.ROTATE);
+        pathDashPathEffect = new PathDashPathEffect(createPath(20, 10, 20), 12, 5, PathDashPathEffect.Style.ROTATE);
     }
 
 
@@ -28,18 +28,24 @@ public class WavyStyle extends AbstractStyle implements Style {
 
 
 
-    private static Path createPath(float height, float length) {
+    private static Path createPath(float height, float length, float thickness) {
         Path p = new Path();
         p.moveTo(-length, 0);
-        p.cubicTo(0, -height, 0,height, length,0);
+        p.cubicTo(0, -height, 0, height, length,0);
+
+        p.lineTo(length, thickness);
+        p.cubicTo(0, height + thickness, 0, -height + thickness, -length, thickness);
+        p.close();
+
+
         return p;
     }
 
 
 
     private void assignPath(){
-        float length = (float) brushSize / 7;
-        pathDashPathEffect = new PathDashPathEffect(createPath(paintGroup.getLineWidth(), length), length * 2, 5, PathDashPathEffect.Style.MORPH);
+        float length = (float) brushSize / 20;
+        pathDashPathEffect = new PathDashPathEffect(createPath(paintGroup.getLineWidth(), length, paintGroup.getLineWidth()), length * 2, 0, PathDashPathEffect.Style.MORPH);
         paintGroup.setPathEffect(pathDashPathEffect);
     }
 

@@ -30,7 +30,7 @@ public class StyleButtonsConfigurator implements ButtonsConfigurator<BrushStyle>
         buttonConfig.add(R.id.fillStyleButton,          R.drawable.fill_style_button,           BrushStyle.FILL);
         buttonConfig.add(R.id.outlineStyleButton,       R.drawable.outline_style_button,        BrushStyle.OUTLINE);
         buttonConfig.add(R.id.jaggedStyleButton,        R.drawable.jagged_style_button,           BrushStyle.JAGGED);
-        buttonConfig.add(R.id.wavyStyleButton,          R.drawable.jagged_style_button,           BrushStyle.WAVY);
+        buttonConfig.add(R.id.wavyStyleButton,          R.drawable.button_style_wavy_b,               BrushStyle.WAVY);
         buttonConfig.add(R.id.doubleEdgeStyleButton,   R.drawable.double_edge_style_button,       BrushStyle.DOUBLE_EDGE);
         buttonConfig.add(R.id.spikedStyleButton,       R.drawable.spiked_style_button,            BrushStyle.SPIKED);
         buttonConfig.add(R.id.translateStyleButton,    R.drawable.translate_outline_style_button, BrushStyle.TRANSLATE);

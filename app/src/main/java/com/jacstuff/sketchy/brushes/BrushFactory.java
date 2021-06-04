@@ -15,7 +15,7 @@ import com.jacstuff.sketchy.brushes.shapes.StraightLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextOnCircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
-import com.jacstuff.sketchy.brushes.shapes.WaveyLineBrush;
+import com.jacstuff.sketchy.brushes.shapes.WavyLineBrush;
 import com.jacstuff.sketchy.brushes.styles.DashedStyle;
 import com.jacstuff.sketchy.brushes.styles.DashedStyleForLines;
 import com.jacstuff.sketchy.brushes.styles.DoubleEdgeStyle;
@@ -61,7 +61,7 @@ public class BrushFactory {
         brushMap.put(BrushShape.STAR,               new StarBrush(canvas, paintGroup));
         brushMap.put(BrushShape.LINE,               new LineBrush(canvas, paintGroup));
         brushMap.put(BrushShape.STRAIGHT_LINE,      new StraightLineBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.WAVEY_LINE,         new WaveyLineBrush(canvas, paintGroup));
+        brushMap.put(BrushShape.WAVEY_LINE,         new WavyLineBrush(canvas, paintGroup));
         brushMap.put(BrushShape.ARC,                new ArcBrush(canvas, paintGroup));
         brushMap.put(BrushShape.TEXT,               new TextBrush(canvas, paintGroup, textControlsDto));
         brushMap.put(BrushShape.TEXT_ON_CIRCLE,     new TextOnCircleBrush(canvas, paintGroup, textControlsDto));
