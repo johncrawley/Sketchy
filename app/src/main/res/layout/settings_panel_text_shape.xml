@@ -45,16 +45,18 @@
             android:id="@+id/textSkewSeekBarLabel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight=".25"
             android:gravity="center_vertical"
             android:text="@string/text_skew_seekbar_label"
             />
 
         <SeekBar
             android:id="@+id/textSkewSeekBar"
-            android:layout_width="177dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight=".75"
             android:indeterminate="false"
+            android:gravity="fill_horizontal"
             android:max="200"
             android:min="0"
             android:padding="@dimen/seekbar_padding"
@@ -65,11 +67,26 @@
 
     </LinearLayout>
 
+
+
     <CheckBox
+        android:id="@+id/checkboxTextBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_bold_checkbox_label">
+        android:text="@string/text_bold_checkbox_label"/>
 
-    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/checkboxTextStrikethrough"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_strikethrough_checkbox_label"/>
+
+
+    <CheckBox
+        android:id="@+id/checkboxTextUnderline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_underline_checkbox_label"/>
 
 </LinearLayout>

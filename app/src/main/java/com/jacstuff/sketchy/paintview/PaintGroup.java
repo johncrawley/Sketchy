@@ -3,6 +3,8 @@ package com.jacstuff.sketchy.paintview;
 import android.graphics.Paint;
 import android.graphics.PathEffect;
 
+import com.jacstuff.sketchy.R;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,6 +54,27 @@ public class PaintGroup {
             p.setTextSize(textSize);
         }
     }
+
+    public void setTextBold(boolean b){
+        for(Paint p : paints){
+            p.setFakeBoldText(b);
+        }
+    }
+
+
+    public void setStrikeThrough(boolean b){
+        for(Paint p : paints){
+            p.setStrikeThruText(b);
+        }
+    }
+
+
+    public void setTextUnderline(boolean b){
+        for(Paint p : paints){
+            p.setUnderlineText(b);
+        }
+    }
+
 
 
 }
