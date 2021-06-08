@@ -2,6 +2,8 @@ package com.jacstuff.sketchy.controls.shapecontrols;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -40,7 +42,6 @@ public class TextControls {
 
          textInput.setOnEditorActionListener(new EditText.OnEditorActionListener() {
 
-
              InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
              @Override
@@ -49,12 +50,28 @@ public class TextControls {
                      return false;
                  }
 
-                 if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                      imm.hideSoftInputFromWindow(textInput.getWindowToken(), 0);
                  }
-                 String contents = textInput.getText().toString();
-                 textControlsDto.setText(contents);
                  return true;
+             }
+         });
+
+
+         textInput.addTextChangedListener(new TextWatcher() {
+             @Override
+             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+             }
+
+             @Override
+             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                 textControlsDto.setText(charSequence.toString());
+             }
+
+             @Override
+             public void afterTextChanged(Editable editable) {
+
              }
          });
      }

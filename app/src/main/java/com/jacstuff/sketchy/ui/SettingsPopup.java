@@ -1,7 +1,9 @@
 package com.jacstuff.sketchy.ui;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.controls.ButtonUtils;
@@ -80,6 +82,13 @@ public class SettingsPopup {
         isPoppedUp = false;
         popupLayout.setVisibility(View.INVISIBLE);
         buttonUtils.deselectButton(currentParentButtonId);
+        hideKeyboard();
+    }
+
+
+    private void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(popupLayout.getWindowToken(), 0);
     }
 
 }
