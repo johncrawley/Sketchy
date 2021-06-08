@@ -45,4 +45,8 @@ public class RandomShadeButtonsState {
         isMultiSelected = false;
     }
 
+    public boolean isAnySelected(){
+        return selectedButtons.size() > 0;
+    }
+
 }

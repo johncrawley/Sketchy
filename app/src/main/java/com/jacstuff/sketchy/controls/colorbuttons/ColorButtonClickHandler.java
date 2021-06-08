@@ -36,6 +36,8 @@ public class ColorButtonClickHandler {
     private MainActivity mainActivity;
     private ColorSelector currentColorSelector;
     private RandomShadeButtonsState randomShadeButtonsState;
+    private int enabledTag = R.string.multi_random_button_checked_tag;
+    private Button randomColorButton;
 
 
 
@@ -103,14 +105,14 @@ public class ColorButtonClickHandler {
 
     public void handleColorButtonClicks(View view){
 
-        if(view == null || ButtonCategory.COLOR_SELECTION != view.getTag(R.string.tag_button_category)){
+        if(!isColorButton(view)){
             return;
         }
         Button button = (Button)view;
         ButtonType buttonType = (ButtonType)view.getTag(R.string.tag_button_type);
-        button.getParent().requestChildFocus(button, button);
-        currentColorSelector = colorSelectors.get(buttonType);
-        paintView.setColorSelector(currentColorSelector);
+        focusOn(button);
+        assignColorSelectorToPaintViewFrom(button);
+
         switch(buttonType){
             case COLOR:
                 onMainColorButtonClick(button);
@@ -125,13 +127,31 @@ public class ColorButtonClickHandler {
                 onMultiShadeButtonClick(button);
                 break;
             case RANDOM_COLOR:
-                onRandomColorButtonClick(button);
+                randomColorButton = button;
+                onRandomColorButtonClick();
                 break;
             case RANDOM_SHADE:
                 clickRandomShadeButtonMultiMode(button);
-              //  onRandomShadeButtonClick(button);
         }
         previouslySelectedButton = button;
+    }
+
+
+    private boolean isColorButton(View view){
+        return view != null && ButtonCategory.COLOR_SELECTION == view.getTag(R.string.tag_button_category);
+    }
+
+
+    private void focusOn(Button button){
+        button.getParent().requestChildFocus(button, button);
+    }
+
+
+    private void assignColorSelectorToPaintViewFrom(Button button){
+
+        ButtonType buttonType = (ButtonType)button.getTag(R.string.tag_button_type);
+        currentColorSelector = colorSelectors.get(buttonType);
+        paintView.setColorSelector(currentColorSelector);
     }
 
 
@@ -167,23 +187,19 @@ public class ColorButtonClickHandler {
     }
 
 
-    private void onRandomColorButtonClick(Button button){
+    private void onRandomColorButtonClick(){
         deselectPreviousButtons();
         currentColorSelector.set(colors);
-        previouslySelectedColorButton = button;
+        if(randomColorButton == null){
+            return;
+        }
+        previouslySelectedColorButton = randomColorButton;
         paintView.setColorSelector(currentColorSelector);
-        selectButton(button);
-        assignShadeLayoutFrom(button);
+        selectButton(randomColorButton);
+        assignShadeLayoutFrom(randomColorButton);
         isMostRecentClickAShade = false;
         deselectButtons(randomShadeButtonsState.getSelected());
         randomShadeButtonsState.deselectMulti();
-    }
-
-
-    private void onRandomShadeButtonClick(Button button){
-        paintView.setColorSelector(currentColorSelector);
-        currentColorSelector.set(getShadesFrom(button));
-        selectButtonAndSetRecent(button);
     }
 
 
@@ -235,7 +251,6 @@ public class ColorButtonClickHandler {
         button.setLayoutParams(buttonLayoutParams.getSelected());
     }
 
-    private  int enabledTag = R.string.multi_random_button_checked_tag;
 
     private void clickRandomShadeButtonMultiMode(Button button){
 
@@ -272,7 +287,18 @@ public class ColorButtonClickHandler {
         button.setText("");
         deselectButton(button);
         randomShadeButtonsState.deselect(button);
+        if(!randomShadeButtonsState.isAnySelected()){
+            switchBackToMainRandomColorButton();
+        }
     }
+
+
+    private void switchBackToMainRandomColorButton(){
+        focusOn(randomColorButton);
+        assignColorSelectorToPaintViewFrom(randomColorButton);
+        onRandomColorButtonClick();
+    }
+
 
     private void selectRandomColorButton(Button button){
         int buttonColor = (int)button.getTag(R.string.tag_button_color);
