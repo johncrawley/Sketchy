@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.controls.settingsbuttons;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
@@ -43,7 +44,7 @@ public class KaleidoscopeButtonsConfigurator implements ButtonsConfigurator<Inte
     }
 
     public void setupKaleidoScopeOptions(){
-       Switch kaleidoscopeCentredSwitch = activity.findViewById(R.id.kaleidoscopeCentredSwitch);
+       SwitchMaterial kaleidoscopeCentredSwitch = activity.findViewById(R.id.kaleidoscopeCentredSwitch);
        kaleidoscopeCentredSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                paintView.setKaleidoscopeFixed(isChecked);

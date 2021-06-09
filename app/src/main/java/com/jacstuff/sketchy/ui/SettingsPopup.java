@@ -49,12 +49,21 @@ public class SettingsPopup {
     }
 
 
+    public void dismiss(View v){
+        if(ignoreIds.contains(v.getId())){
+            return;
+        }
+        setInvisible();
+    }
+
+
     public boolean isVisible(){
         return isPoppedUp;
     }
 
 
     public void click(int id){
+
         if(ignoreIds.contains(id)){
             return;
         }

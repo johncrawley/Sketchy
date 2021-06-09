@@ -40,6 +40,8 @@ public class ButtonConfigHandler<T>{
         this.buttonUtils = new ButtonUtils(activity);
         this.buttonCategory = buttonCategory;
         linearLayout = activity.findViewById(layoutId);
+        settingsPopup.registerToIgnore(layoutId);
+
     }
 
 

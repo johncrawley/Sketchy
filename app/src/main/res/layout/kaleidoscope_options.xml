@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/gradientRadiusSeekBarLayout"
+    android:id="@+id/kaleidoscopeSettingsLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -11,7 +11,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Switch
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/kaleidoscopeCentredSwitch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

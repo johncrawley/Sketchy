@@ -35,6 +35,7 @@
 
     </LinearLayout>
 
+
     <LinearLayout
         android:id="@+id/textSkewSeekBarLayout"
         android:layout_width="match_parent"
