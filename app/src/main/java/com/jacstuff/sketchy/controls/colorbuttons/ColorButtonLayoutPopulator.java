@@ -1,6 +1,13 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,6 +22,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 
 public class ColorButtonLayoutPopulator {
@@ -142,10 +152,69 @@ public class ColorButtonLayoutPopulator {
     }
 
 
-    private LinearLayout createShadeButton(int color, ButtonType buttonType){
+    private LinearLayout createShadeButton(final int color, ButtonType buttonType){
         String key = createColorKey(color, buttonType);
         Button button = createButton(color, buttonType, key);
+        if(buttonType == ButtonType.MULTISHADE){
+            addMultiShadeDrawableTo(button, color);
+        }
         return buttonUtils.wrapInMarginLayout(buttonLayoutParams, button);
+    }
+
+
+    private void addMultiShadeDrawableTo(Button button, final int color){
+
+        final Paint paint = new Paint();
+        final int NUMBER_OF_SHADES = 5;
+        paint.setColor(color);
+        final List<Integer> shades = multiColorShades.get(color);
+        if(shades == null){
+            return;
+        }
+
+
+        Drawable drawable = new Drawable() {
+            @Override
+            public void draw(@NonNull Canvas canvas) {
+                Rect bounds = this.getBounds();
+                paint.setColor(Color.LTGRAY);
+                canvas.drawRect(bounds, paint);
+                float centerX = (bounds.right - bounds.left) /2f;
+                float centerY = (bounds.bottom - bounds.top) / 2f;
+                float radius  = centerX / 2;
+                float thirdOfRadius = radius / 3;
+                float x = centerX - radius;
+                float y = centerY + radius;
+
+                int shadesIndex = 0;
+                int shadesIncrement = shades.size() / NUMBER_OF_SHADES;
+
+                for(int i = 0; i< NUMBER_OF_SHADES; i++){
+                    canvas.drawCircle(x,y, radius, paint);
+                    paint.setColor(shades.get(shadesIndex));
+                    shadesIndex = Math.min(shades.size()-1, shadesIndex + shadesIncrement);
+                    x += thirdOfRadius;
+                    y -= thirdOfRadius;
+                }
+
+            }
+
+            @Override
+            public void setAlpha(int i) {
+
+            }
+
+            @Override
+            public void setColorFilter(@Nullable ColorFilter colorFilter) {
+
+            }
+
+            @Override
+            public int getOpacity() {
+                return PixelFormat.OPAQUE;
+            }
+        };
+        button.setBackground(drawable);
     }
 
 
