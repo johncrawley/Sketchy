@@ -100,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_new:
                 startClearDialogIfChangesNotSaved();
                 return true;
+            case R.id.action_undo:
+                paintView.undo();
+                return true;
             case R.id.action_save:
                 startSaveDocumentActivity();
                 return true;

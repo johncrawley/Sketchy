@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -44,15 +45,18 @@ public class PaintView extends View {
     private BrushFactory brushFactory;
     private boolean wasCanvasModifiedSinceLastSaveOrReset;
     private boolean isCanvasLocked;
+    private Matrix matrix;
+
 
     private ShadowHelper shadowHelper;
     private BlurHelper blurHelper;
     private GradientHelper gradientHelper;
     private AngleHelper angleHelper;
-    private KaleidoscopeHelper kaleidoHelper;
+    private KaleidoscopeHelper kaleidoscopeHelper;
 
     private boolean isPreviewLayerToBeDrawn;
     private Bitmap previewBitmap;
+    private BitmapHistory bitmapHistory;
     private Paint drawPaint = new Paint();
 
     private PaintGroup paintGroup;
@@ -77,11 +81,13 @@ public class PaintView extends View {
 
         paintGroup = new PaintGroup(paint, previewPaint, shadowPaint);
 
+        bitmapHistory = new BitmapHistory(context);
+
         shadowHelper = new ShadowHelper(shadowPaint);
         blurHelper = new BlurHelper(paint);
         gradientHelper = new GradientHelper(paint, context.getResources().getInteger(R.integer.gradient_radius_max));
         angleHelper = new AngleHelper();
-        kaleidoHelper = new KaleidoscopeHelper(0,0);
+        kaleidoscopeHelper = new KaleidoscopeHelper(0,0);
     }
 
 
@@ -90,6 +96,7 @@ public class PaintView extends View {
         this.canvasHeight = canvasHeight;
         this.settingsPopup = settingsPopup;
         this.textControlsDto = textControlsDto;
+
         if(canvasHeight <= 0){
             canvasHeight = this.getHeight();
         }
@@ -100,7 +107,11 @@ public class PaintView extends View {
         canvas = new Canvas(bitmap);
         drawPlainBackground();
         initBrushes();
-        kaleidoHelper = new KaleidoscopeHelper(canvasWidth/2, canvasHeight/2);
+        kaleidoscopeHelper = new KaleidoscopeHelper(canvasWidth/2, canvasHeight/2);
+
+
+        matrix = new Matrix();
+        matrix.postScale(1,1);
     }
 
 
@@ -152,7 +163,7 @@ public class PaintView extends View {
 
 
     public void setKaleidoscopeSegments(int numberOfSegments){
-        kaleidoHelper.setSegments(numberOfSegments);
+        kaleidoscopeHelper.setSegments(numberOfSegments);
     }
 
 
@@ -196,7 +207,7 @@ public class PaintView extends View {
 
 
     public void setKaleidoscopeFixed(boolean isFixed){
-        kaleidoHelper.setFixed(isFixed);
+        kaleidoscopeHelper.setFixed(isFixed);
     }
 
 
@@ -235,12 +246,14 @@ public class PaintView extends View {
         blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         blankPaint.setColor(DEFAULT_BG_COLOR);
         canvas.drawRect(0,0, canvasWidth, canvasHeight, blankPaint);
+        bitmapHistory.push(bitmap);
         invalidate();
     }
 
 
     public void setBitmap(Bitmap bitmap, TextControlsDto textControlsDto){
         this.bitmap = bitmap;
+        bitmapHistory.push(bitmap);
         this.textControlsDto = textControlsDto;
         canvas = new Canvas(bitmap);
         paint.setColor(DEFAULT_BG_COLOR);
@@ -291,7 +304,27 @@ public class PaintView extends View {
             handleDrawing(x,y,event.getAction());
         }
 
+        if(event.getAction() == MotionEvent.ACTION_UP){
+          bitmapHistory.push(bitmap);
+        }
+
         return true;
+    }
+
+
+    public void undo(){
+        Bitmap bm = bitmapHistory.getPreviousBitmap();
+        if(bm == null){
+            return;
+        }
+        canvas.drawBitmap(bm, matrix, paint);
+        disablePreviewLayer();
+        invalidate();
+    }
+
+
+    private void log(String msg){
+        System.out.println("PaintView: " + msg);
     }
 
 
@@ -309,7 +342,6 @@ public class PaintView extends View {
         }
         return false;
     }
-
 
 
     private void assignColorsBlursAndGradients(float x, float y){
@@ -339,7 +371,7 @@ public class PaintView extends View {
                 break;
             case MotionEvent.ACTION_UP :
                 disablePreviewLayer();
-                if(kaleidoHelper.isEnabled()){
+                if(kaleidoscopeHelper.isEnabled()){
                     drawKaleidoscope(x, y, paint,true);
                 }
                 else{
@@ -354,7 +386,7 @@ public class PaintView extends View {
         angleHelper.updateAngle();
         switch(action) {
             case MotionEvent.ACTION_DOWN :
-                kaleidoHelper.setCenter(x,y);
+                kaleidoscopeHelper.setCenter(x,y);
                 drawToCanvas(x,y, paint);
                 break;
 
@@ -373,7 +405,7 @@ public class PaintView extends View {
 
 
     private void drawToCanvas(float x, float y, Paint paint){
-        if(kaleidoHelper.isEnabled()){
+        if(kaleidoscopeHelper.isEnabled()){
             drawKaleidoscope(x,y, paint);
             return;
         }
@@ -402,23 +434,23 @@ public class PaintView extends View {
 
     private void drawKaleidoscope(float x, float y, Paint paint, boolean isDragLine){
         canvas.save();
-        canvas.translate(kaleidoHelper.getCenterX(), kaleidoHelper.getCenterY());
+        canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
 
-        for(float angle = 0; angle < kaleidoHelper.getMaxDegrees(); angle += kaleidoHelper.getDegreeIncrement()){
-            drawKaleidoSegment(x,y, angle, isDragLine, paint);
+        for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()){
+            drawKaleidoscopeSegment(x,y, angle, isDragLine, paint);
         }
         canvas.restore();
     }
 
 
-    private void drawKaleidoSegment(float x, float y, float angle, boolean isDragLine, Paint paint){
+    private void drawKaleidoscopeSegment(float x, float y, float angle, boolean isDragLine, Paint paint){
         canvas.save();
         canvas.rotate(angle);
         if(isDragLine){
-            drawDragLine(x , y, kaleidoHelper.getCenterX(), kaleidoHelper.getCenterY());
+            drawDragLine(x , y, kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
         }
         else {
-            rotateAndDraw(x - kaleidoHelper.getCenterX(), y - kaleidoHelper.getCenterY(), paint);
+            rotateAndDraw(x - kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(), paint);
         }
         canvas.restore();
         invalidate();
