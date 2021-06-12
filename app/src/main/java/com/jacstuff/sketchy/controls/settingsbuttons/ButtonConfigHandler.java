@@ -29,6 +29,7 @@ public class ButtonConfigHandler<T>{
     private LinearLayout linearLayout;
     private SettingsPopup settingsPopup;
     private Map<Drawable, Drawable> drawableCopyMap;
+    private int defaultSelectionId;
 
 
     public ButtonConfigHandler(MainActivity activity, ButtonsConfigurator<T> buttonsConfigurator, ButtonCategory buttonCategory, int layoutId){
@@ -138,8 +139,13 @@ public class ButtonConfigHandler<T>{
 
 
     void setDefaultSelection(int id){
-        buttonUtils.switchSelection(id, buttonIds);
-        buttonsConfigurator.handleClick(id, buttonActionMap.get(id));
+        defaultSelectionId = id;
+    }
+
+
+    void selectDefaultSelection(){
+        buttonUtils.switchSelection(defaultSelectionId, buttonIds);
+        buttonsConfigurator.handleClick(defaultSelectionId, buttonActionMap.get(defaultSelectionId));
     }
 
 }

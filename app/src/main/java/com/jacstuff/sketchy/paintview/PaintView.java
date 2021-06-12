@@ -91,7 +91,14 @@ public class PaintView extends View {
     }
 
 
+    public void initBrushes(){
+        brushFactory = new BrushFactory(canvas, paintGroup, brushSize, textControlsDto);
+        currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
+    }
+
+
     public void init(int canvasWidth, int canvasHeight, SettingsPopup settingsPopup, TextControlsDto textControlsDto) {
+        log("Entered init()");
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
         this.settingsPopup = settingsPopup;
@@ -105,15 +112,23 @@ public class PaintView extends View {
         }
         bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        drawPlainBackground();
         initBrushes();
+        if(bitmapHistory.isEmpty()){
+            drawPlainBackgroundAndSaveToHistory();
+        }
         kaleidoscopeHelper = new KaleidoscopeHelper(canvasWidth/2, canvasHeight/2);
 
-
-        matrix = new Matrix();
-        matrix.postScale(1,1);
+        initMatrixIfNull();
+        invalidate();
     }
 
+
+    private void initMatrixIfNull(){
+        if(matrix == null){
+            matrix = new Matrix();
+            matrix.postScale(1,1);
+        }
+    }
 
     private Paint createPaint(int color){
         Paint paint = new Paint();
@@ -132,6 +147,17 @@ public class PaintView extends View {
 
     public void notifyPictureSaved(){
         wasCanvasModifiedSinceLastSaveOrReset = false;
+    }
+
+
+    public BitmapHistory getBitmapHistory(){
+        return bitmapHistory;
+    }
+
+
+    public void useMostRecentHistory(){
+        log("Entered useMostRecentHistory()");
+        useHistory(false);
     }
 
 
@@ -233,15 +259,17 @@ public class PaintView extends View {
 
 
     public void resetCanvas(){
+        log("Enered resetCanvas()");
         wasCanvasModifiedSinceLastSaveOrReset = false;
         isCanvasLocked = true;
-        drawPlainBackground();
+        drawPlainBackgroundAndSaveToHistory();
         invalidate();
         isCanvasLocked = false;
     }
 
 
-    private void drawPlainBackground(){
+    private void drawPlainBackgroundAndSaveToHistory(){
+        log("Entered drawPlainBackground");
         Paint blankPaint = new Paint();
         blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         blankPaint.setColor(DEFAULT_BG_COLOR);
@@ -252,18 +280,13 @@ public class PaintView extends View {
 
 
     public void setBitmap(Bitmap bitmap, TextControlsDto textControlsDto){
+        log("Entered setBitmap");
         this.bitmap = bitmap;
         bitmapHistory.push(bitmap);
         this.textControlsDto = textControlsDto;
         canvas = new Canvas(bitmap);
         paint.setColor(DEFAULT_BG_COLOR);
         initBrushes();
-    }
-
-
-    private void initBrushes(){
-        brushFactory = new BrushFactory(canvas, paintGroup, brushSize, textControlsDto);
-        currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
     }
 
 
@@ -274,6 +297,7 @@ public class PaintView extends View {
 
     @Override
     protected void onDraw(Canvas viewCanvas) {
+       // log("Entered onDraw()");
         viewCanvas.save();
         viewCanvas.drawColor(DEFAULT_BG_COLOR);
         viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, drawPaint);
@@ -313,11 +337,18 @@ public class PaintView extends View {
 
 
     public void undo(){
-        Bitmap bm = bitmapHistory.getPreviousBitmap();
-        if(bm == null){
+        useHistory(true);
+    }
+
+
+    public void useHistory(boolean isCurrentDiscarded){
+        Bitmap historyBitmap = isCurrentDiscarded ?  bitmapHistory.getPrevious() : bitmapHistory.getCurrent();
+
+        if(historyBitmap == null){
             return;
         }
-        canvas.drawBitmap(bm, matrix, paint);
+        initMatrixIfNull();
+        canvas.drawBitmap(historyBitmap, matrix, drawPaint);
         disablePreviewLayer();
         invalidate();
     }
@@ -325,6 +356,7 @@ public class PaintView extends View {
 
     private void log(String msg){
         System.out.println("PaintView: " + msg);
+        System.out.flush();
     }
 
 

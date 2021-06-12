@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import java.util.ArrayDeque;
+import java.util.Collections;
+import java.util.List;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
@@ -26,6 +28,10 @@ public class BitmapHistory {
         return mi.availMem / (double)mi.totalMem * 100.0;
     }
 
+    public boolean isEmpty(){
+        return history.isEmpty();
+    }
+
 
     public void push(Bitmap bitmap){
         if(getFreeMemoryPercentage() < 15){
@@ -35,7 +41,7 @@ public class BitmapHistory {
     }
 
 
-    public Bitmap getPreviousBitmap(){
+    public Bitmap getPrevious(){
         if(history.size() == 0){
             return null;
         }
@@ -45,4 +51,21 @@ public class BitmapHistory {
         return history.peekFirst();
     }
 
+
+    public Bitmap getCurrent(){
+        if(null != history && history.size() > 0) {
+            return history.peekFirst();
+        }
+        return null;
+    }
+
+
+    public ArrayDeque<Bitmap> getAll(){
+
+        return history;
+    }
+
+    public void setAll(ArrayDeque<Bitmap> history){
+        this.history = history;
+    }
 }

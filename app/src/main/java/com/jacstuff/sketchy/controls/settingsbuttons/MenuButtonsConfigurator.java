@@ -10,22 +10,20 @@ import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.util.Collection;
 
-public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer> {
+public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer> implements ButtonsConfigurator<Integer> {
 
-    private MainActivity activity;
     private Collection<Integer> layoutIds;
     private SettingsPopup settingsPopup;
 
 
-    public SelectionButtonsConfigurator(MainActivity activity){
-        this.activity = activity;
-        configure();
+    public MenuButtonsConfigurator(MainActivity activity){
+        super(activity, null);
         settingsPopup = activity.getSettingsPopup();
     }
 
-
+    @Override
     public void configure(){
-        ButtonConfigHandler<Integer> buttonConfig = new ButtonConfigHandler<>(activity,
+        buttonConfig = new ButtonConfigHandler<>(activity,
                 this,
                 ButtonCategory.CATEGORIES,
                 R.id.controlPanelLayout);

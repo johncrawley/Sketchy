@@ -8,21 +8,17 @@ import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 
-public class StyleButtonsConfigurator implements ButtonsConfigurator<BrushStyle>{
-
-    private MainActivity activity;
-    private PaintView paintView;
+public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushStyle> implements ButtonsConfigurator<BrushStyle>{
 
 
     public StyleButtonsConfigurator(MainActivity activity, PaintView paintView){
-        this.activity = activity;
-        this.paintView = paintView;
-        configure();
+        super(activity, paintView);
     }
 
 
-    void configure(){
-        ButtonConfigHandler<BrushStyle> buttonConfig = new ButtonConfigHandler<>(activity,
+    @Override
+    public void configure(){
+        buttonConfig = new ButtonConfigHandler<>(activity,
                 this,
                 ButtonCategory.STYLE,
                 R.id.styleOptionsLayout);

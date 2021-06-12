@@ -7,20 +7,14 @@ import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.seekbars.AngleSeekBar;
 import com.jacstuff.sketchy.paintview.PaintView;
 
-public class AngleButtonsConfigurator implements ButtonsConfigurator<AngleType>{
-
-    private MainActivity activity;
-    private PaintView paintView;
-    private ButtonConfigHandler<AngleType> buttonConfig;
+public class AngleButtonsConfigurator extends AbstractButtonConfigurator<AngleType> implements ButtonsConfigurator<AngleType>{
 
 
     public AngleButtonsConfigurator(MainActivity activity, PaintView paintView){
-        this.activity = activity;
-        this.paintView = paintView;
-        configure();
+        super(activity,paintView);
     }
 
-
+    @Override
     public void configure(){
         buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.ANGLE, R.id.angleOptionsLayout);
         add(R.id.zeroDegreesButton, AngleType.ZERO );
@@ -45,12 +39,15 @@ public class AngleButtonsConfigurator implements ButtonsConfigurator<AngleType>{
         add(R.id.degreesMinus90Button, AngleType.MINUS_NINTY);
         add(R.id.degreesPlus90Button, AngleType.PLUS_NINTY);
         add(R.id.degreesRandomButton, AngleType.RANDOM);
+
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.angleSelectionButton);
         buttonConfig.setDefaultSelection(R.id.zeroDegreesButton);
 
         new AngleSeekBar(activity, paintView, buttonConfig.getButtonIds());
     }
+
+
 
 
     private void add(int buttonId, AngleType angleType){

@@ -6,21 +6,18 @@ import com.jacstuff.sketchy.brushes.ShadowType;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 
-public class ShadowButtonsConfigurator implements ButtonsConfigurator<ShadowType>{
-
-    private MainActivity activity;
-    private PaintView paintView;
+public class ShadowButtonsConfigurator extends AbstractButtonConfigurator<ShadowType> implements ButtonsConfigurator<ShadowType>{
 
 
     public ShadowButtonsConfigurator(MainActivity activity, PaintView paintView){
-        this.activity = activity;
-        this.paintView = paintView;
+        super(activity, paintView);
         configure();
     }
 
 
+    @Override
     public void configure(){
-        ButtonConfigHandler<ShadowType> buttonConfig = new ButtonConfigHandler<>(activity,
+       buttonConfig = new ButtonConfigHandler<>(activity,
                 this,
                 ButtonCategory.SHADOW,
                 R.id.shadowOptionsLayout);

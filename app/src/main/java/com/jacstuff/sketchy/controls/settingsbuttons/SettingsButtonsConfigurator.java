@@ -3,27 +3,39 @@ package com.jacstuff.sketchy.controls.settingsbuttons;
 import android.view.View;
 
 import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.ui.SettingsPopup;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class SettingsButtonsConfigurator {
 
     private MainActivity activity;
+    private List<SelectableDefault> configurators;
 
     public SettingsButtonsConfigurator(MainActivity activity, PaintView paintView){
         this.activity = activity;
         // needs to be instantiated first, otherwise parent button icons won't get updated
-        new SelectionButtonsConfigurator(activity);
+        new MenuButtonsConfigurator(activity);
 
-        new ShapeButtonsConfigurator(activity, paintView);
-        new StyleButtonsConfigurator(activity, paintView);
-        new GradientButtonsConfigurator(activity, paintView);
-        new BlurButtonsConfigurator(activity, paintView);
-        new ShadowButtonsConfigurator(activity, paintView);
-        new KaleidoscopeButtonsConfigurator(activity, paintView);
-        new AngleButtonsConfigurator(activity, paintView);
+        configurators = new ArrayList<>();
+        configurators.add(new ShapeButtonsConfigurator(activity, paintView));
+        configurators.add(new StyleButtonsConfigurator(activity, paintView));
+        configurators.add(new GradientButtonsConfigurator(activity, paintView));
+        configurators.add(new BlurButtonsConfigurator(activity, paintView));
+        configurators.add(new ShadowButtonsConfigurator(activity, paintView));
+        configurators.add(new KaleidoscopeButtonsConfigurator(activity, paintView));
+        configurators.add(new AngleButtonsConfigurator(activity, paintView));
+
+    }
+
+
+    public void selectDefaults(){
+        for(SelectableDefault selectableDefault : configurators){
+            selectableDefault.selectDefaultSelection();
+        }
     }
 
 

@@ -9,21 +9,16 @@ import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 
-public class KaleidoscopeButtonsConfigurator implements ButtonsConfigurator<Integer>{
-
-    private MainActivity activity;
-    private PaintView paintView;
+public class KaleidoscopeButtonsConfigurator extends AbstractButtonConfigurator<Integer> implements ButtonsConfigurator<Integer>{
 
 
     public KaleidoscopeButtonsConfigurator(MainActivity activity, PaintView paintView){
-        this.activity = activity;
-        this.paintView = paintView;
-        configure();
+        super(activity, paintView);
     }
 
-
+    @Override
     public void configure(){
-        ButtonConfigHandler<Integer> buttonConfig = new ButtonConfigHandler<>(activity,
+        buttonConfig = new ButtonConfigHandler<>(activity,
                 this,
                 ButtonCategory.KALEIDOSCOPE,
                 R.id.kaleidoscopeOptionsLayout);

@@ -3,29 +3,23 @@ package com.jacstuff.sketchy.controls.settingsbuttons;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.childpanel.ChildSettingsPanelManager;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 
-public class ShapeButtonsConfigurator implements ButtonsConfigurator<BrushShape>{
-
-    private MainActivity activity;
-    private PaintView paintView;
-    private ChildSettingsPanelManager childSettingsPanelManager;
+public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushShape> implements ButtonsConfigurator<BrushShape>{
 
 
     public ShapeButtonsConfigurator(MainActivity activity, PaintView paintView){
-        this.activity = activity;
-        this.paintView = paintView;
-        childSettingsPanelManager = new ChildSettingsPanelManager(activity);
+        super(activity, paintView);
         childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
-        configure();
     }
 
-
+    @Override
     public void configure(){
-        ButtonConfigHandler<BrushShape> buttonConfig = new ButtonConfigHandler<>(activity,
+        buttonConfig = new ButtonConfigHandler<>(activity,
                 this,
                 ButtonCategory.SHAPE,
                 R.id.shapeOptionsLayout);

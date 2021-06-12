@@ -6,6 +6,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import com.jacstuff.sketchy.MainActivity;
+import com.jacstuff.sketchy.MainViewModel;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.multicolor.RandomMultiColorSelector;
@@ -39,17 +40,25 @@ public class ColorButtonClickHandler {
     private int enabledTag = R.string.multi_random_button_checked_tag;
     private Button randomColorButton;
 
+    private MainViewModel mainViewModel;
 
 
     public ColorButtonClickHandler(MainActivity mainActivity, PaintView paintView, ButtonLayoutParams buttonLayoutParams, HorizontalScrollView shadesScrollView ){
         this.mainActivity = mainActivity;
+        this.mainViewModel = mainActivity.getViewModel();
         this.paintView = paintView;
         this.buttonLayoutParams = buttonLayoutParams;
         this.shadesScrollView = shadesScrollView;
         randomShadeButtonsState = new RandomShadeButtonsState();
         setupColorSelectors();
+        setupPreexistingState();
     }
 
+    private void setupPreexistingState(){
+        int buttonId = mainViewModel.lastClickedColorButtonId;
+        View view = mainActivity.findViewById(buttonId);
+        handleColorButtonClicks(view);
+    }
 
     private void setupColorSelectors(){
         ColorSelector singleSelector = new SingleColorSelector();
@@ -253,7 +262,6 @@ public class ColorButtonClickHandler {
 
 
     private void clickRandomShadeButtonMultiMode(Button button){
-
         if(!randomShadeButtonsState.isMultiSelected()){
             handleClickWhenMultiDisabled(button);
             return;

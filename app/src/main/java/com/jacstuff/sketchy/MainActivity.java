@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +36,6 @@ import com.jacstuff.sketchy.tasks.ColorAutoScroller;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -56,12 +56,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ResumedActionsHelper resumedActionsHelper;
     private SettingsPopup settingsPopup;
     private TextControlsDto textControlsDto;
+    private MainViewModel viewModel;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         textControlsDto = new TextControlsDto();
         assignViews();
         initImageSaver();
@@ -136,9 +138,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupButtons(){
         setupSettingsButtons();
-        setupDefaultSelections();
         setupColorAndShadeButtons();
-        assignRecentButtons();
+    }
+
+
+    public MainViewModel getViewModel(){
+        return this.viewModel;
+    }
+
+
+    private void setupSettingsButtons(){
+        settingsPopup = new SettingsPopup((ViewGroup)findViewById(R.id.includedSettingsLayout), this);
+        settingsButtonsConfigurator = new SettingsButtonsConfigurator(this, paintView);
+    }
+
+
+    void setupColorAndShadeButtons(){
+        List<Integer> colors = ColorCreator.generate();
+        buttonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams, shadesScrollView);
+        buttonClickHandler.setColorsMap(colors);
+        layoutPopulator = new ColorButtonLayoutPopulator(this, colorButtonLayoutParams, colors);
+        buttonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
+        layoutPopulator.addColorButtonLayoutsTo(colorButtonGroupLayout);
+        buttonClickHandler.setShadeLayoutsMap(layoutPopulator.getShadeLayoutsMap());
+        buttonClickHandler.handleColorButtonClicks(getDefaultButton());
     }
 
 
@@ -152,19 +175,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void setupSettingsButtons(){
-        settingsPopup = new SettingsPopup((ViewGroup)findViewById(R.id.includedSettingsLayout), this);
-        settingsButtonsConfigurator = new SettingsButtonsConfigurator(this, paintView);
-    }
-
 
     public SettingsPopup getSettingsPopup(){
         return this.settingsPopup;
     }
 
 
-    private void assignRecentButtons(){
-        resumedActionsHelper = new ResumedActionsHelper( buttonClickHandler ,layoutPopulator, settingsButtonsConfigurator, paintView);
+    private void assignPreviousSettings(){
+        resumedActionsHelper = new ResumedActionsHelper( viewModel, buttonClickHandler ,layoutPopulator, settingsButtonsConfigurator, paintView);
         resumedActionsHelper.onResume();
     }
 
@@ -180,8 +198,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
-        PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, getWindowManager(), 1000, 1000);
-        paintViewConfigurator.configure(paintView, settingsPopup, textControlsDto);
+        paintView.initBrushes();
+        //PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, getWindowManager(), 1000, 1000);
+        //paintViewConfigurator.configure(paintView, settingsPopup, textControlsDto);
         reconfigurePaintViewWithAssignedLayoutHeight(this);
         //assignSavedBitmap();
     }
@@ -200,6 +219,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(mainActivity, mainActivity.getWindowManager(), width, height);
                 paintViewConfigurator.configure(paintView, settingsPopup, textControlsDto);
                 assignSavedBitmap();
+                settingsButtonsConfigurator.selectDefaults();
+                assignPreviousSettings();
             }
         });
 
@@ -221,29 +242,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    void setupColorAndShadeButtons(){
-        List<Integer> colors = ColorCreator.generate();
-        buttonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams, shadesScrollView);
-        buttonClickHandler.setColorsMap(colors);
-        layoutPopulator = new ColorButtonLayoutPopulator(this, colorButtonLayoutParams, colors);
-        buttonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
-        layoutPopulator.addColorButtonLayoutsTo(colorButtonGroupLayout);
-        buttonClickHandler.setShadeLayoutsMap(layoutPopulator.getShadeLayoutsMap());
-        buttonClickHandler.handleColorButtonClicks(getDefaultButton());
-    }
-
-
     private View getDefaultButton(){
         View defaultButton = colorButtonGroupLayout.findViewWithTag(R.string.tag_button_default_color);
         if(defaultButton == null){
             defaultButton = colorButtonGroupLayout.findViewWithTag(R.string.tag_button_color_button);
         }
         return defaultButton;
-    }
-
-
-    private void setupDefaultSelections(){
-      //  paintView.setBrushSize(brushSizeSeekBar.getProgress());
     }
 
 

@@ -6,21 +6,17 @@ import com.jacstuff.sketchy.brushes.BlurType;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 
-public class BlurButtonsConfigurator implements ButtonsConfigurator<BlurType>{
-
-    private MainActivity activity;
-    private PaintView paintView;
+public class BlurButtonsConfigurator extends AbstractButtonConfigurator<BlurType> implements ButtonsConfigurator<BlurType>{
 
 
     public BlurButtonsConfigurator(MainActivity activity, PaintView paintView){
-        this.activity = activity;
-        this.paintView = paintView;
-        configure();
+        super(activity, paintView);
     }
 
 
+    @Override
     public void configure(){
-        ButtonConfigHandler<BlurType> buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.BLUR, R.id.blurOptionsLayout);
+        buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.BLUR, R.id.blurOptionsLayout);
         buttonConfig.add(R.id.noBlurButton,      R.drawable.button_blur_disabled,      BlurType.NONE);
         buttonConfig.add(R.id.innerBlurButton,   R.drawable.inner_blur_button,   BlurType.INNER);
         buttonConfig.add(R.id.normalBlurButton,  R.drawable.normal_blur_button,  BlurType.NORMAL);
