@@ -35,6 +35,7 @@ import com.jacstuff.sketchy.tasks.ColorAutoScroller;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{

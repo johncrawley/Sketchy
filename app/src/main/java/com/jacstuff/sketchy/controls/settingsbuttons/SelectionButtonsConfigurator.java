@@ -29,10 +29,10 @@ public class SelectionButtonsConfigurator implements ButtonsConfigurator<Integer
                 this,
                 ButtonCategory.CATEGORIES,
                 R.id.controlPanelLayout);
-        buttonConfig.add(R.id.shapeSelectionButton,     R.drawable.circle_shape_button,     R.id.includeShapeControls);
+        buttonConfig.add(R.id.shapeSelectionButton,     R.drawable.button_shape_circle,     R.id.includeShapeControls);
         buttonConfig.add(R.id.styleSelectionButton,     R.drawable.fill_style_button,       R.id.includeStyleControls);
         buttonConfig.add(R.id.gradientSelectionButton,  R.drawable.button_gradient_disabled,      R.id.includeGradientControls);
-        buttonConfig.add(R.id.angleSelectionButton, R.id.includeAngleControls, "0" + activity.getString(R.string.degrees_symbol));
+        buttonConfig.add(R.id.angleSelectionButton,     R.id.includeAngleControls, "0" + activity.getString(R.string.degrees_symbol));
         buttonConfig.add(R.id.blurSelectionButton,      R.drawable.button_blur_disabled,    R.id.includeBlurControls);
         buttonConfig.add(R.id.shadowSelectionButton,    R.drawable.button_shadow_disabled,        R.id.includeShadowControls);
         buttonConfig.add(R.id.kaleidoscopeSelectionButton, R.drawable.k_off_button,         R.id.includeKaleidoScopeControls);
