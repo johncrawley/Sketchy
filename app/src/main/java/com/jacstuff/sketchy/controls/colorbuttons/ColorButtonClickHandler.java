@@ -18,6 +18,7 @@ import com.jacstuff.sketchy.multicolor.RandomColorSelector;
 import com.jacstuff.sketchy.multicolor.SingleColorSelector;
 import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -39,12 +40,14 @@ public class ColorButtonClickHandler {
     private RandomShadeButtonsState randomShadeButtonsState;
     private int enabledTag = R.string.multi_random_button_checked_tag;
     private Button randomColorButton;
+    private ButtonReferenceStore buttonReferenceStore;
 
     private MainViewModel mainViewModel;
 
 
     public ColorButtonClickHandler(MainActivity mainActivity, PaintView paintView, ButtonLayoutParams buttonLayoutParams, HorizontalScrollView shadesScrollView ){
         this.mainActivity = mainActivity;
+        this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         this.mainViewModel = mainActivity.getViewModel();
         this.paintView = paintView;
         this.buttonLayoutParams = buttonLayoutParams;
@@ -82,18 +85,30 @@ public class ColorButtonClickHandler {
     }
 
 
-    public String getMostRecentButtonKey(){
-        return getKey(previouslySelectedColorButton);
+    public String getMostRecentColorButtonKey(){
+        return buttonReferenceStore.getKeyFrom(previouslySelectedColorButton);
+    }
+
+
+    public String getMostRecentShadeButtonKey(){
+        return buttonReferenceStore.getKeyFrom(previouslySelectedShadeButton);
+    }
+
+
+    public int getMostRecentColorButtonId(){
+        if(previouslySelectedColorButton == null) return -1;
+        return previouslySelectedColorButton.getId();
+    }
+
+
+    public int getMostRecentShadeButtonId(){
+        if(previouslySelectedShadeButton == null) return -1;
+        return previouslySelectedShadeButton.getId();
     }
 
 
     private String getKey(Button button){
         return button == null ? "" : (String)button.getTag(R.string.tag_button_key);
-    }
-
-
-    public String getMostRecentShadeKey(){
-        return getKey(previouslySelectedShadeButton);
     }
 
 
@@ -112,6 +127,21 @@ public class ColorButtonClickHandler {
     }
 
 
+    public void handleColorButtonClicks(int id){
+       View v = mainActivity.findViewById(id);
+
+        log("Entered handleColorButtonClicks(int id) - > view is null? : " + String.valueOf(v == null));
+       if(v != null){
+           handleColorButtonClicks(v);
+       }
+    }
+
+
+    private void log(String msg){
+        System.out.println("ColorButtonClickHandler " + msg);
+    }
+
+
     public void handleColorButtonClicks(View view){
 
         if(!isColorButton(view)){
@@ -122,6 +152,7 @@ public class ColorButtonClickHandler {
         focusOn(button);
         assignColorSelectorToPaintViewFrom(button);
 
+        log("handleColorButtonClicks(View view) -> color : " + getColorOf(button));
         switch(buttonType){
             case COLOR:
                 onMainColorButtonClick(button);
@@ -190,12 +221,6 @@ public class ColorButtonClickHandler {
     }
 
 
-    private List<Integer> getShadesFrom(Button button){
-        int color = (int)button.getTag(R.string.tag_button_color);
-        return multiColorShades.get(color);
-    }
-
-
     private void onRandomColorButtonClick(){
         deselectPreviousButtons();
         currentColorSelector.set(colors);
@@ -240,6 +265,9 @@ public class ColorButtonClickHandler {
 
 
     private int getColorOf(Button button){
+        if(button.getTag(R.string.tag_button_color) == null){
+            return -1;
+        }
         return (int)button.getTag(R.string.tag_button_color);
     }
 
@@ -280,6 +308,15 @@ public class ColorButtonClickHandler {
         }
         randomShadeButtonsState.selectMulti();
         selectButtons(randomShadeButtonsState.getSelected());
+    }
+
+
+    public List<String> getSelectedRandomShadeKeys(){
+        List<String> buttonKeys = new ArrayList<>();
+        for(Button button: randomShadeButtonsState.getSelected()){
+            buttonKeys.add(buttonReferenceStore.getKeyFrom(button));
+        }
+        return buttonKeys;
     }
 
 
@@ -345,16 +382,25 @@ public class ColorButtonClickHandler {
         button.setLayoutParams(buttonLayoutParams.getUnselected());
     }
 
+
     private void deselectButtons(Collection<Button> buttons){
         for(Button b: buttons){
             deselectButton(b);
         }
     }
 
+
     private void selectButtons(Collection<Button> buttons){
         for(Button b: buttons){
             selectButton(b);
         }
     }
+
+
+    private List<Integer> getShadesFrom(Button button){
+        int color = (int)button.getTag(R.string.tag_button_color);
+        return multiColorShades.get(color);
+    }
+
 
 }

@@ -6,7 +6,6 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 

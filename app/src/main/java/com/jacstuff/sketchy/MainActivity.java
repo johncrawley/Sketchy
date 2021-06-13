@@ -19,6 +19,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout colorButtonGroupLayout;
     private ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 15);
     private ButtonLayoutParams settingsButtonLayoutParams = new ButtonLayoutParams(120, 120, 15, 2);
-    private ColorButtonClickHandler buttonClickHandler;
+    private ColorButtonClickHandler colorButtonClickHandler;
     private ColorButtonLayoutPopulator layoutPopulator;
     private Toast colorPatternToast;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SettingsPopup settingsPopup;
     private TextControlsDto textControlsDto;
     private MainViewModel viewModel;
+    private ButtonReferenceStore buttonReferenceStore;
 
 
     @Override
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         textControlsDto = new TextControlsDto();
+        buttonReferenceStore = new ButtonReferenceStore();
         assignViews();
         initImageSaver();
         setupActionbar();
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupButtons();
         new SeekBarConfigurator(this, paintView);
         new TextControls(this, textControlsDto, paintView.getPaintGroup());
+        resumedActionsHelper = new ResumedActionsHelper( viewModel, this, colorButtonClickHandler, settingsButtonsConfigurator, paintView);
         setupColorAutoScroll();
     }
 
@@ -79,6 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause(){
         super.onPause();
+        if(resumedActionsHelper == null){
+            return;
+        }
         resumedActionsHelper.onPause();
     }
 
@@ -86,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v){
         settingsPopup.dismiss(v);
-        buttonClickHandler.handleColorButtonClicks(v);
+        colorButtonClickHandler.handleColorButtonClicks(v);
     }
 
 
@@ -153,15 +160,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    public ButtonReferenceStore getButtonReferenceStore(){
+        return buttonReferenceStore;
+    }
+
     void setupColorAndShadeButtons(){
         List<Integer> colors = ColorCreator.generate();
-        buttonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams, shadesScrollView);
-        buttonClickHandler.setColorsMap(colors);
+        buttonReferenceStore = new ButtonReferenceStore();
+        colorButtonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams, shadesScrollView);
+        colorButtonClickHandler.setColorsMap(colors);
         layoutPopulator = new ColorButtonLayoutPopulator(this, colorButtonLayoutParams, colors);
-        buttonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
+        colorButtonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
         layoutPopulator.addColorButtonLayoutsTo(colorButtonGroupLayout);
-        buttonClickHandler.setShadeLayoutsMap(layoutPopulator.getShadeLayoutsMap());
-        buttonClickHandler.handleColorButtonClicks(getDefaultButton());
+        colorButtonClickHandler.setShadeLayoutsMap(layoutPopulator.getShadeLayoutsMap());
+        colorButtonClickHandler.handleColorButtonClicks(getDefaultButton());
     }
 
 
@@ -182,7 +194,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void assignPreviousSettings(){
-        resumedActionsHelper = new ResumedActionsHelper( viewModel, buttonClickHandler ,layoutPopulator, settingsButtonsConfigurator, paintView);
         resumedActionsHelper.onResume();
     }
 

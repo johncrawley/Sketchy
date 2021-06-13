@@ -43,11 +43,13 @@ public class ColorButtonLayoutPopulator {
     private final String RANDOM_SHADE_KEY = "random shade key";
     private ButtonUtils buttonUtils;
 
+    private ButtonReferenceStore buttonReferenceStore;
 
     public ColorButtonLayoutPopulator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, final List<Integer> colors){
         this.context = mainActivity.getApplicationContext();
         defaultColor = mainActivity.getString(R.string.default_color);
         this.onClickListener = mainActivity;
+        this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         setupColorShadeCreator();
         this.buttonLayoutParams = buttonLayoutParams;
         this.colors = colors;
@@ -247,9 +249,11 @@ public class ColorButtonLayoutPopulator {
         Button button = new Button(context);
         button.setLayoutParams(buttonLayoutParams.getUnselected());
         button.setTag(R.string.tag_button_type, type);
+        button.setId(View.generateViewId());
         button.setTag(R.string.tag_button_key, key);
         button.setTag(R.string.tag_button_category, ButtonCategory.COLOR_SELECTION);
         buttonUtils.setStandardWidthOn(button);
+        buttonReferenceStore.add(button);
         buttonMap.put(key, button);
         button.setOnClickListener(onClickListener);
         return button;

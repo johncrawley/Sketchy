@@ -3,9 +3,7 @@ package com.jacstuff.sketchy.controls.settingsbuttons;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.controls.ButtonCategory;
-import com.jacstuff.sketchy.controls.childpanel.ChildSettingsPanelManager;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 

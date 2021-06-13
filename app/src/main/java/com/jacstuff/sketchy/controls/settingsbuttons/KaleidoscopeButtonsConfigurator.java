@@ -1,7 +1,6 @@
 package com.jacstuff.sketchy.controls.settingsbuttons;
 
 import android.widget.CompoundButton;
-import android.widget.Switch;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
