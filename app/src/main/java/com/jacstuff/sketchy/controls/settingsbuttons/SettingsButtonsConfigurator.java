@@ -27,7 +27,6 @@ public class SettingsButtonsConfigurator {
         configurators.add(new ShadowButtonsConfigurator(activity, paintView));
         configurators.add(new KaleidoscopeButtonsConfigurator(activity, paintView));
         configurators.add(new AngleButtonsConfigurator(activity, paintView));
-
     }
 
 

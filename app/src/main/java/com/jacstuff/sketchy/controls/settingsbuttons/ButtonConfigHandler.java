@@ -9,7 +9,7 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonUtils;
-import com.jacstuff.sketchy.settings.PaintViewSingleton;
+import com.jacstuff.sketchy.settings.ViewModelHelper;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.util.Collection;
@@ -30,7 +30,7 @@ public class ButtonConfigHandler<T>{
     private SettingsPopup settingsPopup;
     private Map<Drawable, Drawable> drawableCopyMap;
     private int defaultSelectionId;
-
+    private ViewModelHelper viewModelHelper;
 
     public ButtonConfigHandler(MainActivity activity, ButtonsConfigurator<T> buttonsConfigurator, ButtonCategory buttonCategory, int layoutId){
         buttonActionMap = new HashMap<>();
@@ -42,6 +42,7 @@ public class ButtonConfigHandler<T>{
         this.buttonCategory = buttonCategory;
         linearLayout = activity.findViewById(layoutId);
         settingsPopup.registerToIgnore(layoutId);
+        viewModelHelper = activity.getViewModelHelper();
 
     }
 
@@ -96,7 +97,7 @@ public class ButtonConfigHandler<T>{
         buttonUtils.switchSelection(view.getId(), buttonIds);
 
         buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
-        PaintViewSingleton.getInstance().saveSetting(viewId, buttonCategory);
+        viewModelHelper.saveRecentClick(buttonCategory, viewId);
         assignBackgroundAndTextToParentButtonFrom(view);
     }
 
@@ -131,6 +132,7 @@ public class ButtonConfigHandler<T>{
         buttonIds = buttonActionMap.keySet();
         for(int buttonId : buttonIds){
             View view =  activity.findViewById(buttonId);
+
             if(view != null){
                 view.setOnClickListener(clickListener);
             }

@@ -3,8 +3,6 @@ package com.jacstuff.sketchy.paintview;
 import android.graphics.Paint;
 import android.graphics.PathEffect;
 
-import com.jacstuff.sketchy.R;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,6 +29,7 @@ public class PaintGroup {
     public String getStyle(){
         return paints.get(0).getStyle().toString();
     }
+
 
     public void setPathEffect(PathEffect pathEffect){
         for(Paint p: paints){

@@ -3,7 +3,7 @@ package com.jacstuff.sketchy;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -31,8 +31,7 @@ import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
-import com.jacstuff.sketchy.settings.PaintViewSingleton;
-import com.jacstuff.sketchy.settings.ResumedActionsHelper;
+import com.jacstuff.sketchy.settings.ViewModelHelper;
 import com.jacstuff.sketchy.tasks.ColorAutoScroller;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
@@ -51,10 +50,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 15);
     private ButtonLayoutParams settingsButtonLayoutParams = new ButtonLayoutParams(120, 120, 15, 2);
     private ColorButtonClickHandler colorButtonClickHandler;
-    private ColorButtonLayoutPopulator layoutPopulator;
     private Toast colorPatternToast;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
-    private ResumedActionsHelper resumedActionsHelper;
+    private ViewModelHelper viewModelHelper;
     private SettingsPopup settingsPopup;
     private TextControlsDto textControlsDto;
     private MainViewModel viewModel;
@@ -65,17 +63,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        textControlsDto = new TextControlsDto();
         buttonReferenceStore = new ButtonReferenceStore();
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModelHelper = new ViewModelHelper( viewModel, this);
+        textControlsDto = new TextControlsDto();
         assignViews();
         initImageSaver();
         setupActionbar();
         configurePaintView();
-        setupButtons();
+        setupSettingsButtons();
+        setupColorAndShadeButtons();
         new SeekBarConfigurator(this, paintView);
         new TextControls(this, textControlsDto, paintView.getPaintGroup());
-        resumedActionsHelper = new ResumedActionsHelper( viewModel, this, colorButtonClickHandler, settingsButtonsConfigurator, paintView);
+        viewModelHelper.init(colorButtonClickHandler, settingsButtonsConfigurator, paintView);
         setupColorAutoScroll();
     }
 
@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause(){
         super.onPause();
-        if(resumedActionsHelper == null){
+        if(viewModelHelper == null){
             return;
         }
-        resumedActionsHelper.onPause();
+        viewModelHelper.onPause();
     }
 
 
@@ -143,14 +143,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void setupButtons(){
-        setupSettingsButtons();
-        setupColorAndShadeButtons();
+    public MainViewModel getViewModel(){
+        return this.viewModel;
     }
 
 
-    public MainViewModel getViewModel(){
-        return this.viewModel;
+    public ViewModelHelper getViewModelHelper(){
+        return this.viewModelHelper;
     }
 
 
@@ -164,12 +163,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return buttonReferenceStore;
     }
 
+
     void setupColorAndShadeButtons(){
         List<Integer> colors = ColorCreator.generate();
-        buttonReferenceStore = new ButtonReferenceStore();
         colorButtonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams, shadesScrollView);
         colorButtonClickHandler.setColorsMap(colors);
-        layoutPopulator = new ColorButtonLayoutPopulator(this, colorButtonLayoutParams, colors);
+        ColorButtonLayoutPopulator layoutPopulator = new ColorButtonLayoutPopulator(this, colorButtonLayoutParams, colors);
         colorButtonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
         layoutPopulator.addColorButtonLayoutsTo(colorButtonGroupLayout);
         colorButtonClickHandler.setShadeLayoutsMap(layoutPopulator.getShadeLayoutsMap());
@@ -194,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void assignPreviousSettings(){
-        resumedActionsHelper.onResume();
+        viewModelHelper.onResume();
     }
 
 
@@ -210,10 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
         paintView.initBrushes();
-        //PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(this, getWindowManager(), 1000, 1000);
-        //paintViewConfigurator.configure(paintView, settingsPopup, textControlsDto);
         reconfigurePaintViewWithAssignedLayoutHeight(this);
-        //assignSavedBitmap();
     }
 
 
@@ -229,21 +225,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(mainActivity, mainActivity.getWindowManager(), width, height);
                 paintViewConfigurator.configure(paintView, settingsPopup, textControlsDto);
-                assignSavedBitmap();
                 settingsButtonsConfigurator.selectDefaults();
                 assignPreviousSettings();
             }
         });
 
-    }
-
-
-    private void assignSavedBitmap(){
-        PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
-        Bitmap bitmap = paintViewSingleton.getBitmap();
-        if(bitmap != null){
-            paintView.setBitmap(bitmap, textControlsDto);
-        }
     }
 
 
@@ -308,6 +294,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void startConfirmClearActivity(){
         Intent intent = new Intent(this, ConfirmWipeDialogActivity.class);
         startActivityForResult(intent, CLEAR_CANVAS_ACTIVITY_CODE);
+    }
+
+
+    public void loadPreferences()
+    {
+        SharedPreferences prefs = getSharedPreferences("myPref",0);
+        prefs.getString("myStoreName","defaultValue");
+    }
+
+    public void savePreferences(String thePreference)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences("myPref",0).edit();
+        editor.putString("myStoreName", thePreference);
+        editor.commit();
     }
 
 }

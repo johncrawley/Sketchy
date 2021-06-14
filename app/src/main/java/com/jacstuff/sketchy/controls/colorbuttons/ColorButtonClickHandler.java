@@ -95,23 +95,6 @@ public class ColorButtonClickHandler {
     }
 
 
-    public int getMostRecentColorButtonId(){
-        if(previouslySelectedColorButton == null) return -1;
-        return previouslySelectedColorButton.getId();
-    }
-
-
-    public int getMostRecentShadeButtonId(){
-        if(previouslySelectedShadeButton == null) return -1;
-        return previouslySelectedShadeButton.getId();
-    }
-
-
-    private String getKey(Button button){
-        return button == null ? "" : (String)button.getTag(R.string.tag_button_key);
-    }
-
-
    public boolean isMostRecentClickAShade(){
         return isMostRecentClickAShade;
     }
@@ -129,16 +112,9 @@ public class ColorButtonClickHandler {
 
     public void handleColorButtonClicks(int id){
        View v = mainActivity.findViewById(id);
-
-        log("Entered handleColorButtonClicks(int id) - > view is null? : " + String.valueOf(v == null));
        if(v != null){
            handleColorButtonClicks(v);
        }
-    }
-
-
-    private void log(String msg){
-        System.out.println("ColorButtonClickHandler " + msg);
     }
 
 
@@ -151,8 +127,6 @@ public class ColorButtonClickHandler {
         ButtonType buttonType = (ButtonType)view.getTag(R.string.tag_button_type);
         focusOn(button);
         assignColorSelectorToPaintViewFrom(button);
-
-        log("handleColorButtonClicks(View view) -> color : " + getColorOf(button));
         switch(buttonType){
             case COLOR:
                 onMainColorButtonClick(button);

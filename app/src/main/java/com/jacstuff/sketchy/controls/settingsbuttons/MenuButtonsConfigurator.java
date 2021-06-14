@@ -5,7 +5,6 @@ import android.view.View;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
-import com.jacstuff.sketchy.settings.PaintViewSingleton;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.util.Collection;
@@ -47,9 +46,6 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
             settingsPopup.click(viewId);
         }
         activity.findViewById(layoutId).setVisibility(View.VISIBLE);
-        PaintViewSingleton paintViewSingleton = PaintViewSingleton.getInstance();
-        paintViewSingleton.saveSelectedCategoryButton(viewId);
-
     }
 
 

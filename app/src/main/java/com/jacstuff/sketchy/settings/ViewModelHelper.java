@@ -1,5 +1,7 @@
 package com.jacstuff.sketchy.settings;
 
+import android.view.View;
+
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.MainViewModel;
 import com.jacstuff.sketchy.controls.ButtonCategory;
@@ -8,26 +10,35 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
 
+import java.util.HashMap;
 
-public class ResumedActionsHelper {
+
+public class ViewModelHelper {
 
     private ColorButtonClickHandler buttonClickHandler;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
     private PaintView paintView;
     private MainViewModel viewModel;
     private ButtonReferenceStore buttonReferenceStore;
+    private MainActivity mainActivity;
 
-    public ResumedActionsHelper(MainViewModel viewModel,
-                                MainActivity mainActivity,
-                                ColorButtonClickHandler buttonClickHandler,
-                                SettingsButtonsConfigurator settingsButtonsConfigurator,
-                                PaintView paintView) {
+
+    public ViewModelHelper(MainViewModel viewModel,
+                           MainActivity mainActivity) {
 
         this.viewModel = viewModel;
+        this.mainActivity = mainActivity;
         this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
+    }
+
+
+    public void init(ColorButtonClickHandler buttonClickHandler,
+                     SettingsButtonsConfigurator settingsButtonsConfigurator,
+                     PaintView paintView){
         this.buttonClickHandler = buttonClickHandler;
         this.settingsButtonsConfigurator = settingsButtonsConfigurator;
         this.paintView = paintView;
+        initViewModelSettings();
     }
 
 
@@ -40,13 +51,33 @@ public class ResumedActionsHelper {
     }
 
 
-    public void onResume() {
+    public void saveRecentClick(ButtonCategory buttonCategory, int viewId){
+        viewModel.settingsButtonsClickMap.put(buttonCategory, viewId);
+    }
 
+
+    public void onResume() {
+        setBitmapHistory();
+        setMostRecentSettings();
+        setMostRecentColorAndShade();
+    }
+
+    private void initViewModelSettings(){
+        if(viewModel.settingsButtonsClickMap == null){
+            viewModel.settingsButtonsClickMap = new HashMap<>();
+        }
+    }
+
+
+    private void setBitmapHistory(){
         if(viewModel.bitmapHistory != null) {
             paintView.getBitmapHistory().setAll(viewModel.bitmapHistory);
             paintView.useMostRecentHistory();
         }
+    }
 
+
+    private void setMostRecentColorAndShade(){
         int mostRecentColorButtonId = buttonReferenceStore.getIdFor(viewModel.mostRecentColorButtonKey);
         buttonClickHandler.handleColorButtonClicks(mostRecentColorButtonId);
         if(viewModel.isMostRecentClickAShade){
@@ -59,18 +90,28 @@ public class ResumedActionsHelper {
                 buttonClickHandler.handleColorButtonClicks(buttonId);
             }
         }
-
     }
 
 
+    private void setMostRecentSettings(){
+        for(ButtonCategory buttonCategory : viewModel.settingsButtonsClickMap.keySet()){
 
-    private void selectRecentShapeAndStyle(PaintViewSingleton pvs) {
-        for(ButtonCategory buttonCategory : ButtonCategory.values()){
-            if(buttonCategory == ButtonCategory.COLOR_SELECTION){
-                continue;
-            }
-            settingsButtonsConfigurator.clickOnView(pvs.getMostRecentSettingButtonId(buttonCategory));
+            Integer id = viewModel.settingsButtonsClickMap.get(buttonCategory);
+            clickOn(id);
+        }
+        mainActivity.getSettingsPopup().dismiss();
+    }
+
+
+    private void clickOn(Integer id){
+        if(id == null){
+            return;
+        }
+        View view = mainActivity.findViewById(id);
+        if(view != null){
+            view.callOnClick();
         }
     }
+
 
 }
