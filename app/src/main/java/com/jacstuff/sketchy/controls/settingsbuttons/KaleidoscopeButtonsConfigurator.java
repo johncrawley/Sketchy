@@ -34,10 +34,10 @@ public class KaleidoscopeButtonsConfigurator extends AbstractButtonConfigurator<
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.kaleidoscopeSelectionButton);
         buttonConfig.setDefaultSelection(R.id.kOffButton);
-        setupKaleidoScopeOptions();
+        setupKaleidoscopeOptions();
     }
 
-    public void setupKaleidoScopeOptions(){
+    public void setupKaleidoscopeOptions(){
        SwitchMaterial kaleidoscopeCentredSwitch = activity.findViewById(R.id.kaleidoscopeCentredSwitch);
        kaleidoscopeCentredSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

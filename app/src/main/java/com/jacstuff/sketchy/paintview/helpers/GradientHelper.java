@@ -5,40 +5,45 @@ import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 
+import com.jacstuff.sketchy.MainViewModel;
 import com.jacstuff.sketchy.brushes.GradientType;
 
 public class GradientHelper {
 
     private Paint paint;
     private GradientType gradientType;
-    private int halfBrushSize = 10;
-    private int clampRadialGradientFactor = 12;
-    private int clampRadialGradientRadius = 10;
-    private int radialGradientRadius = 1;
-    private int linearGradientLength = 100;
-    private final int MAX_GRADIENT_FACTOR;
+    private int MAX_GRADIENT_FACTOR;
+    private MainViewModel viewModel;
 
 
-    public GradientHelper(Paint paint, int maxGradientFactor){
-        this.paint = paint;
-        gradientType = GradientType.NONE;
+    public GradientHelper(MainViewModel viewModel, int maxGradientFactor){
+        this.viewModel = viewModel;
         MAX_GRADIENT_FACTOR = maxGradientFactor;
     }
 
-    public void updateBrushSize(int brushSize){
-        this.halfBrushSize = brushSize / 2;
+
+    public void init(Paint paint){
+        this.paint = paint;
+        gradientType = GradientType.NONE;
     }
+
+
+    public void updateBrushSize(int brushSize){
+        viewModel.halfBrushSize = brushSize / 2;
+    }
+
 
     public void setGradientType(GradientType gradientType){
         this.gradientType = gradientType;
     }
 
 
-    public void setGradientRadius(int radiusFactor, int canvasWidth){
-        radialGradientRadius = 1 + canvasWidth / radiusFactor;
-        clampRadialGradientRadius = 1 + radialGradientRadius * clampRadialGradientFactor;
-        linearGradientLength = 1 +  halfBrushSize  - ((halfBrushSize * radiusFactor)/MAX_GRADIENT_FACTOR);
-
+    public void setGradientRadius(int radiusFactor){
+        final int CLAMP_RADIAL_GRADIENT_FACTOR = 12;
+        final int RADIAL_GRADIENT_NUMERATOR= 1100;
+        viewModel.radialGradientRadius = 1 + RADIAL_GRADIENT_NUMERATOR / radiusFactor;
+        viewModel.clampRadialGradientRadius = 1 + viewModel.radialGradientRadius * CLAMP_RADIAL_GRADIENT_FACTOR;
+        viewModel.linearGradientLength = 1 +  viewModel.halfBrushSize  - ((viewModel.halfBrushSize * radiusFactor)/MAX_GRADIENT_FACTOR);
     }
 
 
@@ -49,22 +54,34 @@ public class GradientHelper {
                 paint.setShader(null);
                 break;
             case DIAGONAL_MIRROR:
-                paint.setShader(new LinearGradient(-linearGradientLength, -linearGradientLength,  linearGradientLength, linearGradientLength, color, oldColor, Shader.TileMode.MIRROR));
+                paint.setShader(new LinearGradient(-viewModel.linearGradientLength,
+                        -viewModel.linearGradientLength,
+                        viewModel.linearGradientLength,
+                        viewModel.linearGradientLength,
+                        color,
+                        oldColor,
+                        Shader.TileMode.MIRROR));
                 break;
             case HORIZONTAL_MIRROR:
-                paint.setShader(new LinearGradient( - linearGradientLength, y, linearGradientLength, y, color, oldColor, Shader.TileMode.MIRROR));
+                paint.setShader(new LinearGradient( -viewModel.linearGradientLength,
+                        y,
+                        viewModel.linearGradientLength,
+                        y,
+                        color,
+                        oldColor,
+                        Shader.TileMode.MIRROR));
                 break;
             case VERTICAL_MIRROR:
-                paint.setShader(new LinearGradient(x, - linearGradientLength, x,  + linearGradientLength, color, oldColor, Shader.TileMode.MIRROR));
+                paint.setShader(new LinearGradient(x, - viewModel.linearGradientLength, x,  + viewModel.linearGradientLength, color, oldColor, Shader.TileMode.MIRROR));
                 break;
             case RADIAL_CLAMP:
-                paint.setShader(new RadialGradient(0, 0, clampRadialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.CLAMP ));
+                paint.setShader(new RadialGradient(0, 0, viewModel.clampRadialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.CLAMP ));
                 break;
             case RADIAL_REPEAT:
-                paint.setShader(new RadialGradient(0, 0, radialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.REPEAT ));
+                paint.setShader(new RadialGradient(0, 0, viewModel.radialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.REPEAT ));
                 break;
             case RADIAL_MIRROR:
-                paint.setShader(new RadialGradient(0, 0, radialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.MIRROR ));
+                paint.setShader(new RadialGradient(0, 0, viewModel.radialGradientRadius, new int []{color,oldColor}, null, Shader.TileMode.MIRROR ));
                 break;
         }
     }

@@ -7,7 +7,6 @@ import com.jacstuff.sketchy.MainViewModel;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
-import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 import java.util.HashMap;
@@ -16,7 +15,6 @@ import java.util.HashMap;
 public class ViewModelHelper {
 
     private ColorButtonClickHandler buttonClickHandler;
-    private SettingsButtonsConfigurator settingsButtonsConfigurator;
     private PaintView paintView;
     private MainViewModel viewModel;
     private ButtonReferenceStore buttonReferenceStore;
@@ -33,10 +31,8 @@ public class ViewModelHelper {
 
 
     public void init(ColorButtonClickHandler buttonClickHandler,
-                     SettingsButtonsConfigurator settingsButtonsConfigurator,
                      PaintView paintView){
         this.buttonClickHandler = buttonClickHandler;
-        this.settingsButtonsConfigurator = settingsButtonsConfigurator;
         this.paintView = paintView;
         initViewModelSettings();
     }
@@ -57,10 +53,13 @@ public class ViewModelHelper {
 
 
     public void onResume() {
-        setBitmapHistory();
-        setMostRecentSettings();
-        setMostRecentColorAndShade();
+        retrieveBitmapHistory();
+        retrieveRecentButtonSettings();
+        retrieveColorAndShade();
+
+        reinstateWidgetSettings();
     }
+
 
     private void initViewModelSettings(){
         if(viewModel.settingsButtonsClickMap == null){
@@ -69,7 +68,13 @@ public class ViewModelHelper {
     }
 
 
-    private void setBitmapHistory(){
+    private void reinstateWidgetSettings(){
+
+
+    }
+
+
+    private void retrieveBitmapHistory(){
         if(viewModel.bitmapHistory != null) {
             paintView.getBitmapHistory().setAll(viewModel.bitmapHistory);
             paintView.useMostRecentHistory();
@@ -77,7 +82,7 @@ public class ViewModelHelper {
     }
 
 
-    private void setMostRecentColorAndShade(){
+    private void retrieveColorAndShade(){
         int mostRecentColorButtonId = buttonReferenceStore.getIdFor(viewModel.mostRecentColorButtonKey);
         buttonClickHandler.handleColorButtonClicks(mostRecentColorButtonId);
         if(viewModel.isMostRecentClickAShade){
@@ -93,7 +98,7 @@ public class ViewModelHelper {
     }
 
 
-    private void setMostRecentSettings(){
+    private void retrieveRecentButtonSettings(){
         for(ButtonCategory buttonCategory : viewModel.settingsButtonsClickMap.keySet()){
 
             Integer id = viewModel.settingsButtonsClickMap.get(buttonCategory);

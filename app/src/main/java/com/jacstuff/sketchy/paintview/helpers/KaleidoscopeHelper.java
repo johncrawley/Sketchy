@@ -1,24 +1,30 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
+import com.jacstuff.sketchy.MainViewModel;
+
 public class KaleidoscopeHelper {
 
-
-    private boolean isFixed = true;
     private boolean isEnabled;
     private int defaultCenterX, defaultCenterY;
     private int centerX, centerY;
     private final int TOTAL_DEGREES = 360;
     private float degreeIncrement = 30;
+    private MainViewModel viewModel;
 
-    public KaleidoscopeHelper(int defaultCenterX, int defaultCenterY){
-        this.defaultCenterX = defaultCenterX;
-        this.defaultCenterY = defaultCenterY;
+    public KaleidoscopeHelper(MainViewModel viewModel){
+        this.viewModel = viewModel;
     }
 
+
+    public void setDefaultCenter(int x, int y){
+        defaultCenterX = x;
+        defaultCenterY = y;
+    }
 
     public void setFixed(boolean isFixed){
-        this.isFixed = isFixed;
+        viewModel.isKaleidoscopeCentred = isFixed;
     }
+
 
     public boolean isEnabled(){
         return isEnabled;
@@ -45,11 +51,11 @@ public class KaleidoscopeHelper {
     }
 
     public int getCenterX(){
-        return isFixed ? defaultCenterX : centerX;
+        return viewModel.isKaleidoscopeCentred ? defaultCenterX : centerX;
     }
 
     public int getCenterY(){
-        return isFixed ? defaultCenterY : centerY;
+        return viewModel.isKaleidoscopeCentred ? defaultCenterY : centerY;
     }
 
 }

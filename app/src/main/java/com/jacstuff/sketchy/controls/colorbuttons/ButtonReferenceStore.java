@@ -18,18 +18,13 @@ public class ButtonReferenceStore {
 
     public void add(Button button){
         buttonReferences.put((String)button.getTag(keyTag), button.getId());
-        System.out.println("Adding tag: " + button.getTag(keyTag) + " for button ID: "+ button.getId());
     }
 
     public int getIdFor(String tag){
         Integer result = buttonReferences.get(tag);
-        log("getIdFor(" + tag + ") : result: " + result);
         return result == null ? -1 : result;
     }
 
-    private void log(String msg){
-        System.out.println("ButtonReferenceStore: " + msg);
-    }
 
     public String getKeyFrom(Button button){
         if(button == null){

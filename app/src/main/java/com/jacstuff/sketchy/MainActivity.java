@@ -31,6 +31,8 @@ import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
+import com.jacstuff.sketchy.paintview.helpers.GradientHelper;
+import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.settings.ViewModelHelper;
 import com.jacstuff.sketchy.tasks.ColorAutoScroller;
 import com.jacstuff.sketchy.ui.SettingsPopup;
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupColorAndShadeButtons();
         new SeekBarConfigurator(this, paintView);
         new TextControls(this, textControlsDto, paintView.getPaintGroup());
-        viewModelHelper.init(colorButtonClickHandler, settingsButtonsConfigurator, paintView);
+        viewModelHelper.init(colorButtonClickHandler, paintView);
         setupColorAutoScroll();
     }
 
@@ -209,6 +211,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
         paintView.initBrushes();
+        paintView.setKaleidoscopeHelper(new KaleidoscopeHelper(viewModel));
+        paintView.setGradientHelper(new GradientHelper(viewModel, getResources().getInteger(R.integer.gradient_radius_max)));
         reconfigurePaintViewWithAssignedLayoutHeight(this);
     }
 

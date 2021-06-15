@@ -19,7 +19,13 @@ public class MainViewModel extends ViewModel {
     public boolean isMostRecentClickAShade;
     public List<String> selectedShadeButtonKeys;
 
-    public int menuButtonId;
     public Map<ButtonCategory, Integer> settingsButtonsClickMap;
 
+
+    public boolean isKaleidoscopeCentred = true;
+
+    public int halfBrushSize = 10;
+    public int radialGradientRadius=1;
+    public int clampRadialGradientRadius=10;
+    public int linearGradientLength=100;
 }

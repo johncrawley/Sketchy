@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.brushes.BlurType;
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -64,7 +63,6 @@ public class PaintView extends View {
     private boolean ignoreMoveAndUpActions = false;
     private TextControlsDto textControlsDto;
 
-
     public PaintView(Context context) {
         this(context, null);
     }
@@ -85,11 +83,17 @@ public class PaintView extends View {
 
         shadowHelper = new ShadowHelper(shadowPaint);
         blurHelper = new BlurHelper(paint);
-        gradientHelper = new GradientHelper(paint, context.getResources().getInteger(R.integer.gradient_radius_max));
         angleHelper = new AngleHelper();
-        kaleidoscopeHelper = new KaleidoscopeHelper(0,0);
     }
 
+
+    public void setKaleidoscopeHelper(KaleidoscopeHelper kaleidoscopeHelper){
+        this.kaleidoscopeHelper = kaleidoscopeHelper;
+    }
+
+    public void setGradientHelper(GradientHelper gradientHelper){
+        this.gradientHelper = gradientHelper;
+    }
 
     public void initBrushes(){
         brushFactory = new BrushFactory(canvas, paintGroup, brushSize, textControlsDto);
@@ -98,7 +102,6 @@ public class PaintView extends View {
 
 
     public void init(int canvasWidth, int canvasHeight, SettingsPopup settingsPopup, TextControlsDto textControlsDto) {
-        log("Entered init()");
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
         this.settingsPopup = settingsPopup;
@@ -116,7 +119,9 @@ public class PaintView extends View {
         if(bitmapHistory.isEmpty()){
             drawPlainBackgroundAndSaveToHistory();
         }
-        kaleidoscopeHelper = new KaleidoscopeHelper(canvasWidth/2, canvasHeight/2);
+
+        gradientHelper.init(paint);
+        kaleidoscopeHelper.setDefaultCenter(canvasWidth/2, canvasHeight/2);
 
         initMatrixIfNull();
         invalidate();
@@ -228,7 +233,7 @@ public class PaintView extends View {
 
 
     public void setRadialGradientRadius(int radiusFactor){
-        gradientHelper.setGradientRadius(radiusFactor, canvasWidth);
+        gradientHelper.setGradientRadius(radiusFactor);
     }
 
 
@@ -269,24 +274,12 @@ public class PaintView extends View {
 
 
     private void drawPlainBackgroundAndSaveToHistory(){
-        log("Entered drawPlainBackground");
         Paint blankPaint = new Paint();
         blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         blankPaint.setColor(DEFAULT_BG_COLOR);
         canvas.drawRect(0,0, canvasWidth, canvasHeight, blankPaint);
         bitmapHistory.push(bitmap);
         invalidate();
-    }
-
-
-    public void setBitmap(Bitmap bitmap, TextControlsDto textControlsDto){
-        log("Entered setBitmap");
-        this.bitmap = bitmap;
-        bitmapHistory.push(bitmap);
-        this.textControlsDto = textControlsDto;
-        canvas = new Canvas(bitmap);
-        paint.setColor(DEFAULT_BG_COLOR);
-        initBrushes();
     }
 
 
