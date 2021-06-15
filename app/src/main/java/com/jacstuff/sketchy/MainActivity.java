@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int height = linearLayout.getMeasuredHeight();
 
                 PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(mainActivity, mainActivity.getWindowManager(), width, height);
-                paintViewConfigurator.configure(paintView, settingsPopup, textControlsDto);
+                paintViewConfigurator.configure(viewModel, paintView, settingsPopup, textControlsDto);
                 settingsButtonsConfigurator.selectDefaults();
                 assignPreviousSettings();
             }

@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 
 import com.jacstuff.sketchy.controls.ButtonCategory;
 
@@ -28,4 +29,7 @@ public class MainViewModel extends ViewModel {
     public int radialGradientRadius=1;
     public int clampRadialGradientRadius=10;
     public int linearGradientLength=100;
+
+    public int color = Color.BLACK;
+    public int previousColor = Color.WHITE;
 }

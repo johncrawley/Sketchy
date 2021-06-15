@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.jacstuff.sketchy.MainViewModel;
 import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.brushes.BlurType;
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -33,7 +34,6 @@ public class PaintView extends View {
     private int canvasWidth, canvasHeight;
 
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
-    private int previousColor = Color.WHITE;
     private Paint paint, shadowPaint, previewPaint;
     private int brushSize, halfBrushSize;
     private Bitmap bitmap;
@@ -45,6 +45,7 @@ public class PaintView extends View {
     private boolean wasCanvasModifiedSinceLastSaveOrReset;
     private boolean isCanvasLocked;
     private Matrix matrix;
+    private MainViewModel viewModel;
 
 
     private ShadowHelper shadowHelper;
@@ -101,7 +102,8 @@ public class PaintView extends View {
     }
 
 
-    public void init(int canvasWidth, int canvasHeight, SettingsPopup settingsPopup, TextControlsDto textControlsDto) {
+    public void init(MainViewModel viewModel, int canvasWidth, int canvasHeight, SettingsPopup settingsPopup, TextControlsDto textControlsDto) {
+        this.viewModel = viewModel;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
         this.settingsPopup = settingsPopup;
@@ -122,6 +124,7 @@ public class PaintView extends View {
 
         gradientHelper.init(paint);
         kaleidoscopeHelper.setDefaultCenter(canvasWidth/2, canvasHeight/2);
+        paint.setColor(viewModel.color);
 
         initMatrixIfNull();
         invalidate();
@@ -161,7 +164,6 @@ public class PaintView extends View {
 
 
     public void useMostRecentHistory(){
-        log("Entered useMostRecentHistory()");
         useHistory(false);
     }
 
@@ -174,11 +176,6 @@ public class PaintView extends View {
     public void setBrushStyle(BrushStyle brushStyle){
         currentBrushStyle = brushStyle;
         currentBrush.setStyle(brushStyle);
-    }
-
-
-    public void setCurrentColor(int color){
-        paint.setColor(color);
     }
 
 
@@ -264,7 +261,6 @@ public class PaintView extends View {
 
 
     public void resetCanvas(){
-        log("Enered resetCanvas()");
         wasCanvasModifiedSinceLastSaveOrReset = false;
         isCanvasLocked = true;
         drawPlainBackgroundAndSaveToHistory();
@@ -290,7 +286,6 @@ public class PaintView extends View {
 
     @Override
     protected void onDraw(Canvas viewCanvas) {
-       // log("Entered onDraw()");
         viewCanvas.save();
         viewCanvas.drawColor(DEFAULT_BG_COLOR);
         viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, drawPaint);
@@ -309,16 +304,17 @@ public class PaintView extends View {
         float x = event.getX();
         float y = event.getY();
 
+
         if(!isTouchDownEventWithLineShape(event)){
             assignColorsBlursAndGradients(x,y);
         }
         wasCanvasModifiedSinceLastSaveOrReset = true;
 
         if(BrushShape.LINE == currentBrush.getBrushShape()){
-            handleLineDrawing(event, x,y);
+            handleLineDrawing(x,y, event);
         }
         else{
-            handleDrawing(x,y,event.getAction());
+            handleDrawing(x,y,event);
         }
 
         if(event.getAction() == MotionEvent.ACTION_UP){
@@ -347,12 +343,6 @@ public class PaintView extends View {
     }
 
 
-    private void log(String msg){
-        System.out.println("PaintView: " + msg);
-        System.out.flush();
-    }
-
-
     private boolean isPopupBeingDismissed(MotionEvent event){
         if(settingsPopup.isVisible()){
             settingsPopup.dismiss();
@@ -370,13 +360,13 @@ public class PaintView extends View {
 
 
     private void assignColorsBlursAndGradients(float x, float y){
-        int color = colorSelector.getNextColor();
-        if(color != paint.getColor()){
-            previousColor = paint.getColor();
+        viewModel.color = colorSelector.getNextColor();
+        if(viewModel.color != paint.getColor()){
+            viewModel.previousColor = paint.getColor();
         }
-        paint.setColor(color);
+        paint.setColor(viewModel.color);
         blurHelper.assignBlur();
-        gradientHelper.assignGradient(x,y, color, previousColor);
+        gradientHelper.assignGradient(x,y, viewModel.color, viewModel.previousColor);
     }
 
 
@@ -385,8 +375,8 @@ public class PaintView extends View {
     }
 
 
-    private void handleLineDrawing(MotionEvent motionEvent, float x, float y){
-        switch(motionEvent.getAction()) {
+    private void handleLineDrawing(float x, float y, MotionEvent event){
+        switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
                 currentBrush.onTouchDown(x,y, paint);
                 break;
@@ -407,9 +397,9 @@ public class PaintView extends View {
     }
 
 
-    private void handleDrawing(float x, float y, int action){
+    private void handleDrawing(float x, float y, MotionEvent event){
         angleHelper.updateAngle();
-        switch(action) {
+        switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
                 kaleidoscopeHelper.setCenter(x,y);
                 drawToCanvas(x,y, paint);
