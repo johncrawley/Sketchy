@@ -205,7 +205,8 @@ public class PaintView extends View {
     }
 
 
-    public void setAngle(int angle){
+    public void setExactAngle(int angle){
+        angleHelper.setAngle(AngleType.OTHER);
         angleHelper.setAngle(angle);
     }
 
@@ -399,6 +400,7 @@ public class PaintView extends View {
 
     private void handleDrawing(float x, float y, MotionEvent event){
         angleHelper.updateAngle();
+
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
                 kaleidoscopeHelper.setCenter(x,y);

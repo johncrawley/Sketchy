@@ -194,9 +194,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void assignPreviousSettings(){
-        viewModelHelper.onResume();
-    }
 
 
     public void toastPattern(String msg){
@@ -213,11 +210,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintView.initBrushes();
         paintView.setKaleidoscopeHelper(new KaleidoscopeHelper(viewModel));
         paintView.setGradientHelper(new GradientHelper(viewModel, getResources().getInteger(R.integer.gradient_radius_max)));
-        reconfigurePaintViewWithAssignedLayoutHeight(this);
+        setupPaintViewAndDefaultSelections(this);
     }
 
 
-    private void reconfigurePaintViewWithAssignedLayoutHeight(final MainActivity mainActivity){
+    private void setupPaintViewAndDefaultSelections(final MainActivity mainActivity){
         final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
         ViewTreeObserver vto = linearLayout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -227,10 +224,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int width  = linearLayout.getMeasuredWidth();
                 int height = linearLayout.getMeasuredHeight();
 
-                PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(mainActivity, mainActivity.getWindowManager(), width, height);
+                PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(mainActivity, width, height);
                 paintViewConfigurator.configure(viewModel, paintView, settingsPopup, textControlsDto);
                 settingsButtonsConfigurator.selectDefaults();
-                assignPreviousSettings();
+                viewModelHelper.onResume();
             }
         });
 

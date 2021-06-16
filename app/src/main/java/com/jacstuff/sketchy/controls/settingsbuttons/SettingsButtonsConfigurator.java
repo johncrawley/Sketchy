@@ -1,7 +1,5 @@
 package com.jacstuff.sketchy.controls.settingsbuttons;
 
-import android.view.View;
-
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.paintview.PaintView;
 
@@ -11,11 +9,11 @@ import java.util.List;
 
 public class SettingsButtonsConfigurator {
 
-    private MainActivity activity;
+
     private List<SelectableDefault> configurators;
 
     public SettingsButtonsConfigurator(MainActivity activity, PaintView paintView){
-        this.activity = activity;
+
         // needs to be instantiated first, otherwise parent button icons won't get updated
         new MenuButtonsConfigurator(activity);
 
@@ -33,17 +31,6 @@ public class SettingsButtonsConfigurator {
     public void selectDefaults(){
         for(SelectableDefault selectableDefault : configurators){
             selectableDefault.selectDefaultSelection();
-        }
-    }
-
-
-    public void clickOnView(int id){
-        if(activity == null){
-            return;
-        }
-        View view = activity.findViewById(id);
-        if(view != null){
-            view.callOnClick();
         }
     }
 

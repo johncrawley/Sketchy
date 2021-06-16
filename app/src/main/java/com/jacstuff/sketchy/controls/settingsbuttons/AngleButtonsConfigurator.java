@@ -48,8 +48,6 @@ public class AngleButtonsConfigurator extends AbstractButtonConfigurator<AngleTy
     }
 
 
-
-
     private void add(int buttonId, AngleType angleType){
         buttonConfig.add(buttonId, angleType, angleType.getStr() + activity.getString(R.string.degrees_symbol));
     }
@@ -58,5 +56,14 @@ public class AngleButtonsConfigurator extends AbstractButtonConfigurator<AngleTy
     @Override
     public void handleClick(int viewId, AngleType angleType){
         paintView.setAnglePreset(angleType, viewId);
+        viewModel.useSeekBarAngle = false;
     }
+
+
+    @Override
+    public void handleDefaultClick(int viewId, AngleType angleType){
+        paintView.setAnglePreset(angleType, viewId);
+    }
+
+
 }

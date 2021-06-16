@@ -23,9 +23,21 @@ public abstract class AbstractButtonConfigurator<T> implements SelectableDefault
         configure();
     }
 
+
     public abstract void configure();
+
+
+    public abstract void handleClick(int viewId, T actionType);
+
 
     public void selectDefaultSelection(){
         buttonConfig.selectDefaultSelection();
     }
+
+
+    public void handleDefaultClick(int viewId, T actionType){
+        handleClick(viewId, actionType);
+    }
+
+
 }

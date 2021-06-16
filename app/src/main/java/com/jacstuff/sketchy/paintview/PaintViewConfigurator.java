@@ -2,10 +2,10 @@ package com.jacstuff.sketchy.paintview;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.MainViewModel;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.model.TextControlsDto;
@@ -20,9 +20,9 @@ public class PaintViewConfigurator {
     private int totalMargin, totalPaintViewMargins;
     private int layoutHeight;
 
-    public PaintViewConfigurator(Context context, WindowManager windowManager, int layoutWidth, int layoutHeight){
-        this.context = context;
-        deriveScreenDimensions(windowManager);
+    public PaintViewConfigurator(MainActivity mainActivity, int layoutWidth, int layoutHeight){
+        this.context = mainActivity;
+        deriveScreenDimensions(mainActivity.getWindowManager());
         getDimensionValues();
         this.layoutHeight = layoutHeight;
     }
@@ -39,7 +39,6 @@ public class PaintViewConfigurator {
 
 
     public void configure(MainViewModel viewModel, PaintView paintView, SettingsPopup settingsPopup, TextControlsDto textControlsDto){
-        System.out.println("PaintViewConfigurator-> entered configure()");
         int paintViewWidth, paintViewHeight;
         paintViewHeight = layoutHeight;
 
@@ -64,7 +63,6 @@ public class PaintViewConfigurator {
     private int getDimension(int dimensionCode){
         return (int) context.getResources().getDimension(dimensionCode);
     }
-
 
 
     private void deriveScreenDimensions(WindowManager windowManager){

@@ -13,16 +13,22 @@ public class AngleHelper {
     private int currentPresetViewId;
 
     public AngleHelper(){
+        log("Creating angle");
         angleType = AngleType.ZERO;
     }
 
     public void setAngle(AngleType angleType) {
+        log("Entered setAngle(angleType) + angleType: "+  angleType.toString());
         currentAngle = 0;
         this.angleType = angleType;
         if (angleType.isIncremental()) {
             increment = angleType.get();
             return;
         }
+    }
+
+    private void log(String msg){
+        System.out.println("AngleHelper: " + msg);
     }
 
     public void setCurrentPresetViewId(int viewId){

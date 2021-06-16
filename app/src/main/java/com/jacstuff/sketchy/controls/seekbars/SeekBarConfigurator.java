@@ -5,6 +5,8 @@ import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
+import java.util.Arrays;
+
 public class SeekBarConfigurator {
 
 
@@ -18,13 +20,16 @@ public class SeekBarConfigurator {
         setupIgnoreLayouts(mainActivity);
     }
 
+
     private void setupIgnoreLayouts(MainActivity mainActivity){
-        SettingsPopup settingsPopup = mainActivity.getSettingsPopup();
-        settingsPopup.registerToIgnore(R.id.gradientSettingsLayout);
-        settingsPopup.registerToIgnore(R.id.shadowSettingsLayout);
-        settingsPopup.registerToIgnore(R.id.blurSettingsLayout);
-        settingsPopup.registerToIgnore(R.id.styleSettingsLayout);
-        settingsPopup.registerToIgnore(R.id.kaleidoscopeSettingsLayout);
-        settingsPopup.registerToIgnore(R.id.angleSettingsLayout);
+        for(int id : Arrays.asList(R.id.gradientSettingsLayout,
+                R.id.shadowSettingsLayout,
+                R.id.blurSettingsLayout,
+                R.id.styleSettingsLayout,
+                R.id.kaleidoscopeSettingsLayout,
+                R.id.angleSettingsLayout
+                )){
+            mainActivity.getSettingsPopup().registerToIgnore(id);
+        }
     }
 }

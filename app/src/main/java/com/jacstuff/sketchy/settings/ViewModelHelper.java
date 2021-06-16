@@ -1,10 +1,13 @@
 package com.jacstuff.sketchy.settings;
 
 import android.view.View;
+import android.widget.Button;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.MainViewModel;
+import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.paintview.PaintView;
@@ -19,6 +22,7 @@ public class ViewModelHelper {
     private MainViewModel viewModel;
     private ButtonReferenceStore buttonReferenceStore;
     private MainActivity mainActivity;
+    private ButtonUtils buttonUtils;
 
 
     public ViewModelHelper(MainViewModel viewModel,
@@ -27,6 +31,7 @@ public class ViewModelHelper {
         this.viewModel = viewModel;
         this.mainActivity = mainActivity;
         this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
+        this.buttonUtils = new ButtonUtils(mainActivity);
     }
 
 
@@ -56,8 +61,6 @@ public class ViewModelHelper {
         retrieveBitmapHistory();
         retrieveRecentButtonSettings();
         retrieveColorAndShade();
-
-        reinstateWidgetSettings();
     }
 
 
@@ -67,11 +70,6 @@ public class ViewModelHelper {
         }
     }
 
-
-    private void reinstateWidgetSettings(){
-
-
-    }
 
 
     private void retrieveBitmapHistory(){
@@ -99,12 +97,36 @@ public class ViewModelHelper {
 
 
     private void retrieveRecentButtonSettings(){
-        for(ButtonCategory buttonCategory : viewModel.settingsButtonsClickMap.keySet()){
+        boolean isUsingSeekBarForAngle = viewModel.useSeekBarAngle;
 
-            Integer id = viewModel.settingsButtonsClickMap.get(buttonCategory);
-            clickOn(id);
+        for(ButtonCategory buttonCategory : viewModel.settingsButtonsClickMap.keySet()){
+            Integer buttonId = viewModel.settingsButtonsClickMap.get(buttonCategory);
+            clickOn(buttonId);
+        }
+
+        if(isUsingSeekBarForAngle){
+            setAngleBasedOnSeekBar();
+            deselectCurrentlySelectedAngleButton();
         }
         mainActivity.getSettingsPopup().dismiss();
+    }
+
+
+    private void setAngleBasedOnSeekBar(){
+        int angle = viewModel.angle;
+        paintView.setExactAngle(angle);
+        String buttonText = "" + angle + mainActivity.getString(R.string.degrees_symbol);
+        Button angleButton =  mainActivity.findViewById(R.id.angleSelectionButton);
+        angleButton.setText(buttonText);
+    }
+
+
+    private void deselectCurrentlySelectedAngleButton(){
+        Integer selectedPresetButtonId = viewModel.settingsButtonsClickMap.get(ButtonCategory.ANGLE);
+        if(selectedPresetButtonId == null){
+            return;
+        }
+        buttonUtils.deselectButton(selectedPresetButtonId);
     }
 
 
