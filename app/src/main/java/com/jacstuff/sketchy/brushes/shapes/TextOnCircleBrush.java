@@ -16,7 +16,6 @@ public class TextOnCircleBrush extends AbstractBrush implements Brush {
     public TextOnCircleBrush(Canvas canvas, PaintGroup paintGroup, TextControlsDto textControlsDto){
         super(canvas, paintGroup, BrushShape.TEXT);
         this.textControlsDto = textControlsDto;
-
     }
 
 

@@ -447,12 +447,15 @@ public class PaintView extends View {
     }
 
 
+
     private void drawKaleidoscope(float x, float y, Paint paint, boolean isDragLine){
         canvas.save();
         canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
 
+
+
         for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()){
-            drawKaleidoscopeSegment(x,y, angle, isDragLine, paint);
+            drawKaleidoscopeSegment(x, y, angle, isDragLine, paint);
         }
         canvas.restore();
     }
@@ -461,7 +464,10 @@ public class PaintView extends View {
     private void drawKaleidoscopeSegment(float x, float y, float angle, boolean isDragLine, Paint paint){
         canvas.save();
         canvas.rotate(angle);
-        if(isDragLine){
+        if(viewModel.isGlitchModeEnabled){
+            canvas.drawBitmap(bitmap,x-kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(), paint);
+        }
+        else if(isDragLine){
             drawDragLine(x , y, kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
         }
         else {
