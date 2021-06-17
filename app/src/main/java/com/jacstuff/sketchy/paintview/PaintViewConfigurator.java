@@ -14,7 +14,7 @@ import com.jacstuff.sketchy.ui.SettingsPopup;
 public class PaintViewConfigurator {
 
     private int screenWidth, screenHeight;
-    private Context context;
+    private final Context context;
 
     private int actionBarHeight;
     private int totalMargin, totalPaintViewMargins;
@@ -33,6 +33,8 @@ public class PaintViewConfigurator {
         int paintViewMargin = getDimension(R.dimen.paint_view_margin);
         int paintViewLayoutPadding = getDimension(R.dimen.paint_view_layout_padding);
 
+
+
         totalMargin = (paintViewMargin + paintViewLayoutMargin + paintViewLayoutPadding) * 2;
         totalPaintViewMargins = ( paintViewMargin + paintViewLayoutMargin) * 2;
     }
@@ -41,11 +43,11 @@ public class PaintViewConfigurator {
     public void configure(MainViewModel viewModel, PaintView paintView, SettingsPopup settingsPopup, TextControlsDto textControlsDto){
         int paintViewWidth, paintViewHeight;
         paintViewHeight = layoutHeight;
-
+        int colorButtonHeight = getDimension(R.dimen.color_button_height);
+        int landscapePaintViewWidth = screenWidth - ((colorButtonHeight * 3) + totalPaintViewMargins + actionBarHeight);
         if(isInLandscapeMode()){
-            paintViewHeight = screenHeight - (actionBarHeight + totalMargin);
-            paintViewWidth = (screenWidth / 2) - totalPaintViewMargins;
-
+            paintViewHeight = screenHeight - (totalMargin);
+            paintViewWidth = landscapePaintViewWidth;
         } else {
             paintViewWidth = screenWidth - totalMargin;
         }

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
@@ -43,14 +44,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private PaintView paintView;
-    private HorizontalScrollView shadesScrollView;
     private final int SAVE_FILE_ACTIVITY_CODE = 101;
     private final int CLEAR_CANVAS_ACTIVITY_CODE = 102;
     private final int LOAD_FILE_ACTIVITY_CODE = 103;
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
-    private ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 15);
-    private ButtonLayoutParams settingsButtonLayoutParams = new ButtonLayoutParams(120, 120, 15, 2);
+    private final  ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 15);
+    private final ButtonLayoutParams settingsButtonLayoutParams = new ButtonLayoutParams(120, 120, 15, 2);
     private ColorButtonClickHandler colorButtonClickHandler;
     private Toast colorPatternToast;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         viewModelHelper = new ViewModelHelper( viewModel, this);
         textControlsDto = new TextControlsDto();
-        assignViews();
         initImageSaver();
         setupActionbar();
         configurePaintView();
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v){
         settingsPopup.dismiss(v);
-        colorButtonClickHandler.handleColorButtonClicks(v);
+        colorButtonClickHandler.onClick(v);
     }
 
 
@@ -108,22 +107,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_new:
-                startClearDialogIfChangesNotSaved();
-                return true;
-            case R.id.action_undo:
-                paintView.undo();
-                return true;
-            case R.id.action_save:
-                startSaveDocumentActivity();
-                return true;
-            case R.id.action_about:
-                startAboutActivity();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if(id == R.id.action_new){
+            startClearDialogIfChangesNotSaved();
         }
+        else if(id == R.id.action_undo){
+            paintView.undo();
+        }
+        else if( id == R.id.action_save) {
+            startSaveDocumentActivity();
+        }
+        else if( id == R.id.action_about){
+            startAboutActivity();
+        }
+        return true;
     }
 
 
@@ -168,18 +165,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void setupColorAndShadeButtons(){
         List<Integer> colors = ColorCreator.generate();
-        colorButtonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams, shadesScrollView);
+        colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
+        colorButtonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams, (LinearLayout)findViewById(R.id.shadesButtonGroup));
         colorButtonClickHandler.setColorsMap(colors);
         ColorButtonLayoutPopulator layoutPopulator = new ColorButtonLayoutPopulator(this, colorButtonLayoutParams, colors);
         colorButtonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
         layoutPopulator.addColorButtonLayoutsTo(colorButtonGroupLayout);
         colorButtonClickHandler.setShadeLayoutsMap(layoutPopulator.getShadeLayoutsMap());
-        colorButtonClickHandler.handleColorButtonClicks(getDefaultButton());
+        colorButtonClickHandler.onClick(getDefaultButton());
     }
 
 
     private void setupColorAutoScroll(){
-        new ColorAutoScroller((HorizontalScrollView)findViewById(R.id.colorScrollView));
+        new ColorAutoScroller(
+                (ScrollView)findViewById(R.id.verticalColorScrollView),
+                (HorizontalScrollView)findViewById(R.id.colorScrollView));
     }
 
 
@@ -188,12 +188,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     public SettingsPopup getSettingsPopup(){
         return this.settingsPopup;
     }
-
-
 
 
     public void toastPattern(String msg){
@@ -216,27 +213,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupPaintViewAndDefaultSelections(final MainActivity mainActivity){
         final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
-        ViewTreeObserver vto = linearLayout.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 int width  = linearLayout.getMeasuredWidth();
                 int height = linearLayout.getMeasuredHeight();
 
-                PaintViewConfigurator paintViewConfigurator = new PaintViewConfigurator(mainActivity, width, height);
-                paintViewConfigurator.configure(viewModel, paintView, settingsPopup, textControlsDto);
+                new PaintViewConfigurator(mainActivity, width, height)
+                        .configure(viewModel, paintView, settingsPopup, textControlsDto);
                 settingsButtonsConfigurator.selectDefaults();
                 viewModelHelper.onResume();
             }
         });
-
-    }
-
-
-    private void assignViews(){
-        shadesScrollView =  findViewById(R.id.colorShadeScrollView);
-        colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
     }
 
 
@@ -298,14 +287,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void loadPreferences()
-    {
+    public void loadPreferences(){
         SharedPreferences prefs = getSharedPreferences("myPref",0);
         prefs.getString("myStoreName","defaultValue");
     }
 
-    public void savePreferences(String thePreference)
-    {
+
+    public void savePreferences(String thePreference){
         SharedPreferences.Editor editor = getSharedPreferences("myPref",0).edit();
         editor.putString("myStoreName", thePreference);
         editor.commit();

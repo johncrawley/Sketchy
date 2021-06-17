@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.tasks;
 
 import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -11,9 +12,9 @@ public class ColorAutoScroller {
     private ScheduledExecutorService executor;
     private ScrollTask firstScroll, scrollToNearStart;
 
-    public ColorAutoScroller(HorizontalScrollView colorScrollView){
-        firstScroll = new ScrollTask(colorScrollView, 300);
-        scrollToNearStart = new ScrollTask(colorScrollView, 95);
+    public ColorAutoScroller(ScrollView verticalColorScrollView, HorizontalScrollView colorScrollView){
+        firstScroll = new ScrollTask(colorScrollView,verticalColorScrollView, 300);
+        scrollToNearStart = new ScrollTask(colorScrollView, verticalColorScrollView,95);
         executor = Executors.newSingleThreadScheduledExecutor();
         engageAutoScroll();
     }

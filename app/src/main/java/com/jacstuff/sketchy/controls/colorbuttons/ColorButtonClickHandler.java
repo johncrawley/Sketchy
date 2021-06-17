@@ -2,9 +2,7 @@ package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.MainViewModel;
 import com.jacstuff.sketchy.controls.ButtonCategory;
@@ -32,7 +30,7 @@ public class ColorButtonClickHandler {
     private ButtonLayoutParams buttonLayoutParams;
     private Map<String, LinearLayout> shadeLayoutsMap;
     private boolean isMostRecentClickAShade = false; //for use when selecting a button after rotate/resume
-    private HorizontalScrollView shadesScrollView;
+    private LinearLayout shadesLayout;
     private Map<Integer, List<Integer>> multiColorShades = new HashMap<>();
     private Map<ButtonType, ColorSelector> colorSelectors;
     private MainActivity mainActivity;
@@ -45,13 +43,13 @@ public class ColorButtonClickHandler {
     private MainViewModel mainViewModel;
 
 
-    public ColorButtonClickHandler(MainActivity mainActivity, PaintView paintView, ButtonLayoutParams buttonLayoutParams, HorizontalScrollView shadesScrollView ){
+    public ColorButtonClickHandler(MainActivity mainActivity, PaintView paintView, ButtonLayoutParams buttonLayoutParams, LinearLayout shadesLayout ){
         this.mainActivity = mainActivity;
         this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         this.mainViewModel = mainActivity.getViewModel();
         this.paintView = paintView;
         this.buttonLayoutParams = buttonLayoutParams;
-        this.shadesScrollView = shadesScrollView;
+        this.shadesLayout = shadesLayout;
         randomShadeButtonsState = new RandomShadeButtonsState();
         setupColorSelectors();
         setupPreexistingState();
@@ -60,7 +58,7 @@ public class ColorButtonClickHandler {
     private void setupPreexistingState(){
         int buttonId = mainViewModel.lastClickedColorButtonId;
         View view = mainActivity.findViewById(buttonId);
-        handleColorButtonClicks(view);
+        onClick(view);
     }
 
     private void setupColorSelectors(){
@@ -110,15 +108,16 @@ public class ColorButtonClickHandler {
     }
 
 
-    public void handleColorButtonClicks(int id){
+    public void onClick(int id){
        View v = mainActivity.findViewById(id);
        if(v != null){
-           handleColorButtonClicks(v);
+           onClick(v);
        }
     }
 
 
-    public void handleColorButtonClicks(View view){
+
+    public void onClick(View view){
 
         if(!isColorButton(view)){
             return;
@@ -338,8 +337,8 @@ public class ColorButtonClickHandler {
     private void assignShadeLayoutFrom(Button button){
         LinearLayout shadeLayout = shadeLayoutsMap.get(getKeyFrom(button));
         if (shadeLayout != null) {
-            shadesScrollView.removeAllViews();
-            shadesScrollView.addView(shadeLayout);
+            shadesLayout.removeAllViews();
+            shadesLayout.addView(shadeLayout);
         }
     }
 

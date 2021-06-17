@@ -16,11 +16,11 @@ public class SettingsPopup {
 
     private boolean isPoppedUp;
     private int currentParentButtonId;
-    private ViewGroup popupLayout;
-    private Set<Integer> parentIds;
-    private Set<Integer> ignoreIds;
-    private ButtonUtils buttonUtils;
-    private MainActivity activity;
+    private final ViewGroup popupLayout;
+    private final Set<Integer> parentIds;
+    private final Set<Integer> ignoreIds;
+    private final ButtonUtils buttonUtils;
+    private final MainActivity activity;
 
 
     public SettingsPopup(ViewGroup layout, MainActivity mainActivity){

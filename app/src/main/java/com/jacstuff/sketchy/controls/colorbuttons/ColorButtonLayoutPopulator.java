@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -37,30 +38,27 @@ public class ColorButtonLayoutPopulator {
     private Map<String, LinearLayout> shadeLayoutsMap = new HashMap<>();
     private View.OnClickListener onClickListener;
     private ButtonLayoutParams buttonLayoutParams;
-    private Map<String, Button> buttonMap;
     private String defaultColor;
     private final String MULTI_SHADE_KEY = "multi shade key";
     private final String RANDOM_SHADE_KEY = "random shade key";
     private ButtonUtils buttonUtils;
-
     private ButtonReferenceStore buttonReferenceStore;
+    private int layoutOrientation;
+    private MainActivity activity;
+
 
     public ColorButtonLayoutPopulator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, final List<Integer> colors){
         this.context = mainActivity.getApplicationContext();
+        this.activity = mainActivity;
         defaultColor = mainActivity.getString(R.string.default_color);
         this.onClickListener = mainActivity;
+        setupLayoutOrientation();
         this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         setupColorShadeCreator();
         this.buttonLayoutParams = buttonLayoutParams;
         this.colors = colors;
-        buttonMap = new HashMap<>();
         buttonUtils = new ButtonUtils(mainActivity);
         setupColorAndShadeButtons();
-    }
-
-
-    public Button getButton(String key){
-        return buttonMap.get(key);
     }
 
 
@@ -85,6 +83,13 @@ public class ColorButtonLayoutPopulator {
         int numberOfShades = context.getResources().getInteger(R.integer.number_of_shades);
         int shadeIncrement = context.getResources().getInteger(R.integer.shade_increment);
         colorShadeCreator = new ColorShadeCreator(numberOfShades, shadeIncrement);
+    }
+
+
+    private void setupLayoutOrientation(){
+        layoutOrientation = activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
+                ? LinearLayout.VERTICAL
+                : LinearLayout.HORIZONTAL;
     }
 
 
@@ -146,6 +151,7 @@ public class ColorButtonLayoutPopulator {
 
     private LinearLayout createLayoutWithButtonsFrom(List<Integer> shades, ButtonType buttonType){
         LinearLayout shadeLayout = new LinearLayout(context);
+        shadeLayout.setOrientation(layoutOrientation);
         for(int shade: shades){
             LinearLayout buttonLayout = createShadeButton(shade, buttonType);
             shadeLayout.addView(buttonLayout);
@@ -198,7 +204,6 @@ public class ColorButtonLayoutPopulator {
                     x += thirdOfRadius;
                     y -= thirdOfRadius;
                 }
-
             }
 
             @Override
@@ -254,7 +259,6 @@ public class ColorButtonLayoutPopulator {
         button.setTag(R.string.tag_button_category, ButtonCategory.COLOR_SELECTION);
         buttonUtils.setStandardWidthOn(button);
         buttonReferenceStore.add(button);
-        buttonMap.put(key, button);
         button.setOnClickListener(onClickListener);
         return button;
     }

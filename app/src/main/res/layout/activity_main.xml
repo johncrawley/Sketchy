@@ -73,8 +73,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-    <!--
-        android:layout_weight=".15"
-        android:layout_weight=".49"
-        android:layout_weight=".35" -->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

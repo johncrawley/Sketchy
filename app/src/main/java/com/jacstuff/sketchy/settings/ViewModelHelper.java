@@ -19,10 +19,10 @@ public class ViewModelHelper {
 
     private ColorButtonClickHandler buttonClickHandler;
     private PaintView paintView;
-    private MainViewModel viewModel;
-    private ButtonReferenceStore buttonReferenceStore;
-    private MainActivity mainActivity;
-    private ButtonUtils buttonUtils;
+    private final MainViewModel viewModel;
+    private final ButtonReferenceStore buttonReferenceStore;
+    private final MainActivity mainActivity;
+    private final ButtonUtils buttonUtils;
 
 
     public ViewModelHelper(MainViewModel viewModel,
@@ -82,15 +82,15 @@ public class ViewModelHelper {
 
     private void retrieveColorAndShade(){
         int mostRecentColorButtonId = buttonReferenceStore.getIdFor(viewModel.mostRecentColorButtonKey);
-        buttonClickHandler.handleColorButtonClicks(mostRecentColorButtonId);
+        buttonClickHandler.onClick(mostRecentColorButtonId);
         if(viewModel.isMostRecentClickAShade){
             int mostRecentShadeButtonId = buttonReferenceStore.getIdFor(viewModel.mostRecentShadeButtonKey);
-            buttonClickHandler.handleColorButtonClicks(mostRecentShadeButtonId);
+            buttonClickHandler.onClick(mostRecentShadeButtonId);
         }
         if(viewModel.selectedShadeButtonKeys != null) {
             for (String randomShadeButtonKey : viewModel.selectedShadeButtonKeys) {
                 int buttonId = buttonReferenceStore.getIdFor(randomShadeButtonKey);
-                buttonClickHandler.handleColorButtonClicks(buttonId);
+                buttonClickHandler.onClick(buttonId);
             }
         }
     }
