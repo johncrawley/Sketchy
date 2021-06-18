@@ -8,4 +8,5 @@
     <color name="selected_button_border">#95712A</color>
     <color name="dialog_background">#66FFFDE7</color>
     <color name="paint_view_border">#291F1F</color>
+    <color name="multi_shade_bg">#FFF9C4</color>
 </resources>

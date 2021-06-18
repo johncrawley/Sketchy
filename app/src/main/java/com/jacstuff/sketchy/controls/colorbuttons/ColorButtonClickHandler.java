@@ -24,23 +24,22 @@ import java.util.Map;
 
 public class ColorButtonClickHandler {
 
-    private PaintView paintView;
+    private final PaintView paintView;
     private Button previouslySelectedShadeButton, previouslySelectedColorButton, previouslySelectedButton;
     private List<Integer> colors;
-    private ButtonLayoutParams buttonLayoutParams;
+    private final ButtonLayoutParams buttonLayoutParams;
     private Map<String, LinearLayout> shadeLayoutsMap;
     private boolean isMostRecentClickAShade = false; //for use when selecting a button after rotate/resume
-    private LinearLayout shadesLayout;
+    private final LinearLayout shadesLayout;
     private Map<Integer, List<Integer>> multiColorShades = new HashMap<>();
     private Map<ButtonType, ColorSelector> colorSelectors;
-    private MainActivity mainActivity;
+    private final MainActivity mainActivity;
     private ColorSelector currentColorSelector;
-    private RandomShadeButtonsState randomShadeButtonsState;
-    private int enabledTag = R.string.multi_random_button_checked_tag;
+    private final RandomShadeButtonsState randomShadeButtonsState;
+    private final int enabledTag = R.string.multi_random_button_checked_tag;
     private Button randomColorButton;
-    private ButtonReferenceStore buttonReferenceStore;
-
-    private MainViewModel mainViewModel;
+    private final ButtonReferenceStore buttonReferenceStore;
+    private final MainViewModel mainViewModel;
 
 
     public ColorButtonClickHandler(MainActivity mainActivity, PaintView paintView, ButtonLayoutParams buttonLayoutParams, LinearLayout shadesLayout ){
@@ -54,6 +53,7 @@ public class ColorButtonClickHandler {
         setupColorSelectors();
         setupPreexistingState();
     }
+
 
     private void setupPreexistingState(){
         int buttonId = mainViewModel.lastClickedColorButtonId;

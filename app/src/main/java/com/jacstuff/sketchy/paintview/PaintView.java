@@ -197,7 +197,6 @@ public class PaintView extends View {
 
     public void setAnglePreset(AngleType angleType, int viewId){
         setAnglePreset(angleType);
-        angleHelper.setCurrentPresetViewId(viewId);
     }
 
     public void setAnglePreset(AngleType angleType){

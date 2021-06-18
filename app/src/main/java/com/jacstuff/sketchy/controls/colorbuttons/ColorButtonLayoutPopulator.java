@@ -2,13 +2,6 @@ package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
-import android.graphics.PixelFormat;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -24,34 +17,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 
 public class ColorButtonLayoutPopulator {
 
     private ColorShadeCreator colorShadeCreator;
-    private Map<Integer, List<Integer>> multiColorShades = new HashMap<>();
-    private List<LinearLayout> colorButtonLayouts = new ArrayList<>();
-    private Context context;
-    private List<Integer> colors;
-    private Map<String, LinearLayout> shadeLayoutsMap = new HashMap<>();
-    private View.OnClickListener onClickListener;
-    private ButtonLayoutParams buttonLayoutParams;
-    private String defaultColor;
+    private final Map<Integer, List<Integer>> multiColorShades = new HashMap<>();
+    private final List<LinearLayout> colorButtonLayouts = new ArrayList<>();
+    private final Context context;
+    private final List<Integer> colors;
+    private final Map<String, LinearLayout> shadeLayoutsMap = new HashMap<>();
     private final String MULTI_SHADE_KEY = "multi shade key";
     private final String RANDOM_SHADE_KEY = "random shade key";
-    private ButtonUtils buttonUtils;
-    private ButtonReferenceStore buttonReferenceStore;
+    private final ButtonLayoutParams buttonLayoutParams;
+    private final String defaultColor;
+    private final ButtonUtils buttonUtils;
+    private final ButtonReferenceStore buttonReferenceStore;
     private int layoutOrientation;
-    private MainActivity activity;
+    private final MainActivity activity;
+    private final RandomShadeIconDrawer randomShadeIconDrawer;
 
 
     public ColorButtonLayoutPopulator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, final List<Integer> colors){
         this.context = mainActivity.getApplicationContext();
         this.activity = mainActivity;
         defaultColor = mainActivity.getString(R.string.default_color);
-        this.onClickListener = mainActivity;
+        randomShadeIconDrawer = new RandomShadeIconDrawer(activity);
         setupLayoutOrientation();
         this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         setupColorShadeCreator();
@@ -172,56 +162,8 @@ public class ColorButtonLayoutPopulator {
 
     private void addMultiShadeDrawableTo(Button button, final int color){
 
-        final Paint paint = new Paint();
-        final int NUMBER_OF_SHADES = 5;
-        paint.setColor(color);
         final List<Integer> shades = multiColorShades.get(color);
-        if(shades == null){
-            return;
-        }
-
-
-        Drawable drawable = new Drawable() {
-            @Override
-            public void draw(@NonNull Canvas canvas) {
-                Rect bounds = this.getBounds();
-                paint.setColor(Color.LTGRAY);
-                canvas.drawRect(bounds, paint);
-                float centerX = (bounds.right - bounds.left) /2f;
-                float centerY = (bounds.bottom - bounds.top) / 2f;
-                float radius  = centerX / 2;
-                float thirdOfRadius = radius / 3;
-                float x = centerX - radius;
-                float y = centerY + radius;
-
-                int shadesIndex = 0;
-                int shadesIncrement = shades.size() / NUMBER_OF_SHADES;
-
-                for(int i = 0; i< NUMBER_OF_SHADES; i++){
-                    canvas.drawCircle(x,y, radius, paint);
-                    paint.setColor(shades.get(shadesIndex));
-                    shadesIndex = Math.min(shades.size()-1, shadesIndex + shadesIncrement);
-                    x += thirdOfRadius;
-                    y -= thirdOfRadius;
-                }
-            }
-
-            @Override
-            public void setAlpha(int i) {
-
-            }
-
-            @Override
-            public void setColorFilter(@Nullable ColorFilter colorFilter) {
-
-            }
-
-            @Override
-            public int getOpacity() {
-                return PixelFormat.OPAQUE;
-            }
-        };
-        button.setBackground(drawable);
+        randomShadeIconDrawer.drawBackgroundOf(button, shades);
     }
 
 
@@ -259,7 +201,7 @@ public class ColorButtonLayoutPopulator {
         button.setTag(R.string.tag_button_category, ButtonCategory.COLOR_SELECTION);
         buttonUtils.setStandardWidthOn(button);
         buttonReferenceStore.add(button);
-        button.setOnClickListener(onClickListener);
+        button.setOnClickListener(activity);
         return button;
     }
 
