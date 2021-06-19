@@ -55,14 +55,14 @@ public class AngleButtonsConfigurator extends AbstractButtonConfigurator<AngleTy
 
     @Override
     public void handleClick(int viewId, AngleType angleType){
-        paintView.setAnglePreset(angleType, viewId);
+        paintView.setAnglePreset(angleType);
         viewModel.useSeekBarAngle = false;
     }
 
 
     @Override
     public void handleDefaultClick(int viewId, AngleType angleType){
-        paintView.setAnglePreset(angleType, viewId);
+        paintView.setAnglePreset(angleType);
     }
 
 

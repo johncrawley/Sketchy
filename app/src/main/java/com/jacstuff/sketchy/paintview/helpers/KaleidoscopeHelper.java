@@ -9,7 +9,7 @@ public class KaleidoscopeHelper {
     private int centerX, centerY;
     private final int TOTAL_DEGREES = 360;
     private float degreeIncrement = 30;
-    private MainViewModel viewModel;
+    private final MainViewModel viewModel;
 
     public KaleidoscopeHelper(MainViewModel viewModel){
         this.viewModel = viewModel;
@@ -19,10 +19,6 @@ public class KaleidoscopeHelper {
     public void setDefaultCenter(int x, int y){
         defaultCenterX = x;
         defaultCenterY = y;
-    }
-
-    public void setFixed(boolean isFixed){
-        viewModel.isKaleidoscopeCentred = isFixed;
     }
 
 

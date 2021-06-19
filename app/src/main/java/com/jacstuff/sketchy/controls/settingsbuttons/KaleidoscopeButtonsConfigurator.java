@@ -37,13 +37,22 @@ public class KaleidoscopeButtonsConfigurator extends AbstractButtonConfigurator<
         setupKaleidoscopeOptions();
     }
 
+
     public void setupKaleidoscopeOptions(){
-       SwitchMaterial kaleidoscopeCentredSwitch = activity.findViewById(R.id.kaleidoscopeCentredSwitch);
-       kaleidoscopeCentredSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+       SwitchMaterial kaleidoscopeGlitchMode = activity.findViewById(R.id.kaleidoscopeGlitchMode);
+       kaleidoscopeGlitchMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               paintView.setKaleidoscopeFixed(isChecked);
+               viewModel.isGlitchModeEnabled = isChecked;
            }
        });
+
+
+        SwitchMaterial kaleidoscopeCentredSwitch = activity.findViewById(R.id.kaleidoscopeCentredSwitch);
+        kaleidoscopeCentredSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                viewModel.isKaleidoscopeCentred = isChecked;
+            }
+        });
     }
 
 

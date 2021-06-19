@@ -34,7 +34,7 @@ public class PaintView extends View {
     private int canvasWidth, canvasHeight;
 
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
-    private Paint paint, shadowPaint, previewPaint;
+    private final Paint paint, shadowPaint, previewPaint;
     private int brushSize, halfBrushSize;
     private Bitmap bitmap;
     private Canvas canvas;
@@ -48,18 +48,18 @@ public class PaintView extends View {
     private MainViewModel viewModel;
 
 
-    private ShadowHelper shadowHelper;
-    private BlurHelper blurHelper;
+    private final ShadowHelper shadowHelper;
+    private final BlurHelper blurHelper;
     private GradientHelper gradientHelper;
-    private AngleHelper angleHelper;
+    private final AngleHelper angleHelper;
     private KaleidoscopeHelper kaleidoscopeHelper;
 
     private boolean isPreviewLayerToBeDrawn;
     private Bitmap previewBitmap;
-    private BitmapHistory bitmapHistory;
-    private Paint drawPaint = new Paint();
+    private final BitmapHistory bitmapHistory;
+    private final Paint drawPaint = new Paint();
 
-    private PaintGroup paintGroup;
+    private final PaintGroup paintGroup;
     private SettingsPopup settingsPopup;
     private boolean ignoreMoveAndUpActions = false;
     private TextControlsDto textControlsDto;
@@ -195,10 +195,6 @@ public class PaintView extends View {
     }
 
 
-    public void setAnglePreset(AngleType angleType, int viewId){
-        setAnglePreset(angleType);
-    }
-
     public void setAnglePreset(AngleType angleType){
         angleHelper.setAngle(angleType);
     }
@@ -231,11 +227,6 @@ public class PaintView extends View {
 
     public void setRadialGradientRadius(int radiusFactor){
         gradientHelper.setGradientRadius(radiusFactor);
-    }
-
-
-    public void setKaleidoscopeFixed(boolean isFixed){
-        kaleidoscopeHelper.setFixed(isFixed);
     }
 
 
@@ -465,14 +456,15 @@ public class PaintView extends View {
     private void drawKaleidoscopeSegment(float x, float y, float angle, boolean isDragLine, Paint paint){
         canvas.save();
         canvas.rotate(angle);
-        if(viewModel.isGlitchModeEnabled){
-            canvas.drawBitmap(bitmap,x-kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(), paint);
-        }
-        else if(isDragLine){
+
+        if(isDragLine){
             drawDragLine(x , y, kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
         }
         else {
             rotateAndDraw(x - kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(), paint);
+        }
+        if(viewModel.isGlitchModeEnabled){
+            canvas.drawBitmap(bitmap,x-kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(), paint);
         }
         canvas.restore();
         invalidate();

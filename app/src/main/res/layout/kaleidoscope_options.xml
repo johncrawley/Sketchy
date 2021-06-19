@@ -12,11 +12,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/kaleidoscopeGlitchMode"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:checked="false"
+        android:gravity="center_vertical"
+        android:padding="@dimen/swith_option_padding"
+        android:text="@string/kaleidoscope_glitch_mode_label" />
+
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/kaleidoscopeCentredSwitch"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:checked="true"
+        android:gravity="center_vertical"
         android:padding="@dimen/swith_option_padding"
         android:text="@string/kaleidoscope_fixed_position_label" />
 
