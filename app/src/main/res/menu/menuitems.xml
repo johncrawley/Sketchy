@@ -21,7 +21,7 @@
         android:id="@+id/action_save"
         android:icon="@android:drawable/ic_menu_save"
         android:title="@string/action_save"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         tools:ignore="AlwaysShowAction"/>
     <item
         android:id="@+id/action_about"

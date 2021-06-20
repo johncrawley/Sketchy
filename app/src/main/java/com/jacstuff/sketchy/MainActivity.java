@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
@@ -66,8 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buttonReferenceStore = new ButtonReferenceStore();
-        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        viewModelHelper = new ViewModelHelper( viewModel, this);
+        setupViewModel();
         textControlsDto = new TextControlsDto();
         initImageSaver();
         setupActionbar();
@@ -88,6 +86,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         viewModelHelper.onPause();
+    }
+
+
+    private void setupViewModel(){
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModelHelper = new ViewModelHelper( viewModel, this);
     }
 
 
@@ -178,7 +182,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupColorAutoScroll(){
         new ColorAutoScroller(
-                (ScrollView)findViewById(R.id.verticalColorScrollView),
                 (HorizontalScrollView)findViewById(R.id.colorScrollView));
     }
 

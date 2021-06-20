@@ -10,7 +10,7 @@ import java.util.List;
 public class SettingsButtonsConfigurator {
 
 
-    private List<SelectableDefault> configurators;
+    private final List<SelectableDefault> configurators;
 
     public SettingsButtonsConfigurator(MainActivity activity, PaintView paintView){
 

@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@id/includedToolbar"
         app:layout_constraintBottom_toTopOf="@id/includedBrushSizeSeekBar"
         app:layout_constraintStart_toStartOf="parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <include
             android:id="@+id/includedColorControls"
@@ -37,7 +37,7 @@
 
     </LinearLayout>
 
-
+<!--
     <include
         android:id="@+id/includedBrushSizeSeekBar"
         layout="@layout/brush_size_seek_bar"
@@ -45,6 +45,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"        />
-
+-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

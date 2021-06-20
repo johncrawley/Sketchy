@@ -12,7 +12,7 @@ import java.util.Collection;
 public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer> implements ButtonsConfigurator<Integer> {
 
     private Collection<Integer> layoutIds;
-    private SettingsPopup settingsPopup;
+    private final SettingsPopup settingsPopup;
 
 
     public MenuButtonsConfigurator(MainActivity activity){

@@ -77,9 +77,7 @@ public class ColorButtonLayoutPopulator {
 
 
     private void setupLayoutOrientation(){
-        layoutOrientation = activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
-                ? LinearLayout.VERTICAL
-                : LinearLayout.HORIZONTAL;
+        layoutOrientation = LinearLayout.HORIZONTAL;
     }
 
 

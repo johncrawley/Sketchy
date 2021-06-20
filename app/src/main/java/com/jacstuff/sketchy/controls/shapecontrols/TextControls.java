@@ -19,10 +19,10 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class TextControls {
 
-    private EditText textInput;
-    private Activity activity;
-    private TextControlsDto textControlsDto;
-    private PaintGroup paintGroup;
+    private final EditText textInput;
+    private final Activity activity;
+    private final TextControlsDto textControlsDto;
+    private final PaintGroup paintGroup;
 
 
      public TextControls(Activity activity, TextControlsDto textControlsDto, PaintGroup paintGroup) {
@@ -33,7 +33,7 @@ public class TextControls {
          this.paintGroup = paintGroup;
 
          setupEditTextActionListener();
-         setupListener(skewSeekBar, paintGroup);
+         setupListener(skewSeekBar);
          setupCheckboxListener(paintGroup);
      }
 
@@ -42,7 +42,7 @@ public class TextControls {
 
          textInput.setOnEditorActionListener(new EditText.OnEditorActionListener() {
 
-             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+             final InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
              @Override
              public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -61,7 +61,6 @@ public class TextControls {
          textInput.addTextChangedListener(new TextWatcher() {
              @Override
              public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
              }
 
              @Override
@@ -71,19 +70,17 @@ public class TextControls {
 
              @Override
              public void afterTextChanged(Editable editable) {
-
              }
          });
      }
 
     // paint.setLinearText(true);
-    // paint.setFakeBoldText(true);
     // paint.setSubpixelText(true);
     // paint.setLetterSpacing(0.5f);
     // paint.setElegantTextHeight(true);
 
 
-    private void setupListener(SeekBar seekBar, final PaintGroup paintGroup){
+    private void setupListener(SeekBar seekBar){
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
@@ -99,9 +96,9 @@ public class TextControls {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                //do nothing
             }
-
         });
     }
+
 
     private void setSkew(SeekBar seekBar){
         float skew = (seekBar.getProgress() - 100) / -100f;
@@ -115,23 +112,21 @@ public class TextControls {
 
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                switch (compoundButton.getId()){
-                    case R.id.checkboxTextBold:
-                        paintGroup.setTextBold(b);
-                        break;
-                    case R.id.checkboxTextStrikethrough:
-                        paintGroup.setStrikeThrough(b);
-                        break;
-                    case R.id.checkboxTextUnderline:
-                        paintGroup.setTextUnderline(b);
+                int id = compoundButton.getId();
+                if(id == R.id.checkboxTextBold){
+                    paintGroup.setTextBold(b);
+                }
+                else if(id ==  R.id.checkboxTextStrikethrough){
+                    paintGroup.setStrikeThrough(b);
+                }
+                else if(id == R.id.checkboxTextUnderline){
+                    paintGroup.setTextUnderline(b);
                 }
             }
-
         };
-
         assignCheckBoxListener(checkedChangeListener, R.id.checkboxTextBold, R.id.checkboxTextStrikethrough, R.id.checkboxTextUnderline);
-
     }
+
 
     private void assignCheckBoxListener(CheckBox.OnCheckedChangeListener onCheckedChangeListener, int ... ids){
          for(int id : ids){
@@ -140,9 +135,4 @@ public class TextControls {
          }
     }
 
-
-
 }
-
-
-

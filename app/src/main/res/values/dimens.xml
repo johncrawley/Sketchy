@@ -37,6 +37,6 @@
     <dimen name="clear_canvas_dialog_text_padding">24dp</dimen>
     <dimen name="clear_canvas_dialog_text_size">22sp</dimen>
     <dimen name="settings_panel_horizontal_padding">12dp</dimen>
-
+    <dimen name="settings_buttons_layout_padding_horizontal">12dp</dimen>
 
 </resources>

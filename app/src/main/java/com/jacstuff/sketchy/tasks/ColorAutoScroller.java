@@ -12,9 +12,9 @@ public class ColorAutoScroller {
     private ScheduledExecutorService executor;
     private ScrollTask firstScroll, scrollToNearStart;
 
-    public ColorAutoScroller(ScrollView verticalColorScrollView, HorizontalScrollView colorScrollView){
-        firstScroll = new ScrollTask(colorScrollView,verticalColorScrollView, 300);
-        scrollToNearStart = new ScrollTask(colorScrollView, verticalColorScrollView,95);
+    public ColorAutoScroller(HorizontalScrollView colorScrollView){
+        firstScroll = new ScrollTask(colorScrollView, 300);
+        scrollToNearStart = new ScrollTask(colorScrollView,95);
         executor = Executors.newSingleThreadScheduledExecutor();
         engageAutoScroll();
     }
