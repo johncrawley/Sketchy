@@ -125,7 +125,6 @@ public class PaintView extends View {
         gradientHelper.init(paint);
         kaleidoscopeHelper.setDefaultCenter(canvasWidth/2, canvasHeight/2);
         paint.setColor(viewModel.color);
-
         initMatrixIfNull();
         invalidate();
     }
@@ -294,27 +293,29 @@ public class PaintView extends View {
 
         float x = event.getX();
         float y = event.getY();
+        int action = event.getAction();
 
 
         if(!isTouchDownEventWithLineShape(event)){
             assignColorsBlursAndGradients(x,y);
         }
         wasCanvasModifiedSinceLastSaveOrReset = true;
+        try {
+            if (BrushShape.LINE == currentBrush.getBrushShape()) {
+                handleLineDrawing(x, y, event);
+            } else {
+                handleDrawing(x, y, event);
+            }
 
-        if(BrushShape.LINE == currentBrush.getBrushShape()){
-            handleLineDrawing(x,y, event);
+            if (action == MotionEvent.ACTION_UP) {
+                bitmapHistory.push(bitmap);
+            }
+        }catch (IllegalArgumentException e){
+            //do nothing, sometimes there's an illegalArgException related to drawing gradients
+            // immediately after rotating screen
         }
-        else{
-            handleDrawing(x,y,event);
-        }
-
-        if(event.getAction() == MotionEvent.ACTION_UP){
-          bitmapHistory.push(bitmap);
-        }
-
         return true;
     }
-
 
     public void undo(){
         useHistory(true);
@@ -356,7 +357,6 @@ public class PaintView extends View {
             viewModel.previousColor = paint.getColor();
         }
         paint.setColor(viewModel.color);
-        blurHelper.assignBlur();
         gradientHelper.assignGradient(x,y, viewModel.color, viewModel.previousColor);
     }
 
@@ -439,12 +439,9 @@ public class PaintView extends View {
     }
 
 
-
     private void drawKaleidoscope(float x, float y, Paint paint, boolean isDragLine){
         canvas.save();
         canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
-
-
 
         for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()){
             drawKaleidoscopeSegment(x, y, angle, isDragLine, paint);

@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
 import android.graphics.LinearGradient;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
@@ -86,4 +87,7 @@ public class GradientHelper {
         }
     }
 
+    private void log(String msg){
+        System.out.println("GradientHelper: " +  msg);
+    }
 }
