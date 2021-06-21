@@ -2,10 +2,12 @@ package com.jacstuff.sketchy.paintview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,6 +48,8 @@ public class PaintView extends View {
     private boolean isCanvasLocked;
     private Matrix matrix;
     private MainViewModel viewModel;
+    private Bitmap glitchImage;
+    private final Paint glitchPaint = new Paint();
 
 
     private final ShadowHelper shadowHelper;
@@ -295,7 +299,6 @@ public class PaintView extends View {
         float y = event.getY();
         int action = event.getAction();
 
-
         if(!isTouchDownEventWithLineShape(event)){
             assignColorsBlursAndGradients(x,y);
         }
@@ -306,7 +309,6 @@ public class PaintView extends View {
             } else {
                 handleDrawing(x, y, event);
             }
-
             if (action == MotionEvent.ACTION_UP) {
                 bitmapHistory.push(bitmap);
             }
@@ -316,6 +318,7 @@ public class PaintView extends View {
         }
         return true;
     }
+
 
     public void undo(){
         useHistory(true);
@@ -440,14 +443,47 @@ public class PaintView extends View {
 
 
     private void drawKaleidoscope(float x, float y, Paint paint, boolean isDragLine){
+
         canvas.save();
         canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
 
         for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()){
             drawKaleidoscopeSegment(x, y, angle, isDragLine, paint);
         }
+
+        if(viewModel.isGlitchModeEnabled){
+         drawGlitchSegments(x,y);
+        }
+
         canvas.restore();
     }
+
+
+    private void drawGlitchSegments(float x, float y){
+        glitchImage = Bitmap.createScaledBitmap(bitmap, 500, 500, false);
+
+        BitmapShader fillBMPshader = new BitmapShader(glitchImage, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+        glitchPaint.setStyle(Paint.Style.FILL);
+        glitchPaint.setShader(fillBMPshader);
+        for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()) {
+            drawGlitchModeSegment(x, y, angle);
+        }
+
+    }
+
+
+    private void drawGlitchModeSegment(float x, float y, float angle){
+        canvas.save();
+        canvas.rotate(angle);
+        float gx = x - (kaleidoscopeHelper.getCenterX());// + (brushSize/2f));
+        float gy = y - (kaleidoscopeHelper.getCenterY());// + (brushSize/2f));
+        canvas.drawBitmap(glitchImage ,gx, gy, glitchPaint);
+        //canvas.drawCircle(gx, gy, getMeasuredWidth() /3.5f, glitchPaint);
+        canvas.restore();
+        invalidate();
+    }
+
+
 
 
     private void drawKaleidoscopeSegment(float x, float y, float angle, boolean isDragLine, Paint paint){
@@ -459,9 +495,6 @@ public class PaintView extends View {
         }
         else {
             rotateAndDraw(x - kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(), paint);
-        }
-        if(viewModel.isGlitchModeEnabled){
-            canvas.drawBitmap(bitmap,x-kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(), paint);
         }
         canvas.restore();
         invalidate();
