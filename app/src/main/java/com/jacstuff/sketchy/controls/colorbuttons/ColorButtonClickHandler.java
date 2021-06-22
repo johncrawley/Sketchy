@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.MainViewModel;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.multicolor.RandomMultiColorSelector;

@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.jacstuff.sketchy.MainViewModel;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.brushes.BlurType;
 import com.jacstuff.sketchy.brushes.BrushShape;

@@ -12,7 +12,8 @@ public class BlurSeekBar  extends AbstractSeekBarConfig {
     }
 
 
-    void adjustSetting(int progress){
+    @Override
+    public void adjustSetting(int progress){
         if(paintView != null){
             paintView.setBlurRadius(progress);
         }

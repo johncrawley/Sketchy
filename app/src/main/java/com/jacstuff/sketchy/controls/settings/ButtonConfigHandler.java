@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.controls.settingsbuttons;
+package com.jacstuff.sketchy.controls.settings;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -9,7 +9,7 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonUtils;
-import com.jacstuff.sketchy.settings.ViewModelHelper;
+import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.util.Collection;
@@ -70,7 +70,7 @@ public class ButtonConfigHandler<T>{
     }
 
 
-    void setParentButton(int id){
+    public void setParentButton(int id){
         this.parentButton = activity.findViewById(id);
         settingsPopup.registerParentButton(id);
     }
@@ -81,7 +81,7 @@ public class ButtonConfigHandler<T>{
     }
 
 
-    void setupClickHandler(){
+    public void setupClickHandler(){
         View.OnClickListener clickListener = new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -140,7 +140,7 @@ public class ButtonConfigHandler<T>{
     }
 
 
-    void setDefaultSelection(int id){
+    public void setDefaultSelection(int id){
         defaultSelectionId = id;
     }
 

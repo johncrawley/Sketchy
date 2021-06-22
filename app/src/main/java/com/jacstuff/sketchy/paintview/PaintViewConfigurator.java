@@ -6,7 +6,7 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.MainViewModel;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.ui.SettingsPopup;

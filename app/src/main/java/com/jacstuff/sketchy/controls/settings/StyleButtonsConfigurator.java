@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.controls.settingsbuttons;
+package com.jacstuff.sketchy.controls.settings;
 
 
 import com.jacstuff.sketchy.MainActivity;

@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy;
+package com.jacstuff.sketchy.viewmodel;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;

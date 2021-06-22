@@ -2,8 +2,8 @@ package com.jacstuff.sketchy.controls.seekbars;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.controls.settings.gradient.GradientSizeSeekBar;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.util.Arrays;
 
@@ -13,7 +13,6 @@ public class SeekBarConfigurator {
     public SeekBarConfigurator(MainActivity mainActivity, PaintView paintView){
         new LineWidthSeekBar(mainActivity, paintView);
         new BrushSizeSeekBar(mainActivity, paintView);
-        new GradientSizeSeekBar(mainActivity, paintView);
         new BlurSeekBar(mainActivity, paintView);
         new ShadowRadiusSeekBar(mainActivity, paintView);
 

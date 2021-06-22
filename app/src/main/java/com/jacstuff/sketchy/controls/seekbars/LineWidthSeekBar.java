@@ -12,7 +12,8 @@ public class LineWidthSeekBar extends AbstractSeekBarConfig {
     }
 
 
-    void adjustSetting(int progress){
+    @Override
+    public void adjustSetting(int progress){
         if(paintView != null){
             paintView.setLineWidth(progress);
         }

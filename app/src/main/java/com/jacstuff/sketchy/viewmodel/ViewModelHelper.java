@@ -1,10 +1,9 @@
-package com.jacstuff.sketchy.settings;
+package com.jacstuff.sketchy.viewmodel;
 
 import android.view.View;
 import android.widget.Button;
 
 import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.MainViewModel;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonUtils;

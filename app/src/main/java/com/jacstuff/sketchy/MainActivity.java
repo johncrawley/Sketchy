@@ -25,7 +25,7 @@ import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
-import com.jacstuff.sketchy.controls.settingsbuttons.SettingsButtonsConfigurator;
+import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.controls.shapecontrols.TextControls;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.model.TextControlsDto;
@@ -33,7 +33,8 @@ import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
 import com.jacstuff.sketchy.paintview.helpers.GradientHelper;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
-import com.jacstuff.sketchy.settings.ViewModelHelper;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
+import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
 import com.jacstuff.sketchy.tasks.ColorAutoScroller;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 

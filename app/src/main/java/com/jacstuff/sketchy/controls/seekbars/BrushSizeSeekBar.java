@@ -6,7 +6,7 @@ import com.jacstuff.sketchy.paintview.PaintView;
 
 public class BrushSizeSeekBar extends AbstractSeekBarConfig {
 
-    private int minBrushSize;
+    private final int minBrushSize;
 
     public BrushSizeSeekBar(MainActivity mainActivity, PaintView paintView){
         super(mainActivity, paintView, R.id.brushSizeSeekBar, R.integer.brush_size_default);
@@ -14,7 +14,8 @@ public class BrushSizeSeekBar extends AbstractSeekBarConfig {
     }
 
 
-    void adjustSetting(int progress){
+    @Override
+    public void adjustSetting(int progress){
         if(paintView != null){
             paintView.setBrushSize(minBrushSize + progress);
         }

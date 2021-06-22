@@ -26,12 +26,19 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
 
 
     @Override
-    void adjustSetting(int progress){
+    public void adjustSetting(int progress){
         if(paintView == null || parentButton == null) {
             return;
         }
         viewModel.angle = progress;
         setAngle(progress);
+    }
+
+
+    @Override
+    public void onStartTracking(){
+        viewModel.useSeekBarAngle = true;
+        buttonUtils.switchSelection(R.id.angleSeekBar, buttonIds);
     }
 
 
@@ -42,9 +49,4 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
     }
 
 
-    @Override
-    void onStartTracking(){
-        viewModel.useSeekBarAngle = true;
-        buttonUtils.switchSelection(R.id.angleSeekBar, buttonIds);
-    }
 }

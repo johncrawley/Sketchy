@@ -1,7 +1,8 @@
-package com.jacstuff.sketchy.controls.seekbars;
+package com.jacstuff.sketchy.controls.settings.gradient;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.controls.seekbars.AbstractSeekBarConfig;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 public class GradientSizeSeekBar extends AbstractSeekBarConfig {
@@ -13,7 +14,7 @@ public class GradientSizeSeekBar extends AbstractSeekBarConfig {
 
 
     @Override
-    void onStopTracking(int progress){
+    public void onStopTracking(int progress){
         if(paintView != null){
             paintView.setRadialGradientRadius(progress);
         }

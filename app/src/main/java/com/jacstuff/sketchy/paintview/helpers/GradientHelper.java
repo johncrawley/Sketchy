@@ -1,12 +1,11 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
 import android.graphics.LinearGradient;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 
-import com.jacstuff.sketchy.MainViewModel;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.brushes.GradientType;
 
 public class GradientHelper {

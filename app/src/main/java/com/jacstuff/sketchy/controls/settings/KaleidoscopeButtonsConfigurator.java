@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.controls.settingsbuttons;
+package com.jacstuff.sketchy.controls.settings;
 
 import android.widget.CompoundButton;
 

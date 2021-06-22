@@ -11,8 +11,8 @@ public class ShadowRadiusSeekBar extends AbstractSeekBarConfig {
         super(mainActivity, paintView, R.id.shadowRadiusSeekBar, R.integer.shadow_radius_default);
     }
 
-
-    void adjustSetting(int progress){
+    @Override
+    public void adjustSetting(int progress){
         if(paintView != null){
             paintView.setShadowSize(progress);
         }

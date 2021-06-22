@@ -1,18 +1,18 @@
-package com.jacstuff.sketchy.controls.settingsbuttons;
+package com.jacstuff.sketchy.controls.settings;
 
 import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.MainViewModel;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.controls.childpanel.ChildSettingsPanelManager;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 public abstract class AbstractButtonConfigurator<T> implements SelectableDefault {
 
 
-    MainActivity activity;
-    MainViewModel viewModel;
-    PaintView paintView;
-    ChildSettingsPanelManager childSettingsPanelManager;
-    ButtonConfigHandler<T> buttonConfig;
+    public MainActivity activity;
+    public MainViewModel viewModel;
+    public PaintView paintView;
+    public ChildSettingsPanelManager childSettingsPanelManager;
+    public ButtonConfigHandler<T> buttonConfig;
 
 
     public AbstractButtonConfigurator(MainActivity activity, PaintView paintView){

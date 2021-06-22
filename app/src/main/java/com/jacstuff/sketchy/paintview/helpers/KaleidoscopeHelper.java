@@ -1,6 +1,6 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
-import com.jacstuff.sketchy.MainViewModel;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class KaleidoscopeHelper {
 
