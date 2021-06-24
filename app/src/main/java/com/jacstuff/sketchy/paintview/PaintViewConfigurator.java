@@ -56,12 +56,6 @@ public class PaintViewConfigurator {
     }
 
 
-    private boolean isInLandscapeMode(){
-        int orientation = context.getResources().getConfiguration().orientation;
-        return orientation == Configuration.ORIENTATION_LANDSCAPE;
-    }
-
-
     private int getDimension(int dimensionCode){
         return (int) context.getResources().getDimension(dimensionCode);
     }
@@ -73,6 +67,14 @@ public class PaintViewConfigurator {
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
     }
+
+
+
+    private boolean isInLandscapeMode(){
+        int orientation = context.getResources().getConfiguration().orientation;
+        return orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
 
 
 }

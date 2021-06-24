@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.paintview;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
@@ -67,6 +68,7 @@ public class PaintView extends View {
     private SettingsPopup settingsPopup;
     private boolean ignoreMoveAndUpActions = false;
     private TextControlsDto textControlsDto;
+    private final Context context;
 
     public PaintView(Context context) {
         this(context, null);
@@ -75,6 +77,7 @@ public class PaintView extends View {
 
     public PaintView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         paint = createPaint(Color.WHITE);
         previewPaint =  createPaint(Color.DKGRAY);
         shadowPaint = createPaint(Color.BLACK);
@@ -166,8 +169,8 @@ public class PaintView extends View {
     }
 
 
-    public void useMostRecentHistory(){
-        useHistory(false);
+    public void assignMostRecentBitmap(){
+        loadAndRotateMostRecentHistoryBitmap();
     }
 
 
@@ -325,7 +328,7 @@ public class PaintView extends View {
     }
 
 
-    public void useHistory(boolean isCurrentDiscarded){
+    private void useHistory(boolean isCurrentDiscarded){
         Bitmap historyBitmap = isCurrentDiscarded ?  bitmapHistory.getPrevious() : bitmapHistory.getCurrent();
 
         if(historyBitmap == null){
@@ -336,6 +339,35 @@ public class PaintView extends View {
         disablePreviewLayer();
         invalidate();
     }
+
+
+
+    private void loadAndRotateMostRecentHistoryBitmap(){
+        Bitmap historyBitmap = bitmapHistory.getCurrent();
+
+        if(historyBitmap == null){
+            return;
+        }
+        initMatrixIfNull();
+        int currentOrientation = context.getResources().getConfiguration().orientation;
+        if((viewModel.previousScreenOrientation != currentOrientation) && viewModel.hasOrientationBeenAssigned){
+            int angle = currentOrientation == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
+            log("useHistory2() rotating bitmap via matrix to angle: "+  angle);
+            Matrix m = new Matrix();
+            m.postRotate(angle);
+            historyBitmap = Bitmap.createBitmap(historyBitmap, 0, 0, historyBitmap.getWidth(), historyBitmap.getHeight(), m, true);
+
+        }
+        canvas.drawBitmap(historyBitmap, matrix, drawPaint);
+        disablePreviewLayer();
+        invalidate();
+    }
+
+
+    private void log(String msg){
+        System.out.println("PaintView: " + msg);
+    }
+
 
 
     private boolean isPopupBeingDismissed(MotionEvent event){
@@ -462,9 +494,9 @@ public class PaintView extends View {
     private void drawGlitchSegments(float x, float y){
         glitchImage = Bitmap.createScaledBitmap(bitmap, 500, 500, false);
 
-        BitmapShader fillBMPshader = new BitmapShader(glitchImage, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+        BitmapShader bitmapShader = new BitmapShader(glitchImage, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
         glitchPaint.setStyle(Paint.Style.FILL);
-        glitchPaint.setShader(fillBMPshader);
+        glitchPaint.setShader(bitmapShader);
         for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()) {
             drawGlitchModeSegment(x, y, angle);
         }

@@ -5,15 +5,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import java.util.ArrayDeque;
-import java.util.Collections;
-import java.util.List;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
+
 public class BitmapHistory {
 
-    private Context context;
+    private final Context context;
     private ArrayDeque<Bitmap> history;
+
 
     public BitmapHistory(Context context){
         this.context = context;
@@ -27,6 +27,7 @@ public class BitmapHistory {
         activityManager.getMemoryInfo(mi);
         return mi.availMem / (double)mi.totalMem * 100.0;
     }
+
 
     public boolean isEmpty(){
         return history.isEmpty();
@@ -61,9 +62,9 @@ public class BitmapHistory {
 
 
     public ArrayDeque<Bitmap> getAll(){
-
         return history;
     }
+
 
     public void setAll(ArrayDeque<Bitmap> history){
         this.history = history;

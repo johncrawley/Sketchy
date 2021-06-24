@@ -37,4 +37,7 @@ public class MainViewModel extends ViewModel {
 
     public boolean useSeekBarAngle = false;
     public int angle = 0;
+
+    public boolean hasOrientationBeenAssigned = false;
+    public int previousScreenOrientation;
 }

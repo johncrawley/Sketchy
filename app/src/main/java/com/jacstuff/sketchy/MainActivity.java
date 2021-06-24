@@ -83,10 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause(){
         super.onPause();
-        if(viewModelHelper == null){
-            return;
+        if(viewModelHelper != null){
+            viewModelHelper.onPause();
         }
-        viewModelHelper.onPause();
     }
 
 
@@ -230,6 +229,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 viewModelHelper.onResume();
             }
         });
+    }
+
+
+    public int getScreenOrientation(){
+       return getResources().getConfiguration().orientation;
     }
 
 
