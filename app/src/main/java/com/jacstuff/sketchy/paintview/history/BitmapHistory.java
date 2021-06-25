@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.paintview;
+package com.jacstuff.sketchy.paintview.history;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -12,7 +12,7 @@ import static android.content.Context.ACTIVITY_SERVICE;
 public class BitmapHistory {
 
     private final Context context;
-    private ArrayDeque<Bitmap> history;
+    private ArrayDeque<HistoryItem> history;
 
 
     public BitmapHistory(Context context){
@@ -34,15 +34,15 @@ public class BitmapHistory {
     }
 
 
-    public void push(Bitmap bitmap){
+    public void push(Bitmap bitmap, int orientation){
         if(getFreeMemoryPercentage() < 15){
             history.removeLast();
         }
-        history.addFirst(Bitmap.createBitmap(bitmap));
+        history.addFirst(new HistoryItem(Bitmap.createBitmap(bitmap), orientation));
     }
 
 
-    public Bitmap getPrevious(){
+    public HistoryItem getPrevious(){
         if(history.size() == 0){
             return null;
         }
@@ -53,7 +53,7 @@ public class BitmapHistory {
     }
 
 
-    public Bitmap getCurrent(){
+    public HistoryItem getCurrent(){
         if(null != history && history.size() > 0) {
             return history.peekFirst();
         }
@@ -61,12 +61,12 @@ public class BitmapHistory {
     }
 
 
-    public ArrayDeque<Bitmap> getAll(){
+    public ArrayDeque<HistoryItem> getAll(){
         return history;
     }
 
 
-    public void setAll(ArrayDeque<Bitmap> history){
+    public void setAll(ArrayDeque<HistoryItem> history){
         this.history = history;
     }
 }

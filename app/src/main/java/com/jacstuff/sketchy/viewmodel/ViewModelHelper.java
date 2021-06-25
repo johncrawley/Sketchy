@@ -43,13 +43,11 @@ public class ViewModelHelper {
 
 
     public void onPause(){
-        viewModel.bitmapHistory = paintView.getBitmapHistory().getAll();
+        viewModel.bitmapHistoryItems = paintView.getBitmapHistory().getAll();
         viewModel.mostRecentColorButtonKey = buttonClickHandler.getMostRecentColorButtonKey();
         viewModel.mostRecentShadeButtonKey = buttonClickHandler.getMostRecentShadeButtonKey();
         viewModel.isMostRecentClickAShade = buttonClickHandler.isMostRecentClickAShade();
         viewModel.selectedShadeButtonKeys = buttonClickHandler.getSelectedRandomShadeKeys();
-        viewModel.previousScreenOrientation = mainActivity.getScreenOrientation();
-        viewModel.hasOrientationBeenAssigned = true;
     }
 
 
@@ -74,8 +72,8 @@ public class ViewModelHelper {
 
 
     private void retrieveBitmapHistory(){
-        if(viewModel.bitmapHistory != null) {
-            paintView.getBitmapHistory().setAll(viewModel.bitmapHistory);
+        if(viewModel.bitmapHistoryItems != null) {
+            paintView.getBitmapHistory().setAll(viewModel.bitmapHistoryItems);
             paintView.assignMostRecentBitmap();
         }
     }

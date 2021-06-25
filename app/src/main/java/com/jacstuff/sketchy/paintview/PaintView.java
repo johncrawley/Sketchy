@@ -13,6 +13,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.jacstuff.sketchy.paintview.history.BitmapHistory;
+import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.brushes.BlurType;
@@ -170,7 +172,7 @@ public class PaintView extends View {
 
 
     public void assignMostRecentBitmap(){
-        loadAndRotateMostRecentHistoryBitmap();
+        loadHistoryItem(false);
     }
 
 
@@ -271,7 +273,7 @@ public class PaintView extends View {
         blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         blankPaint.setColor(DEFAULT_BG_COLOR);
         canvas.drawRect(0,0, canvasWidth, canvasHeight, blankPaint);
-        bitmapHistory.push(bitmap);
+        bitmapHistory.push(bitmap, getScreenOrientation());
         invalidate();
     }
 
@@ -313,7 +315,7 @@ public class PaintView extends View {
                 handleDrawing(x, y, event);
             }
             if (action == MotionEvent.ACTION_UP) {
-                bitmapHistory.push(bitmap);
+                bitmapHistory.push(bitmap, getScreenOrientation());
             }
         }catch (IllegalArgumentException e){
             //do nothing, sometimes there's an illegalArgException related to drawing gradients
@@ -324,50 +326,33 @@ public class PaintView extends View {
 
 
     public void undo(){
-        useHistory(true);
+        loadHistoryItem(true);
     }
 
 
-    private void useHistory(boolean isCurrentDiscarded){
-        Bitmap historyBitmap = isCurrentDiscarded ?  bitmapHistory.getPrevious() : bitmapHistory.getCurrent();
-
-        if(historyBitmap == null){
+    private void loadHistoryItem(boolean isCurrentDiscarded){
+        HistoryItem historyItem = isCurrentDiscarded ?  bitmapHistory.getPrevious() : bitmapHistory.getCurrent();
+        Bitmap bitmapToDraw = historyItem.getBitmap();
+        if(bitmapToDraw == null){
             return;
         }
         initMatrixIfNull();
-        canvas.drawBitmap(historyBitmap, matrix, drawPaint);
-        disablePreviewLayer();
-        invalidate();
-    }
-
-
-
-    private void loadAndRotateMostRecentHistoryBitmap(){
-        Bitmap historyBitmap = bitmapHistory.getCurrent();
-
-        if(historyBitmap == null){
-            return;
-        }
-        initMatrixIfNull();
-        int currentOrientation = context.getResources().getConfiguration().orientation;
-        if((viewModel.previousScreenOrientation != currentOrientation) && viewModel.hasOrientationBeenAssigned){
+        int currentOrientation = getScreenOrientation();
+        if(historyItem.getOrientation() != currentOrientation){
             int angle = currentOrientation == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
-            log("useHistory2() rotating bitmap via matrix to angle: "+  angle);
             Matrix m = new Matrix();
             m.postRotate(angle);
-            historyBitmap = Bitmap.createBitmap(historyBitmap, 0, 0, historyBitmap.getWidth(), historyBitmap.getHeight(), m, true);
-
+            Bitmap historyBitmap = historyItem.getBitmap();
+            bitmapToDraw = Bitmap.createBitmap(historyBitmap, 0, 0, historyBitmap.getWidth(), historyBitmap.getHeight(), m, true);
         }
-        canvas.drawBitmap(historyBitmap, matrix, drawPaint);
+        canvas.drawBitmap(bitmapToDraw, matrix, drawPaint);
         disablePreviewLayer();
         invalidate();
     }
 
-
-    private void log(String msg){
-        System.out.println("PaintView: " + msg);
+    private int getScreenOrientation(){
+        return context.getResources().getConfiguration().orientation;
     }
-
 
 
     private boolean isPopupBeingDismissed(MotionEvent event){
