@@ -31,8 +31,8 @@ import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
-import com.jacstuff.sketchy.paintview.helpers.GradientHelper;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
+import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
 import com.jacstuff.sketchy.tasks.ColorAutoScroller;
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextControlsDto textControlsDto;
     private MainViewModel viewModel;
     private ButtonReferenceStore buttonReferenceStore;
+    private PaintHelperManager paintHelperManager;
 
 
     @Override
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initImageSaver();
         setupActionbar();
         configurePaintView();
+        setupPaintHelpers();
         setupSettingsButtons();
         setupColorAndShadeButtons();
         new SeekBarConfigurator(this, paintView);
@@ -88,6 +90,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void setupPaintHelpers(){
+        paintHelperManager = new PaintHelperManager(this, viewModel);
+        viewModelHelper.setPaintHelpers(paintHelperManager);
+        paintView.setPaintHelperManager(paintHelperManager);
+    }
+
+    public PaintHelperManager getPaintHelperManager(){
+        log("Entered getPaintManagerHelper()");
+        return this.paintHelperManager;
+    }
+
+    private void log(String msg){
+        System.out.println("MainActivity: " + msg);
+    }
 
     private void setupViewModel(){
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
@@ -209,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintView = findViewById(R.id.paintView);
         paintView.initBrushes();
         paintView.setKaleidoscopeHelper(new KaleidoscopeHelper(viewModel));
-        paintView.setGradientHelper(new GradientHelper(viewModel, getResources().getInteger(R.integer.gradient_radius_max)));
         setupPaintViewAndDefaultSelections(this);
     }
 
@@ -229,11 +244,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 viewModelHelper.onResume();
             }
         });
-    }
-
-
-    public int getScreenOrientation(){
-       return getResources().getConfiguration().orientation;
     }
 
 

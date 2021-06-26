@@ -4,6 +4,7 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.seekbars.AbstractSeekBarConfig;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.helpers.GradientHelper;
 
 public class GradientSizeSeekBar extends AbstractSeekBarConfig {
 
@@ -15,8 +16,32 @@ public class GradientSizeSeekBar extends AbstractSeekBarConfig {
 
     @Override
     public void onStopTracking(int progress){
-        if(paintView != null){
-            paintView.setRadialGradientRadius(progress);
+        setValue(progress);
+        viewModel.gradient = progress;
+    }
+
+
+    @Override
+    public void setDefaultValue(int value){
+        setValue(value);
+    }
+
+
+    private void setValue(int value){
+        if(paintHelperManager == null){
+            log("paintHelperManager is null!");
+            return;
         }
+        GradientHelper gradientHelper = paintHelperManager.getGradientHelper();
+        if(gradientHelper == null){
+            log("gradientHelper is null!");
+        }else{
+            gradientHelper.setGradientRadius(value);
+        }
+
+    }
+
+    private void log(String msg){
+        System.out.println("GradientSizeSeekBar: " + msg);
     }
 }

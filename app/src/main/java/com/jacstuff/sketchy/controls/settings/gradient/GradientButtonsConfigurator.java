@@ -37,7 +37,7 @@ public class GradientButtonsConfigurator extends AbstractButtonConfigurator<Grad
 
     @Override
     public void handleClick(int viewId, GradientType gradientType){
-        paintView.setGradientType(gradientType);
+        paintHelperManager.getGradientHelper().setGradientType(gradientType);
     }
 
 }

@@ -12,8 +12,8 @@ public class GradientHelper {
 
     private Paint paint;
     private GradientType gradientType;
-    private int MAX_GRADIENT_FACTOR;
-    private MainViewModel viewModel;
+    private final int MAX_GRADIENT_FACTOR;
+    private final MainViewModel viewModel;
 
 
     public GradientHelper(MainViewModel viewModel, int maxGradientFactor){
@@ -86,7 +86,4 @@ public class GradientHelper {
         }
     }
 
-    private void log(String msg){
-        System.out.println("GradientHelper: " +  msg);
-    }
 }

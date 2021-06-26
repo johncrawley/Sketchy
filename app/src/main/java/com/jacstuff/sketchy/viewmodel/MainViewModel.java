@@ -37,4 +37,6 @@ public class MainViewModel extends ViewModel {
 
     public boolean useSeekBarAngle = false;
     public int angle = 0;
+
+    public int gradient = Integer.MIN_VALUE;
 }

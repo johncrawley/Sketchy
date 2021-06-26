@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.controls.settings;
 
 import com.jacstuff.sketchy.MainActivity;
+import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.controls.childpanel.ChildSettingsPanelManager;
 import com.jacstuff.sketchy.paintview.PaintView;
@@ -13,12 +14,13 @@ public abstract class AbstractButtonConfigurator<T> implements SelectableDefault
     public PaintView paintView;
     public ChildSettingsPanelManager childSettingsPanelManager;
     public ButtonConfigHandler<T> buttonConfig;
-
+    public PaintHelperManager paintHelperManager;
 
     public AbstractButtonConfigurator(MainActivity activity, PaintView paintView){
         this.activity = activity;
         this.viewModel = activity.getViewModel();
         this.paintView = paintView;
+        this.paintHelperManager = activity.getPaintHelperManager();
         childSettingsPanelManager = new ChildSettingsPanelManager(activity);
         configure();
     }

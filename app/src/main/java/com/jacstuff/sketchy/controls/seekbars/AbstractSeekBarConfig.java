@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.controls.seekbars;
 import android.widget.SeekBar;
 
 import com.jacstuff.sketchy.MainActivity;
+import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.paintview.PaintView;
 
@@ -12,6 +13,7 @@ public abstract class AbstractSeekBarConfig {
     public MainActivity mainActivity;
     public PaintView paintView;
     public MainViewModel viewModel;
+    public PaintHelperManager paintHelperManager;
 
     public AbstractSeekBarConfig(MainActivity mainActivity, PaintView paintView, int seekBarId, int defaultValueId){
         this.mainActivity = mainActivity;
@@ -20,8 +22,8 @@ public abstract class AbstractSeekBarConfig {
         viewModel = mainActivity.getViewModel();
         setupListener();
         int defaultValue = getValueOf(defaultValueId);
-        adjustSetting(defaultValue);
-        onStopTracking(defaultValue);
+        setDefaultValue(defaultValue);
+        paintHelperManager = mainActivity.getPaintHelperManager();
     }
 
     private void setupListener(){
@@ -53,6 +55,11 @@ public abstract class AbstractSeekBarConfig {
 
     public void adjustSetting(int progress){
         //do nothing
+    }
+
+    public void setDefaultValue(int defaultValue){
+        adjustSetting(defaultValue);
+        onStopTracking(defaultValue);
     }
 
 

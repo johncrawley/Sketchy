@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -20,7 +21,6 @@ import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.brushes.BlurType;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
-import com.jacstuff.sketchy.brushes.GradientType;
 import com.jacstuff.sketchy.brushes.ShadowType;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
@@ -28,7 +28,6 @@ import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.paintview.helpers.AngleHelper;
 import com.jacstuff.sketchy.paintview.helpers.BlurHelper;
-import com.jacstuff.sketchy.paintview.helpers.GradientHelper;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.ShadowHelper;
 import com.jacstuff.sketchy.ui.SettingsPopup;
@@ -53,11 +52,11 @@ public class PaintView extends View {
     private MainViewModel viewModel;
     private Bitmap glitchImage;
     private final Paint glitchPaint = new Paint();
+    private PaintHelperManager paintHelperManager;
 
 
     private final ShadowHelper shadowHelper;
     private final BlurHelper blurHelper;
-    private GradientHelper gradientHelper;
     private final AngleHelper angleHelper;
     private KaleidoscopeHelper kaleidoscopeHelper;
 
@@ -97,13 +96,15 @@ public class PaintView extends View {
     }
 
 
+    public void setPaintHelperManager(PaintHelperManager paintHelperManager){
+        this.paintHelperManager = paintHelperManager;
+    }
+
+
     public void setKaleidoscopeHelper(KaleidoscopeHelper kaleidoscopeHelper){
         this.kaleidoscopeHelper = kaleidoscopeHelper;
     }
 
-    public void setGradientHelper(GradientHelper gradientHelper){
-        this.gradientHelper = gradientHelper;
-    }
 
     public void initBrushes(){
         brushFactory = new BrushFactory(canvas, paintGroup, brushSize, textControlsDto);
@@ -131,7 +132,7 @@ public class PaintView extends View {
             drawPlainBackgroundAndSaveToHistory();
         }
 
-        gradientHelper.init(paint);
+        paintHelperManager.init(paint);
         kaleidoscopeHelper.setDefaultCenter(canvasWidth/2, canvasHeight/2);
         paint.setColor(viewModel.color);
         initMatrixIfNull();
@@ -219,22 +220,12 @@ public class PaintView extends View {
     }
 
 
-    public void setGradientType(GradientType gradientType){
-        gradientHelper.setGradientType(gradientType);
-    }
-
-
     public void setBrushSize(int brushSize){
         this.brushSize = brushSize;
         halfBrushSize = brushSize /2;
         currentBrush.setBrushSize(brushSize);
-        gradientHelper.updateBrushSize(brushSize);
+        paintHelperManager.getGradientHelper().updateBrushSize(brushSize);
         shadowHelper.updateOffsetFactor(halfBrushSize);
-    }
-
-
-    public void setRadialGradientRadius(int radiusFactor){
-        gradientHelper.setGradientRadius(radiusFactor);
     }
 
 
@@ -373,7 +364,7 @@ public class PaintView extends View {
             viewModel.previousColor = paint.getColor();
         }
         paint.setColor(viewModel.color);
-        gradientHelper.assignGradient(x,y, viewModel.color, viewModel.previousColor);
+        paintHelperManager.getGradientHelper().assignGradient(x,y, viewModel.color, viewModel.previousColor);
     }
 
 
