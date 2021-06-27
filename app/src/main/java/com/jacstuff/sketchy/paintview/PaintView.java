@@ -81,7 +81,7 @@ public class PaintView extends View {
     }
 
 
-    public void initBrushes(){
+    public void initBrushes(TextControlsDto textControlsDto){
         brushFactory = new BrushFactory(canvas, paintGroup, brushSize, textControlsDto);
         currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
     }
@@ -92,7 +92,6 @@ public class PaintView extends View {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
         this.settingsPopup = settingsPopup;
-        this.textControlsDto = textControlsDto;
 
         if(canvasHeight <= 0){
             canvasHeight = this.getHeight();
@@ -102,7 +101,7 @@ public class PaintView extends View {
         }
         bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        initBrushes();
+        initBrushes(textControlsDto); // already called by MainActivity, but needs to be called again to register new canvas with the brushes
         if(bitmapHistory.isEmpty()){
             drawPlainBackgroundAndSaveToHistory();
         }
@@ -215,7 +214,7 @@ public class PaintView extends View {
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
 
-        if(isPopupBeingDismissed(event) | isCanvasLocked){
+        if(isPopupBeingDismissed(event) || isCanvasLocked){
             return true;
         }
 

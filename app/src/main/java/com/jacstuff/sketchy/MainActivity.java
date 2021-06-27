@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
-        paintView.initBrushes();
+        paintView.initBrushes(textControlsDto);
         setupPaintViewAndDefaultSelections(this);
     }
 
