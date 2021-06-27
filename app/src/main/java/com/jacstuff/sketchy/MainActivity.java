@@ -44,8 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private PaintView paintView;
     private final int SAVE_FILE_ACTIVITY_CODE = 101;
-    private final int CLEAR_CANVAS_ACTIVITY_CODE = 102;
-    private final int LOAD_FILE_ACTIVITY_CODE = 103;
+    //private final int LOAD_FILE_ACTIVITY_CODE = 103;
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
     private final  ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 15);
@@ -95,14 +94,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintView.setPaintHelperManager(paintHelperManager);
     }
 
+
     public PaintHelperManager getPaintHelperManager(){
-        log("Entered getPaintManagerHelper()");
         return this.paintHelperManager;
     }
 
-    private void log(String msg){
-        System.out.println("MainActivity: " + msg);
-    }
 
     private void setupViewModel(){
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
@@ -128,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.action_new){
-            startClearDialogIfChangesNotSaved();
+            paintView.resetCanvas();
         }
         else if(id == R.id.action_undo){
             paintView.undo();
@@ -148,10 +144,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SAVE_FILE_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
             imageSaver.saveImageToFile(data, paintView);
-            paintView.notifyPictureSaved();
-        }
-        else if(requestCode == CLEAR_CANVAS_ACTIVITY_CODE && resultCode == Activity.RESULT_OK){
-            createNewSketch();
         }
     }
 
@@ -261,23 +253,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    void startClearDialogIfChangesNotSaved(){
-        if(paintView.canvasWasModifiedSinceLastSaveOrReset()){
-            startConfirmClearActivity();
-            return;
-        }
-        createNewSketch();
-    }
-
-
-    private void createNewSketch(){
-        paintView.resetCanvas();
-    }
-
-
     private void startAboutActivity(){
         Intent intent = new Intent(this, AboutDialogActivity.class);
-        startActivityForResult(intent, CLEAR_CANVAS_ACTIVITY_CODE);
+        startActivity(intent);
     }
 
 
@@ -289,19 +267,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(intent, SAVE_FILE_ACTIVITY_CODE);
     }
 
-
+/*
     private void startOpenDocumentActivity(){
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent, LOAD_FILE_ACTIVITY_CODE);
     }
-
-
-    private void startConfirmClearActivity(){
-        Intent intent = new Intent(this, ConfirmWipeDialogActivity.class);
-        startActivityForResult(intent, CLEAR_CANVAS_ACTIVITY_CODE);
-    }
-
+*/
 
     public void loadPreferences(){
         SharedPreferences prefs = getSharedPreferences("myPref",0);

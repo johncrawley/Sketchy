@@ -39,7 +39,6 @@ public class PaintView extends View {
     private BrushStyle currentBrushStyle = BrushStyle.FILL;
     private Brush currentBrush;
     private BrushFactory brushFactory;
-    private boolean wasCanvasModifiedSinceLastSaveOrReset;
     private boolean isCanvasLocked;
     private Matrix matrix;
     private MainViewModel viewModel;
@@ -138,10 +137,6 @@ public class PaintView extends View {
     }
 
 
-    public void notifyPictureSaved(){
-        wasCanvasModifiedSinceLastSaveOrReset = false;
-    }
-
 
     public BitmapHistory getBitmapHistory(){
         return bitmapHistory;
@@ -150,11 +145,6 @@ public class PaintView extends View {
 
     public void assignMostRecentBitmap(){
         loadHistoryItem(false);
-    }
-
-
-    public boolean canvasWasModifiedSinceLastSaveOrReset(){
-        return wasCanvasModifiedSinceLastSaveOrReset;
     }
 
 
@@ -190,7 +180,6 @@ public class PaintView extends View {
 
 
     public void resetCanvas(){
-        wasCanvasModifiedSinceLastSaveOrReset = false;
         isCanvasLocked = true;
         drawPlainBackgroundAndSaveToHistory();
         invalidate();
@@ -233,10 +222,8 @@ public class PaintView extends View {
         float x = event.getX();
         float y = event.getY();
 
-        if(!isTouchDownEventWithLineShape(event)){
-            assignColorsBlursAndGradients(x,y);
-        }
-        wasCanvasModifiedSinceLastSaveOrReset = true;
+        assignColorsBlursAndGradients(x,y, event);
+
         try {
             if (BrushShape.LINE == currentBrush.getBrushShape()) {
                 handleLineDrawing(x, y, event);
@@ -298,13 +285,21 @@ public class PaintView extends View {
     }
 
 
-    private void assignColorsBlursAndGradients(float x, float y){
+    private void assignColorsBlursAndGradients(float x, float y, MotionEvent event){
+        if(isTouchDownEventWithLineShape(event)){
+            return;
+        }
+        assignColors();
+        paintHelperManager.getGradientHelper().assignGradient(x,y, viewModel.color, viewModel.previousColor);
+    }
+
+
+    private void assignColors(){
         viewModel.color = colorSelector.getNextColor();
         if(viewModel.color != paint.getColor()){
             viewModel.previousColor = paint.getColor();
         }
         paint.setColor(viewModel.color);
-        paintHelperManager.getGradientHelper().assignGradient(x,y, viewModel.color, viewModel.previousColor);
     }
 
 
