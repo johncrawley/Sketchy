@@ -28,20 +28,7 @@ public class GradientSizeSeekBar extends AbstractSeekBarConfig {
 
 
     private void setValue(int value){
-        if(paintHelperManager == null){
-            log("paintHelperManager is null!");
-            return;
-        }
-        GradientHelper gradientHelper = paintHelperManager.getGradientHelper();
-        if(gradientHelper == null){
-            log("gradientHelper is null!");
-        }else{
-            gradientHelper.setGradientRadius(value);
-        }
-
+       paintHelperManager.getGradientHelper().setGradientRadius(value);
     }
 
-    private void log(String msg){
-        System.out.println("GradientSizeSeekBar: " + msg);
-    }
 }

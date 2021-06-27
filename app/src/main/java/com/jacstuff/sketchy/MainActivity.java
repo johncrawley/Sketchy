@@ -3,7 +3,6 @@ package com.jacstuff.sketchy;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initImageSaver();
         setupActionbar();
         configurePaintView();
-        setupPaintHelpers();
+        initPaintHelperManager();
         setupSettingsButtons();
         setupColorAndShadeButtons();
         new SeekBarConfigurator(this, paintView);
@@ -88,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void setupPaintHelpers(){
+
+    private void initPaintHelperManager(){
         paintHelperManager = new PaintHelperManager(this, viewModel);
         viewModelHelper.setPaintHelperManager(paintHelperManager);
         paintView.setPaintHelperManager(paintHelperManager);
@@ -273,7 +273,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent, LOAD_FILE_ACTIVITY_CODE);
     }
-*/
 
     public void loadPreferences(){
         SharedPreferences prefs = getSharedPreferences("myPref",0);
@@ -286,5 +285,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.putString("myStoreName", thePreference);
         editor.commit();
     }
-
+*/
 }

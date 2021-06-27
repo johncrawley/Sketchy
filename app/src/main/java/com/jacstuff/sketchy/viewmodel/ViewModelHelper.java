@@ -70,6 +70,7 @@ public class ViewModelHelper {
         retrieveRecentButtonSettings();
         retrieveColorAndShade();
         restoreSeekBarSettings();
+        viewModel.isFirstExecution = false;
     }
 
 
@@ -118,11 +119,12 @@ public class ViewModelHelper {
             deselectCurrentlySelectedAngleButton();
         }
         mainActivity.getSettingsPopup().dismiss();
+
     }
 
 
     private void restoreSeekBarSettings(){
-        if(viewModel.gradient != Integer.MIN_VALUE) {
+        if(!viewModel.isFirstExecution) {
             GradientHelper gradientHelper = paintHelperManager.getGradientHelper();
             gradientHelper.setGradientRadius(viewModel.gradient);
         }

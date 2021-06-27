@@ -20,11 +20,12 @@ public abstract class AbstractSeekBarConfig {
         this.paintView = paintView;
         seekBar = mainActivity.findViewById(seekBarId);
         viewModel = mainActivity.getViewModel();
+        paintHelperManager = mainActivity.getPaintHelperManager();
         setupListener();
         int defaultValue = getValueOf(defaultValueId);
         setDefaultValue(defaultValue);
-        paintHelperManager = mainActivity.getPaintHelperManager();
     }
+
 
     private void setupListener(){
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
