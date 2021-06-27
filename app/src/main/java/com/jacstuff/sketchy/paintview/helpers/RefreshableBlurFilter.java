@@ -5,11 +5,12 @@ import android.graphics.BlurMaskFilter;
 public class RefreshableBlurFilter {
     private boolean isRefreshNeeded;
     private BlurMaskFilter blur;
-    private BlurMaskFilter.Blur blurStyle;
-    private int size, offset;
+    private final BlurMaskFilter.Blur blurStyle;
+    private int size;
+    private final int offset;
+
 
     public RefreshableBlurFilter(BlurMaskFilter.Blur blurStyle, int intialSize, int offset){
-
         this.blurStyle = blurStyle;
         this.offset = offset;
         blur = new BlurMaskFilter(offset + intialSize, blurStyle);

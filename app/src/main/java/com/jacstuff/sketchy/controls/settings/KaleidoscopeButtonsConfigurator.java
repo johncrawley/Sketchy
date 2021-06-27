@@ -58,7 +58,7 @@ public class KaleidoscopeButtonsConfigurator extends AbstractButtonConfigurator<
 
     @Override
     public void handleClick(int viewId, Integer numberOfSegments){
-        paintView.setKaleidoscopeSegments(numberOfSegments);
+        paintHelperManager.getKaleidoscopeHelper().setSegments(numberOfSegments);
     }
 
 }

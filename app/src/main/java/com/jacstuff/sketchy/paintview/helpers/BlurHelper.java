@@ -8,17 +8,21 @@ import com.jacstuff.sketchy.brushes.BlurType;
 public class BlurHelper {
 
     private BlurType blurType;
-    private final Paint paint;
+    private Paint paint;
     private int blurRadius = 1;
     private final RefreshableBlurFilter outer, normal, solid, inner;
 
-    public BlurHelper(Paint paint){
-        this.paint = paint;
+    public BlurHelper(){
         blurType = BlurType.NONE;
         outer = new RefreshableBlurFilter(BlurMaskFilter.Blur.OUTER, blurRadius, 0);
         inner = new RefreshableBlurFilter(BlurMaskFilter.Blur.INNER, blurRadius, 0);
         normal = new RefreshableBlurFilter(BlurMaskFilter.Blur.NORMAL, blurRadius, 2);
         solid = new RefreshableBlurFilter(BlurMaskFilter.Blur.SOLID, blurRadius, 10);
+    }
+
+
+    public void init(Paint p){
+        this.paint = p;
     }
 
 

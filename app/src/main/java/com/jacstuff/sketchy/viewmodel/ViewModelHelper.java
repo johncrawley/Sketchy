@@ -5,6 +5,7 @@ import android.widget.Button;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
@@ -24,7 +25,7 @@ public class ViewModelHelper {
     private final ButtonReferenceStore buttonReferenceStore;
     private final MainActivity mainActivity;
     private final ButtonUtils buttonUtils;
-    private PaintHelperManager paintHelpers;
+    private PaintHelperManager paintHelperManager;
 
 
     public ViewModelHelper(MainViewModel viewModel,
@@ -45,8 +46,8 @@ public class ViewModelHelper {
     }
 
 
-    public void setPaintHelpers(PaintHelperManager paintHelpers){
-        this.paintHelpers = paintHelpers;
+    public void setPaintHelperManager(PaintHelperManager paintHelperManager){
+        this.paintHelperManager = paintHelperManager;
     }
 
 
@@ -122,7 +123,7 @@ public class ViewModelHelper {
 
     private void restoreSeekBarSettings(){
         if(viewModel.gradient != Integer.MIN_VALUE) {
-            GradientHelper gradientHelper = paintHelpers.getGradientHelper();
+            GradientHelper gradientHelper = paintHelperManager.getGradientHelper();
             gradientHelper.setGradientRadius(viewModel.gradient);
         }
 
@@ -131,7 +132,8 @@ public class ViewModelHelper {
 
     private void setAngleBasedOnSeekBar(){
         int angle = viewModel.angle;
-        paintView.setExactAngle(angle);
+        paintHelperManager.getAngleHelper().setAngle(AngleType.OTHER);
+        paintHelperManager.getAngleHelper().setAngle(angle);
         String buttonText = "" + angle + mainActivity.getString(R.string.degrees_symbol);
         Button angleButton =  mainActivity.findViewById(R.id.angleSelectionButton);
         angleButton.setText(buttonText);

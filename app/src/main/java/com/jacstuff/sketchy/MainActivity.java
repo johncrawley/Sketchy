@@ -31,7 +31,6 @@ import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
-import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
@@ -92,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupPaintHelpers(){
         paintHelperManager = new PaintHelperManager(this, viewModel);
-        viewModelHelper.setPaintHelpers(paintHelperManager);
+        viewModelHelper.setPaintHelperManager(paintHelperManager);
         paintView.setPaintHelperManager(paintHelperManager);
     }
 
@@ -224,7 +223,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
         paintView.initBrushes();
-        paintView.setKaleidoscopeHelper(new KaleidoscopeHelper(viewModel));
         setupPaintViewAndDefaultSelections(this);
     }
 

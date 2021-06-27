@@ -16,16 +16,15 @@ public class ShadowHelper {
     private boolean hasSizeBeenUpdated;
     private Paint paint;
 
-    public ShadowHelper(Paint paint){
-        this.paint = paint;
-    }
 
-
-    public void setShadowSize(int size, int halfBrushSize){
+    public void setShadowSize(int size){
         shadowSize = size;
-        shadowOffsetFactor = halfBrushSize / 4;
         hasSizeBeenUpdated = true;
         assignShadow();
+    }
+
+    public void init(Paint paint){
+        this.paint = paint;
     }
 
 
@@ -39,7 +38,7 @@ public class ShadowHelper {
         return shadowType != ShadowType.NONE;
     }
 
-    public void set(ShadowType shadowType){
+    public void setType(ShadowType shadowType){
         this.shadowType = shadowType;
         assignShadow();
     }

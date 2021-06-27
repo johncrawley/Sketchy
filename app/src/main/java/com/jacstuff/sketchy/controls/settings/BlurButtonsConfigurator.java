@@ -31,7 +31,7 @@ public class BlurButtonsConfigurator extends AbstractButtonConfigurator<BlurType
 
     @Override
     public void handleClick(int viewId, BlurType blurType){
-        paintView.setBlurType(blurType);
+        paintHelperManager.getBlurHelper().setBlurType(blurType);
     }
 
 

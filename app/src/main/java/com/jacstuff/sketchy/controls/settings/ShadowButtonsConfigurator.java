@@ -39,7 +39,7 @@ public class ShadowButtonsConfigurator extends AbstractButtonConfigurator<Shadow
 
     @Override
     public void handleClick(int viewId, ShadowType shadowType){
-        paintView.setShadowType(shadowType);
+        paintHelperManager.getShadowHelper().setType(shadowType);
     }
 
 

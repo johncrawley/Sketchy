@@ -13,33 +13,26 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
-import com.jacstuff.sketchy.brushes.AngleType;
-import com.jacstuff.sketchy.brushes.BlurType;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
-import com.jacstuff.sketchy.brushes.ShadowType;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
-import com.jacstuff.sketchy.paintview.helpers.AngleHelper;
-import com.jacstuff.sketchy.paintview.helpers.BlurHelper;
-import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
-import com.jacstuff.sketchy.paintview.helpers.ShadowHelper;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
 
 public class PaintView extends View {
 
     private int canvasWidth, canvasHeight;
-
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
     private final Paint paint, shadowPaint, previewPaint;
-    private int brushSize, halfBrushSize;
+    private int brushSize;
     private Bitmap bitmap;
     private Canvas canvas;
     private ColorSelector colorSelector;
@@ -53,23 +46,17 @@ public class PaintView extends View {
     private Bitmap glitchImage;
     private final Paint glitchPaint = new Paint();
     private PaintHelperManager paintHelperManager;
-
-
-    private final ShadowHelper shadowHelper;
-    private final BlurHelper blurHelper;
-    private final AngleHelper angleHelper;
     private KaleidoscopeHelper kaleidoscopeHelper;
-
     private boolean isPreviewLayerToBeDrawn;
     private Bitmap previewBitmap;
     private final BitmapHistory bitmapHistory;
     private final Paint drawPaint = new Paint();
-
     private final PaintGroup paintGroup;
     private SettingsPopup settingsPopup;
     private boolean ignoreMoveAndUpActions = false;
     private TextControlsDto textControlsDto;
     private final Context context;
+
 
     public PaintView(Context context) {
         this(context, null);
@@ -82,27 +69,16 @@ public class PaintView extends View {
         paint = createPaint(Color.WHITE);
         previewPaint =  createPaint(Color.DKGRAY);
         shadowPaint = createPaint(Color.BLACK);
-
         paint.setAntiAlias(true);
         paint.setDither(true);
-
         paintGroup = new PaintGroup(paint, previewPaint, shadowPaint);
-
         bitmapHistory = new BitmapHistory(context);
-
-        shadowHelper = new ShadowHelper(shadowPaint);
-        blurHelper = new BlurHelper(paint);
-        angleHelper = new AngleHelper();
     }
 
 
     public void setPaintHelperManager(PaintHelperManager paintHelperManager){
         this.paintHelperManager = paintHelperManager;
-    }
-
-
-    public void setKaleidoscopeHelper(KaleidoscopeHelper kaleidoscopeHelper){
-        this.kaleidoscopeHelper = kaleidoscopeHelper;
+        this.paintHelperManager.init(paint, shadowPaint);
     }
 
 
@@ -131,8 +107,7 @@ public class PaintView extends View {
         if(bitmapHistory.isEmpty()){
             drawPlainBackgroundAndSaveToHistory();
         }
-
-        paintHelperManager.init(paint);
+        kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
         kaleidoscopeHelper.setDefaultCenter(canvasWidth/2, canvasHeight/2);
         paint.setColor(viewModel.color);
         initMatrixIfNull();
@@ -146,6 +121,7 @@ public class PaintView extends View {
             matrix.postScale(1,1);
         }
     }
+
 
     private Paint createPaint(int color){
         Paint paint = new Paint();
@@ -199,54 +175,17 @@ public class PaintView extends View {
     }
 
 
-    public void setKaleidoscopeSegments(int numberOfSegments){
-        kaleidoscopeHelper.setSegments(numberOfSegments);
-    }
-
-
-    public void setAnglePreset(AngleType angleType){
-        angleHelper.setAngle(angleType);
-    }
-
-
-    public void setExactAngle(int angle){
-        angleHelper.setAngle(AngleType.OTHER);
-        angleHelper.setAngle(angle);
-    }
-
-
-    public void setBlurType(BlurType blurType){
-        blurHelper.setBlurType(blurType);
-    }
-
-
     public void setBrushSize(int brushSize){
         this.brushSize = brushSize;
-        halfBrushSize = brushSize /2;
         currentBrush.setBrushSize(brushSize);
         paintHelperManager.getGradientHelper().updateBrushSize(brushSize);
-        shadowHelper.updateOffsetFactor(halfBrushSize);
+        paintHelperManager.getShadowHelper().updateOffsetFactor(brushSize/2);
     }
 
 
     public void setLineWidth(int lineWidth){
         paintGroup.setStrokeWidth(lineWidth);
         currentBrush.notifyStyleChange();
-    }
-
-
-    public void setBlurRadius(int blurRadius){
-        blurHelper.setBlurRadius(blurRadius);
-    }
-
-
-    public void setShadowType(ShadowType shadowType){
-        shadowHelper.set(shadowType);
-    }
-
-
-    public void setShadowSize(int size){
-        shadowHelper.setShadowSize(size, halfBrushSize);
     }
 
 
@@ -337,6 +276,7 @@ public class PaintView extends View {
         invalidate();
     }
 
+
     private int getScreenOrientation(){
         return context.getResources().getConfiguration().orientation;
     }
@@ -397,8 +337,7 @@ public class PaintView extends View {
 
 
     private void handleDrawing(float x, float y, MotionEvent event){
-        angleHelper.updateAngle();
-
+        paintHelperManager.getAngleHelper().updateAngle();
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
                 kaleidoscopeHelper.setCenter(x,y);
@@ -450,7 +389,6 @@ public class PaintView extends View {
 
 
     private void drawKaleidoscope(float x, float y, Paint paint, boolean isDragLine){
-
         if(viewModel.isGlitchModeEnabled) {
             glitchImage = Bitmap.createScaledBitmap(bitmap, 500, 500, false);
         }
@@ -506,7 +444,7 @@ public class PaintView extends View {
 
 
     private void drawDragLine(float x, float y, int offsetX, int offsetY){
-        if(shadowHelper.isShadowEnabled()){
+        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
             currentBrush.onTouchUp(x,y, offsetX, offsetY, shadowPaint);
         }
         currentBrush.onTouchUp(x,y, offsetX, offsetY, paint);
@@ -516,8 +454,8 @@ public class PaintView extends View {
     private void rotateAndDraw(float x, float y, Paint paint){
         canvas.save();
         canvas.translate(x, y);
-        canvas.rotate(angleHelper.getAngle());
-        if(shadowHelper.isShadowEnabled()){
+        canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
+        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
             currentBrush.onTouchDown(0,0, shadowPaint);
         }
         currentBrush.onTouchDown(0,0, paint);

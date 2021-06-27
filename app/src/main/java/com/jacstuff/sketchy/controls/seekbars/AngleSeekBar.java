@@ -4,6 +4,7 @@ import android.widget.Button;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.paintview.PaintView;
 
@@ -43,7 +44,8 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
 
 
     public void setAngle(int angle){
-        paintView.setExactAngle(angle);
+        paintHelperManager.getAngleHelper().setAngle(AngleType.OTHER);
+        paintHelperManager.getAngleHelper().setAngle(angle);
         String buttonText = "" + angle + mainActivity.getString(R.string.degrees_symbol);
         parentButton.setText(buttonText);
     }
