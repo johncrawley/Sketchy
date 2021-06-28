@@ -1,8 +1,12 @@
 package com.jacstuff.sketchy;
 
 
-import android.app.Activity;
 import android.content.Intent;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -42,7 +46,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private PaintView paintView;
-    private final int SAVE_FILE_ACTIVITY_CODE = 101;
+    //private final int SAVE_FILE_ACTIVITY_CODE = 101;
     //private final int LOAD_FILE_ACTIVITY_CODE = 103;
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
@@ -57,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MainViewModel viewModel;
     private ButtonReferenceStore buttonReferenceStore;
     private PaintHelperManager paintHelperManager;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
 
 
     @Override
@@ -76,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         new TextControls(this, textControlsDto, paintView.getPaintGroup());
         viewModelHelper.init(colorButtonClickHandler, paintView);
         setupColorAutoScroll();
+        initActivityResultLauncher();
     }
 
 
@@ -133,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startSaveDocumentActivity();
         }
         else if( id == R.id.action_about){
-            startAboutActivity();
+            startActivity(new Intent(this, AboutDialogActivity.class));
         }
         return true;
     }
@@ -142,9 +148,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SAVE_FILE_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
-            imageSaver.saveImageToFile(data, paintView);
-        }
+       // if (requestCode == SAVE_FILE_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
+       //     imageSaver.saveImageToFile(data, paintView);
+       // }
     }
 
 
@@ -253,9 +259,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void startAboutActivity(){
-        Intent intent = new Intent(this, AboutDialogActivity.class);
-        startActivity(intent);
+    private void initActivityResultLauncher(){
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if(result == null || result.getData() == null){
+                            return;
+                        }
+                        imageSaver.saveImageToFile(result.getData(), paintView);
+                    }
+                });
     }
 
 
@@ -264,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/png");
         intent.putExtra(Intent.EXTRA_TITLE, "sketch");
-        startActivityForResult(intent, SAVE_FILE_ACTIVITY_CODE);
+        activityResultLauncher.launch(intent);
     }
 
 /*
