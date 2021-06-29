@@ -189,13 +189,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         colorButtonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
         layoutPopulator.addColorButtonLayoutsTo(colorButtonGroupLayout);
         colorButtonClickHandler.setShadeLayoutsMap(layoutPopulator.getShadeLayoutsMap());
-        colorButtonClickHandler.onClick(getDefaultButton());
+        colorButtonClickHandler.onClick(getDefaultColorButton());
     }
 
 
-    private void setupColorAutoScroll(){
-        new ColorAutoScroller(
-                (HorizontalScrollView)findViewById(R.id.colorScrollView));
+    private void setupColorAutoScroll() {
+        if (viewModel.isFirstExecution){
+            new ColorAutoScroller(
+                    (HorizontalScrollView) findViewById(R.id.colorScrollView));
+        }
     }
 
 
@@ -243,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private View getDefaultButton(){
+    private View getDefaultColorButton(){
         View defaultButton = colorButtonGroupLayout.findViewWithTag(R.string.tag_button_default_color);
         if(defaultButton == null){
             defaultButton = colorButtonGroupLayout.findViewWithTag(R.string.tag_button_color_button);

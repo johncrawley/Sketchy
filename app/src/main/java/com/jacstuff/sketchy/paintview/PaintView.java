@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -53,7 +54,6 @@ public class PaintView extends View {
     private final PaintGroup paintGroup;
     private SettingsPopup settingsPopup;
     private boolean ignoreMoveAndUpActions = false;
-    private TextControlsDto textControlsDto;
     private final Context context;
 
 
@@ -99,7 +99,7 @@ public class PaintView extends View {
         if(canvasHeight <= 0){
             canvasHeight = 1000;
         }
-        bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         initBrushes(textControlsDto); // already called by MainActivity, but needs to be called again to register new canvas with the brushes
         if(bitmapHistory.isEmpty()){
@@ -257,7 +257,9 @@ public class PaintView extends View {
             Bitmap historyBitmap = historyItem.getBitmap();
             bitmapToDraw = Bitmap.createBitmap(historyBitmap, 0, 0, historyBitmap.getWidth(), historyBitmap.getHeight(), m, true);
         }
-        canvas.drawBitmap(bitmapToDraw, matrix, drawPaint);
+        Rect src = new Rect(0,0, bitmapToDraw.getWidth(), bitmapToDraw.getHeight());
+        Rect dest = new Rect(0,0, getWidth(), getHeight());
+        canvas.drawBitmap(bitmapToDraw, src, dest, drawPaint);
         disablePreviewLayer();
         invalidate();
     }

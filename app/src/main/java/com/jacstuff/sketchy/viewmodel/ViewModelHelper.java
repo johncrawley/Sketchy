@@ -125,8 +125,10 @@ public class ViewModelHelper {
 
     private void restoreSeekBarSettings(){
         if(!viewModel.isFirstExecution) {
-            GradientHelper gradientHelper = paintHelperManager.getGradientHelper();
-            gradientHelper.setGradientRadius(viewModel.gradient);
+            if(viewModel.gradient != 0) {
+                GradientHelper gradientHelper = paintHelperManager.getGradientHelper();
+                gradientHelper.setGradientRadius(viewModel.gradient);
+            }
         }
 
     }

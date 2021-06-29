@@ -35,8 +35,8 @@ import java.util.Map;
 public class BrushFactory {
 
     private Map<BrushShape, Brush> brushMap;
-    private Brush circleBrush;
-    private TextControlsDto textControlsDto;
+    private final Brush circleBrush;
+    private final TextControlsDto textControlsDto;
 
     public BrushFactory(Canvas canvas, PaintGroup paintGroup, int brushSize, TextControlsDto textControlsDto){
 
@@ -50,7 +50,6 @@ public class BrushFactory {
 
 
     private void setupBrushMap(Canvas canvas, PaintGroup paintGroup, int brushSize){
-
         brushMap = new HashMap<>();
         brushMap.put(BrushShape.CIRCLE,            circleBrush);
         brushMap.put(BrushShape.ROUNDED_RECTANGLE,  new RoundedRectangleBrush(canvas, paintGroup, brushSize));
@@ -85,6 +84,9 @@ public class BrushFactory {
 
     private void addLineBrushAndStyles(PaintGroup paintGroup, int brushSize){
         Brush lineBrush = brushMap.get(BrushShape.LINE);
+        if(lineBrush == null){
+            return;
+        }
         lineBrush.add(BrushStyle.FILL, new FillStyleForLines());
         lineBrush.add(BrushStyle.BROKEN_OUTLINE, new DashedStyleForLines(paintGroup, brushSize));
     }
