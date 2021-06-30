@@ -34,11 +34,16 @@ public class BitmapHistory {
     }
 
 
-    public void push(Bitmap bitmap, int orientation){
+    public void push(Bitmap bitmap){
         if(getFreeMemoryPercentage() < 15){
             history.removeLast();
         }
-        history.addFirst(new HistoryItem(Bitmap.createBitmap(bitmap), orientation));
+        history.addFirst(new HistoryItem(Bitmap.createBitmap(bitmap), getCurrentScreenOrientation()));
+    }
+
+
+    private int getCurrentScreenOrientation(){
+        return context.getResources().getConfiguration().orientation;
     }
 
 

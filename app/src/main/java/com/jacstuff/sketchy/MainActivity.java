@@ -46,8 +46,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private PaintView paintView;
-    //private final int SAVE_FILE_ACTIVITY_CODE = 101;
-    //private final int LOAD_FILE_ACTIVITY_CODE = 103;
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
     private final  ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 15);
@@ -62,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ButtonReferenceStore buttonReferenceStore;
     private PaintHelperManager paintHelperManager;
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    ActivityResultLauncher <Intent> loadImageActivityResultLauncher;
 
 
     @Override
@@ -82,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewModelHelper.init(colorButtonClickHandler, paintView);
         setupColorAutoScroll();
         initActivityResultLauncher();
+        initActivityResultLauncherForLoad();
     }
 
 
@@ -137,6 +137,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if( id == R.id.action_save) {
             startSaveDocumentActivity();
+        }
+        else if(  id == R.id.action_open) {
+            startOpenDocumentActivity();
         }
         else if( id == R.id.action_about){
             startActivity(new Intent(this, AboutDialogActivity.class));
@@ -276,6 +279,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    private void initActivityResultLauncherForLoad(){
+        loadImageActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if(result == null || result.getData() == null){
+                            return;
+                        }
+                        imageSaver.loadImage(result.getData(), paintView);
+                    }
+                });
+    }
+
     private void startSaveDocumentActivity(){
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -284,13 +301,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         activityResultLauncher.launch(intent);
     }
 
-/*
+
     private void startOpenDocumentActivity(){
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(intent, LOAD_FILE_ACTIVITY_CODE);
+        intent.setType("image/*");
+        loadImageActivityResultLauncher.launch(intent);
     }
 
+    /*
     public void loadPreferences(){
         SharedPreferences prefs = getSharedPreferences("myPref",0);
         prefs.getString("myStoreName","defaultValue");

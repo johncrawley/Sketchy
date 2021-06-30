@@ -191,7 +191,7 @@ public class PaintView extends View {
         blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         blankPaint.setColor(DEFAULT_BG_COLOR);
         canvas.drawRect(0,0, canvasWidth, canvasHeight, blankPaint);
-        bitmapHistory.push(bitmap, getScreenOrientation());
+        bitmapHistory.push(bitmap);
         invalidate();
     }
 
@@ -244,24 +244,49 @@ public class PaintView extends View {
 
     private void loadHistoryItem(boolean isCurrentDiscarded){
         HistoryItem historyItem = isCurrentDiscarded ?  bitmapHistory.getPrevious() : bitmapHistory.getCurrent();
+
+        Bitmap historyBitmap = getCorrectlyOrientatedBitmapFrom(historyItem);
+        if(historyBitmap == null){
+            return;
+        }
+        drawBitmapToScale(historyBitmap);
+        disablePreviewLayer();
+        invalidate();
+    }
+
+
+    private Bitmap getCorrectlyOrientatedBitmapFrom(HistoryItem historyItem){
         Bitmap bitmapToDraw = historyItem.getBitmap();
         if(bitmapToDraw == null){
-            return;
+            return null;
         }
         initMatrixIfNull();
         int currentOrientation = getScreenOrientation();
-        if(historyItem.getOrientation() != currentOrientation){
-            int angle = currentOrientation == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
-            Matrix m = new Matrix();
-            m.postRotate(angle);
-            Bitmap historyBitmap = historyItem.getBitmap();
-            bitmapToDraw = Bitmap.createBitmap(historyBitmap, 0, 0, historyBitmap.getWidth(), historyBitmap.getHeight(), m, true);
+        if(historyItem.getOrientation() != currentOrientation) {
+            bitmapToDraw = getRotatedBitmap(bitmapToDraw, currentOrientation);
         }
+        return bitmapToDraw;
+    }
+
+
+    private Bitmap getRotatedBitmap(Bitmap bm, int currentOrientation){
+        int angle = currentOrientation == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
+        Matrix m = new Matrix();
+        m.postRotate(angle);
+        return Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), m, true);
+    }
+
+
+    public void loadBitmap(Bitmap bm){
+        drawBitmapToScale(bm);
+        bitmapHistory.push(bitmap);
+    }
+
+
+    private void drawBitmapToScale(Bitmap bitmapToDraw){
         Rect src = new Rect(0,0, bitmapToDraw.getWidth(), bitmapToDraw.getHeight());
         Rect dest = new Rect(0,0, getWidth(), getHeight());
         canvas.drawBitmap(bitmapToDraw, src, dest, drawPaint);
-        disablePreviewLayer();
-        invalidate();
     }
 
 
@@ -326,7 +351,7 @@ public class PaintView extends View {
                 else{
                     drawDragLine(x,y);
                 }
-                bitmapHistory.push(bitmap, getScreenOrientation());
+                bitmapHistory.push(bitmap);
         }
         invalidate();
     }
@@ -350,7 +375,7 @@ public class PaintView extends View {
             case MotionEvent.ACTION_UP :
                 disablePreviewLayer();
                 invalidate();
-                bitmapHistory.push(bitmap, getScreenOrientation());
+                bitmapHistory.push(bitmap);
         }
     }
 
@@ -414,8 +439,8 @@ public class PaintView extends View {
     private void drawGlitchModeSegment(float x, float y, float angle){
         canvas.save();
         canvas.rotate(angle);
-        float gx = x - (kaleidoscopeHelper.getCenterX());// + (brushSize/2f));
-        float gy = y - (kaleidoscopeHelper.getCenterY());// + (brushSize/2f));
+        float gx = x - (kaleidoscopeHelper.getCenterX());
+        float gy = y - (kaleidoscopeHelper.getCenterY());
         canvas.drawBitmap(glitchImage ,gx, gy, glitchPaint);
         canvas.restore();
     }
