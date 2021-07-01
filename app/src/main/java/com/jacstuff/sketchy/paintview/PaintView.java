@@ -91,12 +91,7 @@ public class PaintView extends View {
         this.canvasHeight = canvasHeight;
         this.settingsPopup = settingsPopup;
 
-        if(canvasHeight <= 0){
-            canvasHeight = this.getHeight();
-        }
-        if(canvasHeight <= 0){
-            canvasHeight = 1000;
-        }
+
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         bitmapLoader = new BitmapLoader(this, canvas,drawPaint);
@@ -105,7 +100,7 @@ public class PaintView extends View {
             drawPlainBackgroundAndSaveToHistory();
         }
         kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
-        kaleidoscopeHelper.setDefaultCenter(canvasWidth/2, canvasHeight/2);
+        kaleidoscopeHelper.setDefaultCenter(getWidth()/2, getHeight()/2);
         paint.setColor(viewModel.color);
         invalidate();
     }
