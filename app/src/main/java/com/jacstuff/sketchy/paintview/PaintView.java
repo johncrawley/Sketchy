@@ -1,14 +1,11 @@
 package com.jacstuff.sketchy.paintview;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -41,7 +38,6 @@ public class PaintView extends View {
     private Brush currentBrush;
     private BrushFactory brushFactory;
     private boolean isCanvasLocked;
-    private Matrix matrix;
     private MainViewModel viewModel;
     private Bitmap glitchImage;
     private final Paint glitchPaint = new Paint();
@@ -55,6 +51,8 @@ public class PaintView extends View {
     private SettingsPopup settingsPopup;
     private boolean ignoreMoveAndUpActions = false;
     private final Context context;
+    private BitmapLoader bitmapLoader;
+
 
 
     public PaintView(Context context) {
@@ -101,6 +99,7 @@ public class PaintView extends View {
         }
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
+        bitmapLoader = new BitmapLoader(this, canvas,drawPaint);
         initBrushes(textControlsDto); // already called by MainActivity, but needs to be called again to register new canvas with the brushes
         if(bitmapHistory.isEmpty()){
             drawPlainBackgroundAndSaveToHistory();
@@ -108,16 +107,7 @@ public class PaintView extends View {
         kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
         kaleidoscopeHelper.setDefaultCenter(canvasWidth/2, canvasHeight/2);
         paint.setColor(viewModel.color);
-        initMatrixIfNull();
         invalidate();
-    }
-
-
-    private void initMatrixIfNull(){
-        if(matrix == null){
-            matrix = new Matrix();
-            matrix.postScale(1,1);
-        }
     }
 
 
@@ -245,52 +235,23 @@ public class PaintView extends View {
     private void loadHistoryItem(boolean isCurrentDiscarded){
         HistoryItem historyItem = isCurrentDiscarded ?  bitmapHistory.getPrevious() : bitmapHistory.getCurrent();
 
-        Bitmap historyBitmap = getCorrectlyOrientatedBitmapFrom(historyItem);
+        Bitmap historyBitmap = bitmapLoader.getCorrectlyOrientatedBitmapFrom(historyItem);
         if(historyBitmap == null){
             return;
         }
-        drawBitmapToScale(historyBitmap);
+        bitmapLoader.drawBitmapToScale(historyBitmap);
         disablePreviewLayer();
         invalidate();
     }
 
 
-    private Bitmap getCorrectlyOrientatedBitmapFrom(HistoryItem historyItem){
-        Bitmap bitmapToDraw = historyItem.getBitmap();
-        if(bitmapToDraw == null){
-            return null;
-        }
-        initMatrixIfNull();
-        int currentOrientation = getScreenOrientation();
-        if(historyItem.getOrientation() != currentOrientation) {
-            bitmapToDraw = getRotatedBitmap(bitmapToDraw, currentOrientation);
-        }
-        return bitmapToDraw;
-    }
-
-
-    private Bitmap getRotatedBitmap(Bitmap bm, int currentOrientation){
-        int angle = currentOrientation == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
-        Matrix m = new Matrix();
-        m.postRotate(angle);
-        return Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), m, true);
-    }
-
-
     public void loadBitmap(Bitmap bm){
-        drawBitmapToScale(bm);
+        bitmapLoader.drawBitmapToScale(bm);
         bitmapHistory.push(bitmap);
     }
 
 
-    private void drawBitmapToScale(Bitmap bitmapToDraw){
-        Rect src = new Rect(0,0, bitmapToDraw.getWidth(), bitmapToDraw.getHeight());
-        Rect dest = new Rect(0,0, getWidth(), getHeight());
-        canvas.drawBitmap(bitmapToDraw, src, dest, drawPaint);
-    }
-
-
-    private int getScreenOrientation(){
+    int getScreenOrientation(){
         return context.getResources().getConfiguration().orientation;
     }
 
