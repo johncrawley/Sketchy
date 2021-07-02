@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
@@ -49,6 +50,7 @@ public class PaintView extends View {
     private final Context context;
     private BitmapLoader bitmapLoader;
     private KaleidoscopeDrawer kaleidoscopeDrawer;
+    private FractalColorBlender fractalColorBlender;
 
 
 
@@ -97,6 +99,7 @@ public class PaintView extends View {
         }
         initKaleidoscope();
         paint.setColor(viewModel.color);
+        fractalColorBlender = new FractalColorBlender(viewModel, colorSelector, paint);
         invalidate();
     }
 
@@ -189,6 +192,9 @@ public class PaintView extends View {
 
     public void setColorSelector(ColorSelector colorSelector){
         this.colorSelector = colorSelector;
+        if(fractalColorBlender != null){
+            fractalColorBlender.setColorSelector(colorSelector);
+        }
     }
 
 
@@ -283,6 +289,10 @@ public class PaintView extends View {
 
 
     private void assignColors(){
+        if(kaleidoscopeHelper.isEnabled() && viewModel.isGlitchModeEnabled){
+            fractalColorBlender.assignNextFractalModeColor();
+            return;
+        }
         viewModel.color = colorSelector.getNextColor();
         if(viewModel.color != paint.getColor()){
             viewModel.previousColor = paint.getColor();
