@@ -28,8 +28,6 @@
     <item name="degreesPlus15Button" type="id"/>
     <item name="degreesMinus30Button" type="id"/>
     <item name="degreesPlus30Button" type="id"/>
-    <item name="degreesMinus90Button" type="id"/>
-    <item name="degreesPlus90Button" type="id"/>
     <item name="degreesRandomButton" type="id"/>
 
 

@@ -36,8 +36,6 @@ public class AngleButtonsConfigurator extends AbstractButtonConfigurator<AngleTy
         add(R.id.degreesPlus15Button, AngleType.PLUS_FIFTEEN);
         add(R.id.degreesMinus30Button, AngleType.MINUS_THIRTY);
         add(R.id.degreesPlus30Button, AngleType.PLUS_THIRTY);
-        add(R.id.degreesMinus90Button, AngleType.MINUS_NINTY);
-        add(R.id.degreesPlus90Button, AngleType.PLUS_NINTY);
         add(R.id.degreesRandomButton, AngleType.RANDOM);
 
         buttonConfig.setupClickHandler();
