@@ -1,6 +1,6 @@
 package com.jacstuff.sketchy.controls.shapecontrols;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,23 +13,24 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.paintview.PaintGroup;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class TextControls {
 
     private final EditText textInput;
-    private final Activity activity;
-    private final TextControlsDto textControlsDto;
+    private final MainActivity activity;
+    private final MainViewModel viewModel;
     private final PaintGroup paintGroup;
 
 
-     public TextControls(Activity activity, TextControlsDto textControlsDto, PaintGroup paintGroup) {
+     public TextControls(MainActivity activity, PaintGroup paintGroup) {
          this.activity = activity;
          textInput = activity.findViewById(R.id.textShapeInput);
          SeekBar skewSeekBar = activity.findViewById(R.id.textSkewSeekBar);
-         this.textControlsDto = textControlsDto;
+         this.viewModel = activity.getViewModel();
          this.paintGroup = paintGroup;
 
          setupEditTextActionListener();
@@ -65,7 +66,8 @@ public class TextControls {
 
              @Override
              public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                 textControlsDto.setText(charSequence.toString());
+                 viewModel.textBrushText = charSequence.toString();
+
              }
 
              @Override
@@ -130,7 +132,7 @@ public class TextControls {
 
     private void assignCheckBoxListener(CheckBox.OnCheckedChangeListener onCheckedChangeListener, int ... ids){
          for(int id : ids){
-             CheckBox checkbox = (CheckBox)activity.findViewById(id);
+             CheckBox checkbox = activity.findViewById(id);
              checkbox.setOnCheckedChangeListener(onCheckedChangeListener);
          }
     }

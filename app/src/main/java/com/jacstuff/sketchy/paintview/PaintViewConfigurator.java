@@ -8,7 +8,6 @@ import android.view.WindowManager;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
 public class PaintViewConfigurator {
@@ -18,9 +17,9 @@ public class PaintViewConfigurator {
 
     private int actionBarHeight;
     private int totalMargin, totalPaintViewMargins;
-    private int layoutHeight;
+    private final int layoutHeight;
 
-    public PaintViewConfigurator(MainActivity mainActivity, int layoutWidth, int layoutHeight){
+    public PaintViewConfigurator(MainActivity mainActivity, int layoutHeight){
         this.context = mainActivity;
         deriveScreenDimensions(mainActivity.getWindowManager());
         getDimensionValues();
@@ -40,7 +39,7 @@ public class PaintViewConfigurator {
     }
 
 
-    public void configure(MainViewModel viewModel, PaintView paintView, SettingsPopup settingsPopup, TextControlsDto textControlsDto){
+    public void configure(MainViewModel viewModel, PaintView paintView, SettingsPopup settingsPopup){
         int paintViewWidth, paintViewHeight;
         paintViewHeight = layoutHeight;
         int colorButtonHeight = getDimension(R.dimen.color_button_height);
@@ -52,7 +51,7 @@ public class PaintViewConfigurator {
             paintViewWidth = screenWidth - totalMargin;
         }
 
-        paintView.init(viewModel, paintViewWidth, paintViewHeight,settingsPopup, textControlsDto);
+        paintView.init(viewModel, paintViewWidth, paintViewHeight, settingsPopup);
     }
 
 

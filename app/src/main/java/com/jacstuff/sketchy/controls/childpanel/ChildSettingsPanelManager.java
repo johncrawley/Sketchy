@@ -13,9 +13,9 @@ import java.util.Set;
 public class ChildSettingsPanelManager {
 
 
-    private Activity activity;
-    private Set<Integer> settingsPanelIds;
-    private Map<Integer, Integer> childPanelMap;
+    private final Activity activity;
+    private final Set<Integer> settingsPanelIds;
+    private final Map<Integer, Integer> childPanelMap;
 
 
     public ChildSettingsPanelManager(Activity activity){

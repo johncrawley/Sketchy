@@ -62,21 +62,21 @@ public class ImageSaver {
         }catch (IOException e){
             showLoadErrorToast();
         }
-
-
     }
+
 
     private void showLoadErrorToast(){
         Toast.makeText(context, context.getString(R.string.toast_open_file_error), Toast.LENGTH_SHORT).show();
     }
 
+
     private void showSaveErrorToast(){
-        Toast.makeText(context, "ERROR, UNABLE TO SAVE FILE", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getString(R.string.toast_save_sketch_error), Toast.LENGTH_SHORT).show();
     }
 
 
     private void showSaveSuccessToast(){
-        Toast.makeText(context, "SKETCH SAVED", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getString(R.string.toast_save_sketch_success), Toast.LENGTH_SHORT).show();
     }
 
 

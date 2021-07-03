@@ -49,7 +49,6 @@ public class InfinityModeColorBlender {
         int r = getNextColorComponent(currentColor, targetColor, 16);
         int g = getNextColorComponent(currentColor, targetColor, 8);
         int b = getNextColorComponent(currentColor, targetColor, 0);
-
         return ColorConverter.getIntFrom(r,g,b);
     }
 
@@ -59,11 +58,9 @@ public class InfinityModeColorBlender {
         int source = getComponent(currentColor, bitShift);
         int target = getComponent(targetColor, bitShift);
 
-
         if(Math.abs(source - target) <= SHADE_INCREMENT){
             return target;
         }
-
         return source > target ?
                 source - SHADE_INCREMENT
                 : source + SHADE_INCREMENT;

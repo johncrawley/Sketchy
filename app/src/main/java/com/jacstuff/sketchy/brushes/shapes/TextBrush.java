@@ -4,23 +4,23 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.paintview.PaintGroup;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class TextBrush  extends AbstractBrush implements Brush {
 
-    private TextControlsDto textControlsDto;
+    private final MainViewModel viewModel;
 
-    public TextBrush(Canvas canvas, PaintGroup paintGroup, TextControlsDto textControlsDto){
+    public TextBrush(Canvas canvas, PaintGroup paintGroup, MainViewModel viewModel){
         super(canvas, paintGroup, BrushShape.TEXT);
-        this.textControlsDto = textControlsDto;
+        this.viewModel = viewModel;
     }
 
 
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
         paint.setTextSize(halfBrushSize);
-        String text = textControlsDto.getText();
+        String text = viewModel.textBrushText;
         canvas.drawText(text, getCentreX(x,text, paint), y, paint);
     }
 

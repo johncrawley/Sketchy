@@ -116,6 +116,8 @@
 
 
     <string name="toast_open_file_error">Unable to open the selected file</string>
+    <string name="toast_save_sketch_error">Error: unable to save the sketch</string>
+    <string name="toast_save_sketch_success">Sketch saved</string>
 
     <string name="pattern_toast_prefix">Sequence &#160;</string>
     <string name="pattern_label_first_to_last">First To Last</string>

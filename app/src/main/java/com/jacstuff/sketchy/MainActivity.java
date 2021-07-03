@@ -31,7 +31,6 @@ import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.controls.shapecontrols.TextControls;
 import com.jacstuff.sketchy.io.ImageSaver;
-import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
     private ViewModelHelper viewModelHelper;
     private SettingsPopup settingsPopup;
-    private TextControlsDto textControlsDto;
     private MainViewModel viewModel;
     private ButtonReferenceStore buttonReferenceStore;
     private PaintHelperManager paintHelperManager;
@@ -69,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         buttonReferenceStore = new ButtonReferenceStore();
         setupViewModel();
-        textControlsDto = new TextControlsDto();
         initImageSaver();
         setupActionbar();
         configurePaintView();
@@ -77,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupSettingsButtons();
         setupColorAndShadeButtons();
         new SeekBarConfigurator(this, paintView);
-        new TextControls(this, textControlsDto, paintView.getPaintGroup());
+        new TextControls(this, paintView.getPaintGroup());
         viewModelHelper.init(colorButtonClickHandler, paintView);
         setupColorAutoScroll();
         initActivityResultLauncher();
@@ -225,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
-        paintView.initBrushes(textControlsDto);
+        paintView.initBrushes();
         setupPaintViewAndDefaultSelections(this);
     }
 
@@ -236,11 +233,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onGlobalLayout() {
                 linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                int width  = linearLayout.getMeasuredWidth();
-                int height = linearLayout.getMeasuredHeight();
 
-                new PaintViewConfigurator(mainActivity, width, height)
-                        .configure(viewModel, paintView, settingsPopup, textControlsDto);
+                new PaintViewConfigurator(mainActivity, linearLayout.getMeasuredHeight())
+                        .configure(viewModel, paintView, settingsPopup);
                 settingsButtonsConfigurator.selectDefaults();
                 viewModelHelper.onResume();
             }

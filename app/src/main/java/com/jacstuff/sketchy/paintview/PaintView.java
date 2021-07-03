@@ -19,7 +19,6 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
-import com.jacstuff.sketchy.model.TextControlsDto;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
@@ -78,13 +77,13 @@ public class PaintView extends View {
     }
 
 
-    public void initBrushes(TextControlsDto textControlsDto){
-        brushFactory = new BrushFactory(canvas, paintGroup, brushSize, textControlsDto);
+    public void initBrushes(){
+        brushFactory = new BrushFactory(canvas, paintGroup, brushSize, viewModel);
         currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
     }
 
 
-    public void init(MainViewModel viewModel, int canvasWidth, int canvasHeight, SettingsPopup settingsPopup, TextControlsDto textControlsDto) {
+    public void init(MainViewModel viewModel, int canvasWidth, int canvasHeight, SettingsPopup settingsPopup) {
         this.viewModel = viewModel;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
@@ -93,7 +92,7 @@ public class PaintView extends View {
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         bitmapLoader = new BitmapLoader(this, canvas,drawPaint);
-        initBrushes(textControlsDto); // already called by MainActivity, but needs to be called again to register new canvas with the brushes
+        initBrushes(); // already called by MainActivity, but needs to be called again to register new canvas with the brushes
         if(bitmapHistory.isEmpty()){
             drawPlainBackgroundAndSaveToHistory();
         }
