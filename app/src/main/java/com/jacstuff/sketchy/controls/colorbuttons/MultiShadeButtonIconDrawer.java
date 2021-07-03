@@ -2,7 +2,6 @@ package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
@@ -17,12 +16,12 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class RandomShadeIconDrawer {
+public class MultiShadeButtonIconDrawer {
 
     private final Paint paint;
-    private int backgroundColor;
+    private final int backgroundColor;
 
-    public RandomShadeIconDrawer(Context context){
+    public MultiShadeButtonIconDrawer(Context context){
         backgroundColor = context.getColor(R.color.multi_shade_bg);
         paint = new Paint();
     }
