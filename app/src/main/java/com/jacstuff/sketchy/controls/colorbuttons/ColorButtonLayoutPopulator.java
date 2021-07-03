@@ -115,10 +115,8 @@ public class ColorButtonLayoutPopulator {
 
 
     private void addRandomShadeButtons(){
-        log("entered addRandomShadeButtons()");
         LinearLayout shadeLayout = createLayoutWithButtonsFrom(colors, ButtonType.RANDOM_SHADE);
         shadeLayoutsMap.put(RANDOM_SHADE_KEY, shadeLayout);
-        log("Exiting addRandomShadeButtons()");
     }
 
 
@@ -150,16 +148,12 @@ public class ColorButtonLayoutPopulator {
             addMultiShadeDrawableTo(button, color);
         }
         else if(buttonType == ButtonType.RANDOM_SHADE){
-            log("createShadeButton() - button type is random_shade, about to add background to button...");
             addRandomShadeDrawableTo(button, color);
         }
 
         return buttonUtils.wrapInMarginLayout(buttonLayoutParams, button);
     }
 
-    private void log(String msg){
-        System.out.println("ColorButtonLayoutPopulator: " + msg);
-    }
 
     private void addMultiShadeDrawableTo(Button button, final int color){
         final List<Integer> shades = multiColorShades.get(color);

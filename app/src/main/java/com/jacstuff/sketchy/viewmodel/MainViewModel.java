@@ -34,7 +34,7 @@ public class MainViewModel extends ViewModel {
     public int color = Color.BLACK;
     public int previousColor = Color.WHITE;
 
-    public boolean isGlitchModeEnabled = false;
+    public boolean isInfinityModeEnabled = false;
 
     public boolean useSeekBarAngle = false;
     public int angle = 0;

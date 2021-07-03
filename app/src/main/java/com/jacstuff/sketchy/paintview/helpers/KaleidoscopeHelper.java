@@ -31,6 +31,11 @@ public class KaleidoscopeHelper {
         return TOTAL_DEGREES  - REMAINDER_OF_ANGLE_DIVISON;
     }
 
+
+    public boolean isInfinityModeEnabled(){
+        return isEnabled && viewModel.isInfinityModeEnabled;
+    }
+
     public void setSegments(int numberOfSegments){
         isEnabled = numberOfSegments > 1;
         this.degreeIncrement = (float)TOTAL_DEGREES / numberOfSegments;

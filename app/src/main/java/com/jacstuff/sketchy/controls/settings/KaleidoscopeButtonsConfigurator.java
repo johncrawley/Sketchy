@@ -39,10 +39,10 @@ public class KaleidoscopeButtonsConfigurator extends AbstractButtonConfigurator<
 
 
     public void setupKaleidoscopeOptions(){
-       SwitchMaterial kaleidoscopeGlitchMode = activity.findViewById(R.id.kaleidoscopeGlitchMode);
-       kaleidoscopeGlitchMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+       SwitchMaterial kaleidoscopeInfinityMode = activity.findViewById(R.id.kaleidoscopeInfinityMode);
+       kaleidoscopeInfinityMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               viewModel.isGlitchModeEnabled = isChecked;
+               viewModel.isInfinityModeEnabled = isChecked;
            }
        });
 

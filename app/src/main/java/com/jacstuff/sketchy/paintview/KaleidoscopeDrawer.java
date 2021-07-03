@@ -13,16 +13,16 @@ public class KaleidoscopeDrawer {
 
     private final Canvas canvas;
     private final MainViewModel viewModel;
-    private final Paint glitchPaint;
     private final KaleidoscopeHelper kaleidoscopeHelper;
     private final PaintView paintView;
-    private Bitmap glitchImage;
+    private final Paint infinityPaint;
+    private Bitmap infinityImage;
 
     KaleidoscopeDrawer(PaintView paintView, MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
         this.paintView = paintView;
         this.canvas = paintView.getCanvas();
         this.viewModel = viewModel;
-        glitchPaint = new Paint();
+        infinityPaint = new Paint();
         this.kaleidoscopeHelper = kaleidoscopeHelper;
     }
 
@@ -33,8 +33,8 @@ public class KaleidoscopeDrawer {
 
 
     void drawKaleidoscope(float x, float y, Paint paint, boolean isDragLine){
-        if(viewModel.isGlitchModeEnabled) {
-            glitchImage = Bitmap.createScaledBitmap(paintView.getBitmap(), 500, 500, false);
+        if(viewModel.isInfinityModeEnabled) {
+            infinityImage = Bitmap.createScaledBitmap(paintView.getBitmap(), 500, 500, false);
         }
         canvas.save();
         canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
@@ -42,7 +42,7 @@ public class KaleidoscopeDrawer {
         for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()){
             drawKaleidoscopeSegment(x, y, angle, isDragLine, paint);
         }
-        if(viewModel.isGlitchModeEnabled){
+        if(viewModel.isInfinityModeEnabled){
             drawGlitchSegments(x,y);
         }
         canvas.restore();
@@ -50,9 +50,9 @@ public class KaleidoscopeDrawer {
 
 
     private void drawGlitchSegments(float x, float y){
-        BitmapShader bitmapShader = new BitmapShader(glitchImage, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-        glitchPaint.setStyle(Paint.Style.FILL);
-        glitchPaint.setShader(bitmapShader);
+        BitmapShader bitmapShader = new BitmapShader(infinityImage, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+        infinityPaint.setStyle(Paint.Style.FILL);
+        infinityPaint.setShader(bitmapShader);
         for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()) {
             drawGlitchModeSegment(x, y, angle);
         }
@@ -64,7 +64,7 @@ public class KaleidoscopeDrawer {
         canvas.rotate(angle);
         float gx = x - (kaleidoscopeHelper.getCenterX());
         float gy = y - (kaleidoscopeHelper.getCenterY());
-        canvas.drawBitmap(glitchImage ,gx, gy, glitchPaint);
+        canvas.drawBitmap(infinityImage,gx, gy, infinityPaint);
         canvas.restore();
     }
 

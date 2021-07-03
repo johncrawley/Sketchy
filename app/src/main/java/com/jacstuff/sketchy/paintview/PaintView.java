@@ -50,7 +50,7 @@ public class PaintView extends View {
     private final Context context;
     private BitmapLoader bitmapLoader;
     private KaleidoscopeDrawer kaleidoscopeDrawer;
-    private FractalColorBlender fractalColorBlender;
+    private InfinityModeColorBlender fractalColorBlender;
 
 
 
@@ -99,7 +99,7 @@ public class PaintView extends View {
         }
         initKaleidoscope();
         paint.setColor(viewModel.color);
-        fractalColorBlender = new FractalColorBlender(viewModel, colorSelector, paint);
+        fractalColorBlender = new InfinityModeColorBlender(viewModel, colorSelector, paint);
         invalidate();
     }
 
@@ -239,6 +239,8 @@ public class PaintView extends View {
     }
 
 
+
+
     private void loadHistoryItem(boolean isCurrentDiscarded){
         HistoryItem historyItem = isCurrentDiscarded ?  bitmapHistory.getPrevious() : bitmapHistory.getCurrent();
 
@@ -289,8 +291,8 @@ public class PaintView extends View {
 
 
     private void assignColors(){
-        if(kaleidoscopeHelper.isEnabled() && viewModel.isGlitchModeEnabled){
-            fractalColorBlender.assignNextFractalModeColor();
+        if(kaleidoscopeHelper.isEnabled() && viewModel.isInfinityModeEnabled){
+            fractalColorBlender.assignNextInfinityModeColor();
             return;
         }
         viewModel.color = colorSelector.getNextColor();
@@ -341,7 +343,9 @@ public class PaintView extends View {
                 disablePreviewLayer();
                 drawToCanvas(x,y, paint);
                 enablePreviewLayer();
-                drawToCanvas(x,y, previewPaint);
+                if(!kaleidoscopeHelper.isInfinityModeEnabled()) {
+                    drawToCanvas(x, y, previewPaint);
+                }
                 break;
 
             case MotionEvent.ACTION_UP :

@@ -38,6 +38,7 @@ public class ShadowHelper {
         return shadowType != ShadowType.NONE;
     }
 
+
     public void setType(ShadowType shadowType){
         this.shadowType = shadowType;
         assignShadow();

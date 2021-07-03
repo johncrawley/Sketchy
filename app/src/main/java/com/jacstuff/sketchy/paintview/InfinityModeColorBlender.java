@@ -7,7 +7,7 @@ import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 
-public class FractalColorBlender {
+public class InfinityModeColorBlender {
 
     private final MainViewModel viewModel;
     private ColorSelector colorSelector;
@@ -16,14 +16,14 @@ public class FractalColorBlender {
     private int targetColor;
 
 
-    FractalColorBlender(MainViewModel viewModel, ColorSelector colorSelector, Paint paint){
+    InfinityModeColorBlender(MainViewModel viewModel, ColorSelector colorSelector, Paint paint){
         this.viewModel = viewModel;
         this.colorSelector = colorSelector;
         this.paint = paint;
     }
 
 
-    void assignNextFractalModeColor(){
+    void assignNextInfinityModeColor(){
         int currentColor = paint.getColor();
         if(!hasBlendStarted){
             hasBlendStarted = true;
@@ -38,6 +38,7 @@ public class FractalColorBlender {
             hasBlendStarted = false;
         }
     }
+
 
     void setColorSelector(ColorSelector colorSelector){
         this.colorSelector = colorSelector;
@@ -54,7 +55,7 @@ public class FractalColorBlender {
 
 
     private int getNextColorComponent(int currentColor, int targetColor, int bitShift){
-        final int SHADE_INCREMENT = 15;
+        final int SHADE_INCREMENT = 8;
         int source = getComponent(currentColor, bitShift);
         int target = getComponent(targetColor, bitShift);
 
