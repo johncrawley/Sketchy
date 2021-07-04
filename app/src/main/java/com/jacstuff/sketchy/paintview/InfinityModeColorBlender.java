@@ -2,9 +2,11 @@ package com.jacstuff.sketchy.paintview;
 
 import android.graphics.Paint;
 
+import com.jacstuff.sketchy.ColorUtils;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorConverter;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
+import static com.jacstuff.sketchy.ColorUtils.Rgb.*;
 
 
 public class InfinityModeColorBlender {
@@ -46,17 +48,18 @@ public class InfinityModeColorBlender {
 
 
     private int getNextShadeOfColor(int currentColor, int targetColor){
-        int r = getNextColorComponent(currentColor, targetColor, 16);
-        int g = getNextColorComponent(currentColor, targetColor, 8);
-        int b = getNextColorComponent(currentColor, targetColor, 0);
+        int r = getNextColorComponent(currentColor, targetColor, RED);
+        int g = getNextColorComponent(currentColor, targetColor, GREEN);
+        int b = getNextColorComponent(currentColor, targetColor, BLUE);
         return ColorConverter.getIntFrom(r,g,b);
     }
 
 
-    private int getNextColorComponent(int currentColor, int targetColor, int bitShift){
+    private int getNextColorComponent(int currentColor, int targetColor, ColorUtils.Rgb rgb){
         final int SHADE_INCREMENT = 8;
-        int source = getComponent(currentColor, bitShift);
-        int target = getComponent(targetColor, bitShift);
+
+        int source = ColorUtils.getComponentFrom(currentColor, rgb);
+        int target = ColorUtils.getComponentFrom(targetColor, rgb);
 
         if(Math.abs(source - target) <= SHADE_INCREMENT){
             return target;
@@ -64,11 +67,6 @@ public class InfinityModeColorBlender {
         return source > target ?
                 source - SHADE_INCREMENT
                 : source + SHADE_INCREMENT;
-    }
-
-
-    private int getComponent(int color, int bitShift){
-        return (color >> bitShift) & 0xff;
     }
 
 }

@@ -321,7 +321,7 @@ public class ColorButtonClickHandler {
     private void selectRandomColorButton(Button button){
         int buttonColor = (int)button.getTag(R.string.tag_button_color);
         currentColorSelector.add(buttonColor, getShadesFrom(button));
-        button.setText(mainActivity.getResources().getString(R.string.color_checked));
+        //button.setText(mainActivity.getResources().getString(R.string.color_checked));
         button.setTag(enabledTag, "enabled");
         randomShadeButtonsState.setSelected(button);
         selectButton(button);

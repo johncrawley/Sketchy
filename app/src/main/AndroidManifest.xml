@@ -27,11 +27,6 @@
             android:label="@string/about_activity_label"
             android:theme="@style/dialogTheme" />
 
-
-        <activity android:name=".ConfirmWipeDialogActivity"
-            android:label="@string/confirm_wipe_activity_label"
-            android:theme="@style/dialogTheme" />
-
     </application>
 
 </manifest>

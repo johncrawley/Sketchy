@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private PaintView paintView;
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
-    private final  ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 15);
+    private final ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 22);
     private final ButtonLayoutParams settingsButtonLayoutParams = new ButtonLayoutParams(120, 120, 15, 2);
     private ColorButtonClickHandler colorButtonClickHandler;
     private Toast colorPatternToast;
@@ -142,15 +142,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this, AboutDialogActivity.class));
         }
         return true;
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-       // if (requestCode == SAVE_FILE_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
-       //     imageSaver.saveImageToFile(data, paintView);
-       // }
     }
 
 

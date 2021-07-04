@@ -4,8 +4,8 @@ import android.widget.LinearLayout;
 
 public class ButtonLayoutParams {
 
-    private int buttonWidth, buttonHeight;
-    private LinearLayout.LayoutParams unselectedButtonLayoutParams, selectedButtonLayoutParams;
+    private final int buttonWidth, buttonHeight;
+    private final LinearLayout.LayoutParams unselectedButtonLayoutParams, selectedButtonLayoutParams;
 
     public ButtonLayoutParams(int buttonWidth, int buttonHeight, int selectedButtonBorderWidth){
         this(buttonWidth, buttonHeight, selectedButtonBorderWidth, 0);

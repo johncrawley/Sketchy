@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class RandomShadeButtonsState {
 
-    private Set<Button> selectedButtons;
+    private final Set<Button> selectedButtons;
     private boolean isMultiSelected;
 
     public RandomShadeButtonsState(){

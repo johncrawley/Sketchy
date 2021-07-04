@@ -1,9 +1,13 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
 
+import com.jacstuff.sketchy.ColorUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.jacstuff.sketchy.ColorUtils.Rgb.*;
 
 class ColorShadeCreator {
 
@@ -51,9 +55,9 @@ class ColorShadeCreator {
 
     private int getNextShadeOf(int currentColor, boolean isIncremented){
 
-        int r1 = (currentColor >> 16) & 0xff;
-        int g1 = (currentColor >> 8) & 0xff;
-        int b1 = (currentColor      ) & 0xff;
+        int r1 = ColorUtils.getComponentFrom(currentColor, RED);
+        int g1 = ColorUtils.getComponentFrom(currentColor, GREEN);
+        int b1 = ColorUtils.getComponentFrom(currentColor, BLUE);
 
         int r = adjust(r1, isIncremented);
         int g = adjust(g1, isIncremented);

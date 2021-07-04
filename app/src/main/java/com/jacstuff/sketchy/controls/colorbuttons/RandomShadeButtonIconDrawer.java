@@ -10,24 +10,25 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.widget.Button;
 
+import com.jacstuff.sketchy.ColorUtils;
 import com.jacstuff.sketchy.R;
+import static com.jacstuff.sketchy.ColorUtils.Rgb.*;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class RandomShadeButtonIconDrawer {
 
-
-
     private final Paint paint;
     private final String text;
 
-    public RandomShadeButtonIconDrawer(Context context){
 
+    public RandomShadeButtonIconDrawer(Context context){
         paint = new Paint();
-        paint.setTextSize(48);
-        paint.setShadowLayer(2, 3, 3, Color.BLACK);
+        paint.setTextSize(72);
+        paint.setShadowLayer(4, 0,0, Color.DKGRAY);
         text = context.getString(R.string.random_shade_button_text);
+        paint.setFakeBoldText(true);
     }
 
 
@@ -39,12 +40,32 @@ public class RandomShadeButtonIconDrawer {
                 Rect bounds = this.getBounds();
                 paint.setColor(shade);
                 canvas.drawRect(bounds, paint);
-                float textX = bounds.width()/7f;
-                float textY = bounds.height()/2.5f;
-
-                paint.setColor(Color.LTGRAY);
+                paint.setColor(nextShadeUpFrom(shade));
+                float textX = bounds.width()/18f * 7;
+                float textY = bounds.height()/16f * 11;
+                paint.setTextSize(bounds.width() /2f);
                 canvas.drawText(text, textX, textY, paint);
+            }
 
+
+            private int nextShadeUpFrom(int color){
+                if(color == Color.BLACK){
+                    return Color.rgb(80,80, 80);
+                }
+                if(color == Color.BLUE){
+                    return Color.rgb(100,100, 255);
+                }
+
+                return Color.rgb(getModified(color, RED),
+                        getModified(color, GREEN),
+                        getModified(color, BLUE));
+            }
+
+
+            private int getModified(int color, ColorUtils.Rgb rgb){
+                int colorComponent =  ColorUtils.getComponentFrom(color, rgb);
+                int diff = 32;
+                return colorComponent + diff >= 255 ? colorComponent -diff : colorComponent + diff;
             }
 
             @Override
