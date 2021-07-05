@@ -19,18 +19,19 @@ import java.util.Set;
 
 public class ButtonConfigHandler<T>{
 
-    private Map<Integer, T> buttonActionMap;
-    private ButtonsConfigurator<T> buttonsConfigurator;
-    private MainActivity activity;
-    private ButtonUtils buttonUtils;
+    private final Map<Integer, T> buttonActionMap;
+    private final ButtonsConfigurator<T> buttonsConfigurator;
+    private final MainActivity activity;
+    private final ButtonUtils buttonUtils;
     private Set<Integer> buttonIds;
     private Button parentButton;
-    private ButtonCategory buttonCategory;
-    private LinearLayout linearLayout;
-    private SettingsPopup settingsPopup;
-    private Map<Drawable, Drawable> drawableCopyMap;
+    private final ButtonCategory buttonCategory;
+    private final LinearLayout linearLayout;
+    private final SettingsPopup settingsPopup;
+    private final Map<Drawable, Drawable> drawableCopyMap;
     private int defaultSelectionId;
-    private ViewModelHelper viewModelHelper;
+    private final ViewModelHelper viewModelHelper;
+
 
     public ButtonConfigHandler(MainActivity activity, ButtonsConfigurator<T> buttonsConfigurator, ButtonCategory buttonCategory, int layoutId){
         buttonActionMap = new HashMap<>();
@@ -43,7 +44,6 @@ public class ButtonConfigHandler<T>{
         linearLayout = activity.findViewById(layoutId);
         settingsPopup.registerToIgnore(layoutId);
         viewModelHelper = activity.getViewModelHelper();
-
     }
 
 
@@ -88,6 +88,7 @@ public class ButtonConfigHandler<T>{
                 handleClick(view);
             }
         };
+        buttonIds = buttonActionMap.keySet();
         setClickListenerForButtons(clickListener);
     }
 
@@ -117,25 +118,24 @@ public class ButtonConfigHandler<T>{
         Drawable drawable = button.getBackground();
         if(!drawableCopyMap.containsKey(drawable)){
             Drawable.ConstantState constantState = drawable.getConstantState();
-            if(constantState != null){
-                drawableCopyMap.put(drawable, constantState.newDrawable().mutate());
-            }
-            else{
-                drawableCopyMap.put(drawable, drawable);
-            }
+            Drawable drawableToSave = constantState != null ? constantState.newDrawable().mutate() : drawable;
+            drawableCopyMap.put(drawable, drawableToSave);
         }
        return drawableCopyMap.get(drawable);
     }
 
 
     private void setClickListenerForButtons(View.OnClickListener clickListener){
-        buttonIds = buttonActionMap.keySet();
         for(int buttonId : buttonIds){
-            View view =  activity.findViewById(buttonId);
+           setClickListenerFor(buttonId, clickListener);
+        }
+    }
 
-            if(view != null){
-                view.setOnClickListener(clickListener);
-            }
+
+    private void setClickListenerFor(int buttonId, View.OnClickListener clickListener){
+        View view =  activity.findViewById(buttonId);
+        if(view != null){
+            view.setOnClickListener(clickListener);
         }
     }
 
