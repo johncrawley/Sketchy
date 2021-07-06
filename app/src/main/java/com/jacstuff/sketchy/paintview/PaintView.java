@@ -93,6 +93,7 @@ public class PaintView extends View {
         canvas = new Canvas(bitmap);
         bitmapLoader = new BitmapLoader(this, canvas,drawPaint);
         initBrushes(); // already called by MainActivity, but needs to be called again to register new canvas with the brushes
+
         if(bitmapHistory.isEmpty()){
             drawPlainBackgroundAndSaveToHistory();
         }
@@ -174,7 +175,6 @@ public class PaintView extends View {
     public void resetCanvas(){
         isCanvasLocked = true;
         drawPlainBackgroundAndSaveToHistory();
-        invalidate();
         isCanvasLocked = false;
     }
 
@@ -202,6 +202,7 @@ public class PaintView extends View {
         viewCanvas.save();
         viewCanvas.drawColor(DEFAULT_BG_COLOR);
         viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, drawPaint);
+
         viewCanvas.restore();
     }
 
@@ -349,6 +350,7 @@ public class PaintView extends View {
 
             case MotionEvent.ACTION_UP :
                 disablePreviewLayer();
+                this.
                 invalidate();
                 bitmapHistory.push(bitmap);
         }
@@ -404,5 +406,6 @@ public class PaintView extends View {
         currentBrush.onTouchDown(0,0, paint);
         canvas.restore();
     }
+
 
 }

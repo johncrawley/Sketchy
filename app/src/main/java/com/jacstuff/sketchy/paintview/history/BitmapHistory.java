@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.paintview.history;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import java.util.ArrayDeque;
 
@@ -20,12 +21,27 @@ public class BitmapHistory {
         history = new ArrayDeque<>(50);
     }
 
+    private long freeMemoryBytes;
 
     private double getFreeMemoryPercentage(){
         ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
         ActivityManager activityManager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
         activityManager.getMemoryInfo(mi);
+        freeMemoryBytes = mi.availMem;
         return mi.availMem / (double)mi.totalMem * 100.0;
+    }
+
+    private boolean hasSpaceFor(Bitmap bitmap){
+        int bytesPerBitmap = bitmap.getAllocationByteCount();
+        return bytesPerBitmap * 3 < getAvailableMemoryBytes();
+    }
+
+
+    private long getAvailableMemoryBytes(){
+        final Runtime runtime = Runtime.getRuntime();
+        final long usedMemInBytes=(runtime.totalMemory() - runtime.freeMemory());
+        final long maxHeapSizeInBytes=runtime.maxMemory();
+        return (maxHeapSizeInBytes - usedMemInBytes);
     }
 
 
@@ -35,10 +51,22 @@ public class BitmapHistory {
 
 
     public void push(Bitmap bitmap){
-        if(getFreeMemoryPercentage() < 15){
+
+        if(getFreeMemoryPercentage() < 25){
             history.removeLast();
         }
+        if(!hasSpaceFor(bitmap)){
+            history.removeLast();
+        }
+
         history.addFirst(new HistoryItem(Bitmap.createBitmap(bitmap), getCurrentScreenOrientation()));
+    }
+
+
+    private void log(String msg){
+        System.out.println("BitmapHistory: " + msg);
+        System.out.flush();
+        Log.i("BitmapHistory", msg);
     }
 
 

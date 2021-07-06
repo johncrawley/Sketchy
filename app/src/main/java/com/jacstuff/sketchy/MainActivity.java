@@ -1,6 +1,5 @@
 package com.jacstuff.sketchy;
 
-
 import android.content.Intent;
 
 import androidx.activity.result.ActivityResult;
@@ -294,6 +293,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.setType("image/*");
         loadImageActivityResultLauncher.launch(intent);
     }
+
 
     /*
     public void loadPreferences(){
