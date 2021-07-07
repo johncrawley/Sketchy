@@ -12,7 +12,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/includedBrushSizeSeekBar"
+        app:layout_constraintBottom_toTopOf="@+id/includedBrushSizeSeekBarWrapper"
         android:layout_gravity = "center">
 
         <LinearLayout
@@ -27,15 +27,21 @@
     </HorizontalScrollView>
 
 
-    <include
-        android:id="@+id/includedBrushSizeSeekBar"
-        layout="@layout/brush_size_seek_bar"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/includedBrushSizeSeekBarWrapper"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
+        <include
+            android:id="@+id/includedBrushSizeSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/brush_size_seek_bar" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

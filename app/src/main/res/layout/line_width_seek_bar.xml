@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/styleSettingsLayout"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:weightSum="1"
     android:paddingTop="@dimen/seekbar_padding_top"
     android:paddingBottom="@dimen/seekbar_padding_bottom"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/control_detail_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -16,19 +18,27 @@
         android:id="@+id/lineWidthSeekBarLabel"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/seekbar_label_horizontal_padding"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/line_width_seekbar_label"
         />
 
     <SeekBar
         android:id="@+id/lineWidthSeekBar"
-        android:layout_width="177dp"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:indeterminate="false"
-        android:max="@integer/line_width_max"
         android:min="@integer/line_width_min"
-        android:padding="@dimen/seekbar_padding"
-        android:progress="@integer/line_width_default" />
-
-</LinearLayout>
+        android:progress="@integer/line_width_default"
+        app:layout_constraintHorizontal_weight="7"
+        app:layout_constraintStart_toEndOf="@+id/lineWidthSeekBarLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingHorizontal="@dimen/seekbar_horizontal_padding"
+     />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,16 +25,17 @@
         </LinearLayout>
 
     </HorizontalScrollView>
-    <include
-        android:id="@+id/angleSeekBarInclude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_gravity="center_horizontal"
-        layout="@layout/seek_bar_angle" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
+        <include
+            android:id="@+id/angleSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/seek_bar_angle" />
+    </LinearLayout>
 
 </LinearLayout>
