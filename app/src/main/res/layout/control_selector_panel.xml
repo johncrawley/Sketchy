@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
+        android:paddingHorizontal="@dimen/seekbar_brush_size_include_horizontal_padding">
         <include
             android:id="@+id/includedBrushSizeSeekBar"
             android:layout_width="match_parent"

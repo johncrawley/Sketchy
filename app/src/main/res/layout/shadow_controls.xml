@@ -20,7 +20,6 @@
             android:layout_marginTop="@dimen/shape_selector_group_top_margin"
             android:orientation="horizontal"
             android:paddingTop="@dimen/shape_options_padding_top">
-
         </LinearLayout>
 
     </HorizontalScrollView>
