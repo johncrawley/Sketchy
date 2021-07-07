@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupSettingsButtons();
         setupColorAndShadeButtons();
         new SeekBarConfigurator(this, paintView);
+        //TODO: TextControls instantiation needs to go somewhere else
         new TextControls(this, paintView.getPaintGroup());
         viewModelHelper.init(colorButtonClickHandler, paintView);
         setupColorAutoScroll();
@@ -223,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onGlobalLayout() {
                 linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                
 
                 new PaintViewConfigurator(mainActivity, linearLayout.getMeasuredHeight())
                         .configure(viewModel, paintView, settingsPopup);

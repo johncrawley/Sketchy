@@ -38,9 +38,10 @@ public class GradientHelper {
     }
 
 
-    public void setGradientRadius(int radiusFactor){
+    public void setGradientRadius(int progress){
         final int CLAMP_RADIAL_GRADIENT_FACTOR = 12;
         final int RADIAL_GRADIENT_NUMERATOR= 1100;
+        int radiusFactor = Math.max(1, progress);
         viewModel.radialGradientRadius = 1 + RADIAL_GRADIENT_NUMERATOR / radiusFactor;
         viewModel.clampRadialGradientRadius = 1 + viewModel.radialGradientRadius * CLAMP_RADIAL_GRADIENT_FACTOR;
         viewModel.linearGradientLength = 1 +  viewModel.halfBrushSize  - ((viewModel.halfBrushSize * radiusFactor)/MAX_GRADIENT_FACTOR);
