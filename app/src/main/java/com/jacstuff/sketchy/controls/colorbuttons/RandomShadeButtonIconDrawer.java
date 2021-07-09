@@ -25,8 +25,6 @@ public class RandomShadeButtonIconDrawer {
 
     public RandomShadeButtonIconDrawer(Context context){
         paint = new Paint();
-        paint.setTextSize(72);
-        paint.setShadowLayer(4, 0,0, Color.DKGRAY);
         text = context.getString(R.string.random_shade_button_text);
         paint.setFakeBoldText(true);
     }
@@ -41,9 +39,9 @@ public class RandomShadeButtonIconDrawer {
                 paint.setColor(shade);
                 canvas.drawRect(bounds, paint);
                 paint.setColor(nextShadeUpFrom(shade));
-                float textX = bounds.width()/18f * 7;
+                float textX = bounds.width()/19f * 7;
                 float textY = bounds.height()/16f * 11;
-                paint.setTextSize(bounds.width() /2f);
+                paint.setTextSize(bounds.width() /1.8f);
                 canvas.drawText(text, textX, textY, paint);
             }
 

@@ -51,14 +51,13 @@ public class BitmapHistory {
 
 
     public void push(Bitmap bitmap){
-
-        if(getFreeMemoryPercentage() < 25){
+        if(getFreeMemoryPercentage() < 25 || !hasSpaceFor(bitmap)){
+            if(history.isEmpty()){
+                //nothing to remove and not enough memory to save the latest bitmap
+                return;
+            }
             history.removeLast();
         }
-        if(!hasSpaceFor(bitmap)){
-            history.removeLast();
-        }
-
         history.addFirst(new HistoryItem(Bitmap.createBitmap(bitmap), getCurrentScreenOrientation()));
     }
 

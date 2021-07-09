@@ -5,6 +5,7 @@
     android:id="@+id/brushSizeBarLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/seekbar_layout_vertical_margin"
     android:orientation="horizontal"
     android:paddingTop="@dimen/seekbar_padding_top"
     android:paddingBottom="@dimen/seekbar_padding_bottom"
