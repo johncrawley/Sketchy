@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ButtonReferenceStore buttonReferenceStore;
     private PaintHelperManager paintHelperManager;
     private ActivityResultLauncher<Intent> activityResultLauncher;
-    ActivityResultLauncher <Intent> loadImageActivityResultLauncher;
+    private ActivityResultLauncher <Intent> loadImageActivityResultLauncher;
 
 
     @Override
