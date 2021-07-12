@@ -20,7 +20,7 @@ public class ArcBrush extends AbstractBrush implements Brush {
     public void onBrushTouchDown(float x, float y, Paint paint){
         // left, top, right, bottom
         boolean useCenter = paint.getStyle() != Paint.Style.STROKE;
-        canvas.drawArc(x - halfBrushSize, y, x + halfBrushSize, y + arcHeight, 200, 140, false, paint);
+        canvas.drawArc( - halfBrushSize, 0,  halfBrushSize, arcHeight, 200, 140, false, paint);
     }
 
 

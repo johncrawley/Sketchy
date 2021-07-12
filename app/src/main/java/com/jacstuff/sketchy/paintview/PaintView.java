@@ -330,16 +330,20 @@ public class PaintView extends View {
         invalidate();
     }
 
+    boolean isTouchMove = false;
+
 
     private void handleDrawing(float x, float y, MotionEvent event){
         paintHelperManager.getAngleHelper().updateAngle();
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
+                isTouchMove = false;
                 kaleidoscopeHelper.setCenter(x,y);
                 drawToCanvas(x,y, paint);
                 break;
 
             case MotionEvent.ACTION_MOVE :
+                isTouchMove = true;
                 disablePreviewLayer();
                 drawToCanvas(x,y, paint);
                 enablePreviewLayer();
@@ -350,7 +354,6 @@ public class PaintView extends View {
 
             case MotionEvent.ACTION_UP :
                 disablePreviewLayer();
-                this.
                 invalidate();
                 bitmapHistory.push(bitmap);
         }
@@ -401,9 +404,19 @@ public class PaintView extends View {
         canvas.translate(x, y);
         canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
-            currentBrush.onTouchDown(0,0, shadowPaint);
+            if(isTouchMove){
+                currentBrush.onTouchMove(x,y, shadowPaint);
+            }
+            else{
+                currentBrush.onTouchDown(x,y, shadowPaint);
+            }
         }
-        currentBrush.onTouchDown(0,0, paint);
+        if(isTouchMove){
+            currentBrush.onTouchMove(x, y, paint);
+        }
+        else{
+            currentBrush.onTouchDown(x, y, paint);
+        }
         canvas.restore();
     }
 

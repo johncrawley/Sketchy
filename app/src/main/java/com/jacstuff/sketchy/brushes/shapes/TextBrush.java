@@ -19,21 +19,23 @@ public class TextBrush  extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
-        paint.setTextSize(halfBrushSize);
+        float size = halfBrushSize * 6;
+        paint.setTextSize(size);
         String text = viewModel.textBrushText;
-        canvas.drawText(text, getCentreX(x,text, paint), y, paint);
+        canvas.drawText(text, getCentreX(text, paint), size /3f, paint);
     }
 
-    private float getCentreX(float x, String text, Paint paint){
+
+    private float getCentreX(String text, Paint paint){
         float[] measuredWidth = new float[1];
         paint.breakText(text, true, 3000, measuredWidth);
-        return x - (measuredWidth[0] /2);
+        return - (measuredWidth[0] /2);
     }
+
 
     @Override
     public void onTouchMove(float x, float y, Paint paint){
         onTouchDown(x, y, paint);
     }
-
 
 }

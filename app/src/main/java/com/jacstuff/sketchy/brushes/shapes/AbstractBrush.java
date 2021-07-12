@@ -21,8 +21,8 @@ public abstract class AbstractBrush {
     Style currentStyle;
     int halfBrushSize;
     BrushShape brushShape;
-    private Map<BrushStyle, Style> styleMap;
-    private FillStyle fillStyle;
+    private final Map<BrushStyle, Style> styleMap;
+    private final FillStyle fillStyle;
 
 
     AbstractBrush(Canvas canvas, PaintGroup paintGroup, BrushShape brushShape){

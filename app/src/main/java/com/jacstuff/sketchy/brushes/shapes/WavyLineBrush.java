@@ -10,25 +10,24 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 public class WavyLineBrush extends AbstractBrush implements Brush {
 
 
+    Path path;
+
     public WavyLineBrush(Canvas canvas, PaintGroup paintGroup){
         super(canvas, paintGroup, BrushShape.WAVY_LINE);
+        path = new Path();
     }
 
 
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
-
-
-        float width = halfBrushSize / 2f;
-
-        Path path = new Path();
-
-        path.moveTo(x - halfBrushSize, y);
-        path.cubicTo(x, y- halfBrushSize, x,y + halfBrushSize, x + halfBrushSize, y);
-        path.lineTo(x + halfBrushSize, y + width);
-        float y1 = y + halfBrushSize + width;
-        float y2 = y - halfBrushSize + width;
-        path.cubicTo(x,y1, x, y2, x - halfBrushSize, y + width);
+        path.reset();
+        path.moveTo( - halfBrushSize, 0);
+        path.cubicTo(0, -halfBrushSize, 0, halfBrushSize, halfBrushSize, 0);
+        float y0 = halfBrushSize / 2f;
+        path.lineTo( halfBrushSize, y0);
+        float y1 = halfBrushSize + y0;
+        float y2 = - halfBrushSize + y0;
+        path.cubicTo(0, y1, 0, y2, - halfBrushSize, y0);
         path.close();
 
         canvas.drawPath(path, paint);

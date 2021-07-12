@@ -10,7 +10,7 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 public class TriangleBrush extends AbstractBrush implements Brush {
 
 
-    private Point leftPoint, rightPoint, topPoint, centreBottom;
+    private final Point leftPoint, rightPoint, topPoint, centreBottom;
 
     public TriangleBrush(Canvas canvas, PaintGroup paintGroup){
         super(canvas, paintGroup, BrushShape.TRIANGLE);
@@ -23,10 +23,10 @@ public class TriangleBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
-        centreBottom.set(x, y + halfBrushSize);
+        centreBottom.set(0, halfBrushSize);
         leftPoint.set(centreBottom.x - halfBrushSize, centreBottom.y);
         rightPoint.set(centreBottom.x + halfBrushSize, centreBottom.y);
-        topPoint.set(x, y - halfBrushSize);
+        topPoint.set(0, - halfBrushSize);
 
         Path path = new Path();
         path.moveTo(leftPoint.x, leftPoint.y);

@@ -10,8 +10,8 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 public class HexagonBrush extends AbstractBrush implements Brush {
 
 
-    private Point leftPoint, rightPoint, bottomLeftPoint, bottomRightPoint, topLeftPoint, topRightPoint;
-    private double edgeDistanceRatio;
+    private final Point leftPoint, rightPoint, bottomLeftPoint, bottomRightPoint, topLeftPoint, topRightPoint;
+    private final double edgeDistanceRatio;
     private int shortHeight;
     private int quarterBrushSize;
 
@@ -38,14 +38,14 @@ public class HexagonBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
-        leftPoint.set(x - halfBrushSize, y);
-        rightPoint.set(x + halfBrushSize, y);
+        leftPoint.set( - halfBrushSize, 0);
+        rightPoint.set(halfBrushSize, 0);
 
-        bottomLeftPoint.set(x - quarterBrushSize, y + shortHeight);
-        bottomRightPoint.set(x + quarterBrushSize, y + shortHeight);
+        bottomLeftPoint.set(- quarterBrushSize, shortHeight);
+        bottomRightPoint.set( quarterBrushSize, shortHeight);
 
-        topLeftPoint.set(x - quarterBrushSize, y - shortHeight);
-        topRightPoint.set(x + quarterBrushSize, y - shortHeight);
+        topLeftPoint.set( - quarterBrushSize, -shortHeight);
+        topRightPoint.set( + quarterBrushSize, -shortHeight);
 
         Path path = new Path();
         path.moveTo(leftPoint.x, leftPoint.y);

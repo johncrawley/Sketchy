@@ -119,12 +119,12 @@ public class PentagonBrush extends AbstractBrush implements Brush {
 
     void deriveOutsidePoints(float x, float y){
 
-        float topY = y - halfBrushSize;
-        topPoint.set(x, topY );
-        bottomRightX = x    + xFromTopPointToBottomRight;
+        float topY =  - halfBrushSize;
+        topPoint.set(0, topY );
+        bottomRightX =      + xFromTopPointToBottomRight;
         bottomRightY = topY + yFromTopPointToBottomRight;
 
-        bottomLeftX = x     + xFromTopPointToBottomLeft;
+        bottomLeftX =       + xFromTopPointToBottomLeft;
         bottomLeftY = topY  + yFromTopPointToBottomLeft;
 
         rightX = bottomLeftX + xFromBottomLeftPointToRight;

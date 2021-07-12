@@ -32,8 +32,8 @@ public class StarBrush extends PentagonBrush {
 
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
-        deriveOutsidePoints(x,y);
-        deriveInsidePoints(x,y);
+        deriveOutsidePoints(0,0);
+        deriveInsidePoints();
         Path path = new Path();
 
         path.moveTo(topPoint.x, topPoint.y);
@@ -52,21 +52,19 @@ public class StarBrush extends PentagonBrush {
     }
 
 
-    private void deriveInsidePoints(float x, float y){
+    private void deriveInsidePoints(){
 
-        float topY = y - halfBrushSize;
+        insideTopRightPointX = insideTopRightPointXOffset;
+        insideTopRightPointY = -halfBrushSize + insideTopRightPointYOffset;
 
-        insideTopRightPointX = x    + insideTopRightPointXOffset;
-        insideTopRightPointY = topY + insideTopRightPointYOffset;
+        insideTopLeftPointX = insideTopLeftPointXOffset;
+        insideTopLeftPointY = -halfBrushSize  + insideTopLeftPointYOffset;
 
-        insideTopLeftPointX = x     + insideTopLeftPointXOffset;
-        insideTopLeftPointY = topY  + insideTopLeftPointYOffset;
+        insideBottomLeftPointX = insideBottomLeftPointXOffset;
+        insideBottomLeftPointY = -halfBrushSize   + insideBottomLeftPointYOffset;
 
-        insideBottomLeftPointX = x      + insideBottomLeftPointXOffset;
-        insideBottomLeftPointY = topY   + insideBottomLeftPointYOffset;
-
-        insideBottomRightPointX = x + insideBottomRightPointXOffset;
-        insideBottomRightPointY = topY + insideBottomRightPointYOffset;
+        insideBottomRightPointX = insideBottomRightPointXOffset;
+        insideBottomRightPointY = -halfBrushSize + insideBottomRightPointYOffset;
 
         insideBottomPointX = bottomLeftX + insideBottomPointXOffset;
         insideBottomPointY = bottomLeftY + insideBottomPointYOffset;
