@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupSettingsButtons();
         setupColorAndShadeButtons();
         new SeekBarConfigurator(this, paintView);
-        //TODO: TextControls instantiation needs to go somewhere else
-        new TextControls(this, paintView.getPaintGroup());
         viewModelHelper.init(colorButtonClickHandler, paintView);
         setupColorAutoScroll();
         initActivityResultLauncher();

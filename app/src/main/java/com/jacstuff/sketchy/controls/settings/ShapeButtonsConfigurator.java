@@ -4,6 +4,7 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.controls.shapecontrols.TextControls;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 
@@ -13,7 +14,9 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
     public ShapeButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity, paintView);
         childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
+        new TextControls(activity, paintView.getPaintGroup());
     }
+
 
     @Override
     public void configure(){

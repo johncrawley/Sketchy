@@ -10,6 +10,7 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 public class TextBrush  extends AbstractBrush implements Brush {
 
     private final MainViewModel viewModel;
+    private float textSize;
 
     public TextBrush(Canvas canvas, PaintGroup paintGroup, MainViewModel viewModel){
         super(canvas, paintGroup, BrushShape.TEXT);
@@ -19,11 +20,18 @@ public class TextBrush  extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
-        float size = halfBrushSize * 6;
-        paint.setTextSize(size);
         String text = viewModel.textBrushText;
-        canvas.drawText(text, getCentreX(text, paint), size /3f, paint);
+        canvas.drawText(text, getCentreX(text, paint), textSize /3f, paint);
     }
+
+
+    @Override
+    public void setBrushSize(int brushSize) {
+        super.setBrushSize(brushSize);
+        textSize = brushSize * 1.2f;
+        paintGroup.setTextSize(textSize);
+    }
+
 
 
     private float getCentreX(String text, Paint paint){
