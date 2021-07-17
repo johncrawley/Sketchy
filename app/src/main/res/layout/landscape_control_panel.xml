@@ -31,9 +31,27 @@
 
         <include
             android:id="@+id/includedSelectionControls"
-            layout="@layout/control_selector_panel"
+            layout="@layout/control_panel_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+            android:id="@+id/includedBrushSizeSeekBarWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingHorizontal="@dimen/seekbar_brush_size_include_horizontal_padding">
+            <include
+                android:id="@+id/includedBrushSizeSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                layout="@layout/brush_size_seek_bar" />
+        </LinearLayout>
+
 
     </LinearLayout>
 

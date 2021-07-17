@@ -20,7 +20,7 @@ public class AngleSeekBar extends AbstractSeekBarConfig {
 
     public AngleSeekBar(MainActivity mainActivity, PaintView paintView, Set<Integer> buttonIds ){
         super(mainActivity, paintView, R.id.angleSeekBar, R.integer.angle_default);
-        parentButton = mainActivity.findViewById(R.id.angleSelectionButton);
+        parentButton = mainActivity.findViewById(R.id.angleButton);
         buttonUtils = new ButtonUtils(mainActivity);
         this.buttonIds = buttonIds;
     }

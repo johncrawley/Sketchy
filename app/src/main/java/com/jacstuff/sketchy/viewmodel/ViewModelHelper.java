@@ -139,7 +139,7 @@ public class ViewModelHelper {
         paintHelperManager.getAngleHelper().setAngle(AngleType.OTHER);
         paintHelperManager.getAngleHelper().setAngle(angle);
         String buttonText = "" + angle + mainActivity.getString(R.string.degrees_symbol);
-        Button angleButton =  mainActivity.findViewById(R.id.angleSelectionButton);
+        Button angleButton =  mainActivity.findViewById(R.id.angleButton);
         angleButton.setText(buttonText);
     }
 

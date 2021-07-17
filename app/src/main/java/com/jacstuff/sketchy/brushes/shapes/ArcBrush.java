@@ -21,11 +21,10 @@ public class ArcBrush extends AbstractBrush implements Brush {
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
 
-        boolean useCenter = paint.getStyle() != Paint.Style.STROKE;
+        //boolean useCenter = paint.getStyle() != Paint.Style.STROKE;
         //canvas.drawArc( -halfBrushSize, 0,  halfBrushSize, arcHeight, 200, 140, false, paint);
         Path path = new Path();
         path.addArc(-halfBrushSize, -quarterBrushSize, halfBrushSize, arcHeight - quarterBrushSize, 200, 140);
-
         path.close();
         canvas.drawPath(path, paint);
     }
@@ -35,6 +34,7 @@ public class ArcBrush extends AbstractBrush implements Brush {
     public void onTouchMove(float x, float y, Paint paint){
         onTouchDown(x, y, paint);
     }
+
 
     @Override
     public void setBrushSize(int brushSize){

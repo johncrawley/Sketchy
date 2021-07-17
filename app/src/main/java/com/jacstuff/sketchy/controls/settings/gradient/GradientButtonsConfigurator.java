@@ -28,7 +28,7 @@ public class GradientButtonsConfigurator extends AbstractButtonConfigurator<Grad
         buttonConfig.add(R.id.gradientRadialRepeatButton,   R.drawable.gradient_radial_repeat_button,   GradientType.RADIAL_REPEAT);
         buttonConfig.add(R.id.gradientRadialMirrorButton,   R.drawable.gradient_radial_mirror_button,   GradientType.RADIAL_MIRROR);
         buttonConfig.setupClickHandler();
-        buttonConfig.setParentButton(R.id.gradientSelectionButton);
+        buttonConfig.setParentButton(R.id.gradientButton);
         buttonConfig.setDefaultSelection(R.id.noGradientButton);
 
         new GradientSizeSeekBar(activity, paintView);

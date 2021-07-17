@@ -32,7 +32,7 @@ public class KaleidoscopeButtonsConfigurator extends AbstractButtonConfigurator<
         buttonConfig.add(R.id.k12Button,  R.drawable.k_12_button, 12);
         buttonConfig.add(R.id.k16Button,  R.drawable.k_16_button, 16);
         buttonConfig.setupClickHandler();
-        buttonConfig.setParentButton(R.id.kaleidoscopeSelectionButton);
+        buttonConfig.setParentButton(R.id.kaleidoButton);
         buttonConfig.setDefaultSelection(R.id.kOffButton);
         setupKaleidoscopeOptions();
     }

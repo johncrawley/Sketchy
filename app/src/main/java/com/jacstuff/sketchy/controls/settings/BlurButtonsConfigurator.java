@@ -24,7 +24,7 @@ public class BlurButtonsConfigurator extends AbstractButtonConfigurator<BlurType
         buttonConfig.add(R.id.solidBlurButton,   R.drawable.solid_blur_button,   BlurType.SOLID);
 
         buttonConfig.setupClickHandler();
-        buttonConfig.setParentButton(R.id.blurSelectionButton);
+        buttonConfig.setParentButton(R.id.blurButton);
         buttonConfig.setDefaultSelection(R.id.noBlurButton);
     }
 

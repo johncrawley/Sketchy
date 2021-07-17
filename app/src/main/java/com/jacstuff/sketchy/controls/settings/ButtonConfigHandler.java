@@ -14,6 +14,7 @@ import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -59,14 +60,14 @@ public class ButtonConfigHandler<T>{
     }
 
 
-    public void add(int id, T action, String text){
+    public void add(int id, String text,  T action ){
         add(id, action);
         linearLayout.addView(buttonUtils.createWrappedButton(id, R.drawable.blank_button, text));
     }
 
 
-    public Collection<T> getEntries(){
-        return buttonActionMap.values();
+    public Set<T> getEntries(){
+        return new HashSet<T>(buttonActionMap.values());
     }
 
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <item name="gradientSelectionButton" type="id"/>
-    <item name="shapeSelectionButton" type="id"/>
-    <item name="styleSelectionButton" type="id"/>
-    <item name="angleSelectionButton" type="id"/>
-    <item name="blurSelectionButton" type="id"/>
-    <item name="shadowSelectionButton" type="id"/>
-    <item name="kaleidoscopeSelectionButton" type="id"/>
+    <item name="gradientButton" type="id"/>
+    <item name="shapeButton" type="id"/>
+    <item name="styleButton" type="id"/>
+    <item name="angleButton" type="id"/>
+    <item name="blurButton" type="id"/>
+    <item name="shadowButton" type="id"/>
+    <item name="kaleidoButton" type="id"/>
 
     <item name="zeroDegreesButton" type="id"/>
     <item name="degrees30Button" type="id"/>

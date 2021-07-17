@@ -31,7 +31,7 @@ public class ShadowButtonsConfigurator extends AbstractButtonConfigurator<Shadow
         buttonConfig.add(R.id.westShadowButton,           R.drawable.west_shadow_button,            ShadowType.WEST);
         buttonConfig.add(R.id.northWestShadowButton,      R.drawable.north_west_shadow_button,      ShadowType.NORTH_WEST);
         buttonConfig.setupClickHandler();
-        buttonConfig.setParentButton(R.id.shadowSelectionButton);
+        buttonConfig.setParentButton(R.id.shadowButton);
         buttonConfig.setDefaultSelection(R.id.noShadowButton);
     }
 

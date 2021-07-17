@@ -39,7 +39,7 @@ public class AngleButtonsConfigurator extends AbstractButtonConfigurator<AngleTy
         add(R.id.degreesRandomButton, AngleType.RANDOM);
 
         buttonConfig.setupClickHandler();
-        buttonConfig.setParentButton(R.id.angleSelectionButton);
+        buttonConfig.setParentButton(R.id.angleButton);
         buttonConfig.setDefaultSelection(R.id.zeroDegreesButton);
 
         new AngleSeekBar(activity, paintView, buttonConfig.getButtonIds());
@@ -47,7 +47,7 @@ public class AngleButtonsConfigurator extends AbstractButtonConfigurator<AngleTy
 
 
     private void add(int buttonId, AngleType angleType){
-        buttonConfig.add(buttonId, angleType, angleType.getStr() + activity.getString(R.string.degrees_symbol));
+        buttonConfig.add(buttonId, angleType.getStr() + activity.getString(R.string.degrees_symbol), angleType);
     }
 
 

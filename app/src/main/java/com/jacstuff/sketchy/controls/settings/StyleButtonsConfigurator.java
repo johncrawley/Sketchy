@@ -32,7 +32,7 @@ public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushSt
         buttonConfig.add(R.id.translateStyleButton,    R.drawable.translate_outline_style_button, BrushStyle.TRANSLATE);
 
         buttonConfig.setupClickHandler();
-        buttonConfig.setParentButton(R.id.styleSelectionButton);
+        buttonConfig.setParentButton(R.id.styleButton);
         buttonConfig.setDefaultSelection(R.id.fillStyleButton);
     }
 
