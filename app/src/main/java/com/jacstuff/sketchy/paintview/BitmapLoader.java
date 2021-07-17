@@ -25,6 +25,9 @@ public class BitmapLoader {
 
 
     Bitmap getCorrectlyOrientatedBitmapFrom(HistoryItem historyItem){
+        if(historyItem == null){
+            return null;
+        }
         Bitmap bitmapToDraw = historyItem.getBitmap();
         if(bitmapToDraw == null){
             return null;
