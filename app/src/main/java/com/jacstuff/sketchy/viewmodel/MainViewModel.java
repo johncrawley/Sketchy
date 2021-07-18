@@ -38,6 +38,8 @@ public class MainViewModel extends ViewModel {
     public boolean isInfinityModeEnabled = false;
 
     public boolean useSeekBarAngle = false;
+    public int textSkewSeekBarProgress = 100;
+    public int textSpacingSeekBarProgress = 1;
     public int angle = 0;
 
     public int gradient;

@@ -9,7 +9,7 @@ import java.util.List;
 public class PaintGroup {
 
 
-    private List<Paint> paints;
+    private final List<Paint> paints;
 
     public PaintGroup(Paint...paintItems){
         paints = Arrays.asList(paintItems);
@@ -37,9 +37,17 @@ public class PaintGroup {
         }
     }
 
+
     public void setTextSkewX(float value){
         for(Paint p: paints){
             p.setTextSkewX(value);
+        }
+    }
+
+
+    public void setLetterSpacing(float value){
+        for(Paint p: paints){
+            p.setLetterSpacing(value);
         }
     }
 

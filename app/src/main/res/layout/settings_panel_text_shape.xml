@@ -41,8 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/seekbar_padding_top"
-        android:paddingBottom="@dimen/seekbar_padding_bottom">
+        android:paddingVertical="@dimen/text_skew_seekbar_padding_vertical">
 
         <TextView
             android:id="@+id/textSkewSeekBarLabel"
@@ -56,17 +55,44 @@
         <SeekBar
             android:id="@+id/textSkewSeekBar"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_weight=".75"
             android:indeterminate="false"
             android:gravity="fill_horizontal"
-            android:max="200"
+            android:max="@integer/text_skew_seekbar_max"
             android:min="0"
             android:padding="@dimen/seekbar_padding"
-            android:progress="100" />
+            android:progress="@integer/text_skew_seekbar_default" />
 
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/textSpacingSeekBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/text_spacing_seekbar_padding_vertical">
 
+        <TextView
+            android:id="@+id/textSpacingSeekBarLabel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".25"
+            android:gravity="center_vertical"
+            android:text="@string/text_spacing_seekbar_label"
+            />
+
+        <SeekBar
+            android:id="@+id/textSpacingSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight=".75"
+            android:indeterminate="false"
+            android:gravity="fill_horizontal"
+            android:max="@integer/text_spacing_seekbar_max"
+            android:min="0"
+            android:padding="@dimen/seekbar_padding"
+            android:progress="@integer/text_spacing_seekbar_default" />
 
     </LinearLayout>
 

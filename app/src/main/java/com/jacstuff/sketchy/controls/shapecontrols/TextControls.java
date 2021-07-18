@@ -24,18 +24,22 @@ public class TextControls {
     private final MainActivity activity;
     private final MainViewModel viewModel;
     private final PaintGroup paintGroup;
+    private final SeekBar skewSeekBar;
+    private final SeekBar spacingSeekBar;
 
 
      public TextControls(MainActivity activity, PaintGroup paintGroup) {
          this.activity = activity;
          textInput = activity.findViewById(R.id.textShapeInput);
-         SeekBar skewSeekBar = activity.findViewById(R.id.textSkewSeekBar);
+         skewSeekBar = activity.findViewById(R.id.textSkewSeekBar);
+         spacingSeekBar = activity.findViewById(R.id.textSpacingSeekBar);
          this.viewModel = activity.getViewModel();
          this.paintGroup = paintGroup;
 
          setupEditTextActionListener();
-         setupListener(skewSeekBar);
+         setupSeekBarListeners();
          setupCheckboxListener(paintGroup);
+         initializeDefaultSeekBarValues();
      }
 
 
@@ -50,7 +54,6 @@ public class TextControls {
                  if(imm == null){
                      return false;
                  }
-
                  if (actionId == EditorInfo.IME_ACTION_DONE) {
                      imm.hideSoftInputFromWindow(textInput.getWindowToken(), 0);
                  }
@@ -67,7 +70,6 @@ public class TextControls {
              @Override
              public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                  viewModel.textBrushText = charSequence.toString();
-
              }
 
              @Override
@@ -76,18 +78,31 @@ public class TextControls {
          });
      }
 
+
+     private void initializeDefaultSeekBarValues(){
+        // skewSeekBar.setProgress(viewModel.textSkewSeekBarProgress);
+        // setSkew(skewSeekBar);
+         spacingSeekBar.setProgress(viewModel.textSpacingSeekBarProgress);
+         setSpacing(spacingSeekBar);
+     }
+
+
     // paint.setLinearText(true);
     // paint.setSubpixelText(true);
-    // paint.setLetterSpacing(0.5f);
     // paint.setElegantTextHeight(true);
 
 
-    private void setupListener(SeekBar seekBar){
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+    private void setupSeekBarListeners(){
+
+        SeekBar.OnSeekBarChangeListener seekBarListener = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if(seekBar.getId() == R.id.textSkewSeekBar){
+                int id = seekBar.getId();
+                if(id == R.id.textSkewSeekBar){
                     setSkew(seekBar);
+                }
+                else if(id == R.id.textSpacingSeekBar){
+                    setSpacing(seekBar);
                 }
             }
             @Override
@@ -98,13 +113,24 @@ public class TextControls {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                //do nothing
             }
-        });
+        };
+
+        skewSeekBar.setOnSeekBarChangeListener(seekBarListener);
+        spacingSeekBar.setOnSeekBarChangeListener(seekBarListener);
     }
 
 
     private void setSkew(SeekBar seekBar){
         float skew = (seekBar.getProgress() - 100) / -100f;
         paintGroup.setTextSkewX(skew);
+        viewModel.textSkewSeekBarProgress = (int)skew;
+    }
+
+
+    private void setSpacing(SeekBar seekBar){
+        float spacing = (seekBar.getProgress()) / 100f;
+        paintGroup.setLetterSpacing(spacing);
+        viewModel.textSpacingSeekBarProgress = (int)spacing;
     }
 
 

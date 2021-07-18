@@ -33,7 +33,6 @@ public class TextBrush  extends AbstractBrush implements Brush {
     }
 
 
-
     private float getCentreX(String text, Paint paint){
         float[] measuredWidth = new float[1];
         paint.breakText(text, true, 3000, measuredWidth);
