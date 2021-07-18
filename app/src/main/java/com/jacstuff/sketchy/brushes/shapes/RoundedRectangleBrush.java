@@ -10,7 +10,7 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class RoundedRectangleBrush extends AbstractBrush implements Brush {
 
-    private RectF rect;
+    private final RectF rect;
     private int rounding;
 
     public RoundedRectangleBrush(Canvas canvas, PaintGroup paintGroup, int brushSize){

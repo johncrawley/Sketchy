@@ -80,6 +80,7 @@
     <item name="starShapeButton" type="id"/>
     <item name="hexagonShapeButton" type="id"/>
     <item name="textShapeButton" type="id"/>
+    <item name="ovalShapeButton" type="id"/>
     <item name="arcShapeButton" type="id"/>
 
     <item name="brokenOutlineStyleButton" type="id"/>

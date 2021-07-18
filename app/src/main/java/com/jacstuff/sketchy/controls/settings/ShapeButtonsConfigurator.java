@@ -35,6 +35,7 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
         buttonConfig.add(R.id.starShapeButton,              R.drawable.button_shape_star,               BrushShape.STAR);
         buttonConfig.add(R.id.hexagonShapeButton,           R.drawable.button_shape_hexagon,            BrushShape.HEXAGON);
         buttonConfig.add(R.id.textShapeButton,              R.drawable.button_shape_text,               BrushShape.TEXT);
+        buttonConfig.add(R.id.ovalShapeButton,              R.drawable.button_shape_circle,             BrushShape.OVAL);
         buttonConfig.add(R.id.arcShapeButton,               R.drawable.button_shape_arc,                BrushShape.ARC);
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.shapeButton);

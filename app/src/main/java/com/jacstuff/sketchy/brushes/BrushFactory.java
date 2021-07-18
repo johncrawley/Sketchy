@@ -7,6 +7,7 @@ import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.HexagonBrush;
 import com.jacstuff.sketchy.brushes.shapes.LineBrush;
+import com.jacstuff.sketchy.brushes.shapes.OvalBrush;
 import com.jacstuff.sketchy.brushes.shapes.PathBrush;
 import com.jacstuff.sketchy.brushes.shapes.PentagonBrush;
 import com.jacstuff.sketchy.brushes.shapes.RoundedRectangleBrush;
@@ -62,6 +63,7 @@ public class BrushFactory {
         brushMap.put(BrushShape.WAVY_LINE,          new WavyLineBrush(canvas, paintGroup));
         brushMap.put(BrushShape.ARC,                new ArcBrush(canvas, paintGroup));
         brushMap.put(BrushShape.TEXT,               new TextBrush(canvas, paintGroup, viewModel));
+        brushMap.put(BrushShape.OVAL,               new OvalBrush(canvas, paintGroup));
         brushMap.put(BrushShape.TEXT_ON_CIRCLE,     new TextOnCircleBrush(canvas, paintGroup, viewModel));
         brushMap.put(BrushShape.PATH,               new PathBrush(canvas, paintGroup));
     }
