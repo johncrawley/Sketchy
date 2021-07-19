@@ -2,7 +2,6 @@ package com.jacstuff.sketchy.brushes.shapes;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;

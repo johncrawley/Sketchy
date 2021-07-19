@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import com.jacstuff.sketchy.brushes.shapes.ArcBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
+import com.jacstuff.sketchy.brushes.shapes.BananaBrush;
+import com.jacstuff.sketchy.brushes.shapes.CrescentBrush;
 import com.jacstuff.sketchy.brushes.shapes.HexagonBrush;
 import com.jacstuff.sketchy.brushes.shapes.LineBrush;
 import com.jacstuff.sketchy.brushes.shapes.OvalBrush;
@@ -64,6 +66,7 @@ public class BrushFactory {
         brushMap.put(BrushShape.ARC,                new ArcBrush(canvas, paintGroup));
         brushMap.put(BrushShape.TEXT,               new TextBrush(canvas, paintGroup, viewModel));
         brushMap.put(BrushShape.OVAL,               new OvalBrush(canvas, paintGroup));
+        brushMap.put(BrushShape.CRESENT,            new CrescentBrush(canvas, paintGroup));
         brushMap.put(BrushShape.TEXT_ON_CIRCLE,     new TextOnCircleBrush(canvas, paintGroup, viewModel));
         brushMap.put(BrushShape.PATH,               new PathBrush(canvas, paintGroup));
     }
