@@ -7,7 +7,6 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class DashedStyleForLines extends DashedStyle implements Style {
 
-    private int brushSize;
     private PaintGroup paintGroup;
     private DashPathEffect dashPathEffect;
 

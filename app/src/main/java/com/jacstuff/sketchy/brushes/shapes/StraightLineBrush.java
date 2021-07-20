@@ -16,9 +16,8 @@ public class StraightLineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
-        float x1 = x - halfBrushSize;
-        float x2 = x + brushSize;
-        canvas.drawLine(x1, y, x2, y, paint);
+
+        canvas.drawLine(-brushSize, 0, brushSize, 0, paint);
     }
 
 }

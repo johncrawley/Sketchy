@@ -1,15 +1,11 @@
 package com.jacstuff.sketchy.brushes.styles;
 
-import android.graphics.CornerPathEffect;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PathDashPathEffect;
 
 import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class DashedStyle extends AbstractStyle implements Style {
-
 
     private PaintGroup paintGroup;
 
@@ -30,10 +26,9 @@ public class DashedStyle extends AbstractStyle implements Style {
 
     private void assignPath(){
         float lineWidthFactor = paintGroup.getLineWidth() / 2;
-        float baseOffstroke = 30;
+        float baseOffStroke = 30;
         float onStroke = 6;
-        //onStroke = onStroke - lineWidthFactor;
-        float offStroke = baseOffstroke + lineWidthFactor;
+        float offStroke = baseOffStroke + lineWidthFactor;
         paintGroup.setPathEffect(new DashPathEffect(new float[] {onStroke, offStroke}, 0));
     }
 

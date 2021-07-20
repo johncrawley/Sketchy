@@ -24,11 +24,11 @@ public class StyleHelper {
     }
 
 
-    public void setStokeCap(String strokeCap){
-        if(!strokeCapMap.containsKey(strokeCap)){
-            return;
+    public void setStokeCap(String type){
+        Paint.Cap strokeCap = strokeCapMap.get(type);
+        if(strokeCap != null){
+            paintGroup.setStrokeCap(strokeCap);
         }
-        paintGroup.setStrokeCap(strokeCapMap.get(strokeCap));
     }
 
 }

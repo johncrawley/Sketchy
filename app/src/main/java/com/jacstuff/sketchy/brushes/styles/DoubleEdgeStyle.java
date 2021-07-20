@@ -8,7 +8,7 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class DoubleEdgeStyle   extends AbstractStyle implements Style {
 
-    PathDashPathEffect pathDashPathEffect;
+    private PathDashPathEffect pathDashPathEffect;
     private PaintGroup paintGroup;
 
     public DoubleEdgeStyle(PaintGroup paintGroup){

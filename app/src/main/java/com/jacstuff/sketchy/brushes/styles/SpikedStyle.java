@@ -8,7 +8,7 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class SpikedStyle extends AbstractStyle implements Style {
 
-    PathDashPathEffect pathDashPathEffect;
+    private PathDashPathEffect pathDashPathEffect;
     private PaintGroup paintGroup;
 
     public SpikedStyle(PaintGroup paintGroup){

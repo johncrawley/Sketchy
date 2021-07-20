@@ -9,8 +9,8 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class JaggedStyle  extends AbstractStyle implements Style {
 
-        PathDashPathEffect pathDashPathEffect;
-        private PaintGroup paintGroup;
+    private PathDashPathEffect pathDashPathEffect;
+    private PaintGroup paintGroup;
 
     public JaggedStyle(PaintGroup paintGroup){
         this.paintGroup = paintGroup;
