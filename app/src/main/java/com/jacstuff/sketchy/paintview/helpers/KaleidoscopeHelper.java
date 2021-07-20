@@ -27,8 +27,8 @@ public class KaleidoscopeHelper {
     }
 
     public int getMaxDegrees(){
-        final int REMAINDER_OF_ANGLE_DIVISON = 5; //accounts for divisions of 360 that don't fit into 360 exactly
-        return TOTAL_DEGREES  - REMAINDER_OF_ANGLE_DIVISON;
+        final int REMAINDER_OF_ANGLE_DIVISION = 5; //accounts for divisions of 360 that don't fit into 360 exactly
+        return TOTAL_DEGREES  - REMAINDER_OF_ANGLE_DIVISION;
     }
 
 

@@ -1,11 +1,17 @@
 package com.jacstuff.sketchy.controls.settings;
 
 
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.helpers.StyleHelper;
 
 
 public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushStyle> implements ButtonsConfigurator<BrushStyle>{
@@ -13,6 +19,7 @@ public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushSt
 
     public StyleButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity, paintView);
+        setupCapSelection();
     }
 
 
@@ -41,4 +48,30 @@ public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushSt
         paintView.setBrushStyle(brushStyle);
     }
 
+
+
+    private void setupCapSelection(){
+        Spinner spinner = activity.findViewById(R.id.strokeCapSpinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity,
+                R.array.stroke_cap_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = (String)adapterView.getItemAtPosition(i);
+                paintHelperManager.getStyleHelper().setStokeCap(item);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        };
+
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(itemSelectedListener);
+
+    }
 }

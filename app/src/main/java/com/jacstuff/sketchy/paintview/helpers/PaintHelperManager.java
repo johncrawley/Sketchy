@@ -4,6 +4,7 @@ import android.graphics.Paint;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class PaintHelperManager {
@@ -13,6 +14,7 @@ public class PaintHelperManager {
     private final ShadowHelper shadowHelper;
     private final AngleHelper angleHelper;
     private final KaleidoscopeHelper kaleidoscopeHelper;
+    private final StyleHelper styleHelper;
 
 
     public PaintHelperManager(MainActivity mainActivity, MainViewModel viewModel){
@@ -21,13 +23,15 @@ public class PaintHelperManager {
         shadowHelper = new ShadowHelper();
         angleHelper = new AngleHelper();
         kaleidoscopeHelper = new KaleidoscopeHelper(viewModel);
+        styleHelper = new StyleHelper();
     }
 
 
-    public void init(Paint paint, Paint shadowPaint){
+    public void init(Paint paint, Paint shadowPaint, PaintGroup paintGroup){
         gradientHelper.init(paint);
         blurHelper.init(paint);
         shadowHelper.init(shadowPaint);
+        styleHelper.init(paintGroup);
     }
 
     public GradientHelper getGradientHelper(){
@@ -42,6 +46,11 @@ public class PaintHelperManager {
 
     public ShadowHelper getShadowHelper(){
         return shadowHelper;
+    }
+
+
+    public StyleHelper getStyleHelper(){
+        return styleHelper;
     }
 
 

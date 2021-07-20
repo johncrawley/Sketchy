@@ -76,6 +76,13 @@ public class PaintGroup {
     }
 
 
+    public void setStrokeCap(Paint.Cap cap){
+        for(Paint p : paints){
+            p.setStrokeCap(cap);
+        }
+    }
+
+
     public void setTextUnderline(boolean b){
         for(Paint p : paints){
             p.setUnderlineText(b);

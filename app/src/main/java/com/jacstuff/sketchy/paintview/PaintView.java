@@ -66,6 +66,7 @@ public class PaintView extends View {
         shadowPaint = createPaint(Color.BLACK);
         paint.setAntiAlias(true);
         paint.setDither(true);
+        paint.setStrokeCap(Paint.Cap.BUTT);
         paintGroup = new PaintGroup(paint, previewPaint, shadowPaint);
         bitmapHistory = new BitmapHistory(context);
     }
@@ -73,7 +74,7 @@ public class PaintView extends View {
 
     public void setPaintHelperManager(PaintHelperManager paintHelperManager){
         this.paintHelperManager = paintHelperManager;
-        this.paintHelperManager.init(paint, shadowPaint);
+        this.paintHelperManager.init(paint, shadowPaint, paintGroup);
     }
 
 
