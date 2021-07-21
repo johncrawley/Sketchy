@@ -34,8 +34,9 @@ public class DoubleEdgeStyle   extends AbstractStyle implements Style {
         float edgeDepth = 1 + (paintGroup.getLineWidth() /8);
         float outerY = 4 * edgeDepth;
         float innerY = 3 * edgeDepth;
-        pathDashPathEffect = new PathDashPathEffect(createPath(outerY, innerY), 12, 5, PathDashPathEffect.Style.MORPH);
+        pathDashPathEffect = new PathDashPathEffect(createPath(outerY, innerY), 12, 1, PathDashPathEffect.Style.MORPH);
         paintGroup.setPathEffect(pathDashPathEffect);
+
     }
 
 

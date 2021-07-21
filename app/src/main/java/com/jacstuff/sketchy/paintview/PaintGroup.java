@@ -83,6 +83,13 @@ public class PaintGroup {
     }
 
 
+    public void setStrokeJoin(Paint.Join join){
+        for(Paint p : paints){
+            p.setStrokeJoin(join);
+        }
+    }
+
+
     public void setTextUnderline(boolean b){
         for(Paint p : paints){
             p.setUnderlineText(b);

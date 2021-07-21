@@ -7,4 +7,11 @@
     </string-array>
 
 
+    <string-array name="stroke_join_array">
+        <item>Bevel</item>
+        <item>Mitre</item>
+        <item>Round</item>
+    </string-array>
+
+
 </resources>

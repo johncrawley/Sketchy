@@ -9,10 +9,42 @@
     android:focusable="true">
 
 
-    <Spinner
-        android:id="@+id/strokeCapSpinner"
+
+    <LinearLayout
+        android:id="@+id/strokeCapSpinnerLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/strokeCapSpinner"
+            android:text="@string/stroke_cap_spinner_label"/>
+
+        <Spinner
+            android:id="@+id/strokeCapSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/strokeJoinSpinnerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/strokeCapSpinner"
+            android:text="@string/stroke_join_spinner_label"/>
+
+        <Spinner
+            android:id="@+id/strokeJoinSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/includedLineWidthSeekBarWrapper"

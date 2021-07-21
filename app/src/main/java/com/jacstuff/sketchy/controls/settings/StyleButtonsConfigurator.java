@@ -11,7 +11,8 @@ import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.helpers.StyleHelper;
+
+import androidx.core.util.Consumer;
 
 
 public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushStyle> implements ButtonsConfigurator<BrushStyle>{
@@ -19,7 +20,7 @@ public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushSt
 
     public StyleButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity, paintView);
-        setupCapSelection();
+        setupSpinners();
     }
 
 
@@ -43,18 +44,24 @@ public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushSt
         buttonConfig.setDefaultSelection(R.id.fillStyleButton);
     }
 
+
     @Override
     public void handleClick(int viewId, BrushStyle brushStyle) {
         paintView.setBrushStyle(brushStyle);
     }
 
 
+    private void setupSpinners(){
+        setupSpinner(R.id.strokeCapSpinner, R.array.stroke_cap_array,  x -> paintHelperManager.getStyleHelper().setStokeCap(x));
+        setupSpinner(R.id.strokeJoinSpinner,R.array.stroke_join_array, x -> paintHelperManager.getStyleHelper().setStrokeJoin(x));
+    }
 
-    private void setupCapSelection(){
-        Spinner spinner = activity.findViewById(R.id.strokeCapSpinner);
+
+    private void setupSpinner(int spinnerId, int itemsArrayId, final Consumer<String> paintAction){
+        Spinner spinner = activity.findViewById(spinnerId);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity,
-                R.array.stroke_cap_array, android.R.layout.simple_spinner_item);
+                itemsArrayId, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
@@ -62,16 +69,20 @@ public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushSt
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = (String)adapterView.getItemAtPosition(i);
-                paintHelperManager.getStyleHelper().setStokeCap(item);
+
+                System.out.println("s9 about to run action for item " + item);
+                paintAction.accept(item);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         };
-
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(itemSelectedListener);
 
     }
+
+
+
 }

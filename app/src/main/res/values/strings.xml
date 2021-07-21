@@ -136,6 +136,8 @@
     <string name="pattern_label_to_dark">To Dark</string>
     <string name="pattern_label_snake">Snake</string>
     <string name="pattern_label_macaron">Macaron</string>
+    <string name="stroke_cap_spinner_label">Stoke Cap</string>
+    <string name="stroke_join_spinner_label">Stoke Join</string>
     <string name="confirm_wipe_text">Clear the canvas without saving?</string>
     <string name="confirm_wipe_confirm_button">Yes</string>
     <string name="confirm_wipe_cancel_button">No</string>
