@@ -13,14 +13,13 @@ public class CrescentBrush extends AbstractBrush implements Brush {
     private boolean hasSizeChanged = false;
     private float outerLeft, innerLeft, top, bottom, outerRight, innerRight;
     private  int quarterBrushSize;
-    private final float offsetX;// paint.getStrokeWidth();
-    private final int repeats;
+    private float previousStrokeWidth;
+    private boolean hasTouchedUp = true;
+    private float crescentStrokeAdjustment;
 
     public CrescentBrush(Canvas canvas, PaintGroup paintGroup){
         super(canvas, paintGroup, BrushShape.CRESENT);
         path = new Path();
-        offsetX = 1;
-        repeats = 10;
     }
 
 
@@ -28,20 +27,34 @@ public class CrescentBrush extends AbstractBrush implements Brush {
     public void onBrushTouchDown(float x, float y, Paint paint){
         readjustPointsOnSizeChanged();
         path.reset();
+        assignStrokeWidth(paint);
         path.addArc( outerLeft, top, outerRight, bottom, 270, 180);
         path.addArc( innerLeft, top, innerRight, bottom, 90, -180);
         canvas.drawPath(path, paint);
+        restoreStrokeWidth(paint);
+    }
 
-        // if we close the above path, it draws a semicircle,
-        // so we offset the path a few times and draw it to try to fill up the gap
-        if(paint.getStyle() == Paint.Style.FILL_AND_STROKE){
-            for(int i=0; i < repeats; i++){
-                path.offset(-offsetX,0);
-                canvas.drawPath(path, paint);
-            }
+
+    private void assignStrokeWidth(Paint paint){
+        if( paint.getStyle() == Paint.Style.FILL_AND_STROKE){
+            hasTouchedUp = false;
+            previousStrokeWidth = paint.getStrokeWidth();
+            paint.setStrokeWidth(1);
         }
     }
 
+
+    private void restoreStrokeWidth(Paint paint){
+        if(paint.getStyle() == Paint.Style.FILL_AND_STROKE){
+            paint.setStrokeWidth(previousStrokeWidth);
+        }
+    }
+
+
+    @Override
+    public void onTouchUp(float x, float y, Paint paint){
+        hasTouchedUp = true;
+    }
 
     @Override
     public void onTouchMove(float x, float y, Paint paint){
@@ -58,21 +71,31 @@ public class CrescentBrush extends AbstractBrush implements Brush {
 
 
     private void readjustPointsOnSizeChanged(){
-        if(!hasSizeChanged){
-            return;
+        if(hasSizeChanged){
+            hasSizeChanged = false;
+            readjustPoints();
         }
-        hasSizeChanged = false;
-        float displacement = quarterBrushSize /1.3f;
-        outerLeft = -halfBrushSize - quarterBrushSize;
-        innerLeft  = outerLeft + displacement;
-        top = - halfBrushSize;
-        bottom = halfBrushSize;
-        outerRight = halfBrushSize - quarterBrushSize + 2;
-        innerRight = outerRight - displacement;
     }
 
 
+    private void readjustPoints(){
+        float displacement = quarterBrushSize /1.3f;
+        outerLeft = -halfBrushSize - quarterBrushSize;
+        innerLeft  = outerLeft + displacement + crescentStrokeAdjustment;
+        top = - halfBrushSize;
+        bottom = halfBrushSize;
+        outerRight = halfBrushSize - quarterBrushSize + 2;
+        innerRight = outerRight - displacement - crescentStrokeAdjustment;
+
+    }
 
 
+    @Override
+    public void notifyStrokeWidthChanged(){
+        super.notifyStrokeWidthChanged();
+        previousStrokeWidth = paintGroup.getLineWidth();
+        crescentStrokeAdjustment = previousStrokeWidth / 1.7f;
+        readjustPoints();
+    }
 
 }

@@ -60,7 +60,7 @@ public abstract class AbstractBrush {
     }
 
 
-    public void notifyStyleChange(){
+    public void notifyStrokeWidthChanged(){
         currentStyle.notifyStyleChange();
     }
 

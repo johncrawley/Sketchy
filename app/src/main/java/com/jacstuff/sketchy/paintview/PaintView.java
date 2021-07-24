@@ -169,7 +169,7 @@ public class PaintView extends View {
 
     public void setLineWidth(int lineWidth){
         paintGroup.setStrokeWidth(lineWidth);
-        currentBrush.notifyStyleChange();
+        currentBrush.notifyStrokeWidthChanged();
     }
 
 

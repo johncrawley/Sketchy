@@ -16,6 +16,6 @@ public interface Brush {
     void setBrushSize(int brushSize);
     void setStyle(BrushStyle style);
     void add(BrushStyle brushStyle, Style style);
-    void notifyStyleChange();
+    void notifyStrokeWidthChanged();
     BrushShape getBrushShape();
 }
