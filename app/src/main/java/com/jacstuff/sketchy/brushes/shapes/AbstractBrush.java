@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.jacstuff.sketchy.brushes.BrushDrawer;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.styles.FillStyle;
@@ -21,6 +22,7 @@ public abstract class AbstractBrush {
     Style currentStyle;
     int halfBrushSize;
     BrushShape brushShape;
+    BrushDrawer brushDrawer;
     private final Map<BrushStyle, Style> styleMap;
     private final FillStyle fillStyle;
 
@@ -32,6 +34,7 @@ public abstract class AbstractBrush {
         fillStyle = new FillStyle();
         currentStyle = fillStyle;
         this.brushShape = brushShape;
+        brushDrawer = BrushDrawer.DEFAULT;
     }
 
     public void add(BrushStyle brushStyle, Style style){
@@ -85,6 +88,10 @@ public abstract class AbstractBrush {
 
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint){
         //do nothing
+    }
+
+    public BrushDrawer getBrushDrawer(){
+        return brushDrawer;
     }
 
 }

@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.jacstuff.sketchy.brushes.BrushDrawer;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.line.DefaultLineDrawer;
@@ -23,6 +24,7 @@ public class LineBrush extends AbstractBrush implements Brush {
     public LineBrush(Canvas canvas, PaintGroup paintGroup) {
         super(canvas, paintGroup, BrushShape.LINE);
         setupLineDrawers();
+        brushDrawer = BrushDrawer.DRAG;
     }
 
 

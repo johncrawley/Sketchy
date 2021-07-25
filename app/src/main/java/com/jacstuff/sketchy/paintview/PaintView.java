@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 
+import com.jacstuff.sketchy.brushes.BrushDrawer;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
@@ -50,7 +51,6 @@ public class PaintView extends View {
     private BitmapLoader bitmapLoader;
     private KaleidoscopeDrawer kaleidoscopeDrawer;
     private InfinityModeColorBlender fractalColorBlender;
-
 
 
     public PaintView(Context context) {
@@ -203,7 +203,6 @@ public class PaintView extends View {
         viewCanvas.save();
         viewCanvas.drawColor(DEFAULT_BG_COLOR);
         viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, drawPaint);
-
         viewCanvas.restore();
     }
 
@@ -222,8 +221,8 @@ public class PaintView extends View {
         assignColorsBlursAndGradients(x,y, event);
 
         try {
-            if (BrushShape.LINE == currentBrush.getBrushShape()) {
-                handleLineDrawing(x, y, event);
+            if (BrushDrawer.DRAG == currentBrush.getBrushDrawer()) {
+                handleDragDrawing(x, y, event);
             } else {
                 handleDrawing(x, y, event);
             }
@@ -283,7 +282,7 @@ public class PaintView extends View {
 
 
     private void assignColorsBlursAndGradients(float x, float y, MotionEvent event){
-        if(isTouchDownEventWithLineShape(event)){
+        if(isDragBrushWithTouchMoveOrUp(event)){
             return;
         }
         assignColors();
@@ -304,17 +303,19 @@ public class PaintView extends View {
     }
 
 
-    private boolean isTouchDownEventWithLineShape(MotionEvent event){
-        return event.getAction() != MotionEvent.ACTION_DOWN && currentBrush.getBrushShape() == BrushShape.LINE;
+    private boolean isDragBrushWithTouchMoveOrUp(MotionEvent event){
+        return event.getAction() != MotionEvent.ACTION_DOWN && currentBrush.getBrushDrawer() == BrushDrawer.DRAG;
     }
 
 
-    private void handleLineDrawing(float x, float y, MotionEvent event){
+    private void handleDragDrawing(float x, float y, MotionEvent event){
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
                 currentBrush.onTouchDown(x,y, paint);
                 break;
             case MotionEvent.ACTION_MOVE :
+               // disablePreviewLayer();
+                //drawToCanvas(x,y, paint);
                 enablePreviewLayer();
                 currentBrush.onTouchMove(x,y, paint);
                 break;
@@ -331,25 +332,22 @@ public class PaintView extends View {
         invalidate();
     }
 
-    boolean isTouchMove = false;
 
 
     private void handleDrawing(float x, float y, MotionEvent event){
         paintHelperManager.getAngleHelper().updateAngle();
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
-                isTouchMove = false;
                 kaleidoscopeHelper.setCenter(x,y);
-                drawToCanvas(x,y, paint);
+                drawToCanvasDown(x,y, paint);
                 break;
 
             case MotionEvent.ACTION_MOVE :
-                isTouchMove = true;
                 disablePreviewLayer();
-                drawToCanvas(x,y, paint);
+                drawToCanvasMove(x,y, paint);
                 enablePreviewLayer();
                 if(!kaleidoscopeHelper.isInfinityModeEnabled()) {
-                    drawToCanvas(x, y, previewPaint);
+                    drawToCanvasMove(x, y, previewPaint);
                 }
                 break;
 
@@ -361,12 +359,23 @@ public class PaintView extends View {
     }
 
 
-    private void drawToCanvas(float x, float y, Paint paint){
+    private void drawToCanvasDown(float x, float y, Paint paint){
         if(kaleidoscopeHelper.isEnabled()){
             kaleidoscopeDrawer.drawKaleidoscope(x,y, paint);
         }
         else{
-            rotateAndDraw(x,y, paint);
+            rotateAndDrawDown(x,y, paint);
+        }
+        invalidate();
+    }
+
+
+    private void drawToCanvasMove(float x, float y, Paint paint){
+        if(kaleidoscopeHelper.isEnabled()){
+            kaleidoscopeDrawer.drawKaleidoscope(x,y, paint);
+        }
+        else{
+            rotateAndDrawMove(x,y, paint);
         }
         invalidate();
     }
@@ -385,8 +394,6 @@ public class PaintView extends View {
     }
 
 
-
-
     private void drawDragLine(float x, float y){
         drawDragLine(x,y,0,0);
     }
@@ -400,24 +407,26 @@ public class PaintView extends View {
     }
 
 
-    void rotateAndDraw(float x, float y, Paint paint){
+    void rotateAndDrawDown(float x, float y, Paint paint){
         canvas.save();
         canvas.translate(x, y);
         canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
-            if(isTouchMove){
-                currentBrush.onTouchMove(x,y, shadowPaint);
-            }
-            else{
-                currentBrush.onTouchDown(x,y, shadowPaint);
-            }
+            currentBrush.onTouchDown(x,y, shadowPaint);
         }
-        if(isTouchMove){
-            currentBrush.onTouchMove(x, y, paint);
+        currentBrush.onTouchDown(x, y, paint);
+        canvas.restore();
+    }
+
+
+    void rotateAndDrawMove(float x, float y, Paint paint){
+        canvas.save();
+        canvas.translate(x, y);
+        canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
+        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
+            currentBrush.onTouchMove(x,y, shadowPaint);
         }
-        else{
-            currentBrush.onTouchDown(x, y, paint);
-        }
+        currentBrush.onTouchMove(x, y, paint);
         canvas.restore();
     }
 

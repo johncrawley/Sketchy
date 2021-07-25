@@ -82,6 +82,7 @@
     <item name="textShapeButton" type="id"/>
     <item name="ovalShapeButton" type="id"/>
     <item name="cresentShapeButton" type="id"/>
+    <item name="rectangleShapeButton" type="id"/>
     <item name="arcShapeButton" type="id"/>
 
     <item name="brokenOutlineStyleButton" type="id"/>

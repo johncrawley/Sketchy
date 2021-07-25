@@ -14,11 +14,10 @@ public class CrescentBrush extends AbstractBrush implements Brush {
     private float outerLeft, innerLeft, top, bottom, outerRight, innerRight;
     private  int quarterBrushSize;
     private float previousStrokeWidth;
-    private boolean hasTouchedUp = true;
     private float crescentStrokeAdjustment;
 
     public CrescentBrush(Canvas canvas, PaintGroup paintGroup){
-        super(canvas, paintGroup, BrushShape.CRESENT);
+        super(canvas, paintGroup, BrushShape.CRESCENT);
         path = new Path();
     }
 
@@ -37,7 +36,6 @@ public class CrescentBrush extends AbstractBrush implements Brush {
 
     private void assignStrokeWidth(Paint paint){
         if( paint.getStyle() == Paint.Style.FILL_AND_STROKE){
-            hasTouchedUp = false;
             previousStrokeWidth = paint.getStrokeWidth();
             paint.setStrokeWidth(1);
         }
@@ -50,11 +48,6 @@ public class CrescentBrush extends AbstractBrush implements Brush {
         }
     }
 
-
-    @Override
-    public void onTouchUp(float x, float y, Paint paint){
-        hasTouchedUp = true;
-    }
 
     @Override
     public void onTouchMove(float x, float y, Paint paint){

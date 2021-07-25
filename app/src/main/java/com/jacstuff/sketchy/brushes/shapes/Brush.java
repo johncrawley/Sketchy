@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.jacstuff.sketchy.brushes.BrushDrawer;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
@@ -18,4 +19,5 @@ public interface Brush {
     void add(BrushStyle brushStyle, Style style);
     void notifyStrokeWidthChanged();
     BrushShape getBrushShape();
+    BrushDrawer getBrushDrawer();
 }

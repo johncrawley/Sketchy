@@ -76,7 +76,8 @@ public class KaleidoscopeDrawer {
             paintView.drawDragLine(x , y, kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
         }
         else {
-            paintView.rotateAndDraw(x - kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(), paint);
+            //TODO need to figure out if down event or move event, specifically for the currently unused PathBrush
+            paintView.rotateAndDrawDown(x - kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(), paint);
         }
         canvas.restore();
     }

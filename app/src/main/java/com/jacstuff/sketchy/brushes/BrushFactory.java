@@ -12,6 +12,7 @@ import com.jacstuff.sketchy.brushes.shapes.LineBrush;
 import com.jacstuff.sketchy.brushes.shapes.OvalBrush;
 import com.jacstuff.sketchy.brushes.shapes.PathBrush;
 import com.jacstuff.sketchy.brushes.shapes.PentagonBrush;
+import com.jacstuff.sketchy.brushes.shapes.RectangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.RoundedRectangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.SquareBrush;
 import com.jacstuff.sketchy.brushes.shapes.StarBrush;
@@ -53,22 +54,28 @@ public class BrushFactory {
 
     private void setupBrushMap(Canvas canvas, PaintGroup paintGroup, int brushSize){
         brushMap = new HashMap<>();
-        brushMap.put(BrushShape.CIRCLE,            circleBrush);
-        brushMap.put(BrushShape.ROUNDED_RECTANGLE,  new RoundedRectangleBrush(canvas, paintGroup, brushSize));
-        brushMap.put(BrushShape.SQUARE,             new SquareBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.TRIANGLE,           new TriangleBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.PENTAGON,           new PentagonBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.HEXAGON,            new HexagonBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.STAR,               new StarBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.LINE,               new LineBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.STRAIGHT_LINE,      new StraightLineBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.WAVY_LINE,          new WavyLineBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.ARC,                new ArcBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.TEXT,               new TextBrush(canvas, paintGroup, viewModel));
-        brushMap.put(BrushShape.OVAL,               new OvalBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.CRESENT,            new CrescentBrush(canvas, paintGroup));
-        brushMap.put(BrushShape.TEXT_ON_CIRCLE,     new TextOnCircleBrush(canvas, paintGroup, viewModel));
-        brushMap.put(BrushShape.PATH,               new PathBrush(canvas, paintGroup));
+        add(circleBrush);
+        add(new RoundedRectangleBrush(canvas, paintGroup, brushSize));
+        add( new SquareBrush(canvas, paintGroup));
+        add(new TriangleBrush(canvas, paintGroup));
+        add(new PentagonBrush(canvas, paintGroup));
+        add(new HexagonBrush(canvas, paintGroup));
+        add(new StarBrush(canvas, paintGroup));
+        add(new LineBrush(canvas, paintGroup));
+        add(new StraightLineBrush(canvas, paintGroup));
+        add(new WavyLineBrush(canvas, paintGroup));
+        add(new ArcBrush(canvas, paintGroup));
+        add(new TextBrush(canvas, paintGroup, viewModel));
+        add(new OvalBrush(canvas, paintGroup));
+        add(new CrescentBrush(canvas, paintGroup));
+        add(new TextOnCircleBrush(canvas, paintGroup, viewModel));
+        add(new PathBrush(canvas, paintGroup));
+        add(new RectangleBrush(canvas, paintGroup));
+    }
+
+
+    private void add(Brush brush){
+        brushMap.put(brush.getBrushShape(), brush);
     }
 
 
