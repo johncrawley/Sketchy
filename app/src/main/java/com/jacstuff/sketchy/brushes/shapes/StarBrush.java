@@ -1,11 +1,9 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 
 
 /*
@@ -24,8 +22,8 @@ public class StarBrush extends PentagonBrush {
     private float insideBottomPointYOffset, insideBottomLeftPointYOffset, insideTopLeftPointYOffset, insideTopRightPointYOffset, insideBottomRightPointYOffset;
 
 
-    public StarBrush(Canvas canvas, PaintGroup paintGroup){
-        super(canvas, paintGroup);
+    public StarBrush(){
+        super();
         brushShape = BrushShape.STAR;
     }
 

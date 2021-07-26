@@ -1,22 +1,19 @@
 
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class RoundedRectangleBrush extends AbstractBrush implements Brush {
 
     private final RectF rect;
     private int rounding;
 
-    public RoundedRectangleBrush(Canvas canvas, PaintGroup paintGroup, int brushSize){
-        super(canvas, paintGroup, BrushShape.ROUNDED_RECTANGLE);
+    public RoundedRectangleBrush(){
+        super(BrushShape.ROUNDED_RECTANGLE);
         rect = new RectF(1,1,1,1);
-        setBrushSize(brushSize);
     }
 
     @Override

@@ -9,8 +9,8 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 public class CircleBrush extends AbstractBrush implements Brush {
 
 
-    public CircleBrush(Canvas canvas, PaintGroup paintGroup){
-       super(canvas, paintGroup, BrushShape.CIRCLE);
+    public CircleBrush(){
+       super(BrushShape.CIRCLE);
     }
 
 

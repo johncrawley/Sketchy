@@ -1,11 +1,10 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
+
 import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class CrescentBrush extends AbstractBrush implements Brush {
 
@@ -16,8 +15,8 @@ public class CrescentBrush extends AbstractBrush implements Brush {
     private float previousStrokeWidth;
     private float crescentStrokeAdjustment;
 
-    public CrescentBrush(Canvas canvas, PaintGroup paintGroup){
-        super(canvas, paintGroup, BrushShape.CRESCENT);
+    public CrescentBrush(){
+        super(BrushShape.CRESCENT);
         path = new Path();
     }
 
@@ -79,7 +78,6 @@ public class CrescentBrush extends AbstractBrush implements Brush {
         bottom = halfBrushSize;
         outerRight = halfBrushSize - quarterBrushSize + 2;
         innerRight = outerRight - displacement - crescentStrokeAdjustment;
-
     }
 
 

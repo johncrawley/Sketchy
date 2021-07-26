@@ -49,7 +49,6 @@ public class PaintView extends View {
     private boolean ignoreMoveAndUpActions = false;
     private final Context context;
     private BitmapLoader bitmapLoader;
-    private KaleidoscopeDrawer kaleidoscopeDrawer;
     private InfinityModeColorBlender fractalColorBlender;
 
 
@@ -79,7 +78,7 @@ public class PaintView extends View {
 
 
     public void initBrushes(){
-        brushFactory = new BrushFactory(canvas, paintGroup, brushSize, viewModel);
+        brushFactory = new BrushFactory(this, paintGroup, brushSize, viewModel);
         currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
     }
 
@@ -92,7 +91,7 @@ public class PaintView extends View {
 
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        bitmapLoader = new BitmapLoader(this, canvas,drawPaint);
+        bitmapLoader = new BitmapLoader(this, canvas, drawPaint);
         initBrushes(); // already called by MainActivity, but needs to be called again to register new canvas with the brushes
 
         if(bitmapHistory.isEmpty()){
@@ -117,8 +116,9 @@ public class PaintView extends View {
 
     private void initKaleidoscope(){
         kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
+        kaleidoscopeHelper.setCanvas(canvas);
         kaleidoscopeHelper.setDefaultCenter(getWidth()/2, getHeight()/2);
-        kaleidoscopeDrawer = new KaleidoscopeDrawer(this, viewModel, kaleidoscopeHelper);
+       // kaleidoscopeDrawer = new KaleidoscopeDrawer(this, viewModel, kaleidoscopeHelper);
     }
 
 
@@ -148,8 +148,16 @@ public class PaintView extends View {
     }
 
 
-    Canvas getCanvas(){
+    public Canvas getCanvas(){
         return canvas;
+    }
+
+    public Paint getShadowPaint(){
+        return shadowPaint;
+    }
+
+    public PaintHelperManager getPaintHelperManager(){
+        return paintHelperManager;
     }
 
 
@@ -214,18 +222,12 @@ public class PaintView extends View {
         if(isPopupBeingDismissed(event) || isCanvasLocked){
             return true;
         }
-
         float x = event.getX();
         float y = event.getY();
 
         assignColorsBlursAndGradients(x,y, event);
-
         try {
-            if (BrushDrawer.DRAG == currentBrush.getBrushDrawer()) {
-                handleDragDrawing(x, y, event);
-            } else {
                 handleDrawing(x, y, event);
-            }
         }catch (IllegalArgumentException e){
             //do nothing, sometimes there's an illegalArgException related to drawing gradients
             // immediately after rotating screen
@@ -234,11 +236,24 @@ public class PaintView extends View {
     }
 
 
-    public void undo(){
-        loadHistoryItem(true);
+    private void handleDrawing(float x, float y, MotionEvent event){
+        paintHelperManager.getAngleHelper().updateAngle();
+        switch(event.getAction()) {
+            case MotionEvent.ACTION_DOWN :
+                currentBrush.touchDown(x, y, paint);
+                break;
+            case MotionEvent.ACTION_MOVE :
+                currentBrush.touchMove(x, y, paint);
+                break;
+            case MotionEvent.ACTION_UP :
+                currentBrush.touchUp(x, y, paint);
+        }
     }
 
 
+    public void undo(){
+        loadHistoryItem(true);
+    }
 
 
     private void loadHistoryItem(boolean isCurrentDiscarded){
@@ -308,127 +323,25 @@ public class PaintView extends View {
     }
 
 
-    private void handleDragDrawing(float x, float y, MotionEvent event){
-        switch(event.getAction()) {
-            case MotionEvent.ACTION_DOWN :
-                currentBrush.onTouchDown(x,y, paint);
-                break;
-            case MotionEvent.ACTION_MOVE :
-               // disablePreviewLayer();
-                //drawToCanvas(x,y, paint);
-                enablePreviewLayer();
-                currentBrush.onTouchMove(x,y, paint);
-                break;
-            case MotionEvent.ACTION_UP :
-                disablePreviewLayer();
-                if(kaleidoscopeHelper.isEnabled()){
-                    kaleidoscopeDrawer.drawKaleidoscope(x, y, paint,true);
-                }
-                else{
-                    drawDragLine(x,y);
-                }
-                bitmapHistory.push(bitmap);
-        }
-        invalidate();
+    public void pushHistory(){
+        bitmapHistory.push(bitmap);
     }
 
 
-
-    private void handleDrawing(float x, float y, MotionEvent event){
-        paintHelperManager.getAngleHelper().updateAngle();
-        switch(event.getAction()) {
-            case MotionEvent.ACTION_DOWN :
-                kaleidoscopeHelper.setCenter(x,y);
-                drawToCanvasDown(x,y, paint);
-                break;
-
-            case MotionEvent.ACTION_MOVE :
-                disablePreviewLayer();
-                drawToCanvasMove(x,y, paint);
-                enablePreviewLayer();
-                if(!kaleidoscopeHelper.isInfinityModeEnabled()) {
-                    drawToCanvasMove(x, y, previewPaint);
-                }
-                break;
-
-            case MotionEvent.ACTION_UP :
-                disablePreviewLayer();
-                invalidate();
-                bitmapHistory.push(bitmap);
-        }
-    }
-
-
-    private void drawToCanvasDown(float x, float y, Paint paint){
-        if(kaleidoscopeHelper.isEnabled()){
-            kaleidoscopeDrawer.drawKaleidoscope(x,y, paint);
-        }
-        else{
-            rotateAndDrawDown(x,y, paint);
-        }
-        invalidate();
-    }
-
-
-    private void drawToCanvasMove(float x, float y, Paint paint){
-        if(kaleidoscopeHelper.isEnabled()){
-            kaleidoscopeDrawer.drawKaleidoscope(x,y, paint);
-        }
-        else{
-            rotateAndDrawMove(x,y, paint);
-        }
-        invalidate();
-    }
-
-
-    private void enablePreviewLayer(){
+    public void enablePreviewLayer(){
         isPreviewLayerToBeDrawn = true;
         previewBitmap = Bitmap.createBitmap(bitmap);
         canvas.setBitmap(previewBitmap);
     }
 
 
-    private void disablePreviewLayer(){
+    public void disablePreviewLayer(){
         isPreviewLayerToBeDrawn = false;
         canvas.setBitmap(bitmap);
     }
 
-
-    private void drawDragLine(float x, float y){
-        drawDragLine(x,y,0,0);
+    public Paint getPreviewPaint(){
+        return previewPaint;
     }
-
-
-    void drawDragLine(float x, float y, int offsetX, int offsetY){
-        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
-            currentBrush.onTouchUp(x,y, offsetX, offsetY, shadowPaint);
-        }
-        currentBrush.onTouchUp(x,y, offsetX, offsetY, paint);
-    }
-
-
-    void rotateAndDrawDown(float x, float y, Paint paint){
-        canvas.save();
-        canvas.translate(x, y);
-        canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
-        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
-            currentBrush.onTouchDown(x,y, shadowPaint);
-        }
-        currentBrush.onTouchDown(x, y, paint);
-        canvas.restore();
-    }
-
-
-    void rotateAndDrawMove(float x, float y, Paint paint){
-        canvas.save();
-        canvas.translate(x, y);
-        canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
-        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
-            currentBrush.onTouchMove(x,y, shadowPaint);
-        }
-        currentBrush.onTouchMove(x, y, paint);
-        canvas.restore();
-    }
-
 
 }

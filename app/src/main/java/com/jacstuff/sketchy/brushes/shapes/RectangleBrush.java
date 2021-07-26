@@ -1,19 +1,18 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
+
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.BrushDrawer;
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class RectangleBrush extends AbstractBrush implements Brush {
 
     private float centerX, centerY;
 
 
-    public RectangleBrush(Canvas canvas, PaintGroup paintGroup) {
-        super(canvas, paintGroup, BrushShape.DRAG_RECTANGLE);
+    public RectangleBrush() {
+        super(BrushShape.DRAG_RECTANGLE);
         brushDrawer = BrushDrawer.DRAG;
     }
 

@@ -1,11 +1,9 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class ArcBrush extends AbstractBrush implements Brush {
 
@@ -13,8 +11,8 @@ public class ArcBrush extends AbstractBrush implements Brush {
     private int arcHeight;
     private float quarterBrushSize;
 
-    public ArcBrush(Canvas canvas, PaintGroup paintGroup){
-        super(canvas, paintGroup, BrushShape.TEXT);
+    public ArcBrush(){
+        super(BrushShape.TEXT);
     }
 
 

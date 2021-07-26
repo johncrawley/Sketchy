@@ -1,19 +1,18 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.paintview.PaintGroup;
+
 
 public class TriangleBrush extends AbstractBrush implements Brush {
 
 
     private final Point leftPoint, rightPoint, topPoint, centreBottom;
 
-    public TriangleBrush(Canvas canvas, PaintGroup paintGroup){
-        super(canvas, paintGroup, BrushShape.TRIANGLE);
+    public TriangleBrush(){
+        super(BrushShape.TRIANGLE);
         leftPoint = new Point();
         rightPoint = new Point();
         topPoint = new Point();

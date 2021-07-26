@@ -1,7 +1,5 @@
 package com.jacstuff.sketchy.brushes.styles;
 
-import android.graphics.Paint;
-
 import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public interface Style {

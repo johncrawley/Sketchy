@@ -7,10 +7,13 @@ import com.jacstuff.sketchy.brushes.BrushDrawer;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
+import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public interface Brush {
 
     void onTouchDown(float x, float y, Paint paint);
+    void init(PaintView paintView, MainViewModel mainViewModel);
     void onTouchMove(float x, float y, Paint paint);
     void onTouchUp(float x, float y, Paint paint);
     void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint);
@@ -20,4 +23,8 @@ public interface Brush {
     void notifyStrokeWidthChanged();
     BrushShape getBrushShape();
     BrushDrawer getBrushDrawer();
+    void touchDown(float x, float y, Paint paint);
+    void touchMove(float x, float y, Paint paint);
+    void touchUp(float x, float y, Paint paint);
+
 }

@@ -1,11 +1,8 @@
 package com.jacstuff.sketchy.brushes;
 
-import android.graphics.Canvas;
-
 import com.jacstuff.sketchy.brushes.shapes.ArcBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
-import com.jacstuff.sketchy.brushes.shapes.BananaBrush;
 import com.jacstuff.sketchy.brushes.shapes.CrescentBrush;
 import com.jacstuff.sketchy.brushes.shapes.HexagonBrush;
 import com.jacstuff.sketchy.brushes.shapes.LineBrush;
@@ -32,6 +29,7 @@ import com.jacstuff.sketchy.brushes.styles.SpikedStyle;
 import com.jacstuff.sketchy.brushes.styles.TranslateStyle;
 import com.jacstuff.sketchy.brushes.styles.WavyStyle;
 import com.jacstuff.sketchy.paintview.PaintGroup;
+import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.HashMap;
@@ -41,40 +39,43 @@ public class BrushFactory {
 
     private Map<BrushShape, Brush> brushMap;
     private final Brush circleBrush;
-    private final MainViewModel viewModel;
+    private final PaintView paintView;
+    private final MainViewModel mainViewModel;
 
-    public BrushFactory(Canvas canvas, PaintGroup paintGroup, int brushSize, MainViewModel viewModel){
-        this.viewModel = viewModel;
-        circleBrush = new CircleBrush(canvas, paintGroup);
-        setupBrushMap(canvas, paintGroup, brushSize);
+    public BrushFactory(PaintView paintView, PaintGroup paintGroup, int brushSize, MainViewModel mainViewModel){
+        this.paintView = paintView;
+        this.mainViewModel = mainViewModel;
+        circleBrush = new CircleBrush();
+        setupBrushMap();
         handleStyles(brushSize, paintGroup);
         addLineBrushAndStyles(paintGroup, brushSize);
     }
 
 
-    private void setupBrushMap(Canvas canvas, PaintGroup paintGroup, int brushSize){
+    private void setupBrushMap(){
         brushMap = new HashMap<>();
         add(circleBrush);
-        add(new RoundedRectangleBrush(canvas, paintGroup, brushSize));
-        add( new SquareBrush(canvas, paintGroup));
-        add(new TriangleBrush(canvas, paintGroup));
-        add(new PentagonBrush(canvas, paintGroup));
-        add(new HexagonBrush(canvas, paintGroup));
-        add(new StarBrush(canvas, paintGroup));
-        add(new LineBrush(canvas, paintGroup));
-        add(new StraightLineBrush(canvas, paintGroup));
-        add(new WavyLineBrush(canvas, paintGroup));
-        add(new ArcBrush(canvas, paintGroup));
-        add(new TextBrush(canvas, paintGroup, viewModel));
-        add(new OvalBrush(canvas, paintGroup));
-        add(new CrescentBrush(canvas, paintGroup));
-        add(new TextOnCircleBrush(canvas, paintGroup, viewModel));
-        add(new PathBrush(canvas, paintGroup));
-        add(new RectangleBrush(canvas, paintGroup));
+        add(new RoundedRectangleBrush());
+        add( new SquareBrush());
+        add(new TriangleBrush());
+        add(new PentagonBrush());
+        add(new HexagonBrush());
+        add(new StarBrush());
+        add(new LineBrush());
+        add(new StraightLineBrush());
+        add(new WavyLineBrush());
+        add(new ArcBrush());
+        add(new TextBrush());
+        add(new OvalBrush());
+        add(new CrescentBrush());
+        add(new TextOnCircleBrush());
+        add(new PathBrush());
+        add(new RectangleBrush());
     }
 
 
     private void add(Brush brush){
+        brush.init(paintView, mainViewModel);
         brushMap.put(brush.getBrushShape(), brush);
     }
 
@@ -112,6 +113,5 @@ public class BrushFactory {
         brush.setStyle(brushStyle);
         return brush;
     }
-
 
 }

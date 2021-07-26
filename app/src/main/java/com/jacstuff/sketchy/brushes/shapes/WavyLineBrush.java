@@ -1,19 +1,16 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class WavyLineBrush extends AbstractBrush implements Brush {
 
+    private final Path path;
 
-    Path path;
-
-    public WavyLineBrush(Canvas canvas, PaintGroup paintGroup){
-        super(canvas, paintGroup, BrushShape.WAVY_LINE);
+    public WavyLineBrush(){
+        super(BrushShape.WAVY_LINE);
         path = new Path();
     }
 
@@ -29,7 +26,6 @@ public class WavyLineBrush extends AbstractBrush implements Brush {
         float y2 = - halfBrushSize + y0;
         path.cubicTo(0, y1, 0, y2, - halfBrushSize, y0);
         path.close();
-
         canvas.drawPath(path, paint);
     }
 

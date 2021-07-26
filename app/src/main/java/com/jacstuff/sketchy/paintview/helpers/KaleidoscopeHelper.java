@@ -1,5 +1,9 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
+import android.graphics.Canvas;
+
+import com.jacstuff.sketchy.paintview.KaleidoscopeDrawer;
+import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class KaleidoscopeHelper {
@@ -10,9 +14,11 @@ public class KaleidoscopeHelper {
     private final int TOTAL_DEGREES = 360;
     private float degreeIncrement = 30;
     private final MainViewModel viewModel;
+    private final KaleidoscopeDrawer kaleidoscopeDrawer;
 
-    public KaleidoscopeHelper(MainViewModel viewModel){
+    public KaleidoscopeHelper(PaintView paintView, MainViewModel viewModel){
         this.viewModel = viewModel;
+        kaleidoscopeDrawer = new KaleidoscopeDrawer(paintView, viewModel, this);
     }
 
 
@@ -20,6 +26,11 @@ public class KaleidoscopeHelper {
         defaultCenterX = x;
         defaultCenterY = y;
     }
+
+    public void setCanvas(Canvas canvas){
+        kaleidoscopeDrawer.setCanvas(canvas);
+    }
+
 
 
     public boolean isEnabled(){

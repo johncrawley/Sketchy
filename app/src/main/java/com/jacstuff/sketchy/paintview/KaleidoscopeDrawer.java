@@ -6,19 +6,21 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Shader;
 
+import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
+
 public class KaleidoscopeDrawer {
 
-    private final Canvas canvas;
+    private Canvas canvas;
     private final MainViewModel viewModel;
     private final KaleidoscopeHelper kaleidoscopeHelper;
     private final PaintView paintView;
     private final Paint infinityPaint;
     private Bitmap infinityImage;
 
-    KaleidoscopeDrawer(PaintView paintView, MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
+    public KaleidoscopeDrawer(PaintView paintView, MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
         this.paintView = paintView;
         this.canvas = paintView.getCanvas();
         this.viewModel = viewModel;
@@ -27,12 +29,18 @@ public class KaleidoscopeDrawer {
     }
 
 
-    void drawKaleidoscope(float x, float y, Paint paint){
-        drawKaleidoscope(x,y, paint, false);
+    public void setCanvas(Canvas canvas){
+        this.canvas = canvas;
+    }
+
+    private Drawer parentDrawer;
+
+    public void initParentDrawer(Drawer drawer){
+        parentDrawer = drawer;
     }
 
 
-    void drawKaleidoscope(float x, float y, Paint paint, boolean isDragLine){
+    public void drawKaleidoscope(float x, float y, Paint paint){
         if(viewModel.isInfinityModeEnabled) {
             infinityImage = Bitmap.createScaledBitmap(paintView.getBitmap(), 500, 500, false);
         }
@@ -40,7 +48,10 @@ public class KaleidoscopeDrawer {
         canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
 
         for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()){
-            drawKaleidoscopeSegment(x, y, angle, isDragLine, paint);
+            canvas.save();
+            canvas.rotate(angle);
+            parentDrawer.drawKaleidoscopeSegment(x, y, angle, paint);
+            canvas.restore();
         }
         if(viewModel.isInfinityModeEnabled){
             drawGlitchSegments(x,y);
@@ -69,16 +80,4 @@ public class KaleidoscopeDrawer {
     }
 
 
-    private void drawKaleidoscopeSegment(float x, float y, float angle, boolean isDragLine, Paint paint){
-        canvas.save();
-        canvas.rotate(angle);
-        if(isDragLine){
-            paintView.drawDragLine(x , y, kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
-        }
-        else {
-            //TODO need to figure out if down event or move event, specifically for the currently unused PathBrush
-            paintView.rotateAndDrawDown(x - kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(), paint);
-        }
-        canvas.restore();
-    }
 }

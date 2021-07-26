@@ -2,8 +2,6 @@ package com.jacstuff.sketchy;
 
 import android.content.Intent;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -28,7 +24,6 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
-import com.jacstuff.sketchy.controls.shapecontrols.TextControls;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
@@ -72,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initPaintHelperManager();
         setupSettingsButtons();
         setupColorAndShadeButtons();
-        new SeekBarConfigurator(this, paintView);
         viewModelHelper.init(colorButtonClickHandler, paintView);
         setupColorAutoScroll();
         initActivityResultLauncher();
@@ -90,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void initPaintHelperManager(){
-        paintHelperManager = new PaintHelperManager(this, viewModel);
+        paintHelperManager = new PaintHelperManager(this, paintView, viewModel);
         viewModelHelper.setPaintHelperManager(paintHelperManager);
         paintView.setPaintHelperManager(paintHelperManager);
     }
@@ -159,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void setupSettingsButtons(){
-        settingsPopup = new SettingsPopup((ViewGroup)findViewById(R.id.includedSettingsLayout), this);
+        settingsPopup = new SettingsPopup(findViewById(R.id.includedSettingsLayout), this);
         settingsButtonsConfigurator = new SettingsButtonsConfigurator(this, paintView);
     }
 
@@ -172,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void setupColorAndShadeButtons(){
         List<Integer> colors = ColorCreator.generate();
         colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
-        colorButtonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams, (LinearLayout)findViewById(R.id.shadesButtonGroup));
+        colorButtonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams, findViewById(R.id.shadesButtonGroup));
         colorButtonClickHandler.setColorsMap(colors);
         ColorButtonLayoutPopulator layoutPopulator = new ColorButtonLayoutPopulator(this, colorButtonLayoutParams, colors);
         colorButtonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
@@ -184,8 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupColorAutoScroll() {
         if (viewModel.isFirstExecution){
-            new ColorAutoScroller(
-                    (HorizontalScrollView) findViewById(R.id.colorScrollView));
+            new ColorAutoScroller(findViewById(R.id.colorScrollView));
         }
     }
 
@@ -211,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
-        paintView.initBrushes();
+        //paintView.initBrushes();
         setupPaintViewAndDefaultSelections(this);
     }
 
@@ -227,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new PaintViewConfigurator(mainActivity, linearLayout.getMeasuredHeight())
                         .configure(viewModel, paintView, settingsPopup);
                 settingsButtonsConfigurator.selectDefaults();
+                new SeekBarConfigurator(mainActivity, paintView);
                 viewModelHelper.onResume();
             }
         });
@@ -251,31 +245,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initActivityResultLauncher(){
         activityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if(result == null || result.getData() == null){
-                            return;
-                        }
-                        imageSaver.saveImageToFile(result.getData(), paintView);
-                    }
-                });
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if(result == null || result.getData() == null){
+                    return;
+                }
+                imageSaver.saveImageToFile(result.getData(), paintView);
+            });
     }
 
 
     private void initActivityResultLauncherForLoad(){
         loadImageActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if(result == null || result.getData() == null){
-                            return;
-                        }
-                        imageSaver.loadImage(result.getData(), paintView);
-                    }
-                });
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if(result == null || result.getData() == null){
+                    return;
+                }
+                imageSaver.loadImage(result.getData(), paintView);
+            });
     }
 
     private void startSaveDocumentActivity(){

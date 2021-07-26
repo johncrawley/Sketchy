@@ -1,18 +1,16 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class OvalBrush extends AbstractBrush implements Brush {
 
     private final RectF ovalRect;
 
-    public OvalBrush(Canvas canvas, PaintGroup paintGroup){
-        super(canvas, paintGroup, BrushShape.OVAL);
+    public OvalBrush(){
+        super(BrushShape.OVAL);
         ovalRect = new RectF(-1,1,1,-1);
     }
 

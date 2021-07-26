@@ -1,15 +1,18 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
+
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.BrushDrawer;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
+import com.jacstuff.sketchy.brushes.shapes.drawer.DragLineDrawer;
+import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.shapes.line.DefaultLineDrawer;
 import com.jacstuff.sketchy.brushes.shapes.line.LineDrawer;
 import com.jacstuff.sketchy.brushes.shapes.line.LineOutlineDrawer;
-import com.jacstuff.sketchy.paintview.PaintGroup;
+import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,10 +24,23 @@ public class LineBrush extends AbstractBrush implements Brush {
     private Map<BrushStyle, LineDrawer> lineDrawerMap;
 
 
-    public LineBrush(Canvas canvas, PaintGroup paintGroup) {
-        super(canvas, paintGroup, BrushShape.LINE);
+    public LineBrush() {
+        super(BrushShape.LINE);
         setupLineDrawers();
         brushDrawer = BrushDrawer.DRAG;
+    }
+
+
+    @Override
+    public void init(PaintView paintView, MainViewModel mainViewModel){
+        super.init(paintView, mainViewModel);
+        setupLineDrawers();
+    }
+
+
+    @Override
+    Drawer getDrawer(){
+        return new DragLineDrawer(this, paintView, mainViewModel);
     }
 
 

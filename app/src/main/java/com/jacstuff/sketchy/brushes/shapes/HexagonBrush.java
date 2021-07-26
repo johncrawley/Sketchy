@@ -1,11 +1,9 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class HexagonBrush extends AbstractBrush implements Brush {
 
@@ -16,8 +14,8 @@ public class HexagonBrush extends AbstractBrush implements Brush {
     private int quarterBrushSize;
 
 
-    public HexagonBrush(Canvas canvas, PaintGroup paintGroup){
-        super(canvas, paintGroup, BrushShape.HEXAGON);
+    public HexagonBrush(){
+        super(BrushShape.HEXAGON);
         leftPoint = new Point();
         rightPoint = new Point();
         bottomLeftPoint = new Point();

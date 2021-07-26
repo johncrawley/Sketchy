@@ -6,15 +6,19 @@ import android.graphics.Paint;
 import com.jacstuff.sketchy.brushes.BrushDrawer;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
+import com.jacstuff.sketchy.brushes.shapes.drawer.BasicDrawer;
+import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.styles.FillStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
 import com.jacstuff.sketchy.paintview.PaintGroup;
+import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public abstract class AbstractBrush {
+public abstract class AbstractBrush implements  Brush{
 
     Canvas canvas;
     PaintGroup paintGroup;
@@ -25,11 +29,12 @@ public abstract class AbstractBrush {
     BrushDrawer brushDrawer;
     private final Map<BrushStyle, Style> styleMap;
     private final FillStyle fillStyle;
+    Drawer drawer;
+    MainViewModel mainViewModel;
+    PaintView paintView;
 
 
-    AbstractBrush(Canvas canvas, PaintGroup paintGroup, BrushShape brushShape){
-        this.canvas = canvas;
-        this.paintGroup = paintGroup;
+    AbstractBrush(BrushShape brushShape){
         styleMap = new HashMap<>();
         fillStyle = new FillStyle();
         currentStyle = fillStyle;
@@ -37,9 +42,41 @@ public abstract class AbstractBrush {
         brushDrawer = BrushDrawer.DEFAULT;
     }
 
+    @Override
+    public void init(PaintView paintView, MainViewModel mainViewModel){
+        this.paintView = paintView;
+        this.paintGroup = paintView.getPaintGroup();
+        this.canvas = paintView.getCanvas();
+        this.mainViewModel = mainViewModel;
+        drawer = getDrawer();
+        drawer.init();
+    }
+
+
+    Drawer getDrawer(){
+        return new BasicDrawer(this, paintView, mainViewModel);
+    }
+
+
+    public void touchDown(float x, float y, Paint paint){
+        drawer.down(x,y,paint);
+    }
+
+
+    public void touchMove(float x, float y, Paint paint){
+        drawer.move(x,y,paint);
+    }
+
+
+    public void touchUp(float x, float y, Paint paint){
+        drawer.up(x,y,paint);
+    }
+
+
     public void add(BrushStyle brushStyle, Style style){
         styleMap.put(brushStyle, style);
     }
+
 
     public BrushShape getBrushShape(){
         return this.brushShape;
@@ -74,7 +111,9 @@ public abstract class AbstractBrush {
     }
 
 
-    void onBrushTouchDown(float x, float y, Paint paint){}
+    void onBrushTouchDown(float x, float y, Paint paint){
+        //do nothing
+    }
 
 
     public void onTouchMove(float x, float y, Paint paint){

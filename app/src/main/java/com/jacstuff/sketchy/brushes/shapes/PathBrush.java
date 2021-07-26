@@ -1,12 +1,9 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class PathBrush extends AbstractBrush implements Brush {
 
@@ -22,8 +19,8 @@ public class PathBrush extends AbstractBrush implements Brush {
 
      */
 
-    public PathBrush(Canvas canvas, PaintGroup paintGroup){
-        super(canvas, paintGroup, BrushShape.PATH);
+    public PathBrush(){
+        super(BrushShape.PATH);
     }
 
 

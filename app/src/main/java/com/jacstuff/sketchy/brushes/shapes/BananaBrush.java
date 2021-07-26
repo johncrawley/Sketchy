@@ -1,12 +1,10 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class BananaBrush extends AbstractBrush implements Brush {
 
@@ -17,8 +15,8 @@ public class BananaBrush extends AbstractBrush implements Brush {
     private final Point lowerDipPoint;
     private boolean hasSizeChanged = false;
 
-    public BananaBrush(Canvas canvas, PaintGroup paintGroup){
-        super(canvas, paintGroup, BrushShape.BANANA);
+    public BananaBrush(){
+        super(BrushShape.BANANA);
         path = new Path();
         bottomPoint = new Point(0,0);
         topPoint = new Point(0,0);

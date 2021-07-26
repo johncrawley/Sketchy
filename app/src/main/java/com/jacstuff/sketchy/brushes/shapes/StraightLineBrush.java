@@ -1,16 +1,14 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
-import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class StraightLineBrush extends AbstractBrush implements Brush {
 
 
-    public StraightLineBrush(Canvas canvas, PaintGroup paintGroup){
-        super(canvas, paintGroup, BrushShape.STRAIGHT_LINE);
+    public StraightLineBrush(){
+        super(BrushShape.STRAIGHT_LINE);
     }
 
 
