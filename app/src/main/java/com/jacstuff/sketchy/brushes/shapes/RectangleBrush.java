@@ -3,42 +3,43 @@ package com.jacstuff.sketchy.brushes.shapes;
 
 import android.graphics.Paint;
 
-import com.jacstuff.sketchy.brushes.BrushDrawer;
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 
 public class RectangleBrush extends AbstractBrush implements Brush {
 
-    private float centerX, centerY;
-
+    private float x1, y1;
 
     public RectangleBrush() {
         super(BrushShape.DRAG_RECTANGLE);
-        brushDrawer = BrushDrawer.DRAG;
+        drawerType = DrawerFactory.Type.DRAG_RECT;
     }
 
 
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
-        centerX = x;
-        centerY = y;
+        x1 = x;
+        y1 = y;
     }
 
 
     @Override
-    public void onTouchMove(float x, float y, Paint paint) {
-        float diffX = (Math.abs(centerX) - Math.abs(x));
-        float diffY = (Math.abs(centerY) - Math.abs(y));
-        float left = centerX - diffX;
-        float top = centerY - diffY;
-        float right = centerX + diffX;
-        float bottom = centerY + diffY;
-        canvas.drawRect(left, top, right, bottom, paint);
+    public void onTouchMove(float x2, float y2, Paint paint) {
+        float greaterX = Math.max(x1,x2);
+        float lesserX = Math.min(x1,x2);
+        float greaterY = Math.max(y1,y2);
+        float lesserY = Math.min(y1, y2);
+
+        float halfWidth = (greaterX - lesserX) / -2;
+        float halfHeight = (greaterY - lesserY) / -2;
+
+        canvas.drawRect(-halfWidth, -halfHeight, halfWidth, halfHeight, paint);
     }
 
+
     @Override
-    public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint){
+    public void onTouchUp(float x, float y, Paint paint){
         onTouchMove(x,y, paint);
     }
-
 
 }

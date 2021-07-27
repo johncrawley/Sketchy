@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 
-import com.jacstuff.sketchy.brushes.BrushDrawer;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
@@ -340,7 +339,7 @@ public class PaintView extends View {
 
 
     private boolean isDragBrushWithTouchMoveOrUp(MotionEvent event){
-        return event.getAction() != MotionEvent.ACTION_DOWN && currentBrush.getBrushDrawer() == BrushDrawer.DRAG;
+        return event.getAction() != MotionEvent.ACTION_DOWN && !currentBrush.isColorChangedOnDown();
     }
 
 }

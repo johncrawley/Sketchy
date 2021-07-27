@@ -7,7 +7,7 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class DefaultLineDrawer implements LineDrawer {
 
-    private Canvas canvas;
+    private final Canvas canvas;
 
     public DefaultLineDrawer(Canvas canvas){
         this.canvas = canvas;

@@ -18,6 +18,7 @@ import com.jacstuff.sketchy.brushes.shapes.TextBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextOnCircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.WavyLineBrush;
+import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.styles.DashedStyle;
 import com.jacstuff.sketchy.brushes.styles.DashedStyleForLines;
 import com.jacstuff.sketchy.brushes.styles.DoubleEdgeStyle;
@@ -41,11 +42,13 @@ public class BrushFactory {
     private final Brush circleBrush;
     private final PaintView paintView;
     private final MainViewModel mainViewModel;
+    private final DrawerFactory drawerFactory;
 
     public BrushFactory(PaintView paintView, PaintGroup paintGroup, int brushSize, MainViewModel mainViewModel){
         this.paintView = paintView;
         this.mainViewModel = mainViewModel;
         circleBrush = new CircleBrush();
+        drawerFactory = new DrawerFactory(paintView, mainViewModel);
         setupBrushMap();
         handleStyles(brushSize, paintGroup);
         addLineBrushAndStyles(paintGroup, brushSize);
@@ -75,7 +78,7 @@ public class BrushFactory {
 
 
     private void add(Brush brush){
-        brush.init(paintView, mainViewModel);
+        brush.init(paintView, mainViewModel, drawerFactory);
         brushMap.put(brush.getBrushShape(), brush);
     }
 
@@ -111,6 +114,7 @@ public class BrushFactory {
             brush = circleBrush;
         }
         brush.setStyle(brushStyle);
+        brush.reinitialize();
         return brush;
     }
 
