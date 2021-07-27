@@ -77,12 +77,6 @@ public class PaintView extends View {
     }
 
 
-    public void initBrushes(){
-        brushFactory = new BrushFactory(this, paintGroup, brushSize, viewModel);
-        currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
-    }
-
-
     public void init(MainViewModel viewModel, int canvasWidth, int canvasHeight, SettingsPopup settingsPopup) {
         this.viewModel = viewModel;
         this.canvasWidth = canvasWidth;
@@ -92,7 +86,7 @@ public class PaintView extends View {
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         bitmapLoader = new BitmapLoader(this, canvas, drawPaint);
-        initBrushes(); // already called by MainActivity, but needs to be called again to register new canvas with the brushes
+        initBrushes();
 
         if(bitmapHistory.isEmpty()){
             drawPlainBackgroundAndSaveToHistory();
@@ -101,24 +95,6 @@ public class PaintView extends View {
         paint.setColor(viewModel.color);
         fractalColorBlender = new InfinityModeColorBlender(viewModel, colorSelector, paint);
         invalidate();
-    }
-
-
-    private Paint createPaint(int color){
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeCap(Paint.Cap.SQUARE);
-        paint.setColor(color);
-        return paint;
-    }
-
-
-    private void initKaleidoscope(){
-        kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
-        kaleidoscopeHelper.setCanvas(canvas);
-        kaleidoscopeHelper.setDefaultCenter(getWidth()/2, getHeight()/2);
-       // kaleidoscopeDrawer = new KaleidoscopeDrawer(this, viewModel, kaleidoscopeHelper);
     }
 
 
@@ -188,6 +164,51 @@ public class PaintView extends View {
     }
 
 
+    public Paint getPreviewPaint(){
+        return previewPaint;
+    }
+
+    public void pushHistory(){
+        bitmapHistory.push(bitmap);
+    }
+
+
+    public void enablePreviewLayer(){
+        isPreviewLayerToBeDrawn = true;
+        previewBitmap = Bitmap.createBitmap(bitmap);
+        canvas.setBitmap(previewBitmap);
+    }
+
+
+    public void disablePreviewLayer(){
+        isPreviewLayerToBeDrawn = false;
+        canvas.setBitmap(bitmap);
+    }
+
+
+    private Paint createPaint(int color){
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.SQUARE);
+        paint.setColor(color);
+        return paint;
+    }
+
+
+    private void initBrushes(){
+        brushFactory = new BrushFactory(this, paintGroup, brushSize, viewModel);
+        currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
+    }
+
+
+    private void initKaleidoscope(){
+        kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
+        kaleidoscopeHelper.setCanvas(canvas);
+        kaleidoscopeHelper.setDefaultCenter(getWidth()/2, getHeight()/2);
+    }
+
+
     private void drawPlainBackgroundAndSaveToHistory(){
         Paint blankPaint = new Paint();
         blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -225,7 +246,7 @@ public class PaintView extends View {
         float x = event.getX();
         float y = event.getY();
 
-        assignColorsBlursAndGradients(x,y, event);
+        assignColorsBlursAndGradients(x, y, event);
         try {
                 handleDrawing(x, y, event);
         }catch (IllegalArgumentException e){
@@ -320,28 +341,6 @@ public class PaintView extends View {
 
     private boolean isDragBrushWithTouchMoveOrUp(MotionEvent event){
         return event.getAction() != MotionEvent.ACTION_DOWN && currentBrush.getBrushDrawer() == BrushDrawer.DRAG;
-    }
-
-
-    public void pushHistory(){
-        bitmapHistory.push(bitmap);
-    }
-
-
-    public void enablePreviewLayer(){
-        isPreviewLayerToBeDrawn = true;
-        previewBitmap = Bitmap.createBitmap(bitmap);
-        canvas.setBitmap(previewBitmap);
-    }
-
-
-    public void disablePreviewLayer(){
-        isPreviewLayerToBeDrawn = false;
-        canvas.setBitmap(bitmap);
-    }
-
-    public Paint getPreviewPaint(){
-        return previewPaint;
     }
 
 }

@@ -12,15 +12,12 @@ public class ArcBrush extends AbstractBrush implements Brush {
     private float quarterBrushSize;
 
     public ArcBrush(){
-        super(BrushShape.TEXT);
+        super(BrushShape.ARC);
     }
 
 
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
-
-        //boolean useCenter = paint.getStyle() != Paint.Style.STROKE;
-        //canvas.drawArc( -halfBrushSize, 0,  halfBrushSize, arcHeight, 200, 140, false, paint);
         Path path = new Path();
         path.addArc(-halfBrushSize, -quarterBrushSize, halfBrushSize, arcHeight - quarterBrushSize, 200, 140);
         path.close();

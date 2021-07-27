@@ -22,7 +22,6 @@ public class BananaBrush extends AbstractBrush implements Brush {
         topPoint = new Point(0,0);
         upperDipPoint = new Point(0,0);
         lowerDipPoint = new Point(0,0);
-
     }
 
 
