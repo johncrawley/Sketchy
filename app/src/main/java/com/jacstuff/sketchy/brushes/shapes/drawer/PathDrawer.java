@@ -1,16 +1,16 @@
 package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Paint;
+
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
+public class PathDrawer extends BasicDrawer{
 
-public class BasicDrawer extends AbstractDrawer implements Drawer {
-
-
-    public BasicDrawer(PaintView paintView, MainViewModel viewModel){
+    public PathDrawer(PaintView paintView, MainViewModel viewModel){
         super(paintView, viewModel);
     }
+
 
 
     @Override
@@ -23,9 +23,29 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
     @Override
     public void move(float x, float y, Paint paint) {
         paintView.disablePreviewLayer();
-        drawToCanvas(x,y, paint);
+        drawToCanvasMove(x,y, paint);
         paintView.enablePreviewLayer();
         drawPreviewWhenInfinityModeOff(x, y);
+    }
+
+
+    public void rotateAndDraw(float x, float y, Paint paint){
+        canvas.save();
+        canvas.translate(x, y);
+        //canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
+        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
+            brush.onTouchDown(x,y, paintView.getShadowPaint());
+        }
+        brush.onTouchDown(x, y, paint);
+        canvas.restore();
+    }
+
+
+    public void rotateAndDrawMove(float x, float y, Paint paint){
+        canvas.save();
+        canvas.translate(x, y);
+        brush.onTouchMove(x, y, paint);
+        canvas.restore();
     }
 
 
@@ -39,6 +59,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
     @Override
     public void up(float x, float y, Paint paint) {
         paintView.disablePreviewLayer();
+        brush.onTouchUp(x, y, paint);
         paintView.invalidate();
         paintView.pushHistory();
     }
@@ -54,17 +75,16 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
         paintView.invalidate();
     }
 
-
-    public void rotateAndDraw(float x, float y, Paint paint){
-        canvas.save();
-        canvas.translate(x, y);
-        canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
-        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
-            brush.onTouchDown(x,y, paintView.getShadowPaint());
+    void drawToCanvasMove(float x, float y, Paint paint){
+        if(kaleidoscopeHelper.isEnabled()){
+            kaleidoscopeDrawer.drawKaleidoscope(x,y, paint);
         }
-        brush.onTouchDown(x, y, paint);
-        canvas.restore();
+        else{
+            rotateAndDrawMove(x,y, paint);
+        }
+        paintView.invalidate();
     }
+
 
 
     @Override

@@ -4,11 +4,12 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 
 public class PathBrush extends AbstractBrush implements Brush {
 
     private float previousX, previousY;
-
+    private Path totalPath;
     /*
 
         Will need a special case for shadows:
@@ -21,15 +22,16 @@ public class PathBrush extends AbstractBrush implements Brush {
 
     public PathBrush(){
         super(BrushShape.PATH);
+        drawerType = DrawerFactory.Type.PATH;
+        totalPath = new Path();
     }
 
 
     public void onBrushTouchDown(float x, float y, Paint paint){
+        totalPath.reset();
+        totalPath.moveTo(x,y);
         previousX = x;
         previousY = y;
-        Path path = new Path();
-        path.moveTo(0,0);
-        canvas.drawPath(path, paint);
     }
 
 
@@ -38,11 +40,16 @@ public class PathBrush extends AbstractBrush implements Brush {
         currentStyle.onDraw();
         Path path = new Path();
         path.moveTo(previousX -x, previousY -y);
+        totalPath.lineTo(x,y);
         path.lineTo(0,0);
         canvas.drawPath(path, paint);
         previousX = x;
         previousY = y;
     }
 
+
+    public void onTouchUp(float x, float y, Paint paint){
+        canvas.drawPath(totalPath, paint);
+    }
 
 }

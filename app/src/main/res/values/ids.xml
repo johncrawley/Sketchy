@@ -81,7 +81,8 @@
     <item name="hexagonShapeButton" type="id"/>
     <item name="textShapeButton" type="id"/>
     <item name="ovalShapeButton" type="id"/>
-    <item name="cresentShapeButton" type="id"/>
+    <item name="crescentShapeButton" type="id"/>
+    <item name="pathShapeButton" type="id"/>
     <item name="rectangleShapeButton" type="id"/>
     <item name="arcShapeButton" type="id"/>
 
