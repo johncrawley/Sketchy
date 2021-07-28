@@ -28,10 +28,6 @@ public class DragRectDrawer extends BasicDrawer{
         downX = x;
         downY = y;
         canvas.translate(x, y);
-        canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
-        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
-            brush.onTouchDown(x,y, paintView.getShadowPaint());
-        }
         brush.onTouchDown(x, y, paint);
         canvas.restore();
     }
@@ -40,11 +36,7 @@ public class DragRectDrawer extends BasicDrawer{
     public void rotateAndDrawMove(float x, float y, Paint paint){
         canvas.save();
         canvas.translate(downX + ((x-downX) /2f), downY + ((y-downY)/2f));
-        canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
-        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
-            brush.onTouchMove(x,y, paintView.getShadowPaint());
-        }
-        brush.onTouchMove(x,y, paint);
+        rotateThenDrawShadowAndObject(x, y, paint);
         canvas.restore();
     }
 
@@ -71,11 +63,32 @@ public class DragRectDrawer extends BasicDrawer{
     }
 
 
-    // good attempt but still not drawing a proper kaleidoscope - rectangles are of incorrect position and dimensions!
     @Override
     public void drawKaleidoscopeSegment(float x, float y, float angle, Paint paint){
-        rotateAndDrawMove( x - kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(),paint);
+        canvas.save();
+        translateForKaleidoscope(x, y);
+        rotateThenDrawShadowAndObject(x, y, paint);
+        canvas.restore();
     }
+
+
+    private void rotateThenDrawShadowAndObject(float x, float y, Paint paint){
+        canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
+        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
+            brush.onTouchMove(x, y, paintView.getShadowPaint());
+        }
+        brush.onTouchMove(x,y, paint);
+    }
+
+
+    private void translateForKaleidoscope(float x, float y){
+        float downKx = downX - kaleidoscopeHelper.getCenterX();
+        float downKy = downY - kaleidoscopeHelper.getCenterY();
+        float kx = x - kaleidoscopeHelper.getCenterX();
+        float ky = y - kaleidoscopeHelper.getCenterY();
+        canvas.translate(downKx + ((kx-downKx) /2f), downKy + ((ky-downKy)/2f));
+    }
+
 
 }
 
