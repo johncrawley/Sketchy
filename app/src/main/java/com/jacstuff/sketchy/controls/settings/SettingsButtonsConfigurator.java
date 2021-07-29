@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.controls.settings;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.controls.settings.gradient.GradientButtonsConfigurator;
+import com.jacstuff.sketchy.controls.settings.shape.ShapeButtonsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 import java.util.ArrayList;

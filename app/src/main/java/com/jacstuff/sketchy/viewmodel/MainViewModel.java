@@ -6,6 +6,7 @@ import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 
 import java.util.ArrayDeque;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ public class MainViewModel extends ViewModel {
     public String mostRecentShadeButtonKey;
     public boolean isMostRecentClickAShade;
     public List<String> selectedShadeButtonKeys;
+    public Map<Integer, Integer> seekBarValue;
 
     public Map<ButtonCategory, Integer> settingsButtonsClickMap;
 
@@ -43,4 +45,9 @@ public class MainViewModel extends ViewModel {
     public int angle = 0;
 
     public int gradient;
+
+
+    public MainViewModel(){
+        seekBarValue = new HashMap<>();
+    }
 }

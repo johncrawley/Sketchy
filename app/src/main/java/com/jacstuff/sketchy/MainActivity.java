@@ -204,7 +204,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void configurePaintView(){
         paintView = findViewById(R.id.paintView);
-        //paintView.initBrushes();
         setupPaintViewAndDefaultSelections(this);
     }
 
@@ -265,6 +264,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 imageSaver.loadImage(result.getData(), paintView);
             });
     }
+
 
     private void startSaveDocumentActivity(){
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);

@@ -9,15 +9,18 @@ import com.jacstuff.sketchy.paintview.PaintView;
 
 public abstract class AbstractSeekBarConfig {
 
-    public SeekBar seekBar;
-    public MainActivity mainActivity;
-    public PaintView paintView;
-    public MainViewModel viewModel;
-    public PaintHelperManager paintHelperManager;
+    protected SeekBar seekBar;
+    protected MainActivity mainActivity;
+    protected PaintView paintView;
+    protected MainViewModel viewModel;
+    protected PaintHelperManager paintHelperManager;
+    private final int seekBarId;
+
 
     public AbstractSeekBarConfig(MainActivity mainActivity, PaintView paintView, int seekBarId, int defaultValueId){
         this.mainActivity = mainActivity;
         this.paintView = paintView;
+        this.seekBarId = seekBarId;
         seekBar = mainActivity.findViewById(seekBarId);
         viewModel = mainActivity.getViewModel();
         paintHelperManager = mainActivity.getPaintHelperManager();
@@ -31,6 +34,7 @@ public abstract class AbstractSeekBarConfig {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                viewModel.seekBarValue.put(seekBarId, seekBar.getProgress());
                 onStopTracking(seekBar.getProgress());
             }
             @Override
@@ -59,8 +63,19 @@ public abstract class AbstractSeekBarConfig {
     }
 
     public void setDefaultValue(int defaultValue){
-        adjustSetting(defaultValue);
-        onStopTracking(defaultValue);
+        adjustSetting(getSavedOrDefault(defaultValue));
+        onStopTracking(getSavedOrDefault(defaultValue));
+    }
+
+
+    private int getSavedOrDefault(int defaultValue){
+        if(!viewModel.isFirstExecution){
+            Integer savedValue = viewModel.seekBarValue.get(seekBarId);
+            if(savedValue != null) {
+                return savedValue;
+            }
+        }
+        return defaultValue;
     }
 
 

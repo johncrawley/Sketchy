@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.controls.shapecontrols;
+package com.jacstuff.sketchy.controls.settings.shape;
 
 
 import android.content.Context;

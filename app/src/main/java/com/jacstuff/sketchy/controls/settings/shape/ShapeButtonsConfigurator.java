@@ -1,14 +1,17 @@
-package com.jacstuff.sketchy.controls.settings;
+package com.jacstuff.sketchy.controls.settings.shape;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.controls.ButtonCategory;
-import com.jacstuff.sketchy.controls.shapecontrols.TextControls;
+import com.jacstuff.sketchy.controls.settings.AbstractButtonConfigurator;
+import com.jacstuff.sketchy.controls.settings.ButtonConfigHandler;
+import com.jacstuff.sketchy.controls.settings.ButtonsConfigurator;
+import com.jacstuff.sketchy.controls.settings.shape.TextControls;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 
-public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushShape> implements ButtonsConfigurator<BrushShape>{
+public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushShape> implements ButtonsConfigurator<BrushShape> {
 
 
     public ShapeButtonsConfigurator(MainActivity activity, PaintView paintView){
