@@ -30,14 +30,14 @@ public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushSt
                 this,
                 ButtonCategory.STYLE,
                 R.id.styleOptionsLayout);
-        buttonConfig.add(R.id.brokenOutlineStyleButton, R.drawable.broken_outline_style_button, BrushStyle.BROKEN_OUTLINE);
-        buttonConfig.add(R.id.fillStyleButton,          R.drawable.fill_style_button,           BrushStyle.FILL);
-        buttonConfig.add(R.id.outlineStyleButton,       R.drawable.outline_style_button,        BrushStyle.OUTLINE);
-        buttonConfig.add(R.id.jaggedStyleButton,        R.drawable.jagged_style_button,           BrushStyle.JAGGED);
-        buttonConfig.add(R.id.wavyStyleButton,          R.drawable.button_style_wavy_b,               BrushStyle.WAVY);
-        buttonConfig.add(R.id.doubleEdgeStyleButton,   R.drawable.double_edge_style_button,       BrushStyle.DOUBLE_EDGE);
-        buttonConfig.add(R.id.spikedStyleButton,       R.drawable.spiked_style_button,            BrushStyle.SPIKED);
-        buttonConfig.add(R.id.translateStyleButton,    R.drawable.translate_outline_style_button, BrushStyle.TRANSLATE);
+        buttonConfig.add(R.id.brokenOutlineStyleButton, R.drawable.button_style_dotted,      BrushStyle.BROKEN_OUTLINE);
+        buttonConfig.add(R.id.fillStyleButton,          R.drawable.button_style_fill,        BrushStyle.FILL);
+        buttonConfig.add(R.id.outlineStyleButton,       R.drawable.button_style_outline,     BrushStyle.OUTLINE);
+        buttonConfig.add(R.id.jaggedStyleButton,        R.drawable.button_style_jagged,      BrushStyle.JAGGED);
+        buttonConfig.add(R.id.wavyStyleButton,          R.drawable.button_style_wavy,        BrushStyle.WAVY);
+        buttonConfig.add(R.id.doubleEdgeStyleButton,    R.drawable.button_style_double_line, BrushStyle.DOUBLE_EDGE);
+        buttonConfig.add(R.id.spikedStyleButton,        R.drawable.button_style_spiked,      BrushStyle.SPIKED);
+        buttonConfig.add(R.id.translateStyleButton,     R.drawable.button_style_translate,   BrushStyle.TRANSLATE);
 
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.styleButton);

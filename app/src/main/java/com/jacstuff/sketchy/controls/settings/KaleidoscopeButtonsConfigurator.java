@@ -1,7 +1,5 @@
 package com.jacstuff.sketchy.controls.settings;
 
-import android.widget.CompoundButton;
-
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
@@ -15,22 +13,25 @@ public class KaleidoscopeButtonsConfigurator extends AbstractButtonConfigurator<
         super(activity, paintView);
     }
 
+
     @Override
     public void configure(){
         buttonConfig = new ButtonConfigHandler<>(activity,
                 this,
                 ButtonCategory.KALEIDOSCOPE,
                 R.id.kaleidoscopeOptionsLayout);
-        buttonConfig.add(R.id.kOffButton, R.drawable.k_off_button,1);
-        buttonConfig.add(R.id.k2Button,   R.drawable.k_2_button,  2);
-        buttonConfig.add(R.id.k5Button,   R.drawable.k_5_button,  5);
-        buttonConfig.add(R.id.k6Button,   R.drawable.k_6_button,  6);
-        buttonConfig.add(R.id.k7Button,   R.drawable.k_7_button,  7);
-        buttonConfig.add(R.id.k8Button,   R.drawable.k_8_button,  8);
-        buttonConfig.add(R.id.k9Button,   R.drawable.k_9_button,  9);
-        buttonConfig.add(R.id.k10Button,  R.drawable.k_10_button, 10);
-        buttonConfig.add(R.id.k12Button,  R.drawable.k_12_button, 12);
-        buttonConfig.add(R.id.k16Button,  R.drawable.k_16_button, 16);
+
+        add(R.id.kOffButton,1);
+        add(R.id.k2Button,2);
+        add(R.id.k5Button,5);
+        add(R.id.k6Button,6);
+        add(R.id.k7Button,7);
+        add(R.id.k8Button,8);
+        add(R.id.k9Button,9);
+        add(R.id.k10Button,10);
+        add(R.id.k12Button,12);
+        add(R.id.k16Button, 16);
+
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.kaleidoButton);
         buttonConfig.setDefaultSelection(R.id.kOffButton);
@@ -38,21 +39,17 @@ public class KaleidoscopeButtonsConfigurator extends AbstractButtonConfigurator<
     }
 
 
+    private void add(int id, int action){
+        buttonConfig.add(id, "K: " + action, action);
+    }
+
+
     public void setupKaleidoscopeOptions(){
        SwitchMaterial kaleidoscopeInfinityMode = activity.findViewById(R.id.kaleidoscopeInfinityMode);
-       kaleidoscopeInfinityMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               viewModel.isInfinityModeEnabled = isChecked;
-           }
-       });
-
+       kaleidoscopeInfinityMode.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isInfinityModeEnabled = isChecked);
 
         SwitchMaterial kaleidoscopeCentredSwitch = activity.findViewById(R.id.kaleidoscopeCentredSwitch);
-        kaleidoscopeCentredSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                viewModel.isKaleidoscopeCentred = isChecked;
-            }
-        });
+        kaleidoscopeCentredSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isKaleidoscopeCentred = isChecked);
     }
 
 
