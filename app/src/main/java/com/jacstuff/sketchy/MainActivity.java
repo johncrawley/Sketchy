@@ -26,7 +26,6 @@ import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.PaintViewConfigurator;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
@@ -214,10 +213,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onGlobalLayout() {
                 linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                
-
-                new PaintViewConfigurator(mainActivity, linearLayout.getMeasuredHeight())
-                        .configure(viewModel, paintView, settingsPopup);
+                paintView.init(viewModel, settingsPopup);
                 settingsButtonsConfigurator.selectDefaults();
                 new SeekBarConfigurator(mainActivity, paintView);
                 viewModelHelper.onResume();

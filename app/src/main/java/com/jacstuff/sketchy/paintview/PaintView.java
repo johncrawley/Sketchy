@@ -25,7 +25,6 @@ import com.jacstuff.sketchy.ui.SettingsPopup;
 
 public class PaintView extends View {
 
-    private int canvasWidth, canvasHeight;
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
     private final Paint paint, shadowPaint, previewPaint;
     private int brushSize;
@@ -77,10 +76,8 @@ public class PaintView extends View {
     }
 
 
-    public void init(MainViewModel viewModel, int canvasWidth, int canvasHeight, SettingsPopup settingsPopup) {
+    public void init(MainViewModel viewModel, SettingsPopup settingsPopup) {
         this.viewModel = viewModel;
-        this.canvasWidth = canvasWidth;
-        this.canvasHeight = canvasHeight;
         this.settingsPopup = settingsPopup;
 
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
@@ -213,7 +210,7 @@ public class PaintView extends View {
         Paint blankPaint = new Paint();
         blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         blankPaint.setColor(DEFAULT_BG_COLOR);
-        canvas.drawRect(0,0, canvasWidth, canvasHeight, blankPaint);
+        canvas.drawRect(0,0, getWidth(), getHeight(), blankPaint);
         bitmapHistory.push(bitmap);
         invalidate();
     }
