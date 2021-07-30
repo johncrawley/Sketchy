@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="stroke_cap_array">
-        <item>Round</item>
-        <item>Square</item>
-        <item>Butt</item>
+        <item>@string/stroke_cap_spinner_round_item</item>
+        <item>@string/stroke_cap_spinner_square_item</item>
+        <item>@string/stroke_cap_spinner_butt_item</item>
     </string-array>
 
-
     <string-array name="stroke_join_array">
-        <item>Bevel</item>
-        <item>Mitre</item>
-        <item>Round</item>
+        <item>@string/stroke_join_spinner_mitre_item</item>
+        <item>@string/stroke_join_spinner_round_item</item>
+        <item>@string/stroke_join_spinner_bevel_item</item>
     </string-array>
 
 

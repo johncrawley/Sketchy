@@ -24,7 +24,7 @@ public class PaintHelperManager {
         shadowHelper = new ShadowHelper();
         angleHelper = new AngleHelper();
         kaleidoscopeHelper = new KaleidoscopeHelper(paintView, viewModel);
-        styleHelper = new StyleHelper();
+        styleHelper = new StyleHelper(mainActivity);
     }
 
 

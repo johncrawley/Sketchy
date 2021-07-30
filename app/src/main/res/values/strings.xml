@@ -137,7 +137,14 @@
     <string name="pattern_label_snake">Snake</string>
     <string name="pattern_label_macaron">Macaron</string>
     <string name="stroke_cap_spinner_label">Cap</string>
+    <string name="stroke_cap_spinner_round_item">Round</string>
+    <string name="stroke_cap_spinner_square_item">Square</string>
+    <string name="stroke_cap_spinner_butt_item">Line</string>
+    <string name="stroke_join_spinner_">Cap</string>
     <string name="stroke_join_spinner_label">Join</string>
+    <string name="stroke_join_spinner_mitre_item">Sharp</string>
+    <string name="stroke_join_spinner_round_item">Soft</string>
+    <string name="stroke_join_spinner_bevel_item">Bevel</string>
     <string name="confirm_wipe_text">Clear the canvas without saving?</string>
     <string name="confirm_wipe_confirm_button">Yes</string>
     <string name="confirm_wipe_cancel_button">No</string>

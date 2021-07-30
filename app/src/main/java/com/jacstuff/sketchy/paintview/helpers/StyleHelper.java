@@ -1,7 +1,9 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
+import android.content.Context;
 import android.graphics.Paint;
 
+import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 
 import java.util.HashMap;
@@ -10,19 +12,33 @@ import java.util.Map;
 public class StyleHelper {
 
     private PaintGroup paintGroup;
+    private final Context context;
     private final Map<String, Paint.Cap> strokeCapMap;
     private final Map<String, Paint.Join> strokeJoinMap;
 
-    public StyleHelper(){
+
+    public StyleHelper(Context context){
+        this.context = context;
         strokeCapMap = new HashMap<>(3);
-        strokeCapMap.put("Square", Paint.Cap.SQUARE);
-        strokeCapMap.put("Round", Paint.Cap.ROUND);
-        strokeCapMap.put("Butt", Paint.Cap.BUTT);
+        put(strokeCapMap, R.string.stroke_cap_spinner_round_item,  Paint.Cap.ROUND);
+        put(strokeCapMap, R.string.stroke_cap_spinner_square_item, Paint.Cap.SQUARE);
+        put(strokeCapMap, R.string.stroke_cap_spinner_butt_item,   Paint.Cap.BUTT);
 
         strokeJoinMap = new HashMap<>(3);
-        strokeJoinMap.put("Bevel", Paint.Join.BEVEL);
-        strokeJoinMap.put("Mitre", Paint.Join.MITER);
-        strokeJoinMap.put("Round", Paint.Join.ROUND);
+        put(strokeJoinMap, R.string.stroke_join_spinner_mitre_item, Paint.Join.MITER);
+        put(strokeJoinMap, R.string.stroke_join_spinner_round_item, Paint.Join.ROUND);
+        put(strokeJoinMap, R.string.stroke_join_spinner_bevel_item, Paint.Join.BEVEL);
+    }
+
+
+    private <T> void put(Map<String, T> map, int id, T item){
+        String str= getStr(id);
+        map.put(str, item);
+    }
+
+
+    private String getStr(int resId){
+        return context.getResources().getString(resId);
     }
 
 

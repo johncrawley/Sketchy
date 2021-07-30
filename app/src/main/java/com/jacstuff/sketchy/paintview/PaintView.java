@@ -64,7 +64,8 @@ public class PaintView extends View {
         shadowPaint = createPaint(Color.BLACK);
         paint.setAntiAlias(true);
         paint.setDither(true);
-        paint.setStrokeCap(Paint.Cap.BUTT);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setStrokeJoin(Paint.Join.MITER);
         paintGroup = new PaintGroup(paint, previewPaint, shadowPaint);
         bitmapHistory = new BitmapHistory(context);
     }
