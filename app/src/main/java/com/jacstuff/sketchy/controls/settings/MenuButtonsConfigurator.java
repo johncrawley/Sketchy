@@ -26,25 +26,19 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
                 ButtonCategory.CATEGORIES,
                 R.id.controlPanelLayoutGroup1);
 
-        ButtonConfigHandler<Integer> buttonConfigSet2 = new ButtonConfigHandler<>(activity,
-                this,
-                ButtonCategory.CATEGORIES,
-                R.id.controlPanelLayoutGroup2);
-
         String angleStr = "0" + activity.getString(R.string.degrees_symbol);
 
         buttonConfig.add(R.id.shapeButton,     R.drawable.button_shape_circle,     R.id.includeShapeControls);
         buttonConfig.add(R.id.styleButton,     R.drawable.button_style_fill,       R.id.includeStyleControls);
         buttonConfig.add(R.id.gradientButton,  R.drawable.button_gradient_disabled,R.id.includeGradientControls);
         buttonConfig.add(R.id.angleButton,     angleStr,                           R.id.includeAngleControls);
-        buttonConfigSet2.add(R.id.blurButton,      R.drawable.button_blur_disabled,    R.id.includeBlurControls);
-        buttonConfigSet2.add(R.id.shadowButton,    R.drawable.button_shadow_disabled,  R.id.includeShadowControls);
-        //buttonConfigSet2.add(R.id.kaleidoButton,   R.drawable.k_off_button,            R.id.includeKaleidoScopeControls);
-        buttonConfigSet2.add(R.id.kaleidoButton,   "K: 1",                  R.id.includeKaleidoScopeControls);
+        buttonConfig.setParentLayout(R.id.controlPanelLayoutGroup2);
+        buttonConfig.add(R.id.blurButton,      R.drawable.button_blur_disabled,    R.id.includeBlurControls);
+        buttonConfig.add(R.id.shadowButton,    R.drawable.button_shadow_disabled,  R.id.includeShadowControls);
+        buttonConfig.add(R.id.kaleidoButton,   "K: 1",                  R.id.includeKaleidoScopeControls);
         buttonConfig.setupClickHandler();
-        buttonConfigSet2.setupClickHandler();
+        buttonConfig.setupClickHandler();
         layoutIds = buttonConfig.getEntries();
-        layoutIds.addAll(buttonConfigSet2.getEntries());
         buttonConfig.setDefaultSelection(R.id.shapeButton);
     }
 
@@ -64,6 +58,5 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
             activity.findViewById(layoutId).setVisibility(View.GONE);
         }
     }
-
 
 }

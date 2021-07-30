@@ -12,7 +12,6 @@ import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -27,7 +26,7 @@ public class ButtonConfigHandler<T>{
     private Set<Integer> buttonIds;
     private Button parentButton;
     private final ButtonCategory buttonCategory;
-    private final LinearLayout linearLayout;
+    private LinearLayout linearLayout;
     private final SettingsPopup settingsPopup;
     private final Map<Drawable, Drawable> drawableCopyMap;
     private int defaultSelectionId;
@@ -65,9 +64,13 @@ public class ButtonConfigHandler<T>{
         linearLayout.addView(buttonUtils.createWrappedButton(id, R.drawable.blank_button, text));
     }
 
+    public void setParentLayout(int layoutId){
+        this.linearLayout = activity.findViewById(layoutId);
+    }
+
 
     public Set<T> getEntries(){
-        return new HashSet<T>(buttonActionMap.values());
+        return new HashSet<>(buttonActionMap.values());
     }
 
 
@@ -83,12 +86,7 @@ public class ButtonConfigHandler<T>{
 
 
     public void setupClickHandler(){
-        View.OnClickListener clickListener = new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                handleClick(view);
-            }
-        };
+        View.OnClickListener clickListener = this::handleClick;
         buttonIds = buttonActionMap.keySet();
         setClickListenerForButtons(clickListener);
     }
