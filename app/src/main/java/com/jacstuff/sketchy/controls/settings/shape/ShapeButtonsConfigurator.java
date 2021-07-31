@@ -7,7 +7,6 @@ import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.settings.AbstractButtonConfigurator;
 import com.jacstuff.sketchy.controls.settings.ButtonConfigHandler;
 import com.jacstuff.sketchy.controls.settings.ButtonsConfigurator;
-import com.jacstuff.sketchy.controls.settings.shape.TextControls;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 
@@ -43,6 +42,7 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
         buttonConfig.add(R.id.pathShapeButton,              R.drawable.button_shape_path,               BrushShape.PATH);
         buttonConfig.add(R.id.rectangleShapeButton,         R.drawable.button_shape_rectangle,          BrushShape.DRAG_RECTANGLE);
         buttonConfig.add(R.id.arcShapeButton,               R.drawable.button_shape_arc,                BrushShape.ARC);
+        buttonConfig.add(R.id.xShapeButton,                 R.drawable.button_shape_square,             BrushShape.X);
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.shapeButton);
         buttonConfig.setDefaultSelection(R.id.circleShapeButton);

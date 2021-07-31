@@ -18,6 +18,7 @@ import com.jacstuff.sketchy.brushes.shapes.TextBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextOnCircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.WavyLineBrush;
+import com.jacstuff.sketchy.brushes.shapes.XBrush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.styles.DashedStyle;
 import com.jacstuff.sketchy.brushes.styles.DashedStyleForLines;
@@ -74,6 +75,7 @@ public class BrushFactory {
         add(new TextOnCircleBrush());
         add(new PathBrush());
         add(new RectangleBrush());
+        add(new XBrush());
     }
 
 
