@@ -17,11 +17,11 @@ public class BlurButtonsConfigurator extends AbstractButtonConfigurator<BlurType
     @Override
     public void configure(){
         buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.BLUR, R.id.blurOptionsLayout);
-        buttonConfig.add(R.id.noBlurButton,      R.drawable.button_blur_disabled,      BlurType.NONE);
-        buttonConfig.add(R.id.innerBlurButton,   R.drawable.inner_blur_button,   BlurType.INNER);
-        buttonConfig.add(R.id.normalBlurButton,  R.drawable.normal_blur_button,  BlurType.NORMAL);
-        buttonConfig.add(R.id.outerBlurButton,   R.drawable.outer_blur_button,   BlurType.OUTER);
-        buttonConfig.add(R.id.solidBlurButton,   R.drawable.solid_blur_button,   BlurType.SOLID);
+        buttonConfig.add(R.id.noBlurButton,      R.drawable.button_blur_off,      BlurType.NONE);
+        buttonConfig.add(R.id.innerBlurButton,   R.drawable.button_blur_inner,   BlurType.INNER);
+        buttonConfig.add(R.id.normalBlurButton,  R.drawable.button_blur_normal,  BlurType.NORMAL);
+        buttonConfig.add(R.id.outerBlurButton,   R.drawable.button_blur_outer,   BlurType.OUTER);
+        buttonConfig.add(R.id.solidBlurButton,   R.drawable.button_blur_solid,   BlurType.SOLID);
 
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.blurButton);
