@@ -11,6 +11,9 @@ import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,17 +21,25 @@ import java.io.OutputStream;
 public class ImageSaver {
 
 
+    private final String CACHE_IMAGE_FILENAME = "cachedImage.bmp";
     private final Context context;
+
 
     public ImageSaver(Context context){
         this.context = context;
     }
+
 
     public void saveImageToFile(Intent data, PaintView paintView){
         Uri uri = data.getData();
         if(uri == null){
             return;
         }
+        saveImageToUri(uri, paintView);
+    }
+
+
+    private void saveImageToUri(Uri uri, PaintView paintView){
         try {
             OutputStream output = context.getContentResolver().openOutputStream(uri);
             if(output == null){
@@ -61,6 +72,35 @@ public class ImageSaver {
             paintView.loadBitmap(bitmap);
         }catch (IOException e){
             showLoadErrorToast();
+        }
+    }
+
+
+    public void saveImageToCacheFile(PaintView paintView){
+        try{
+            FileOutputStream fileOutputStream = context.openFileOutput(CACHE_IMAGE_FILENAME, Context.MODE_PRIVATE);
+            fileOutputStream.write(getImageByteArrayFrom(paintView));
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void loadImageFromCacheFile(PaintView paintView) {
+        File file = context.getFileStreamPath(CACHE_IMAGE_FILENAME);
+        if(!file.exists()){
+            return;
+        }
+        try {
+            FileInputStream input = context.openFileInput(CACHE_IMAGE_FILENAME);
+            Bitmap bitmap = BitmapFactory.decodeStream(input);
+            if(bitmap == null){
+                return;
+            }
+            paintView.loadBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

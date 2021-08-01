@@ -42,13 +42,14 @@ public class ColorButtonClickHandler {
     private final MainViewModel mainViewModel;
 
 
-    public ColorButtonClickHandler(MainActivity mainActivity, PaintView paintView, ButtonLayoutParams buttonLayoutParams, LinearLayout shadesLayout ){
+    public ColorButtonClickHandler(MainActivity mainActivity, PaintView paintView, ButtonLayoutParams buttonLayoutParams){
         this.mainActivity = mainActivity;
         this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         this.mainViewModel = mainActivity.getViewModel();
         this.paintView = paintView;
         this.buttonLayoutParams = buttonLayoutParams;
-        this.shadesLayout = shadesLayout;
+        this.shadesLayout = mainActivity.findViewById(R.id.shadesButtonGroup);
+
         randomShadeButtonsState = new RandomShadeButtonsState();
         setupColorSelectors();
         setupPreexistingState();

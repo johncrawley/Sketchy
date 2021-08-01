@@ -6,6 +6,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         buttonReferenceStore = new ButtonReferenceStore();
         setupViewModel();
-        initImageSaver();
+        imageSaver = new ImageSaver(this);
         setupActionbar();
         configurePaintView();
         initPaintHelperManager();
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupColorAutoScroll();
         initActivityResultLauncher();
         initActivityResultLauncherForLoad();
+
     }
 
 
@@ -165,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void setupColorAndShadeButtons(){
         List<Integer> colors = ColorCreator.generate();
         colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
-        colorButtonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams, findViewById(R.id.shadesButtonGroup));
+        colorButtonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams);
         colorButtonClickHandler.setColorsMap(colors);
         ColorButtonLayoutPopulator layoutPopulator = new ColorButtonLayoutPopulator(this, colorButtonLayoutParams, colors);
         colorButtonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
@@ -175,15 +178,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    private View getDefaultColorButton(){
+        View defaultButton = colorButtonGroupLayout.findViewWithTag(R.string.tag_button_default_color);
+        if(defaultButton == null){
+            defaultButton = colorButtonGroupLayout.findViewWithTag(R.string.tag_button_color_button);
+        }
+        return defaultButton;
+    }
+
+
+
     private void setupColorAutoScroll() {
         if (viewModel.isFirstExecution){
             new ColorAutoScroller(findViewById(R.id.colorScrollView));
         }
-    }
-
-
-    private void initImageSaver(){
-        imageSaver = new ImageSaver(this);
     }
 
 
@@ -217,17 +225,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 settingsButtonsConfigurator.selectDefaults();
                 new SeekBarConfigurator(mainActivity, paintView);
                 viewModelHelper.onResume();
+                loadPreferences();
             }
         });
-    }
-
-
-    private View getDefaultColorButton(){
-        View defaultButton = colorButtonGroupLayout.findViewWithTag(R.string.tag_button_default_color);
-        if(defaultButton == null){
-            defaultButton = colorButtonGroupLayout.findViewWithTag(R.string.tag_button_color_button);
-        }
-        return defaultButton;
     }
 
 
@@ -279,17 +279,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    /*
+    private final String SAVED_ORIENTATION = "savedOrientation";
+
+
+    public void onDestroy(){
+        savePreferences();
+        super.onDestroy();
+    }
+
+
     public void loadPreferences(){
-        SharedPreferences prefs = getSharedPreferences("myPref",0);
-        prefs.getString("myStoreName","defaultValue");
+        SharedPreferences prefs = getSharedPreferences("imagePrefs",0);
+        prefs.getInt(SAVED_ORIENTATION, Configuration.ORIENTATION_PORTRAIT);
+        imageSaver.loadImageFromCacheFile(paintView);
     }
 
 
-    public void savePreferences(String thePreference){
+    public void savePreferences(){
         SharedPreferences.Editor editor = getSharedPreferences("myPref",0).edit();
-        editor.putString("myStoreName", thePreference);
-        editor.commit();
+        editor.putInt(SAVED_ORIENTATION, getResources().getConfiguration().orientation);
+        imageSaver.saveImageToCacheFile(paintView);
+        editor.apply();
     }
-*/
+
 }
