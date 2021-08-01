@@ -35,7 +35,7 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
 
         buttonConfig.setParentLayout(R.id.controlPanelLayoutGroup2);
         buttonConfig.add(R.id.blurButton,      R.drawable.button_blur_off,    R.id.includeBlurControls);
-        buttonConfig.add(R.id.shadowButton,    R.drawable.button_shadow_disabled,  R.id.includeShadowControls);
+        buttonConfig.add(R.id.shadowButton,    R.drawable.button_shadow_off,  R.id.includeShadowControls);
         buttonConfig.add(R.id.kaleidoButton,   "K: 1",                        R.id.includeKaleidoScopeControls);
 
         buttonConfig.setupClickHandler();
