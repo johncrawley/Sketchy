@@ -72,6 +72,7 @@
     <item name="squareShapeButton" type="id"/>
     <item name="circleShapeButton" type="id"/>
     <item name="lineShapeButton" type="id"/>
+    <item name="diamondShapeButton" type="id"/>
     <item name="straightLineShapeButton" type="id"/>
     <item name="waveyLineShapeButton" type="id"/>
     <item name="roundedRectangleShapeButton" type="id"/>
