@@ -117,7 +117,6 @@ public class ColorButtonClickHandler {
     }
 
 
-
     public void onClick(View view){
 
         if(!isColorButton(view)){

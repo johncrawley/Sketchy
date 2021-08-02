@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ColorButtonLayoutPopulator {
+public class ColorButtonLayoutCreator {
 
     private ColorShadeCreator colorShadeCreator;
     private final Map<Integer, List<Integer>> multiColorShades = new HashMap<>();
@@ -36,7 +36,7 @@ public class ColorButtonLayoutPopulator {
     private final RandomShadeButtonIconDrawer randomShadeButtonIconDrawer;
 
 
-    public ColorButtonLayoutPopulator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, final List<Integer> colors){
+    public ColorButtonLayoutCreator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, final List<Integer> colors){
         this.context = mainActivity.getApplicationContext();
         this.activity = mainActivity;
         defaultColor = mainActivity.getString(R.string.default_color);

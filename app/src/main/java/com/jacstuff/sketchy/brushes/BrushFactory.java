@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.brushes;
 
+import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.brushes.shapes.ArcBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
@@ -41,16 +42,23 @@ import java.util.Map;
 public class BrushFactory {
 
     private Map<BrushShape, Brush> brushMap;
-    private final Brush circleBrush;
-    private final PaintView paintView;
+    private Brush circleBrush;
+    private PaintView paintView;
     private final MainViewModel mainViewModel;
-    private final DrawerFactory drawerFactory;
+    private DrawerFactory drawerFactory;
+    private final MainActivity mainActivity;
 
-    public BrushFactory(PaintView paintView, PaintGroup paintGroup, int brushSize, MainViewModel mainViewModel){
+    public BrushFactory(MainActivity mainActivity){
+        this.mainActivity = mainActivity;
+        this.mainViewModel = mainActivity.getViewModel();
+    }
+
+
+    public void init(PaintView paintView, int brushSize){
         this.paintView = paintView;
-        this.mainViewModel = mainViewModel;
-        circleBrush = new CircleBrush();
         drawerFactory = new DrawerFactory(paintView, mainViewModel);
+        circleBrush = new CircleBrush();
+        PaintGroup paintGroup = paintView.getPaintGroup();
         setupBrushMap();
         handleStyles(brushSize, paintGroup);
         addLineBrushAndStyles(paintGroup, brushSize);
@@ -82,7 +90,7 @@ public class BrushFactory {
 
 
     private void add(Brush brush){
-        brush.init(paintView, mainViewModel, drawerFactory);
+        brush.init(paintView, mainActivity, drawerFactory);
         brushMap.put(brush.getBrushShape(), brush);
     }
 

@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 
 import android.graphics.Paint;
 
+import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 
 public class TextBrush extends AbstractBrush implements Brush {
@@ -16,6 +17,10 @@ public class TextBrush extends AbstractBrush implements Brush {
     @Override
     public void onBrushTouchDown(float x, float y, Paint paint){
         String text = mainViewModel.textBrushText;
+        if(text.trim().isEmpty()){
+            mainActivity.toast(R.string.toast_text_brush_is_empty);
+            return;
+        }
         canvas.drawText(text, getCentreX(text, paint), textSize /3f, paint);
     }
 

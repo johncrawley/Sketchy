@@ -59,12 +59,10 @@ public class PaintView extends View {
         super(context, attrs);
         this.context = context;
         paint = createPaint(Color.WHITE);
-        previewPaint =  createPaint(Color.DKGRAY);
+        previewPaint = createPaint(Color.DKGRAY);
         shadowPaint = createPaint(Color.BLACK);
         paint.setAntiAlias(true);
         paint.setDither(true);
-        paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setStrokeJoin(Paint.Join.MITER);
         paintGroup = new PaintGroup(paint, previewPaint, shadowPaint);
         bitmapHistory = new BitmapHistory(context);
     }
@@ -76,9 +74,10 @@ public class PaintView extends View {
     }
 
 
-    public void init(MainViewModel viewModel, SettingsPopup settingsPopup) {
+    public void init(MainViewModel viewModel, SettingsPopup settingsPopup, BrushFactory brushFactory) {
         this.viewModel = viewModel;
         this.settingsPopup = settingsPopup;
+        this.brushFactory = brushFactory;
 
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
@@ -186,15 +185,16 @@ public class PaintView extends View {
     private Paint createPaint(int color){
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeCap(Paint.Cap.SQUARE);
+        paint.setStrokeJoin(Paint.Join.MITER);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setElegantTextHeight(true);
         paint.setColor(color);
         return paint;
     }
 
 
     private void initBrushes(){
-        brushFactory = new BrushFactory(this, paintGroup, brushSize, viewModel);
+        brushFactory.init(this, brushSize);
         currentBrush = brushFactory.getResettedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
     }
 

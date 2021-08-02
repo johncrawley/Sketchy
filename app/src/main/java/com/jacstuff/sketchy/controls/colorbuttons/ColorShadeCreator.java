@@ -1,13 +1,13 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
 
-import com.jacstuff.sketchy.ColorUtils;
+import com.jacstuff.sketchy.utils.ColorUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.jacstuff.sketchy.ColorUtils.Rgb.*;
+import static com.jacstuff.sketchy.utils.ColorUtils.Rgb.*;
 
 class ColorShadeCreator {
 

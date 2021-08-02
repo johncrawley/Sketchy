@@ -13,12 +13,12 @@ import java.util.Set;
 
 public class ButtonUtils {
 
-    private MainActivity activity;
-    private  ButtonLayoutParams buttonLayoutParams;
+    private final MainActivity activity;
+    private  final ButtonLayoutParams buttonLayoutParams;
 
     public ButtonUtils(MainActivity activity){
         this.activity = activity;
-        buttonLayoutParams = activity.getSettingsButtonsLayoutParams();
+        buttonLayoutParams = new ButtonLayoutParams(120, 120, 15, 2);
     }
 
 

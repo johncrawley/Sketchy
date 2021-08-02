@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
@@ -29,6 +30,7 @@ public abstract class AbstractBrush implements  Brush{
     private final FillStyle fillStyle;
     Drawer drawer;
     MainViewModel mainViewModel;
+    MainActivity mainActivity;
     PaintView paintView;
     DrawerFactory.Type drawerType;
 
@@ -43,11 +45,12 @@ public abstract class AbstractBrush implements  Brush{
 
 
     @Override
-    public void init(PaintView paintView, MainViewModel mainViewModel, DrawerFactory drawerFactory){
+    public void init(PaintView paintView, MainActivity mainActivity, DrawerFactory drawerFactory){
         this.paintView = paintView;
         this.paintGroup = paintView.getPaintGroup();
         this.canvas = paintView.getCanvas();
-        this.mainViewModel = mainViewModel;
+        this.mainActivity = mainActivity;
+        this.mainViewModel = mainActivity.getViewModel();
         drawer = drawerFactory.get(drawerType);
         drawer.init();
         postInit();

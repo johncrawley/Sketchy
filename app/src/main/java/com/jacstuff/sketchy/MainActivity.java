@@ -17,18 +17,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
-import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutPopulator;
+import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutCreator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.utils.Toaster;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
 import com.jacstuff.sketchy.tasks.ColorAutoScroller;
@@ -39,13 +40,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private final String SAVED_ORIENTATION = "savedOrientation";
     private PaintView paintView;
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
-    private final ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 22);
-    private final ButtonLayoutParams settingsButtonLayoutParams = new ButtonLayoutParams(120, 120, 15, 2);
     private ColorButtonClickHandler colorButtonClickHandler;
-    private Toast colorPatternToast;
+    private Toaster toaster;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
     private ViewModelHelper viewModelHelper;
     private SettingsPopup settingsPopup;
@@ -61,10 +61,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buttonReferenceStore = new ButtonReferenceStore();
-        setupViewModel();
+        toaster = new Toaster(MainActivity.this);
         imageSaver = new ImageSaver(this);
+        setupViewModel();
         setupActionbar();
-        configurePaintView();
+        setupPaintViewAndDefaultSelections(this);
         initPaintHelperManager();
         setupSettingsButtons();
         setupColorAndShadeButtons();
@@ -72,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupColorAutoScroll();
         initActivityResultLauncher();
         initActivityResultLauncherForLoad();
-
     }
 
 
@@ -89,11 +89,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintHelperManager = new PaintHelperManager(this, paintView, viewModel);
         viewModelHelper.setPaintHelperManager(paintHelperManager);
         paintView.setPaintHelperManager(paintHelperManager);
-    }
-
-
-    public PaintHelperManager getPaintHelperManager(){
-        return this.paintHelperManager;
     }
 
 
@@ -139,8 +134,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public ButtonLayoutParams getSettingsButtonsLayoutParams(){
-        return settingsButtonLayoutParams;
+    public PaintHelperManager getPaintHelperManager(){
+        return this.paintHelperManager;
     }
 
 
@@ -149,9 +144,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    public ButtonReferenceStore getButtonReferenceStore(){
+        return buttonReferenceStore;
+    }
+
+
     public ViewModelHelper getViewModelHelper(){
         return this.viewModelHelper;
     }
+
+
+    public SettingsPopup getSettingsPopup(){
+        return this.settingsPopup;
+    }
+
+
+    public void toastPattern(String msg){  toaster.toastPattern(msg); }
+
+
+    public void toast(int resId){ toaster.toast(resId); }
 
 
     private void setupSettingsButtons(){
@@ -160,20 +171,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public ButtonReferenceStore getButtonReferenceStore(){
-        return buttonReferenceStore;
-    }
-
-
     void setupColorAndShadeButtons(){
         List<Integer> colors = ColorCreator.generate();
         colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
+        ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 22);
         colorButtonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams);
         colorButtonClickHandler.setColorsMap(colors);
-        ColorButtonLayoutPopulator layoutPopulator = new ColorButtonLayoutPopulator(this, colorButtonLayoutParams, colors);
-        colorButtonClickHandler.setMultiColorShades(layoutPopulator.getMultiColorShades());
-        layoutPopulator.addColorButtonLayoutsTo(colorButtonGroupLayout);
-        colorButtonClickHandler.setShadeLayoutsMap(layoutPopulator.getShadeLayoutsMap());
+        ColorButtonLayoutCreator layoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams, colors);
+        colorButtonClickHandler.setMultiColorShades(layoutCreator.getMultiColorShades());
+        layoutCreator.addColorButtonLayoutsTo(colorButtonGroupLayout);
+        colorButtonClickHandler.setShadeLayoutsMap(layoutCreator.getShadeLayoutsMap());
         colorButtonClickHandler.onClick(getDefaultColorButton());
     }
 
@@ -187,7 +194,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     private void setupColorAutoScroll() {
         if (viewModel.isFirstExecution){
             new ColorAutoScroller(findViewById(R.id.colorScrollView));
@@ -195,33 +201,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public SettingsPopup getSettingsPopup(){
-        return this.settingsPopup;
-    }
-
-
-    public void toastPattern(String msg){
-        if(colorPatternToast != null){
-            colorPatternToast.cancel();
-        }
-        colorPatternToast = Toast.makeText(MainActivity.this, getString(R.string.pattern_toast_prefix) +  msg, Toast.LENGTH_SHORT);
-        colorPatternToast.show();
-    }
-
-
-    private void configurePaintView(){
-        paintView = findViewById(R.id.paintView);
-        setupPaintViewAndDefaultSelections(this);
-    }
-
-
     private void setupPaintViewAndDefaultSelections(final MainActivity mainActivity){
+        paintView = findViewById(R.id.paintView);
+        BrushFactory brushFactory = new BrushFactory(this);
         final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                paintView.init(viewModel, settingsPopup);
+                paintView.init(viewModel, settingsPopup, brushFactory);
                 settingsButtonsConfigurator.selectDefaults();
                 new SeekBarConfigurator(mainActivity, paintView);
                 viewModelHelper.onResume();
@@ -277,9 +265,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.setType("image/*");
         loadImageActivityResultLauncher.launch(intent);
     }
-
-
-    private final String SAVED_ORIENTATION = "savedOrientation";
 
 
     public void onDestroy(){

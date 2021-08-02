@@ -10,9 +10,9 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.widget.Button;
 
-import com.jacstuff.sketchy.ColorUtils;
+import com.jacstuff.sketchy.utils.ColorUtils;
 import com.jacstuff.sketchy.R;
-import static com.jacstuff.sketchy.ColorUtils.Rgb.*;
+import static com.jacstuff.sketchy.utils.ColorUtils.Rgb.*;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

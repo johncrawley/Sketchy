@@ -9,15 +9,11 @@
     android:paddingHorizontal="@dimen/paint_view_layout_margin"
     android:layout_height="wrap_content">
 
-
     <LinearLayout
         android:id="@+id/textInputEditTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/seekbar_padding_top"
-        android:paddingBottom="@dimen/seekbar_padding_bottom">
-
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,9 +28,7 @@
             android:imeOptions="actionDone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/textSkewSeekBarLayout"
@@ -47,7 +41,7 @@
             android:id="@+id/textSkewSeekBarLabel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight=".25"
+            android:layout_weight=".2"
             android:gravity="center_vertical"
             android:text="@string/text_skew_seekbar_label"
             />
@@ -56,14 +50,14 @@
             android:id="@+id/textSkewSeekBar"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_weight=".75"
+            android:layout_weight=".8"
             android:indeterminate="false"
             android:gravity="fill_horizontal"
             android:max="@integer/text_skew_seekbar_max"
             android:min="0"
-            android:padding="@dimen/seekbar_padding"
+            android:paddingTop="@dimen/seekbar_text_controls_padding_top"
+            android:paddingBottom="@dimen/seekbar_text_controls_padding_bottom"
             android:progress="@integer/text_skew_seekbar_default" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -77,7 +71,7 @@
             android:id="@+id/textSpacingSeekBarLabel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight=".25"
+            android:layout_weight=".2"
             android:gravity="center_vertical"
             android:text="@string/text_spacing_seekbar_label"
             />
@@ -86,36 +80,44 @@
             android:id="@+id/textSpacingSeekBar"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_weight=".75"
+            android:layout_weight=".8"
             android:indeterminate="false"
             android:gravity="fill_horizontal"
             android:max="@integer/text_spacing_seekbar_max"
             android:min="0"
-            android:padding="@dimen/seekbar_padding"
+            android:paddingTop="@dimen/seekbar_text_controls_padding_top"
+            android:paddingBottom="@dimen/seekbar_text_controls_padding_bottom"
             android:progress="@integer/text_spacing_seekbar_default" />
 
     </LinearLayout>
 
-
-
-    <CheckBox
-        android:id="@+id/checkboxTextBold"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_bold_checkbox_label"/>
+        android:layout_gravity="fill_horizontal"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkboxTextBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_bold_checkbox_label" />
+
+        <CheckBox
+            android:id="@+id/checkboxTextStrikethrough"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_strikethrough_checkbox_label" />
 
 
-    <CheckBox
-        android:id="@+id/checkboxTextStrikethrough"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_strikethrough_checkbox_label"/>
+        <CheckBox
+            android:id="@+id/checkboxTextUnderline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_underline_checkbox_label" />
 
 
-    <CheckBox
-        android:id="@+id/checkboxTextUnderline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_underline_checkbox_label"/>
+    </LinearLayout>
+
 
 </LinearLayout>

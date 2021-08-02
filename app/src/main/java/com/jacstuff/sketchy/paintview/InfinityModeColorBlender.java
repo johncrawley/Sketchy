@@ -2,11 +2,11 @@ package com.jacstuff.sketchy.paintview;
 
 import android.graphics.Paint;
 
-import com.jacstuff.sketchy.ColorUtils;
+import com.jacstuff.sketchy.utils.ColorUtils;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorConverter;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
-import static com.jacstuff.sketchy.ColorUtils.Rgb.*;
+import static com.jacstuff.sketchy.utils.ColorUtils.Rgb.*;
 
 
 public class InfinityModeColorBlender {

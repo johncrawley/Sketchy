@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy;
+package com.jacstuff.sketchy.utils;
 
 public class ColorUtils {
 
@@ -7,21 +7,20 @@ public class ColorUtils {
         GREEN(8),
         BLUE(0);
 
-
         private final int bitShift;
 
         Rgb(int bitShift){
             this.bitShift = bitShift;
         }
 
-        int getBitshift(){
+        int getBitShift(){
             return bitShift;
         }
-
     }
 
+
     public static int getComponentFrom(int color, Rgb rgb){
-        return (color >> rgb.getBitshift()) & 0xff;
+        return (color >> rgb.getBitShift()) & 0xff;
     }
 
 }
