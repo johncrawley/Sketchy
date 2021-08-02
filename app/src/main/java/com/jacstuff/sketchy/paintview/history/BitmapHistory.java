@@ -4,6 +4,8 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import com.jacstuff.sketchy.R;
+
 import java.util.ArrayDeque;
 
 import static android.content.Context.ACTIVITY_SERVICE;
@@ -34,6 +36,23 @@ public class BitmapHistory {
     }
 
 
+    public boolean isEmpty(){
+        return history.isEmpty();
+    }
+
+
+    public void push(Bitmap bitmap){
+        if(isHistorySizeAtLimit() || getFreeMemoryPercentage() < 20 || !hasSpaceFor(bitmap)){
+            if(history.isEmpty()){
+                //nothing to remove and not enough memory to save the latest bitmap
+                return;
+            }
+            history.removeLast();
+        }
+        history.addFirst(new HistoryItem(Bitmap.createBitmap(bitmap), getCurrentScreenOrientation()));
+    }
+
+
     private long getAvailableMemoryBytes(){
         final Runtime runtime = Runtime.getRuntime();
         final long usedMemInBytes=(runtime.totalMemory() - runtime.freeMemory());
@@ -42,23 +61,10 @@ public class BitmapHistory {
     }
 
 
-    public boolean isEmpty(){
-        return history.isEmpty();
+    private boolean isHistorySizeAtLimit(){
+        int limit = context.getResources().getInteger(R.integer.bitmap_history_maximum_size);
+        return history.size() > limit;
     }
-
-
-    public void push(Bitmap bitmap){
-        if(getFreeMemoryPercentage() < 20 || !hasSpaceFor(bitmap)){
-            if(history.isEmpty()){
-                //nothing to remove and not enough memory to save the latest bitmap
-                return;
-            }
-
-            history.removeLast();
-        }
-        history.addFirst(new HistoryItem(Bitmap.createBitmap(bitmap), getCurrentScreenOrientation()));
-    }
-
 
     private int getCurrentScreenOrientation(){
         return context.getResources().getConfiguration().orientation;
