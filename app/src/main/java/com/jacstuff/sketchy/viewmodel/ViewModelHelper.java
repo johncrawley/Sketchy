@@ -81,7 +81,6 @@ public class ViewModelHelper {
     }
 
 
-
     private void retrieveBitmapHistory(){
         if(viewModel.bitmapHistoryItems != null) {
             paintView.getBitmapHistory().setAll(viewModel.bitmapHistoryItems);

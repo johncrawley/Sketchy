@@ -2,10 +2,24 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="wrap_content"
+    android:paddingTop="@dimen/menu_padding_top"
     android:layout_width="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
+        <include
+            android:id="@+id/blurSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/seek_bar_blur" />
+    </LinearLayout>
+
 
     <HorizontalScrollView
         android:id="@+id/controlsScrollView"
@@ -18,25 +32,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/shape_selector_group_top_margin"
+            android:layout_marginTop="@dimen/menu_buttons_layout_top_margin"
+            android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
             android:orientation="horizontal"
             android:paddingTop="@dimen/shape_options_padding_top">
 
         </LinearLayout>
 
     </HorizontalScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
-        <include
-            android:id="@+id/blurSeekBarInclude"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            layout="@layout/blur_seek_bar" />
-    </LinearLayout>
-
 
 </LinearLayout>

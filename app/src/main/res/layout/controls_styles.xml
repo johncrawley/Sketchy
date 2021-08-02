@@ -5,10 +5,9 @@
     android:orientation="vertical"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:paddingTop="@dimen/menu_padding_top"
     android:clickable="true"
     android:focusable="true">
-
-
 
     <LinearLayout
         android:id="@+id/strokeCapSpinnerLayout"
@@ -63,9 +62,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            layout="@layout/line_width_seek_bar" />
+            layout="@layout/seek_bar_line_width" />
     </LinearLayout>
-
 
 
     <HorizontalScrollView
@@ -78,14 +76,10 @@
             android:id="@+id/styleOptionsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/shape_selector_group_top_margin"
-            android:layout_marginBottom="@dimen/shape_selector_group_bottom_margin"
+            android:layout_marginTop="@dimen/menu_buttons_layout_top_margin"
+            android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
             android:orientation="horizontal"
             android:paddingTop="@dimen/shape_options_padding_top"/>
-
     </HorizontalScrollView>
-
-
-
 
 </LinearLayout>

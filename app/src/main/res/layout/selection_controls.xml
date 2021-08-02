@@ -15,7 +15,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:paddingHorizontal="12dp"
-                layout="@layout/shapes_controls" />
+                layout="@layout/controls_shapes" />
 
             <include
                 android:visibility="gone"
@@ -27,7 +27,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:paddingHorizontal="12dp"
-                layout="@layout/styles_controls" />
+                layout="@layout/controls_styles" />
 
             <include
                 android:visibility="gone"
@@ -38,7 +38,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                layout="@layout/angle_controls" />
+                layout="@layout/controls_angle" />
 
             <include
                 android:visibility="gone"
@@ -49,7 +49,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                layout="@layout/gradient_controls" />
+                layout="@layout/controls_gradient" />
 
             <include
                 android:visibility="gone"
@@ -60,7 +60,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                layout="@layout/blur_controls" />
+                layout="@layout/controls_blur" />
 
             <include
                 android:visibility="gone"
@@ -72,7 +72,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:paddingHorizontal="12dp"
-                layout="@layout/shadow_controls" />
+                layout="@layout/controls_shadow" />
             <include
                 android:visibility="gone"
                 android:id="@+id/includeKaleidoScopeControls"
@@ -83,7 +83,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:paddingHorizontal="12dp"
-                layout="@layout/kaleidoscope_controls" />
+                layout="@layout/controls_kaleidoscope" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

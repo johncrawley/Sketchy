@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/shadowSettingsLayout"
+    android:id="@+id/blurSettingsLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/seekbar_padding_top"
-    android:paddingBottom="@dimen/seekbar_padding_bottom"
+    android:weightSum="1"
+    android:paddingTop="@dimen/menu_seekbar_padding_top"
+    android:paddingBottom="@dimen/menu_seekbar_padding_bottom"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-        android:id="@+id/shadowRadiusSeekBarLabel"
+        android:id="@+id/blurIntensitySeekBarLabel"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight=".3"
         android:gravity="center_vertical"
         android:paddingHorizontal="@dimen/seekbar_label_horizontal_padding"
         app:layout_constraintHorizontal_weight="3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/shadow_radius_seekbar_label"
+        android:text="@string/blur_intensity_seekbar_label"
         />
 
     <SeekBar
-        android:id="@+id/shadowRadiusSeekBar"
+        android:id="@+id/blurSeekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:indeterminate="false"
-        android:max="@integer/shadow_radius_max"
-        android:min="@integer/shadow_radius_min"
-        android:progress="@integer/shadow_radius_default"
+        android:layout_weight=".7"
+        android:max="@integer/blur_radius_max_default"
+        android:min="@integer/blur_radius_min_default"
+        android:progress="@integer/blur_radius_default"
         app:layout_constraintHorizontal_weight="7"
-        app:layout_constraintStart_toEndOf="@+id/shadowRadiusSeekBarLabel"
+        app:layout_constraintStart_toEndOf="@+id/blurIntensitySeekBarLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:paddingHorizontal="@dimen/seekbar_horizontal_padding" />
+        android:paddingHorizontal="@dimen/seekbar_horizontal_padding"
+         />
 </androidx.constraintlayout.widget.ConstraintLayout>

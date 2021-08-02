@@ -4,8 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/seekbar_padding_top"
-    android:paddingBottom="@dimen/seekbar_padding_bottom"
+    android:paddingTop="@dimen/menu_seekbar_padding_top"
+    android:paddingBottom="@dimen/menu_seekbar_padding_bottom"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -18,9 +18,10 @@
         android:layout_weight="1"
         android:checked="false"
         android:gravity="center_vertical"
-        android:padding="@dimen/swith_option_padding"
+        android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
+        android:paddingTop="@dimen/switch_option_padding_top"
+        android:paddingBottom="@dimen/switch_option_padding_bottom"
         android:text="@string/kaleidoscope_infinity_mode_label" />
-
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/kaleidoscopeCentredSwitch"
@@ -29,7 +30,9 @@
         android:layout_weight="1"
         android:checked="true"
         android:gravity="center_vertical"
-        android:padding="@dimen/swith_option_padding"
+        android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
+        android:paddingTop="@dimen/switch_option_padding_top"
+        android:paddingBottom="@dimen/switch_option_padding_bottom"
         android:text="@string/kaleidoscope_fixed_position_label" />
 
 </LinearLayout>

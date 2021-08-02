@@ -6,26 +6,10 @@
     android:orientation="vertical"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:paddingTop="@dimen/menu_padding_top"
     android:clickable="true"
     android:focusable="true">
 
-
-    <HorizontalScrollView
-        android:id="@+id/controlsScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/kaleidoscopeOptionsLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/shape_selector_group_top_margin"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/shape_options_padding_top">
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
     <include
         android:id="@+id/kaleidoscopeOptionsInclude"
         android:layout_width="wrap_content"
@@ -37,5 +21,20 @@
         android:layout_gravity="center_horizontal"
         layout="@layout/kaleidoscope_options" />
 
+    <HorizontalScrollView
+        android:id="@+id/controlsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/kaleidoscopeOptionsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/menu_buttons_layout_top_margin"
+            android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/shape_options_padding_top">
+        </LinearLayout>
+    </HorizontalScrollView>
 
 </LinearLayout>

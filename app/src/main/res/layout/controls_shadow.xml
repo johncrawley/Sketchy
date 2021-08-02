@@ -6,23 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:clickable="true"
+    android:paddingTop="@dimen/menu_padding_top"
     android:focusable="true">
-
-    <HorizontalScrollView
-        android:id="@+id/controlsScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/shadowOptionsLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/shape_selector_group_top_margin"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/shape_options_padding_top">
-        </LinearLayout>
-
-    </HorizontalScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,8 +18,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            layout="@layout/shadow_radius_seek_bar" />
+            layout="@layout/seek_bar_shadow_radius" />
     </LinearLayout>
 
+    <HorizontalScrollView
+        android:id="@+id/controlsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/shadowOptionsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/menu_buttons_layout_top_margin"
+            android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/shape_options_padding_top">
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
 </LinearLayout>

@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/styleSettingsLayout"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/gradientSettingsLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:weightSum="1"
-    android:paddingTop="@dimen/seekbar_padding_top"
-    android:paddingBottom="@dimen/seekbar_padding_bottom"
+    android:paddingTop="@dimen/menu_seekbar_padding_top"
+    android:paddingBottom="@dimen/menu_seekbar_padding_bottom"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-        android:id="@+id/lineWidthSeekBarLabel"
+        android:id="@+id/gradientRadiusSeekBarLabel"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight=".3"
         android:gravity="center_vertical"
         android:paddingHorizontal="@dimen/seekbar_label_horizontal_padding"
         app:layout_constraintHorizontal_weight="3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/line_width_seekbar_label"
+        android:text="@string/gradient_size_seekbar_label"
         />
 
     <SeekBar
-        android:id="@+id/lineWidthSeekBar"
+        android:id="@+id/gradientSizeSeekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:indeterminate="false"
-        android:min="@integer/line_width_min"
-        android:progress="@integer/line_width_default"
+        android:layout_weight=".7"
+        android:max="@integer/gradient_radius_max"
+        android:min="@integer/gradient_radius_min"
         app:layout_constraintHorizontal_weight="7"
-        app:layout_constraintStart_toEndOf="@+id/lineWidthSeekBarLabel"
+        app:layout_constraintStart_toEndOf="@+id/gradientRadiusSeekBarLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:paddingHorizontal="@dimen/seekbar_horizontal_padding"
-     />
+        android:progress="@integer/gradient_radius_default" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
