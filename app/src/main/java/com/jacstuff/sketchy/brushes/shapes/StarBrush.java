@@ -50,7 +50,7 @@ public class StarBrush extends PentagonBrush {
         insideTopLeft    = new Point(getX(radsFromTopPointToBottomLeft, starPointSideLength),
                 getYOffset(radsFromTopPointToBottomLeft, starPointSideLength));
 
-        insideBottomLeft = new Point(getX(radsFromTopPointToBottomRight, furtherInnerPointLength),
+        insideBottomLeft = new Point(getX(radsFromTopPointToBottomLeft, furtherInnerPointLength),
                 getYOffset(radsFromTopPointToBottomLeft, furtherInnerPointLength));
 
         insideBottomRight = new Point(getX(radsFromTopPointToBottomRight, furtherInnerPointLength),

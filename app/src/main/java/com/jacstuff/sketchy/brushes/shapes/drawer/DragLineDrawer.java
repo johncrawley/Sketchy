@@ -1,6 +1,8 @@
 package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Paint;
+import android.graphics.Point;
+
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -20,7 +22,7 @@ public class DragLineDrawer extends AbstractDrawer implements Drawer{
 
     @Override
     public void down(float x, float y, Paint paint) {
-        brush.onTouchDown(x,y, paint);
+        brush.onTouchDown(new Point((int)x, (int)y), canvas,paint);
         paintView.invalidate();
     }
 
