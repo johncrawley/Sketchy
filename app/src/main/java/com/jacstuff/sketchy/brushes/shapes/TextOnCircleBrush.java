@@ -1,7 +1,9 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
@@ -15,10 +17,10 @@ public class TextOnCircleBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onBrushTouchDown(float x, float y, Paint paint) {
+    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
         Path path = new Path();
-        path.moveTo(x,y);
-        path.addCircle(x,y, brushSize * 2, Path.Direction.CW);
+        path.moveTo(0,0);
+        path.addCircle(0,0, brushSize * 2, Path.Direction.CW);
 
         paint.setLinearText(true);
         String text = mainViewModel.textBrushText;

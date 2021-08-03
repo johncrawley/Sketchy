@@ -1,8 +1,10 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
 
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
@@ -103,8 +105,8 @@ public class PentagonBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onBrushTouchDown(float x, float y, Paint paint){
-        deriveOutsidePoints(x,y);
+    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+        deriveOutsidePoints();
         Path path = new Path();
         path.moveTo(topPoint.x, topPoint.y);
         path.lineTo(rightX, rightY);
@@ -116,9 +118,9 @@ public class PentagonBrush extends AbstractBrush implements Brush {
     }
 
 
-    void deriveOutsidePoints(float x, float y){
+    void deriveOutsidePoints(){
 
-        float topY =  - halfBrushSize;
+        int topY =  - halfBrushSize;
         topPoint.set(0, topY );
         bottomRightX =      + xFromTopPointToBottomRight;
         bottomRightY = topY + yFromTopPointToBottomRight;
@@ -140,38 +142,37 @@ public class PentagonBrush extends AbstractBrush implements Brush {
 
         distanceToOppositePoint = brushSize * heightToOppositePointRatio;
 
-        xFromTopPointToBottomRight  = getXPoint(radsFromTopPointToBottomRight);
-        yFromTopPointToBottomRight  = getYPoint(radsFromTopPointToBottomRight);
+        xFromTopPointToBottomRight  = getX(radsFromTopPointToBottomRight);
+        yFromTopPointToBottomRight  = getY(radsFromTopPointToBottomRight);
 
-        xFromTopPointToBottomLeft   = getXPoint(radsFromTopPointToBottomLeft);
-        yFromTopPointToBottomLeft   = getYPoint(radsFromTopPointToBottomLeft);
+        xFromTopPointToBottomLeft   = getX(radsFromTopPointToBottomLeft);
+        yFromTopPointToBottomLeft   = getY(radsFromTopPointToBottomLeft);
 
-        xFromBottomRightPointToLeft = getXPoint(radsFromBottomRightPointToLeft);
-        yFromBottomRightPointToLeft = getYPoint(radsFromBottomRightPointToLeft);
+        xFromBottomRightPointToLeft = getX(radsFromBottomRightPointToLeft);
+        yFromBottomRightPointToLeft = getY(radsFromBottomRightPointToLeft);
 
-        xFromBottomLeftPointToRight = getXPoint(radsFromBottomLeftPointToRight);
-        yFromBottomLeftPointToRight = getYPoint(radsFromBottomLeftPointToRight);
+        xFromBottomLeftPointToRight = getX(radsFromBottomLeftPointToRight);
+        yFromBottomLeftPointToRight = getY(radsFromBottomLeftPointToRight);
 
     }
 
 
-
-    private int getXPoint(double rads){
-        return getXPoint(rads, distanceToOppositePoint);
+    private int getX(double rads){
+        return getX(rads, distanceToOppositePoint);
     }
 
 
-    private int getYPoint(double rads){
-        return getYPoint(rads, distanceToOppositePoint);
+    private int getY(double rads){
+        return getY(rads, distanceToOppositePoint);
     }
 
 
-    int getXPoint(double rads, float distance){
+    int getX(double rads, float distance){
         return (int) (distance * Math.sin(rads));
     }
 
 
-    int getYPoint(double rads, float distance){
+    int getY(double rads, float distance){
         return (int)(distance * Math.cos(rads));
     }
 

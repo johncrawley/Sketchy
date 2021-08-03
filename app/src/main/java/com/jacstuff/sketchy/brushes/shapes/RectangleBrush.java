@@ -1,7 +1,9 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
 
+import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
@@ -17,9 +19,9 @@ public class RectangleBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onBrushTouchDown(float x, float y, Paint paint){
-        x1 = x;
-        y1 = y;
+    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+        x1 = p.x;
+        y1 = p.y;
     }
 
 

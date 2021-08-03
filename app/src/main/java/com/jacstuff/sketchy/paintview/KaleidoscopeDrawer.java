@@ -3,12 +3,16 @@ package com.jacstuff.sketchy.paintview;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Shader;
 
 import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
+
+import androidx.core.util.Consumer;
 
 
 public class KaleidoscopeDrawer {
@@ -26,6 +30,7 @@ public class KaleidoscopeDrawer {
         this.viewModel = viewModel;
         infinityPaint = new Paint();
         this.kaleidoscopeHelper = kaleidoscopeHelper;
+        segmentCanvas = new Canvas();
     }
 
 
@@ -50,11 +55,45 @@ public class KaleidoscopeDrawer {
         for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()){
             canvas.save();
             canvas.rotate(angle);
-            parentDrawer.drawKaleidoscopeSegment(x, y, angle, paint);
+            parentDrawer.drawKaleidoscopeSegment(x, y, paint);
             canvas.restore();
         }
         if(viewModel.isInfinityModeEnabled){
             drawGlitchSegments(x,y);
+        }
+        canvas.restore();
+    }
+    //TODO: let's try again to create a segment bitmap on each draw
+    // -should be transparent
+    // should draw the current brush in the middle
+    // should be drawn at current translated 0,0 -segmentWidth/2, -segmentHeight/2
+    private Bitmap segmentBitmap;
+    private Canvas segmentCanvas;
+
+
+    public void drawKaleidoscope(Point p, int currentBrushSize, Runnable segmentDrawer){
+        final int MIN_DIMENSION = 50;
+        int segmentDimension = MIN_DIMENSION + currentBrushSize;
+
+        if(viewModel.isInfinityModeEnabled) {
+            infinityImage = Bitmap.createScaledBitmap(paintView.getBitmap(), segmentDimension, segmentDimension, false);
+        }
+        else{
+            segmentBitmap = Bitmap.createScaledBitmap(paintView.getBitmap(), 500, 500, false);
+            segmentBitmap.eraseColor(Color.TRANSPARENT);
+            segmentCanvas.setBitmap(segmentBitmap);
+        }
+        canvas.save();
+        canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
+
+        for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()){
+            canvas.save();
+            canvas.rotate(angle);
+            segmentDrawer.run();
+            canvas.restore();
+        }
+        if(viewModel.isInfinityModeEnabled){
+            drawGlitchSegments(p.x, p.y);
         }
         canvas.restore();
     }

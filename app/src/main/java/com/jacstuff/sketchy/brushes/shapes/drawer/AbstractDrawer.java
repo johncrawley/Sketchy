@@ -1,6 +1,8 @@
 package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
+
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.paintview.KaleidoscopeDrawer;
 import com.jacstuff.sketchy.paintview.PaintView;
@@ -18,6 +20,7 @@ public abstract class AbstractDrawer implements Drawer {
     Brush brush;
     PaintView paintView;
     boolean isColorChangedOnDown = true;
+    final Paint shadowPaint;
 
 
     AbstractDrawer(PaintView paintView, MainViewModel viewModel){
@@ -26,6 +29,7 @@ public abstract class AbstractDrawer implements Drawer {
         this.paintHelperManager = paintView.getPaintHelperManager();
         kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
         kaleidoscopeDrawer = new KaleidoscopeDrawer(paintView, viewModel, kaleidoscopeHelper);
+        shadowPaint = paintView.getShadowPaint();
     }
 
     public void setBrush(Brush brush){

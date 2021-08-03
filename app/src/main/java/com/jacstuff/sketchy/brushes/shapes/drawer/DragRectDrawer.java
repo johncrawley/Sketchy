@@ -64,7 +64,7 @@ public class DragRectDrawer extends BasicDrawer{
 
 
     @Override
-    public void drawKaleidoscopeSegment(float x, float y, float angle, Paint paint){
+    public void drawKaleidoscopeSegment(float x, float y, Paint paint){
         canvas.save();
         translateForKaleidoscope(x, y);
         rotateThenDrawShadowAndObject(x, y, paint);

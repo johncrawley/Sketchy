@@ -56,7 +56,7 @@ public class DragLineDrawer extends AbstractDrawer implements Drawer{
 
 
     @Override
-    public void drawKaleidoscopeSegment(float x, float y, float angle, Paint paint){
+    public void drawKaleidoscopeSegment(float x, float y, Paint paint){
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
             brushTouchUp(x,y, paintView.getShadowPaint());
         }

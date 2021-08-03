@@ -1,7 +1,9 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
@@ -27,11 +29,11 @@ public class PathBrush extends AbstractBrush implements Brush {
     }
 
 
-    public void onBrushTouchDown(float x, float y, Paint paint){
+    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         totalPath.reset();
-        totalPath.moveTo(x,y);
-        previousX = x;
-        previousY = y;
+        totalPath.moveTo(p.x, p.y);
+        previousX = p.x;
+        previousY = p.y;
     }
 
 

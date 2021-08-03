@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -41,6 +42,16 @@ public abstract class AbstractBrush implements  Brush{
         currentStyle = fillStyle;
         this.brushShape = brushShape;
         this.drawerType = DrawerFactory.Type.BASIC;
+    }
+
+
+    public void onTouchMove(Point p, Canvas canvas, Paint paint){
+
+
+    }
+
+    public void onTouchUp(Point p, Canvas canvas, Paint paint){
+
     }
 
 
@@ -107,6 +118,10 @@ public abstract class AbstractBrush implements  Brush{
         currentStyle.init(paintGroup, brushSize);
     }
 
+    @Override
+    public int getBrushSize(){
+        return brushSize;
+    }
 
     public void notifyStrokeWidthChanged(){
         currentStyle.notifyStyleChange();
@@ -118,6 +133,16 @@ public abstract class AbstractBrush implements  Brush{
         onBrushTouchDown(x, y, paint);
     }
 
+    @Override
+    public final void onTouchDown(Point p, Canvas canvas, Paint paint){
+        currentStyle.onDraw();
+        onBrushTouchDown(p, canvas, paint);
+    }
+
+
+    void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+        //do nothing
+    }
 
     void onBrushTouchDown(float x, float y, Paint paint){
         //do nothing

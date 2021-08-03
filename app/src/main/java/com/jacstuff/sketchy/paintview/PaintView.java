@@ -29,7 +29,7 @@ public class PaintView extends View {
     private final Paint paint, shadowPaint, previewPaint;
     private int brushSize;
     private Bitmap bitmap;
-    private Canvas canvas;
+    private Canvas canvas, kaleidoscopeSegmentCanvas;
     private ColorSelector colorSelector;
     private BrushStyle currentBrushStyle = BrushStyle.FILL;
     private Brush currentBrush;
@@ -81,6 +81,7 @@ public class PaintView extends View {
 
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
+        kaleidoscopeSegmentCanvas = new Canvas(Bitmap.createBitmap(10,10, Bitmap.Config.ARGB_8888));
         bitmapLoader = new BitmapLoader(this, canvas, drawPaint);
         initBrushes();
 
@@ -123,6 +124,8 @@ public class PaintView extends View {
     public Canvas getCanvas(){
         return canvas;
     }
+
+    public Canvas getKaleidoscopeSegmentCanvas(){return kaleidoscopeSegmentCanvas;}
 
     public Paint getShadowPaint(){
         return shadowPaint;

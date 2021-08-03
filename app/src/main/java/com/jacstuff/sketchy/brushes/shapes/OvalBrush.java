@@ -1,6 +1,8 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
+import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.RectF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -14,18 +16,10 @@ public class OvalBrush extends AbstractBrush implements Brush {
         ovalRect = new RectF(-1,1,1,-1);
     }
 
-
     @Override
-    public void onBrushTouchDown(float x, float y, Paint paint){
+    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         canvas.drawOval(ovalRect, paint);
     }
-
-
-    @Override
-    public void onTouchMove(float x, float y, Paint paint){
-        onTouchDown(0,0, paint);
-    }
-
 
 
     @Override
@@ -36,9 +30,5 @@ public class OvalBrush extends AbstractBrush implements Brush {
         ovalRect.right = halfBrushSize;
         ovalRect.top = height;
         ovalRect.bottom = -height;
-
     }
-
-
-
 }

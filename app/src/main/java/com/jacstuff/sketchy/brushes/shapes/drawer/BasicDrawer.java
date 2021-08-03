@@ -1,6 +1,8 @@
 package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Paint;
+import android.graphics.Point;
+
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -58,17 +60,21 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
     public void rotateAndDraw(float x, float y, Paint paint){
         canvas.save();
         canvas.translate(x, y);
+        Point p = new Point((int)x, (int)y);
         canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
-            brush.onTouchDown(x,y, paintView.getShadowPaint());
+            brush.onTouchDown(p, canvas, paintView.getShadowPaint());
         }
-        brush.onTouchDown(x, y, paint);
+        brush.onTouchDown(p, canvas, paint);
         canvas.restore();
     }
 
+    private void log(String msg){
+        System.out.println("BasicDrawer: " + msg);
+    }
 
     @Override
-    public void drawKaleidoscopeSegment(float x, float y, float angle, Paint paint){
+    public void drawKaleidoscopeSegment(float x, float y, Paint paint){
         rotateAndDraw(x - kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(), paint);
     }
 

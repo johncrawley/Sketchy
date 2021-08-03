@@ -1,6 +1,8 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
+import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -15,7 +17,7 @@ public class TextBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onBrushTouchDown(float x, float y, Paint paint){
+    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         String text = mainViewModel.textBrushText;
         if(text.trim().isEmpty()){
             mainActivity.toast(R.string.toast_text_brush_is_empty);
