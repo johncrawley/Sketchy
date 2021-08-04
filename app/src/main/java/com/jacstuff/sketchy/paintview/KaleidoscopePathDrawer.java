@@ -10,11 +10,8 @@ import android.graphics.Point;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-import androidx.lifecycle.ViewModel;
 
 public class KaleidoscopePathDrawer extends KaleidoscopeDrawer{
-
-
 
     private final Canvas kaleidoscopeCanvas;
     private final Paint paint;
@@ -22,15 +19,11 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer{
     private final Point previousPoint = new Point();
 
 
-
     public KaleidoscopePathDrawer(PaintView paintView, MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
         super(paintView, viewModel, kaleidoscopeHelper);
         kaleidoscopeCanvas = paintView.getKaleidoscopeSegmentCanvas();
         paint = paintView.getPaint();
     }
-
-
-
 
 
     public void drawKaleidoscope(Point p, Point originalPoint, int currentBrushSize){
@@ -65,24 +58,20 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer{
         canvas.restore();
         previousPoint.x = originalPoint.x;
         previousPoint.y = originalPoint.y;
-        drawFlickerGuardCircles(kx, ky, p, halfSegmentWidth);
+        drawFlickerGuardCircles(p);
 
     }
 
-    private void drawFlickerGuardCircles(float kx, float ky, Point p, float halfSegmentWidth){
-
+    private void drawFlickerGuardCircles(Point p){
         canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
         paintView.enablePreviewLayer();
+        canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
         for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle+= kaleidoscopeHelper.getDegreeIncrement()){
             canvas.rotate(kaleidoscopeHelper.getDegreeIncrement());
-            kx = p.x -halfSegmentWidth;
-            ky = p.y -halfSegmentWidth;
-            canvas.drawCircle(kx, ky, paint.getStrokeWidth()/2, paintView.getPreviewPaint());
+            canvas.drawCircle(p.x, p.y, paint.getStrokeWidth()/3, paintView.getPreviewPaint());
         }
         canvas.rotate(0);
         canvas.translate(0,0);
-
-
     }
 
 
@@ -99,6 +88,5 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer{
         tempPath.lineTo(0, 0);
         kaleidoscopeCanvas.drawPath(tempPath, paint);
     }
-
 
 }

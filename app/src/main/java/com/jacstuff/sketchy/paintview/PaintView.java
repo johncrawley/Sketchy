@@ -177,6 +177,8 @@ public class PaintView extends View {
     }
 
 
+
+
     public void disablePreviewLayer(){
         isPreviewLayerToBeDrawn = false;
         canvas.setBitmap(bitmap);
