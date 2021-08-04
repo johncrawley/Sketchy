@@ -166,4 +166,9 @@ public abstract class AbstractBrush implements  Brush{
         return drawer.isColorChangedOnDown();
     }
 
+
+    public void onTouchDownKaleidoscope(Point p, Canvas canvas, Paint paint){}
+    public void onTouchMoveKaleidoscope(Point p, Canvas canvas, Paint paint){}
+    public void onTouchUpKaleidoscope(Point p, Canvas canvas, Paint paint){}
+
 }

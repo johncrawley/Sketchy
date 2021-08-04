@@ -131,6 +131,10 @@ public class PaintView extends View {
         return shadowPaint;
     }
 
+    public Paint getPaint(){
+        return paint;
+    }
+
     public PaintHelperManager getPaintHelperManager(){
         return paintHelperManager;
     }

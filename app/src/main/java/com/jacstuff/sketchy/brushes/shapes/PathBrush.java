@@ -39,16 +39,33 @@ public class PathBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchMove(Point p, Canvas canvas, Paint paint){
-        log("Entered onTouchMove()");
         currentStyle.onDraw();
         Path path = new Path();
         path.moveTo(previousX -p.x, previousY -p.y);
         totalPath.lineTo(p.x, p.y);
+        float x1 = previousX -p.x;
+        float y1 = previousY -p.y;
+
         path.lineTo(0,0);
         canvas.drawPath(path, paint);
         previousX = p.x;
         previousY = p.y;
     }
+
+
+    @Override
+    public void onTouchMoveKaleidoscope(Point p, Canvas canvas, Paint paint){
+        currentStyle.onDraw();
+        Path path = new Path();
+        float transformedPreviousX = p.x - previousX;
+        float transformedPreviousY = p.y - previousY;
+        path.moveTo(transformedPreviousX, transformedPreviousY);
+        path.lineTo(0,500);
+        canvas.drawPath(path, paint);
+        previousX = p.x;
+        previousY = p.y;
+    }
+
 
     private void log(String msg){
         System.out.println("PathBrush: " + msg);

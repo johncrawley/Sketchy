@@ -11,27 +11,25 @@ import androidx.core.util.Consumer;
 
 public class PathDrawer extends BasicDrawer{
 
-    private final Canvas kaleidoscopeCanvas;
 
     public PathDrawer(PaintView paintView, MainViewModel viewModel){
         super(paintView, viewModel);
-        kaleidoscopeCanvas = paintView.getKaleidoscopeSegmentCanvas();
     }
 
 
     @Override
     public void down(float x, float y, Paint paint) {
+        Point point = new Point((int)x, (int)y);
         paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
-        drawToCanvas((int)x, (int)y, () -> draw(paint, (p) -> brush.onTouchDown(new Point((int)x, (int)y), canvas, p)));
-        //drawToCanvas(x,y, paint);
+        drawToCanvas(point, (c) -> draw(point, (paintArg) -> brush.onTouchDown(point, c, paintArg)));
     }
 
 
     @Override
     public void move(float x, float y, Paint paint) {
+        Point point = new Point((int)x, (int)y);
         paintView.disablePreviewLayer();
-        drawToCanvas((int)x, (int)y, () -> draw(paint, (p) -> brush.onTouchMove(new Point((int)x, (int)y), canvas, p)));
-       // drawToCanvasMove(x,y, paint);
+        drawToCanvas(point, (c) -> draw(point, (paintArg) -> brush.onTouchMove(point, c, paintArg)));
         paintView.enablePreviewLayer();
         drawPreviewWhenInfinityModeOff(x, y);
     }
@@ -46,23 +44,29 @@ public class PathDrawer extends BasicDrawer{
     }
 
 
-    void drawToCanvas(int x, int y, Runnable runnable){
+    void drawToCanvas(Point p, Consumer<Canvas> drawMethod){
         if(kaleidoscopeHelper.isEnabled()){
-            Point p = new Point(x - kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY());
-            kaleidoscopeDrawer.drawKaleidoscope(p , brush.getBrushSize(), runnable);
+            Point pk = new Point(p.x - kaleidoscopeHelper.getCenterX(), p.y - kaleidoscopeHelper.getCenterY());
+
+                   // kaleidoscopeDrawer.drawKaleidoscope(pk , brush.getBrushSize(), draw(pk, (canvas) -> { brush.onTouchMoveKaleidoscope(p, canvas, paint);}));
+            //kaleidoscopeDrawer.drawKaleidoscope(pk , brush.getBrushSize(), (c)-> draw(pk, (paintArg) -> { brush.onTouchMoveKaleidoscope(pk, canvas, paintArg);}));
+            kaleidoscopeDrawer.drawKaleidoscope(pk, p, brush.getBrushSize());
         }
         else{
-            runnable.run();
+            drawMethod.accept(canvas);
         }
         paintView.invalidate();
     }
 
 
-    public void draw(Paint defaultPaint, Consumer<Paint> drawTouch){
+    public void draw(Point point, Consumer<Paint> drawTouch){
+        canvas.save();
+        canvas.translate(point.x, point.y);
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
             drawTouch.accept(shadowPaint);
         }
-        drawTouch.accept(defaultPaint);
+        drawTouch.accept(paint);
+        canvas.restore();
     }
 
 
