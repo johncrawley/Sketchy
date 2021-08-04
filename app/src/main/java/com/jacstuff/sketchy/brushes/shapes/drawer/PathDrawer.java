@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 
+import com.jacstuff.sketchy.paintview.KaleidoscopePathDrawer;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -11,9 +12,11 @@ import androidx.core.util.Consumer;
 
 public class PathDrawer extends BasicDrawer{
 
+    private KaleidoscopePathDrawer kaleidoscopePathDrawer;
 
     public PathDrawer(PaintView paintView, MainViewModel viewModel){
         super(paintView, viewModel);
+        kaleidoscopePathDrawer = new KaleidoscopePathDrawer(paintView, viewModel, kaleidoscopeHelper);
     }
 
 
@@ -30,7 +33,8 @@ public class PathDrawer extends BasicDrawer{
         Point point = new Point((int)x, (int)y);
         paintView.disablePreviewLayer();
         drawToCanvas(point, (c) -> draw(point, (paintArg) -> brush.onTouchMove(point, c, paintArg)));
-        paintView.enablePreviewLayer();
+       // paintView.enablePreviewLayer();
+       // canvas.drawCircle(x,y, paint.getStrokeWidth(), paintView.getPreviewPaint());
         drawPreviewWhenInfinityModeOff(x, y);
     }
 
@@ -47,10 +51,7 @@ public class PathDrawer extends BasicDrawer{
     void drawToCanvas(Point p, Consumer<Canvas> drawMethod){
         if(kaleidoscopeHelper.isEnabled()){
             Point pk = new Point(p.x - kaleidoscopeHelper.getCenterX(), p.y - kaleidoscopeHelper.getCenterY());
-
-                   // kaleidoscopeDrawer.drawKaleidoscope(pk , brush.getBrushSize(), draw(pk, (canvas) -> { brush.onTouchMoveKaleidoscope(p, canvas, paint);}));
-            //kaleidoscopeDrawer.drawKaleidoscope(pk , brush.getBrushSize(), (c)-> draw(pk, (paintArg) -> { brush.onTouchMoveKaleidoscope(pk, canvas, paintArg);}));
-            kaleidoscopeDrawer.drawKaleidoscope(pk, p, brush.getBrushSize());
+            kaleidoscopePathDrawer.drawKaleidoscope(pk, p, brush.getBrushSize());
         }
         else{
             drawMethod.accept(canvas);

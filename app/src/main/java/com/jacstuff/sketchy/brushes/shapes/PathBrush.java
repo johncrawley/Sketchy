@@ -60,7 +60,7 @@ public class PathBrush extends AbstractBrush implements Brush {
         float transformedPreviousX = p.x - previousX;
         float transformedPreviousY = p.y - previousY;
         path.moveTo(transformedPreviousX, transformedPreviousY);
-        path.lineTo(0,500);
+        path.lineTo(0,0);
         canvas.drawPath(path, paint);
         previousX = p.x;
         previousY = p.y;

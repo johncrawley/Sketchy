@@ -28,7 +28,7 @@ public class PaintView extends View {
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
     private final Paint paint, shadowPaint, previewPaint;
     private int brushSize;
-    private Bitmap bitmap;
+    private Bitmap bitmap, previewBitmap;
     private Canvas canvas, kaleidoscopeSegmentCanvas;
     private ColorSelector colorSelector;
     private BrushStyle currentBrushStyle = BrushStyle.FILL;
@@ -39,12 +39,11 @@ public class PaintView extends View {
     private PaintHelperManager paintHelperManager;
     private KaleidoscopeHelper kaleidoscopeHelper;
     private boolean isPreviewLayerToBeDrawn;
-    private Bitmap previewBitmap;
+    private boolean ignoreMoveAndUpActions = false;
     private final BitmapHistory bitmapHistory;
     private final Paint drawPaint = new Paint();
     private final PaintGroup paintGroup;
     private SettingsPopup settingsPopup;
-    private boolean ignoreMoveAndUpActions = false;
     private final Context context;
     private BitmapLoader bitmapLoader;
     private InfinityModeColorBlender fractalColorBlender;
@@ -99,27 +98,13 @@ public class PaintView extends View {
         return this.paintGroup;
     }
 
-
     public BitmapHistory getBitmapHistory(){
         return bitmapHistory;
     }
 
-
-    public void assignMostRecentBitmap(){
-        loadHistoryItem(false);
-    }
-
-
-    public void setBrushStyle(BrushStyle brushStyle){
-        currentBrushStyle = brushStyle;
-        currentBrush.setStyle(brushStyle);
-    }
-
-
     public Bitmap getBitmap(){
         return bitmap;
     }
-
 
     public Canvas getCanvas(){
         return canvas;
@@ -137,6 +122,24 @@ public class PaintView extends View {
 
     public PaintHelperManager getPaintHelperManager(){
         return paintHelperManager;
+    }
+
+    public Paint getPreviewPaint(){
+        return previewPaint;
+    }
+
+    public void pushHistory(){
+        bitmapHistory.push(bitmap);
+    }
+
+    public void assignMostRecentBitmap(){
+        loadHistoryItem(false);
+    }
+
+
+    public void setBrushStyle(BrushStyle brushStyle){
+        currentBrushStyle = brushStyle;
+        currentBrush.setStyle(brushStyle);
     }
 
 
@@ -164,15 +167,6 @@ public class PaintView extends View {
         isCanvasLocked = true;
         drawPlainBackgroundAndSaveToHistory();
         isCanvasLocked = false;
-    }
-
-
-    public Paint getPreviewPaint(){
-        return previewPaint;
-    }
-
-    public void pushHistory(){
-        bitmapHistory.push(bitmap);
     }
 
 
@@ -234,7 +228,7 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas viewCanvas) {
         viewCanvas.save();
-        viewCanvas.drawColor(DEFAULT_BG_COLOR);
+        //viewCanvas.drawColor(DEFAULT_BG_COLOR);
         viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, drawPaint);
         viewCanvas.restore();
     }
@@ -247,13 +241,12 @@ public class PaintView extends View {
         if(isPopupBeingDismissed(event) || isCanvasLocked){
             return true;
         }
-        float x = event.getX();
-        float y = event.getY();
-
-        assignColorsBlursAndGradients(x, y, event);
+        assignColorsBlursAndGradients(event);
+        paintHelperManager.getAngleHelper().updateAngle();
         try {
-                handleDrawing(x, y, event);
-        }catch (IllegalArgumentException e){
+            handleDrawing(event);
+        }
+        catch(IllegalArgumentException e){
             //do nothing, sometimes there's an illegalArgException related to drawing gradients
             // immediately after rotating screen
         }
@@ -261,8 +254,10 @@ public class PaintView extends View {
     }
 
 
-    private void handleDrawing(float x, float y, MotionEvent event){
-        paintHelperManager.getAngleHelper().updateAngle();
+    private void handleDrawing(MotionEvent event){
+        float x = event.getX();
+        float y = event.getY();
+
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
                 currentBrush.touchDown(x, y, paint);
@@ -321,12 +316,12 @@ public class PaintView extends View {
     }
 
 
-    private void assignColorsBlursAndGradients(float x, float y, MotionEvent event){
+    private void assignColorsBlursAndGradients(MotionEvent event){
         if(isDragBrushWithTouchMoveOrUp(event)){
             return;
         }
         assignColors();
-        paintHelperManager.getGradientHelper().assignGradient(x,y, viewModel.color, viewModel.previousColor);
+        paintHelperManager.getGradientHelper().assignGradient(event.getX(), event.getY(), viewModel.color, viewModel.previousColor);
     }
 
 
