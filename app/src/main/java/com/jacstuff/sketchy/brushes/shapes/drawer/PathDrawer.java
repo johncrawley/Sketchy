@@ -24,6 +24,8 @@ public class PathDrawer extends BasicDrawer{
 
     private void setupFlickerGuardPaint(){
         flickerGuardPaint = new Paint(paintView.getPreviewPaint());
+        flickerGuardPaint.setStyle(Paint.Style.FILL);
+        kaleidoscopePathDrawer.setFlickerGuardPaint(flickerGuardPaint);
     }
 
 

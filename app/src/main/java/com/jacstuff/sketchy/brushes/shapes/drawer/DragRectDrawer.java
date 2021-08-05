@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Paint;
+import android.graphics.Point;
 
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -19,24 +20,16 @@ public class DragRectDrawer extends BasicDrawer{
     public void down(float x, float y, Paint paint) {
         paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
         paintView.enablePreviewLayer();
-        rotateAndDraw(x,y, paint);
+        draw(x,y, paint);
     }
 
 
-    public void rotateAndDraw(float x, float y, Paint paint){
+    public void draw(float x, float y, Paint paint){
         canvas.save();
         downX = x;
         downY = y;
         canvas.translate(x, y);
-        brush.onTouchDown(x, y, paint);
-        canvas.restore();
-    }
-
-
-    public void rotateAndDrawMove(float x, float y, Paint paint){
-        canvas.save();
-        canvas.translate(downX + ((x-downX) /2f), downY + ((y-downY)/2f));
-        rotateThenDrawShadowAndObject(x, y, paint);
+        brush.onTouchDown(new Point((int)x,(int)y), canvas, paint);
         canvas.restore();
     }
 
@@ -60,6 +53,22 @@ public class DragRectDrawer extends BasicDrawer{
         }
         paintView.pushHistory();
         paintView.invalidate();
+    }
+
+
+    public void rotateAndDrawMove(float x, float y, Paint paint){
+        canvas.save();
+        translateToMiddleOfRect(x,y);
+        rotateThenDrawShadowAndObject(x, y, paint);
+        canvas.restore();
+    }
+
+
+    private void translateToMiddleOfRect(float x2, float y2){
+        float middleOfRectX = downX + ((x2-downX)/2f);
+        float middleOfRectY = downY + ((y2-downY)/2f);
+        canvas.translate(middleOfRectX, middleOfRectY);
+
     }
 
 
@@ -88,7 +97,6 @@ public class DragRectDrawer extends BasicDrawer{
         float ky = y - kaleidoscopeHelper.getCenterY();
         canvas.translate(downKx + ((kx-downKx) /2f), downKy + ((ky-downKy)/2f));
     }
-
 
 }
 
