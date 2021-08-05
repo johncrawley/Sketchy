@@ -56,6 +56,7 @@ public class PathDrawer extends BasicDrawer{
         drawPreviewWhenInfinityModeOff(x, y);
     }
 
+
     @Override
     public void up(float x, float y, Paint paint) {
         paintView.disablePreviewLayer();

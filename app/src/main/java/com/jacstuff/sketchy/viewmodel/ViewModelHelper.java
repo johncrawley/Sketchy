@@ -70,6 +70,7 @@ public class ViewModelHelper {
         retrieveRecentButtonSettings();
         retrieveColorAndShade();
         restoreSeekBarSettings();
+        mainActivity.loadStoredImage();
         viewModel.isFirstExecution = false;
     }
 

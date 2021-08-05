@@ -40,7 +40,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private final String SHARED_PREFS_NAME = "SketchtyPrefs";
     private final String SAVED_ORIENTATION = "savedOrientation";
+    private final String SAVED_WAS_APP_STOPPED_PROPERLY = "wasAppStoppedProperly";
     private PaintView paintView;
     private ImageSaver imageSaver;
     private LinearLayout colorButtonGroupLayout;
@@ -213,7 +215,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 settingsButtonsConfigurator.selectDefaults();
                 new SeekBarConfigurator(mainActivity, paintView);
                 viewModelHelper.onResume();
-                loadPreferences();
             }
         });
     }
@@ -269,19 +270,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onDestroy(){
         savePreferences();
+        setWasAppStoppedProperlyProperty(true);
         super.onDestroy();
     }
 
 
-    public void loadPreferences(){
-        SharedPreferences prefs = getSharedPreferences("imagePrefs",0);
+    public void loadStoredImage(){
+        SharedPreferences prefs = getSharedPreferences(SHARED_PREFS_NAME,0);
+        boolean wasAppStoppedProperly = prefs.getBoolean(SAVED_WAS_APP_STOPPED_PROPERLY, false);
+        setWasAppStoppedProperlyProperty(false);
+        if(!viewModel.isFirstExecution || !wasAppStoppedProperly){
+            return;
+        }
         prefs.getInt(SAVED_ORIENTATION, Configuration.ORIENTATION_PORTRAIT);
         imageSaver.loadImageFromCacheFile(paintView);
     }
 
 
+    private void setWasAppStoppedProperlyProperty(boolean wasSaved){
+        SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFS_NAME,0).edit();
+        editor.putBoolean(SAVED_WAS_APP_STOPPED_PROPERLY, wasSaved);
+        boolean success = editor.commit();
+        System.out.println("app stopped properly property was saved! : " + success);
+    }
+
+
     public void savePreferences(){
-        SharedPreferences.Editor editor = getSharedPreferences("myPref",0).edit();
+        SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFS_NAME,0).edit();
         editor.putInt(SAVED_ORIENTATION, getResources().getConfiguration().orientation);
         imageSaver.saveImageToCacheFile(paintView);
         editor.apply();
