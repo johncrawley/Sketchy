@@ -136,6 +136,10 @@ public class PaintView extends View {
         loadHistoryItem(false);
     }
 
+    public BrushFactory getBrushFactory(){
+        return brushFactory;
+    }
+
 
     public void setBrushStyle(BrushStyle brushStyle){
         currentBrushStyle = brushStyle;

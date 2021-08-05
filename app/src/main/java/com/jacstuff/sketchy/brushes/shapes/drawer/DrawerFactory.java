@@ -20,6 +20,12 @@ public class DrawerFactory {
         drawerMap.put(Type.PATH, new PathDrawer(paintView, mainViewModel));
     }
 
+    public void init(){
+        for(Drawer drawer: drawerMap.values()){
+            drawer.initExtra();
+        }
+    }
+
 
     public Drawer get(Type type){
         return drawerMap.get(type);

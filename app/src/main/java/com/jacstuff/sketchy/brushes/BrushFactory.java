@@ -47,6 +47,7 @@ public class BrushFactory {
     private final MainViewModel mainViewModel;
     private DrawerFactory drawerFactory;
     private final MainActivity mainActivity;
+    private PathBrush shadowPathBrush;
 
     public BrushFactory(MainActivity mainActivity){
         this.mainActivity = mainActivity;
@@ -57,6 +58,8 @@ public class BrushFactory {
     public void init(PaintView paintView, int brushSize){
         this.paintView = paintView;
         drawerFactory = new DrawerFactory(paintView, mainViewModel);
+        initShadowPathBrush();
+        drawerFactory.init();
         circleBrush = new CircleBrush();
         PaintGroup paintGroup = paintView.getPaintGroup();
         setupBrushMap();
@@ -86,6 +89,17 @@ public class BrushFactory {
         add(new RectangleBrush());
         add(new XBrush());
         add(new DiamondBrush());
+    }
+
+
+    private void initShadowPathBrush(){
+        shadowPathBrush = new PathBrush();
+        shadowPathBrush.init(paintView, mainActivity, drawerFactory);
+    }
+
+
+    public PathBrush getShadowPathBrush(){
+        return shadowPathBrush;
     }
 
 

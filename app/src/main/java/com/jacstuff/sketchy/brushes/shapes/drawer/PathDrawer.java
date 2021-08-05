@@ -4,9 +4,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 
+import com.jacstuff.sketchy.brushes.shapes.Brush;
+import com.jacstuff.sketchy.brushes.shapes.PathBrush;
 import com.jacstuff.sketchy.paintview.KaleidoscopePathDrawer;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
+
 
 import androidx.core.util.Consumer;
 
@@ -14,11 +17,18 @@ public class PathDrawer extends BasicDrawer{
 
     private final KaleidoscopePathDrawer kaleidoscopePathDrawer;
     private Paint flickerGuardPaint;
+    private PathBrush shadowBrush;
 
     public PathDrawer(PaintView paintView, MainViewModel viewModel){
         super(paintView, viewModel);
         kaleidoscopePathDrawer = new KaleidoscopePathDrawer(paintView, viewModel, kaleidoscopeHelper);
         setupFlickerGuardPaint();
+    }
+
+
+    @Override
+    public void initExtra(){
+        shadowBrush = paintView.getBrushFactory().getShadowPathBrush();
     }
 
 
@@ -33,7 +43,7 @@ public class PathDrawer extends BasicDrawer{
     public void down(float x, float y, Paint paint) {
         Point point = new Point((int)x, (int)y);
         paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
-        drawToCanvas(point, (c) -> draw(point, (paintArg) -> brush.onTouchDown(point, c, paintArg)));
+        drawToCanvas(point, (c) -> draw(point, (paintArg, brushArg) -> brushArg.onTouchDown(point, c, paintArg)));
     }
 
 
@@ -41,9 +51,18 @@ public class PathDrawer extends BasicDrawer{
     public void move(float x, float y, Paint paint) {
         Point point = new Point((int)x, (int)y);
         paintView.disablePreviewLayer();
-        drawToCanvas(point, (c) -> draw(point, (paintArg) -> brush.onTouchMove(point, c, paintArg)));
+        drawToCanvas(point, (c) -> draw(point, (paintArg, brushArg) -> brushArg.onTouchMove(point, c, paintArg)));
         drawFlickerGuard(x,y);
         drawPreviewWhenInfinityModeOff(x, y);
+    }
+
+    @Override
+    public void up(float x, float y, Paint paint) {
+        paintView.disablePreviewLayer();
+        kaleidoscopePathDrawer.resetPreviousPoint();
+        brush.onTouchUp(x, y, paint);
+        paintView.invalidate();
+        paintView.pushHistory();
     }
 
 
@@ -53,18 +72,6 @@ public class PathDrawer extends BasicDrawer{
         }
         paintView.enablePreviewLayer();
         canvas.drawCircle(x,y, paint.getStrokeWidth()/2, flickerGuardPaint);
-    }
-
-
-
-
-    @Override
-    public void up(float x, float y, Paint paint) {
-        paintView.disablePreviewLayer();
-        kaleidoscopePathDrawer.resetPreviousPoint();
-        brush.onTouchUp(x, y, paint);
-        paintView.invalidate();
-        paintView.pushHistory();
     }
 
 
@@ -80,13 +87,13 @@ public class PathDrawer extends BasicDrawer{
     }
 
 
-    public void draw(Point point, Consumer<Paint> drawTouch){
+    public void draw(Point point, BiConsumerX<Paint, Brush> drawTouch){
         canvas.save();
         canvas.translate(point.x, point.y);
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
-            drawTouch.accept(shadowPaint);
+            drawTouch.accept(shadowPaint, shadowBrush);
         }
-        drawTouch.accept(paint);
+        drawTouch.accept(paint, brush);
         canvas.restore();
     }
 

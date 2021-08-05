@@ -11,6 +11,7 @@ public interface Drawer {
     void up(float x, float y, Paint paint);
     void drawKaleidoscopeSegment(float x, float y, Paint paint);
     void init();
+    void initExtra();
     void setBrush(Brush brush);
     boolean isColorChangedOnDown();
 

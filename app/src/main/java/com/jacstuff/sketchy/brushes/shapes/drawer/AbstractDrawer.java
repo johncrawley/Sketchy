@@ -45,6 +45,12 @@ public abstract class AbstractDrawer implements Drawer {
 
 
     @Override
+    public void initExtra(){
+        //do nothing
+    }
+
+
+    @Override
     public boolean isColorChangedOnDown(){
         return isColorChangedOnDown;
     }
