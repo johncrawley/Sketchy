@@ -29,7 +29,7 @@ public class PathDrawer extends BasicDrawer{
     @Override
     public void initExtra(){
         shadowBrush = paintView.getBrushFactory().getShadowPathBrush();
-        kaleidoscopePathDrawer.setShadowBrush(shadowBrush);
+        kaleidoscopePathDrawer.setShadowHelper(paintHelperManager.getShadowHelper());
     }
 
 
@@ -54,7 +54,6 @@ public class PathDrawer extends BasicDrawer{
         paintView.disablePreviewLayer();
         drawToCanvas(point, (c) -> draw(point, (paintArg, brushArg) -> brushArg.onTouchMove(point, c, paintArg)));
         drawFlickerGuard(x,y);
-        drawPreviewWhenInfinityModeOff(x, y);
     }
 
 
@@ -99,11 +98,5 @@ public class PathDrawer extends BasicDrawer{
         canvas.restore();
     }
 
-
-    private void drawPreviewWhenInfinityModeOff(float x, float y){
-        if(!kaleidoscopeHelper.isInfinityModeEnabled()) {
-            drawToCanvas(x, y, paintView.getPreviewPaint());
-        }
-    }
 
 }

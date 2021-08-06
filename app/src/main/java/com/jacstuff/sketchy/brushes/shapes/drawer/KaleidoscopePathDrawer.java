@@ -7,9 +7,9 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 
-import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
+import com.jacstuff.sketchy.paintview.helpers.ShadowHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 
@@ -28,6 +28,13 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
         super(paintView, viewModel, kaleidoscopeHelper);
         kaleidoscopeCanvas = paintView.getKaleidoscopeSegmentCanvas();
         paint = paintView.getPaint();
+    }
+
+    private ShadowHelper shadowHelper;
+
+
+    public void setShadowHelper(ShadowHelper shadowHelper){
+        this.shadowHelper = shadowHelper;
     }
 
 
@@ -62,14 +69,9 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
         previousPoint.y = p.y;
     }
 
-    private Brush shadowBrush;
 
     public void resetPreviousPoint(){
         isPreviousPointReset = true;
-    }
-
-    public void setShadowBrush(Brush shadowBrush){
-        this.shadowBrush = shadowBrush;
     }
 
 
@@ -136,11 +138,15 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
         return diffPoint;
     }
 
-
     private void drawPath(Point diffPoint){
+
         Path path = new Path();
         path.moveTo(diffPoint.x,diffPoint.y);
         path.lineTo(0, 0);
+
+        if(shadowHelper.isShadowEnabled()){
+            kaleidoscopeCanvas.drawPath(path, paintView.getShadowPaint());
+        }
         kaleidoscopeCanvas.drawPath(path, paint);
     }
 

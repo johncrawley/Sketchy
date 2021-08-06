@@ -69,9 +69,6 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
         canvas.restore();
     }
 
-    private void log(String msg){
-        System.out.println("BasicDrawer: " + msg);
-    }
 
     @Override
     public void drawKaleidoscopeSegment(float x, float y, Paint paint){

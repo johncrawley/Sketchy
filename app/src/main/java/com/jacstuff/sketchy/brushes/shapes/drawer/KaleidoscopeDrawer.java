@@ -19,7 +19,7 @@ public class KaleidoscopeDrawer {
     final PaintView paintView;
     final Paint infinityPaint;
     Bitmap infinityImage;
-    private Drawer parentDrawer;
+    Drawer parentDrawer;
 
 
     public KaleidoscopeDrawer(PaintView paintView, MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
@@ -34,6 +34,7 @@ public class KaleidoscopeDrawer {
     public void setCanvas(Canvas canvas){
         this.canvas = canvas;
     }
+
 
     public void initParentDrawer(Drawer drawer){
         parentDrawer = drawer;

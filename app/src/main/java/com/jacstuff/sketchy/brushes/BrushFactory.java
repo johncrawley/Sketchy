@@ -134,7 +134,7 @@ public class BrushFactory {
     }
 
 
-    public Brush getResettedBrushFor(BrushShape shape, BrushStyle brushStyle){
+    public Brush getReinitializedBrushFor(BrushShape shape, BrushStyle brushStyle){
         Brush brush =  brushMap.get(shape);
         if(brush == null){
             brush = circleBrush;

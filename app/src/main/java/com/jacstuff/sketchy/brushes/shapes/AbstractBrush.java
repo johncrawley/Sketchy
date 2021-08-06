@@ -60,7 +60,6 @@ public abstract class AbstractBrush implements  Brush{
         this.mainActivity = mainActivity;
         this.mainViewModel = mainActivity.getViewModel();
         drawer = drawerFactory.get(drawerType);
-        drawer.init();
         postInit();
     }
 
