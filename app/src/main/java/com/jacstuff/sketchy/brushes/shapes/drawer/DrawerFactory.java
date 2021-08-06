@@ -22,6 +22,7 @@ public class DrawerFactory {
 
     public void init(){
         for(Drawer drawer: drawerMap.values()){
+            drawer.init();
             drawer.initExtra();
         }
     }

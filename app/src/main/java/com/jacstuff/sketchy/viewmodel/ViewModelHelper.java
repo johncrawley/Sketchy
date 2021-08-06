@@ -70,10 +70,19 @@ public class ViewModelHelper {
         retrieveRecentButtonSettings();
         retrieveColorAndShade();
         restoreSeekBarSettings();
+        setDefaultTextBrushText();
         mainActivity.loadStoredImage();
         viewModel.isFirstExecution = false;
     }
 
+
+    private void setDefaultTextBrushText(){
+        if(!viewModel.isFirstExecution){
+            return;
+        }
+        viewModel.textBrushText = mainActivity.getString(R.string.text_edit_text_default);
+
+    }
 
     private void initViewModelSettings(){
         if(viewModel.settingsButtonsClickMap == null){

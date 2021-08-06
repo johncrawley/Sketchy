@@ -164,6 +164,7 @@
     <string name="text_underline_checkbox_label">Underline</string>
     <string name="text_strikethrough_checkbox_label">Strikethrough</string>
     <string name="text_edit_text_autofill_hint">Add Text To Draw</string>
+    <string name="text_edit_text_default">Hello!</string>
 
     <string name="toast_text_brush_is_empty">Please enter some text to draw</string>
     <string name="random_shade_button_text">\?</string>
