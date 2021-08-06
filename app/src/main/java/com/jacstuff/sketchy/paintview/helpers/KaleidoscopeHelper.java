@@ -2,7 +2,7 @@ package com.jacstuff.sketchy.paintview.helpers;
 
 import android.graphics.Canvas;
 
-import com.jacstuff.sketchy.paintview.KaleidoscopeDrawer;
+import com.jacstuff.sketchy.brushes.shapes.drawer.KaleidoscopeDrawer;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 

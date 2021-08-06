@@ -6,18 +6,18 @@ import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.PathBrush;
-import com.jacstuff.sketchy.paintview.KaleidoscopePathDrawer;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-
 import androidx.core.util.Consumer;
+
 
 public class PathDrawer extends BasicDrawer{
 
     private final KaleidoscopePathDrawer kaleidoscopePathDrawer;
     private Paint flickerGuardPaint;
     private PathBrush shadowBrush;
+
 
     public PathDrawer(PaintView paintView, MainViewModel viewModel){
         super(paintView, viewModel);
@@ -29,6 +29,7 @@ public class PathDrawer extends BasicDrawer{
     @Override
     public void initExtra(){
         shadowBrush = paintView.getBrushFactory().getShadowPathBrush();
+        kaleidoscopePathDrawer.setShadowBrush(shadowBrush);
     }
 
 

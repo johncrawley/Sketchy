@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.paintview;
+package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Shader;
 
-import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
+import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 

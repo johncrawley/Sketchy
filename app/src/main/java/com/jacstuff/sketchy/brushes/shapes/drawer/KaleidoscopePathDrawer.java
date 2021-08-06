@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.paintview;
+package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -7,11 +7,13 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 
+import com.jacstuff.sketchy.brushes.shapes.Brush;
+import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 
-public class KaleidoscopePathDrawer extends KaleidoscopeDrawer{
+public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
 
     private final Canvas kaleidoscopeCanvas;
     private final Paint paint;
@@ -60,54 +62,95 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer{
         previousPoint.y = p.y;
     }
 
+    private Brush shadowBrush;
 
     public void resetPreviousPoint(){
         isPreviousPointReset = true;
     }
 
+    public void setShadowBrush(Brush shadowBrush){
+        this.shadowBrush = shadowBrush;
+    }
+
 
     private void drawFlickerGuardCircles(Point p){
-        canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
-        paintView.enablePreviewLayer();
-        canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
-        for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle+= kaleidoscopeHelper.getDegreeIncrement()){
-            canvas.rotate(kaleidoscopeHelper.getDegreeIncrement());
-            canvas.drawCircle(p.x, p.y, paint.getStrokeWidth()/2, flickerGuardPaint);
+        if(kaleidoscopeHelper.isInfinityModeEnabled()){
+            return;
         }
+        paintView.enablePreviewLayer();
+        translateCanvasToCenter();
+        for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle+= kaleidoscopeHelper.getDegreeIncrement()){
+            drawFlickerGuardCircle(p);
+        }
+        resetCanvasProperties(); //instead of using canvas save() and restore(), because they have problems in preview mode
+    }
+
+
+    private void drawFlickerGuardCircle(Point p){
+        canvas.rotate(kaleidoscopeHelper.getDegreeIncrement());
+        canvas.drawCircle(p.x, p.y, paint.getStrokeWidth()/2, flickerGuardPaint);
+    }
+
+
+    private void resetCanvasProperties(){
         canvas.rotate(0);
         canvas.translate(0,0);
     }
 
 
     private void rotateAndDrawSegmentBitmapAroundAxis(Point p, float halfSegmentWidth){
-        canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
+        translateCanvasToCenter();
         float kx = p.x -halfSegmentWidth;
         float ky = p.y -halfSegmentWidth;
         for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()){
-            canvas.save();
-            canvas.rotate(angle);
-            canvas.drawBitmap(segmentBitmap, kx, ky, paint);
-            canvas.restore();
+           drawSegmentBitmapAtAngle(kx, ky, angle);
         }
     }
 
+    private void translateCanvasToCenter(){
+        canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
+    }
 
-    private void drawPathOnSegmentBitmap(Point originalPoint, int segmentDimension){
+
+    private void drawSegmentBitmapAtAngle(float kx, float ky, float angle){
+        canvas.save();
+        canvas.rotate(angle);
+        canvas.drawBitmap(segmentBitmap, kx, ky, paint);
+        canvas.restore();
+    }
+
+
+    private void drawPathOnSegmentBitmap(Point originalPoint, int segmentWidth){
+        Point diffPoint = createDiffPoint(originalPoint);
+        kaleidoscopeCanvas.save();
+        configureSegmentBitmapAndCanvas(segmentWidth);
+        drawPath(diffPoint);
+        isPreviousPointReset = false;
+    }
+
+
+    private Point createDiffPoint(Point originalPoint){
         Point diffPoint = new Point();
         diffPoint.x = isPreviousPointReset ? 0 : previousPoint.x - originalPoint.x;
         diffPoint.y = isPreviousPointReset ? 0 : previousPoint.y - originalPoint.y;
-        float halfSegmentWidth = segmentDimension /2f;
-        segmentBitmap = Bitmap.createBitmap(segmentDimension, segmentDimension, Bitmap.Config.ARGB_8888);
+        return diffPoint;
+    }
+
+
+    private void drawPath(Point diffPoint){
+        Path path = new Path();
+        path.moveTo(diffPoint.x,diffPoint.y);
+        path.lineTo(0, 0);
+        kaleidoscopeCanvas.drawPath(path, paint);
+    }
+
+
+    private void configureSegmentBitmapAndCanvas(int segmentLength){
+        segmentBitmap = Bitmap.createBitmap(segmentLength, segmentLength, Bitmap.Config.ARGB_8888);
         segmentBitmap.eraseColor(Color.TRANSPARENT);
         kaleidoscopeCanvas.setBitmap(segmentBitmap);
-        kaleidoscopeCanvas.save();
-
+        float halfSegmentWidth = segmentLength /2f;
         kaleidoscopeCanvas.translate(halfSegmentWidth, halfSegmentWidth);
-        Path tempPath = new Path();
-        tempPath.moveTo(diffPoint.x,diffPoint.y);
-        tempPath.lineTo(0, 0);
-        kaleidoscopeCanvas.drawPath(tempPath, paint);
-        isPreviousPointReset = false;
     }
 
 }
