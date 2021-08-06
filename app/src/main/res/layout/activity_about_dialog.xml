@@ -6,43 +6,56 @@
     android:id="@+id/aboutLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/about_text_side_padding"
-    android:paddingEnd="@dimen/about_text_side_padding"
+    android:padding="@dimen/about_text_side_padding"
     tools:context=".AboutDialogActivity">
 
 
-    <TextView
-        android:id="@+id/appName"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/appGraphic"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="@dimen/about_text_primary_font_size"
-        android:padding="@dimen/about_text_padding"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/sketchty_feature_graphic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/appVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/about_version"
-        android:paddingBottom="@dimen/about_text_padding"
         android:textSize="@dimen/about_text_version_font_size"
+        android:paddingVertical="@dimen/about_version_text_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appName" />
+        app:layout_constraintTop_toBottomOf="@id/appGraphic" />
 
     <TextView
         android:id="@+id/createdBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/about_text_padding"
+        android:paddingBottom="@dimen/about_text_created_by_bottom_padding"
         android:text="@string/about_created_by"
         android:textAlignment="center"
         android:textSize="@dimen/about_text_created_by_font_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appVersion" />
+
+    <TextView
+        android:id="@+id/yearInfoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/about_text_padding"
+        android:text="@string/about_year_info"
+        android:textAlignment="center"
+        android:textSize="@dimen/about_text_created_by_font_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createdBy" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

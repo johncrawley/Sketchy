@@ -11,13 +11,13 @@ public class AboutDialogActivity extends Activity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_dialog);
-        findViewById(R.id.appName).setOnClickListener(this);
+        findViewById(R.id.appGraphic).setOnClickListener(this);
         addClickListeners();
     }
 
     private void addClickListeners(){
         addClickListener(R.id.aboutLayout);
-        addClickListener(R.id.appName);
+        addClickListener(R.id.appGraphic);
         addClickListener(R.id.appVersion);
         addClickListener(R.id.createdBy);
     }

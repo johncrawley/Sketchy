@@ -14,11 +14,13 @@
     <dimen name="color_button_height">40dp</dimen>
     <dimen name="color_button_width">40dp</dimen>
     <dimen name="action_bar_height">55dp</dimen>
-    <dimen name="about_text_padding">40dp</dimen>
+    <dimen name="about_text_padding">22dp</dimen>
+    <dimen name="about_text_created_by_bottom_padding">8dp</dimen>
+    <dimen name="about_version_text_padding">16dp</dimen>
     <dimen name="about_text_primary_font_size">30sp</dimen>
     <dimen name="about_text_secondary_font_size">22sp</dimen>
     <dimen name="about_text_created_by_font_size">18sp</dimen>
-    <dimen name="about_text_version_font_size">18sp</dimen>
+    <dimen name="about_text_version_font_size">24sp</dimen>
     <dimen name="about_text_side_padding">14dp</dimen>
     <dimen name="shade_scroll_view_bottom_margin">8dp</dimen>
     <dimen name="menu_buttons_layout_top_margin">12dp</dimen>
