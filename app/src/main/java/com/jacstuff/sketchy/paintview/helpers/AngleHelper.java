@@ -1,16 +1,19 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
 import com.jacstuff.sketchy.brushes.AngleType;
-import java.util.concurrent.ThreadLocalRandom;
+
+import java.util.Random;
 
 public class AngleHelper {
 
     private int currentAngle;
     private int increment;
     private AngleType angleType;
+    private final Random random;
 
 
     public AngleHelper(){
+        random = new Random(System.currentTimeMillis());
         angleType = AngleType.ZERO;
     }
 
@@ -49,7 +52,7 @@ public class AngleHelper {
 
 
     private int getRandomAngle(){
-        return ThreadLocalRandom.current().nextInt(0, 359);
+        return random.nextInt(359);
     }
 
 }

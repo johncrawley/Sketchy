@@ -1,7 +1,6 @@
 package com.jacstuff.sketchy.multicolor;
 
 import android.graphics.Color;
-import android.util.Log;
 
 import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
 import com.jacstuff.sketchy.multicolor.pattern.RandomPattern;
@@ -10,31 +9,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public class RandomMultiColorSelector implements ColorSelector {
 
-    private MulticolorPattern pattern;
-    private Map<String, List<Integer>> shadesMap;
-    private List<String> ids;
-
+    private final MulticolorPattern pattern;
+    private final Map<String, List<Integer>> shadesMap;
+    private final List<String> ids;
+    private final Random random;
 
     public RandomMultiColorSelector(){
         pattern = new RandomPattern();
         shadesMap = new HashMap<>(30);
         ids = new ArrayList<>(30);
+        random = new Random(System.currentTimeMillis());
     }
 
 
     @Override
     public int getNextColor(){
-        String randomId = ids.get(ThreadLocalRandom.current().nextInt(ids.size()));
+        String randomId = getRandomId();
         List<Integer> shades = shadesMap.get(randomId);
         if(shades == null){
             return Color.BLACK;
         }
         int randomShadeIndex = pattern.getNextIndex(shades.size());
         return shades.get(randomShadeIndex);
+    }
+
+
+    private String getRandomId(){
+        return ids.get(random.nextInt(ids.size()));
     }
 
 

@@ -1,20 +1,18 @@
 package com.jacstuff.sketchy.multicolor.pattern;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public class RandomPattern extends AbstractMulticolorPattern implements MulticolorPattern {
 
-
-    public RandomPattern(String label){
-        this.label = label;
-    }
+    private final Random random;
 
     public RandomPattern(){
+        random = new Random(System.currentTimeMillis());
     }
 
     @Override
     public int getNextIndex(int numberOfColors) {
-        return ThreadLocalRandom.current().nextInt(numberOfColors -1);
+        return random.nextInt(numberOfColors);
     }
 
     @Override

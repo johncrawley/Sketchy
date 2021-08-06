@@ -8,13 +8,12 @@ import java.util.List;
 
 public class RandomColorSelector implements ColorSelector {
 
-    private MulticolorPattern pattern;
+    private final MulticolorPattern pattern;
     private List<Integer> colors;
 
     public RandomColorSelector(){
         pattern = new RandomPattern();
     }
-
 
 
     @Override
