@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.paintview.helpers;
 
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 
@@ -12,13 +13,16 @@ public class GradientHelper {
 
     private Paint paint;
     private GradientType gradientType;
-    private final int MAX_GRADIENT_FACTOR;
+    private final int MAX_GRADIENT_PROGRESS;
     private final MainViewModel viewModel;
+    final int CLAMP_RADIAL_GRADIENT_FACTOR = 12;
+    final int RADIAL_GRADIENT_NUMERATOR= 1100;
+    int radiusFactor;
 
 
     public GradientHelper(MainViewModel viewModel, int maxGradientFactor){
         this.viewModel = viewModel;
-        MAX_GRADIENT_FACTOR = maxGradientFactor;
+        MAX_GRADIENT_PROGRESS = maxGradientFactor;
     }
 
 
@@ -37,24 +41,27 @@ public class GradientHelper {
         this.gradientType = gradientType;
     }
 
-    private int currentProgress;
 
     public void setGradientRadius(int progress){
-        this.currentProgress = progress;
-        radiusFactor = Math.max(1, currentProgress);
+        radiusFactor = Math.max(1, progress);
         calculateGradientLength();
     }
 
 
-    final int CLAMP_RADIAL_GRADIENT_FACTOR = 15;
-    final int RADIAL_GRADIENT_NUMERATOR= 1100;
-    int radiusFactor;
-
     public void calculateGradientLength(){
         viewModel.radialGradientRadius = 1 + RADIAL_GRADIENT_NUMERATOR / radiusFactor;
         viewModel.clampRadialGradientRadius = 1 + viewModel.radialGradientRadius * CLAMP_RADIAL_GRADIENT_FACTOR;
-        viewModel.linearGradientLength = 1 +  viewModel.gradientMaxLength  - ((viewModel.gradientMaxLength * radiusFactor)/MAX_GRADIENT_FACTOR);
+        viewModel.linearGradientLength = calculateLinearGradientLength();
     }
+
+    private int calculateLinearGradientLength(){
+        float progressPercentage = ((float)radiusFactor / MAX_GRADIENT_PROGRESS)* 100f;
+        float progressPercentage2 = Math.max(1, progressPercentage) + 10;
+        float minusFraction = ((float)viewModel.gradientMaxLength / 100) * progressPercentage2;
+        int calculatedGradientLength = viewModel.gradientMaxLength  - (int)(minusFraction);
+        return Math.max(1, calculatedGradientLength);
+    }
+
 
     public void recalculateGradientLengthForBrushSize(){
         if(gradientType == GradientType.NONE){
@@ -65,13 +72,13 @@ public class GradientHelper {
     }
 
 
-    public void recalculateGradientLengthForRectangle(float width, float height){
+    public void recalculateGradientLengthForRectangle(Point p, float width, float height){
         if(gradientType == GradientType.NONE){
             return;
          }
         viewModel.gradientMaxLength = (int)((width + height)/1.4142f);
         calculateGradientLength();
-
+        assignGradient(p.x, p.y, viewModel.color, viewModel.previousColor);
     }
 
 
