@@ -18,6 +18,7 @@ public class BrushSizeSeekBar extends AbstractSeekBarConfig {
     public void adjustSetting(int progress){
         if(paintView != null){
             paintView.setBrushSize(minBrushSize + progress);
+            paintHelperManager.getGradientHelper().recalculateGradientLengthForBrushSize();
         }
     }
 

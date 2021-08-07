@@ -37,14 +37,41 @@ public class GradientHelper {
         this.gradientType = gradientType;
     }
 
+    private int currentProgress;
 
     public void setGradientRadius(int progress){
-        final int CLAMP_RADIAL_GRADIENT_FACTOR = 12;
-        final int RADIAL_GRADIENT_NUMERATOR= 1100;
-        int radiusFactor = Math.max(1, progress);
+        this.currentProgress = progress;
+        radiusFactor = Math.max(1, currentProgress);
+        calculateGradientLength();
+    }
+
+
+    final int CLAMP_RADIAL_GRADIENT_FACTOR = 15;
+    final int RADIAL_GRADIENT_NUMERATOR= 1100;
+    int radiusFactor;
+
+    public void calculateGradientLength(){
         viewModel.radialGradientRadius = 1 + RADIAL_GRADIENT_NUMERATOR / radiusFactor;
         viewModel.clampRadialGradientRadius = 1 + viewModel.radialGradientRadius * CLAMP_RADIAL_GRADIENT_FACTOR;
-        viewModel.linearGradientLength = 1 +  viewModel.halfBrushSize  - ((viewModel.halfBrushSize * radiusFactor)/MAX_GRADIENT_FACTOR);
+        viewModel.linearGradientLength = 1 +  viewModel.gradientMaxLength  - ((viewModel.gradientMaxLength * radiusFactor)/MAX_GRADIENT_FACTOR);
+    }
+
+    public void recalculateGradientLengthForBrushSize(){
+        if(gradientType == GradientType.NONE){
+            return;
+        }
+        viewModel.gradientMaxLength = viewModel.halfBrushSize;
+        calculateGradientLength();
+    }
+
+
+    public void recalculateGradientLengthForRectangle(float width, float height){
+        if(gradientType == GradientType.NONE){
+            return;
+         }
+        viewModel.gradientMaxLength = (int)((width + height)/1.4142f);
+        calculateGradientLength();
+
     }
 
 

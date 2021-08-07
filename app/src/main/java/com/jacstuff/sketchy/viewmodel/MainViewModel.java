@@ -45,6 +45,7 @@ public class MainViewModel extends ViewModel {
     public int angle = 0;
 
     public int gradient;
+    public int gradientMaxLength;
 
 
     public MainViewModel(){

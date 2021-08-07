@@ -27,8 +27,11 @@ public class RectangleBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchMove(float x2, float y2, Paint paint) {
-        float halfWidth = Math.abs(x2 - touchDownX) /2;
-        float halfHeight =  Math.abs(y2 - touchDownY ) /2;
+        float width = Math.abs(x2 - touchDownX);
+        float height =  Math.abs(y2 - touchDownY );
+        float halfWidth = width /2;
+        float halfHeight =  height /2;
+        paintView.getPaintHelperManager().getGradientHelper().recalculateGradientLengthForRectangle(width, height);
         canvas.drawRect(-halfWidth, -halfHeight, halfWidth, halfHeight, paint);
     }
 
