@@ -27,6 +27,7 @@ public class GradientHelper {
 
 
     public void init(Paint paint){
+        radiusFactor = 1;
         this.paint = paint;
         gradientType = GradientType.NONE;
     }
@@ -49,13 +50,22 @@ public class GradientHelper {
 
 
     public void calculateGradientLength(){
+
         viewModel.radialGradientRadius = 1 + RADIAL_GRADIENT_NUMERATOR / radiusFactor;
         viewModel.clampRadialGradientRadius = 1 + viewModel.radialGradientRadius * CLAMP_RADIAL_GRADIENT_FACTOR;
         viewModel.linearGradientLength = calculateLinearGradientLength();
     }
 
+
     private int calculateLinearGradientLength(){
         float progressPercentage = ((float)radiusFactor / MAX_GRADIENT_PROGRESS)* 100f;
+
+        if(progressPercentage > 80){
+            return 1 + (int)(100 - progressPercentage);
+        }
+        else if(progressPercentage > 40){
+            return (int)(viewModel.gradientMaxLength /  progressPercentage) * 10;
+        }
         float progressPercentage2 = Math.max(1, progressPercentage) + 10;
         float minusFraction = ((float)viewModel.gradientMaxLength / 100) * progressPercentage2;
         int calculatedGradientLength = viewModel.gradientMaxLength  - (int)(minusFraction);

@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
+import android.content.Context;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.MainActivity;

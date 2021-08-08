@@ -70,18 +70,19 @@ public class ViewModelHelper {
         retrieveRecentButtonSettings();
         retrieveColorAndShade();
         restoreSeekBarSettings();
-        setDefaultTextBrushText();
+        setDefaultPropertiesFromResources();
         mainActivity.loadStoredImage();
         viewModel.isFirstExecution = false;
     }
 
 
-    private void setDefaultTextBrushText(){
+    private void setDefaultPropertiesFromResources(){
         if(!viewModel.isFirstExecution){
             return;
         }
         viewModel.textBrushText = mainActivity.getString(R.string.text_edit_text_default);
-
+        viewModel.gradientMaxLength = mainActivity.getResources().getInteger(R.integer.brush_size_default);
+        viewModel.linearGradientLength = mainActivity.getResources().getInteger(R.integer.brush_size_default);
     }
 
     private void initViewModelSettings(){
