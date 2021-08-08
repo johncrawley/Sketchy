@@ -39,6 +39,7 @@ public class MulticolorSelector implements ColorSelector {
     }
 
 
+    @Override
     public void reset(){
         currentPatternIndex = 0;
         currentMulticolorPattern = multicolorPatterns.get(currentPatternIndex);

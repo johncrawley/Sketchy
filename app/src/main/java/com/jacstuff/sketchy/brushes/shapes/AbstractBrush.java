@@ -137,17 +137,14 @@ public abstract class AbstractBrush implements  Brush{
     }
 
 
-    void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-        //do nothing
-    }
-
-    void onBrushTouchDown(float x, float y, Paint paint){
-        //do nothing
-    }
-
-
     public void onTouchMove(float x, float y, Paint paint){
         onTouchDown(x ,y, paint);
+    }
+
+
+
+    public boolean isColorChangedOnDown(){
+        return drawer.isColorChangedOnDown();
     }
 
 
@@ -159,10 +156,14 @@ public abstract class AbstractBrush implements  Brush{
         //do nothing
     }
 
-    public boolean isColorChangedOnDown(){
-        return drawer.isColorChangedOnDown();
+
+    void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+        //do nothing
     }
 
+    void onBrushTouchDown(float x, float y, Paint paint){
+        //do nothing
+    }
 
     public void onTouchDownKaleidoscope(Point p, Canvas canvas, Paint paint){}
     public void onTouchMoveKaleidoscope(Point p, Canvas canvas, Paint paint){}

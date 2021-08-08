@@ -232,7 +232,6 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas viewCanvas) {
         viewCanvas.save();
-        //viewCanvas.drawColor(DEFAULT_BG_COLOR);
         viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, drawPaint);
         viewCanvas.restore();
     }
@@ -241,24 +240,34 @@ public class PaintView extends View {
     @Override
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
-
         if(isPopupBeingDismissed(event) || isCanvasLocked){
             return true;
         }
-        assignColorsBlursAndGradients(event);
+        assignColors(event);
+        assignGradient(event);
+        updateAngle();
+        handleDrawing(event);
+        return true;
+    }
+
+
+    private void updateAngle(){
         paintHelperManager.getAngleHelper().updateAngle();
+    }
+
+
+    private void handleDrawing(MotionEvent event){
         try {
-            handleDrawing(event);
+            drawWithBrush(event);
         }
         catch(IllegalArgumentException e){
             //do nothing, sometimes there's an illegalArgException related to drawing gradients
             // immediately after rotating screen
         }
-        return true;
     }
 
 
-    private void handleDrawing(MotionEvent event){
+    private void drawWithBrush(MotionEvent event){
         float x = event.getX();
         float y = event.getY();
 
@@ -320,12 +329,24 @@ public class PaintView extends View {
     }
 
 
-    private void assignColorsBlursAndGradients(MotionEvent event){
+    private void assignColors(MotionEvent event){
         if(isDragBrushWithTouchMoveOrUp(event)){
             return;
         }
+        resetPatternIndexOnTouchUp(event);
         assignColors();
+    }
+
+
+    private void assignGradient(MotionEvent event){
         paintHelperManager.getGradientHelper().assignGradient(event.getX(), event.getY(), viewModel.color, viewModel.previousColor);
+    }
+
+
+    private void resetPatternIndexOnTouchUp(MotionEvent event){
+        if(event.getAction() == MotionEvent.ACTION_UP){
+            colorSelector.resetCurrentIndex();
+        }
     }
 
 

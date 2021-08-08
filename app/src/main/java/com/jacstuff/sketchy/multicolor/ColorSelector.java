@@ -20,6 +20,7 @@ public interface ColorSelector {
 
     void resetCurrentIndex();
 
+
     int getNextColor();
 
     String getCurrentPatternLabel();

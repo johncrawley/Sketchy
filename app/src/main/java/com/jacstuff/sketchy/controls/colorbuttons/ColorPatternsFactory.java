@@ -1,7 +1,6 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.content.Context;
-import android.content.res.Resources;
 
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.multicolor.pattern.EvenNumbersPattern;
@@ -18,10 +17,10 @@ import java.util.List;
 
 class ColorPatternsFactory {
 
-    private Resources res;
+    private final Context context;
 
     ColorPatternsFactory(Context context){
-        res = context.getResources();
+        this.context = context;
     }
 
 
@@ -39,19 +38,19 @@ class ColorPatternsFactory {
         colorPatterns.add(new FourColoursStartingAt(2, get(R.string.pattern_label_humbug)));
         colorPatterns.add(new FourColoursStartingAt(3, get(R.string.pattern_label_spooky)));
         colorPatterns.add(new FourColoursStartingAt(4, get(R.string.pattern_label_icing)));
-
         return colorPatterns;
     }
 
+
     private String get(int stringId){
-        return res.getString(stringId);
+        return context.getString(stringId);
     }
 
 
     List<MulticolorPattern> createShadePatterns(){
         List<MulticolorPattern> shadePatterns = new ArrayList<>();
-        shadePatterns.add(new FirstToLastPattern( get(R.string.pattern_label_first_to_last)));
         shadePatterns.add(new ReversiblePattern( get(R.string.pattern_label_strobe)));
+        shadePatterns.add(new FirstToLastPattern( get(R.string.pattern_label_first_to_last)));
         shadePatterns.add(new MiddleToEndPattern( get(R.string.pattern_label_to_light)));
         shadePatterns.add(new MiddleToStartPattern( get(R.string.pattern_label_to_dark)));
         shadePatterns.add(new OddNumbersPattern( get(R.string.pattern_label_snake)));
