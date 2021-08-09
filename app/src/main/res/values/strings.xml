@@ -152,7 +152,7 @@
     <string name="gradient_size_seekbar_label">Gradient Factor</string>
     <string name="angle_seekbar_label">Rotation</string>
     <string name="kaleidoscope_fixed_position_label">Centre Kaleidoscope</string>
-    <string name="kaleidoscope_infinity_mode_label">Infinity Mode</string>
+    <string name="kaleidoscope_infinity_mode_label">Infinity Mirror</string>
     <string name="shadow_radius_seekbar_label">Shadow Focus</string>
     <string name="line_width_seekbar_label">Line Width</string>
     <string name="blur_intensity_seekbar_label">Blur Intensity</string>

@@ -64,7 +64,7 @@ public class GradientHelper {
             return 1 + (int)(100 - progressPercentage);
         }
         else if(progressPercentage > 40){
-            return (int)(viewModel.gradientMaxLength /  progressPercentage) * 10;
+            return (int)((viewModel.gradientMaxLength /  progressPercentage) * 10);
         }
         float progressPercentage2 = Math.max(1, progressPercentage) + 10;
         float minusFraction = ((float)viewModel.gradientMaxLength / 100) * progressPercentage2;

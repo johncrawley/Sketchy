@@ -1,5 +1,7 @@
 package com.jacstuff.sketchy.controls.settings.shape;
 
+import android.os.Build;
+
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -28,7 +30,9 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
                 R.id.shapeOptionsLayout);
         buttonConfig.add(R.id.circleShapeButton,            R.drawable.button_shape_circle,             BrushShape.CIRCLE);
         buttonConfig.add(R.id.squareShapeButton,            R.drawable.button_shape_square,             BrushShape.SQUARE);
-        buttonConfig.add(R.id.pathShapeButton,              R.drawable.button_shape_path,               BrushShape.PATH);
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            buttonConfig.add(R.id.pathShapeButton,              R.drawable.button_shape_path,               BrushShape.PATH);
+        }
         buttonConfig.add(R.id.straightLineShapeButton,      R.drawable.button_shape_straight_line,      BrushShape.STRAIGHT_LINE);
         buttonConfig.add(R.id.roundedRectangleShapeButton,  R.drawable.button_shape_rounded_rect,       BrushShape.ROUNDED_RECTANGLE);
         buttonConfig.add(R.id.triangleShapeButton,          R.drawable.button_shape_triangle,           BrushShape.TRIANGLE);

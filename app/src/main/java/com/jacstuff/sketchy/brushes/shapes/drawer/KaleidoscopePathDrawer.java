@@ -139,7 +139,6 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
     }
 
     private void drawPath(Point diffPoint){
-
         Path path = new Path();
         path.moveTo(diffPoint.x,diffPoint.y);
         path.lineTo(0, 0);

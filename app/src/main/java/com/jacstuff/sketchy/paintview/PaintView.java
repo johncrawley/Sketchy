@@ -260,7 +260,9 @@ public class PaintView extends View {
         try {
             drawWithBrush(event);
         }
-        catch(IllegalArgumentException e){
+        //catch(IllegalArgumentException e){
+        catch (Exception e){
+            e.printStackTrace();
             //do nothing, sometimes there's an illegalArgException related to drawing gradients
             // immediately after rotating screen
         }
