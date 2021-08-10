@@ -20,6 +20,10 @@ public class DragRectDrawer extends BasicDrawer{
     public void down(float x, float y, Paint paint) {
         paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
         paintView.enablePreviewLayer();
+        if(viewModel.snapRectangleToEdge){
+            x = x <= 25 ? 0 : x;
+            y = y <= 25 ? 0 : y;
+        }
         draw(x,y, paint);
     }
 

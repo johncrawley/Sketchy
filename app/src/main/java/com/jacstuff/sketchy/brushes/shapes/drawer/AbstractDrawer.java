@@ -18,6 +18,7 @@ public abstract class AbstractDrawer implements Drawer {
     final Canvas canvas;
     Brush brush;
     PaintView paintView;
+    MainViewModel viewModel;
     boolean isColorChangedOnDown = true;
     final Paint shadowPaint;
     final Paint paint;
@@ -26,6 +27,7 @@ public abstract class AbstractDrawer implements Drawer {
     AbstractDrawer(PaintView paintView, MainViewModel viewModel){
         this.paintView = paintView;
         this.canvas =  paintView.getCanvas();
+        this.viewModel = viewModel;
         this.paintHelperManager = paintView.getPaintHelperManager();
         kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
         kaleidoscopeDrawer = new KaleidoscopeDrawer(paintView, viewModel, kaleidoscopeHelper);

@@ -31,6 +31,7 @@ public class MainViewModel extends ViewModel {
     public int radialGradientRadius=1;
     public int clampRadialGradientRadius=10;
     public int linearGradientLength=100;
+    public boolean snapRectangleToEdge =true;
 
     public String textBrushText = "";
 

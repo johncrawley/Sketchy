@@ -12,6 +12,7 @@ public class RectangleBrush extends AbstractBrush implements Brush {
 
     private Point touchDownPoint;
 
+
     public RectangleBrush() {
         super(BrushShape.DRAG_RECTANGLE);
         drawerType = DrawerFactory.Type.DRAG_RECT;

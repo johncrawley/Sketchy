@@ -109,6 +109,7 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
         }
     }
 
+
     private void translateCanvasToCenter(){
         canvas.translate(kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY());
     }
@@ -137,6 +138,7 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
         diffPoint.y = isPreviousPointReset ? 0 : previousPoint.y - originalPoint.y;
         return diffPoint;
     }
+
 
     private void drawPath(Point diffPoint){
         Path path = new Path();
