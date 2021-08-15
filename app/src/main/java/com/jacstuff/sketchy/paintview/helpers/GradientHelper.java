@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
+import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -93,6 +94,7 @@ public class GradientHelper {
 
 
     public void assignGradient(float x, float y, int color, int oldColor){
+       // oldColor = Color.TRANSPARENT;
         switch(gradientType){
 
             case NONE:

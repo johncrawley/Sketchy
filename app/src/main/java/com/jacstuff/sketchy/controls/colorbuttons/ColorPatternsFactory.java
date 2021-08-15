@@ -10,7 +10,7 @@ import com.jacstuff.sketchy.multicolor.pattern.MiddleToEndPattern;
 import com.jacstuff.sketchy.multicolor.pattern.MiddleToStartPattern;
 import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
 import com.jacstuff.sketchy.multicolor.pattern.OddNumbersPattern;
-import com.jacstuff.sketchy.multicolor.pattern.ReversiblePattern;
+import com.jacstuff.sketchy.multicolor.pattern.StrobePattern;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ class ColorPatternsFactory {
 
         List<MulticolorPattern> colorPatterns = new ArrayList<>();
         colorPatterns.add(new FirstToLastPattern( get(R.string.pattern_label_first_to_last)));
-        colorPatterns.add(new ReversiblePattern( get(R.string.pattern_label_over_and_back)));
+        colorPatterns.add(new StrobePattern( get(R.string.pattern_label_over_and_back)));
         colorPatterns.add(new MiddleToEndPattern( get(R.string.pattern_label_middle_to_end)));
         colorPatterns.add(new MiddleToStartPattern( get(R.string.pattern_label_middle_to_start)));
         colorPatterns.add(new OddNumbersPattern( get(R.string.pattern_label_caterpillar)));
@@ -49,7 +49,7 @@ class ColorPatternsFactory {
 
     List<MulticolorPattern> createShadePatterns(){
         List<MulticolorPattern> shadePatterns = new ArrayList<>();
-        shadePatterns.add(new ReversiblePattern( get(R.string.pattern_label_strobe)));
+        shadePatterns.add(new StrobePattern( get(R.string.pattern_label_strobe)));
         shadePatterns.add(new FirstToLastPattern( get(R.string.pattern_label_first_to_last)));
         shadePatterns.add(new MiddleToEndPattern( get(R.string.pattern_label_to_light)));
         shadePatterns.add(new MiddleToStartPattern( get(R.string.pattern_label_to_dark)));

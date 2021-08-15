@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="backgroundColor">#FFFDE7</color>
+    <color name="backgroundColorDark">#333653</color>
     <color name="appIconBackground">#4FC3F7</color>
     <color name="selected_button_border">#95712A</color>
     <color name="dialog_background">#66FFFDE7</color>

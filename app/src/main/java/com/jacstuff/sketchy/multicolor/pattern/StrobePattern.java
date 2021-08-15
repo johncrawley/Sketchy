@@ -1,19 +1,19 @@
 package com.jacstuff.sketchy.multicolor.pattern;
 
-public class ReversiblePattern extends AbstractMulticolorPattern implements MulticolorPattern {
+public class StrobePattern extends AbstractMulticolorPattern implements MulticolorPattern {
 
 
     private enum Direction { FORWARDS, BACKWARDS}
     private Direction indexDirection = Direction.FORWARDS;
 
 
-    public ReversiblePattern(String label){
+    public StrobePattern(String label){
         this();
         this.label = label;
     }
 
 
-    public ReversiblePattern(){
+    public StrobePattern(){
         currentIndex = getStartingIndex();
     }
 
@@ -27,9 +27,10 @@ public class ReversiblePattern extends AbstractMulticolorPattern implements Mult
         if(isIndexAtEdgeOfBounds()){
             changeDirection();
         }
-        udpateIndex();
+        updateIndex();
         return currentIndex;
     }
+
 
     public void resetIndex(){
         indexDirection = Direction.FORWARDS;
@@ -52,7 +53,7 @@ public class ReversiblePattern extends AbstractMulticolorPattern implements Mult
     }
 
 
-    private void udpateIndex() {
+    private void updateIndex(){
         if (indexDirection == Direction.FORWARDS) {
             currentIndex++;
             return;

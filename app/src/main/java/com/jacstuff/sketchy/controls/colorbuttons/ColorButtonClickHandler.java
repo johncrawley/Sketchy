@@ -11,7 +11,7 @@ import com.jacstuff.sketchy.multicolor.RandomMultiColorSelector;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
-import com.jacstuff.sketchy.multicolor.MulticolorSelector;
+import com.jacstuff.sketchy.multicolor.ColorSequenceSelector;
 import com.jacstuff.sketchy.multicolor.RandomColorSelector;
 import com.jacstuff.sketchy.multicolor.SingleColorSelector;
 import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
@@ -72,8 +72,8 @@ public class ColorButtonClickHandler {
         colorSelectors = new HashMap<>();
         colorSelectors.put(ButtonType.COLOR, singleSelector);
         colorSelectors.put(ButtonType.SHADE, singleSelector);
-        colorSelectors.put(ButtonType.MULTICOLOR, new MulticolorSelector(colorPatterns));
-        colorSelectors.put(ButtonType.MULTISHADE, new MulticolorSelector(shadePatterns));
+        colorSelectors.put(ButtonType.MULTICOLOR, new ColorSequenceSelector(colorPatterns));
+        colorSelectors.put(ButtonType.MULTISHADE, new ColorSequenceSelector(shadePatterns));
         colorSelectors.put(ButtonType.RANDOM_COLOR, randomSelector);
         colorSelectors.put(ButtonType.RANDOM_SHADE, randomMultiColor );
     }
