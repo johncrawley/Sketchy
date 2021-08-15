@@ -54,28 +54,7 @@ public class ColorSequenceSelector implements ColorSelector {
 
     public void set(List<Integer> inputList){
         colors = new ArrayList<>(inputList);
-        printColors();
         lastIndex = colors.size()-1;
-    }
-
-    private void printColors(){
-        System.out.println("ColorSequenceSelector : print Colors: ********************");
-        StringBuilder str = new StringBuilder();
-        for(Integer color : colors){
-            str.append(getColorStr(color));
-            str.append( " ");
-        }
-        System.out.println(str.toString());
-    }
-
-    private String getColorStr(int color){
-        String colorStr = "#";
-        colorStr +=  ColorUtils.getComponentFrom(color, ColorUtils.Rgb.RED);
-        colorStr += "_";
-        colorStr +=  ColorUtils.getComponentFrom(color, ColorUtils.Rgb.GREEN);
-        colorStr += "_";
-        colorStr +=  ColorUtils.getComponentFrom(color, ColorUtils.Rgb.BLUE);
-        return colorStr;
     }
 
 

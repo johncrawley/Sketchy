@@ -39,8 +39,8 @@ public class StrobePattern extends AbstractMulticolorPattern implements Multicol
 
 
     private boolean isIndexAtEdgeOfBounds(){
-        return (currentIndex == 0 && indexDirection == Direction.BACKWARDS) ||
-                (currentIndex == numberOfColors -1 && indexDirection == Direction.FORWARDS);
+        return (currentIndex <= 0 && indexDirection == Direction.BACKWARDS) ||
+                (currentIndex >= numberOfColors -1 && indexDirection == Direction.FORWARDS);
     }
 
 
