@@ -7,6 +7,7 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.helpers.size.SizeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class PaintHelperManager {
@@ -17,6 +18,7 @@ public class PaintHelperManager {
     private final AngleHelper angleHelper;
     private final KaleidoscopeHelper kaleidoscopeHelper;
     private final StyleHelper styleHelper;
+    private final SizeHelper sizeHelper;
 
 
     public PaintHelperManager(MainActivity mainActivity, PaintView paintView, MainViewModel viewModel){
@@ -26,6 +28,7 @@ public class PaintHelperManager {
         angleHelper = new AngleHelper();
         kaleidoscopeHelper = new KaleidoscopeHelper(paintView, viewModel);
         styleHelper = new StyleHelper(mainActivity);
+        sizeHelper = new SizeHelper(viewModel);
     }
 
 
@@ -64,5 +67,7 @@ public class PaintHelperManager {
     public AngleHelper getAngleHelper(){
         return angleHelper;
     }
+
+    public SizeHelper getSizeHelper() { return sizeHelper;}
 
 }

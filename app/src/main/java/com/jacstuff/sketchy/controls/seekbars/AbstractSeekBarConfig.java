@@ -41,11 +41,11 @@ public abstract class AbstractSeekBarConfig {
             public void onStartTrackingTouch(SeekBar seekBar) {
                 onStartTracking();
             }
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 adjustSetting(progress);
             }
-
         });
     }
 

@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.paintview.helpers.size.SizeSequenceType;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -90,6 +91,7 @@ public class PaintView extends View {
         initKaleidoscope();
         paint.setColor(viewModel.color);
         fractalColorBlender = new InfinityModeColorBlender(viewModel, colorSelector, paint);
+        paintHelperManager.getSizeHelper().setSequence(SizeSequenceType.INCREASING);
         invalidate();
     }
 
