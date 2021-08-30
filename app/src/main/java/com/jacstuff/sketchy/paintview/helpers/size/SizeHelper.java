@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.paintview.helpers.size;
 
+import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.HashMap;
@@ -10,11 +11,13 @@ public class SizeHelper {
 
     private final MainViewModel viewModel;
     private SizeSequence currentSequence;
+    private final PaintView paintView;
     private Map<SizeSequenceType, SizeSequence> sizeSequenceMap;
 
 
-    public SizeHelper(MainViewModel viewModel){
+    public SizeHelper(MainViewModel viewModel, PaintView paintView){
         this.viewModel = viewModel;
+        this.paintView = paintView;
         initSizeSequenceMap();
     }
 
@@ -32,7 +35,9 @@ public class SizeHelper {
 
 
     public void assignNextBrushSize(){
-        currentSequence.assignNextBrushSize();
+        if(currentSequence.hasSizeChanged()) {
+            paintView.setBrushSize(currentSequence.getNextBrushSize());
+        }
     }
 
 }
