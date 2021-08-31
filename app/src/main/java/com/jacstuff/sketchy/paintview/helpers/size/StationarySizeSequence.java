@@ -18,6 +18,12 @@ public class StationarySizeSequence implements SizeSequence{
         // do nothing
     }
 
+
+    @Override
+    public void reset() {
+        // do nothing
+    }
+
     @Override
     public boolean hasSizeChanged(){
         return false;

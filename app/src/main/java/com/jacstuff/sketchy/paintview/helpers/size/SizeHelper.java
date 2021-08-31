@@ -26,6 +26,9 @@ public class SizeHelper {
         sizeSequenceMap = new HashMap<>();
         sizeSequenceMap.put(SizeSequenceType.STATIONARY, new StationarySizeSequence());
         sizeSequenceMap.put(SizeSequenceType.INCREASING, new IncreasingSizeSequence(viewModel));
+        sizeSequenceMap.put(SizeSequenceType.DECREASING, new DecreasingSizeSequence(viewModel));
+        sizeSequenceMap.put(SizeSequenceType.STROBE_INCREASING, new StrobeSizeSequence(viewModel, true));
+        sizeSequenceMap.put(SizeSequenceType.STROBE_DECREASING, new StrobeSizeSequence(viewModel, false));
     }
 
 
@@ -38,6 +41,11 @@ public class SizeHelper {
         if(currentSequence.hasSizeChanged()) {
             paintView.setBrushSize(currentSequence.getNextBrushSize());
         }
+    }
+
+
+    public void reset(){
+       currentSequence.reset();
     }
 
 }

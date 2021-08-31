@@ -13,7 +13,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-        android:id="@+id/lineWidthSeekBarLabel"
+        android:id="@+id/sizeSequenceMinSeekBarLabel"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
@@ -22,21 +22,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/line_width_seekbar_label"
+        android:text="@string/size_sequence_min_seekbar_label"
         />
 
     <SeekBar
-        android:id="@+id/lineWidthSeekBar"
+        android:id="@+id/sizeSequenceMinSeekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:indeterminate="false"
         android:min="@integer/line_width_min"
-        android:progress="@integer/line_width_default"
+        android:max="@integer/brush_size_max_default"
+        android:progress="@integer/size_sequence_min_default"
         app:layout_constraintHorizontal_weight="7"
-        app:layout_constraintStart_toEndOf="@+id/lineWidthSeekBarLabel"
+        app:layout_constraintStart_toEndOf="@+id/sizeSequenceMinSeekBarLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:paddingHorizontal="@dimen/seekbar_horizontal_padding"
-     />
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

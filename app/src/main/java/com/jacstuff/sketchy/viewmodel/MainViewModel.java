@@ -28,8 +28,11 @@ public class MainViewModel extends ViewModel {
     public boolean isKaleidoscopeCentred = true;
 
     public int brushSize;
+    public int brushSizeSetBySeekBar;
     public int sizeSequenceMin = 5;
     public int sizeSequenceMax = 240;
+    public int sizeSequenceIncrement = 10;
+    public boolean isSizeSequenceResetOnTouchUp = true;
     public int halfBrushSize = 10;
     public int radialGradientRadius=1;
     public int clampRadialGradientRadius=10;

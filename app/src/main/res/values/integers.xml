@@ -30,6 +30,13 @@
     <integer name="text_spacing_seekbar_max">200</integer>
     <integer name="bitmap_history_maximum_size">16</integer>
 
+
+    <integer name="size_sequence_max_default">100</integer>
+    <integer name="size_sequence_min_default">1</integer>
+    <integer name="size_sequence_step_default">5</integer>
+    <integer name="size_sequence_step_min">1</integer>
+    <integer name="size_sequence_step_max">30</integer>
+
     <fraction name="skew_seekbar_min">-1</fraction>
     <fraction name="skew_seekbar_max">1.1</fraction>
     <fraction name="skew_seekbar_default">0</fraction>

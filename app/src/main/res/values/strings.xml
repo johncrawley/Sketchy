@@ -155,6 +155,9 @@
     <string name="kaleidoscope_infinity_mode_label">Infinity Mirror</string>
     <string name="shadow_radius_seekbar_label">Shadow Focus</string>
     <string name="line_width_seekbar_label">Line Width</string>
+    <string name="size_sequence_min_seekbar_label">Minimum Width</string>
+    <string name="size_sequence_max_seekbar_label">Maximum Width</string>
+    <string name="size_sequence_increments_seekbar_label">Step Size</string>
     <string name="blur_intensity_seekbar_label">Blur Intensity</string>
     <string name="brush_size_seekbar_label">Shape Width</string>
     <string name="text_skew_seekbar_label">Skew</string>

@@ -8,6 +8,7 @@
     <item name="blurButton" type="id"/>
     <item name="shadowButton" type="id"/>
     <item name="kaleidoButton" type="id"/>
+    <item name="sizeSequenceButton" type="id"/>
 
     <item name="zeroDegreesButton" type="id"/>
     <item name="degrees30Button" type="id"/>
@@ -97,7 +98,11 @@
     <item name="spikedStyleButton" type="id"/>
     <item name="translateStyleButton" type="id"/>
 
-
-
+    <item name="sizeSequenceStationaryButton" type="id"/>
+    <item name="sizeSequenceIncreasingButton" type="id"/>
+    <item name="sizeSequenceDecreasingButton" type="id"/>
+    <item name="sizeSequenceStrobeIncreasingButton" type="id"/>
+    <item name="sizeSequenceStrobeDecreasingButton" type="id"/>
+    <item name="sizeSequenceRandomButton" type="id"/>
 
 </resources>

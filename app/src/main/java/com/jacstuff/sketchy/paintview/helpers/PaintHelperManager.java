@@ -1,6 +1,5 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
-import android.content.Context;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.MainActivity;
@@ -38,6 +37,7 @@ public class PaintHelperManager {
         shadowHelper.init(shadowPaint);
         styleHelper.init(paintGroup);
     }
+
 
     public GradientHelper getGradientHelper(){
         return gradientHelper;

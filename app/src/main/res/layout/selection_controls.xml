@@ -6,84 +6,97 @@
     android:background="@android:drawable/dialog_holo_light_frame">
 
 
-            <include
-                android:id="@+id/includeShapeControls"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:paddingHorizontal="12dp"
-                layout="@layout/controls_shapes" />
+        <include
+            android:id="@+id/includeShapeControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingHorizontal="12dp"
+            layout="@layout/controls_shapes" />
 
-            <include
-                android:visibility="gone"
-                android:id="@+id/includeStyleControls"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:paddingHorizontal="12dp"
-                layout="@layout/controls_styles" />
+        <include
+            android:visibility="gone"
+            android:id="@+id/includeStyleControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingHorizontal="12dp"
+            layout="@layout/controls_styles" />
 
-            <include
-                android:visibility="gone"
-                android:id="@+id/includeAngleControls"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                layout="@layout/controls_angle" />
+        <include
+            android:visibility="gone"
+            android:id="@+id/includeAngleControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            layout="@layout/controls_angle" />
 
-            <include
-                android:visibility="gone"
-                android:id="@+id/includeGradientControls"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                layout="@layout/controls_gradient" />
+        <include
+            android:visibility="gone"
+            android:id="@+id/includeGradientControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            layout="@layout/controls_gradient" />
 
-            <include
-                android:visibility="gone"
-                android:id="@+id/includeBlurControls"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                layout="@layout/controls_blur" />
+        <include
+            android:visibility="gone"
+            android:id="@+id/includeBlurControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            layout="@layout/controls_blur" />
 
-            <include
-                android:visibility="gone"
-                android:id="@+id/includeShadowControls"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:paddingHorizontal="12dp"
-                layout="@layout/controls_shadow" />
-            <include
-                android:visibility="gone"
-                android:id="@+id/includeKaleidoScopeControls"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:paddingHorizontal="12dp"
-                layout="@layout/controls_kaleidoscope" />
+        <include
+            android:visibility="gone"
+            android:id="@+id/includeShadowControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingHorizontal="12dp"
+            layout="@layout/controls_shadow" />
+
+        <include
+            android:visibility="gone"
+            android:id="@+id/includeKaleidoscopeControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingHorizontal="12dp"
+            layout="@layout/controls_kaleidoscope" />
+
+        <include
+            android:visibility="gone"
+            android:id="@+id/includeSizeSequenceControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingHorizontal="12dp"
+            layout="@layout/controls_size_sequence" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

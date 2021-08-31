@@ -5,4 +5,5 @@ public interface SizeSequence {
     int getNextBrushSize();
     void init(int initialSize);
     boolean hasSizeChanged();
+    void reset();
 }

@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.controls.settings;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.controls.settings.gradient.GradientButtonsConfigurator;
 import com.jacstuff.sketchy.controls.settings.shape.ShapeButtonsConfigurator;
+import com.jacstuff.sketchy.controls.settings.size.SizeSequenceOptionsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class SettingsButtonsConfigurator {
         configurators.add(new ShadowButtonsConfigurator(activity, paintView));
         configurators.add(new KaleidoscopeButtonsConfigurator(activity, paintView));
         configurators.add(new AngleButtonsConfigurator(activity, paintView));
+        configurators.add(new SizeSequenceOptionsConfigurator(activity, paintView));
     }
 
 

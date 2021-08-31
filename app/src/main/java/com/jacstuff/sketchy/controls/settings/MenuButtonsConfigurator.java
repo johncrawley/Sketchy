@@ -34,9 +34,10 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
         buttonConfig.add(R.id.angleButton,     angleStr,                           R.id.includeAngleControls);
 
         buttonConfig.setParentLayout(R.id.controlPanelLayoutGroup2);
-        buttonConfig.add(R.id.blurButton,      R.drawable.button_blur_off,    R.id.includeBlurControls);
-        buttonConfig.add(R.id.shadowButton,    R.drawable.button_shadow_off,  R.id.includeShadowControls);
-        buttonConfig.add(R.id.kaleidoButton,   "K: 1",                        R.id.includeKaleidoScopeControls);
+        buttonConfig.add(R.id.blurButton,       R.drawable.button_blur_off,      R.id.includeBlurControls);
+        buttonConfig.add(R.id.shadowButton,     R.drawable.button_shadow_off,    R.id.includeShadowControls);
+        buttonConfig.add(R.id.kaleidoButton,   "K: 1",                      R.id.includeKaleidoscopeControls);
+        buttonConfig.add(R.id.sizeSequenceButton, R.drawable.button_style_fill,  R.id.includeSizeSequenceControls);
 
         buttonConfig.setupClickHandler();
         buttonConfig.setupClickHandler();
@@ -48,6 +49,7 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
     @Override
     public void handleClick(int viewId, Integer layoutId) {
         hideAllPanels();
+        System.out.println("MenuButtonsConfigurator.handleClick() settingsPopup==null: " + (settingsPopup == null));
         if(settingsPopup != null) {
             settingsPopup.click(viewId);
         }

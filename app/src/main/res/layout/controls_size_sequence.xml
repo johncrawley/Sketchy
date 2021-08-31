@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:paddingTop="@dimen/menu_padding_top"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:id="@+id/strokeCapSpinnerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/style_spinner_margin_vertical"
+        android:paddingHorizontal="@dimen/spinner_layout_horizontal_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/strokeCapSpinner"
+            android:layout_marginEnd="@dimen/spinner_label_margin_end"
+            android:text="@string/stroke_cap_spinner_label"/>
+
+        <Spinner
+            android:id="@+id/strokeCapSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/strokeJoinSpinnerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/style_spinner_margin_vertical"
+        android:paddingHorizontal="@dimen/spinner_layout_horizontal_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/strokeCapSpinner"
+            android:layout_marginEnd="@dimen/spinner_label_margin_end"
+            android:text="@string/stroke_join_spinner_label"/>
+
+        <Spinner
+            android:id="@+id/strokeJoinSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/includedLineWidthSeekBarWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/menu_seekbar_include_horizontal_padding"
+        android:orientation="vertical">
+
+
+        <include
+            android:id="@+id/sizeSequenceMaxSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/seek_bar_size_sequence_max" />
+
+
+        <include
+            android:id="@+id/sizeSequenceMinSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/seek_bar_size_sequence_min" />
+
+
+        <include
+            android:id="@+id/sizeSequenceStepSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/seek_bar_size_sequence_step" />
+
+    </LinearLayout>
+
+
+    <HorizontalScrollView
+        android:id="@+id/controlsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity = "center">
+
+        <LinearLayout
+            android:id="@+id/sizeSequenceOptionsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/menu_buttons_layout_top_margin"
+            android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/shape_options_padding_top"/>
+    </HorizontalScrollView>
+
+</LinearLayout>

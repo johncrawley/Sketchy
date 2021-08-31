@@ -91,7 +91,7 @@ public class PaintView extends View {
         initKaleidoscope();
         paint.setColor(viewModel.color);
         fractalColorBlender = new InfinityModeColorBlender(viewModel, colorSelector, paint);
-        paintHelperManager.getSizeHelper().setSequence(SizeSequenceType.INCREASING);
+        paintHelperManager.getSizeHelper().setSequence(SizeSequenceType.STROBE_INCREASING);
         invalidate();
     }
 
