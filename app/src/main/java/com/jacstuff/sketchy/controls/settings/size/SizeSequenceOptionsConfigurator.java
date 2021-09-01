@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.controls.settings.size;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushStyle;
@@ -26,12 +27,12 @@ public class SizeSequenceOptionsConfigurator extends AbstractButtonConfigurator<
                 ButtonCategory.SIZE_SEQUENCE,
                 R.id.sizeSequenceOptionsLayout);
 
-        buttonConfig.add(R.id.sizeSequenceStationaryButton, R.drawable.button_style_dotted, SizeSequenceType.STATIONARY);
-        buttonConfig.add(R.id.sizeSequenceIncreasingButton, R.drawable.button_style_dotted, SizeSequenceType.INCREASING);
-        buttonConfig.add(R.id.sizeSequenceDecreasingButton, R.drawable.button_style_dotted, SizeSequenceType.DECREASING);
-        buttonConfig.add(R.id.sizeSequenceStrobeIncreasingButton, R.drawable.button_style_dotted, SizeSequenceType.STROBE_INCREASING);
-        buttonConfig.add(R.id.sizeSequenceStrobeDecreasingButton, R.drawable.button_style_dotted, SizeSequenceType.STROBE_DECREASING);
-        buttonConfig.add(R.id.sizeSequenceRandomButton, R.drawable.button_style_dotted, SizeSequenceType.RANDOM);
+        buttonConfig.add(R.id.sizeSequenceStationaryButton, R.drawable.button_size_sequence_stationary, SizeSequenceType.STATIONARY);
+        buttonConfig.add(R.id.sizeSequenceIncreasingButton, R.drawable.button_size_sequence_increasing, SizeSequenceType.INCREASING);
+        buttonConfig.add(R.id.sizeSequenceDecreasingButton, R.drawable.button_size_sequence_decreasing, SizeSequenceType.DECREASING);
+        buttonConfig.add(R.id.sizeSequenceStrobeIncreasingButton, R.drawable.button_size_sequence_strobe_increasing, SizeSequenceType.STROBE_INCREASING);
+        buttonConfig.add(R.id.sizeSequenceStrobeDecreasingButton, R.drawable.button_size_sequence_strobe_decreasing, SizeSequenceType.STROBE_DECREASING);
+        buttonConfig.add(R.id.sizeSequenceRandomButton, R.drawable.button_size_sequence_random, SizeSequenceType.RANDOM);
 
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.sizeSequenceButton);
@@ -40,6 +41,8 @@ public class SizeSequenceOptionsConfigurator extends AbstractButtonConfigurator<
         new SizeSequenceMaxSeekBar(activity, paintView);
         new SizeSequenceMinSeekBar(activity, paintView);
         new SizeSequenceStepSeekBar(activity, paintView);
+
+        setupOtherOptions();
     }
 
 
@@ -47,5 +50,14 @@ public class SizeSequenceOptionsConfigurator extends AbstractButtonConfigurator<
     public void handleClick(int viewId, SizeSequenceType sizeSequenceType) {
         paintHelperManager.getSizeHelper().setSequence(sizeSequenceType);
     }
+
+    public void setupOtherOptions(){
+        SwitchMaterial repeatSequence = activity.findViewById(R.id.sizeSequenceIsRepeatedSwitch);
+        repeatSequence.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isSizeSequenceRepeated = isChecked);
+
+        SwitchMaterial resetOnTouchUp = activity.findViewById(R.id.sizeSequenceIsResetSwitch);
+        resetOnTouchUp.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isSizeSequenceResetOnTouchUp = isChecked);
+    }
+
 
 }

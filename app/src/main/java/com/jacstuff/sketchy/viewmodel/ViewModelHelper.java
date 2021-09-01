@@ -83,6 +83,8 @@ public class ViewModelHelper {
         viewModel.textBrushText = mainActivity.getString(R.string.text_edit_text_default);
         viewModel.gradientMaxLength = mainActivity.getResources().getInteger(R.integer.brush_size_default);
         viewModel.linearGradientLength = mainActivity.getResources().getInteger(R.integer.brush_size_default);
+        viewModel.sizeSequenceMax = mainActivity.getResources().getInteger(R.integer.brush_size_max_default);
+        viewModel.sizeSequenceMin = mainActivity.getResources().getInteger(R.integer.size_sequence_min_default);
     }
 
     private void initViewModelSettings(){
@@ -140,7 +142,6 @@ public class ViewModelHelper {
                 gradientHelper.setGradientRadius(viewModel.gradient);
             }
         }
-
     }
 
 
@@ -172,6 +173,5 @@ public class ViewModelHelper {
             view.callOnClick();
         }
     }
-
 
 }

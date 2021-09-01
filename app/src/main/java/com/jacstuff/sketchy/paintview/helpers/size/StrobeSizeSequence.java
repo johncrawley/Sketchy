@@ -17,13 +17,17 @@ public class StrobeSizeSequence implements  SizeSequence{
 
 
     @Override
-    public void init(int currentSize){
-        this.currentSize = viewModel.brushSize;
+    public void init(){
+        if(isIncreasingDefault){
+            this.currentSize = viewModel.sizeSequenceMin;
+            return;
+        }
+        this.currentSize = viewModel.sizeSequenceMax;
     }
 
 
     @Override
-    public int getNextBrushSize(){
+    public  int getNextBrushSize(){
 
         if(viewModel.sizeSequenceMax < viewModel.sizeSequenceMin){
             return viewModel.sizeSequenceMin;
@@ -35,6 +39,9 @@ public class StrobeSizeSequence implements  SizeSequence{
             }
             else{
                 currentSize = viewModel.sizeSequenceMax;
+                if(!isIncreasingDefault && !viewModel.isSizeSequenceRepeated){
+                    return currentSize;
+                }
                 isIncreasing = false;
             }
         }
@@ -44,6 +51,9 @@ public class StrobeSizeSequence implements  SizeSequence{
             }
             else{
                 currentSize = viewModel.sizeSequenceMin;
+                if(isIncreasingDefault && !viewModel.isSizeSequenceRepeated){
+                    return currentSize;
+                }
                 isIncreasing = true;
             }
         }
@@ -56,7 +66,7 @@ public class StrobeSizeSequence implements  SizeSequence{
     public void reset() {
         if(viewModel.isSizeSequenceResetOnTouchUp){
             isIncreasing = isIncreasingDefault;
-            currentSize = viewModel.brushSizeSetBySeekBar;
+            currentSize = isIncreasingDefault ? viewModel.sizeSequenceMin : viewModel.sizeSequenceMax;
         }
     }
 

@@ -13,13 +13,18 @@ public class DecreasingSizeSequence implements  SizeSequence{
 
 
     @Override
-    public void init(int currentSize){
-        this.currentSize = viewModel.brushSize;
+    public void init(){
+        this.currentSize = viewModel.sizeSequenceMax;
     }
 
 
     @Override
     public int getNextBrushSize(){
+        if(viewModel.isSizeSequenceRepeated && currentSize == viewModel.sizeSequenceMin){
+            currentSize = viewModel.sizeSequenceMax;
+            return currentSize;
+        }
+
         currentSize = currentSize > viewModel.sizeSequenceMin ? currentSize - viewModel.sizeSequenceIncrement : viewModel.sizeSequenceMin;
         return currentSize;
     }

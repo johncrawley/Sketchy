@@ -14,7 +14,7 @@ public class StationarySizeSequence implements SizeSequence{
     }
 
     @Override
-    public void init(int initialSize) {
+    public void init() {
         // do nothing
     }
 
