@@ -181,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         colorButtonClickHandler.setColorsMap(colors);
         ColorButtonLayoutCreator layoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams, colors);
         colorButtonClickHandler.setMultiColorShades(layoutCreator.getMultiColorShades());
+        colorButtonClickHandler.setMultiColorShadesForSequences(layoutCreator.getMultiColorShadesForSequences());
         layoutCreator.addColorButtonLayoutsTo(colorButtonGroupLayout);
         colorButtonClickHandler.setShadeLayoutsMap(layoutCreator.getShadeLayoutsMap());
         colorButtonClickHandler.onClick(getDefaultColorButton());

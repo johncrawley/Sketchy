@@ -32,6 +32,7 @@ public class ColorButtonClickHandler {
     private boolean isMostRecentClickAShade = false; //for use when selecting a button after rotate/resume
     private final LinearLayout shadesLayout;
     private Map<Integer, List<Integer>> multiColorShades = new HashMap<>();
+    private Map<Integer, List<Integer>> multiColorShadesForSequences = new HashMap<>();
     private Map<ButtonType, ColorSelector> colorSelectors;
     private final MainActivity mainActivity;
     private ColorSelector currentColorSelector;
@@ -66,14 +67,13 @@ public class ColorButtonClickHandler {
         ColorSelector singleSelector = new SingleColorSelector();
         ColorSelector randomSelector = new RandomColorSelector();
         ColorPatternsFactory colorPatternsFactory = new ColorPatternsFactory(mainActivity.getApplicationContext());
-        List<MulticolorPattern> colorPatterns = colorPatternsFactory.createColorPatterns();
-        List<MulticolorPattern> shadePatterns = colorPatternsFactory.createShadePatterns();
+
         ColorSelector randomMultiColor = new RandomMultiColorSelector();
         colorSelectors = new HashMap<>();
         colorSelectors.put(ButtonType.COLOR, singleSelector);
         colorSelectors.put(ButtonType.SHADE, singleSelector);
-        colorSelectors.put(ButtonType.MULTICOLOR, new ColorSequenceSelector(colorPatterns));
-        colorSelectors.put(ButtonType.MULTISHADE, new ColorSequenceSelector(shadePatterns));
+        colorSelectors.put(ButtonType.MULTICOLOR, new ColorSequenceSelector(colorPatternsFactory.createColorPatterns()));
+        colorSelectors.put(ButtonType.MULTISHADE, new ColorSequenceSelector(colorPatternsFactory.createShadePatterns()));
         colorSelectors.put(ButtonType.RANDOM_COLOR, randomSelector);
         colorSelectors.put(ButtonType.RANDOM_SHADE, randomMultiColor );
     }
@@ -104,9 +104,15 @@ public class ColorButtonClickHandler {
     }
 
 
-   public void setMultiColorShades(Map<Integer, List<Integer>> multiColorShades){
+    public void setMultiColorShades(Map<Integer, List<Integer>> multiColorShades){
         this.multiColorShades = multiColorShades;
     }
+
+
+    public void setMultiColorShadesForSequences(Map<Integer, List<Integer>> multiColorShades){
+        this.multiColorShadesForSequences = multiColorShades;
+    }
+
 
 
     public void onClick(int id){
@@ -161,7 +167,6 @@ public class ColorButtonClickHandler {
 
 
     private void assignColorSelectorToPaintViewFrom(Button button){
-
         ButtonType buttonType = (ButtonType)button.getTag(R.string.tag_button_type);
         currentColorSelector = colorSelectors.get(buttonType);
         paintView.setColorSelector(currentColorSelector);
@@ -372,7 +377,7 @@ public class ColorButtonClickHandler {
 
     private List<Integer> getShadesFrom(Button button){
         int color = (int)button.getTag(R.string.tag_button_color);
-        return multiColorShades.get(color);
+        return multiColorShadesForSequences.get(color);
     }
 
 

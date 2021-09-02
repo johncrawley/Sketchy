@@ -9,10 +9,6 @@ public class FirstToLastPattern extends  AbstractMulticolorPattern implements Mu
     }
 
 
-    public FirstToLastPattern(){
-    }
-
-
     @Override
     public int getNextIndex(int numberOfColors) {
         currentIndex = currentIndex >= numberOfColors -1 ? 0 : currentIndex + 1;

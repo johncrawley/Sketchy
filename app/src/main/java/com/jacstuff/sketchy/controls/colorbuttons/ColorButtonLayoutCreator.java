@@ -19,8 +19,9 @@ import java.util.Map;
 
 public class ColorButtonLayoutCreator {
 
-    private ColorShadeCreator colorShadeCreator;
+    private ColorShadeCreator colorShadeCreator, colorShadeCreatorForSequences;
     private final Map<Integer, List<Integer>> multiColorShades = new HashMap<>();
+    private final Map<Integer, List<Integer>> multiColorShadesForSequences = new HashMap<>();
     private final List<LinearLayout> colorButtonLayouts = new ArrayList<>();
     private final Context context;
     private final List<Integer> colors;
@@ -68,10 +69,14 @@ public class ColorButtonLayoutCreator {
     }
 
 
+    public Map<Integer, List<Integer>> getMultiColorShadesForSequences(){
+        return this.multiColorShadesForSequences;
+    }
+
+
     private void setupColorShadeCreator(){
-        int numberOfShades = context.getResources().getInteger(R.integer.number_of_shades);
-        int shadeIncrement = context.getResources().getInteger(R.integer.shade_increment);
-        colorShadeCreator = new ColorShadeCreator(numberOfShades, shadeIncrement);
+        colorShadeCreator = new ColorShadeCreator(15, 7);
+        colorShadeCreatorForSequences = new ColorShadeCreator(80, 2);
     }
 
 
@@ -91,6 +96,7 @@ public class ColorButtonLayoutCreator {
         List<Integer> shades = colorShadeCreator.generateShadesFrom(color);
         addShadesToLayoutMap(color, shades);
         addMultiColorShades(color, shades);
+        addMultiColorShadesForSequences(color, colorShadeCreatorForSequences.generateShadesFrom(color));
     }
 
 
@@ -125,6 +131,11 @@ public class ColorButtonLayoutCreator {
     }
 
 
+    private void addMultiColorShadesForSequences(int color, List<Integer> shades){
+        multiColorShadesForSequences.put(color, shades);
+    }
+
+
     private void addShadesToLayoutMap(int color, List<Integer> shades){
         LinearLayout shadeLayout = createLayoutWithButtonsFrom(shades, ButtonType.SHADE);
         shadeLayoutsMap.put(createColorKey(color, ButtonType.COLOR), shadeLayout);
@@ -150,7 +161,6 @@ public class ColorButtonLayoutCreator {
         else if(buttonType == ButtonType.RANDOM_SHADE){
             addRandomShadeDrawableTo(button, color);
         }
-
         return buttonUtils.wrapInMarginLayout(buttonLayoutParams, button);
     }
 
