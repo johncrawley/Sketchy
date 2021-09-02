@@ -45,6 +45,12 @@ public class SizeHelper {
     }
 
 
+    public void onTouchDown(){
+        currentSequence.reset();
+        assignNextBrushSize();
+    }
+
+
     public void assignNextBrushSize(){
         if(currentSequence.hasSizeChanged()) {
             paintView.setBrushSize(currentSequence.getNextBrushSize());

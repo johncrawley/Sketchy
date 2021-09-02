@@ -18,7 +18,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
     @Override
     public void down(float x, float y, Paint paint) {
         paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
-        paintHelperManager.getSizeHelper().assignNextBrushSize();
+        paintHelperManager.getSizeHelper().onTouchDown();
         drawToCanvas(x,y, paint);
     }
 
@@ -43,7 +43,6 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
     @Override
     public void up(float x, float y, Paint paint) {
         paintView.disablePreviewLayer();
-        paintHelperManager.getSizeHelper().reset();
         paintView.invalidate();
         paintView.pushHistory();
     }
