@@ -47,6 +47,7 @@ public class BitmapLoader {
         canvas.drawBitmap(bitmapToDraw, src, dest, drawPaint);
     }
 
+
     private Bitmap getRotatedBitmap(Bitmap bm, int currentOrientation){
         int angle = currentOrientation == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
         Matrix m = new Matrix();

@@ -64,10 +64,18 @@ public class StrobeSizeSequence implements  SizeSequence{
 
     @Override
     public void reset() {
-        if(viewModel.isSizeSequenceResetOnTouchUp){
+        if(viewModel.isSizeSequenceResetOnTouchUp || isCurrentSizeAtLimit()){
             isIncreasing = isIncreasingDefault;
             currentSize = isIncreasingDefault ? viewModel.sizeSequenceMin : viewModel.sizeSequenceMax;
         }
+    }
+
+
+    private boolean isCurrentSizeAtLimit(){
+        return isIncreasingDefault ?
+                  currentSize == viewModel.sizeSequenceMin
+                : currentSize == viewModel.sizeSequenceMax;
+
     }
 
 
