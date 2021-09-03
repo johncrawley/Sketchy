@@ -64,10 +64,14 @@ public class SettingsPopup {
 
     public void click(int id){
 
+        /*
         if(ignoreIds.contains(id)){
+            System.out.println("ignore id " + id);
             return;
         }
-        if(isCurrentParentOrNotAParent(id)){
+
+         */
+        if(isIdTheCurrentParentOrNotAParent(id)){
             setInvisible();
             return;
         }
@@ -76,7 +80,7 @@ public class SettingsPopup {
     }
 
 
-    boolean isCurrentParentOrNotAParent(int id){
+    boolean isIdTheCurrentParentOrNotAParent(int id){
         return (isPoppedUp && currentParentButtonId == id) || !parentIds.contains(id);
     }
 

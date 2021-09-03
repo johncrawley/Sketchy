@@ -95,7 +95,6 @@ public class ButtonConfigHandler<T>{
     private void handleClick(View view){
         int viewId = view.getId();
         buttonUtils.switchSelection(view.getId(), buttonIds);
-
         buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
         viewModelHelper.saveRecentClick(buttonCategory, viewId);
         assignBackgroundAndTextToParentButtonFrom(view);
@@ -103,12 +102,11 @@ public class ButtonConfigHandler<T>{
 
 
     private void assignBackgroundAndTextToParentButtonFrom(View view){
-        Button clickedButton = (Button)view;
         if(parentButton == null){
             return;
         }
+        Button clickedButton = (Button)view;
         parentButton.setBackground(getCopyOfDrawableFrom(clickedButton));
-
         parentButton.setText(clickedButton.getText());
     }
 

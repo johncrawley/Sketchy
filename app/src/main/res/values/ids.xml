@@ -39,6 +39,9 @@
     <item name="solidBlurButton" type="id"/>
 
 
+    <item name="colorConfigButton" type="id"/>
+
+
     <item name="noGradientButton" type="id"/>
     <item name="gradientVerticallMirrorButton" type="id"/>
     <item name="gradientHorizontalMirrorButton" type="id"/>

@@ -86,6 +86,7 @@ public class ColorButtonLayoutCreator {
         }
         addMultiColorButton();
         addRandomButton();
+      //  addConfigButton();
         addMultiColorShadeButtons();
         addRandomShadeButtons();
     }
@@ -112,6 +113,30 @@ public class ColorButtonLayoutCreator {
         button.setBackgroundResource(R.drawable.random_color_button);
         buttonUtils.putButtonInLayoutAndAddToList(button, buttonLayoutParams, colorButtonLayouts);
     }
+
+
+/*
+    private void addConfigButton(){
+        Button button = createGenericColorButton(ButtonType.RANDOM_COLOR, RANDOM_SHADE_KEY);
+        button.setBackgroundResource(android.R.drawable.ic_menu_manage);
+        buttonUtils.putButtonInLayoutAndAddToList(button, buttonLayoutParams, colorButtonLayouts);
+        button.setOnClickListener(this::handleColorConfigClick);
+
+    }
+
+
+ */
+    /*
+    private void handleColorConfigClick(View view){
+        int viewId = view.getId();
+        buttonUtils.switchSelection(view.getId(), buttonIds);
+
+        buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
+        viewModelHelper.saveRecentClick(buttonCategory, viewId);
+        assignBackgroundAndTextToParentButtonFrom(view);
+    }
+
+     */
 
 
     private void addMultiColorShadeButtons(){

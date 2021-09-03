@@ -17,7 +17,7 @@ public class BlurButtonsConfigurator extends AbstractButtonConfigurator<BlurType
     @Override
     public void configure(){
         buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.BLUR, R.id.blurOptionsLayout);
-        buttonConfig.add(R.id.noBlurButton,      R.drawable.button_blur_off,      BlurType.NONE);
+        buttonConfig.add(R.id.noBlurButton,      R.drawable.button_blur_off,     BlurType.NONE);
         buttonConfig.add(R.id.innerBlurButton,   R.drawable.button_blur_inner,   BlurType.INNER);
         buttonConfig.add(R.id.normalBlurButton,  R.drawable.button_blur_normal,  BlurType.NORMAL);
         buttonConfig.add(R.id.outerBlurButton,   R.drawable.button_blur_outer,   BlurType.OUTER);
@@ -33,6 +33,5 @@ public class BlurButtonsConfigurator extends AbstractButtonConfigurator<BlurType
     public void handleClick(int viewId, BlurType blurType){
         paintHelperManager.getBlurHelper().setBlurType(blurType);
     }
-
 
 }

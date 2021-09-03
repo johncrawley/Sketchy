@@ -17,6 +17,7 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
     public MenuButtonsConfigurator(MainActivity activity){
         super(activity, null);
         settingsPopup = activity.getSettingsPopup();
+        settingsPopup.registerParentButton(R.id.colorConfigButton);
     }
 
     @Override
@@ -39,7 +40,9 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
         buttonConfig.add(R.id.kaleidoButton,   "K: 1",                      R.id.includeKaleidoscopeControls);
         buttonConfig.add(R.id.sizeSequenceButton, R.drawable.button_size_sequence_stationary,  R.id.includeSizeSequenceControls);
 
-        buttonConfig.setupClickHandler();
+        buttonConfig.setParentLayout(R.id.colorButtonGroup);
+        buttonConfig.add(R.id.colorConfigButton, R.drawable.button_blur_off, R.id.includeColorConfigControls);
+
         buttonConfig.setupClickHandler();
         layoutIds = buttonConfig.getEntries();
         buttonConfig.setDefaultSelection(R.id.shapeButton);

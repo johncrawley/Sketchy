@@ -98,5 +98,19 @@
             android:paddingHorizontal="12dp"
             layout="@layout/controls_size_sequence" />
 
+        <include
+            android:visibility="gone"
+            android:id="@+id/includeColorConfigControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingHorizontal="12dp"
+            layout="@layout/controls_color_config"
+            />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

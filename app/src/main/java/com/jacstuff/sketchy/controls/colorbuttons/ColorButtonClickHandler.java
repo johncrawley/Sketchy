@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import com.jacstuff.sketchy.MainActivity;
+import com.jacstuff.sketchy.multicolor.ShadesStore;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
@@ -14,7 +15,6 @@ import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.multicolor.ColorSequenceSelector;
 import com.jacstuff.sketchy.multicolor.RandomColorSelector;
 import com.jacstuff.sketchy.multicolor.SingleColorSelector;
-import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,8 +31,7 @@ public class ColorButtonClickHandler {
     private Map<String, LinearLayout> shadeLayoutsMap;
     private boolean isMostRecentClickAShade = false; //for use when selecting a button after rotate/resume
     private final LinearLayout shadesLayout;
-    private Map<Integer, List<Integer>> multiColorShades = new HashMap<>();
-    private Map<Integer, List<Integer>> multiColorShadesForSequences = new HashMap<>();
+    private ShadesStore shadesStore;
     private Map<ButtonType, ColorSelector> colorSelectors;
     private final MainActivity mainActivity;
     private ColorSelector currentColorSelector;
@@ -104,15 +103,9 @@ public class ColorButtonClickHandler {
     }
 
 
-    public void setMultiColorShades(Map<Integer, List<Integer>> multiColorShades){
-        this.multiColorShades = multiColorShades;
+    public void setShadesStore(ShadesStore shadesStore){
+        this.shadesStore = shadesStore;
     }
-
-
-    public void setMultiColorShadesForSequences(Map<Integer, List<Integer>> multiColorShades){
-        this.multiColorShadesForSequences = multiColorShades;
-    }
-
 
 
     public void onClick(int id){
@@ -377,7 +370,7 @@ public class ColorButtonClickHandler {
 
     private List<Integer> getShadesFrom(Button button){
         int color = (int)button.getTag(R.string.tag_button_color);
-        return multiColorShadesForSequences.get(color);
+        return shadesStore.getShadesFor(color);
     }
 
 
