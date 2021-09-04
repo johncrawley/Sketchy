@@ -260,7 +260,6 @@ public class PaintView extends View {
     private void drawWithBrush(MotionEvent event){
         float x = event.getX();
         float y = event.getY();
-        System.out.println("paint alpha: " + paint.getAlpha());
 
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
@@ -325,7 +324,7 @@ public class PaintView extends View {
             return;
         }
         resetPatternIndexOnTouchUp(event);
-        assignColors();
+        paintHelperManager.getColorHelper().assignColors();
     }
 
 
@@ -338,20 +337,6 @@ public class PaintView extends View {
         if(event.getAction() == MotionEvent.ACTION_UP){
             paintHelperManager.getColorHelper().resetCurrentIndex();
         }
-    }
-
-
-    private void assignColors(){
-        if(kaleidoscopeHelper.isEnabled() && viewModel.isInfinityModeEnabled){
-            paintHelperManager.getColorHelper().assignNextInfinityModeColor();
-            return;
-        }
-        viewModel.color = paintHelperManager.getColorHelper().getNextColor();
-        if(viewModel.color != paint.getColor()){
-            viewModel.previousColor = paint.getColor();
-        }
-        paint.setColor(viewModel.color);
-        paint.setAlpha(viewModel.colorTransparency);
     }
 
 

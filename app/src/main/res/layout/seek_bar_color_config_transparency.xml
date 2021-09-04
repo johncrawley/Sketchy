@@ -30,7 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:indeterminate="false"
-        android:progress="@integer/color_transparency_max"
+        android:progress="@integer/color_transparency_default"
         android:max="@integer/color_transparency_max"
         app:layout_constraintHorizontal_weight="7"
         app:layout_constraintStart_toEndOf="@+id/colorTransparencySeekBarLabel"

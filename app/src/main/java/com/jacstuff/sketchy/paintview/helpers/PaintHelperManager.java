@@ -28,7 +28,7 @@ public class PaintHelperManager {
         kaleidoscopeHelper = new KaleidoscopeHelper(paintView, viewModel);
         styleHelper = new StyleHelper(mainActivity);
         sizeHelper = new SizeHelper(viewModel, paintView);
-        colorHelper = new ColorHelper(viewModel, paintView);
+        colorHelper = new ColorHelper(viewModel, kaleidoscopeHelper);
     }
 
 

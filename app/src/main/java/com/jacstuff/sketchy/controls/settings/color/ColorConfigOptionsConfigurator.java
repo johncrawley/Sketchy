@@ -14,7 +14,6 @@ public class ColorConfigOptionsConfigurator  extends AbstractButtonConfigurator<
 
     @Override
     public void configure(){
-        System.out.println("ColorConfigOptionsConfigurator entered config()");
         ColorTransparencySeekBar colorTransparencySeekBar = new ColorTransparencySeekBar(activity, paintView);
     }
 

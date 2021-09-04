@@ -4,21 +4,20 @@ import android.graphics.Paint;
 
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.paintview.InfinityModeColorBlender;
-import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class ColorHelper {
 
     private final MainViewModel viewModel;
-    private final PaintView paintView;
     private ColorSelector colorSelector;
     private InfinityModeColorBlender infinityModeColorBlender;
     private Paint paint, shadowPaint;
+    private final KaleidoscopeHelper kaleidoscopeHelper;
 
 
-    public ColorHelper(MainViewModel viewModel, PaintView paintView){
+    public ColorHelper(MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
         this.viewModel = viewModel;
-        this.paintView = paintView;
+        this.kaleidoscopeHelper = kaleidoscopeHelper;
     }
 
 
@@ -26,7 +25,7 @@ public class ColorHelper {
         this.paint = paint;
         this.shadowPaint = shadowPaint;
         paint.setColor(viewModel.color);
-        shadowPaint.setColor(viewModel.color);
+        this.shadowPaint.setColor(viewModel.color);
         infinityModeColorBlender = new InfinityModeColorBlender(viewModel, colorSelector, paint);
     }
 
@@ -39,26 +38,29 @@ public class ColorHelper {
     }
 
 
-    public void assignNextInfinityModeColor(){
-        infinityModeColorBlender.assignNextInfinityModeColor();
-    }
-
-
     public void updateTransparency(int value){
-        viewModel.colorTransparency = value;
-        paint.setAlpha(value);
-        shadowPaint.setAlpha(value);
-        System.out.println("ColorHelper.updateTransparency(" + value + ") invoked");
+        value += 1;
+        viewModel.colorTransparency = 255 - value;
     }
 
-
-    public int getNextColor(){
-        return colorSelector.getNextColor();
-    }
 
     public void resetCurrentIndex(){
         colorSelector.resetCurrentIndex();
     }
 
+
+    public void assignColors(){
+        if(kaleidoscopeHelper.isEnabled() && viewModel.isInfinityModeEnabled){
+
+            infinityModeColorBlender.assignNextInfinityModeColor();
+            return;
+        }
+        viewModel.color = colorSelector.getNextColor();
+        if(viewModel.color != paint.getColor()){
+            viewModel.previousColor = paint.getColor();
+        }
+        paint.setColor(viewModel.color);
+        paint.setAlpha(viewModel.colorTransparency);
+    }
 
 }
