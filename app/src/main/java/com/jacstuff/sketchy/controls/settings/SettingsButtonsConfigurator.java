@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.controls.settings;
 
 import com.jacstuff.sketchy.MainActivity;
+import com.jacstuff.sketchy.controls.settings.color.ColorConfigOptionsConfigurator;
 import com.jacstuff.sketchy.controls.settings.gradient.GradientButtonsConfigurator;
 import com.jacstuff.sketchy.controls.settings.shape.ShapeButtonsConfigurator;
 import com.jacstuff.sketchy.controls.settings.size.SizeSequenceOptionsConfigurator;
@@ -29,9 +30,8 @@ public class SettingsButtonsConfigurator {
         configurators.add(new KaleidoscopeButtonsConfigurator(activity, paintView));
         configurators.add(new AngleButtonsConfigurator(activity, paintView));
         configurators.add(new SizeSequenceOptionsConfigurator(activity, paintView));
+        configurators.add(new ColorConfigOptionsConfigurator(activity, paintView));
     }
-
-
 
 
     public void selectDefaults(){

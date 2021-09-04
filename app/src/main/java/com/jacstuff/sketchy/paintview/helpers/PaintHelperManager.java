@@ -18,7 +18,7 @@ public class PaintHelperManager {
     private final KaleidoscopeHelper kaleidoscopeHelper;
     private final StyleHelper styleHelper;
     private final SizeHelper sizeHelper;
-
+    private final ColorHelper colorHelper;
 
     public PaintHelperManager(MainActivity mainActivity, PaintView paintView, MainViewModel viewModel){
         gradientHelper = new GradientHelper(viewModel, mainActivity.getResources().getInteger(R.integer.gradient_radius_max));
@@ -28,6 +28,7 @@ public class PaintHelperManager {
         kaleidoscopeHelper = new KaleidoscopeHelper(paintView, viewModel);
         styleHelper = new StyleHelper(mainActivity);
         sizeHelper = new SizeHelper(viewModel, paintView);
+        colorHelper = new ColorHelper(viewModel, paintView);
     }
 
 
@@ -36,6 +37,7 @@ public class PaintHelperManager {
         blurHelper.init(paint);
         shadowHelper.init(shadowPaint);
         styleHelper.init(paintGroup);
+        colorHelper.init(paint, shadowPaint);
     }
 
 
@@ -69,5 +71,7 @@ public class PaintHelperManager {
     }
 
     public SizeHelper getSizeHelper() { return sizeHelper;}
+
+    public ColorHelper getColorHelper(){ return colorHelper;}
 
 }

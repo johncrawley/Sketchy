@@ -33,7 +33,9 @@ public abstract class AbstractButtonConfigurator<T> implements SelectableDefault
 
 
     public void selectDefaultSelection(){
-        buttonConfig.selectDefaultSelection();
+        if(buttonConfig != null){
+            buttonConfig.selectDefaultSelection();
+        }
     }
 
 

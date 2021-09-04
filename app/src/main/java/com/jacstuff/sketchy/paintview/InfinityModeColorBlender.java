@@ -19,7 +19,7 @@ public class InfinityModeColorBlender {
     private int nextTargetSecondaryShade;
 
 
-    InfinityModeColorBlender(MainViewModel viewModel, ColorSelector colorSelector, Paint paint){
+    public InfinityModeColorBlender(MainViewModel viewModel, ColorSelector colorSelector, Paint paint){
         this.viewModel = viewModel;
         this.colorSelector = colorSelector;
         this.paint = paint;
@@ -27,7 +27,7 @@ public class InfinityModeColorBlender {
     }
 
 
-    void assignNextInfinityModeColor(){
+    public void assignNextInfinityModeColor(){
         int currentColor = paint.getColor();
         if(!hasBlendStarted){
             hasBlendStarted = true;
@@ -49,7 +49,7 @@ public class InfinityModeColorBlender {
     }
 
 
-    void setColorSelector(ColorSelector colorSelector){
+    public void setColorSelector(ColorSelector colorSelector){
         this.colorSelector = colorSelector;
     }
 

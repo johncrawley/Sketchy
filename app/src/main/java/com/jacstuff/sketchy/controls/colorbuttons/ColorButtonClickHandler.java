@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.multicolor.ShadesStore;
+import com.jacstuff.sketchy.paintview.helpers.ColorHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
@@ -40,6 +41,7 @@ public class ColorButtonClickHandler {
     private Button randomColorButton;
     private final ButtonReferenceStore buttonReferenceStore;
     private final MainViewModel mainViewModel;
+    private final ColorHelper colorHelper;
 
 
     public ColorButtonClickHandler(MainActivity mainActivity, PaintView paintView, ButtonLayoutParams buttonLayoutParams){
@@ -49,6 +51,7 @@ public class ColorButtonClickHandler {
         this.paintView = paintView;
         this.buttonLayoutParams = buttonLayoutParams;
         this.shadesLayout = mainActivity.findViewById(R.id.shadesButtonGroup);
+        this.colorHelper = mainActivity.getPaintHelperManager().getColorHelper();
 
         randomShadeButtonsState = new RandomShadeButtonsState();
         setupColorSelectors();
@@ -162,12 +165,12 @@ public class ColorButtonClickHandler {
     private void assignColorSelectorToPaintViewFrom(Button button){
         ButtonType buttonType = (ButtonType)button.getTag(R.string.tag_button_type);
         currentColorSelector = colorSelectors.get(buttonType);
-        paintView.setColorSelector(currentColorSelector);
+        colorHelper.setColorSelector(currentColorSelector);
     }
 
 
     private void onMainColorButtonClick(Button button){
-        paintView.setColorSelector(currentColorSelector);
+        colorHelper.setColorSelector(currentColorSelector);
         setColorAndUpdateButtons(button);
         previouslySelectedColorButton = button;
         assignShadeLayoutFrom(button);
@@ -199,7 +202,7 @@ public class ColorButtonClickHandler {
             return;
         }
         previouslySelectedColorButton = randomColorButton;
-        paintView.setColorSelector(currentColorSelector);
+        colorHelper.setColorSelector(currentColorSelector);
         selectButton(randomColorButton);
         assignShadeLayoutFrom(randomColorButton);
         isMostRecentClickAShade = false;
@@ -249,7 +252,7 @@ public class ColorButtonClickHandler {
             mainActivity.toastPattern(currentColorSelector.getCurrentPatternLabel());
         }else{
             currentColorSelector.reset();
-            paintView.setColorSelector(currentColorSelector);
+            colorHelper.setColorSelector(currentColorSelector);
         }
         currentColorSelector.set(colorList);
     }

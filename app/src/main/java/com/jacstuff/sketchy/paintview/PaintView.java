@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
-import com.jacstuff.sketchy.paintview.helpers.size.SizeSequenceType;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -20,7 +19,6 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
-import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
 
@@ -31,7 +29,6 @@ public class PaintView extends View {
     private int brushSize;
     private Bitmap bitmap, previewBitmap;
     private Canvas canvas, kaleidoscopeSegmentCanvas;
-    private ColorSelector colorSelector;
     private BrushStyle currentBrushStyle = BrushStyle.FILL;
     private Brush currentBrush;
     private BrushFactory brushFactory;
@@ -47,7 +44,7 @@ public class PaintView extends View {
     private SettingsPopup settingsPopup;
     private final Context context;
     private BitmapLoader bitmapLoader;
-    private InfinityModeColorBlender fractalColorBlender;
+   // private InfinityModeColorBlender fractalColorBlender;
 
 
     public PaintView(Context context) {
@@ -89,8 +86,6 @@ public class PaintView extends View {
             drawPlainBackgroundAndSaveToHistory();
         }
         initKaleidoscope();
-        paint.setColor(viewModel.color);
-        fractalColorBlender = new InfinityModeColorBlender(viewModel, colorSelector, paint);
         invalidate();
     }
 
@@ -222,14 +217,6 @@ public class PaintView extends View {
     }
 
 
-    public void setColorSelector(ColorSelector colorSelector){
-        this.colorSelector = colorSelector;
-        if(fractalColorBlender != null){
-            fractalColorBlender.setColorSelector(colorSelector);
-        }
-    }
-
-
     @Override
     protected void onDraw(Canvas viewCanvas) {
         viewCanvas.save();
@@ -273,6 +260,7 @@ public class PaintView extends View {
     private void drawWithBrush(MotionEvent event){
         float x = event.getX();
         float y = event.getY();
+        System.out.println("paint alpha: " + paint.getAlpha());
 
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
@@ -348,21 +336,22 @@ public class PaintView extends View {
 
     private void resetPatternIndexOnTouchUp(MotionEvent event){
         if(event.getAction() == MotionEvent.ACTION_UP){
-            colorSelector.resetCurrentIndex();
+            paintHelperManager.getColorHelper().resetCurrentIndex();
         }
     }
 
 
     private void assignColors(){
         if(kaleidoscopeHelper.isEnabled() && viewModel.isInfinityModeEnabled){
-            fractalColorBlender.assignNextInfinityModeColor();
+            paintHelperManager.getColorHelper().assignNextInfinityModeColor();
             return;
         }
-        viewModel.color = colorSelector.getNextColor();
+        viewModel.color = paintHelperManager.getColorHelper().getNextColor();
         if(viewModel.color != paint.getColor()){
             viewModel.previousColor = paint.getColor();
         }
         paint.setColor(viewModel.color);
+        paint.setAlpha(viewModel.colorTransparency);
     }
 
 
