@@ -13,13 +13,13 @@ public class SizeHelper {
     private SizeSequence currentSequence;
     private final PaintView paintView;
     private Map<SizeSequenceType, SizeSequence> sizeSequenceMap;
-    private SizeSequence stationarySequence;
+    private final SizeSequence stationarySequence;
 
 
     public SizeHelper(MainViewModel viewModel, PaintView paintView){
         this.viewModel = viewModel;
         this.paintView = paintView;
-        stationarySequence = new StationarySizeSequence();
+        stationarySequence = new StationarySizeSequence(viewModel);
         initSizeSequenceMap();
     }
 

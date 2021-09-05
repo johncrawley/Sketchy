@@ -5,12 +5,16 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class StationarySizeSequence implements SizeSequence{
 
-    public StationarySizeSequence(){
+    private final MainViewModel viewModel;
+    private boolean hasChanged = false;
+
+    public StationarySizeSequence(MainViewModel viewModel){
+        this.viewModel = viewModel;
     }
 
     @Override
     public int getNextBrushSize() {
-        return 10;
+        return viewModel.brushSizeSetBySeekBar;
     }
 
     @Override
@@ -21,11 +25,14 @@ public class StationarySizeSequence implements SizeSequence{
 
     @Override
     public void reset() {
-        // do nothing
+        hasChanged = true;
     }
+
 
     @Override
     public boolean hasSizeChanged(){
-        return false;
+        boolean ret = hasChanged;
+        hasChanged = false;
+        return ret;
     }
 }
