@@ -51,16 +51,18 @@ public class ColorHelper {
 
     public void assignColors(){
         if(kaleidoscopeHelper.isEnabled() && viewModel.isInfinityModeEnabled){
-
             infinityModeColorBlender.assignNextInfinityModeColor();
             return;
         }
-        viewModel.color = colorSelector.getNextColor();
-        if(viewModel.color != paint.getColor()){
-            viewModel.previousColor = paint.getColor();
+        int nextColor = colorSelector.getNextColor();
+        if(viewModel.color != nextColor){
+            viewModel.previousColor = viewModel.color;
         }
+        viewModel.color = nextColor;
         paint.setColor(viewModel.color);
+        shadowPaint.setColor(viewModel.color);
         paint.setAlpha(viewModel.colorTransparency);
+        shadowPaint.setAlpha(viewModel.colorTransparency);
     }
 
 }
