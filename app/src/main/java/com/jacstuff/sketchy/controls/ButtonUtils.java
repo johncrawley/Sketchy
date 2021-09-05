@@ -71,6 +71,12 @@ public class ButtonUtils {
     }
 
 
+    public LinearLayout createWrappedButton(int id, int backgroundId, ButtonLayoutParams customButtonLayoutParams){
+        Button button = createButton(id, backgroundId, customButtonLayoutParams);
+        return wrapInMarginLayout(customButtonLayoutParams, button);
+    }
+
+
     public Button createButton(int id, int backgroundId, ButtonLayoutParams layoutParams){
         return createButton(id,backgroundId,layoutParams, "");
     }

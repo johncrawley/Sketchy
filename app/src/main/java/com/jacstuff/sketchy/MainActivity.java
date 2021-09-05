@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private ActivityResultLauncher <Intent> loadImageActivityResultLauncher;
 
+    private ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 22);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupActionbar();
         setupPaintViewAndDefaultSelections(this);
         initPaintHelperManager();
-        setupSettingsButtons();
         setupColorAndShadeButtons();
+        setupSettingsButtons();
         viewModelHelper.init(colorButtonClickHandler, paintView);
         setupColorAutoScroll();
         initActivityResultLauncher();
@@ -112,6 +114,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menuitems, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    public ButtonLayoutParams getColorButtonLayoutParams(){
+        return this.colorButtonLayoutParams;
     }
 
 
@@ -177,7 +184,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void setupColorAndShadeButtons(){
         List<Integer> colors = ColorCreator.generate();
         colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
-        ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 22);
         colorButtonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams);
         colorButtonClickHandler.setColorsMap(colors);
         ColorButtonLayoutCreator layoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams, colors);

@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
 import com.jacstuff.sketchy.ui.SettingsPopup;
@@ -63,6 +64,13 @@ public class ButtonConfigHandler<T>{
         add(id, action);
         linearLayout.addView(buttonUtils.createWrappedButton(id, R.drawable.blank_button, text));
     }
+
+
+    public void add(int id, int drawableId,  T action, ButtonLayoutParams buttonLayoutParams ){
+        add(id, action);
+        linearLayout.addView(buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams));
+    }
+
 
     public void setParentLayout(int layoutId){
         this.linearLayout = activity.findViewById(layoutId);
