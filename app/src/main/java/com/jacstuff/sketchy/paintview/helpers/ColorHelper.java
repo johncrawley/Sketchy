@@ -39,8 +39,7 @@ public class ColorHelper {
 
 
     public void updateTransparency(int value){
-        //value += 1;
-        viewModel.colorTransparency = 255 - value;
+        viewModel.colorAlpha = 255 - value;
     }
 
 
@@ -61,8 +60,8 @@ public class ColorHelper {
         viewModel.color = nextColor;
         paint.setColor(viewModel.color);
         shadowPaint.setColor(viewModel.color);
-        paint.setAlpha(viewModel.colorTransparency);
-        shadowPaint.setAlpha(viewModel.colorTransparency);
+        paint.setAlpha(viewModel.colorAlpha);
+        shadowPaint.setAlpha(viewModel.colorAlpha);
     }
 
 }

@@ -87,6 +87,8 @@ public class ViewModelHelper {
         viewModel.sizeSequenceMin = mainActivity.getResources().getInteger(R.integer.size_sequence_min_default);
     }
 
+
+
     private void initViewModelSettings(){
         if(viewModel.settingsButtonsClickMap == null){
             viewModel.settingsButtonsClickMap = new HashMap<>();

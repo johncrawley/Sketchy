@@ -40,10 +40,8 @@ public class MainViewModel extends ViewModel {
     public int linearGradientLength=100;
     public boolean snapRectangleToEdge =true;
 
-    public int colorTransparency;
-
+    public int colorAlpha = 0;
     public String textBrushText = "";
-
     public int color = Color.BLACK;
     public int previousColor = Color.WHITE;
 

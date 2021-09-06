@@ -8,7 +8,7 @@ import com.jacstuff.sketchy.paintview.PaintView;
 public class ColorTransparencySeekBar extends AbstractSeekBarConfig {
 
     public ColorTransparencySeekBar(MainActivity mainActivity, PaintView paintView){
-        super(mainActivity, paintView, R.id.colorTransparencySeekBar, R.integer.size_sequence_step_default);
+        super(mainActivity, paintView, R.id.colorTransparencySeekBar, R.integer.color_transparency_default);
     }
 
     @Override
