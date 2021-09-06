@@ -3,12 +3,15 @@ package com.jacstuff.sketchy.brushes.shapes.drawer;
 import android.graphics.Paint;
 import android.graphics.Point;
 
+import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.helpers.AngleHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class DragRectDrawer extends BasicDrawer{
 
     private float downX, downY;
+    private int angleOnTouchDown;
 
     public DragRectDrawer(PaintView paintView, MainViewModel viewModel){
         super(paintView, viewModel);
@@ -19,6 +22,7 @@ public class DragRectDrawer extends BasicDrawer{
     @Override
     public void down(float x, float y, Paint paint) {
         paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
+        angleOnTouchDown = paintHelperManager.getAngleHelper().getAngle();
         paintView.enablePreviewLayer();
         if(viewModel.snapRectangleToEdge){
             x = x <= 25 ? 0 : x;
@@ -86,11 +90,22 @@ public class DragRectDrawer extends BasicDrawer{
 
 
     private void rotateThenDrawShadowAndObject(float x, float y, Paint paint){
-        canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
+        rotateToAngle();
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
             brush.onTouchMove(x, y, paintView.getShadowPaint());
         }
         brush.onTouchMove(x,y, paint);
+    }
+
+
+    private void rotateToAngle(){
+        AngleHelper angleHelper = paintHelperManager.getAngleHelper();
+        if(angleHelper.getAngleType() == AngleType.RANDOM) {
+            canvas.rotate(angleOnTouchDown);
+        }
+        else{
+            canvas.rotate(angleHelper.getAngle());
+        }
     }
 
 

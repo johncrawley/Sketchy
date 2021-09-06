@@ -50,6 +50,10 @@ public class AngleHelper {
         return angleType.get();
     }
 
+    public AngleType getAngleType(){
+        return angleType;
+    }
+
 
     private int getRandomAngle(){
         return random.nextInt(359);

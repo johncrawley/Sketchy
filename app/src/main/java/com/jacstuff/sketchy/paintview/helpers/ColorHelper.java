@@ -39,7 +39,7 @@ public class ColorHelper {
 
 
     public void updateTransparency(int value){
-        value += 1;
+        //value += 1;
         viewModel.colorTransparency = 255 - value;
     }
 
