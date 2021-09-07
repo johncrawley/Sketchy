@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.viewmodel;
 import android.graphics.Color;
 
 import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.multicolor.ColorSequenceType;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 
 import java.util.ArrayDeque;
@@ -24,6 +25,13 @@ public class MainViewModel extends ViewModel {
     public Map<Integer, Integer> seekBarValue;
 
     public Map<ButtonCategory, Integer> settingsButtonsClickMap;
+
+
+    public ColorSequenceType colorSequenceType = ColorSequenceType.FORWARDS;
+    public int colorSequenceStartingShadeIndex = 0;
+    public int colorSequenceEndingShadeIndex =0;
+    public int colorSequenceSkippedShades = 1;
+
 
     public boolean isKaleidoscopeCentred = true;
 
