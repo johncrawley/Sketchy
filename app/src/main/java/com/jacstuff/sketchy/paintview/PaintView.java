@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.paintview.helpers.TileHelper;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -240,6 +241,10 @@ public class PaintView extends View {
     private void drawWithBrush(MotionEvent event){
         float x = event.getX();
         float y = event.getY();
+        if(paintHelperManager.getTileHelper().isEnabled()){
+            paintHelperManager.getTileHelper().draw(event, currentBrush);
+            return;
+        }
 
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
