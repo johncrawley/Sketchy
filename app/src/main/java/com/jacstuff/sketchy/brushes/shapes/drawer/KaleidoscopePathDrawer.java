@@ -22,6 +22,7 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
     private final Point previousPoint = new Point();
     private boolean isPreviousPointReset = true;
     private int segmentWidth, halfSegmentWidth;
+    private ShadowHelper shadowHelper;
 
 
     public KaleidoscopePathDrawer(PaintView paintView, MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
@@ -30,13 +31,10 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
         paint = paintView.getPaint();
     }
 
-    private ShadowHelper shadowHelper;
-
 
     public void setShadowHelper(ShadowHelper shadowHelper){
         this.shadowHelper = shadowHelper;
     }
-
 
 
     public void setFlickerGuardPaint(Paint flickerGuardPaint){

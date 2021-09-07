@@ -27,10 +27,11 @@ public class KaleidoscopeHelper {
         defaultCenterY = y;
     }
 
+
     public void setCanvas(Canvas canvas){
         kaleidoscopeDrawer.setCanvas(canvas);
+        setDefaultCenter(canvas.getWidth()/2, canvas.getHeight()/2);
     }
-
 
 
     public boolean isEnabled(){

@@ -9,8 +9,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-
-import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
@@ -20,6 +18,8 @@ import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.ui.SettingsPopup;
+
+import static com.jacstuff.sketchy.paintview.helpers.PaintFactory.createPaint;
 
 
 public class PaintView extends View {
@@ -35,7 +35,6 @@ public class PaintView extends View {
     private boolean isCanvasLocked;
     private MainViewModel viewModel;
     private PaintHelperManager paintHelperManager;
-    private KaleidoscopeHelper kaleidoscopeHelper;
     private boolean isPreviewLayerToBeDrawn;
     private boolean ignoreMoveAndUpActions = false;
     private final BitmapHistory bitmapHistory;
@@ -44,7 +43,6 @@ public class PaintView extends View {
     private SettingsPopup settingsPopup;
     private final Context context;
     private BitmapLoader bitmapLoader;
-   // private InfinityModeColorBlender fractalColorBlender;
 
 
     public PaintView(Context context) {
@@ -85,7 +83,7 @@ public class PaintView extends View {
         if(bitmapHistory.isEmpty()){
             drawPlainBackgroundAndSaveToHistory();
         }
-        initKaleidoscope();
+        paintHelperManager.getKaleidoscopeHelper().setCanvas(canvas);
         invalidate();
     }
 
@@ -183,27 +181,9 @@ public class PaintView extends View {
     }
 
 
-    private Paint createPaint(int color){
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setStrokeJoin(Paint.Join.MITER);
-        paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setElegantTextHeight(true);
-        paint.setColor(color);
-        return paint;
-    }
-
-
     private void initBrushes(){
         brushFactory.init(this, brushSize);
         currentBrush = brushFactory.getReinitializedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
-    }
-
-
-    private void initKaleidoscope(){
-        kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
-        kaleidoscopeHelper.setCanvas(canvas);
-        kaleidoscopeHelper.setDefaultCenter(getWidth()/2, getHeight()/2);
     }
 
 
@@ -281,7 +261,6 @@ public class PaintView extends View {
 
     private void loadHistoryItem(boolean isCurrentDiscarded){
         HistoryItem historyItem = isCurrentDiscarded ?  bitmapHistory.getPrevious() : bitmapHistory.getCurrent();
-
         Bitmap historyBitmap = bitmapLoader.getCorrectlyOrientatedBitmapFrom(historyItem);
         if(historyBitmap == null){
             return;
