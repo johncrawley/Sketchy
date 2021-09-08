@@ -28,9 +28,10 @@ public class MainViewModel extends ViewModel {
 
 
     public ColorSequenceType colorSequenceType = ColorSequenceType.FORWARDS;
-    public int colorSequenceStartingShadeIndex = 0;
-    public int colorSequenceEndingShadeIndex =0;
+    public int colorSequenceMinValue = 0;
+    public int colorSequenceMaxValue =0;
     public int colorSequenceSkippedShades = 1;
+    public boolean doesColorSequenceRepeat = true;
 
 
     public boolean isKaleidoscopeCentred = true;

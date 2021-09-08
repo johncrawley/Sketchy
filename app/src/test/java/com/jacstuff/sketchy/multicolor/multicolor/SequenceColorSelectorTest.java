@@ -1,7 +1,6 @@
 package com.jacstuff.sketchy.multicolor.multicolor;
 
 import com.jacstuff.sketchy.multicolor.SequenceColorSelector;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,17 +37,32 @@ public class SequenceColorSelectorTest {
 
     @Test
     public void canCalculateCorrectMaxIndexOfSequence(){
-      int result = sequenceColorSelector.setMaxIndexOfSequence(100, fewColors);
+      int result = sequenceColorSelector.getMaxIndexOfSequence(100, fewColors);
       assertEquals(fewColors.size()-1, result );
 
-    // there should be at least 2 colors in each sequence, so max index should never be less than 1
-      result = sequenceColorSelector.setMaxIndexOfSequence(0, fewColors);
+      // there should be at least 2 colors in each sequence, so max index should never be less than 1
+      result = sequenceColorSelector.getMaxIndexOfSequence(0, fewColors);
       assertEquals( 1, result);
 
       // trying for the larger list
-      result = sequenceColorSelector.setMaxIndexOfSequence(25, manyColors);
+      result = sequenceColorSelector.getMaxIndexOfSequence(25, manyColors);
       int expectedIndex = manyColors.size() / 4;
       assertEquals( expectedIndex, result);
+    }
+
+
+    @Test
+    public void canCalculateMinIndexOfSequence(){
+      int result = sequenceColorSelector.getMinIndexOfSequence(100, fewColors);
+      int expected = fewColors.size() -2;
+      assertEquals(expected, result);
+
+      result = sequenceColorSelector.getMinIndexOfSequence(0, manyColors);
+      expected = 0;
+      assertEquals(expected, result);
+
+
+
     }
 
 }

@@ -13,6 +13,9 @@ public class SequenceColorSelector implements ColorSelector {
     private int currentPatternIndex = 0;
     private int lastIndex;
     private MainViewModel viewModel;
+    private int currentIndex;
+    private int startingIndex;
+
 
 
     public SequenceColorSelector(List<MulticolorPattern> patterns, MainViewModel viewModel){
@@ -20,7 +23,7 @@ public class SequenceColorSelector implements ColorSelector {
     }
 
     public void initSequence(){
-        viewModel.colorSequenceEndingShadeIndex = 0;
+        viewModel.colorSequenceMaxValue = 0;
     }
 
 
@@ -28,7 +31,40 @@ public class SequenceColorSelector implements ColorSelector {
         //int index = currentMulticolorPattern.getNextIndex(colors.size());
        // int currentIndex = Math.min(index, viewModel.colorSequenceEndingShadeIndex );
        // return colors.get(currentIndex);
+        switch (viewModel.colorSequenceType){
+            case FORWARDS:
+                return colors.get(getNextForwardsIndex());
+            case BACKWARDS:
+                return colors.get(getNextBackwardsIndex());
+        }
         return 0;
+    }
+
+
+    private int getNextForwardsIndex(){
+        if(isAtEndOfForwardsSequence()){
+            return currentIndex == sequenceMinIndex ?
+                    sequenceMaxIndex :
+                    viewModel.doesColorSequenceRepeat ? sequenceMinIndex : currentIndex;
+        }
+        return currentIndex + viewModel.colorSequenceSkippedShades;
+    }
+
+
+    private int getNextBackwardsIndex(){
+        if(isAtEndOfForwardsSequence()){
+            return currentIndex == sequenceMinIndex ?
+                    sequenceMaxIndex :
+                    viewModel.doesColorSequenceRepeat ? sequenceMinIndex : currentIndex;
+        }
+        return currentIndex + viewModel.colorSequenceSkippedShades;
+    }
+
+
+
+
+    private boolean isAtEndOfForwardsSequence(){
+        return currentIndex + viewModel.colorSequenceSkippedShades > sequenceMaxIndex;
     }
 
 
@@ -57,15 +93,29 @@ public class SequenceColorSelector implements ColorSelector {
     public void set(List<Integer> inputList){
         colors = new ArrayList<>(inputList);
         lastIndex = colors.size()-1;
-
-      //  sequenceMaxIndex = lastIndex / viewModel.
+        updateRangeIndexes();
 
     }
 
-    public int setMaxIndexOfSequence(int seekBarColorRangeMaximum, List<Integer> colorList){
+
+    private void updateRangeIndexes(){
+        sequenceMaxIndex = getMaxIndexOfSequence(viewModel.colorSequenceMaxValue, colors);
+        int minIndex = getMinIndexOfSequence(viewModel.colorSequenceMinValue, colors);
+        sequenceMinIndex = minIndex < sequenceMaxIndex ? minIndex : sequenceMaxIndex -1;
+    }
+
+
+    public int getMaxIndexOfSequence(int seekBarColorRangeMaximum, List<Integer> colorList){
         int lastIndex = colorList.size() -1;
         int maxSequenceIndex = (int)((lastIndex / 100f) * seekBarColorRangeMaximum);
         return Math.max(1,maxSequenceIndex);
+    }
+
+
+    public int getMinIndexOfSequence(int seekBarColorRangeMaximum, List<Integer> colorList){
+        int lastIndex = colorList.size() -1;
+        int minSequenceIndex = (int)((lastIndex / 100f) * seekBarColorRangeMaximum);
+        return Math.min(colorList.size()-2, minSequenceIndex);
     }
 
 
