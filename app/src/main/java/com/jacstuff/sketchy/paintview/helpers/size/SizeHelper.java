@@ -57,6 +57,10 @@ public class SizeHelper {
         }
     }
 
+    public int getCurrentBrushSize(){
+        return currentSequence.getNextBrushSize();
+    }
+
 
     public void reset(){
        currentSequence.reset();

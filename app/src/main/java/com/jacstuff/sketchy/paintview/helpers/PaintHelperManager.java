@@ -34,13 +34,13 @@ public class PaintHelperManager {
     }
 
 
-    public void init(Paint paint, Paint shadowPaint, PaintGroup paintGroup){
+    public void init(Paint paint, Paint shadowPaint, Paint previewPaint, PaintGroup paintGroup){
         gradientHelper.init(paint);
         blurHelper.init(paint);
         shadowHelper.init(shadowPaint);
         styleHelper.init(paintGroup);
         colorHelper.init(paint, shadowPaint);
-        tileHelper.init(paint);
+        tileHelper.init(paint, previewPaint);
     }
 
 

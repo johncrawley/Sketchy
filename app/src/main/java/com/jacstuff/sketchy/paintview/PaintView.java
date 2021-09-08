@@ -66,7 +66,7 @@ public class PaintView extends View {
 
     public void setPaintHelperManager(PaintHelperManager paintHelperManager){
         this.paintHelperManager = paintHelperManager;
-        this.paintHelperManager.init(paint, shadowPaint, paintGroup);
+        this.paintHelperManager.init(paint, shadowPaint, previewPaint, paintGroup);
     }
 
 
@@ -241,10 +241,6 @@ public class PaintView extends View {
     private void drawWithBrush(MotionEvent event){
         float x = event.getX();
         float y = event.getY();
-        if(paintHelperManager.getTileHelper().isEnabled()){
-            paintHelperManager.getTileHelper().draw(event, currentBrush);
-            return;
-        }
 
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :

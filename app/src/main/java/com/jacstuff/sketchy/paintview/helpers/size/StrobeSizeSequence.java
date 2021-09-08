@@ -15,6 +15,11 @@ public class StrobeSizeSequence implements  SizeSequence{
         this.isIncreasingDefault = isIncreasing;
     }
 
+    @Override
+    public int getBrushSize(){
+        return currentSize;
+    }
+
 
     @Override
     public void init(){

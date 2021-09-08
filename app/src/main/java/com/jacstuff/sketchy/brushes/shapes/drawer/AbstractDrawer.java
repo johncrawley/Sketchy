@@ -7,6 +7,7 @@ import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.paintview.helpers.TileHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public abstract class AbstractDrawer implements Drawer {
@@ -15,6 +16,7 @@ public abstract class AbstractDrawer implements Drawer {
     final PaintHelperManager paintHelperManager;
     final KaleidoscopeHelper kaleidoscopeHelper;
     final KaleidoscopeDrawer kaleidoscopeDrawer;
+    final TileHelper tileHelper;
     final Canvas canvas;
     Brush brush;
     PaintView paintView;
@@ -30,6 +32,7 @@ public abstract class AbstractDrawer implements Drawer {
         this.viewModel = viewModel;
         this.paintHelperManager = paintView.getPaintHelperManager();
         kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
+        tileHelper = paintHelperManager.getTileHelper();
         kaleidoscopeDrawer = new KaleidoscopeDrawer(paintView, viewModel, kaleidoscopeHelper);
         shadowPaint = paintView.getShadowPaint();
         paint = paintView.getPaint();

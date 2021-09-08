@@ -18,6 +18,11 @@ public class StationarySizeSequence implements SizeSequence{
     }
 
     @Override
+    public int getBrushSize(){
+        return viewModel.brushSizeSetBySeekBar;
+    }
+
+    @Override
     public void init() {
         // do nothing
     }

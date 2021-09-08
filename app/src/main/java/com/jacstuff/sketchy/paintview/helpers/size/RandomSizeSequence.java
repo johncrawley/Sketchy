@@ -24,6 +24,11 @@ public class RandomSizeSequence implements  SizeSequence{
     }
 
 
+    @Override
+    public int getBrushSize(){
+        return currentSize;
+    }
+
 
     private void assignNextTargetSize(){
         if(viewModel.sizeSequenceMax < viewModel.sizeSequenceMin){

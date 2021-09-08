@@ -31,6 +31,12 @@ public class DecreasingSizeSequence implements  SizeSequence{
 
 
     @Override
+    public int getBrushSize(){
+        return currentSize;
+    }
+
+
+    @Override
     public void reset() {
         if(currentSize == viewModel.sizeSequenceMin || viewModel.isSizeSequenceResetOnTouchUp){
             currentSize = viewModel.sizeSequenceMax;

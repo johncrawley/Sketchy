@@ -17,7 +17,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
 
     @Override
     public void down(float x, float y, Paint paint) {
-        paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
+        kaleidoscopeHelper.setCenter(x,y);
         paintHelperManager.getSizeHelper().onTouchDown();
         drawToCanvas(x,y, paint);
     }
@@ -35,6 +35,10 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
 
     private void drawPreviewWhenInfinityModeOff(float x, float y){
         if(!kaleidoscopeHelper.isInfinityModeEnabled()) {
+            if(tileHelper.isEnabled() && !kaleidoscopeHelper.isEnabled()){
+                tileHelper.drawPreview(x,y,this);
+                return;
+            }
             drawToCanvas(x, y, paintView.getPreviewPaint());
         }
     }
@@ -51,6 +55,9 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
     void drawToCanvas(float x, float y, Paint paint){
         if(kaleidoscopeHelper.isEnabled()){
             kaleidoscopeDrawer.drawKaleidoscope(x,y, paint);
+        }
+        else if(paintHelperManager.getTileHelper().isEnabled()){
+            paintHelperManager.getTileHelper().draw(x,y, this);
         }
         else{
             rotateAndDraw(x,y, paint);
