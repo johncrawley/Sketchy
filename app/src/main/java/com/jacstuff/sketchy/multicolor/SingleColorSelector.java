@@ -9,7 +9,7 @@ public class SingleColorSelector implements ColorSelector {
 
 
     @Override
-    public void set(int color){
+    public void setColorList(int color){
         this.color = color;
     }
 
@@ -37,7 +37,7 @@ public class SingleColorSelector implements ColorSelector {
     }
 
     @Override
-    public void set(List<Integer> colorList) {
+    public void setColorList(List<Integer> colorList) {
         //do nothing
     }
 

@@ -1,6 +1,8 @@
 package com.jacstuff.sketchy.multicolor.multicolor;
 
 import com.jacstuff.sketchy.multicolor.SequenceColorSelector;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
+import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +22,10 @@ public class SequenceColorSelectorTest {
 
     @Before
     public void setup(){
-      sequenceColorSelector = new SequenceColorSelector(null, null);
+      MainViewModel mainViewModel = new MainViewModel();
+      ColorSequenceControls colorSequenceControls = new ColorSequenceControls();
+      mainViewModel.setColorSequenceControls(colorSequenceControls);
+      sequenceColorSelector = new SequenceColorSelector(mainViewModel);
       fewColors = setupColorsList(5);
       manyColors = setupColorsList(50);
     }
@@ -61,6 +66,23 @@ public class SequenceColorSelectorTest {
       expected = 0;
       assertEquals(expected, result);
 
+    }
+
+
+    @Test
+    public void resetIndex(){
+      sequenceColorSelector.setColorList(manyColors);
+      int initialResetIndex = 0;
+      sequenceColorSelector.setResetIndex(initialResetIndex);
+      sequenceColorSelector.reset();
+      int currentIndex = sequenceColorSelector.getCurrentIndex();
+      assertEquals(initialResetIndex, currentIndex);
+    }
+
+
+    @Test
+    public void getNextForwardsIndex(){
+      //sequenceColorSelector.
 
 
     }

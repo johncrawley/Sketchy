@@ -53,6 +53,7 @@ public class ColorHelper {
             infinityModeColorBlender.assignNextInfinityModeColor();
             return;
         }
+        log("assignColors() about to invoke colorSelector.getNextColor()");
         int nextColor = colorSelector.getNextColor();
         if(viewModel.color != nextColor){
             viewModel.previousColor = viewModel.color;
@@ -62,6 +63,11 @@ public class ColorHelper {
         shadowPaint.setColor(viewModel.color);
         paint.setAlpha(viewModel.colorAlpha);
         shadowPaint.setAlpha(viewModel.colorAlpha);
+    }
+
+
+    private void log(String msg){
+        System.out.println("ColorHelper: "  + msg);
     }
 
 }

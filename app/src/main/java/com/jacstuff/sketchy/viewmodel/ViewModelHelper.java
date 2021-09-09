@@ -13,6 +13,7 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.GradientHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
 import java.util.HashMap;
 
@@ -35,6 +36,7 @@ public class ViewModelHelper {
         this.mainActivity = mainActivity;
         this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         this.buttonUtils = new ButtonUtils(mainActivity);
+        initControls();
     }
 
 
@@ -43,6 +45,13 @@ public class ViewModelHelper {
         this.buttonClickHandler = buttonClickHandler;
         this.paintView = paintView;
         initViewModelSettings();
+    }
+
+
+    private void initControls(){
+        if(viewModel.getColorSequenceControls() == null){
+            viewModel.setColorSequenceControls(new ColorSequenceControls());
+        }
     }
 
 

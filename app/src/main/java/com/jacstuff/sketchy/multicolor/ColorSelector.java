@@ -8,9 +8,9 @@ public interface ColorSelector {
 
     void reset();
 
-    void set(List<Integer> colorList);
+    void setColorList(List<Integer> colorList);
 
-    void set(int color);
+    void setColorList(int color);
 
     void nextPattern();
 

@@ -17,7 +17,7 @@ public class RandomColorSelector implements ColorSelector {
 
 
     @Override
-    public void set(List<Integer> colors){
+    public void setColorList(List<Integer> colors){
         this.colors = colors;
     }
 
@@ -34,7 +34,7 @@ public class RandomColorSelector implements ColorSelector {
         //do nothing
     }
     @Override
-    public void set(int color){
+    public void setColorList(int color){
         //do nothing
     }
 

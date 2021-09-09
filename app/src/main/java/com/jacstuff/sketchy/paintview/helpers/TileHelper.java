@@ -54,7 +54,7 @@ public class TileHelper {
 
 
     public boolean isEnabled(){
-        return true;
+        return false;
     }
 
 }

@@ -6,7 +6,7 @@ import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ColorSequenceSelector implements ColorSelector {
+public class LegacyColorSequenceSelector implements ColorSelector {
 
     private List<Integer> colors;
     private MulticolorPattern currentMulticolorPattern;
@@ -15,7 +15,7 @@ public class ColorSequenceSelector implements ColorSelector {
     private int lastIndex;
 
 
-    public ColorSequenceSelector(List<MulticolorPattern> patterns){
+    public LegacyColorSequenceSelector(List<MulticolorPattern> patterns){
         initPatterns(patterns);
     }
 
@@ -51,7 +51,7 @@ public class ColorSequenceSelector implements ColorSelector {
     }
 
 
-    public void set(List<Integer> inputList){
+    public void setColorList(List<Integer> inputList){
         colors = new ArrayList<>(inputList);
         lastIndex = colors.size()-1;
     }
@@ -84,7 +84,7 @@ public class ColorSequenceSelector implements ColorSelector {
 
 
     @Override
-    public void set(int color){
+    public void setColorList(int color){
         // do nothing
     }
 

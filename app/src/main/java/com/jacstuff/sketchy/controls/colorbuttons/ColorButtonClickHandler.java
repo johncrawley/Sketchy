@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import com.jacstuff.sketchy.MainActivity;
+import com.jacstuff.sketchy.multicolor.SequenceColorSelector;
 import com.jacstuff.sketchy.multicolor.ShadesStore;
 import com.jacstuff.sketchy.paintview.helpers.ColorHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -13,7 +14,7 @@ import com.jacstuff.sketchy.multicolor.RandomMultiColorSelector;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
-import com.jacstuff.sketchy.multicolor.ColorSequenceSelector;
+import com.jacstuff.sketchy.multicolor.LegacyColorSequenceSelector;
 import com.jacstuff.sketchy.multicolor.RandomColorSelector;
 import com.jacstuff.sketchy.multicolor.SingleColorSelector;
 
@@ -74,8 +75,8 @@ public class ColorButtonClickHandler {
         colorSelectors = new HashMap<>();
         colorSelectors.put(ButtonType.COLOR, singleSelector);
         colorSelectors.put(ButtonType.SHADE, singleSelector);
-        colorSelectors.put(ButtonType.MULTICOLOR, new ColorSequenceSelector(colorPatternsFactory.createColorPatterns()));
-        colorSelectors.put(ButtonType.MULTISHADE, new ColorSequenceSelector(colorPatternsFactory.createShadePatterns()));
+        colorSelectors.put(ButtonType.MULTICOLOR, new SequenceColorSelector(mainViewModel));
+        colorSelectors.put(ButtonType.MULTISHADE, new LegacyColorSequenceSelector(colorPatternsFactory.createShadePatterns()));
         colorSelectors.put(ButtonType.RANDOM_COLOR, randomSelector);
         colorSelectors.put(ButtonType.RANDOM_SHADE, randomMultiColor );
     }
@@ -197,7 +198,7 @@ public class ColorButtonClickHandler {
 
     private void onRandomColorButtonClick(){
         deselectPreviousButtons();
-        currentColorSelector.set(colors);
+        currentColorSelector.setColorList(colors);
         if(randomColorButton == null){
             return;
         }
@@ -234,7 +235,7 @@ public class ColorButtonClickHandler {
 
     private void setPaintColorFrom(Button button){
         int color = getColorOf(button);
-        currentColorSelector.set(color);
+        currentColorSelector.setColorList(color);
     }
 
 
@@ -254,7 +255,7 @@ public class ColorButtonClickHandler {
             currentColorSelector.reset();
             colorHelper.setColorSelector(currentColorSelector);
         }
-        currentColorSelector.set(colorList);
+        currentColorSelector.setColorList(colorList);
     }
 
 

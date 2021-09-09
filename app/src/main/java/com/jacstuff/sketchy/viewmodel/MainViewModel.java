@@ -1,10 +1,12 @@
 package com.jacstuff.sketchy.viewmodel;
 
 import android.graphics.Color;
+import android.service.controls.Control;
 
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.multicolor.ColorSequenceType;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
+import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
@@ -13,7 +15,18 @@ import java.util.Map;
 
 import androidx.lifecycle.ViewModel;
 
-public class MainViewModel extends ViewModel {
+public class MainViewModel extends ViewModel implements ControlsHolder {
+
+
+    private ColorSequenceControls colorSequenceControls;
+
+    public ColorSequenceControls getColorSequenceControls(){
+        return this.colorSequenceControls;
+    }
+
+    public void setColorSequenceControls(ColorSequenceControls colorSequenceControls){
+        this.colorSequenceControls = colorSequenceControls;
+    }
 
     public boolean isFirstExecution = true;
     public int lastClickedColorButtonId;
@@ -25,13 +38,6 @@ public class MainViewModel extends ViewModel {
     public Map<Integer, Integer> seekBarValue;
 
     public Map<ButtonCategory, Integer> settingsButtonsClickMap;
-
-
-    public ColorSequenceType colorSequenceType = ColorSequenceType.FORWARDS;
-    public int colorSequenceMinValue = 0;
-    public int colorSequenceMaxValue =0;
-    public int colorSequenceSkippedShades = 1;
-    public boolean doesColorSequenceRepeat = true;
 
 
     public boolean isKaleidoscopeCentred = true;

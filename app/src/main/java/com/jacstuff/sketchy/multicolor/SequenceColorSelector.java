@@ -1,75 +1,124 @@
 package com.jacstuff.sketchy.multicolor;
 
-import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
+import com.jacstuff.sketchy.viewmodel.ControlsHolder;
+import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SequenceColorSelector implements ColorSelector {
 
     private List<Integer> colors;
-    private MulticolorPattern currentMulticolorPattern;
     private int currentPatternIndex = 0;
     private int lastIndex;
-    private MainViewModel viewModel;
+    private ControlsHolder viewModel;
+    private ColorSequenceControls colorSequenceControls;
     private int currentIndex;
-    private int startingIndex;
+    private int resetIndex;
+    private Random random;
+
+
+    int sequenceMaxIndex;
+    int sequenceMinIndex;
 
 
 
-    public SequenceColorSelector(List<MulticolorPattern> patterns, MainViewModel viewModel){
+    int direction = 1;
+    int changedDirectionCount = 0;
+
+
+
+    public SequenceColorSelector(ControlsHolder viewModel){
+        this.colorSequenceControls = viewModel.getColorSequenceControls();
       this.viewModel = viewModel;
+      random = new Random(System.currentTimeMillis());
     }
 
     public void initSequence(){
-        viewModel.colorSequenceMaxValue = 0;
     }
 
 
     public int getNextColor(){
-        //int index = currentMulticolorPattern.getNextIndex(colors.size());
-       // int currentIndex = Math.min(index, viewModel.colorSequenceEndingShadeIndex );
-       // return colors.get(currentIndex);
-        switch (viewModel.colorSequenceType){
+        log("entered getNextColor(), colors size : " + colors.size());
+        switch (colorSequenceControls.colorSequenceType){
             case FORWARDS:
-                return colors.get(getNextForwardsIndex());
+                calculateNextForwardIndex();
+                break;
             case BACKWARDS:
-                return colors.get(getNextBackwardsIndex());
+                calculateNextBackwardsIndex();
+                break;
+            case STROBE:
+                calculateNextStrobeIndex();
+                break;
+            case RANDOM:
+                calculateNextRandomIndex();
+                break;
         }
-        return 0;
+        return colors.get(currentIndex);
     }
 
 
-    private int getNextForwardsIndex(){
+    private void log(String msg){
+        System.out.println("SequenceColorSelector: " + msg);
+    }
+
+
+    public void calculateNextForwardIndex(){
         if(isAtEndOfForwardsSequence()){
-            return currentIndex == sequenceMinIndex ?
+            currentIndex = currentIndex == sequenceMinIndex ?
                     sequenceMaxIndex :
-                    viewModel.doesColorSequenceRepeat ? sequenceMinIndex : currentIndex;
+                    colorSequenceControls.doesRepeat ? sequenceMinIndex : sequenceMaxIndex;
+            return;
         }
-        return currentIndex + viewModel.colorSequenceSkippedShades;
+       currentIndex += colorSequenceControls.skippedShades;
     }
 
 
-    private int getNextBackwardsIndex(){
-        if(isAtEndOfForwardsSequence()){
-            return currentIndex == sequenceMinIndex ?
-                    sequenceMaxIndex :
-                    viewModel.doesColorSequenceRepeat ? sequenceMinIndex : currentIndex;
+    private void calculateNextBackwardsIndex(){
+        if(isAtEndOfBackwardsSequence()){
+            currentIndex = currentIndex == sequenceMaxIndex ?
+                    sequenceMinIndex :
+                    colorSequenceControls.doesRepeat ? sequenceMaxIndex : currentIndex;
         }
-        return currentIndex + viewModel.colorSequenceSkippedShades;
+        currentIndex -= colorSequenceControls.skippedShades;
     }
 
 
+    private void calculateNextStrobeIndex(){
+        if((direction == 1 && isAtEndOfForwardsSequence())
+                || (direction == -1 && isAtEndOfBackwardsSequence())){
+            direction *= -1;
+            changedDirectionCount++;
+        }
+
+        if(!colorSequenceControls.doesRepeat
+                && direction == 1
+                && changedDirectionCount > 1
+                && currentIndex + colorSequenceControls.skippedShades > resetIndex){
+            currentIndex = resetIndex;
+            return;
+        }
+        currentIndex += direction * colorSequenceControls.skippedShades;
+    }
+
+
+    private void calculateNextRandomIndex(){
+        currentIndex = sequenceMinIndex + random.nextInt(sequenceMaxIndex - sequenceMinIndex);
+    }
 
 
     private boolean isAtEndOfForwardsSequence(){
-        return currentIndex + viewModel.colorSequenceSkippedShades > sequenceMaxIndex;
+        return currentIndex + colorSequenceControls.skippedShades > sequenceMaxIndex;
+    }
+
+
+    private boolean isAtEndOfBackwardsSequence(){
+        return currentIndex - colorSequenceControls.skippedShades < sequenceMinIndex;
     }
 
 
     private boolean isMaxedOut(int index){
-
         //return index >= multicolorPatterns.size() -1;
         return false;
     }
@@ -77,31 +126,41 @@ public class SequenceColorSelector implements ColorSelector {
 
     @Override
     public void resetCurrentIndex(){
-        currentMulticolorPattern.resetIndex();
+
     }
 
 
     @Override
     public void reset(){
-        currentPatternIndex = 0;
-       // currentMulticolorPattern = multicolorPatterns.get(currentPatternIndex);
+        currentPatternIndex = resetIndex;
+        changedDirectionCount = 0;
+        direction = 1;
     }
 
-    int sequenceMaxIndex;
-    int sequenceMinIndex;
 
-    public void set(List<Integer> inputList){
+    public void setColorList(List<Integer> inputList){
         colors = new ArrayList<>(inputList);
         lastIndex = colors.size()-1;
         updateRangeIndexes();
+    }
 
+
+
+    public void setResetIndex(int resetValue){
+        this.resetIndex = resetValue;
     }
 
 
     private void updateRangeIndexes(){
-        sequenceMaxIndex = getMaxIndexOfSequence(viewModel.colorSequenceMaxValue, colors);
-        int minIndex = getMinIndexOfSequence(viewModel.colorSequenceMinValue, colors);
+        log("Entered updateRangeIndexes()");
+        sequenceMaxIndex = getMaxIndexOfSequence(colorSequenceControls.colorSequenceMaxPercentage, colors);
+        int minIndex = getMinIndexOfSequence(colorSequenceControls.colorSequenceMinPercentage, colors);
         sequenceMinIndex = minIndex < sequenceMaxIndex ? minIndex : sequenceMaxIndex -1;
+
+        resetIndex = Math.max(resetIndex, sequenceMinIndex);
+        resetIndex = Math.min(resetIndex, sequenceMaxIndex);
+        currentIndex = resetIndex;
+        log("updateRangeIndexes() min and max Indexes: " + sequenceMinIndex + "," +  sequenceMaxIndex);
     }
 
 
@@ -119,18 +178,22 @@ public class SequenceColorSelector implements ColorSelector {
     }
 
 
+    public int getCurrentIndex(){
+        return currentIndex;
+    }
+
+
 
     @Override
     public void nextPattern(){
         currentPatternIndex = isMaxedOut(currentPatternIndex) ? 0 : currentPatternIndex + 1;
         //currentMulticolorPattern = multicolorPatterns.get(currentPatternIndex);
-        currentMulticolorPattern.resetIndex();
     }
 
 
     @Override
     public String getCurrentPatternLabel(){
-        return (currentPatternIndex + 1) + ": "  +currentMulticolorPattern.getLabel();
+        return (currentPatternIndex + 1) + ": " ;
     }
 
 
@@ -147,7 +210,7 @@ public class SequenceColorSelector implements ColorSelector {
 
 
     @Override
-    public void set(int color){
+    public void setColorList(int color){
         // do nothing
     }
 
