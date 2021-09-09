@@ -15,5 +15,4 @@ public class ColorTransparencySeekBar extends AbstractSeekBarConfig {
     public void adjustSetting(int progress){
         paintHelperManager.getColorHelper().updateTransparency(progress);
     }
-
 }

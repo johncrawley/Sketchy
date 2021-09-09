@@ -13,16 +13,13 @@ public class SequenceColorSelector implements ColorSelector {
     private int currentPatternIndex = 0;
     private int lastIndex;
     private ControlsHolder viewModel;
-    private ColorSequenceControls colorSequenceControls;
+    private final ColorSequenceControls colorSequenceControls;
     private int currentIndex;
     private int resetIndex;
-    private Random random;
-
+    private final Random random;
 
     int sequenceMaxIndex;
     int sequenceMinIndex;
-
-
 
     int direction = 1;
     int changedDirectionCount = 0;
@@ -40,7 +37,6 @@ public class SequenceColorSelector implements ColorSelector {
 
 
     public int getNextColor(){
-        log("entered getNextColor(), colors size : " + colors.size());
         switch (colorSequenceControls.colorSequenceType){
             case FORWARDS:
                 calculateNextForwardIndex();
@@ -56,11 +52,6 @@ public class SequenceColorSelector implements ColorSelector {
                 break;
         }
         return colors.get(currentIndex);
-    }
-
-
-    private void log(String msg){
-        System.out.println("SequenceColorSelector: " + msg);
     }
 
 
@@ -151,8 +142,10 @@ public class SequenceColorSelector implements ColorSelector {
     }
 
 
-    private void updateRangeIndexes(){
-        log("Entered updateRangeIndexes()");
+    public void updateRangeIndexes(){
+        if(colors == null){
+            return;
+        }
         sequenceMaxIndex = getMaxIndexOfSequence(colorSequenceControls.colorSequenceMaxPercentage, colors);
         int minIndex = getMinIndexOfSequence(colorSequenceControls.colorSequenceMinPercentage, colors);
         sequenceMinIndex = minIndex < sequenceMaxIndex ? minIndex : sequenceMaxIndex -1;
@@ -160,7 +153,6 @@ public class SequenceColorSelector implements ColorSelector {
         resetIndex = Math.max(resetIndex, sequenceMinIndex);
         resetIndex = Math.min(resetIndex, sequenceMaxIndex);
         currentIndex = resetIndex;
-        log("updateRangeIndexes() min and max Indexes: " + sequenceMinIndex + "," +  sequenceMaxIndex);
     }
 
 

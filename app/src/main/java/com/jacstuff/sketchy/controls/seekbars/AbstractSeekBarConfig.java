@@ -7,6 +7,8 @@ import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.paintview.PaintView;
 
+import androidx.core.util.Consumer;
+
 public abstract class AbstractSeekBarConfig {
 
     protected SeekBar seekBar;
@@ -15,6 +17,21 @@ public abstract class AbstractSeekBarConfig {
     protected MainViewModel viewModel;
     protected PaintHelperManager paintHelperManager;
     private final int seekBarId;
+    protected Consumer<Integer> progressConsumer;
+
+
+    public AbstractSeekBarConfig(MainActivity mainActivity, int seekBarId, int defaultValueId, Consumer<Integer> progressConsumer){
+        this.mainActivity = mainActivity;
+        this.seekBarId = seekBarId;
+        seekBar = mainActivity.findViewById(seekBarId);
+        viewModel = mainActivity.getViewModel();
+        paintHelperManager = mainActivity.getPaintHelperManager();
+        setupListener();
+        this.progressConsumer = progressConsumer;
+        int defaultValue = getValueOf(defaultValueId);
+        setDefaultValue(defaultValue);
+    }
+
 
 
     public AbstractSeekBarConfig(MainActivity mainActivity, PaintView paintView, int seekBarId, int defaultValueId){
@@ -82,8 +99,6 @@ public abstract class AbstractSeekBarConfig {
     protected int getValueOf(int id){
         return mainActivity.getResources().getInteger(id);
     }
-
-
 
 
 }

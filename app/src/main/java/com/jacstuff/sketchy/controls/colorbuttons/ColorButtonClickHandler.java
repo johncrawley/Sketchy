@@ -26,7 +26,6 @@ import java.util.Map;
 
 public class ColorButtonClickHandler {
 
-    private final PaintView paintView;
     private Button previouslySelectedShadeButton, previouslySelectedColorButton, previouslySelectedButton;
     private List<Integer> colors;
     private final ButtonLayoutParams buttonLayoutParams;
@@ -45,12 +44,12 @@ public class ColorButtonClickHandler {
     private final ColorHelper colorHelper;
 
 
-    public ColorButtonClickHandler(MainActivity mainActivity, PaintView paintView, ButtonLayoutParams buttonLayoutParams){
+    public ColorButtonClickHandler(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams){
         this.mainActivity = mainActivity;
+        this.buttonLayoutParams = buttonLayoutParams;
+
         this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         this.mainViewModel = mainActivity.getViewModel();
-        this.paintView = paintView;
-        this.buttonLayoutParams = buttonLayoutParams;
         this.shadesLayout = mainActivity.findViewById(R.id.shadesButtonGroup);
         this.colorHelper = mainActivity.getPaintHelperManager().getColorHelper();
 
@@ -75,7 +74,7 @@ public class ColorButtonClickHandler {
         colorSelectors = new HashMap<>();
         colorSelectors.put(ButtonType.COLOR, singleSelector);
         colorSelectors.put(ButtonType.SHADE, singleSelector);
-        colorSelectors.put(ButtonType.MULTICOLOR, new SequenceColorSelector(mainViewModel));
+        colorSelectors.put(ButtonType.MULTICOLOR, colorHelper.getSequenceColorSelector());
         colorSelectors.put(ButtonType.MULTISHADE, new LegacyColorSequenceSelector(colorPatternsFactory.createShadePatterns()));
         colorSelectors.put(ButtonType.RANDOM_COLOR, randomSelector);
         colorSelectors.put(ButtonType.RANDOM_SHADE, randomMultiColor );

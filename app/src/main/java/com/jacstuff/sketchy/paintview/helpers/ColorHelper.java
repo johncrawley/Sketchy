@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.paintview.helpers;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.multicolor.ColorSelector;
+import com.jacstuff.sketchy.multicolor.SequenceColorSelector;
 import com.jacstuff.sketchy.paintview.InfinityModeColorBlender;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -13,11 +14,13 @@ public class ColorHelper {
     private InfinityModeColorBlender infinityModeColorBlender;
     private Paint paint, shadowPaint;
     private final KaleidoscopeHelper kaleidoscopeHelper;
+    private final SequenceColorSelector sequenceColorSelector;
 
 
     public ColorHelper(MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
         this.viewModel = viewModel;
         this.kaleidoscopeHelper = kaleidoscopeHelper;
+        sequenceColorSelector = new SequenceColorSelector(viewModel);
     }
 
 
@@ -35,6 +38,10 @@ public class ColorHelper {
         if(infinityModeColorBlender != null){
             infinityModeColorBlender.setColorSelector(colorSelector);
         }
+    }
+
+    public SequenceColorSelector getSequenceColorSelector(){
+        return this.sequenceColorSelector;
     }
 
 

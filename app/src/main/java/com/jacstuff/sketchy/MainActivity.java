@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private ActivityResultLauncher <Intent> loadImageActivityResultLauncher;
 
-    private ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 22);
+    private final ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 22);
 
 
     @Override
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void setupColorAndShadeButtons(){
         List<Integer> colors = ColorCreator.generate();
         colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
-        colorButtonClickHandler = new ColorButtonClickHandler(this, paintView, colorButtonLayoutParams);
+        colorButtonClickHandler = new ColorButtonClickHandler(this, colorButtonLayoutParams);
         colorButtonClickHandler.setColorsMap(colors);
         ColorButtonLayoutCreator layoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams, colors);
         ShadesStore shadesStore = new ShadesStore();
