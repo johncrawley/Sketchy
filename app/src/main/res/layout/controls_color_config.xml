@@ -10,6 +10,10 @@
     android:clickable="true"
     android:focusable="true">
 
+
+
+
+
     <LinearLayout
         android:id="@+id/colorSequenceTypeLayout"
         android:layout_width="match_parent"
@@ -55,6 +59,58 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             layout="@layout/seek_bar_color_sequence_max_index" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
+        <include
+            android:id="@+id/colorSequenceMaxIndexSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/seek_bar_color_sequence_steps" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/kaleidoscopeSettingsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/menu_seekbar_padding_top"
+        android:paddingBottom="@dimen/menu_seekbar_padding_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/colorSequenceRepeatSwitch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:checked="false"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
+            android:paddingTop="@dimen/switch_option_padding_top"
+            android:paddingBottom="@dimen/switch_option_padding_bottom"
+            android:text="@string/switch_label_color_sequence_repeat" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/colorSequenceResetOnReleaseSwitch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:checked="true"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
+            android:paddingTop="@dimen/switch_option_padding_top"
+            android:paddingBottom="@dimen/switch_option_padding_bottom"
+            android:text="@string/switch_label_color_sequence_reset_on_release" />
+
     </LinearLayout>
 
 

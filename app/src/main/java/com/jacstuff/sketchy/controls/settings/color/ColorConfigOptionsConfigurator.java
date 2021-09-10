@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.controls.settings.color;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
@@ -40,24 +41,44 @@ public class ColorConfigOptionsConfigurator  extends AbstractButtonConfigurator<
                             sequenceColorSelector.updateRangeIndexes();
                         });
 
-      new SimpleSeekBar(activity,
-                        R.id.colorSequenceMinIndexSeekBar,
-                        R.integer.seek_bar_color_sequence_min_range_default,
-                        progress -> {
-                            viewModel.getColorSequenceControls().colorSequenceMinPercentage = progress;
-                            sequenceColorSelector.updateRangeIndexes();
-                        });
+        new SimpleSeekBar(activity,
+                R.id.colorSequenceMinIndexSeekBar,
+                R.integer.seek_bar_color_sequence_min_range_default,
+                progress -> {
+                    viewModel.getColorSequenceControls().colorSequenceMinPercentage = progress;
+                    sequenceColorSelector.updateRangeIndexes();
+                });
+
+        new SimpleSeekBar(activity,
+                R.id.colorSequenceStepsSeekBar,
+                R.integer.seek_bar_color_sequence_steps_default,
+                progress -> {
+                    viewModel.getColorSequenceControls().skippedShades = 1 + progress;
+                    sequenceColorSelector.updateRangeIndexes();
+                });
 
         setupSpinner(activity,
                 R.id.colorSequenceTypeSpinner,
                 R.array.color_sequence_type_array,
                 x -> paintHelperManager.getColorHelper().getSequenceColorSelector().setSequenceType(sequenceTypeMap.get(x)));
+
+        setupSwitches();
     }
 
 
     @Override
     public void handleClick(int viewId, Void actionType) {
         //do nothing
+    }
+
+    private void setupSwitches(){
+
+        SwitchMaterial colorSequenceRepeatSwitch = activity.findViewById(R.id.colorSequenceRepeatSwitch);
+        colorSequenceRepeatSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.getColorSequenceControls().doesRepeat = isChecked);
+
+
+        SwitchMaterial colorSequenceResetOnReleaseSwitch = activity.findViewById(R.id.colorSequenceResetOnReleaseSwitch);
+        colorSequenceResetOnReleaseSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.getColorSequenceControls().isResetOnRelease = isChecked);
     }
 
 

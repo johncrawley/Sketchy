@@ -9,4 +9,5 @@ public class ColorSequenceControls {
     public int colorSequenceMaxPercentage = 100;
     public int skippedShades = 1;
     public boolean doesRepeat = true;
+    public boolean isResetOnRelease = true;
 }

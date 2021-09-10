@@ -113,6 +113,13 @@ public class SequenceColorSelector implements ColorSelector {
     }
 
 
+    public void onTouchUp(){
+        if(colorSequenceControls.isResetOnRelease){
+            reset();
+        }
+    }
+
+
     @Override
     public void reset(){
         currentIndex = resetIndex;
