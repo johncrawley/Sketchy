@@ -23,6 +23,9 @@ public class ButtonUtils {
 
 
     public void switchSelection(int viewId, Set<Integer> buttonIds){
+        if(buttonIds == null){
+            return;
+        }
         for(int buttonId : buttonIds){
             if(viewId == buttonId){
                 selectButton(buttonId);

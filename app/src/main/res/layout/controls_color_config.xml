@@ -2,11 +2,33 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/colorConfigLayout"
     android:orientation="vertical"
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/menu_padding_top"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:clickable="true"
+    android:focusable="true">
 
+    <LinearLayout
+        android:id="@+id/colorSequenceTypeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/style_spinner_margin_vertical"
+        android:paddingHorizontal="@dimen/spinner_layout_horizontal_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/strokeCapSpinner"
+            android:layout_marginEnd="@dimen/spinner_label_margin_end"
+            android:text="@string/spinner_color_sequence_type_label"/>
+
+        <Spinner
+            android:id="@+id/colorSequenceTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 
     <LinearLayout

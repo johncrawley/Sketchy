@@ -52,7 +52,6 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
     @Override
     public void handleClick(int viewId, Integer layoutId) {
         hideAllPanels();
-        System.out.println("MenuButtonsConfigurator.handleClick() settingsPopup==null: " + (settingsPopup == null));
         if(settingsPopup != null) {
             settingsPopup.click(viewId);
         }

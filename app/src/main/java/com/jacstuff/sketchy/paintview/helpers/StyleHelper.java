@@ -32,7 +32,7 @@ public class StyleHelper {
 
 
     private <T> void put(Map<String, T> map, int id, T item){
-        String str= getStr(id);
+        String str = getStr(id);
         map.put(str, item);
     }
 

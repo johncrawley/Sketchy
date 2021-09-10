@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.multicolor;
 
+
 import com.jacstuff.sketchy.viewmodel.ControlsHolder;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
@@ -10,9 +11,6 @@ import java.util.Random;
 public class SequenceColorSelector implements ColorSelector {
 
     private List<Integer> colors;
-    private int currentPatternIndex = 0;
-    private int lastIndex;
-    private ControlsHolder viewModel;
     private final ColorSequenceControls colorSequenceControls;
     private int currentIndex;
     private int resetIndex;
@@ -25,16 +23,16 @@ public class SequenceColorSelector implements ColorSelector {
     int changedDirectionCount = 0;
 
 
-
     public SequenceColorSelector(ControlsHolder viewModel){
         this.colorSequenceControls = viewModel.getColorSequenceControls();
-      this.viewModel = viewModel;
-      random = new Random(System.currentTimeMillis());
+        random = new Random(System.currentTimeMillis());
     }
 
-    public void initSequence(){
-    }
 
+    public void setSequenceType(ColorSequenceType type){
+        colorSequenceControls.colorSequenceType = type;
+        updateRangeIndexes();
+    }
 
     public int getNextColor(){
         switch (colorSequenceControls.colorSequenceType){
@@ -95,7 +93,7 @@ public class SequenceColorSelector implements ColorSelector {
 
 
     private void calculateNextRandomIndex(){
-        currentIndex = sequenceMinIndex + random.nextInt(sequenceMaxIndex - sequenceMinIndex);
+        currentIndex = sequenceMinIndex + random.nextInt((sequenceMaxIndex - sequenceMinIndex) + 1);
     }
 
 
@@ -109,12 +107,6 @@ public class SequenceColorSelector implements ColorSelector {
     }
 
 
-    private boolean isMaxedOut(int index){
-        //return index >= multicolorPatterns.size() -1;
-        return false;
-    }
-
-
     @Override
     public void resetCurrentIndex(){
 
@@ -123,7 +115,7 @@ public class SequenceColorSelector implements ColorSelector {
 
     @Override
     public void reset(){
-        currentPatternIndex = resetIndex;
+        currentIndex = resetIndex;
         changedDirectionCount = 0;
         direction = 1;
     }
@@ -131,7 +123,6 @@ public class SequenceColorSelector implements ColorSelector {
 
     public void setColorList(List<Integer> inputList){
         colors = new ArrayList<>(inputList);
-        lastIndex = colors.size()-1;
         updateRangeIndexes();
     }
 
@@ -178,14 +169,13 @@ public class SequenceColorSelector implements ColorSelector {
 
     @Override
     public void nextPattern(){
-        currentPatternIndex = isMaxedOut(currentPatternIndex) ? 0 : currentPatternIndex + 1;
-        //currentMulticolorPattern = multicolorPatterns.get(currentPatternIndex);
+
     }
 
 
     @Override
     public String getCurrentPatternLabel(){
-        return (currentPatternIndex + 1) + ": " ;
+        return "";
     }
 
 

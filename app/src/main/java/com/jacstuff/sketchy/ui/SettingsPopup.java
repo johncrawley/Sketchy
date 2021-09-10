@@ -39,8 +39,10 @@ public class SettingsPopup {
 
     // ignored views won't trigger a dismiss when clicked
     // we really just want to ignore views that are in the popup itself
-    public void registerToIgnore(int id){
-        ignoreIds.add(id);
+    public void registerToIgnore(int ...ids){
+        for(int id : ids){
+            ignoreIds.add(id);
+        }
     }
 
 
@@ -63,14 +65,9 @@ public class SettingsPopup {
 
 
     public void click(int id){
-
-        /*
         if(ignoreIds.contains(id)){
-            System.out.println("ignore id " + id);
             return;
         }
-
-         */
         if(isIdTheCurrentParentOrNotAParent(id)){
             setInvisible();
             return;

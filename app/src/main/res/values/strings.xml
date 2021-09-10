@@ -147,6 +147,13 @@
     <string name="stroke_join_spinner_round_item">Soft</string>
     <string name="stroke_join_spinner_bevel_item">Bevel</string>
     <string name="confirm_wipe_text">Clear the canvas without saving?</string>
+
+    <string name="spinner_color_sequence_type_label">Sequence Type</string>
+    <string name="spinner_item_color_sequence_forwards">Forwards</string>
+    <string name="spinner_item_color_sequence_backwards">Backwards</string>
+    <string name="spinner_item_color_sequence_strobe">Strobe</string>
+    <string name="spinner_item_color_sequence_random">Random</string>
+    <string name="spinner_item_color_sequence_shuffle">Shuffle</string>
     <string name="confirm_wipe_confirm_button">Yes</string>
     <string name="confirm_wipe_cancel_button">No</string>
     <string name="gradient_size_seekbar_label">Gradient Factor</string>

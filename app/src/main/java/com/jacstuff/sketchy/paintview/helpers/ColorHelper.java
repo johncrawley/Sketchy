@@ -60,21 +60,20 @@ public class ColorHelper {
             infinityModeColorBlender.assignNextInfinityModeColor();
             return;
         }
-        log("assignColors() about to invoke colorSelector.getNextColor()");
         int nextColor = colorSelector.getNextColor();
         if(viewModel.color != nextColor){
             viewModel.previousColor = viewModel.color;
         }
         viewModel.color = nextColor;
-        paint.setColor(viewModel.color);
-        shadowPaint.setColor(viewModel.color);
-        paint.setAlpha(viewModel.colorAlpha);
-        shadowPaint.setAlpha(viewModel.colorAlpha);
+
+        setColorAndAlpha(paint);
+        setColorAndAlpha(shadowPaint);
     }
 
 
-    private void log(String msg){
-        System.out.println("ColorHelper: "  + msg);
+    private void setColorAndAlpha(Paint paint){
+        paint.setColor(viewModel.color);
+        paint.setAlpha( viewModel.colorAlpha);
     }
 
 }
