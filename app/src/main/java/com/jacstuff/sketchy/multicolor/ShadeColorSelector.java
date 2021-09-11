@@ -69,8 +69,23 @@ public class ShadeColorSelector implements ColorSelector {
         int oldIndex = currentIndex;
         while(currentIndex == oldIndex){
             currentIndex = random.nextInt(ids.size());
+
         }
         return getRandomShade();
+    }
+
+
+    private int getRandomShade(){
+        String shadeListKey = ids.get(currentIndex);
+        List<Integer> shadesList =  shadesMap.get(shadeListKey);
+
+        if(shadesList == null){
+            return Color.BLACK;
+        }
+        int minIndex = getMinIndexOfSequence(colorSequenceControls.colorSequenceMinPercentage, shadesList);
+        int maxIndex = getMaxIndexOfSequence(colorSequenceControls.colorSequenceMaxPercentage, shadesList);
+        int randomIndex = minIndex + random.nextInt((maxIndex - minIndex) + 1);
+        return shadesList.get(random.nextInt(randomIndex));
     }
 
 
@@ -81,12 +96,6 @@ public class ShadeColorSelector implements ColorSelector {
             return shadesList.get(minIndex);
         }
         return Color.BLACK;
-    }
-
-
-    private int getRandomShade(){
-        List<Integer> shadesList =  shadesMap.get(ids.get(currentIndex));
-        return shadesList != null ? random.nextInt(shadesList.size()) : Color.BLACK;
     }
 
     private int direction = 1;
@@ -102,11 +111,11 @@ public class ShadeColorSelector implements ColorSelector {
         return Math.min(colorList.size()-2, minSequenceIndex);
     }
 
-
-    private String getRandomId(){
-        return ids.get(random.nextInt(ids.size()));
+    public int getMaxIndexOfSequence(int seekBarColorRangeMaximum, List<Integer> colorList){
+        int lastIndex = colorList.size() -1;
+        int maxSequenceIndex = (int)((lastIndex / 100f) * seekBarColorRangeMaximum);
+        return Math.max(1,maxSequenceIndex);
     }
-
 
     @Override
     public void add(int id, List<Integer> shades){
