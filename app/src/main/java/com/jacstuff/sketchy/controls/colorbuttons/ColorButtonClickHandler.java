@@ -77,7 +77,8 @@ public class ColorButtonClickHandler {
         colorSelectors.put(ButtonType.MULTICOLOR, colorHelper.getSequenceColorSelector());
         colorSelectors.put(ButtonType.MULTISHADE, new LegacyColorSequenceSelector(colorPatternsFactory.createShadePatterns()));
         colorSelectors.put(ButtonType.RANDOM_COLOR, randomSelector);
-        colorSelectors.put(ButtonType.RANDOM_SHADE, randomMultiColor );
+        //colorSelectors.put(ButtonType.RANDOM_SHADE, randomMultiColor );
+        colorSelectors.put(ButtonType.RANDOM_SHADE, colorHelper.getShadeColorSelector() );
     }
 
 

@@ -33,7 +33,6 @@ public abstract class AbstractSeekBarConfig {
     }
 
 
-
     public AbstractSeekBarConfig(MainActivity mainActivity, PaintView paintView, int seekBarId, int defaultValueId){
         this.mainActivity = mainActivity;
         this.paintView = paintView;

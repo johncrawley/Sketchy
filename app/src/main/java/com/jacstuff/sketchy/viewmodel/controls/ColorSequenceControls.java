@@ -10,4 +10,5 @@ public class ColorSequenceControls {
     public int skippedShades = 1;
     public boolean doesRepeat = true;
     public boolean isResetOnRelease = true;
+    public boolean areAllShadesUsed = false;
 }

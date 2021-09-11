@@ -5,6 +5,7 @@ import com.jacstuff.sketchy.viewmodel.ControlsHolder;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -15,6 +16,7 @@ public class SequenceColorSelector implements ColorSelector {
     private int currentIndex;
     private int resetIndex;
     private final Random random;
+
 
     int sequenceMaxIndex;
     int sequenceMinIndex;
@@ -33,6 +35,7 @@ public class SequenceColorSelector implements ColorSelector {
         colorSequenceControls.colorSequenceType = type;
         updateRangeIndexes();
     }
+
 
     public int getNextColor(){
         switch (colorSequenceControls.colorSequenceType){
@@ -161,9 +164,9 @@ public class SequenceColorSelector implements ColorSelector {
     }
 
 
-    public int getMinIndexOfSequence(int seekBarColorRangeMaximum, List<Integer> colorList){
+    public int getMinIndexOfSequence(int seekBarColorRangeMinimum, List<Integer> colorList){
         int lastIndex = colorList.size() -1;
-        int minSequenceIndex = (int)((lastIndex / 100f) * seekBarColorRangeMaximum);
+        int minSequenceIndex = (int)((lastIndex / 100f) * seekBarColorRangeMinimum);
         return Math.min(colorList.size()-2, minSequenceIndex);
     }
 
@@ -186,9 +189,11 @@ public class SequenceColorSelector implements ColorSelector {
     }
 
 
+
+
     @Override
     public void add(int id, List<Integer> shades){
-        //do nothing
+        colors = new ArrayList<>(shades);
     }
 
 

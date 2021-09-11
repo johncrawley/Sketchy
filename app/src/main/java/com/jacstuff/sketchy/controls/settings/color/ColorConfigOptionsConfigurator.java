@@ -1,5 +1,7 @@
 package com.jacstuff.sketchy.controls.settings.color;
 
+import android.widget.SeekBar;
+
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
@@ -46,6 +48,7 @@ public class ColorConfigOptionsConfigurator  extends AbstractButtonConfigurator<
                 R.integer.seek_bar_color_sequence_min_range_default,
                 progress -> {
                     viewModel.getColorSequenceControls().colorSequenceMinPercentage = progress;
+                    SeekBar maxRangeSeekBar = activity.findViewById(R.id.colorSequenceMaxIndexSeekBar);
                     sequenceColorSelector.updateRangeIndexes();
                 });
 

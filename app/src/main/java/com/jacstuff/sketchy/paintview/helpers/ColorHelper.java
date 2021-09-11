@@ -4,6 +4,7 @@ import android.graphics.Paint;
 
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.multicolor.SequenceColorSelector;
+import com.jacstuff.sketchy.multicolor.ShadeColorSelector;
 import com.jacstuff.sketchy.paintview.InfinityModeColorBlender;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -15,12 +16,15 @@ public class ColorHelper {
     private Paint paint, shadowPaint;
     private final KaleidoscopeHelper kaleidoscopeHelper;
     private final SequenceColorSelector sequenceColorSelector;
-
+    private final ShadeColorSelector shadeColorSelector;
 
     public ColorHelper(MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
         this.viewModel = viewModel;
         this.kaleidoscopeHelper = kaleidoscopeHelper;
         sequenceColorSelector = new SequenceColorSelector(viewModel);
+
+
+        shadeColorSelector = new ShadeColorSelector(viewModel);
     }
 
 
@@ -42,6 +46,11 @@ public class ColorHelper {
 
     public SequenceColorSelector getSequenceColorSelector(){
         return this.sequenceColorSelector;
+    }
+
+
+    public ShadeColorSelector getShadeColorSelector(){
+        return this.shadeColorSelector;
     }
 
 
