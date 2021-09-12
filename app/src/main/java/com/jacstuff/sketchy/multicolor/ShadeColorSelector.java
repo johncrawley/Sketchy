@@ -21,9 +21,9 @@ public class ShadeColorSelector implements ColorSelector {
 
     private int currentIndex = 0;
 
-    public ShadeColorSelector(MainViewModel viewModel){
+    public ShadeColorSelector(MainViewModel viewModel, SequenceColorSelector sequenceColorSelector){
         colorSequenceControls = viewModel.getColorSequenceControls();
-        sequenceColorSelector = new SequenceColorSelector(viewModel);
+        this. sequenceColorSelector = sequenceColorSelector;
         shadesMap = new HashMap<>(30);
         ids = new ArrayList<>(30);
         random = new Random(System.currentTimeMillis());
@@ -108,15 +108,16 @@ public class ShadeColorSelector implements ColorSelector {
         return Math.min(colorList.size()-2, minSequenceIndex);
     }
 
+
     public int getMaxIndexOfSequence(int seekBarColorRangeMaximum, List<Integer> colorList){
         int lastIndex = colorList.size() -1;
         int maxSequenceIndex = (int)((lastIndex / 100f) * seekBarColorRangeMaximum);
         return Math.max(1,maxSequenceIndex);
     }
 
+
     @Override
     public void add(int id, List<Integer> shades){
-
         String idStr = Integer.toString(id);
         shadesMap.put(idStr, shades);
         ids.add(idStr);
@@ -126,6 +127,7 @@ public class ShadeColorSelector implements ColorSelector {
         }
     }
 
+
     @Override
     public void remove(int id){
         String idStr = Integer.toString(id);
@@ -133,6 +135,7 @@ public class ShadeColorSelector implements ColorSelector {
         ids.remove(idStr);
         assignOnlyColorToSequenceColorSelector();
     }
+
 
     private void assignOnlyColorToSequenceColorSelector(){
         if(ids.size() == 1){

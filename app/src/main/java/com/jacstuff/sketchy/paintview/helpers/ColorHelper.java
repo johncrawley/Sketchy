@@ -22,9 +22,7 @@ public class ColorHelper {
         this.viewModel = viewModel;
         this.kaleidoscopeHelper = kaleidoscopeHelper;
         sequenceColorSelector = new SequenceColorSelector(viewModel);
-
-
-        shadeColorSelector = new ShadeColorSelector(viewModel);
+        shadeColorSelector = new ShadeColorSelector(viewModel, sequenceColorSelector);
     }
 
 
