@@ -1,7 +1,8 @@
-package com.jacstuff.sketchy.multicolor;
+package com.jacstuff.sketchy.multicolor.legacy;
 
 import android.graphics.Color;
 
+import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
 import com.jacstuff.sketchy.multicolor.pattern.RandomPattern;
 
@@ -17,6 +18,7 @@ public class RandomMultiColorSelector implements ColorSelector {
     private final Map<String, List<Integer>> shadesMap;
     private final List<String> ids;
     private final Random random;
+
 
     public RandomMultiColorSelector(){
         pattern = new RandomPattern();

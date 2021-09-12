@@ -34,7 +34,7 @@ public class ColorButtonLayoutCreator {
     private final ButtonReferenceStore buttonReferenceStore;
     private final MainActivity activity;
     private final MultiShadeButtonIconDrawer multiShadeButtonIconDrawer;
-    private final RandomShadeButtonIconDrawer randomShadeButtonIconDrawer;
+    //private final RandomShadeButtonIconDrawer randomShadeButtonIconDrawer;
 
 
     public ColorButtonLayoutCreator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, final List<Integer> colors){
@@ -42,7 +42,7 @@ public class ColorButtonLayoutCreator {
         this.activity = mainActivity;
         defaultColor = mainActivity.getString(R.string.default_color);
         multiShadeButtonIconDrawer = new MultiShadeButtonIconDrawer(activity);
-        randomShadeButtonIconDrawer = new RandomShadeButtonIconDrawer(activity);
+        //randomShadeButtonIconDrawer = new RandomShadeButtonIconDrawer(activity);
         this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         setupColorShadeCreator();
         this.buttonLayoutParams = buttonLayoutParams;
@@ -85,8 +85,7 @@ public class ColorButtonLayoutCreator {
             addColorAndShadeButtons(color);
         }
         addMultiColorButton();
-        addRandomButton();
-      //  addConfigButton();
+       // addRandomButton();
         addMultiColorShadeButtons();
         addRandomShadeButtons();
     }
@@ -197,7 +196,7 @@ public class ColorButtonLayoutCreator {
 
 
     private void addRandomShadeDrawableTo(Button button, final int color){
-        randomShadeButtonIconDrawer.drawBackgroundOf(button, color);
+      //  randomShadeButtonIconDrawer.drawBackgroundOf(button, color);
     }
 
 

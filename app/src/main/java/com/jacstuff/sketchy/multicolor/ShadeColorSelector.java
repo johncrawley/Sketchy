@@ -50,13 +50,13 @@ public class ShadeColorSelector implements ColorSelector {
 
 
     private int getNextShadeForwards(){
-        currentIndex = currentIndex == ids.size() -1 ? 0 : currentIndex +1;
+        currentIndex = currentIndex >= ids.size() -1 ? 0 : currentIndex +1;
         return getShade();
     }
 
 
     private int getNextShadeBackwards(){
-        currentIndex =  currentIndex == 0 ? ids.size()-1 : currentIndex -1;
+        currentIndex =  currentIndex <= 0 ? ids.size()-1 : currentIndex -1;
         return getShade();
     }
 
@@ -82,7 +82,7 @@ public class ShadeColorSelector implements ColorSelector {
         int maxIndex = getMaxIndexOfSequence(colorSequenceControls.colorSequenceMaxPercentage, shadesList);
         int bound = Math.max(0, (maxIndex - minIndex)) + 1;
         int randomIndex = minIndex + random.nextInt(bound);
-        return shadesList.get(random.nextInt(randomIndex));
+        return shadesList.get(randomIndex);
     }
 
 
@@ -136,6 +136,10 @@ public class ShadeColorSelector implements ColorSelector {
         assignOnlyColorToSequenceColorSelector();
     }
 
+    private void log(String msg){
+
+        System.out.println("ShadeColorSelector" + msg);
+    }
 
     private void assignOnlyColorToSequenceColorSelector(){
         if(ids.size() == 1){

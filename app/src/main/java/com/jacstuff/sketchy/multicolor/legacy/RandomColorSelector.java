@@ -1,6 +1,7 @@
-package com.jacstuff.sketchy.multicolor;
+package com.jacstuff.sketchy.multicolor.legacy;
 
 
+import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
 import com.jacstuff.sketchy.multicolor.pattern.RandomPattern;
 

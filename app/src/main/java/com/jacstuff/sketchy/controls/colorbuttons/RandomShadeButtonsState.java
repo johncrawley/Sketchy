@@ -30,6 +30,9 @@ public class RandomShadeButtonsState {
         isMultiSelected = true;
     }
 
+    public int getSelectedCount(){
+        return selectedButtons.size();
+    }
 
     public Collection<Button> getSelected(){
         return selectedButtons;

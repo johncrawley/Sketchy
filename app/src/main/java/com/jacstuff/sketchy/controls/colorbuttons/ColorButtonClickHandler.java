@@ -1,21 +1,17 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.multicolor.SequenceColorSelector;
 import com.jacstuff.sketchy.multicolor.ShadesStore;
 import com.jacstuff.sketchy.paintview.helpers.ColorHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
-import com.jacstuff.sketchy.multicolor.RandomMultiColorSelector;
-import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
-import com.jacstuff.sketchy.multicolor.LegacyColorSequenceSelector;
-import com.jacstuff.sketchy.multicolor.RandomColorSelector;
 import com.jacstuff.sketchy.multicolor.SingleColorSelector;
 
 import java.util.ArrayList;
@@ -38,7 +34,6 @@ public class ColorButtonClickHandler {
     private ColorSelector currentColorSelector;
     private final RandomShadeButtonsState randomShadeButtonsState;
     private final int enabledTag = R.string.multi_random_button_checked_tag;
-    private Button randomColorButton;
     private final ButtonReferenceStore buttonReferenceStore;
     private final MainViewModel mainViewModel;
     private final ColorHelper colorHelper;
@@ -67,18 +62,11 @@ public class ColorButtonClickHandler {
 
     private void setupColorSelectors(){
         ColorSelector singleSelector = new SingleColorSelector();
-        ColorSelector randomSelector = new RandomColorSelector();
-        ColorPatternsFactory colorPatternsFactory = new ColorPatternsFactory(mainActivity.getApplicationContext());
-
-        ColorSelector randomMultiColor = new RandomMultiColorSelector();
         colorSelectors = new HashMap<>();
         colorSelectors.put(ButtonType.COLOR, singleSelector);
         colorSelectors.put(ButtonType.SHADE, singleSelector);
         colorSelectors.put(ButtonType.MULTICOLOR, colorHelper.getSequenceColorSelector());
-        colorSelectors.put(ButtonType.MULTISHADE, new LegacyColorSequenceSelector(colorPatternsFactory.createShadePatterns()));
-        colorSelectors.put(ButtonType.RANDOM_COLOR, randomSelector);
-        //colorSelectors.put(ButtonType.RANDOM_SHADE, randomMultiColor );
-        colorSelectors.put(ButtonType.RANDOM_SHADE, colorHelper.getShadeColorSelector() );
+        colorSelectors.put(ButtonType.MULTISHADE, colorHelper.getShadeColorSelector());
     }
 
 
@@ -140,14 +128,7 @@ public class ColorButtonClickHandler {
                 onShadeButtonClick(button);
                 break;
             case MULTISHADE:
-                onMultiShadeButtonClick(button);
-                break;
-            case RANDOM_COLOR:
-                randomColorButton = button;
-                onRandomColorButtonClick();
-                break;
-            case RANDOM_SHADE:
-                clickRandomShadeButtonMultiMode(button);
+                clickShadeButtonMultiMode(button);
         }
         previouslySelectedButton = button;
     }
@@ -159,7 +140,13 @@ public class ColorButtonClickHandler {
 
 
     private void focusOn(Button button){
-        button.getParent().requestChildFocus(button, button);
+        if(button == null){
+            return;
+        }
+        ViewParent parent = button.getParent();
+        if(parent != null) {
+            button.getParent().requestChildFocus(button, button);
+        }
     }
 
 
@@ -192,37 +179,9 @@ public class ColorButtonClickHandler {
         previouslySelectedColorButton = button;
         selectButton(button);
         assignShadeLayoutFrom(button);
-        isMostRecentClickAShade = false;
-    }
-
-
-    private void onRandomColorButtonClick(){
-        deselectPreviousButtons();
-        currentColorSelector.setColorList(colors);
-        if(randomColorButton == null){
-            return;
-        }
-        previouslySelectedColorButton = randomColorButton;
-        colorHelper.setColorSelector(currentColorSelector);
-        selectButton(randomColorButton);
-        assignShadeLayoutFrom(randomColorButton);
-        isMostRecentClickAShade = false;
         deselectButtons(randomShadeButtonsState.getSelected());
         randomShadeButtonsState.deselectMulti();
-    }
-
-
-    private void selectButtonAndSetRecent(Button button){
-        deselectButton(previouslySelectedShadeButton);
-        previouslySelectedShadeButton = button;
-        selectButton(button);
-        isMostRecentClickAShade = true;
-    }
-
-
-    private void onMultiShadeButtonClick(Button button){
-        assignMultiSelector(button, getShadesFrom(button));
-        selectButtonAndSetRecent(button);
+        isMostRecentClickAShade = false;
     }
 
 
@@ -264,7 +223,7 @@ public class ColorButtonClickHandler {
     }
 
 
-    private void clickRandomShadeButtonMultiMode(Button button){
+    private void clickShadeButtonMultiMode(Button button){
         if(!randomShadeButtonsState.isMultiSelected()){
             handleClickWhenMultiDisabled(button);
             return;
@@ -301,22 +260,16 @@ public class ColorButtonClickHandler {
 
 
     private void deselectRandomColorButton(Button button){
+        if(randomShadeButtonsState.getSelectedCount() == 1){
+            return;
+        }
         int buttonColor = (int)button.getTag(R.string.tag_button_color);
+
         currentColorSelector.remove(buttonColor);
         button.setTag(enabledTag, "disabled");
         button.setText("");
         deselectButton(button);
         randomShadeButtonsState.deselect(button);
-        if(!randomShadeButtonsState.isAnySelected()){
-            switchBackToMainRandomColorButton();
-        }
-    }
-
-
-    private void switchBackToMainRandomColorButton(){
-        focusOn(randomColorButton);
-        assignColorSelectorToPaintViewFrom(randomColorButton);
-        onRandomColorButtonClick();
     }
 
 
