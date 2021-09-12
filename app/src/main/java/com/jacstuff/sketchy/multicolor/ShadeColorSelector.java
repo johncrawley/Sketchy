@@ -2,8 +2,6 @@ package com.jacstuff.sketchy.multicolor;
 
 import android.graphics.Color;
 
-import com.jacstuff.sketchy.multicolor.pattern.MulticolorPattern;
-import com.jacstuff.sketchy.multicolor.pattern.RandomPattern;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
@@ -15,7 +13,6 @@ import java.util.Random;
 
 public class ShadeColorSelector implements ColorSelector {
 
-    private final MulticolorPattern pattern;
     private final Map<String, List<Integer>> shadesMap;
     private final List<String> ids;
     private final Random random;
@@ -27,7 +24,6 @@ public class ShadeColorSelector implements ColorSelector {
     public ShadeColorSelector(MainViewModel viewModel){
         colorSequenceControls = viewModel.getColorSequenceControls();
         sequenceColorSelector = new SequenceColorSelector(viewModel);
-        pattern = new RandomPattern();
         shadesMap = new HashMap<>(30);
         ids = new ArrayList<>(30);
         random = new Random(System.currentTimeMillis());
@@ -84,7 +80,8 @@ public class ShadeColorSelector implements ColorSelector {
         }
         int minIndex = getMinIndexOfSequence(colorSequenceControls.colorSequenceMinPercentage, shadesList);
         int maxIndex = getMaxIndexOfSequence(colorSequenceControls.colorSequenceMaxPercentage, shadesList);
-        int randomIndex = minIndex + random.nextInt((maxIndex - minIndex) + 1);
+        int bound = Math.max(0, (maxIndex - minIndex)) + 1;
+        int randomIndex = minIndex + random.nextInt(bound);
         return shadesList.get(random.nextInt(randomIndex));
     }
 
