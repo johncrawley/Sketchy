@@ -16,7 +16,7 @@ public class KaleidoscopeDrawer {
     Canvas canvas;
     final MainViewModel viewModel;
     final KaleidoscopeHelper kaleidoscopeHelper;
-    final PaintView paintView;
+    final public PaintView paintView;
     final Paint infinityPaint;
     Bitmap infinityImage;
     Drawer parentDrawer;

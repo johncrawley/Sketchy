@@ -32,7 +32,7 @@ public class ColorButtonClickHandler {
     private Map<ButtonType, ColorSelector> colorSelectors;
     private final MainActivity mainActivity;
     private ColorSelector currentColorSelector;
-    private final RandomShadeButtonsState randomShadeButtonsState;
+    private final RandomShadeButtonsState shadeButtonsState;
     private final int buttonStatusTag = R.string.multi_random_button_checked_tag;
     private enum ButtonStatus { ENABLED, DISABLED }
     private final ButtonReferenceStore buttonReferenceStore;
@@ -49,7 +49,7 @@ public class ColorButtonClickHandler {
         this.shadesLayout = mainActivity.findViewById(R.id.shadesButtonGroup);
         this.colorHelper = mainActivity.getPaintHelperManager().getColorHelper();
 
-        randomShadeButtonsState = new RandomShadeButtonsState();
+        shadeButtonsState = new RandomShadeButtonsState();
         setupColorSelectors();
         setupPreexistingState();
     }
@@ -179,8 +179,8 @@ public class ColorButtonClickHandler {
         previouslySelectedColorButton = button;
         selectButton(button);
         assignShadeLayoutFrom(button);
-        deselectButtons(randomShadeButtonsState.getSelected());
-        randomShadeButtonsState.deselectMulti();
+        deselectButtons(shadeButtonsState.getSelected());
+        shadeButtonsState.deselectMulti();
         isMostRecentClickAShade = false;
     }
 
@@ -221,12 +221,12 @@ public class ColorButtonClickHandler {
 
 
     private void clickShadeButtonMultiMode(Button button){
-        if(!randomShadeButtonsState.isMultiSelected()){
+        if(!shadeButtonsState.isMultiSelected()){
             handleClickWhenMultiDisabled(button);
             return;
         }
         if(isEnabled(button)){
-           deselectRandomColorButton(button);
+           deselectShadeButton(button);
             return;
         }
         selectRandomColorButton(button);
@@ -237,14 +237,14 @@ public class ColorButtonClickHandler {
         if(!isEnabled(button)){
             selectRandomColorButton(button);
         }
-        randomShadeButtonsState.selectMulti();
-        selectButtons(randomShadeButtonsState.getSelected());
+        shadeButtonsState.selectMulti();
+        selectButtons(shadeButtonsState.getSelected());
     }
 
 
     public List<String> getSelectedRandomShadeKeys(){
         List<String> buttonKeys = new ArrayList<>();
-        for(Button button: randomShadeButtonsState.getSelected()){
+        for(Button button: shadeButtonsState.getSelected()){
             buttonKeys.add(buttonReferenceStore.getKeyFrom(button));
         }
         return buttonKeys;
@@ -256,8 +256,8 @@ public class ColorButtonClickHandler {
     }
 
 
-    private void deselectRandomColorButton(Button button){
-        if(randomShadeButtonsState.getSelectedCount() == 1){
+    private void deselectShadeButton(Button button){
+        if(shadeButtonsState.getSelectedCount() == 1){
             return;
         }
         int buttonColor = (int)button.getTag(R.string.tag_button_color);
@@ -266,7 +266,7 @@ public class ColorButtonClickHandler {
         button.setTag(buttonStatusTag, ButtonStatus.DISABLED);
         button.setText("");
         deselectButton(button);
-        randomShadeButtonsState.deselect(button);
+        shadeButtonsState.deselect(button);
     }
 
 
@@ -274,7 +274,7 @@ public class ColorButtonClickHandler {
         int buttonColor = (int)button.getTag(R.string.tag_button_color);
         currentColorSelector.add(buttonColor, getShadesFrom(button));
         button.setTag(buttonStatusTag, ButtonStatus.ENABLED);
-        randomShadeButtonsState.setSelected(button);
+        shadeButtonsState.setSelected(button);
         selectButton(button);
     }
 

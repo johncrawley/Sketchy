@@ -59,9 +59,12 @@ public class KaleidoscopeHelper {
 
 
     public void setCenter(float x, float y){
+        System.out.println("default centre x,y :" + defaultCenterX + " " + defaultCenterY + " canvas width,height: " + kaleidoscopeDrawer.paintView.getWidth() + "," + kaleidoscopeDrawer.paintView.getHeight());
         this.centerX = (int) x;
         this.centerY = (int) y;
     }
+
+
 
     public int getCenterX(){
         return viewModel.isKaleidoscopeCentred ? defaultCenterX : centerX;

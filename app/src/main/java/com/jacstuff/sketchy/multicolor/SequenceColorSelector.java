@@ -5,7 +5,6 @@ import com.jacstuff.sketchy.viewmodel.ControlsHolder;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -16,18 +15,16 @@ public class SequenceColorSelector implements ColorSelector {
     private int currentIndex;
     private int resetIndex;
     private final Random random;
-
+    private final StrobeCalculator strobeCalculator;
 
     int sequenceMaxIndex;
     int sequenceMinIndex;
-
-    int direction = 1;
-    int changedDirectionCount = 0;
 
 
     public SequenceColorSelector(ControlsHolder viewModel){
         this.colorSequenceControls = viewModel.getColorSequenceControls();
         random = new Random(System.currentTimeMillis());
+        strobeCalculator = new StrobeCalculator(viewModel);
     }
 
 
@@ -52,6 +49,7 @@ public class SequenceColorSelector implements ColorSelector {
                 calculateNextRandomIndex();
                 break;
         }
+
         return colors.get(currentIndex);
     }
 
@@ -72,26 +70,14 @@ public class SequenceColorSelector implements ColorSelector {
             currentIndex = currentIndex == sequenceMaxIndex ?
                     sequenceMinIndex :
                     colorSequenceControls.doesRepeat ? sequenceMaxIndex : currentIndex;
+            return;
         }
         currentIndex -= colorSequenceControls.skippedShades;
     }
 
 
     private void calculateNextStrobeIndex(){
-        if((direction == 1 && isAtEndOfForwardsSequence())
-                || (direction == -1 && isAtEndOfBackwardsSequence())){
-            direction *= -1;
-            changedDirectionCount++;
-        }
-
-        if(!colorSequenceControls.doesRepeat
-                && direction == 1
-                && changedDirectionCount > 1
-                && currentIndex + colorSequenceControls.skippedShades > resetIndex){
-            currentIndex = resetIndex;
-            return;
-        }
-        currentIndex += direction * colorSequenceControls.skippedShades;
+        currentIndex = strobeCalculator.getNextStrobeIndex(currentIndex, sequenceMinIndex, sequenceMaxIndex);
     }
 
 
@@ -126,8 +112,7 @@ public class SequenceColorSelector implements ColorSelector {
     @Override
     public void reset(){
         currentIndex = resetIndex;
-        changedDirectionCount = 0;
-        direction = 1;
+        strobeCalculator.reset();
     }
 
 
@@ -139,6 +124,7 @@ public class SequenceColorSelector implements ColorSelector {
 
 
     public void setResetIndex(int resetValue){
+        strobeCalculator.setResetIndex(resetValue);
         this.resetIndex = resetValue;
     }
 
@@ -157,14 +143,14 @@ public class SequenceColorSelector implements ColorSelector {
     }
 
 
-    public int getMaxIndexOfSequence(int seekBarColorRangeMaximum, List<Integer> colorList){
+    public int getMaxIndexOfSequence(int seekBarColorRangeMaximum, List<?> colorList){
         int lastIndex = colorList.size() -1;
         int maxSequenceIndex = (int)((lastIndex / 100f) * seekBarColorRangeMaximum);
         return Math.max(1,maxSequenceIndex);
     }
 
 
-    public int getMinIndexOfSequence(int seekBarColorRangeMinimum, List<Integer> colorList){
+    public int getMinIndexOfSequence(int seekBarColorRangeMinimum, List<?> colorList){
         int lastIndex = colorList.size() -1;
         int minSequenceIndex = (int)((lastIndex / 100f) * seekBarColorRangeMinimum);
         return Math.min(colorList.size()-2, minSequenceIndex);
@@ -174,21 +160,6 @@ public class SequenceColorSelector implements ColorSelector {
     public int getCurrentIndex(){
         return currentIndex;
     }
-
-
-
-    @Override
-    public void nextPattern(){
-
-    }
-
-
-    @Override
-    public String getCurrentPatternLabel(){
-        return "";
-    }
-
-
 
 
     @Override

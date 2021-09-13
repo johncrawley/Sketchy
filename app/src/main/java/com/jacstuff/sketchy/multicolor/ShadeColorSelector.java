@@ -18,11 +18,13 @@ public class ShadeColorSelector implements ColorSelector {
     private final Random random;
     private final ColorSequenceControls colorSequenceControls;
     private final SequenceColorSelector sequenceColorSelector;
+    private final StrobeCalculator strobeCalculator;
 
     private int currentIndex = 0;
 
     public ShadeColorSelector(MainViewModel viewModel, SequenceColorSelector sequenceColorSelector){
         colorSequenceControls = viewModel.getColorSequenceControls();
+        strobeCalculator = new StrobeCalculator(viewModel);
         this. sequenceColorSelector = sequenceColorSelector;
         shadesMap = new HashMap<>(30);
         ids = new ArrayList<>(30);
@@ -95,23 +97,47 @@ public class ShadeColorSelector implements ColorSelector {
         return Color.BLACK;
     }
 
-    private int direction = 1;
 
     private int getNextStrobeShade(){
-        return Color.RED;
+        currentIndex = strobeCalculator.getNextStrobeIndex(currentIndex,
+                getMinIndexOfSequence(colorSequenceControls.colorSequenceMinPercentage, ids),
+                getMaxIndexOfSequence(colorSequenceControls.colorSequenceMaxPercentage, ids));
+
+        String key = ids.get(currentIndex);
+        List<Integer> shadesList =  shadesMap.get(key);
+
+        if(shadesList == null || doesKeyEqual(key, Color.BLACK)){
+            return Color.BLACK;
+        }
+        if(doesKeyEqual(key, Color.WHITE)){
+            return Color.WHITE;
+        }
+        int shadeIndex = getIndexFromPercentage(shadesList, colorSequenceControls.multiShadeBrightnessPercentage);
+        return shadesList.get(shadeIndex);
     }
 
 
-    public int getMinIndexOfSequence(int seekBarColorRangeMaximum, List<Integer> colorList){
-        int lastIndex = colorList.size() -1;
-        int minSequenceIndex = (int)((lastIndex / 100f) * seekBarColorRangeMaximum);
+    private boolean doesKeyEqual(String key, int color){
+        if(colorSequenceControls.isBlackAndWhitePreserved) {
+            return Integer.parseInt(key) == color;
+        }
+        return false;
+    }
+
+
+    private int getIndexFromPercentage(List<?> list, int percentage){
+        return (int)(((list.size()-1) / 100f)* percentage);
+    }
+
+
+    public int getMinIndexOfSequence(int seekBarColorRangeMinimum, List<?> colorList){
+        int minSequenceIndex = getIndexFromPercentage(colorList, seekBarColorRangeMinimum);
         return Math.min(colorList.size()-2, minSequenceIndex);
     }
 
 
-    public int getMaxIndexOfSequence(int seekBarColorRangeMaximum, List<Integer> colorList){
-        int lastIndex = colorList.size() -1;
-        int maxSequenceIndex = (int)((lastIndex / 100f) * seekBarColorRangeMaximum);
+    public int getMaxIndexOfSequence(int seekBarColorRangeMaximum, List<?> colorList){
+        int maxSequenceIndex = getIndexFromPercentage(colorList, seekBarColorRangeMaximum);
         return Math.max(1,maxSequenceIndex);
     }
 
@@ -136,10 +162,6 @@ public class ShadeColorSelector implements ColorSelector {
         assignOnlyColorToSequenceColorSelector();
     }
 
-    private void log(String msg){
-
-        System.out.println("ShadeColorSelector" + msg);
-    }
 
     private void assignOnlyColorToSequenceColorSelector(){
         if(ids.size() == 1){
@@ -147,11 +169,6 @@ public class ShadeColorSelector implements ColorSelector {
         }
     }
 
-
-    @Override
-    public String getCurrentPatternLabel(){
-        return "";
-    }
 
 
     @Override
@@ -167,10 +184,6 @@ public class ShadeColorSelector implements ColorSelector {
         //do nothing
     }
 
-    @Override
-    public void nextPattern(){
-        //do nothing
-    }
 
     @Override
     public void resetCurrentIndex(){

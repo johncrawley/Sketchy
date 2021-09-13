@@ -15,11 +15,6 @@ public class SingleColorSelector implements ColorSelector {
 
 
     @Override
-    public String getCurrentPatternLabel(){
-        return "";
-    }
-
-    @Override
     public int getNextColor() {
         return color;
     }
@@ -41,10 +36,6 @@ public class SingleColorSelector implements ColorSelector {
         //do nothing
     }
 
-    @Override
-    public void nextPattern(){
-        //do nothing
-    }
 
     @Override
     public void add(int id, List<Integer> shades){

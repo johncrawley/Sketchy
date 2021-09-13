@@ -12,8 +12,6 @@ public interface ColorSelector {
 
     void setColorList(int color);
 
-    void nextPattern();
-
     void add(int id, List<Integer> shades);
 
     void remove(int id);
@@ -22,7 +20,5 @@ public interface ColorSelector {
 
 
     int getNextColor();
-
-    String getCurrentPatternLabel();
 
 }
