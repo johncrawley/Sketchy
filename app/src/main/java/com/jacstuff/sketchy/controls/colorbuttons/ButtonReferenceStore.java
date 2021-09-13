@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class ButtonReferenceStore {
 
-    private Map<String, Integer> buttonReferences;
-    private int keyTag = R.string.tag_button_key;
+    private final Map<String, Integer> buttonReferences;
+    private final int keyTag = R.string.tag_button_key;
 
     public ButtonReferenceStore(){
         buttonReferences = new HashMap<>();

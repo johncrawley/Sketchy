@@ -139,7 +139,7 @@ public class ColorButtonLayoutCreator {
 
 
     private void addMultiColorShadeButtons(){
-        LinearLayout shadeLayout = createLayoutWithButtonsFrom(colors, ButtonType.MULTISHADE);
+        LinearLayout shadeLayout = createLayoutWithButtonsFrom(colors, ButtonType.MULTI_SHADE);
         shadeLayoutsMap.put(MULTI_SHADE_KEY, shadeLayout);
     }
 
@@ -179,7 +179,7 @@ public class ColorButtonLayoutCreator {
     private LinearLayout createShadeButton(final int color, ButtonType buttonType){
         String key = createColorKey(color, buttonType);
         Button button = createButton(color, buttonType, key);
-        if(buttonType == ButtonType.MULTISHADE){
+        if(buttonType == ButtonType.MULTI_SHADE){
             addMultiShadeDrawableTo(button, color);
         }
         else if(buttonType == ButtonType.RANDOM_SHADE){
