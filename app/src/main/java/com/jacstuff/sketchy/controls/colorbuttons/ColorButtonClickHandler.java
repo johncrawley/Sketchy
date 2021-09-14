@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.Button;
@@ -229,13 +230,13 @@ public class ColorButtonClickHandler {
            deselectShadeButton(button);
             return;
         }
-        selectRandomColorButton(button);
+        selectMultiShadeButton(button);
     }
 
 
     private void handleClickWhenMultiDisabled(Button button){
         if(!isEnabled(button)){
-            selectRandomColorButton(button);
+            selectMultiShadeButton(button);
         }
         shadeButtonsState.selectMulti();
         selectButtons(shadeButtonsState.getSelected());
@@ -270,8 +271,9 @@ public class ColorButtonClickHandler {
     }
 
 
-    private void selectRandomColorButton(Button button){
+    private void selectMultiShadeButton(Button button){
         int buttonColor = (int)button.getTag(R.string.tag_button_color);
+        System.out.println("ColorButtonClickHandler.selectMultiShadeButton : adding color " + buttonColor + " white: " + Color.WHITE + " black: " + Color.BLACK);
         currentColorSelector.add(buttonColor, getShadesFrom(button));
         button.setTag(buttonStatusTag, ButtonStatus.ENABLED);
         shadeButtonsState.setSelected(button);

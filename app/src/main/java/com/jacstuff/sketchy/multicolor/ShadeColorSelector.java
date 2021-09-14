@@ -53,13 +53,13 @@ public class ShadeColorSelector implements ColorSelector {
 
     private int getNextShadeForwards(){
         currentIndex = currentIndex >= ids.size() -1 ? 0 : currentIndex +1;
-        return getShade();
+        return getShadeFromCurrentIndexAtFixedBrightness();
     }
 
 
     private int getNextShadeBackwards(){
         currentIndex =  currentIndex <= 0 ? ids.size()-1 : currentIndex -1;
-        return getShade();
+        return getShadeFromCurrentIndexAtFixedBrightness();
     }
 
 
@@ -67,11 +67,8 @@ public class ShadeColorSelector implements ColorSelector {
         int oldIndex = currentIndex;
         while(currentIndex == oldIndex){
             currentIndex = random.nextInt(ids.size());
-
         }
-
         return getShadeFromCurrentIndexAtFixedBrightness();
-       // return getRandomShade();
     }
 
 
@@ -93,24 +90,11 @@ public class ShadeColorSelector implements ColorSelector {
     }
 
 
-    private int getShade(){
-        List<Integer> shadesList =  shadesMap.get(ids.get(currentIndex));
-        if(shadesList != null){
-
-            int shadeIndex = getIndexFromPercentage(shadesList, colorSequenceControls.multiShadeBrightnessPercentage);
-            return shadesList.get(shadeIndex);
-        }
-        return Color.BLACK;
-    }
-
-
     private int getNextStrobeShade(){
         currentIndex = strobeCalculator.getNextStrobeIndex(currentIndex,
                 getMinIndexOfSequence(colorSequenceControls.colorSequenceMinPercentage, ids),
                 getMaxIndexOfSequence(colorSequenceControls.colorSequenceMaxPercentage, ids));
 
-        String key = ids.get(currentIndex);
-        List<Integer> shadesList =  shadesMap.get(key);
         return getShadeFromCurrentIndexAtFixedBrightness();
     }
 

@@ -75,8 +75,19 @@ public class ColorButtonLayoutCreator {
 
 
     private void setupColorShadeCreator(){
-        colorShadeCreator = new ColorShadeCreator(15, 7);
-        colorShadeCreatorForSequences = new ColorShadeCreator(80, 2);
+
+        int numberOfSequenceShades  = getRes(R.integer.color_sequences_shade_number);
+        int shadeIncrement          = getRes(R.integer.color_sequences_step_size);
+        colorShadeCreatorForSequences = new ColorShadeCreator(numberOfSequenceShades, shadeIncrement);
+
+        int numberOfSequenceShadesForButtons = getRes(R.integer.color_sequences_for_buttons_shade_number);
+        int shadeIncrementForButtons         = getRes(R.integer.color_sequences_for_buttons_step_size);
+        colorShadeCreator = new ColorShadeCreator(numberOfSequenceShadesForButtons, shadeIncrementForButtons);
+    }
+
+
+    private int getRes(int resId){
+        return activity.getResources().getInteger(resId);
     }
 
 

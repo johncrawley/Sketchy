@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <integer name="color_sequences_shade_number">160</integer>
+    <integer name="color_sequences_step_size">1</integer>
+    <integer name="color_sequences_for_buttons_shade_number">20</integer>
+    <integer name="color_sequences_for_buttons_step_size">7</integer>
     <integer name="brush_size_min_default">2</integer>
     <integer name="brush_size_max_default">380</integer>
     <integer name="color_transparency_max">254</integer>
@@ -10,7 +14,7 @@
     <integer name="seek_bar_percentage_max">100</integer>
     <integer name="seek_bar_multi_shade_brightness_default">50</integer>
     <integer name="seek_bar_multi_shade_brightness_max">100</integer>
-    <integer name="seek_bar_color_sequence_steps_max">10</integer>
+    <integer name="seek_bar_color_sequence_steps_max">25</integer>
     <integer name="seek_bar_color_sequence_steps_default">0</integer>
     <integer name="brush_size_default">150</integer>
     <integer name="blur_radius_min_default">1</integer>
