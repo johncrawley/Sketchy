@@ -20,9 +20,18 @@ public class SequenceColorSelector implements ColorSelector {
     int sequenceMaxIndex;
     int sequenceMinIndex;
 
+    private final boolean isUsingBrightnessRange;
+
 
     public SequenceColorSelector(ControlsHolder viewModel){
+        this(viewModel, false);
+    }
+
+
+
+    public SequenceColorSelector(ControlsHolder viewModel, boolean isUsingBrightnessRange){
         this.colorSequenceControls = viewModel.getColorSequenceControls();
+        this.isUsingBrightnessRange = isUsingBrightnessRange;
         random = new Random(System.currentTimeMillis());
         strobeCalculator = new StrobeCalculator(viewModel);
     }
@@ -133,6 +142,13 @@ public class SequenceColorSelector implements ColorSelector {
         if(colors == null){
             return;
         }
+        if(!isUsingBrightnessRange){
+            sequenceMaxIndex = colors.size() -1;
+            sequenceMinIndex = 0;
+            currentIndex = resetIndex;
+            return;
+        }
+
         sequenceMaxIndex = getMaxIndexOfSequence(colorSequenceControls.colorSequenceMaxPercentage, colors);
         int minIndex = getMinIndexOfSequence(colorSequenceControls.colorSequenceMinPercentage, colors);
         sequenceMinIndex = minIndex < sequenceMaxIndex ? minIndex : sequenceMaxIndex -1;

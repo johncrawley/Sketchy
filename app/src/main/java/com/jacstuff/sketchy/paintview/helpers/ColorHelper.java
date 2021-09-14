@@ -15,14 +15,14 @@ public class ColorHelper {
     private InfinityModeColorBlender infinityModeColorBlender;
     private Paint paint, shadowPaint;
     private final KaleidoscopeHelper kaleidoscopeHelper;
-    private final SequenceColorSelector sequenceColorSelector;
+    private final SequenceColorSelector allColorsSequenceSelector;
     private final ShadeColorSelector shadeColorSelector;
 
     public ColorHelper(MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
         this.viewModel = viewModel;
         this.kaleidoscopeHelper = kaleidoscopeHelper;
-        sequenceColorSelector = new SequenceColorSelector(viewModel);
-        shadeColorSelector = new ShadeColorSelector(viewModel, sequenceColorSelector);
+        allColorsSequenceSelector = new SequenceColorSelector(viewModel);
+        shadeColorSelector = new ShadeColorSelector(viewModel);
     }
 
 
@@ -42,8 +42,8 @@ public class ColorHelper {
         }
     }
 
-    public SequenceColorSelector getSequenceColorSelector(){
-        return this.sequenceColorSelector;
+    public SequenceColorSelector getAllColorsSequenceSelector(){
+        return this.allColorsSequenceSelector;
     }
 
 

@@ -12,6 +12,8 @@ public interface ColorSelector {
 
     void setColorList(int color);
 
+    void updateRangeIndexes();
+
     void add(int id, List<Integer> shades);
 
     void remove(int id);

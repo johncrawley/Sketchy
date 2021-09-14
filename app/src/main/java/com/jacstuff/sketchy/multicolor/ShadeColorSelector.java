@@ -19,13 +19,13 @@ public class ShadeColorSelector implements ColorSelector {
     private final ColorSequenceControls colorSequenceControls;
     private final SequenceColorSelector sequenceColorSelector;
     private final StrobeCalculator strobeCalculator;
-
     private int currentIndex = 0;
 
-    public ShadeColorSelector(MainViewModel viewModel, SequenceColorSelector sequenceColorSelector){
+
+    public ShadeColorSelector(MainViewModel viewModel){
         colorSequenceControls = viewModel.getColorSequenceControls();
         strobeCalculator = new StrobeCalculator(viewModel);
-        this. sequenceColorSelector = sequenceColorSelector;
+        this. sequenceColorSelector = new SequenceColorSelector(viewModel, true);
         shadesMap = new HashMap<>(30);
         ids = new ArrayList<>(30);
         random = new Random(System.currentTimeMillis());
@@ -69,19 +69,24 @@ public class ShadeColorSelector implements ColorSelector {
             currentIndex = random.nextInt(ids.size());
 
         }
-        return getRandomShade();
+
+        return getShadeFromCurrentIndexAtFixedBrightness();
+       // return getRandomShade();
     }
 
 
     private int getRandomShade(){
+
         String shadeListKey = ids.get(currentIndex);
         List<Integer> shadesList =  shadesMap.get(shadeListKey);
-
         if(shadesList == null){
             return Color.BLACK;
         }
-        int minIndex = getMinIndexOfSequence(colorSequenceControls.colorSequenceMinPercentage, shadesList);
-        int maxIndex = getMaxIndexOfSequence(colorSequenceControls.colorSequenceMaxPercentage, shadesList);
+        // if we wanted to control multi-shade brightness with range controls then use this
+        //int minIndex = getMinIndexOfSequence(colorSequenceControls.colorSequenceMinPercentage, shadesList);
+        //int maxIndex = getMaxIndexOfSequence(colorSequenceControls.colorSequenceMaxPercentage, shadesList);
+        int minIndex = 0;
+        int maxIndex = shadesList.size() -1;
         int bound = Math.max(0, (maxIndex - minIndex)) + 1;
         int randomIndex = minIndex + random.nextInt(bound);
         return shadesList.get(randomIndex);
@@ -106,12 +111,13 @@ public class ShadeColorSelector implements ColorSelector {
 
         String key = ids.get(currentIndex);
         List<Integer> shadesList =  shadesMap.get(key);
-        return getShadeFrom(shadesList, key);
+        return getShadeFromCurrentIndexAtFixedBrightness();
     }
 
 
-
-    private int getShadeFrom(List<Integer> shadesList, String shadeListKey){
+    private int getShadeFromCurrentIndexAtFixedBrightness(){
+        String shadeListKey = ids.get(currentIndex);
+        List<Integer> shadesList =  shadesMap.get(shadeListKey);
         if(shadesList == null || doesKeyEqual(shadeListKey, Color.BLACK)){
             return Color.BLACK;
         }
@@ -120,7 +126,6 @@ public class ShadeColorSelector implements ColorSelector {
         }
         int shadeIndex = getIndexFromPercentage(shadesList, colorSequenceControls.multiShadeBrightnessPercentage);
         return shadesList.get(shadeIndex);
-
     }
 
 
@@ -176,6 +181,11 @@ public class ShadeColorSelector implements ColorSelector {
         }
     }
 
+
+    @Override
+    public void updateRangeIndexes(){
+       sequenceColorSelector.updateRangeIndexes();
+    }
 
 
     @Override

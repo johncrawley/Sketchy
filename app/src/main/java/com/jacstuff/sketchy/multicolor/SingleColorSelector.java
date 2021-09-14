@@ -20,6 +20,12 @@ public class SingleColorSelector implements ColorSelector {
     }
 
 
+    @Override
+    public void updateRangeIndexes() {
+        //do nothing
+    }
+
+
 
     @Override
     public void resetCurrentIndex(){

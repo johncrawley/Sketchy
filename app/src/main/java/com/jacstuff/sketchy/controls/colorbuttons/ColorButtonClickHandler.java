@@ -67,7 +67,7 @@ public class ColorButtonClickHandler {
         colorSelectors = new HashMap<>();
         colorSelectors.put(ButtonType.COLOR, singleSelector);
         colorSelectors.put(ButtonType.SHADE, singleSelector);
-        colorSelectors.put(ButtonType.MULTICOLOR, colorHelper.getSequenceColorSelector());
+        colorSelectors.put(ButtonType.MULTICOLOR, colorHelper.getAllColorsSequenceSelector());
         colorSelectors.put(ButtonType.MULTI_SHADE, colorHelper.getShadeColorSelector());
     }
 
