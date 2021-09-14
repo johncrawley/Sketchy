@@ -40,13 +40,25 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
         <include
+            android:id="@+id/multiShadeBrightnessSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/seek_bar_multi_shade_brightness" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
+        <include
             android:id="@+id/colorSequenceMinIndexSeekBarInclude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             layout="@layout/seek_bar_color_sequence_min_index" />
     </LinearLayout>
-
 
 
     <LinearLayout

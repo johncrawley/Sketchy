@@ -91,8 +91,9 @@ public class ShadeColorSelector implements ColorSelector {
     private int getShade(){
         List<Integer> shadesList =  shadesMap.get(ids.get(currentIndex));
         if(shadesList != null){
-            int minIndex = getMinIndexOfSequence(colorSequenceControls.colorSequenceMinPercentage, shadesList);
-            return shadesList.get(minIndex);
+
+            int shadeIndex = getIndexFromPercentage(shadesList, colorSequenceControls.multiShadeBrightnessPercentage);
+            return shadesList.get(shadeIndex);
         }
         return Color.BLACK;
     }
@@ -105,15 +106,21 @@ public class ShadeColorSelector implements ColorSelector {
 
         String key = ids.get(currentIndex);
         List<Integer> shadesList =  shadesMap.get(key);
+        return getShadeFrom(shadesList, key);
+    }
 
-        if(shadesList == null || doesKeyEqual(key, Color.BLACK)){
+
+
+    private int getShadeFrom(List<Integer> shadesList, String shadeListKey){
+        if(shadesList == null || doesKeyEqual(shadeListKey, Color.BLACK)){
             return Color.BLACK;
         }
-        if(doesKeyEqual(key, Color.WHITE)){
+        if(doesKeyEqual(shadeListKey, Color.WHITE)){
             return Color.WHITE;
         }
         int shadeIndex = getIndexFromPercentage(shadesList, colorSequenceControls.multiShadeBrightnessPercentage);
         return shadesList.get(shadeIndex);
+
     }
 
 

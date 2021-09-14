@@ -8,6 +8,8 @@
     <integer name="seek_bar_color_sequence_max_range_default">100</integer>
     <integer name="seek_bar_color_sequence_min_range_default">0</integer>
     <integer name="seek_bar_percentage_max">100</integer>
+    <integer name="seek_bar_multi_shade_brightness_default">50</integer>
+    <integer name="seek_bar_multi_shade_brightness_max">100</integer>
     <integer name="seek_bar_color_sequence_steps_max">10</integer>
     <integer name="seek_bar_color_sequence_steps_default">0</integer>
     <integer name="brush_size_default">150</integer>

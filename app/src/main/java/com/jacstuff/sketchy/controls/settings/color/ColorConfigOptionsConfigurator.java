@@ -35,6 +35,16 @@ public class ColorConfigOptionsConfigurator  extends AbstractButtonConfigurator<
         SequenceColorSelector sequenceColorSelector = paintHelperManager.getColorHelper().getSequenceColorSelector();
         new ColorTransparencySeekBar(activity, paintView);
 
+
+        new SimpleSeekBar(activity,
+                R.id.multiShadeBrightnessSeekBar,
+                R.integer.seek_bar_multi_shade_brightness_default,
+                progress -> {
+                    viewModel.getColorSequenceControls().multiShadeBrightnessPercentage = Math.max(1, progress);
+                    //sequenceColorSelector.updateRangeIndexes();
+                });
+
+        
        new SimpleSeekBar(activity,
                         R.id.colorSequenceMaxIndexSeekBar,
                         R.integer.seek_bar_color_sequence_max_range_default,
