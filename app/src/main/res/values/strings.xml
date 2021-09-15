@@ -170,9 +170,10 @@
     <string name="size_sequence_max_seekbar_label">Maximum Width</string>
     <string name="seekbar_label_color_transparency">Transparency</string>
     <string name="seekbar_label_color_multi_shade_brightness">Multi-shade brightness</string>
-    <string name="seekbar_label_color_sequence_max_index">Sequence Range Maximum</string>
-    <string name="seekbar_label_color_sequence_minimum_index">Sequence Range Minimum</string>
-    <string name="seekbar_label_color_sequence_steps_index">Sequence Steps</string>
+    <string name="single_color_sequence_controls_label">Single Color Sequence Brightness Range</string>
+    <string name="seekbar_label_color_sequence_max_index">Maximum</string>
+    <string name="seekbar_label_color_sequence_minimum_index">Minimum</string>
+    <string name="seekbar_label_color_sequence_steps_index">Gradation</string>
     <string name="seekbar_label_color_sequence_starting_index">Sequence Starting Index</string>
     <string name="size_sequence_increments_seekbar_label">Step Size</string>
     <string name="blur_intensity_seekbar_label">Blur Intensity</string>

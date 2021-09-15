@@ -49,6 +49,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/single_color_options_label_padding_top"
+        android:paddingHorizontal="@dimen/spinner_layout_horizontal_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spinner_label_margin_end"
+            android:text="@string/single_color_sequence_controls_label"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
         <include
             android:id="@+id/colorSequenceMinIndexSeekBarInclude"
