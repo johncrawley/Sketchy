@@ -6,12 +6,10 @@
     android:orientation="vertical"
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/menu_padding_top"
+    android:paddingBottom="@dimen/menu_padding_bottom"
     android:layout_width="match_parent"
-    android:clickable="true"
-    android:focusable="true">
-
-
-
+    android:focusable="true"
+    android:clickable="true">
 
 
     <LinearLayout
@@ -88,16 +86,16 @@
 
 
     <LinearLayout
-        android:id="@+id/kaleidoscopeSettingsLayout"
+        android:id="@+id/colorSequenceRepeatResetLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:paddingTop="@dimen/menu_seekbar_padding_top"
         android:paddingBottom="@dimen/menu_seekbar_padding_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/colorSequenceRepeatSwitch"

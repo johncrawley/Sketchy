@@ -17,17 +17,16 @@ public class ShadeColorSelector implements ColorSelector {
     private final List<String> ids;
     private final Random random;
     private final ColorSequenceControls colorSequenceControls;
-    private final SequenceColorSelector sequenceColorSelector;
+    private final SequenceColorSelector colorSelectorForSingleColorMultiShades;
     private final StrobeCalculator strobeCalculatorForMultiColor;
-    private final SingleColorStrobeCalculator singleColorStrobeCalculator;
     private int currentIndex = 0;
+    private boolean isAtLastIndex;
 
 
     public ShadeColorSelector(MainViewModel viewModel){
         colorSequenceControls = viewModel.getColorSequenceControls();
-        singleColorStrobeCalculator = new SingleColorStrobeCalculator(viewModel);
         strobeCalculatorForMultiColor = new StrobeCalculator(viewModel);
-        this. sequenceColorSelector = new SequenceColorSelector(viewModel, true, true);
+        this.colorSelectorForSingleColorMultiShades = new SequenceColorSelector(viewModel, true, true);
         shadesMap = new HashMap<>(30);
         ids = new ArrayList<>(30);
         random = new Random(System.currentTimeMillis());
@@ -37,7 +36,7 @@ public class ShadeColorSelector implements ColorSelector {
     @Override
     public int getNextColor(){
         if(ids.size() == 1){
-            return sequenceColorSelector.getNextColor();
+            return colorSelectorForSingleColorMultiShades.getNextColor();
         }
         switch(colorSequenceControls.colorSequenceType){
             case FORWARDS:
@@ -54,13 +53,17 @@ public class ShadeColorSelector implements ColorSelector {
 
 
     private int getNextShadeForwards(){
-        currentIndex = currentIndex >= ids.size() -1 ? 0 : currentIndex +1;
+        int firstIndex = 0;
+        int lastIndex = ids.size() -1;
+        currentIndex = currentIndex >= lastIndex ? firstIndex : currentIndex + 1;
         return getShadeFromCurrentIndexAtFixedBrightness();
     }
 
 
     private int getNextShadeBackwards(){
-        currentIndex =  currentIndex <= 0 ? ids.size()-1 : currentIndex -1;
+        int lastIndex = 0;
+        int firstIndex = ids.size() -1;
+        currentIndex =  currentIndex <= lastIndex ? firstIndex : currentIndex - 1;
         return getShadeFromCurrentIndexAtFixedBrightness();
     }
 
@@ -69,6 +72,7 @@ public class ShadeColorSelector implements ColorSelector {
         int oldIndex = currentIndex;
         while(currentIndex == oldIndex){
             currentIndex = random.nextInt(ids.size());
+            isAtLastIndex = true;
         }
         return getShadeFromCurrentIndexAtFixedBrightness();
     }
@@ -125,18 +129,6 @@ public class ShadeColorSelector implements ColorSelector {
     }
 
 
-    public int getMinIndexOfSequence(int seekBarColorRangeMinimum, List<?> colorList){
-        int minSequenceIndex = getIndexFromPercentage(colorList, seekBarColorRangeMinimum);
-        return Math.min(colorList.size()-2, minSequenceIndex);
-    }
-
-
-    public int getMaxIndexOfSequence(int seekBarColorRangeMaximum, List<?> colorList){
-        int maxSequenceIndex = getIndexFromPercentage(colorList, seekBarColorRangeMaximum);
-        return Math.max(1,maxSequenceIndex);
-    }
-
-
     @Override
     public void add(int id, List<Integer> shades){
         String idStr = Integer.toString(id);
@@ -160,14 +152,14 @@ public class ShadeColorSelector implements ColorSelector {
 
     private void assignOnlyColorToSequenceColorSelector(){
         if(ids.size() == 1){
-            sequenceColorSelector.setColorList(shadesMap.get(ids.get(0)));
+            colorSelectorForSingleColorMultiShades.setColorList(shadesMap.get(ids.get(0)));
         }
     }
 
 
     @Override
     public void updateRangeIndexes(){
-       sequenceColorSelector.updateRangeIndexes();
+       colorSelectorForSingleColorMultiShades.updateRangeIndexes();
     }
 
 
@@ -187,7 +179,10 @@ public class ShadeColorSelector implements ColorSelector {
 
     @Override
     public void resetCurrentIndex(){
-        //do nothing
+        if(colorSequenceControls.isResetOnRelease || isAtLastIndex){
+            colorSelectorForSingleColorMultiShades.resetCurrentIndex();
+            currentIndex = 0;
+        }
     }
 
 

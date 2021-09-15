@@ -39,6 +39,7 @@
     <dimen name="menu_seekbar_padding_bottom">2dp</dimen>
     <dimen name="menu_seekbar_padding_top">8dp</dimen>
     <dimen name="menu_padding_top">8dp</dimen>
+    <dimen name="menu_padding_bottom">12dp</dimen>
     <dimen name="text_spacing_seekbar_padding_vertical">4dp</dimen>
     <dimen name="style_spinner_margin_vertical">8dp</dimen>
     <dimen name="spinner_label_margin_end">8dp</dimen>

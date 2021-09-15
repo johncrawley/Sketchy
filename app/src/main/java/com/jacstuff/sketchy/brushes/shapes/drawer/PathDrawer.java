@@ -60,6 +60,7 @@ public class PathDrawer extends BasicDrawer{
     @Override
     public void up(float x, float y, Paint paint) {
         paintView.disablePreviewLayer();
+        paintHelperManager.getColorHelper().resetCurrentIndex();
         kaleidoscopePathDrawer.resetPreviousPoint();
         brush.onTouchUp(x, y, paint);
         paintView.invalidate();

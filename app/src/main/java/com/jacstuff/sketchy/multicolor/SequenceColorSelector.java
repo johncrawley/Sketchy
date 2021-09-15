@@ -119,7 +119,7 @@ public class SequenceColorSelector implements ColorSelector {
 
     @Override
     public void resetCurrentIndex(){
-
+        reset();
     }
 
 

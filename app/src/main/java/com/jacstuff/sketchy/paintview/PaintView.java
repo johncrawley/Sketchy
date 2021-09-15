@@ -303,20 +303,12 @@ public class PaintView extends View {
         if(isDragBrushWithTouchMoveOrUp(event)){
             return;
         }
-        resetPatternIndexOnTouchUp(event);
         paintHelperManager.getColorHelper().assignColors();
     }
 
 
     private void assignGradient(MotionEvent event){
         paintHelperManager.getGradientHelper().assignGradient(event.getX(), event.getY(), viewModel.color, viewModel.previousColor);
-    }
-
-
-    private void resetPatternIndexOnTouchUp(MotionEvent event){
-        if(event.getAction() == MotionEvent.ACTION_UP){
-            paintHelperManager.getColorHelper().resetCurrentIndex();
-        }
     }
 
 

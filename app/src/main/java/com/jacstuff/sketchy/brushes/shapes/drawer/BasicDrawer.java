@@ -46,6 +46,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
 
     @Override
     public void up(float x, float y, Paint paint) {
+        paintHelperManager.getColorHelper().resetCurrentIndex();
         paintView.disablePreviewLayer();
         paintView.invalidate();
         paintView.pushHistory();
