@@ -18,14 +18,16 @@ public class ShadeColorSelector implements ColorSelector {
     private final Random random;
     private final ColorSequenceControls colorSequenceControls;
     private final SequenceColorSelector sequenceColorSelector;
-    private final StrobeCalculator strobeCalculator;
+    private final StrobeCalculator strobeCalculatorForMultiColor;
+    private final SingleColorStrobeCalculator singleColorStrobeCalculator;
     private int currentIndex = 0;
 
 
     public ShadeColorSelector(MainViewModel viewModel){
         colorSequenceControls = viewModel.getColorSequenceControls();
-        strobeCalculator = new StrobeCalculator(viewModel);
-        this. sequenceColorSelector = new SequenceColorSelector(viewModel, true);
+        singleColorStrobeCalculator = new SingleColorStrobeCalculator(viewModel);
+        strobeCalculatorForMultiColor = new StrobeCalculator(viewModel);
+        this. sequenceColorSelector = new SequenceColorSelector(viewModel, true, true);
         shadesMap = new HashMap<>(30);
         ids = new ArrayList<>(30);
         random = new Random(System.currentTimeMillis());
@@ -91,10 +93,7 @@ public class ShadeColorSelector implements ColorSelector {
 
 
     private int getNextStrobeShade(){
-        currentIndex = strobeCalculator.getNextStrobeIndex(currentIndex,
-                getMinIndexOfSequence(colorSequenceControls.colorSequenceMinPercentage, ids),
-                getMaxIndexOfSequence(colorSequenceControls.colorSequenceMaxPercentage, ids));
-
+        currentIndex = strobeCalculatorForMultiColor.getNextStrobeIndex(currentIndex, ids.size()-1);
         return getShadeFromCurrentIndexAtFixedBrightness();
     }
 

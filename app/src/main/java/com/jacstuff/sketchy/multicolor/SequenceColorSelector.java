@@ -24,16 +24,28 @@ public class SequenceColorSelector implements ColorSelector {
 
 
     public SequenceColorSelector(ControlsHolder viewModel){
-        this(viewModel, false);
+        this(viewModel, false, false);
     }
 
+    private boolean isForSingleColor = false;
 
+    private int getIncrement(){
+        return isForSingleColor ? colorSequenceControls.skippedShades : 1;
+    }
 
     public SequenceColorSelector(ControlsHolder viewModel, boolean isUsingBrightnessRange){
         this.colorSequenceControls = viewModel.getColorSequenceControls();
         this.isUsingBrightnessRange = isUsingBrightnessRange;
         random = new Random(System.currentTimeMillis());
         strobeCalculator = new StrobeCalculator(viewModel);
+    }
+
+    public SequenceColorSelector(ControlsHolder viewModel, boolean isUsingBrightnessRange, boolean isForSingleColor){
+        this.colorSequenceControls = viewModel.getColorSequenceControls();
+        this.isUsingBrightnessRange = isUsingBrightnessRange;
+        random = new Random(System.currentTimeMillis());
+        this.isForSingleColor = isForSingleColor;
+        strobeCalculator =  isForSingleColor ? new SingleColorStrobeCalculator(viewModel) : new StrobeCalculator(viewModel);
     }
 
 
@@ -70,7 +82,7 @@ public class SequenceColorSelector implements ColorSelector {
                     colorSequenceControls.doesRepeat ? sequenceMinIndex : sequenceMaxIndex;
             return;
         }
-       currentIndex += colorSequenceControls.skippedShades;
+       currentIndex += getIncrement();
     }
 
 
@@ -81,7 +93,7 @@ public class SequenceColorSelector implements ColorSelector {
                     colorSequenceControls.doesRepeat ? sequenceMaxIndex : currentIndex;
             return;
         }
-        currentIndex -= colorSequenceControls.skippedShades;
+        currentIndex -= getIncrement();
     }
 
 
@@ -96,12 +108,12 @@ public class SequenceColorSelector implements ColorSelector {
 
 
     private boolean isAtEndOfForwardsSequence(){
-        return currentIndex + colorSequenceControls.skippedShades > sequenceMaxIndex;
+        return currentIndex + getIncrement() > sequenceMaxIndex;
     }
 
 
     private boolean isAtEndOfBackwardsSequence(){
-        return currentIndex - colorSequenceControls.skippedShades < sequenceMinIndex;
+        return currentIndex - getIncrement() < sequenceMinIndex;
     }
 
 

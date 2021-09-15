@@ -3,20 +3,23 @@ package com.jacstuff.sketchy.multicolor;
 import com.jacstuff.sketchy.viewmodel.ControlsHolder;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
+
 public class StrobeCalculator {
 
     private final ColorSequenceControls colorSequenceControls;
     private int direction = 1;
     private int changedDirectionCount = 0;
     private int resetIndex;
+    boolean isUsingVariableIncrement = false;
 
 
     public StrobeCalculator(ControlsHolder viewModel){
         this.colorSequenceControls = viewModel.getColorSequenceControls();
     }
 
-    private void log(String msg){
-        System.out.println("StrobeCalculator:" +  msg);
+
+    private int getIncrement(){
+        return isUsingVariableIncrement ? colorSequenceControls.skippedShades : 1;
     }
 
 
@@ -25,7 +28,7 @@ public class StrobeCalculator {
                 || (direction == -1 && isAtEndOfBackwardsSequence(currentIndex, sequenceMinIndex))){
             direction *= -1;
             changedDirectionCount++;
-            if(colorSequenceControls.skippedShades > (sequenceMaxIndex - sequenceMinIndex)){
+            if(getIncrement() > (sequenceMaxIndex - sequenceMinIndex)){
                 return currentIndex == sequenceMaxIndex ? sequenceMinIndex : sequenceMaxIndex;
             }
         }
@@ -33,11 +36,16 @@ public class StrobeCalculator {
         if(!colorSequenceControls.doesRepeat
                 && direction == 1
                 && changedDirectionCount > 1
-                && currentIndex + colorSequenceControls.skippedShades > resetIndex){
+                && currentIndex + getIncrement() > resetIndex){
             return resetIndex;
         }
-        int amendedValue = currentIndex + (direction * colorSequenceControls.skippedShades);
+        int amendedValue = currentIndex + (direction * getIncrement());
         return Math.min(sequenceMaxIndex, Math.max(sequenceMinIndex, amendedValue));
+    }
+
+
+    public int getNextStrobeIndex(int currentIndex, int lastIndex){
+        return getNextStrobeIndex(currentIndex, 0, lastIndex);
     }
 
 
@@ -52,12 +60,12 @@ public class StrobeCalculator {
 
 
     private boolean isAtEndOfForwardsSequence(int currentIndex, int sequenceMaxIndex){
-        return currentIndex + colorSequenceControls.skippedShades > sequenceMaxIndex;
+        return currentIndex + getIncrement() > sequenceMaxIndex;
     }
 
 
     private boolean isAtEndOfBackwardsSequence(int currentIndex, int sequenceMinIndex){
-        return currentIndex - colorSequenceControls.skippedShades < sequenceMinIndex;
+        return currentIndex - getIncrement() < sequenceMinIndex;
     }
 
 }
