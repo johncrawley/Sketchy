@@ -40,7 +40,8 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
         buttonConfig.add(R.id.kaleidoButton,   "K: 1",                      R.id.includeKaleidoscopeControls);
         buttonConfig.add(R.id.sizeSequenceButton, R.drawable.button_size_sequence_stationary,  R.id.includeSizeSequenceControls);
 
-        buttonConfig.setParentLayout(R.id.colorButtonGroup);
+
+        buttonConfig.setParentLayout(activity.getColorButtonLayoutCreator().getMultiShadesLayout());
         buttonConfig.add(R.id.colorConfigButton, R.drawable.button_color_config, R.id.includeColorConfigControls, activity.getColorButtonLayoutParams());
 
         buttonConfig.setupClickHandler();

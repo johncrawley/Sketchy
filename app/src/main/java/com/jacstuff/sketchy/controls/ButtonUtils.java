@@ -74,8 +74,9 @@ public class ButtonUtils {
     }
 
 
-    public LinearLayout createWrappedButton(int id, int backgroundId, ButtonLayoutParams customButtonLayoutParams){
+    public LinearLayout createWrappedButton(int id, int backgroundId, ButtonLayoutParams customButtonLayoutParams, View.OnClickListener clickListener){
         Button button = createButton(id, backgroundId, customButtonLayoutParams);
+        button.setOnClickListener(clickListener);
         return wrapInMarginLayout(customButtonLayoutParams, button);
     }
 

@@ -68,7 +68,13 @@ public class ButtonConfigHandler<T>{
 
     public void add(int id, int drawableId,  T action, ButtonLayoutParams buttonLayoutParams ){
         add(id, action);
-        linearLayout.addView(buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams));
+        LinearLayout wrappedButton = buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams, this::handleClick);
+        linearLayout.addView(wrappedButton);
+    }
+
+
+    public void setParentLayout(LinearLayout linearLayout){
+        this.linearLayout = linearLayout;
     }
 
 

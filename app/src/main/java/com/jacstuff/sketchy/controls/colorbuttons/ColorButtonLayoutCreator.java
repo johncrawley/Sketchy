@@ -27,14 +27,11 @@ public class ColorButtonLayoutCreator {
     private final List<Integer> colors;
     private final Map<String, LinearLayout> shadeLayoutsMap = new HashMap<>();
     private final String MULTI_SHADE_KEY = "multi shade key";
-    private final String RANDOM_SHADE_KEY = "random shade key";
     private final ButtonLayoutParams buttonLayoutParams;
     private final String defaultColor;
     private final ButtonUtils buttonUtils;
-    private final ButtonReferenceStore buttonReferenceStore;
     private final MainActivity activity;
     private final MultiShadeButtonIconDrawer multiShadeButtonIconDrawer;
-    //private final RandomShadeButtonIconDrawer randomShadeButtonIconDrawer;
 
 
     public ColorButtonLayoutCreator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, final List<Integer> colors){
@@ -42,8 +39,6 @@ public class ColorButtonLayoutCreator {
         this.activity = mainActivity;
         defaultColor = mainActivity.getString(R.string.default_color);
         multiShadeButtonIconDrawer = new MultiShadeButtonIconDrawer(activity);
-        //randomShadeButtonIconDrawer = new RandomShadeButtonIconDrawer(activity);
-        this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         setupColorShadeCreator();
         this.buttonLayoutParams = buttonLayoutParams;
         this.colors = colors;
@@ -61,6 +56,11 @@ public class ColorButtonLayoutCreator {
 
     public Map<String, LinearLayout> getShadeLayoutsMap (){
         return this.shadeLayoutsMap;
+    }
+
+
+    public LinearLayout getMultiShadesLayout(){
+        return shadeLayoutsMap.get(MULTI_SHADE_KEY);
     }
 
 
@@ -96,9 +96,7 @@ public class ColorButtonLayoutCreator {
             addColorAndShadeButtons(color);
         }
         addMultiColorButton();
-       // addRandomButton();
         addMultiColorShadeButtons();
-        addRandomShadeButtons();
     }
 
 
@@ -118,46 +116,10 @@ public class ColorButtonLayoutCreator {
     }
 
 
-    private void addRandomButton(){
-        Button button = createGenericColorButton(ButtonType.RANDOM_COLOR, RANDOM_SHADE_KEY);
-        button.setBackgroundResource(R.drawable.random_color_button);
-        buttonUtils.putButtonInLayoutAndAddToList(button, buttonLayoutParams, colorButtonLayouts);
-    }
-
-
-/*
-    private void addConfigButton(){
-        Button button = createGenericColorButton(ButtonType.RANDOM_COLOR, RANDOM_SHADE_KEY);
-        button.setBackgroundResource(android.R.drawable.ic_menu_manage);
-        buttonUtils.putButtonInLayoutAndAddToList(button, buttonLayoutParams, colorButtonLayouts);
-        button.setOnClickListener(this::handleColorConfigClick);
-
-    }
-
-
- */
-    /*
-    private void handleColorConfigClick(View view){
-        int viewId = view.getId();
-        buttonUtils.switchSelection(view.getId(), buttonIds);
-
-        buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
-        viewModelHelper.saveRecentClick(buttonCategory, viewId);
-        assignBackgroundAndTextToParentButtonFrom(view);
-    }
-
-     */
-
-
     private void addMultiColorShadeButtons(){
         LinearLayout shadeLayout = createLayoutWithButtonsFrom(colors, ButtonType.MULTI_SHADE);
+        shadeLayout.setId(R.id.multiShadeLayout);
         shadeLayoutsMap.put(MULTI_SHADE_KEY, shadeLayout);
-    }
-
-
-    private void addRandomShadeButtons(){
-        LinearLayout shadeLayout = createLayoutWithButtonsFrom(colors, ButtonType.RANDOM_SHADE);
-        shadeLayoutsMap.put(RANDOM_SHADE_KEY, shadeLayout);
     }
 
 
@@ -193,9 +155,6 @@ public class ColorButtonLayoutCreator {
         if(buttonType == ButtonType.MULTI_SHADE){
             addMultiShadeDrawableTo(button, color);
         }
-        else if(buttonType == ButtonType.RANDOM_SHADE){
-            addRandomShadeDrawableTo(button, color);
-        }
         return buttonUtils.wrapInMarginLayout(buttonLayoutParams, button);
     }
 
@@ -203,11 +162,6 @@ public class ColorButtonLayoutCreator {
     private void addMultiShadeDrawableTo(Button button, final int color){
         final List<Integer> shades = multiColorShades.get(color);
         multiShadeButtonIconDrawer.drawBackgroundOf(button, shades);
-    }
-
-
-    private void addRandomShadeDrawableTo(Button button, final int color){
-      //  randomShadeButtonIconDrawer.drawBackgroundOf(button, color);
     }
 
 
@@ -244,7 +198,7 @@ public class ColorButtonLayoutCreator {
         button.setTag(R.string.tag_button_key, key);
         button.setTag(R.string.tag_button_category, ButtonCategory.COLOR_SELECTION);
         buttonUtils.setStandardWidthOn(button);
-        buttonReferenceStore.add(button);
+        activity.getButtonReferenceStore().add(button);
         button.setOnClickListener(activity);
         return button;
     }

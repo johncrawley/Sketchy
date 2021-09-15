@@ -21,6 +21,7 @@
             layout="@layout/seek_bar_gradient_radius" />
     </LinearLayout>
 
+
     <HorizontalScrollView
         android:id="@+id/controlsScrollView"
         android:layout_width="match_parent"

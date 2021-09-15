@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <item name="multiShadeLayout" type="id"/>
+
     <item name="gradientButton" type="id"/>
     <item name="shapeButton" type="id"/>
     <item name="styleButton" type="id"/>

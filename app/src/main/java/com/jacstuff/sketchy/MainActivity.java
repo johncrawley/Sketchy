@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private PaintHelperManager paintHelperManager;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private ActivityResultLauncher <Intent> loadImageActivityResultLauncher;
+    private ColorButtonLayoutCreator colorButtonLayoutCreator;
 
     private final ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 22);
 
@@ -169,7 +170,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void toastPattern(String msg){  toaster.toastPattern(msg); }
+    public ColorButtonLayoutCreator getColorButtonLayoutCreator(){
+        return this.colorButtonLayoutCreator;
+    }
 
 
     public void toast(int resId){ toaster.toast(resId); }
@@ -186,12 +189,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
         colorButtonClickHandler = new ColorButtonClickHandler(this, colorButtonLayoutParams);
         colorButtonClickHandler.setColorsMap(colors);
-        ColorButtonLayoutCreator layoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams, colors);
+        colorButtonLayoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams, colors);
         ShadesStore shadesStore = new ShadesStore();
-        shadesStore.setShades(layoutCreator.getMultiColorShadesForSequences());
+        shadesStore.setShades(colorButtonLayoutCreator.getMultiColorShadesForSequences());
         colorButtonClickHandler.setShadesStore(shadesStore);
-        layoutCreator.addColorButtonLayoutsTo(colorButtonGroupLayout);
-        colorButtonClickHandler.setShadeLayoutsMap(layoutCreator.getShadeLayoutsMap());
+        colorButtonLayoutCreator.addColorButtonLayoutsTo(colorButtonGroupLayout);
+        colorButtonClickHandler.setShadeLayoutsMap(colorButtonLayoutCreator.getShadeLayoutsMap());
         colorButtonClickHandler.onClick(getDefaultColorButton());
     }
 
