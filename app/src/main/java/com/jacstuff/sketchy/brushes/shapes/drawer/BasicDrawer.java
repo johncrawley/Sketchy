@@ -20,18 +20,44 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
         updateColorGradientAndAngle(x,y);
         kaleidoscopeHelper.setCenter(x,y);
         paintHelperManager.getSizeHelper().onTouchDown();
+        if(viewModel.isSingleDrawModeEnabled){
+            paintView.enablePreviewLayer();
+            drawToCanvas(x,y, paint);
+            return;
+        }
         drawToCanvas(x,y, paint);
     }
 
 
     @Override
     public void move(float x, float y, Paint paint) {
+        if(viewModel.isSingleDrawModeEnabled){
+            paintView.enablePreviewLayer();
+            drawToCanvas(x,y, paint);
+            return;
+        }
         updateColorGradientAndAngle(x,y);
         paintView.disablePreviewLayer();
         paintHelperManager.getSizeHelper().assignNextBrushSize();
         drawToCanvas(x,y, paint);
         paintView.enablePreviewLayer();
         drawPreviewWhenInfinityModeOff(x, y);
+    }
+
+
+    @Override
+    public void up(float x, float y, Paint paint) {
+        if(viewModel.isSingleDrawModeEnabled){
+            paintView.disablePreviewLayer();
+            paintHelperManager.getSizeHelper().assignNextBrushSize();
+            drawToCanvas(x,y, paint);
+            paintView.enablePreviewLayer();
+            drawPreviewWhenInfinityModeOff(x, y);
+        }
+        paintHelperManager.getColorHelper().resetCurrentIndex();
+        paintView.disablePreviewLayer();
+        paintView.invalidate();
+        paintView.pushHistory();
     }
 
 
@@ -43,15 +69,6 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
             }
             drawToCanvas(x, y, paintView.getPreviewPaint());
         }
-    }
-
-
-    @Override
-    public void up(float x, float y, Paint paint) {
-        paintHelperManager.getColorHelper().resetCurrentIndex();
-        paintView.disablePreviewLayer();
-        paintView.invalidate();
-        paintView.pushHistory();
     }
 
 
