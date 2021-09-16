@@ -19,7 +19,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
     public void down(float x, float y, Paint paint) {
         updateColorGradientAndAngle(x,y);
         kaleidoscopeHelper.setCenter(x,y);
-        if(viewModel.isSingleDrawModeEnabled){
+        if(!viewModel.isDrawOnMoveModeEnabled){
             paintView.enablePreviewLayer();
             drawToCanvas(x,y, paint);
             return;
@@ -31,7 +31,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
 
     @Override
     public void move(float x, float y, Paint paint) {
-        if(viewModel.isSingleDrawModeEnabled){
+        if(!viewModel.isDrawOnMoveModeEnabled){
             paintView.enablePreviewLayer();
             drawToCanvas(x,y, paint);
             return;
@@ -47,7 +47,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
 
     @Override
     public void up(float x, float y, Paint paint) {
-        if(viewModel.isSingleDrawModeEnabled){
+        if(!viewModel.isDrawOnMoveModeEnabled){
             paintView.disablePreviewLayer();
             drawToCanvas(x,y, paint);
             paintView.enablePreviewLayer();

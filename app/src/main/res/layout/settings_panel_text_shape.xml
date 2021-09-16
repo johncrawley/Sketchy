@@ -13,6 +13,7 @@
         android:id="@+id/textInputEditTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/text_controls_text_padding_horizontal"
         android:orientation="horizontal">
 
         <TextView
@@ -36,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/text_controls_text_padding_horizontal"
         android:paddingVertical="@dimen/text_skew_seekbar_padding_vertical">
 
         <TextView
@@ -50,7 +52,7 @@
         <SeekBar
             android:id="@+id/textSkewSeekBar"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight=".8"
             android:indeterminate="false"
             android:gravity="fill_horizontal"
@@ -66,6 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/text_controls_text_padding_horizontal"
         android:paddingVertical="@dimen/text_spacing_seekbar_padding_vertical">
 
         <TextView
@@ -74,19 +77,18 @@
             android:layout_height="match_parent"
             android:layout_weight=".2"
             android:gravity="center_vertical"
+            android:min="0"
             android:text="@string/text_spacing_seekbar_label"
             />
 
         <SeekBar
             android:id="@+id/textSpacingSeekBar"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight=".8"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7"
             android:indeterminate="false"
             android:gravity="fill_horizontal"
             android:max="@integer/text_spacing_seekbar_max"
-            android:min="0"
-            android:paddingTop="@dimen/seekbar_text_controls_padding_top"
             android:paddingBottom="@dimen/seekbar_text_controls_padding_bottom"
             android:progress="@integer/text_spacing_seekbar_default" />
 
@@ -96,6 +98,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="fill_horizontal"
+        android:paddingTop="@dimen/text_controls_checkboxes_group_padding_top"
         android:orientation="horizontal">
 
         <CheckBox
@@ -117,4 +120,18 @@
             android:text="@string/text_underline_checkbox_label" />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="8dp">
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingTop="@dimen/text_controls_divisor_padding_top"
+            android:paddingBottom="@dimen/text_controls_divisor_padding_bottom"
+            android:background="?android:attr/listDivider" />
+
+    </LinearLayout>
+
 </LinearLayout>

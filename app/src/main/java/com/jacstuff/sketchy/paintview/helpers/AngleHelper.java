@@ -32,6 +32,9 @@ public class AngleHelper {
             currentAngle += increment;
             currentAngle = currentAngle % 360;
         }
+        else if(angleType == AngleType.RANDOM){
+            currentAngle = getRandomAngle();
+        }
     }
 
 
@@ -41,10 +44,9 @@ public class AngleHelper {
 
 
     public int getAngle(){
-        if(angleType == AngleType.RANDOM){
-            return getRandomAngle();
-        }
-        if(angleType.isIncremental() || angleType == AngleType.OTHER){
+        if(angleType.isIncremental()
+                || angleType == AngleType.OTHER
+                || angleType == AngleType.RANDOM){
             return currentAngle;
         }
         return angleType.get();

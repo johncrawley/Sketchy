@@ -22,6 +22,17 @@
         layout="@layout/settings_panel_text_shape" />
 
 
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/drawOnMoveSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:checked="true"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/switch_option_draw_on_move_padding_horizontal"
+        android:paddingTop="@dimen/switch_option_draw_on_move_padding_top"
+        android:paddingBottom="@dimen/switch_option_padding_bottom"
+        android:text="@string/switch_label_draw_on_move_mode" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -176,6 +176,7 @@
     <string name="seekbar_label_color_sequence_steps_index">Gradation</string>
     <string name="seekbar_label_color_sequence_starting_index">Sequence Starting Index</string>
     <string name="size_sequence_increments_seekbar_label">Step Size</string>
+    <string name="switch_label_draw_on_move_mode">Draw On Move</string>
     <string name="blur_intensity_seekbar_label">Blur Intensity</string>
     <string name="brush_size_seekbar_label">Shape Width</string>
     <string name="text_skew_seekbar_label">Skew</string>

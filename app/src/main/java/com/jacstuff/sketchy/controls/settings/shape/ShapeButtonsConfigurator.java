@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.controls.settings.shape;
 
 import android.os.Build;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -51,6 +52,11 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.shapeButton);
         buttonConfig.setDefaultSelection(R.id.circleShapeButton);
+
+
+        SwitchMaterial singleDrawModeSwitch = activity.findViewById(R.id.drawOnMoveSwitch);
+        singleDrawModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isDrawOnMoveModeEnabled = isChecked);
+
     }
 
 
