@@ -42,7 +42,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
 
     public boolean isKaleidoscopeCentred = true;
 
-    public boolean isSingleDrawModeEnabled = false;
+    public boolean isSingleDrawModeEnabled = true;
 
     public int brushSize;
     public int brushSizeSetBySeekBar;

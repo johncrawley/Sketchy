@@ -72,13 +72,13 @@ public class ColorHelper {
             viewModel.previousColor = viewModel.color;
         }
         viewModel.color = nextColor;
-
         setColorAndAlpha(paint);
         setColorAndAlpha(shadowPaint);
     }
 
 
     private void setColorAndAlpha(Paint paint){
+        System.out.println("Setting color to : " + viewModel.color);
         paint.setColor(viewModel.color);
         paint.setAlpha( viewModel.colorAlpha);
     }

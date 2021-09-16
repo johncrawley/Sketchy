@@ -179,6 +179,7 @@ public class ShadeColorSelector implements ColorSelector {
 
     @Override
     public void resetCurrentIndex(){
+        System.out.println("ShadeColorSelector entered resetCurrentIndex()");
         if(colorSequenceControls.isResetOnRelease || isAtLastIndex){
             colorSelectorForSingleColorMultiShades.resetCurrentIndex();
             currentIndex = 0;
