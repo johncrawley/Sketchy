@@ -10,10 +10,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
-import com.jacstuff.sketchy.paintview.helpers.TileHelper;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
@@ -29,12 +27,11 @@ public class PaintView extends View {
     private final Paint paint, shadowPaint, previewPaint;
     private int brushSize;
     private Bitmap bitmap, previewBitmap;
-    private Canvas canvas, kaleidoscopeSegmentCanvas;
+    private Canvas canvas;
     private BrushStyle currentBrushStyle = BrushStyle.FILL;
     private Brush currentBrush;
     private BrushFactory brushFactory;
     private boolean isCanvasLocked;
-    private MainViewModel viewModel;
     private PaintHelperManager paintHelperManager;
     private boolean isPreviewLayerToBeDrawn;
     private boolean ignoreMoveAndUpActions = false;
@@ -70,14 +67,11 @@ public class PaintView extends View {
     }
 
 
-    public void init(MainViewModel viewModel, SettingsPopup settingsPopup, BrushFactory brushFactory) {
-        this.viewModel = viewModel;
+    public void init(SettingsPopup settingsPopup, BrushFactory brushFactory) {
         this.settingsPopup = settingsPopup;
         this.brushFactory = brushFactory;
-
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        kaleidoscopeSegmentCanvas = new Canvas(Bitmap.createBitmap(10,10, Bitmap.Config.ARGB_8888));
         bitmapLoader = new BitmapLoader(this, canvas, drawPaint);
         initBrushes();
 
@@ -104,8 +98,6 @@ public class PaintView extends View {
     public Canvas getCanvas(){
         return canvas;
     }
-
-    public Canvas getKaleidoscopeSegmentCanvas(){return kaleidoscopeSegmentCanvas;}
 
     public Paint getShadowPaint(){
         return shadowPaint;
@@ -212,20 +204,6 @@ public class PaintView extends View {
         if(isPopupBeingDismissed(event) || isCanvasLocked){
             return true;
         }
-        assignColors(event);
-        assignGradient(event);
-        updateAngle();
-        handleDrawing(event);
-        return true;
-    }
-
-
-    private void updateAngle(){
-        paintHelperManager.getAngleHelper().updateAngle();
-    }
-
-
-    private void handleDrawing(MotionEvent event){
         try {
             drawWithBrush(event);
         }
@@ -235,7 +213,9 @@ public class PaintView extends View {
             //do nothing, sometimes there's an illegalArgException related to drawing gradients
             // immediately after rotating screen
         }
+        return true;
     }
+
 
 
     private void drawWithBrush(MotionEvent event){
@@ -296,24 +276,6 @@ public class PaintView extends View {
             return true;
         }
         return false;
-    }
-
-
-    private void assignColors(MotionEvent event){
-        if(isDragBrushWithTouchMoveOrUp(event)){
-            return;
-        }
-        paintHelperManager.getColorHelper().assignColors();
-    }
-
-
-    private void assignGradient(MotionEvent event){
-        paintHelperManager.getGradientHelper().assignGradient(event.getX(), event.getY(), viewModel.color, viewModel.previousColor);
-    }
-
-
-    private boolean isDragBrushWithTouchMoveOrUp(MotionEvent event){
-        return event.getAction() != MotionEvent.ACTION_DOWN && !currentBrush.isColorChangedOnDown();
     }
 
 }

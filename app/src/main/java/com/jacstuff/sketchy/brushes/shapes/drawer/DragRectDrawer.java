@@ -21,6 +21,7 @@ public class DragRectDrawer extends BasicDrawer{
 
     @Override
     public void down(float x, float y, Paint paint) {
+        updateColorGradientAndAngle(x,y);
         paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
         angleOnTouchDown = paintHelperManager.getAngleHelper().getAngle();
         paintView.enablePreviewLayer();

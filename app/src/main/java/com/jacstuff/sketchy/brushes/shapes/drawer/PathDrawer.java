@@ -42,6 +42,7 @@ public class PathDrawer extends BasicDrawer{
 
     @Override
     public void down(float x, float y, Paint paint) {
+        updateColorGradientAndAngle(x,y);
         Point point = new Point((int)x, (int)y);
         paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
         drawToCanvas(point, (c) -> draw(point, (paintArg, brushArg) -> brushArg.onTouchDown(point, c, paintArg)));
@@ -50,6 +51,7 @@ public class PathDrawer extends BasicDrawer{
 
     @Override
     public void move(float x, float y, Paint paint) {
+        updateColorGradientAndAngle(x,y);
         Point point = new Point((int)x, (int)y);
         paintView.disablePreviewLayer();
         drawToCanvas(point, (c) -> draw(point, (paintArg, brushArg) -> brushArg.onTouchMove(point, c, paintArg)));

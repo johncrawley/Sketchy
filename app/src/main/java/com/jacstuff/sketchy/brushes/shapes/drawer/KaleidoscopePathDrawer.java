@@ -27,7 +27,7 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
 
     public KaleidoscopePathDrawer(PaintView paintView, MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
         super(paintView, viewModel, kaleidoscopeHelper);
-        kaleidoscopeCanvas = paintView.getKaleidoscopeSegmentCanvas();
+        kaleidoscopeCanvas = new Canvas(Bitmap.createBitmap(10,10, Bitmap.Config.ARGB_8888));
         paint = paintView.getPaint();
     }
 

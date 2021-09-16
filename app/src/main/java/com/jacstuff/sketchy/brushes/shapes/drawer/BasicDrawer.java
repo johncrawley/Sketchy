@@ -17,6 +17,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
 
     @Override
     public void down(float x, float y, Paint paint) {
+        updateColorGradientAndAngle(x,y);
         kaleidoscopeHelper.setCenter(x,y);
         paintHelperManager.getSizeHelper().onTouchDown();
         drawToCanvas(x,y, paint);
@@ -25,6 +26,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
 
     @Override
     public void move(float x, float y, Paint paint) {
+        updateColorGradientAndAngle(x,y);
         paintView.disablePreviewLayer();
         paintHelperManager.getSizeHelper().assignNextBrushSize();
         drawToCanvas(x,y, paint);

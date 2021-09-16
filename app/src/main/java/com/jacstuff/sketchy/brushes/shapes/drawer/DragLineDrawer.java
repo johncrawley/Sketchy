@@ -22,6 +22,7 @@ public class DragLineDrawer extends AbstractDrawer implements Drawer{
 
     @Override
     public void down(float x, float y, Paint paint) {
+        updateColorGradientAndAngle(x,y);
         paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
         brush.onTouchDown(new Point((int)x, (int)y), canvas,paint);
         paintView.invalidate();

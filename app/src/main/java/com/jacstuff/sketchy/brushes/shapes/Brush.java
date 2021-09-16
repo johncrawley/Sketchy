@@ -26,11 +26,6 @@ public interface Brush {
 
     void onTouchDown(Point p, Canvas canvas, Paint paint);
     void onTouchMove(Point p, Canvas canvas, Paint paint);
-    void onTouchUp(Point p, Canvas canvas, Paint paint);
-
-    void onTouchDownKaleidoscope(Point p, Canvas canvas, Paint paint);
-    void onTouchMoveKaleidoscope(Point p, Canvas canvas, Paint paint);
-    void onTouchUpKaleidoscope(Point p, Canvas canvas, Paint paint);
 
 
     void setBrushSize(int brushSize);

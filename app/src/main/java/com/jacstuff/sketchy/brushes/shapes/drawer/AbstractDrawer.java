@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.view.MotionEvent;
 
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.paintview.PaintView;
@@ -45,6 +46,13 @@ public abstract class AbstractDrawer implements Drawer {
 
     public void init(){
         kaleidoscopeDrawer.initParentDrawer(this);
+    }
+
+
+    void updateColorGradientAndAngle(float x, float y){
+        paintHelperManager.getColorHelper().assignColors();
+        paintHelperManager.getGradientHelper().assignGradient(x, y, viewModel.color, viewModel.previousColor);
+        paintHelperManager.getAngleHelper().updateAngle();
     }
 
 
