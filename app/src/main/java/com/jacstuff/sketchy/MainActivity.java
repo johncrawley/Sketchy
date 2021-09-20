@@ -25,6 +25,7 @@ import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutCreator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
+import com.jacstuff.sketchy.controls.seekbars.SimpleSeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.multicolor.ShadesStore;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private ActivityResultLauncher <Intent> loadImageActivityResultLauncher;
     private ColorButtonLayoutCreator colorButtonLayoutCreator;
+    private SimpleSeekBarConfigurator simpleSeekBarConfigurator;
 
     private final ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 22);
 
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonReferenceStore = new ButtonReferenceStore();
         toaster = new Toaster(MainActivity.this);
         imageSaver = new ImageSaver(this);
+        simpleSeekBarConfigurator = new SimpleSeekBarConfigurator(this);
         setupViewModel();
         setupActionbar();
         setupPaintViewAndDefaultSelections(this);
@@ -157,6 +160,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public ButtonReferenceStore getButtonReferenceStore(){
         return buttonReferenceStore;
+    }
+
+    public SimpleSeekBarConfigurator getSimpleSeekBarConfigurator(){
+        return this.simpleSeekBarConfigurator;
     }
 
 

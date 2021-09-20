@@ -1,12 +1,9 @@
 package com.jacstuff.sketchy.controls.settings.color;
 
-import android.widget.SeekBar;
-
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
-import com.jacstuff.sketchy.controls.seekbars.SimpleSeekBar;
 import com.jacstuff.sketchy.controls.settings.AbstractButtonConfigurator;
 import com.jacstuff.sketchy.controls.settings.ButtonConfigHandler;
 import com.jacstuff.sketchy.controls.settings.ButtonsConfigurator;
@@ -20,7 +17,7 @@ import java.util.Map;
 
 import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner;
 
-public class ColorConfigOptionsConfigurator  extends AbstractButtonConfigurator<Void> implements ButtonsConfigurator<Void> {
+public class ColorConfigOptionsConfigurator extends AbstractButtonConfigurator<Void> implements ButtonsConfigurator<Void> {
 
     private Map<String, ColorSequenceType> sequenceTypeMap;
 
@@ -33,50 +30,12 @@ public class ColorConfigOptionsConfigurator  extends AbstractButtonConfigurator<
     @Override
     public void configure(){
         buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.COLOR_CONFIG, R.id.colorConfigLayout);
-        SequenceColorSelector allColorsSequenceSelector = paintHelperManager.getColorHelper().getAllColorsSequenceSelector();
-        ColorSelector shadeColorSelector = paintHelperManager.getColorHelper().getShadeColorSelector();
         new ColorTransparencySeekBar(activity, paintView);
-
-
-        new SimpleSeekBar(activity,
-                R.id.multiShadeBrightnessSeekBar,
-                R.integer.seek_bar_multi_shade_brightness_default,
-                progress -> {
-                    viewModel.getColorSequenceControls().multiShadeBrightnessPercentage = Math.max(1, progress);
-                });
-
-
-       new SimpleSeekBar(activity,
-                        R.id.colorSequenceMaxIndexSeekBar,
-                        R.integer.seek_bar_color_sequence_max_range_default,
-                        progress -> {
-                            viewModel.getColorSequenceControls().colorSequenceMaxPercentage = progress;
-                            shadeColorSelector.updateRangeIndexes();
-                        });
-
-        new SimpleSeekBar(activity,
-                R.id.colorSequenceMinIndexSeekBar,
-                R.integer.seek_bar_color_sequence_min_range_default,
-                progress -> {
-                    viewModel.getColorSequenceControls().colorSequenceMinPercentage = progress;
-                    SeekBar maxRangeSeekBar = activity.findViewById(R.id.colorSequenceMaxIndexSeekBar);
-                    shadeColorSelector.updateRangeIndexes();
-                });
-
-        new SimpleSeekBar(activity,
-                R.id.colorSequenceStepsSeekBar,
-                R.integer.seek_bar_color_sequence_steps_default,
-                progress -> {
-                    viewModel.getColorSequenceControls().skippedShades = 1 + progress;
-                    allColorsSequenceSelector.updateRangeIndexes();
-                });
-
-
+        setupSeekBars();
         setupSpinner(activity,
                 R.id.colorSequenceTypeSpinner,
                 R.array.color_sequence_type_array,
                 x -> paintHelperManager.getColorHelper().getAllColorsSequenceSelector().setSequenceType(sequenceTypeMap.get(x)));
-
         setupSwitches();
     }
 
@@ -86,11 +45,41 @@ public class ColorConfigOptionsConfigurator  extends AbstractButtonConfigurator<
         //do nothing
     }
 
-    private void setupSwitches(){
+    private void setupSeekBars(){
 
+        SequenceColorSelector allColorsSequenceSelector = paintHelperManager.getColorHelper().getAllColorsSequenceSelector();
+        ColorSelector shadeColorSelector = paintHelperManager.getColorHelper().getShadeColorSelector();
+
+        simpleSeekBarConfigurator.configure(R.id.multiShadeBrightnessSeekBar,
+                R.integer.seek_bar_multi_shade_brightness_default,
+                progress -> viewModel.getColorSequenceControls().multiShadeBrightnessPercentage = Math.max(1, progress));
+
+        simpleSeekBarConfigurator.configure(R.id.colorSequenceMaxIndexSeekBar,
+                R.integer.seek_bar_color_sequence_max_range_default,
+                progress -> {
+                    viewModel.getColorSequenceControls().colorSequenceMaxPercentage = progress;
+                    shadeColorSelector.updateRangeIndexes();
+                });
+
+        simpleSeekBarConfigurator.configure(R.id.colorSequenceMinIndexSeekBar,
+                R.integer.seek_bar_color_sequence_min_range_default,
+                progress -> {
+                    viewModel.getColorSequenceControls().colorSequenceMinPercentage = progress;
+                    shadeColorSelector.updateRangeIndexes();
+                });
+
+        simpleSeekBarConfigurator.configure(R.id.colorSequenceStepsSeekBar,
+                R.integer.seek_bar_color_sequence_steps_default,
+                progress -> {
+                    viewModel.getColorSequenceControls().skippedShades = 1 + progress;
+                    allColorsSequenceSelector.updateRangeIndexes();
+                });
+    }
+
+
+    private void setupSwitches(){
         SwitchMaterial colorSequenceRepeatSwitch = activity.findViewById(R.id.colorSequenceRepeatSwitch);
         colorSequenceRepeatSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.getColorSequenceControls().doesRepeat = isChecked);
-
 
         SwitchMaterial colorSequenceResetOnReleaseSwitch = activity.findViewById(R.id.colorSequenceResetOnReleaseSwitch);
         colorSequenceResetOnReleaseSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.getColorSequenceControls().isResetOnRelease = isChecked);
