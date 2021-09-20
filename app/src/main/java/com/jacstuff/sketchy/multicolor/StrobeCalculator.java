@@ -18,6 +18,12 @@ public class StrobeCalculator {
     }
 
 
+    public StrobeCalculator(ControlsHolder viewModel, boolean forSingleColor){
+        this(viewModel);
+        this.isUsingVariableIncrement = forSingleColor;
+    }
+
+
     private int getIncrement(){
         return isUsingVariableIncrement ? colorSequenceControls.skippedShades : 1;
     }

@@ -26,16 +26,17 @@ public class SingleColorSelector implements ColorSelector {
     }
 
 
-
     @Override
     public void resetCurrentIndex(){
         //do nothing
     }
 
+
     @Override
     public void reset() {
         //do nothing
     }
+
 
     @Override
     public void setColorList(List<Integer> colorList) {
