@@ -142,7 +142,9 @@ public class PaintView extends View {
 
     public void setBrushSize(int brushSize){
         this.brushSize = brushSize;
-        currentBrush.setBrushSize(brushSize);
+        if(currentBrush != null) {
+            currentBrush.setBrushSize(brushSize);
+        }
         paintHelperManager.getGradientHelper().updateBrushSize(brushSize);
         paintHelperManager.getShadowHelper().updateOffsetFactor(brushSize/2);
     }
@@ -150,7 +152,9 @@ public class PaintView extends View {
 
     public void setLineWidth(int lineWidth){
         paintGroup.setStrokeWidth(lineWidth);
-        currentBrush.notifyStrokeWidthChanged();
+        if(currentBrush != null) {
+            currentBrush.notifyStrokeWidthChanged();
+        }
     }
 
 

@@ -15,11 +15,13 @@ import com.jacstuff.sketchy.paintview.PaintView;
 
 public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushShape> implements ButtonsConfigurator<BrushShape> {
 
+    private  int minBrushSize;
 
     public ShapeButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity, paintView);
         childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
         new TextControls(activity, paintView.getPaintGroup());
+        minBrushSize = activity.getResources().getInteger(R.integer.brush_size_min_default);
     }
 
 
@@ -53,12 +55,31 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
         buttonConfig.setParentButton(R.id.shapeButton);
         buttonConfig.setDefaultSelection(R.id.circleShapeButton);
 
-
+        configureSeekBars();
         SwitchMaterial singleDrawModeSwitch = activity.findViewById(R.id.drawOnMoveSwitch);
         singleDrawModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isDrawOnMoveModeEnabled = isChecked);
 
     }
 
+
+    private void configureSeekBars() {
+        simpleSeekBarConfigurator.configure(R.id.brushSizeSeekBar, R.integer.brush_size_default
+                , null,
+                progress -> {
+                    if (paintView != null) {
+                        viewModel.brushSize = minBrushSize + progress;
+                        viewModel.brushSizeSetBySeekBar = viewModel.brushSize;
+                        paintView.setBrushSize(viewModel.brushSize);
+                        paintHelperManager.getGradientHelper().recalculateGradientLengthForBrushSize();
+                    }
+                });
+
+        simpleSeekBarConfigurator.configure(R.id.colorTransparencySeekBar,
+                R.integer.color_transparency_default,
+                progress -> paintHelperManager.getColorHelper().updateTransparency(progress));
+
+
+    }
 
     @Override
     public void handleClick(int viewId, BrushShape brushShape){

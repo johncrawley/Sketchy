@@ -30,7 +30,6 @@ public class ColorConfigOptionsConfigurator extends AbstractButtonConfigurator<V
     @Override
     public void configure(){
         buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.COLOR_CONFIG, R.id.colorConfigLayout);
-        new ColorTransparencySeekBar(activity, paintView);
         setupSeekBars();
         setupSpinner(activity,
                 R.id.colorSequenceTypeSpinner,
@@ -46,7 +45,6 @@ public class ColorConfigOptionsConfigurator extends AbstractButtonConfigurator<V
     }
 
     private void setupSeekBars(){
-
         SequenceColorSelector allColorsSequenceSelector = paintHelperManager.getColorHelper().getAllColorsSequenceSelector();
         ColorSelector shadeColorSelector = paintHelperManager.getColorHelper().getShadeColorSelector();
 

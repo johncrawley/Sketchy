@@ -11,7 +11,7 @@ public class SeekBarConfigurator {
 
 
     public SeekBarConfigurator(MainActivity mainActivity, PaintView paintView){
-        new LineWidthSeekBar(mainActivity, paintView);
+        //new LineWidthSeekBar(mainActivity, paintView);
         new BrushSizeSeekBar(mainActivity, paintView);
         new BlurSeekBar(mainActivity, paintView);
         new ShadowRadiusSeekBar(mainActivity, paintView);

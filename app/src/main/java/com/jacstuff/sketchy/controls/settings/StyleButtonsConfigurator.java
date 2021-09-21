@@ -35,12 +35,23 @@ public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushSt
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.styleButton);
         buttonConfig.setDefaultSelection(R.id.fillStyleButton);
+        setupSeekBar();
     }
 
 
     @Override
     public void handleClick(int viewId, BrushStyle brushStyle) {
         paintView.setBrushStyle(brushStyle);
+    }
+
+    private void setupSeekBar(){
+        simpleSeekBarConfigurator.configure(R.id.lineWidthSeekBar,
+                R.integer.line_width_default,
+                progress -> {
+                    if(paintView != null) {
+                        paintView.setLineWidth(progress);
+                    }
+                });
     }
 
 
