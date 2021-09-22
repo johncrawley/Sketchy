@@ -48,7 +48,7 @@ public class ColorConfigOptionsConfigurator extends AbstractButtonConfigurator<V
         SequenceColorSelector allColorsSequenceSelector = paintHelperManager.getColorHelper().getAllColorsSequenceSelector();
         ColorSelector shadeColorSelector = paintHelperManager.getColorHelper().getShadeColorSelector();
 
-        simpleSeekBarConfigurator.configure(R.id.multiShadeBrightnessSeekBar,
+        simpleSeekBarConfigurator.configure( R.id.multiShadeBrightnessSeekBar,
                 R.integer.seek_bar_multi_shade_brightness_default,
                 progress -> viewModel.getColorSequenceControls().multiShadeBrightnessPercentage = Math.max(1, progress));
 

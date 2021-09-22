@@ -141,9 +141,7 @@ public class ViewModelHelper {
             setAngleBasedOnSeekBar();
             deselectCurrentlySelectedAngleButton();
         }
-        System.out.println("ViewModelHelper.retrieveRecentButtonSettings() going to dismiss popup");
         mainActivity.getSettingsPopup().dismiss();
-
     }
 
 

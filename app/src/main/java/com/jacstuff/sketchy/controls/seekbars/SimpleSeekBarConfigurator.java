@@ -18,7 +18,6 @@ public class SimpleSeekBarConfigurator {
     }
 
 
-
     public void configure(int seekBarId, int defaultResourceId,
                           Consumer<Integer> progressFinishedConsumer,
                           Consumer<Integer> progressConsumer,
@@ -26,15 +25,15 @@ public class SimpleSeekBarConfigurator {
 
         SeekBar seekBar = activity.findViewById(seekBarId);
         viewModel = activity.getViewModel();
-        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, progressConsumer, progressFinishedConsumer, progressStartedConsumer));
-        setDefaultValue(defaultResourceId, seekBarId, progressConsumer, progressFinishedConsumer, progressStartedConsumer);
+        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
+        setDefaultValue(defaultResourceId, seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer);
     }
 
 
     public void configure(int seekBarId, int defaultResourceId,
                           Consumer<Integer> progressFinishedConsumer,
                           Consumer<Integer> progressConsumer){
-        configure(seekBarId, defaultResourceId,  progressFinishedConsumer,progressConsumer, null);
+        configure( seekBarId, defaultResourceId,  progressFinishedConsumer,progressConsumer, null);
     }
 
 
@@ -44,9 +43,9 @@ public class SimpleSeekBarConfigurator {
 
 
     private SeekBar.OnSeekBarChangeListener createSeekBarChangeListener(int seekBarId,
+                                                                        Consumer<Integer> progressStartedConsumer,
                                                                         Consumer<Integer> progressChangedConsumer,
-                                                                        Consumer<Integer> progressFinishedConsumer,
-                                                                        Consumer<Integer> progressStartedConsumer){
+                                                                        Consumer<Integer> progressFinishedConsumer){
         return new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -75,25 +74,26 @@ public class SimpleSeekBarConfigurator {
 
 
     public void setDefaultValue(int defaultResourceId, int seekBarId,
+                                Consumer<Integer> progressStartedConsumer,
                                 Consumer<Integer> progressConsumer,
-                                Consumer<Integer> progressFinishedConsumer,
-                                Consumer<Integer> progressStartedConsumer){
-        int defaultValue = getValueOf(defaultResourceId);
+                                Consumer<Integer> progressFinishedConsumer){
 
-        acceptIfNotNull(progressStartedConsumer, defaultValue, seekBarId);
-        acceptIfNotNull(progressConsumer, defaultValue, seekBarId);
-        acceptIfNotNull(progressFinishedConsumer, defaultValue, seekBarId);
+        int progress = getSavedOrDefault(defaultResourceId, seekBarId);
+        acceptIfNotNull(progressStartedConsumer, progress);
+        acceptIfNotNull(progressConsumer, progress);
+        acceptIfNotNull(progressFinishedConsumer, progress);
     }
 
 
-    private void acceptIfNotNull(Consumer<Integer> consumer, int defaultValue, int seekBarId){
+    private void acceptIfNotNull(Consumer<Integer> consumer, int value){
         if(consumer != null) {
-            consumer.accept(getSavedOrDefault(defaultValue, getSavedOrDefault(defaultValue, seekBarId)));
+            consumer.accept(value);
         }
     }
 
 
-    private int getSavedOrDefault(int defaultValue, int seekBarId){
+    private int getSavedOrDefault(int defaultResourceId, int seekBarId){
+        int defaultValue = getValueOf(defaultResourceId);
         if(!viewModel.isFirstExecution){
             Integer savedValue = viewModel.seekBarValue.get(seekBarId);
             if(savedValue != null) {
@@ -103,9 +103,7 @@ public class SimpleSeekBarConfigurator {
         return defaultValue;
     }
 
-
     protected int getValueOf(int id){
         return activity.getResources().getInteger(id);
     }
-
 }

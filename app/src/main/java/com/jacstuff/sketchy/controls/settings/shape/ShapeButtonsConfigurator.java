@@ -15,7 +15,7 @@ import com.jacstuff.sketchy.paintview.PaintView;
 
 public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushShape> implements ButtonsConfigurator<BrushShape> {
 
-    private  int minBrushSize;
+    private final int minBrushSize;
 
     public ShapeButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity, paintView);
@@ -63,7 +63,8 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
 
 
     private void configureSeekBars() {
-        simpleSeekBarConfigurator.configure(R.id.brushSizeSeekBar, R.integer.brush_size_default
+        simpleSeekBarConfigurator.configure( R.id.brushSizeSeekBar,
+                R.integer.brush_size_default
                 , null,
                 progress -> {
                     if (paintView != null) {
@@ -77,7 +78,6 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
         simpleSeekBarConfigurator.configure(R.id.colorTransparencySeekBar,
                 R.integer.color_transparency_default,
                 progress -> paintHelperManager.getColorHelper().updateTransparency(progress));
-
 
     }
 

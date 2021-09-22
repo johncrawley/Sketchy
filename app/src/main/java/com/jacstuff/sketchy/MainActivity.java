@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return this.simpleSeekBarConfigurator;
     }
 
-
     public ViewModelHelper getViewModelHelper(){
         return this.viewModelHelper;
     }
