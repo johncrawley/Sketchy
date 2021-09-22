@@ -33,6 +33,8 @@ public class ShadowButtonsConfigurator extends AbstractButtonConfigurator<Shadow
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.shadowButton);
         buttonConfig.setDefaultSelection(R.id.noShadowButton);
+
+        configureSeekBar();
     }
 
 
@@ -41,5 +43,11 @@ public class ShadowButtonsConfigurator extends AbstractButtonConfigurator<Shadow
         paintHelperManager.getShadowHelper().setType(shadowType);
     }
 
+
+    private void configureSeekBar(){
+        simpleSeekBarConfigurator.configure( R.id.shadowRadiusSeekBar,
+                R.integer.shadow_radius_default,
+                progress -> paintHelperManager.getShadowHelper().setShadowSize(progress));
+    }
 
 }

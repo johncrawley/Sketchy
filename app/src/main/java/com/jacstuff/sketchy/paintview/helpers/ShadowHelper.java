@@ -18,7 +18,7 @@ public class ShadowHelper {
 
 
     public void setShadowSize(int size){
-        shadowSize = size;
+        shadowSize = 1 + size;
         hasSizeBeenUpdated = true;
         assignShadow();
     }

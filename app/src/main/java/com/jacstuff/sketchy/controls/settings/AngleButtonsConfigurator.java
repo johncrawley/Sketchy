@@ -1,14 +1,19 @@
 package com.jacstuff.sketchy.controls.settings;
 
+import android.widget.Button;
+
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.controls.ButtonCategory;
-import com.jacstuff.sketchy.controls.seekbars.AngleSeekBar;
+import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 public class AngleButtonsConfigurator extends AbstractButtonConfigurator<AngleType> implements ButtonsConfigurator<AngleType>{
 
+
+    private Button parentButton;
+    private ButtonUtils buttonUtils;
 
     public AngleButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity,paintView);
@@ -42,12 +47,38 @@ public class AngleButtonsConfigurator extends AbstractButtonConfigurator<AngleTy
         buttonConfig.setParentButton(R.id.angleButton);
         buttonConfig.setDefaultSelection(R.id.zeroDegreesButton);
 
-        new AngleSeekBar(activity, paintView, buttonConfig.getButtonIds());
+        configureSeekBar();
     }
 
 
     private void add(int buttonId, AngleType angleType){
         buttonConfig.add(buttonId, angleType.getStr() + activity.getString(R.string.degrees_symbol), angleType);
+    }
+
+
+    private void configureSeekBar(){
+
+        buttonUtils = new ButtonUtils(activity);
+        parentButton = activity.findViewById(R.id.angleButton);
+
+        simpleSeekBarConfigurator.configure( R.id.angleSeekBar,
+                R.integer.angle_default,
+                null,
+                progress -> {
+                    paintHelperManager.getAngleHelper().setOtherAngle(progress);
+                    setAngleParentButtonText(progress);
+                },
+
+                progress-> {
+                    viewModel.useSeekBarAngle = true;
+                    buttonUtils.switchSelection(R.id.angleSeekBar, buttonConfig.getButtonIds());
+                });
+    }
+
+
+    private void setAngleParentButtonText(int progress){
+        String buttonText = "" + progress + activity.getString(R.string.degrees_symbol);
+        parentButton.setText(buttonText);
     }
 
 

@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.controls.settings.gradient;
+package com.jacstuff.sketchy.controls.settings;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
@@ -31,13 +31,19 @@ public class GradientButtonsConfigurator extends AbstractButtonConfigurator<Grad
         buttonConfig.setParentButton(R.id.gradientButton);
         buttonConfig.setDefaultSelection(R.id.noGradientButton);
 
-        new GradientSizeSeekBar(activity, paintView);
+        configureSeekBar();
     }
 
 
     @Override
     public void handleClick(int viewId, GradientType gradientType){
         paintHelperManager.getGradientHelper().setGradientType(gradientType);
+    }
+
+    private void configureSeekBar(){
+        simpleSeekBarConfigurator.configure( R.id.gradientSizeSeekBar,
+                R.integer.gradient_radius_default,
+                progress ->  paintHelperManager.getGradientHelper().setGradientRadius(progress));
     }
 
 }

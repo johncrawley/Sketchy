@@ -24,7 +24,6 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutCreator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
-import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.seekbars.SimpleSeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.io.ImageSaver;
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         simpleSeekBarConfigurator = new SimpleSeekBarConfigurator(this);
         setupViewModel();
         setupActionbar();
-        setupPaintViewAndDefaultSelections(this);
+        setupPaintViewAndDefaultSelections();
         initPaintHelperManager();
         setupColorAndShadeButtons();
         setupSettingsButtons();
@@ -222,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void setupPaintViewAndDefaultSelections(final MainActivity mainActivity){
+    private void setupPaintViewAndDefaultSelections(){
         paintView = findViewById(R.id.paintView);
         BrushFactory brushFactory = new BrushFactory(this);
         final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
@@ -232,7 +231,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 paintView.init(settingsPopup, brushFactory);
                 settingsButtonsConfigurator.selectDefaults();
-                new SeekBarConfigurator(mainActivity, paintView);
                 viewModelHelper.onResume();
             }
         });

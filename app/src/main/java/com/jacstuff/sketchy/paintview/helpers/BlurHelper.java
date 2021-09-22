@@ -32,8 +32,8 @@ public class BlurHelper {
     }
 
 
-    public void setBlurRadius(int blurRadius){
-        this.blurRadius = blurRadius;
+    public void setBlurRadius(int radius){
+        this.blurRadius = 1 + radius;
         outer.setSize(blurRadius);
         inner.setSize(blurRadius);
         normal.setSize(blurRadius);

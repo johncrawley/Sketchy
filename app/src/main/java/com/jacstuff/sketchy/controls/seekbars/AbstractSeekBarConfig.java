@@ -30,6 +30,7 @@ public abstract class AbstractSeekBarConfig {
         this.progressConsumer = progressConsumer;
         int defaultValue = getValueOf(defaultValueId);
         setDefaultValue(defaultValue);
+        mainActivity.getSettingsPopup().registerToIgnore(seekBarId);
     }
 
 

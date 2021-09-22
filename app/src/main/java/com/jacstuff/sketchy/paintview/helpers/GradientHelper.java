@@ -46,12 +46,12 @@ public class GradientHelper {
 
     public void setGradientRadius(int progress){
         radiusFactor = Math.max(1, progress);
+        viewModel.gradient = radiusFactor;
         calculateGradientLength();
     }
 
 
     public void calculateGradientLength(){
-
         viewModel.radialGradientRadius = 1 + RADIAL_GRADIENT_NUMERATOR / radiusFactor;
         viewModel.clampRadialGradientRadius = 1 + viewModel.radialGradientRadius * CLAMP_RADIAL_GRADIENT_FACTOR;
         viewModel.linearGradientLength = calculateLinearGradientLength();

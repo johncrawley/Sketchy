@@ -26,12 +26,21 @@ public class BlurButtonsConfigurator extends AbstractButtonConfigurator<BlurType
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.blurButton);
         buttonConfig.setDefaultSelection(R.id.noBlurButton);
+
+        configureSeekBar();
     }
 
 
     @Override
     public void handleClick(int viewId, BlurType blurType){
         paintHelperManager.getBlurHelper().setBlurType(blurType);
+    }
+
+    private void configureSeekBar(){
+        simpleSeekBarConfigurator.configure( R.id.blurSeekBar,
+                R.integer.blur_radius_default,
+                progress -> paintHelperManager.getBlurHelper().setBlurRadius(progress));
+
     }
 
 }

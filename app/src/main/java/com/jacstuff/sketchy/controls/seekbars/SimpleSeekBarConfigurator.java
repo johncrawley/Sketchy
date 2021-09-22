@@ -19,24 +19,34 @@ public class SimpleSeekBarConfigurator {
 
 
 
-    public void configure(int seekBarId, int defaultResourceId, Consumer<Integer> progressFinishedConsumer, Consumer<Integer> progressConsumer){
+    public void configure(int seekBarId, int defaultResourceId,
+                          Consumer<Integer> progressFinishedConsumer,
+                          Consumer<Integer> progressConsumer,
+                          Consumer<Integer> progressStartedConsumer){
 
         SeekBar seekBar = activity.findViewById(seekBarId);
         viewModel = activity.getViewModel();
-        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, progressConsumer, progressFinishedConsumer));
-        int defaultValue = getValueOf(defaultResourceId);
-        setDefaultValue(defaultValue, seekBarId, progressConsumer, progressFinishedConsumer);
+        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, progressConsumer, progressFinishedConsumer, progressStartedConsumer));
+        setDefaultValue(defaultResourceId, seekBarId, progressConsumer, progressFinishedConsumer, progressStartedConsumer);
+    }
+
+
+    public void configure(int seekBarId, int defaultResourceId,
+                          Consumer<Integer> progressFinishedConsumer,
+                          Consumer<Integer> progressConsumer){
+        configure(seekBarId, defaultResourceId,  progressFinishedConsumer,progressConsumer, null);
     }
 
 
     public void configure(int seekBarId, int defaultResourceId, Consumer<Integer> progressFinishedConsumer){
-        configure(seekBarId, defaultResourceId,  progressFinishedConsumer,null);
+        configure(seekBarId, defaultResourceId,  progressFinishedConsumer,null, null);
     }
 
 
     private SeekBar.OnSeekBarChangeListener createSeekBarChangeListener(int seekBarId,
                                                                         Consumer<Integer> progressChangedConsumer,
-                                                                        Consumer<Integer> progressFinishedConsumer){
+                                                                        Consumer<Integer> progressFinishedConsumer,
+                                                                        Consumer<Integer> progressStartedConsumer){
         return new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -56,18 +66,29 @@ public class SimpleSeekBarConfigurator {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                //do nothing
+                if(progressStartedConsumer != null){
+                    progressStartedConsumer.accept(seekBar.getProgress());
+                }
             }
         };
     }
 
 
-    public void setDefaultValue(int defaultValue, int seekBarId, Consumer<Integer> progressConsumer, Consumer<Integer> progressFinishedConsumer){
-        if(progressConsumer != null) {
-            progressConsumer.accept(getSavedOrDefault(defaultValue, seekBarId));
-        }
-        if(progressFinishedConsumer != null) {
-            progressFinishedConsumer.accept(getSavedOrDefault(defaultValue, seekBarId));
+    public void setDefaultValue(int defaultResourceId, int seekBarId,
+                                Consumer<Integer> progressConsumer,
+                                Consumer<Integer> progressFinishedConsumer,
+                                Consumer<Integer> progressStartedConsumer){
+        int defaultValue = getValueOf(defaultResourceId);
+
+        acceptIfNotNull(progressStartedConsumer, defaultValue, seekBarId);
+        acceptIfNotNull(progressConsumer, defaultValue, seekBarId);
+        acceptIfNotNull(progressFinishedConsumer, defaultValue, seekBarId);
+    }
+
+
+    private void acceptIfNotNull(Consumer<Integer> consumer, int defaultValue, int seekBarId){
+        if(consumer != null) {
+            consumer.accept(getSavedOrDefault(defaultValue, getSavedOrDefault(defaultValue, seekBarId)));
         }
     }
 

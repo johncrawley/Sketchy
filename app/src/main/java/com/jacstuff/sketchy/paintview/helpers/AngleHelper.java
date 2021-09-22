@@ -42,6 +42,11 @@ public class AngleHelper {
         this.currentAngle = angle;
     }
 
+    public void setOtherAngle(int angle){
+        angleType = AngleType.OTHER;
+        this.currentAngle = angle;
+    }
+
 
     public int getAngle(){
         if(angleType.isIncremental()
