@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.brushes;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.brushes.shapes.ArcBrush;
+import com.jacstuff.sketchy.brushes.shapes.BananaBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.CrescentBrush;
@@ -85,6 +86,7 @@ public class BrushFactory {
         add(new OvalBrush());
         add(new CrescentBrush());
         add(new TextOnCircleBrush());
+        add(new BananaBrush());
         add(new PathBrush());
         add(new RectangleBrush());
         add(new XBrush());
