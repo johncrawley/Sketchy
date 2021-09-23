@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.controls.settings.size;
+package com.jacstuff.sketchy.controls.settings;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
@@ -38,10 +38,11 @@ public class SizeSequenceOptionsConfigurator extends AbstractButtonConfigurator<
         buttonConfig.setParentButton(R.id.sizeSequenceButton);
         buttonConfig.setDefaultSelection(R.id.fillStyleButton);
 
-        new SizeSequenceMaxSeekBar(activity, paintView);
-        new SizeSequenceMinSeekBar(activity, paintView);
-        new SizeSequenceStepSeekBar(activity, paintView);
+        //new SizeSequenceMaxSeekBar(activity, paintView);
+        //new SizeSequenceMinSeekBar(activity, paintView);
+        //new SizeSequenceStepSeekBar(activity, paintView);
 
+        configureSeekBars();
         setupOtherOptions();
     }
 
@@ -50,6 +51,26 @@ public class SizeSequenceOptionsConfigurator extends AbstractButtonConfigurator<
     public void handleClick(int viewId, SizeSequenceType sizeSequenceType) {
         paintHelperManager.getSizeHelper().setSequence(sizeSequenceType);
     }
+
+
+    private void configureSeekBars(){
+        simpleSeekBarConfigurator.configure(R.id.sizeSequenceMaxSeekBar,
+                R.integer.size_sequence_max_default,
+                progress -> viewModel.sizeSequenceMax = 1 + progress
+        );
+
+        simpleSeekBarConfigurator.configure(R.id.sizeSequenceMinSeekBar,
+                R.integer.size_sequence_min_default,
+                progress ->  viewModel.sizeSequenceMin = 1 + progress
+        );
+
+        simpleSeekBarConfigurator.configure(R.id.sizeSequenceStepSizeSeekBar,
+                R.integer.size_sequence_step_default,
+                progress ->  viewModel.sizeSequenceIncrement = 1 + progress
+        );
+
+    }
+
 
     public void setupOtherOptions(){
         SwitchMaterial repeatSequence = activity.findViewById(R.id.sizeSequenceIsRepeatedSwitch);
