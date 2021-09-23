@@ -7,12 +7,12 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import androidx.core.util.Consumer;
 
-public class SimpleSeekBarConfigurator {
+public class SeekBarConfigurator {
 
     private final MainActivity activity;
     private MainViewModel viewModel;
 
-    public SimpleSeekBarConfigurator(MainActivity activity){
+    public SeekBarConfigurator(MainActivity activity){
         this.activity = activity;
         viewModel = activity.getViewModel();
     }

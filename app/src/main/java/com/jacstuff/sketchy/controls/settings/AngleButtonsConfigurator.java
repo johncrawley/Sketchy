@@ -61,7 +61,7 @@ public class AngleButtonsConfigurator extends AbstractButtonConfigurator<AngleTy
         buttonUtils = new ButtonUtils(activity);
         parentButton = activity.findViewById(R.id.angleButton);
 
-        simpleSeekBarConfigurator.configure(R.id.angleSeekBar,
+        seekBarConfigurator.configure(R.id.angleSeekBar,
                 R.integer.angle_default,
                 null,
                 progress -> {

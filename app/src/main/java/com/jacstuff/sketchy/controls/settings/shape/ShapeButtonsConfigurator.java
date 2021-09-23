@@ -64,7 +64,7 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
 
 
     private void configureSeekBars() {
-        simpleSeekBarConfigurator.configure( R.id.brushSizeSeekBar,
+        seekBarConfigurator.configure( R.id.brushSizeSeekBar,
                 R.integer.brush_size_default
                 , null,
                 progress -> {
@@ -76,7 +76,7 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
                     }
                 });
 
-        simpleSeekBarConfigurator.configure(R.id.colorTransparencySeekBar,
+        seekBarConfigurator.configure(R.id.colorTransparencySeekBar,
                 R.integer.color_transparency_default,
                 progress -> paintHelperManager.getColorHelper().updateTransparency(progress));
 

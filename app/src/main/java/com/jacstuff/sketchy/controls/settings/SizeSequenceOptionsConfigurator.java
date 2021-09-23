@@ -3,11 +3,7 @@ package com.jacstuff.sketchy.controls.settings;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.controls.ButtonCategory;
-import com.jacstuff.sketchy.controls.settings.AbstractButtonConfigurator;
-import com.jacstuff.sketchy.controls.settings.ButtonConfigHandler;
-import com.jacstuff.sketchy.controls.settings.ButtonsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.size.SizeSequenceType;
 
@@ -54,17 +50,17 @@ public class SizeSequenceOptionsConfigurator extends AbstractButtonConfigurator<
 
 
     private void configureSeekBars(){
-        simpleSeekBarConfigurator.configure(R.id.sizeSequenceMaxSeekBar,
+        seekBarConfigurator.configure(R.id.sizeSequenceMaxSeekBar,
                 R.integer.size_sequence_max_default,
                 progress -> viewModel.sizeSequenceMax = 1 + progress
         );
 
-        simpleSeekBarConfigurator.configure(R.id.sizeSequenceMinSeekBar,
+        seekBarConfigurator.configure(R.id.sizeSequenceMinSeekBar,
                 R.integer.size_sequence_min_default,
                 progress ->  viewModel.sizeSequenceMin = 1 + progress
         );
 
-        simpleSeekBarConfigurator.configure(R.id.sizeSequenceStepSizeSeekBar,
+        seekBarConfigurator.configure(R.id.sizeSequenceStepSizeSeekBar,
                 R.integer.size_sequence_step_default,
                 progress ->  viewModel.sizeSequenceIncrement = 1 + progress
         );

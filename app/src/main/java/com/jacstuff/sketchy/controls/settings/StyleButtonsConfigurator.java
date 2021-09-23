@@ -45,7 +45,7 @@ public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushSt
     }
 
     private void setupSeekBar(){
-        simpleSeekBarConfigurator.configure(R.id.lineWidthSeekBar,
+        seekBarConfigurator.configure(R.id.lineWidthSeekBar,
                 R.integer.line_width_default,
                 progress -> {
                     if(paintView != null) {

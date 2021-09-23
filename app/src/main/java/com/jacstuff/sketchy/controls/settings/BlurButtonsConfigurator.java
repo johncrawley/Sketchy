@@ -37,7 +37,7 @@ public class BlurButtonsConfigurator extends AbstractButtonConfigurator<BlurType
     }
 
     private void configureSeekBar(){
-        simpleSeekBarConfigurator.configure( R.id.blurSeekBar,
+        seekBarConfigurator.configure( R.id.blurSeekBar,
                 R.integer.blur_radius_default,
                 progress -> paintHelperManager.getBlurHelper().setBlurRadius(progress));
 

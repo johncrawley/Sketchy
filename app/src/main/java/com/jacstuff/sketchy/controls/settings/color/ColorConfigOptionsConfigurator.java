@@ -48,25 +48,25 @@ public class ColorConfigOptionsConfigurator extends AbstractButtonConfigurator<V
         SequenceColorSelector allColorsSequenceSelector = paintHelperManager.getColorHelper().getAllColorsSequenceSelector();
         ColorSelector shadeColorSelector = paintHelperManager.getColorHelper().getShadeColorSelector();
 
-        simpleSeekBarConfigurator.configure( R.id.multiShadeBrightnessSeekBar,
+        seekBarConfigurator.configure( R.id.multiShadeBrightnessSeekBar,
                 R.integer.seek_bar_multi_shade_brightness_default,
                 progress -> viewModel.getColorSequenceControls().multiShadeBrightnessPercentage = Math.max(1, progress));
 
-        simpleSeekBarConfigurator.configure(R.id.colorSequenceMaxIndexSeekBar,
+        seekBarConfigurator.configure(R.id.colorSequenceMaxIndexSeekBar,
                 R.integer.seek_bar_color_sequence_max_range_default,
                 progress -> {
                     viewModel.getColorSequenceControls().colorSequenceMaxPercentage = progress;
                     shadeColorSelector.updateRangeIndexes();
                 });
 
-        simpleSeekBarConfigurator.configure(R.id.colorSequenceMinIndexSeekBar,
+        seekBarConfigurator.configure(R.id.colorSequenceMinIndexSeekBar,
                 R.integer.seek_bar_color_sequence_min_range_default,
                 progress -> {
                     viewModel.getColorSequenceControls().colorSequenceMinPercentage = progress;
                     shadeColorSelector.updateRangeIndexes();
                 });
 
-        simpleSeekBarConfigurator.configure(R.id.colorSequenceStepsSeekBar,
+        seekBarConfigurator.configure(R.id.colorSequenceStepsSeekBar,
                 R.integer.seek_bar_color_sequence_steps_default,
                 progress -> {
                     viewModel.getColorSequenceControls().skippedShades = 1 + progress;
