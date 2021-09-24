@@ -20,7 +20,7 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
     public ShapeButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity, paintView);
         childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
-        new TextControls(activity, paintView.getPaintGroup());
+        new TextControls(activity, paintView.getPaintGroup(), seekBarConfigurator);
         minBrushSize = activity.getResources().getInteger(R.integer.brush_size_min_default);
     }
 
