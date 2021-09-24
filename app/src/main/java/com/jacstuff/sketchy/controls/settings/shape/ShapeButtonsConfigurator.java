@@ -20,6 +20,7 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
     public ShapeButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity, paintView);
         childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
+        childSettingsPanelManager.add(R.id.convexSquareShapeButton, R.id.settingsPanelConvexSquareShapeInclude);
         new TextControls(activity, paintView.getPaintGroup(), seekBarConfigurator);
         minBrushSize = activity.getResources().getInteger(R.integer.brush_size_min_default);
     }
@@ -80,6 +81,14 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
         seekBarConfigurator.configure(R.id.colorTransparencySeekBar,
                 R.integer.color_transparency_default,
                 progress -> paintHelperManager.getColorHelper().updateTransparency(progress));
+
+        seekBarConfigurator.configure(R.id.convexSquareShapeMidpointSeekBar,
+                R.integer.convex_square_shape_seek_bar_default,
+                progress -> {
+                    viewModel.convexSquareShapeMidpointLengthPercentage = progress;
+                    // TODO: add a call to brush to notify percentage changed,
+                    //  so that the actual value can be recalculated
+                } );
 
     }
 

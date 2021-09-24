@@ -43,6 +43,9 @@
     <integer name="text_spacing_seekbar_max">200</integer>
     <integer name="bitmap_history_maximum_size">16</integer>
 
+    <integer name="convex_square_shape_seek_bar_default">600</integer>
+    <integer name="convex_square_shape_seek_bar_max">1200</integer>
+
 
     <integer name="size_sequence_max_default">100</integer>
     <integer name="size_sequence_min_default">10</integer>

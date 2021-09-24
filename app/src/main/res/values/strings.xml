@@ -187,6 +187,7 @@
     <string name="text_strikethrough_checkbox_label">Strikethrough</string>
     <string name="text_edit_text_autofill_hint">Add Text To Draw</string>
     <string name="text_edit_text_default">Hello!</string>
+    <string name="seek_bar_label_convex_square_shape_midpoint_distances">Curve Bend</string>
 
     <string name="toast_text_brush_is_empty">Please enter some text to draw</string>
     <string name="random_shade_button_text">\?</string>

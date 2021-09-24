@@ -22,6 +22,18 @@
         layout="@layout/settings_panel_text_shape" />
 
 
+    <include
+        android:id="@+id/settingsPanelConvexSquareShapeInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        layout="@layout/settings_panel_convex_square_shape" />
+
+
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/drawOnMoveSwitch"
         android:layout_width="wrap_content"

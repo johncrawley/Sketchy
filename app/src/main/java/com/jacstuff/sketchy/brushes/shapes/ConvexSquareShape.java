@@ -5,12 +5,11 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 
+import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 
 public class ConvexSquareShape extends AbstractBrush implements Brush {
 
-
-        private int arcHeight;
         private float quarterBrushSize;
 
         public ConvexSquareShape(){
@@ -24,8 +23,9 @@ public class ConvexSquareShape extends AbstractBrush implements Brush {
             Point topRightCorner = new Point(halfBrushSize, -halfBrushSize);
             Point bottomRightCorner = new Point(halfBrushSize, halfBrushSize);
             Point bottomLeftCorner = new Point(-halfBrushSize, halfBrushSize);
-
-            int midPointLength = -halfBrushSize /2;
+            int midPercentage = mainActivity.getResources().getInteger(R.integer.convex_square_shape_seek_bar_max) / 2;
+            int percentage = mainViewModel.convexSquareShapeMidpointLengthPercentage - midPercentage;
+            int  midPointLength =  (int)((quarterBrushSize/100f) * percentage);
             Point midCurveTop = new Point(0, -midPointLength);
             Point midCurveBottom = new Point(0, midPointLength);
             Point midCurveLeft = new Point(-midPointLength, 0);
@@ -51,7 +51,6 @@ public class ConvexSquareShape extends AbstractBrush implements Brush {
         @Override
         public void setBrushSize(int brushSize){
             super.setBrushSize(brushSize);
-            arcHeight = (int)(halfBrushSize * 2.25);
             quarterBrushSize = halfBrushSize / 2f;
         }
 

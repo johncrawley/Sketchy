@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -57,7 +56,6 @@
             android:indeterminate="false"
             android:gravity="fill_horizontal"
             android:max="@integer/text_skew_seekbar_max"
-            android:min="0"
             android:paddingTop="@dimen/seekbar_text_controls_padding_top"
             android:paddingBottom="@dimen/seekbar_text_controls_padding_bottom"
             android:progress="@integer/text_skew_seekbar_default" />
