@@ -33,6 +33,7 @@ public interface Brush {
     void reinitialize();
     void add(BrushStyle brushStyle, Style style);
     void notifyStrokeWidthChanged();
+    void recalculateDimensions();
     BrushShape getBrushShape();
 
     void touchDown(float x, float y, Paint paint);

@@ -20,7 +20,7 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
     public ShapeButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity, paintView);
         childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
-        childSettingsPanelManager.add(R.id.convexSquareShapeButton, R.id.settingsPanelConvexSquareShapeInclude);
+        childSettingsPanelManager.add(R.id.astroidShapeButton, R.id.settingsPanelAstroidShapeInclude);
         new TextControls(activity, paintView.getPaintGroup(), seekBarConfigurator);
         minBrushSize = activity.getResources().getInteger(R.integer.brush_size_min_default);
     }
@@ -48,10 +48,10 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
         buttonConfig.add(R.id.crescentShapeButton,          R.drawable.button_shape_crescent,           BrushShape.CRESCENT);
         buttonConfig.add(R.id.xShapeButton,                 R.drawable.button_shape_x,                  BrushShape.X);
         buttonConfig.add(R.id.starShapeButton,              R.drawable.button_shape_star,               BrushShape.STAR);
-        buttonConfig.add(R.id.bananaShapeButton,            R.drawable.button_shape_x,                  BrushShape.BANANA);
+        buttonConfig.add(R.id.bananaShapeButton,            R.drawable.button_shape_banana,             BrushShape.BANANA);
         buttonConfig.add(R.id.waveyLineShapeButton,         R.drawable.button_shape_wavy_line,          BrushShape.WAVY_LINE);
-        buttonConfig.add(R.id.convexSquareShapeButton,      R.drawable.button_shape_rounded_rect,       BrushShape.CONVEX_SQUARE);
-        buttonConfig.add(R.id.lensShapeButton,              R.drawable.button_shape_circle,             BrushShape.LENS);
+        buttonConfig.add(R.id.astroidShapeButton,           R.drawable.button_shape_astroid,            BrushShape.ASTROID);
+        buttonConfig.add(R.id.pointedOvalShapeButton,       R.drawable.button_shape_pointed_oval,       BrushShape.POINTED_OVAL);
         buttonConfig.add(R.id.textShapeButton,              R.drawable.button_shape_text,               BrushShape.TEXT);
         buttonConfig.add(R.id.rectangleShapeButton,         R.drawable.button_shape_rectangle,          BrushShape.DRAG_RECTANGLE);
         buttonConfig.add(R.id.lineShapeButton,              R.drawable.button_shape_line,               BrushShape.LINE);
@@ -83,15 +83,16 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
                 R.integer.color_transparency_default,
                 progress -> paintHelperManager.getColorHelper().updateTransparency(progress));
 
-        seekBarConfigurator.configure(R.id.convexSquareShapeMidpointSeekBar,
-                R.integer.convex_square_shape_seek_bar_default,
+        seekBarConfigurator.configure(R.id.astroidShapeCurveSeekBar,
+                R.integer.astroid_shape_curve_seek_bar_default,
                 progress -> {
-                    viewModel.convexSquareShapeMidpointLengthPercentage = progress;
+                    viewModel.astroid_shape_curve_rate = progress;
+                    paintView.recalculateBrush();
                     // TODO: add a call to brush to notify percentage changed,
                     //  so that the actual value can be recalculated
                 } );
-
     }
+
 
     @Override
     public void handleClick(int viewId, BrushShape brushShape){

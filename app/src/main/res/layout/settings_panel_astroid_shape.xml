@@ -15,25 +15,24 @@
         android:paddingVertical="@dimen/convex_square_midpoint_seekbar_padding_vertical">
 
         <TextView
-            android:id="@+id/convexSquareShapeMidpointDistancesSeekBarLabel"
+            android:id="@+id/astroidShapeCurveSeekBarLabel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".2"
             android:gravity="center_vertical"
-            android:text="@string/seek_bar_label_convex_square_shape_midpoint_distances"
+            android:text="@string/seek_bar_label_astroid_shape_curve"
             />
 
         <SeekBar
-            android:id="@+id/convexSquareShapeMidpointSeekBar"
+            android:id="@+id/astroidShapeCurveSeekBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
             android:indeterminate="false"
             android:gravity="fill_horizontal"
-            android:max="@integer/convex_square_shape_seek_bar_max"
+            android:max="@integer/astroid_shape_curve_seek_bar_max"
             android:paddingBottom="@dimen/seekbar_text_controls_padding_bottom"
-            android:progress="@integer/convex_square_shape_seek_bar_default" />
-
+            android:progress="@integer/astroid_shape_curve_seek_bar_default" />
     </LinearLayout>
 
     <LinearLayout

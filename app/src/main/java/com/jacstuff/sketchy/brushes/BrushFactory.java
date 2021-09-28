@@ -5,11 +5,11 @@ import com.jacstuff.sketchy.brushes.shapes.ArcBrush;
 import com.jacstuff.sketchy.brushes.shapes.BananaBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
-import com.jacstuff.sketchy.brushes.shapes.ConvexSquareShape;
+import com.jacstuff.sketchy.brushes.shapes.AstroidBrush;
 import com.jacstuff.sketchy.brushes.shapes.CrescentBrush;
 import com.jacstuff.sketchy.brushes.shapes.DiamondBrush;
 import com.jacstuff.sketchy.brushes.shapes.HexagonBrush;
-import com.jacstuff.sketchy.brushes.shapes.LensBrush;
+import com.jacstuff.sketchy.brushes.shapes.PointedOvalBrush;
 import com.jacstuff.sketchy.brushes.shapes.LineBrush;
 import com.jacstuff.sketchy.brushes.shapes.OvalBrush;
 import com.jacstuff.sketchy.brushes.shapes.PathBrush;
@@ -93,8 +93,8 @@ public class BrushFactory {
         add(new RectangleBrush());
         add(new XBrush());
         add(new DiamondBrush());
-        add(new ConvexSquareShape());
-        add(new LensBrush());
+        add(new AstroidBrush());
+        add(new PointedOvalBrush());
     }
 
 

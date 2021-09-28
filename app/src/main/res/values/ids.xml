@@ -95,8 +95,8 @@
     <item name="arcShapeButton" type="id"/>
     <item name="xShapeButton" type="id"/>
     <item name="bananaShapeButton" type="id"/>
-    <item name="convexSquareShapeButton" type="id"/>
-    <item name="lensShapeButton" type="id"/>
+    <item name="astroidShapeButton" type="id"/>
+    <item name="pointedOvalShapeButton" type="id"/>
 
     <item name="brokenOutlineStyleButton" type="id"/>
     <item name="fillStyleButton" type="id"/>

@@ -43,8 +43,8 @@
     <integer name="text_spacing_seekbar_max">200</integer>
     <integer name="bitmap_history_maximum_size">16</integer>
 
-    <integer name="convex_square_shape_seek_bar_default">600</integer>
-    <integer name="convex_square_shape_seek_bar_max">1200</integer>
+    <integer name="astroid_shape_curve_seek_bar_default">150</integer>
+    <integer name="astroid_shape_curve_seek_bar_max">530</integer>
 
 
     <integer name="size_sequence_max_default">100</integer>

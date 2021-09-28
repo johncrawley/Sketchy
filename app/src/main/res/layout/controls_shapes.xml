@@ -23,7 +23,7 @@
 
 
     <include
-        android:id="@+id/settingsPanelConvexSquareShapeInclude"
+        android:id="@+id/settingsPanelAstroidShapeInclude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        layout="@layout/settings_panel_convex_square_shape" />
+        layout="@layout/settings_panel_astroid_shape" />
 
 
     <com.google.android.material.switchmaterial.SwitchMaterial

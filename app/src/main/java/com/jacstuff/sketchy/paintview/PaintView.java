@@ -239,6 +239,14 @@ public class PaintView extends View {
     }
 
 
+    public void recalculateBrush(){
+        if(currentBrush == null){
+            return;
+        }
+        currentBrush.recalculateDimensions();
+    }
+
+
     public void undo(){
         loadHistoryItem(true);
     }

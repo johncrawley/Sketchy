@@ -51,6 +51,10 @@ public abstract class AbstractBrush implements  Brush{
     public void onTouchUp(Point p, Canvas canvas, Paint paint){
     }
 
+    @Override
+    public void recalculateDimensions(){
+        //do nothing
+    }
 
     @Override
     public void init(PaintView paintView, MainActivity mainActivity, DrawerFactory drawerFactory){

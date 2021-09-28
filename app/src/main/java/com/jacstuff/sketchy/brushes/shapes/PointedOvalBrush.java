@@ -5,15 +5,14 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 
-import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 
-public class LensBrush extends AbstractBrush implements Brush {
+public class PointedOvalBrush extends AbstractBrush implements Brush {
 
     private float quarterBrushSize;
 
-    public LensBrush(){
-        super(BrushShape.LENS);
+    public PointedOvalBrush(){
+        super(BrushShape.POINTED_OVAL);
     }
 
 
@@ -21,7 +20,6 @@ public class LensBrush extends AbstractBrush implements Brush {
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         Point leftPoint = new Point(-halfBrushSize, 0);
         Point rightPoint = new Point(halfBrushSize, 0);
-        Point bottomRightCorner = new Point(halfBrushSize, halfBrushSize);
         int  midPointLength = (int) quarterBrushSize;
         Point midPointTop = new Point(0, -midPointLength);
         Point midPointBottom = new Point(0, midPointLength);

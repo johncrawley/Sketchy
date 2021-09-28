@@ -57,7 +57,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int linearGradientLength=100;
     public boolean snapRectangleToEdge =true;
 
-    public int convexSquareShapeMidpointLengthPercentage = 100;
+    public int astroid_shape_curve_rate = 100;
 
     public int colorAlpha = 0;
     public String textBrushText = "";
