@@ -51,6 +51,23 @@ public class GradientHelper {
     }
 
 
+    public void setGradientOffsetX(int progress){
+        viewModel.radialGradientOffsetX = getOffset(progress);
+    }
+
+
+    public void setGradientOffsetY(int progress){
+        viewModel.radialGradientOffsetY = getOffset(progress);
+    }
+
+
+    private int getOffset(int progress){
+        int percentage = progress -100;
+        return (int)((viewModel.brushSize /100f) * percentage);
+    }
+
+
+
     public void calculateGradientLength(){
         viewModel.radialGradientRadius = 1 + RADIAL_GRADIENT_NUMERATOR / radiusFactor;
         viewModel.clampRadialGradientRadius = 1 + viewModel.radialGradientRadius * CLAMP_RADIAL_GRADIENT_FACTOR;

@@ -42,9 +42,14 @@ public class GradientButtonsConfigurator extends AbstractButtonConfigurator<Grad
                 R.integer.gradient_radius_default,
                 progress ->  paintHelperManager.getGradientHelper().setGradientRadius(progress));
 
-        seekBarConfigurator.configure( R.id.gradientSizeSeekBar,
-                R.integer.gradient_radius_default,
-                progress ->  paintHelperManager.getGradientHelper().setGradientRadius(progress));
+        seekBarConfigurator.configure( R.id.gradientOffsetXSeekBar,
+                R.integer.gradient_radius_offset_x_default,
+                progress ->  paintHelperManager.getGradientHelper().setGradientOffsetX(progress));
+
+        seekBarConfigurator.configure( R.id.gradientOffsetYSeekBar,
+                R.integer.gradient_radius_offset_y_default,
+                progress ->  paintHelperManager.getGradientHelper().setGradientOffsetY(progress));
+
     }
 
 

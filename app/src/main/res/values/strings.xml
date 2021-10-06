@@ -157,8 +157,8 @@
     <string name="confirm_wipe_confirm_button">Yes</string>
     <string name="confirm_wipe_cancel_button">No</string>
     <string name="gradient_size_seekbar_label">Gradient Factor</string>
-    <string name="gradient_offset_x_seekbar_label">Gradient Factor</string>
-    <string name="gradient_offset_y_seekbar_label">Offset</string>
+    <string name="gradient_offset_x_seekbar_label">X-Axis Offset</string>
+    <string name="gradient_offset_y_seekbar_label">Y-Axis Offset</string>
     <string name="angle_seekbar_label">Rotation</string>
     <string name="kaleidoscope_fixed_position_label">Centre Kaleidoscope</string>
     <string name="kaleidoscope_infinity_mode_label">Infinity Mirror</string>
