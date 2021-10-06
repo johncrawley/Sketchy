@@ -48,10 +48,12 @@ public class KaleidoscopeHelper {
         return isEnabled && viewModel.isInfinityModeEnabled;
     }
 
+
     public void setSegments(int numberOfSegments){
         isEnabled = numberOfSegments > 1;
         this.degreeIncrement = (float)TOTAL_DEGREES / numberOfSegments;
     }
+
 
     public float getDegreeIncrement(){
         return degreeIncrement;
@@ -59,11 +61,9 @@ public class KaleidoscopeHelper {
 
 
     public void setCenter(float x, float y){
-        System.out.println("default centre x,y :" + defaultCenterX + " " + defaultCenterY + " canvas width,height: " + kaleidoscopeDrawer.paintView.getWidth() + "," + kaleidoscopeDrawer.paintView.getHeight());
         this.centerX = (int) x;
         this.centerY = (int) y;
     }
-
 
 
     public int getCenterX(){

@@ -1,10 +1,7 @@
 package com.jacstuff.sketchy.viewmodel;
 
 import android.graphics.Color;
-import android.service.controls.Control;
-
 import com.jacstuff.sketchy.controls.ButtonCategory;
-import com.jacstuff.sketchy.multicolor.ColorSequenceType;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
@@ -55,6 +52,8 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int radialGradientRadius=1;
     public int clampRadialGradientRadius=10;
     public int linearGradientLength=100;
+    public int radialGradientOffsetX=0;
+    public int radialGradientOffsetY=0;
     public boolean snapRectangleToEdge =true;
 
     public int astroid_shape_curve_rate = 100;

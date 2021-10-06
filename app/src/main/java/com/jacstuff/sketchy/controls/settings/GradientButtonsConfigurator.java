@@ -28,7 +28,7 @@ public class GradientButtonsConfigurator extends AbstractButtonConfigurator<Grad
         buttonConfig.setParentButton(R.id.gradientButton);
         buttonConfig.setDefaultSelection(R.id.noGradientButton);
 
-        configureSeekBar();
+        configureSeekBars();
     }
 
 
@@ -37,10 +37,16 @@ public class GradientButtonsConfigurator extends AbstractButtonConfigurator<Grad
         paintHelperManager.getGradientHelper().setGradientType(gradientType);
     }
 
-    private void configureSeekBar(){
+    private void configureSeekBars(){
+        seekBarConfigurator.configure( R.id.gradientSizeSeekBar,
+                R.integer.gradient_radius_default,
+                progress ->  paintHelperManager.getGradientHelper().setGradientRadius(progress));
+
         seekBarConfigurator.configure( R.id.gradientSizeSeekBar,
                 R.integer.gradient_radius_default,
                 progress ->  paintHelperManager.getGradientHelper().setGradientRadius(progress));
     }
+
+
 
 }
