@@ -59,6 +59,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int astroid_shape_curve_rate = 100;
 
     public int colorAlpha = 0;
+    public int secondaryColor = Color.WHITE;
     public String textBrushText = "";
     public int color = Color.BLACK;
     public int previousColor = Color.WHITE;

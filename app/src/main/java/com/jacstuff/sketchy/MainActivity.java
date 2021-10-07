@@ -8,6 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
@@ -231,8 +236,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 paintView.init(settingsPopup, brushFactory);
                 settingsButtonsConfigurator.selectDefaults();
                 viewModelHelper.onResume();
+                setupColorPickerSeekbar();
             }
         });
+    }
+
+    private void setupColorPickerSeekbar(){
+        SeekBar colorPickerSeekBar = findViewById(R.id.colorPickerSeekBar);
+        int totalSeekBarMargin = (int)(getResources().getDimension(R.dimen.gradient_color_picker_seek_bar_horizontal_margin) * 2);
+        int totalControlPanelMargin = (int)(getResources().getDimension(R.dimen.settings_buttons_layout_padding_horizontal) * 2);
+        int seekBarWidth = paintView.getWidth() - (totalSeekBarMargin + totalControlPanelMargin);
+        LinearGradient linearGradient = new LinearGradient(0, 0, seekBarWidth, 0,
+                new int[] { 0xFF000000, 0xFF0000FF, 0xFF00FF00, 0xFF00FFFF,
+                        0xFFFF0000, 0xFFFF00FF, 0xFFFFFF00, 0xFFFFFFFF},
+                null, Shader.TileMode.CLAMP);
+        ShapeDrawable shape = new ShapeDrawable(new RectShape());
+        shape.getPaint().setShader(linearGradient);
+        colorPickerSeekBar.setProgressDrawable(shape);
+        colorPickerSeekBar.setMax(256*7-1);
     }
 
 

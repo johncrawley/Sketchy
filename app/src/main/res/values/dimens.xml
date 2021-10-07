@@ -60,6 +60,7 @@
     <dimen name="seekbar_brush_size_include_horizontal_padding">12dp</dimen>
     <dimen name="seekbar_horizontal_padding">12dp</dimen>
     <dimen name="seekbar_layout_vertical_margin">16dp</dimen>
+    <dimen name="gradient_color_picker_seek_bar_horizontal_margin">16dp</dimen>
     <dimen name="seekbar_padding">10dp</dimen>
     <dimen name="seekbar_text_controls_padding_top">4dp</dimen>
     <dimen name="seekbar_text_controls_padding_bottom">6dp</dimen>
