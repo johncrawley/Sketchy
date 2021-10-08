@@ -1,10 +1,13 @@
 package com.jacstuff.sketchy.controls.settings;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.GradientType;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
+
+import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner;
 
 public class GradientButtonsConfigurator extends AbstractButtonConfigurator<GradientType> implements ButtonsConfigurator<GradientType> {
 
@@ -28,6 +31,7 @@ public class GradientButtonsConfigurator extends AbstractButtonConfigurator<Grad
         buttonConfig.setParentButton(R.id.gradientButton);
         buttonConfig.setDefaultSelection(R.id.noGradientButton);
         configureSeekBars();
+        setupSpinner();
     }
 
 
@@ -54,6 +58,15 @@ public class GradientButtonsConfigurator extends AbstractButtonConfigurator<Grad
                 R.integer.gradient_color_picker_seek_bar_default,
                 progress ->  paintHelperManager.getGradientHelper().setGradientColor(progress));
 
+    }
+
+
+    private void setupSpinner(){
+        SettingsUtils.setupSpinner2(activity,
+                R.id.gradientColorSpinner,
+                R.array.gradient_color_array,
+                R.array.gradient_color_values,
+                x -> paintHelperManager.getGradientHelper().setGradientColorType(x));
     }
 
 

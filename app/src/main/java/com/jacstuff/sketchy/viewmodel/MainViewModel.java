@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.viewmodel;
 
 import android.graphics.Color;
 import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.paintview.helpers.GradientColorType;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
@@ -54,12 +55,14 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int linearGradientLength=100;
     public int radialGradientOffsetX=0;
     public int radialGradientOffsetY=0;
+    public GradientColorType gradientColorType = GradientColorType.SELECTED;
     public boolean snapRectangleToEdge =true;
 
     public int astroid_shape_curve_rate = 100;
 
     public int colorAlpha = 0;
     public int secondaryColor = Color.WHITE;
+    public boolean usePreviousColorForGradient = false;
     public String textBrushText = "";
     public int color = Color.BLACK;
     public int previousColor = Color.WHITE;

@@ -145,13 +145,28 @@ public class GradientHelper {
          }
         viewModel.gradientMaxLength = (int)((width + height)/1.4142f);
         calculateGradientLength();
-        assignGradient(p.x, p.y, viewModel.color, viewModel.secondaryColor);
+        assignGradient(p.x, p.y, viewModel.color);
+    }
+
+    public void setGradientColorType(String type){
+        viewModel.gradientColorType = GradientColorType.valueOf(type.toUpperCase());
+    }
+
+    private int getGradientColor(){
+        switch(viewModel.gradientColorType) {
+            case SELECTED:
+                return viewModel.secondaryColor;
+
+            case PREVIOUS:
+                return viewModel.previousColor;
+        }
+        return Color.TRANSPARENT;
     }
 
 
-    public void assignGradient(float x, float y, int color, int oldColor2){
-       // oldColor = Color.TRANSPARENT;
-        int oldColor = viewModel.secondaryColor;
+    public void assignGradient(float x, float y, int color){
+        int oldColor = getGradientColor();
+
         switch(gradientType){
 
             case NONE:

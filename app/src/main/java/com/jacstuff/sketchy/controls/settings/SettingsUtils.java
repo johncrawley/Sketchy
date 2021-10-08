@@ -6,6 +6,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.jacstuff.sketchy.R;
+
 import androidx.core.util.Consumer;
 
 public class SettingsUtils {
@@ -29,6 +31,28 @@ public class SettingsUtils {
         };
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(itemSelectedListener);
-
     }
+
+
+    public static void setupSpinner2(Activity activity, int spinnerId, int itemsArrayId, int valuesArrayId, final Consumer<String> paintAction){
+        Spinner spinner = activity.findViewById(spinnerId);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity,
+                itemsArrayId, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String[] size_values = activity.getResources().getStringArray(valuesArrayId);
+                paintAction.accept(size_values[i]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        };
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(itemSelectedListener);
+    }
+
 }

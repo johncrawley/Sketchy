@@ -120,23 +120,6 @@
     <string name="toast_save_sketch_error">Error: unable to save the sketch</string>
     <string name="toast_save_sketch_success">Sketch saved</string>
 
-    <string name="pattern_toast_prefix">Sequence &#160;</string>
-    <string name="pattern_label_first_to_last">First To Last</string>
-    <string name="pattern_label_over_and_back">Over And Back</string>
-    <string name="pattern_label_middle_to_end">Middle To End</string>
-    <string name="pattern_label_middle_to_start">Middle To Start</string>
-    <string name="pattern_label_caterpillar">Caterpillar</string>
-    <string name="pattern_label_even_selection">Evens</string>
-    <string name="pattern_label_ice_cream">Ice Cream</string>
-    <string name="pattern_label_fresh">Fresh</string>
-    <string name="pattern_label_humbug">Humbug</string>
-    <string name="pattern_label_spooky">Spooky</string>
-    <string name="pattern_label_icing">Icing</string>
-    <string name="pattern_label_strobe">Strobe</string>
-    <string name="pattern_label_to_light">To Light</string>
-    <string name="pattern_label_to_dark">To Dark</string>
-    <string name="pattern_label_snake">Snake</string>
-    <string name="pattern_label_macaron">Macaron</string>
     <string name="stroke_cap_spinner_label">Cap</string>
     <string name="stroke_cap_spinner_round_item">Round</string>
     <string name="stroke_cap_spinner_square_item">Square</string>
@@ -146,6 +129,13 @@
     <string name="stroke_join_spinner_mitre_item">Sharp</string>
     <string name="stroke_join_spinner_round_item">Soft</string>
     <string name="stroke_join_spinner_bevel_item">Bevel</string>
+
+
+    <string name="gradient_color_spinner_label">Gradient Color</string>
+    <string name="spinner_item_gradient_color_selected">Selected</string>
+    <string name="spinner_item_gradient_color_previous">Previous Color</string>
+    <string name="spinner_item_gradient_color_transparent">Transparent</string>
+
     <string name="confirm_wipe_text">Clear the canvas without saving?</string>
 
     <string name="spinner_color_sequence_type_label">Sequence Type</string>
@@ -162,6 +152,7 @@
     <string name="angle_seekbar_label">Rotation</string>
     <string name="kaleidoscope_fixed_position_label">Centre Kaleidoscope</string>
     <string name="kaleidoscope_infinity_mode_label">Infinity Mirror</string>
+    <string name="switch_label_gradient_use_previous_colour">Use Previous Colour</string>
     <string name="switch_label_color_sequence_repeat">Repeat Sequence</string>
     <string name="switch_label_color_sequence_reset_on_release">Reset on Release</string>
     <string name="size_sequence_is_repeated_label">Repeat</string>

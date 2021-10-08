@@ -7,19 +7,11 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 
 public class Toaster {
-    private Toast colorPatternToast, toast;
-    private Context context;
+    private Toast toast;
+    private final Context context;
 
     public Toaster(Context context){
         this.context = context;
-    }
-
-    public void toastPattern(String msg){
-        if(colorPatternToast != null){
-            colorPatternToast.cancel();
-        }
-        colorPatternToast = Toast.makeText(context, context.getString(R.string.pattern_toast_prefix) +  msg, Toast.LENGTH_SHORT);
-        colorPatternToast.show();
     }
 
 

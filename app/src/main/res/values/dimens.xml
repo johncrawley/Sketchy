@@ -68,6 +68,7 @@
     <dimen name="switch_option_padding_bottom">2dp</dimen>
     <dimen name="switch_option_padding_top">0dp</dimen>
     <dimen name="switch_option_draw_on_move_padding_top">6dp</dimen>
+    <dimen name="gradient_color_type_padding_horizontal">32dp</dimen>
     <dimen name="switch_option_draw_on_move_padding_horizontal">32dp</dimen>
     <dimen name="shape_options_padding_top">4dp</dimen>
     <dimen name="clear_canvas_dialog_buttons_padding">16dp</dimen>
