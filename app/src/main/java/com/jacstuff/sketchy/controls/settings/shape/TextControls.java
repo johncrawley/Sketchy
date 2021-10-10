@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.controls.settings.shape;
 
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -14,8 +15,11 @@ import android.widget.TextView;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
+import com.jacstuff.sketchy.controls.settings.SettingsUtils;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
+
+import androidx.core.content.res.ResourcesCompat;
 
 public class TextControls {
 
@@ -24,6 +28,7 @@ public class TextControls {
     private final MainViewModel viewModel;
     private final PaintGroup paintGroup;
     private final SeekBarConfigurator seekBarConfigurator;
+
 
 
      public TextControls(MainActivity activity, PaintGroup paintGroup, SeekBarConfigurator seekBarConfigurator) {
@@ -36,6 +41,7 @@ public class TextControls {
          setupEditTextActionListener();
          setupCheckboxListener(paintGroup);
          configureSeekBars();
+        // setupFontSpinner();
      }
 
 
@@ -72,6 +78,7 @@ public class TextControls {
              public void afterTextChanged(Editable editable) {
              }
          });
+
      }
 
 
@@ -113,6 +120,21 @@ public class TextControls {
         };
         assignCheckBoxListener(checkedChangeListener, R.id.checkboxTextBold, R.id.checkboxTextStrikethrough, R.id.checkboxTextUnderline);
     }
+
+    private void setupFontSpinner(){
+      /*
+            SettingsUtils.setupSpinner2(activity,
+                    R.id.gradientColorSpinner,
+                    R.array.gradient_color_array,
+                    R.array.gradient_color_values,
+                    x -> paintHelperManager.getGradientHelper().setGradientColorType(x));
+         */
+        Typeface customTypeface = ResourcesCompat.getFont(activity, R.font.playfair_regular);
+        paintGroup.setTypeface(customTypeface);
+
+
+    }
+
 
 
     private void assignCheckBoxListener(CheckBox.OnCheckedChangeListener onCheckedChangeListener, int ... ids){

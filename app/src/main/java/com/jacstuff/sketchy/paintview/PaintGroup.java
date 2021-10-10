@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.paintview;
 
 import android.graphics.Paint;
 import android.graphics.PathEffect;
+import android.graphics.Typeface;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +35,12 @@ public class PaintGroup {
     public void setPathEffect(PathEffect pathEffect){
         for(Paint p: paints){
             p.setPathEffect(pathEffect);
+        }
+    }
+
+    public void setTypeface(Typeface typeface){
+        for(Paint p: paints){
+            p.setTypeface(typeface);
         }
     }
 
