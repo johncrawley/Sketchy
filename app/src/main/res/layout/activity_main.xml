@@ -35,7 +35,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/paint_view_layout_margin"
-        android:layout_marginTop="@dimen/paint_view_layout_portrait_margin_top"
         android:background="@color/paint_view_border"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/includeColorControls"
@@ -55,10 +54,10 @@
 
 
     <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/includedSettingsLayout"
         layout="@layout/selection_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/includedSelectionControls"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
