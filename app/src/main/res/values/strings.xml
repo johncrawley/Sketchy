@@ -158,6 +158,7 @@
     <string name="size_sequence_is_repeated_label">Repeat</string>
     <string name="size_sequence_is_reset_on_release_label">Reset on Release</string>
     <string name="shadow_radius_seekbar_label">Shadow Focus</string>
+    <string name="shadow_distance_seekbar_label">Distance</string>
     <string name="line_width_seekbar_label">Line Width</string>
     <string name="size_sequence_min_seekbar_label">Minimum Width</string>
     <string name="size_sequence_max_seekbar_label">Maximum Width</string>

@@ -40,6 +40,8 @@
     <integer name="shadow_radius_min">1</integer>
     <integer name="shadow_radius_max">100</integer>
     <integer name="shadow_radius_default">10</integer>
+    <integer name="shadow_distance_max">100</integer>
+    <integer name="shadow_distance_default">10</integer>
     <integer name="angle_max">359</integer>
     <integer name="angle_min">0</integer>
     <integer name="angle_default">0</integer>

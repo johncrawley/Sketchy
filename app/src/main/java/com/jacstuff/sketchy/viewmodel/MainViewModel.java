@@ -60,6 +60,9 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
 
     public int astroid_shape_curve_rate = 100;
 
+    public int shadowSize = 1;
+    public int shadowDistance =1;
+
     public int colorAlpha = 0;
     public int secondaryColor = Color.WHITE;
     public boolean usePreviousColorForGradient = false;

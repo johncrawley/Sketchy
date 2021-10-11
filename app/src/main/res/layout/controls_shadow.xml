@@ -12,6 +12,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+
         android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
         <include
             android:id="@+id/shadowSeekBarInclude"
@@ -19,6 +21,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             layout="@layout/seek_bar_shadow_radius" />
+
+        <include
+            android:id="@+id/shadowDistanceBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/seek_bar_shadow_distance" />
     </LinearLayout>
 
     <HorizontalScrollView

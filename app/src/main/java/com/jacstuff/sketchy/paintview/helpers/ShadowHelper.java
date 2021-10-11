@@ -4,24 +4,43 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.ShadowType;
+import com.jacstuff.sketchy.brushes.shapes.drawer.KaleidoscopeDrawer;
+import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class ShadowHelper {
 
 
     private ShadowType shadowType = ShadowType.NONE;
-    private int shadowSize;
-    private int shadowOffsetX;
-    private int shadowOffsetY;
+
+    private float shadowOffsetX, shadowOffsetY;
     private int shadowOffsetFactor;
     private boolean hasSizeBeenUpdated;
+    private boolean hasDistanceBeenUpdated;
     private Paint paint;
+    private  MainViewModel viewModel;
+    private PaintView paintView;
+
+
+    public ShadowHelper(PaintView paintView, MainViewModel viewModel){
+        this.paintView = paintView;
+        this.viewModel = viewModel;
+    }
 
 
     public void setShadowSize(int size){
-        shadowSize = 1 + size;
+        viewModel.shadowSize = 1 + size;
         hasSizeBeenUpdated = true;
         assignShadow();
     }
+
+
+    public void setShadowDistance(int progress){
+        hasDistanceBeenUpdated = true;
+        viewModel.shadowDistance = 1 + progress;
+        assignShadow();
+    }
+
 
     public void init(Paint paint){
         this.paint = paint;
@@ -29,7 +48,7 @@ public class ShadowHelper {
 
 
     public void updateOffsetFactor(int halfBrushSize){
-        shadowOffsetFactor = halfBrushSize / 4;
+        shadowOffsetFactor = halfBrushSize * 4;
         assignShadow();
     }
 
@@ -51,17 +70,18 @@ public class ShadowHelper {
             return;
         }
 
-        int previousX = shadowOffsetX;
-        int previousY = shadowOffsetY;
+        float previousX = shadowOffsetX;
+        float previousY = shadowOffsetY;
 
-        shadowOffsetX = shadowOffsetFactor * shadowType.offsetX;
-        shadowOffsetY = shadowOffsetFactor * shadowType.offsetY;
+        shadowOffsetX = ((shadowOffsetFactor * shadowType.offsetX) /100f) * viewModel.shadowDistance;
+        shadowOffsetY = ((shadowOffsetFactor * shadowType.offsetY) / 100f) * viewModel.shadowDistance;
 
-        if(previousX == shadowOffsetX && previousY == shadowOffsetY && !hasSizeBeenUpdated){
+        if(previousX == shadowOffsetX && previousY == shadowOffsetY && !hasSizeBeenUpdated && !hasDistanceBeenUpdated){
             return;
         }
         hasSizeBeenUpdated = false;
-        paint.setShadowLayer(shadowSize, shadowOffsetX, shadowOffsetY, Color.BLACK);
+        hasDistanceBeenUpdated = false;
+        paint.setShadowLayer(viewModel.shadowSize, shadowOffsetX, shadowOffsetY, Color.BLACK);
     }
 
 }
