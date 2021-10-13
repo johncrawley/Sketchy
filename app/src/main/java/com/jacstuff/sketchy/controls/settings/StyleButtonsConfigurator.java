@@ -50,6 +50,9 @@ public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushSt
                 progress -> {
                     if(paintView != null) {
                         paintView.setLineWidth(progress);
+                        if(viewModel.useStrokeWidthForShadowDistance){
+                            paintHelperManager.getShadowHelper().updateOffsetFactor(1);
+                        }
                     }
                 });
     }

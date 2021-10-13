@@ -5,8 +5,11 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 
+import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
+import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
+import com.jacstuff.sketchy.paintview.PaintView;
 
 
 public class PathBrush extends AbstractBrush implements Brush {
@@ -15,6 +18,7 @@ public class PathBrush extends AbstractBrush implements Brush {
 
     public PathBrush(){
         super(BrushShape.PATH);
+        brushInitializer = new LineInitializer();
         drawerType = DrawerFactory.Type.PATH;
     }
 
@@ -48,6 +52,11 @@ public class PathBrush extends AbstractBrush implements Brush {
         canvas.drawPath(path, paint);
         previousX = p.x;
         previousY = p.y;
+    }
+
+
+    private void log(String msg){
+        System.out.println("PathBrush: " + msg);
     }
 
 }

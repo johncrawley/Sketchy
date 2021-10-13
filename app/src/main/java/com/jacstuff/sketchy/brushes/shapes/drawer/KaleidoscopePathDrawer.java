@@ -151,7 +151,8 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
 
 
     private void configureSegmentBitmapAndCanvas(int segmentLength){
-        segmentBitmap = Bitmap.createBitmap(segmentLength, segmentLength, Bitmap.Config.ARGB_8888);
+        int bitmapSide = segmentLength + (int)viewModel.shadowOffsetX;
+        segmentBitmap = Bitmap.createBitmap(bitmapSide, bitmapSide, Bitmap.Config.ARGB_8888);
         segmentBitmap.eraseColor(Color.TRANSPARENT);
         kaleidoscopeCanvas.setBitmap(segmentBitmap);
         float halfSegmentWidth = segmentLength /2f;

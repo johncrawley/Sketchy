@@ -9,6 +9,8 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
+import com.jacstuff.sketchy.brushes.shapes.initializer.BrushInitializer;
+import com.jacstuff.sketchy.brushes.shapes.initializer.DefaultInitializer;
 import com.jacstuff.sketchy.brushes.styles.FillStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
 import com.jacstuff.sketchy.paintview.PaintGroup;
@@ -34,6 +36,7 @@ public abstract class AbstractBrush implements  Brush{
     MainActivity mainActivity;
     PaintView paintView;
     DrawerFactory.Type drawerType;
+    BrushInitializer brushInitializer;
 
 
     AbstractBrush(BrushShape brushShape){
@@ -42,6 +45,7 @@ public abstract class AbstractBrush implements  Brush{
         currentStyle = fillStyle;
         this.brushShape = brushShape;
         this.drawerType = DrawerFactory.Type.BASIC;
+        brushInitializer = new DefaultInitializer();
     }
 
 
@@ -64,6 +68,7 @@ public abstract class AbstractBrush implements  Brush{
         this.mainActivity = mainActivity;
         this.mainViewModel = mainActivity.getViewModel();
         drawer = drawerFactory.get(drawerType);
+        brushInitializer.init(mainViewModel, paintView.getPaintHelperManager());
         postInit();
     }
 
@@ -107,6 +112,7 @@ public abstract class AbstractBrush implements  Brush{
 
 
     public void reinitialize(){
+        brushInitializer.initialize();
         drawer.setBrush(this);
     }
 
@@ -129,10 +135,17 @@ public abstract class AbstractBrush implements  Brush{
     }
 
 
+    @Override
+    public void onDeallocate(){
+        //
+    }
+
+
     public final void onTouchDown(float x, float y, Paint paint){
         currentStyle.onDraw();
         onBrushTouchDown(x, y, paint);
     }
+
 
     @Override
     public final void onTouchDown(Point p, Canvas canvas, Paint paint){
@@ -146,7 +159,6 @@ public abstract class AbstractBrush implements  Brush{
     }
 
 
-
     public boolean isColorChangedOnDown(){
         return drawer.isColorChangedOnDown();
     }
@@ -156,6 +168,7 @@ public abstract class AbstractBrush implements  Brush{
         //do nothing
     }
 
+
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint){
         //do nothing
     }
@@ -164,6 +177,7 @@ public abstract class AbstractBrush implements  Brush{
     void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         //do nothing
     }
+
 
     void onBrushTouchDown(float x, float y, Paint paint){
         //do nothing

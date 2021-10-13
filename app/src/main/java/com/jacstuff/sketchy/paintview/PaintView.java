@@ -135,6 +135,7 @@ public class PaintView extends View {
 
 
     public void setBrushShape(BrushShape brushShape){
+        currentBrush.onDeallocate();
         currentBrush = brushFactory.getReinitializedBrushFor(brushShape, currentBrushStyle);
         currentBrush.setBrushSize(brushSize);
     }

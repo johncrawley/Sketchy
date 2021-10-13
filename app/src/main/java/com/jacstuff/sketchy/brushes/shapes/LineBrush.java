@@ -8,6 +8,7 @@ import android.graphics.Point;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
+import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
 import com.jacstuff.sketchy.brushes.shapes.line.DefaultLineDrawer;
 import com.jacstuff.sketchy.brushes.shapes.line.LineDrawer;
 import com.jacstuff.sketchy.brushes.shapes.line.LineOutlineDrawer;
@@ -24,6 +25,7 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     public LineBrush() {
         super(BrushShape.LINE);
+        brushInitializer = new LineInitializer();
         drawerType = DrawerFactory.Type.DRAG_LINE;
     }
 

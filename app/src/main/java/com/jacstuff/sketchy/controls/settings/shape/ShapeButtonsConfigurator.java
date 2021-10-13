@@ -62,7 +62,6 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
         configureSeekBars();
         SwitchMaterial singleDrawModeSwitch = activity.findViewById(R.id.drawOnMoveSwitch);
         singleDrawModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isDrawOnMoveModeEnabled = isChecked);
-
     }
 
 

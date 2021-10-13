@@ -36,6 +36,8 @@ public interface Brush {
     void recalculateDimensions();
     BrushShape getBrushShape();
 
+    void onDeallocate();
+
     void touchDown(float x, float y, Paint paint);
     void touchMove(float x, float y, Paint paint);
     void touchUp(float x, float y, Paint paint);
