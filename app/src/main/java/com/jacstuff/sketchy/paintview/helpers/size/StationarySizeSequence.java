@@ -1,30 +1,33 @@
 package com.jacstuff.sketchy.paintview.helpers.size;
 
 import com.jacstuff.sketchy.paintview.PaintGroup;
+import com.jacstuff.sketchy.paintview.helpers.size.initializer.SizeInitializer;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-public class StationarySizeSequence implements SizeSequence{
+public class StationarySizeSequence extends AbstractSizeSequence implements SizeSequence{
 
-    private final MainViewModel viewModel;
     private boolean hasChanged = false;
 
-    public StationarySizeSequence(MainViewModel viewModel){
-        this.viewModel = viewModel;
+    public StationarySizeSequence(SizeInitializer sizeInitializer, MainViewModel viewModel){
+        super(sizeInitializer, viewModel);
     }
+
 
     @Override
     public int getNextBrushSize() {
         return viewModel.brushSizeSetBySeekBar;
     }
 
+
     @Override
     public int getBrushSize(){
         return viewModel.brushSizeSetBySeekBar;
     }
 
+
     @Override
     public void init() {
-        // do nothing
+       super.init();
     }
 
 

@@ -1,15 +1,16 @@
 package com.jacstuff.sketchy.paintview.helpers.size;
 
+import com.jacstuff.sketchy.paintview.helpers.size.initializer.SizeInitializer;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-public class StrobeSizeSequence implements  SizeSequence{
+public class StrobeSizeSequence extends AbstractSizeSequence implements SizeSequence{
 
     private int currentSize;
-    private final MainViewModel viewModel;
     private boolean isIncreasing;
     private final boolean isIncreasingDefault;
 
-    public StrobeSizeSequence(MainViewModel mainViewModel, boolean isIncreasing){
+    public StrobeSizeSequence(SizeInitializer sizeInitializer, MainViewModel mainViewModel, boolean isIncreasing){
+        super(sizeInitializer, mainViewModel);
         this.viewModel = mainViewModel;
         this.isIncreasing = isIncreasing;
         this.isIncreasingDefault = isIncreasing;
@@ -23,6 +24,7 @@ public class StrobeSizeSequence implements  SizeSequence{
 
     @Override
     public void init(){
+        super.init();
         if(isIncreasingDefault){
             this.currentSize = viewModel.sizeSequenceMin;
             return;

@@ -1,19 +1,20 @@
 package com.jacstuff.sketchy.paintview.helpers.size;
 
+import com.jacstuff.sketchy.paintview.helpers.size.initializer.SizeInitializer;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-public class IncreasingSizeSequence implements  SizeSequence{
+public class IncreasingSizeSequence extends AbstractSizeSequence implements SizeSequence{
 
     private int currentSize;
-    private final MainViewModel viewModel;
 
-    public IncreasingSizeSequence(MainViewModel mainViewModel){
-        this.viewModel = mainViewModel;
+    public IncreasingSizeSequence(SizeInitializer sizeInitializer, MainViewModel mainViewModel){
+        super(sizeInitializer, mainViewModel);
     }
 
 
     @Override
     public void init(){
+        super.init();
         this.currentSize = viewModel.sizeSequenceMin;
     }
 

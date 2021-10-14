@@ -1,24 +1,25 @@
 package com.jacstuff.sketchy.paintview.helpers.size;
 
+import com.jacstuff.sketchy.paintview.helpers.size.initializer.SizeInitializer;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.Random;
 
-public class RandomSizeSequence implements  SizeSequence{
+public class RandomSizeSequence extends  AbstractSizeSequence implements  SizeSequence{
 
-    private final MainViewModel viewModel;
     private final Random random;
     private int targetSize;
     private int currentSize;
 
-    public RandomSizeSequence(MainViewModel mainViewModel){
-        this.viewModel = mainViewModel;
+    public RandomSizeSequence(SizeInitializer sizeInitializer, MainViewModel mainViewModel){
+        super(sizeInitializer, mainViewModel);
         random = new Random(System.currentTimeMillis());
     }
 
 
     @Override
     public void init(){
+        super.init();
         assignNextTargetSize();
         this.currentSize = targetSize;
     }
