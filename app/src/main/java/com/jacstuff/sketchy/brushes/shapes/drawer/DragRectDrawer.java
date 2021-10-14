@@ -92,9 +92,12 @@ public class DragRectDrawer extends BasicDrawer{
 
     private void rotateThenDrawShadowAndObject(float x, float y, Paint paint){
         rotateToAngle();
+        /*
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
             brush.onTouchMove(x, y, paintView.getShadowPaint());
         }
+
+         */
         brush.onTouchMove(x,y, paint);
     }
 

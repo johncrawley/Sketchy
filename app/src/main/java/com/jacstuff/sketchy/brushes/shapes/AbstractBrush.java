@@ -68,7 +68,7 @@ public abstract class AbstractBrush implements  Brush{
         this.mainActivity = mainActivity;
         this.mainViewModel = mainActivity.getViewModel();
         drawer = drawerFactory.get(drawerType);
-        brushInitializer.init(mainViewModel, paintView.getPaintHelperManager());
+        brushInitializer.init(mainActivity, mainViewModel, paintView.getPaintHelperManager());
         postInit();
     }
 
@@ -137,7 +137,7 @@ public abstract class AbstractBrush implements  Brush{
 
     @Override
     public void onDeallocate(){
-        //
+        brushInitializer.deInitialize();
     }
 
 

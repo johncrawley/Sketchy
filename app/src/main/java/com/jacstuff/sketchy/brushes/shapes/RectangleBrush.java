@@ -7,6 +7,7 @@ import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
+import com.jacstuff.sketchy.brushes.shapes.initializer.DisableBrushSizeInitializer;
 
 public class RectangleBrush extends AbstractBrush implements Brush {
 
@@ -15,6 +16,7 @@ public class RectangleBrush extends AbstractBrush implements Brush {
 
     public RectangleBrush() {
         super(BrushShape.DRAG_RECTANGLE);
+        brushInitializer = new DisableBrushSizeInitializer();
         drawerType = DrawerFactory.Type.DRAG_RECT;
     }
 

@@ -6,13 +6,14 @@ import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
+import com.jacstuff.sketchy.brushes.shapes.initializer.StraightLineInitializer;
 
 public class StraightLineBrush extends AbstractBrush implements Brush {
 
 
     public StraightLineBrush(){
         super(BrushShape.STRAIGHT_LINE);
-        brushInitializer = new LineInitializer();
+        brushInitializer = new StraightLineInitializer();
     }
 
 
