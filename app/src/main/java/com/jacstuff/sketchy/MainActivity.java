@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy;
 
+import android.app.ActionBar;
 import android.content.Intent;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -13,7 +14,6 @@ import android.graphics.Shader;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.Menu;
@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Toolbar;
 
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
@@ -77,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imageSaver = new ImageSaver(this);
         seekBarConfigurator = new SeekBarConfigurator(this);
         setupViewModel();
-        setupActionbar();
         setupPaintViewAndDefaultSelections();
         initPaintHelperManager();
         setupColorAndShadeButtons();
@@ -254,13 +254,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         shape.getPaint().setShader(linearGradient);
         colorPickerSeekBar.setProgressDrawable(shape);
         colorPickerSeekBar.setMax(256*7-1);
-    }
-
-
-    private void setupActionbar(){
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar();
     }
 
 

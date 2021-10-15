@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#008577</color>
+    <color name="statusBarColor">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="backgroundColor">#FFFDE7</color>
     <color name="backgroundColorDark">#333653</color>
-    <color name="appIconBackground">#4FC3F7</color>
+    <color name="appIconBackgroundOriginal">#4FC3F7</color>
+    <color name="darkToolbar">#252F6E</color>
+    <color name="darkToolbarText">#86899A</color>
+    <color name="darkAndroidBar">#151B42</color>
+    <color name="appIconBackground">#141A57</color>
     <color name="selected_button_border">#95712A</color>
     <color name="dialog_background">#66FFFDE7</color>
     <color name="paint_view_border">#291F1F</color>
