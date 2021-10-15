@@ -35,10 +35,11 @@ public class ColorButtonClickHandler {
     private ColorSelector currentColorSelector;
     private final RandomShadeButtonsState shadeButtonsState;
     private final int buttonStatusTag = R.string.multi_random_button_checked_tag;
-    private enum ButtonStatus { ENABLED, DISABLED }
+    private enum ButtonStatus {SELECTED, UNSELECTED}
     private final ButtonReferenceStore buttonReferenceStore;
     private final MainViewModel mainViewModel;
     private final ColorHelper colorHelper;
+    private Button mainMultiColorButton;
 
 
     public ColorButtonClickHandler(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams){
@@ -122,11 +123,12 @@ public class ColorButtonClickHandler {
             case COLOR:
                 onMainColorButtonClick(button);
                 break;
-            case MULTICOLOR:
-                onMultiColorButtonClick(button);
-                break;
             case SHADE:
                 onShadeButtonClick(button);
+                break;
+            case MULTICOLOR:
+                mainMultiColorButton = button;
+                onMultiColorButtonClick(button);
                 break;
             case MULTI_SHADE:
                 clickShadeButtonMultiMode(button);
@@ -226,7 +228,7 @@ public class ColorButtonClickHandler {
             handleClickWhenMultiDisabled(button);
             return;
         }
-        if(isEnabled(button)){
+        if(isSelected(button)){
            deselectShadeButton(button);
             return;
         }
@@ -235,7 +237,7 @@ public class ColorButtonClickHandler {
 
 
     private void handleClickWhenMultiDisabled(Button button){
-        if(!isEnabled(button)){
+        if(!isSelected(button)){
             selectMultiShadeButton(button);
         }
         shadeButtonsState.selectMulti();
@@ -252,27 +254,27 @@ public class ColorButtonClickHandler {
     }
 
 
-    private boolean isEnabled(Button button){
-       return ButtonStatus.ENABLED.equals(button.getTag(buttonStatusTag));
+    private boolean isSelected(Button button){
+       return ButtonStatus.SELECTED.equals(button.getTag(buttonStatusTag));
     }
 
 
     private void deselectShadeButton(Button button){
-        if(shadeButtonsState.getSelectedCount() == 1){
-            return;
-        }
         int buttonColor = (int)button.getTag(R.string.tag_button_color);
         currentColorSelector.remove(buttonColor);
-        button.setTag(buttonStatusTag, ButtonStatus.DISABLED);
+        button.setTag(buttonStatusTag, ButtonStatus.UNSELECTED);
         deselectButton(button);
         shadeButtonsState.deselect(button);
+        if(shadeButtonsState.getSelectedCount() == 0){
+            onClick(mainMultiColorButton);
+        }
     }
 
 
     private void selectMultiShadeButton(Button button){
         int buttonColor = (int)button.getTag(R.string.tag_button_color);
         currentColorSelector.add(buttonColor, getShadesFrom(button));
-        button.setTag(buttonStatusTag, ButtonStatus.ENABLED);
+        button.setTag(buttonStatusTag, ButtonStatus.SELECTED);
         shadeButtonsState.setSelected(button);
         selectButton(button);
     }
