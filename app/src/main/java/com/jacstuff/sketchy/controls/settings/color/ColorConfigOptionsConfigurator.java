@@ -90,6 +90,7 @@ public class ColorConfigOptionsConfigurator extends AbstractButtonConfigurator<V
         put(sequenceTypeMap, R.string.spinner_item_color_sequence_backwards, ColorSequenceType.BACKWARDS);
         put(sequenceTypeMap, R.string.spinner_item_color_sequence_strobe, ColorSequenceType.STROBE);
         put(sequenceTypeMap, R.string.spinner_item_color_sequence_random, ColorSequenceType.RANDOM);
+        put(sequenceTypeMap, R.string.spinner_item_color_sequence_blend, ColorSequenceType.BLEND);
     }
 
 

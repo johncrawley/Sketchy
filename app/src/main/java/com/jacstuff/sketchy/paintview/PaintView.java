@@ -24,7 +24,9 @@ import static com.jacstuff.sketchy.paintview.helpers.PaintFactory.createPaint;
 public class PaintView extends View {
 
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
-    private final Paint paint, shadowPaint, previewPaint;
+    private Paint paint, shadowPaint, previewPaint;
+    private Paint drawPaint;
+    private PaintGroup paintGroup;
     private int brushSize;
     private Bitmap bitmap, previewBitmap;
     private Canvas canvas;
@@ -36,8 +38,6 @@ public class PaintView extends View {
     private boolean isPreviewLayerToBeDrawn;
     private boolean ignoreMoveAndUpActions = false;
     private final BitmapHistory bitmapHistory;
-    private final Paint drawPaint = new Paint();
-    private final PaintGroup paintGroup;
     private SettingsPopup settingsPopup;
     private final Context context;
     private BitmapLoader bitmapLoader;
@@ -51,12 +51,7 @@ public class PaintView extends View {
     public PaintView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        paint = createPaint(Color.WHITE);
-        previewPaint = createPaint(Color.DKGRAY);
-        shadowPaint = createPaint(Color.BLACK);
-        paint.setAntiAlias(true);
-        paint.setDither(true);
-        paintGroup = new PaintGroup(paint, previewPaint, shadowPaint);
+        initPaints();
         bitmapHistory = new BitmapHistory(context);
     }
 
@@ -176,6 +171,17 @@ public class PaintView extends View {
     public void disablePreviewLayer(){
         isPreviewLayerToBeDrawn = false;
         canvas.setBitmap(bitmap);
+    }
+
+
+    private void initPaints(){
+        paint = createPaint(Color.WHITE);
+        previewPaint = createPaint(Color.DKGRAY);
+        shadowPaint = createPaint(Color.BLACK);
+        drawPaint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setDither(true);
+        paintGroup = new PaintGroup(paint, previewPaint, shadowPaint);
     }
 
 

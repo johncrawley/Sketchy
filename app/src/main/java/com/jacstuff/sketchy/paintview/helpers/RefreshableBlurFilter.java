@@ -10,10 +10,10 @@ public class RefreshableBlurFilter {
     private final int offset;
 
 
-    public RefreshableBlurFilter(BlurMaskFilter.Blur blurStyle, int intialSize, int offset){
+    public RefreshableBlurFilter(BlurMaskFilter.Blur blurStyle, int initialSize, int offset){
         this.blurStyle = blurStyle;
         this.offset = offset;
-        blur = new BlurMaskFilter(offset + intialSize, blurStyle);
+        blur = new BlurMaskFilter(offset + initialSize, blurStyle);
     }
 
 

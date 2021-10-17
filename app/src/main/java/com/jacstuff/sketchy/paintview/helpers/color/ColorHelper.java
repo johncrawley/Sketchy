@@ -1,11 +1,11 @@
-package com.jacstuff.sketchy.paintview.helpers;
+package com.jacstuff.sketchy.paintview.helpers.color;
 
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.multicolor.SequenceColorSelector;
 import com.jacstuff.sketchy.multicolor.ShadeColorSelector;
-import com.jacstuff.sketchy.paintview.InfinityModeColorBlender;
+import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class ColorHelper {
@@ -41,6 +41,7 @@ public class ColorHelper {
             infinityModeColorBlender.setColorSelector(colorSelector);
         }
     }
+
 
     public SequenceColorSelector getAllColorsSequenceSelector(){
         return this.allColorsSequenceSelector;

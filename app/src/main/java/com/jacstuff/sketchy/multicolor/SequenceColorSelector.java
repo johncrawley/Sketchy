@@ -1,6 +1,8 @@
 package com.jacstuff.sketchy.multicolor;
 
 
+import android.graphics.Color;
+
 import com.jacstuff.sketchy.viewmodel.ControlsHolder;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
@@ -16,6 +18,7 @@ public class SequenceColorSelector implements ColorSelector {
     private final Random random;
     private final StrobeCalculator strobeCalculator;
     private final boolean isUsingBrightnessRange, isForSingleColor;
+    private final BlendCalculator blendCalculator;
 
     public SequenceColorSelector(ControlsHolder viewModel){
         this(viewModel, false, false);
@@ -28,6 +31,7 @@ public class SequenceColorSelector implements ColorSelector {
         random = new Random(System.currentTimeMillis());
         this.isForSingleColor = isForSingleColor;
         strobeCalculator =  isForSingleColor ? new StrobeCalculator(viewModel, true) : new StrobeCalculator(viewModel);
+        blendCalculator = new BlendCalculator();
     }
 
 
@@ -52,6 +56,9 @@ public class SequenceColorSelector implements ColorSelector {
 
     public void setSequenceType(ColorSequenceType type){
         colorSequenceControls.colorSequenceType = type;
+        if(colorSequenceControls.colorSequenceType == ColorSequenceType.BLEND){
+           blendCalculator.reset(calculateNextBlendTargetColor(), calculateNextBlendTargetColor());
+        }
         updateRangeIndexes();
     }
 
@@ -66,12 +73,19 @@ public class SequenceColorSelector implements ColorSelector {
                 break;
             case STROBE:
                 calculateNextStrobeIndex();
-                break;
             case RANDOM:
                 calculateNextRandomIndex();
                 break;
+            case BLEND:
+                return calculateNextBlendColor();
         }
         return colors.get(currentIndex);
+    }
+
+
+
+    public int getCurrentColor(){
+        return colors == null ? Color.RED : colors.get(currentIndex);
     }
 
 
@@ -83,6 +97,13 @@ public class SequenceColorSelector implements ColorSelector {
             return;
         }
         incrementCurrentIndex(getIncrement());
+    }
+
+
+    private int calculateNextBlendTargetColor(){
+        currentIndex = strobeCalculator.getNextStrobeIndex(currentIndex, sequenceMinIndex, sequenceMaxIndex);
+        System.out.println("^^^ SequenceColorSelector.calculateNextBlendTargetColor() : currentIndex =  " + currentIndex);
+        return colors.get(currentIndex);
     }
 
 
@@ -108,6 +129,7 @@ public class SequenceColorSelector implements ColorSelector {
         currentIndex = Math.min(colors.size()-1, currentIndex);
         currentIndex = Math.max(0, currentIndex);
     }
+
 
     public int getMaxIndexOfSequence(int seekBarColorRangeMaximum, List<?> colorList){
         int lastIndex = colorList.size() -1;
@@ -148,6 +170,21 @@ public class SequenceColorSelector implements ColorSelector {
 
     private void calculateNextStrobeIndex(){
         currentIndex = strobeCalculator.getNextStrobeIndex(currentIndex, sequenceMinIndex, sequenceMaxIndex);
+    }
+
+
+    private int calculateNextBlendColor(){
+        int nextBlendColor = blendCalculator.getNextShade();
+        if(nextBlendColor == getCurrentColor()){
+            blendCalculator.setTargetShade(calculateNextBlendTargetColor());
+        }
+        return nextBlendColor;
+    }
+
+
+    private void log(String msg){
+        System.out.println("^^^ SequenceColorSelector: " + msg);
+        System.out.flush();
     }
 
 

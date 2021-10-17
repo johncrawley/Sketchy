@@ -21,11 +21,13 @@ public class ShadeColorSelector implements ColorSelector {
     private final StrobeCalculator strobeCalculatorForMultiColor;
     private int currentIndex = 0;
     private boolean isAtLastIndex;
+    private final BlendCalculator blendCalculator;
 
 
     public ShadeColorSelector(MainViewModel viewModel){
         colorSequenceControls = viewModel.getColorSequenceControls();
         strobeCalculatorForMultiColor = new StrobeCalculator(viewModel);
+        blendCalculator = new BlendCalculator();
         this.colorSelectorForSingleColorMultiShades = new SequenceColorSelector(viewModel, true, true);
         int initialCapacity = 30;
         shadesMap = new HashMap<>(initialCapacity);
@@ -48,6 +50,8 @@ public class ShadeColorSelector implements ColorSelector {
                 return getNextRandomShade();
             case STROBE:
                 return getNextStrobeShade();
+            case BLEND:
+                return calculateNextBlendColor();
         }
         return 0;
     }
@@ -62,6 +66,15 @@ public class ShadeColorSelector implements ColorSelector {
         if(ids.size() == 1){
             currentIndex = 0;
         }
+    }
+
+
+    private int calculateNextBlendColor(){
+        int nextBlendColor = blendCalculator.getNextShade();
+        if(blendCalculator.hasReachedTargetShade()){
+            blendCalculator.setTargetShade(getNextStrobeShade());
+        }
+        return nextBlendColor;
     }
 
 
@@ -85,6 +98,7 @@ public class ShadeColorSelector implements ColorSelector {
         if(colorSequenceControls.isResetOnRelease || isAtLastIndex){
             colorSelectorForSingleColorMultiShades.resetCurrentIndex();
             currentIndex = 0;
+            blendCalculator.reset(getNextStrobeShade(), getNextStrobeShade());
         }
     }
 
