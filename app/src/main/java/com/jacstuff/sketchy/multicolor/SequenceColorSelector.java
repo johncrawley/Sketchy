@@ -29,7 +29,7 @@ public class SequenceColorSelector implements ColorSelector {
         random = new Random(System.currentTimeMillis());
         this.isForSingleColor = isForSingleColor;
         strobeCalculator =  isForSingleColor ? new StrobeCalculator(viewModel, true) : new StrobeCalculator(viewModel);
-        blendCalculator = new BlendCalculator();
+        blendCalculator = new BlendCalculator(viewModel);
     }
 
 
