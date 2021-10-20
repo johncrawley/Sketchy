@@ -73,6 +73,7 @@ public class SequenceColorSelector implements ColorSelector {
                 break;
             case STROBE:
                 calculateNextStrobeIndex();
+                break;
             case RANDOM:
                 calculateNextRandomIndex();
                 break;
