@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.multicolor;
 
 import com.jacstuff.sketchy.controls.colorbuttons.ColorConverter;
+import com.jacstuff.sketchy.utils.ColorUtils;
 import com.jacstuff.sketchy.viewmodel.ControlsHolder;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
@@ -31,8 +32,12 @@ public class BlendCalculator {
         return currentShade;
     }
 
+    public int getTargetShade(){
+        return targetShade;
+    }
 
-    public boolean hasReachedTargetShade(){
-        return currentShade == targetShade;
+
+    public boolean hasReachedTargetShade() {
+        return ColorUtils.haveEqualRgb(currentShade, targetShade);
     }
 }

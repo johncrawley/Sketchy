@@ -72,7 +72,7 @@ public class ShadeColorSelector implements ColorSelector {
     private int calculateNextBlendColor(){
         int nextBlendColor = blendCalculator.getNextShade();
         if(blendCalculator.hasReachedTargetShade()){
-            blendCalculator.setTargetShade(getNextStrobeShade());
+            blendCalculator.setTargetShade(getNextBlendTarget());
         }
         return nextBlendColor;
     }
@@ -87,6 +87,11 @@ public class ShadeColorSelector implements ColorSelector {
     }
 
 
+    private int getNextBlendTarget(){
+        return getNextShadeForwards();
+    }
+
+
     @Override
     public void updateRangeIndexes(){
         colorSelectorForSingleColorMultiShades.updateRangeIndexes();
@@ -98,7 +103,7 @@ public class ShadeColorSelector implements ColorSelector {
         if(colorSequenceControls.isResetOnRelease || isAtLastIndex){
             colorSelectorForSingleColorMultiShades.resetCurrentIndex();
             currentIndex = 0;
-            blendCalculator.reset(getNextStrobeShade(), getNextStrobeShade());
+            blendCalculator.reset(getShadeFromCurrentIndexAtFixedBrightness(), getNextBlendTarget());
         }
     }
 

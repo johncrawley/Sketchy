@@ -1,8 +1,6 @@
 package com.jacstuff.sketchy.multicolor;
 
 
-import android.graphics.Color;
-
 import com.jacstuff.sketchy.viewmodel.ControlsHolder;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
@@ -78,15 +76,35 @@ public class SequenceColorSelector implements ColorSelector {
                 calculateNextRandomIndex();
                 break;
             case BLEND:
-                return calculateNextBlendColor();
+                if(isForSingleColor){
+                    calculateNextStrobeIndex();
+                }
+                else{
+                    return calculateNextBlendColor();
+                }
         }
         return colors.get(currentIndex);
     }
 
 
+    private int calculateNextBlendColor(){
+        int nextBlendColor = blendCalculator.getNextShade();
+        if(blendCalculator.hasReachedTargetShade()){
+            getNextStrobeShade();
+            blendCalculator.setTargetShade(colors.get(currentIndex));
+        }
+        return nextBlendColor;
+    }
 
-    public int getCurrentColor(){
-        return colors == null ? Color.RED : colors.get(currentIndex);
+
+    private int calculateNextBlendTargetColor(){
+        calculateNextRandomIndex();
+        return colors.get(currentIndex);
+    }
+
+
+    private void getNextStrobeShade(){
+        currentIndex = strobeCalculator.getNextStrobeIndex(currentIndex, colors.size()-1);
     }
 
 
@@ -98,13 +116,6 @@ public class SequenceColorSelector implements ColorSelector {
             return;
         }
         incrementCurrentIndex(getIncrement());
-    }
-
-
-    private int calculateNextBlendTargetColor(){
-        currentIndex = strobeCalculator.getNextStrobeIndex(currentIndex, sequenceMinIndex, sequenceMaxIndex);
-        System.out.println("^^^ SequenceColorSelector.calculateNextBlendTargetColor() : currentIndex =  " + currentIndex);
-        return colors.get(currentIndex);
     }
 
 
@@ -171,21 +182,6 @@ public class SequenceColorSelector implements ColorSelector {
 
     private void calculateNextStrobeIndex(){
         currentIndex = strobeCalculator.getNextStrobeIndex(currentIndex, sequenceMinIndex, sequenceMaxIndex);
-    }
-
-
-    private int calculateNextBlendColor(){
-        int nextBlendColor = blendCalculator.getNextShade();
-        if(nextBlendColor == getCurrentColor()){
-            blendCalculator.setTargetShade(calculateNextBlendTargetColor());
-        }
-        return nextBlendColor;
-    }
-
-
-    private void log(String msg){
-        System.out.println("^^^ SequenceColorSelector: " + msg);
-        System.out.flush();
     }
 
 
