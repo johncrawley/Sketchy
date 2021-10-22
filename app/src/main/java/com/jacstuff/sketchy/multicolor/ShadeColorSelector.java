@@ -196,8 +196,7 @@ public class ShadeColorSelector implements ColorSelector {
         //do nothing
     }
 
-
-
+    
     /*
     private int getRandomShade(){
 

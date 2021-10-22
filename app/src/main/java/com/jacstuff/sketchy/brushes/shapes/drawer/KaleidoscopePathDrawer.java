@@ -9,7 +9,7 @@ import android.graphics.Point;
 
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
-import com.jacstuff.sketchy.paintview.helpers.ShadowHelper;
+import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 

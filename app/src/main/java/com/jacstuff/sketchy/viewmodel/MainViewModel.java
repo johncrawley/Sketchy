@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.viewmodel;
 import android.graphics.Color;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.helpers.GradientColorType;
+import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
@@ -64,11 +65,10 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int shadowDistance =1;
     public float shadowOffsetX;
     public float shadowOffsetY;
-    public boolean useStrokeWidthForShadowDistance = false;
+    public ShadowOffsetType shadowOffsetType = ShadowOffsetType.USE_SHAPE_WIDTH;
 
     public int colorAlpha = 0;
     public int secondaryColor = Color.WHITE;
-    public boolean usePreviousColorForGradient = false;
     public String textBrushText = "";
     public int color = Color.BLACK;
     public int previousColor = Color.WHITE;

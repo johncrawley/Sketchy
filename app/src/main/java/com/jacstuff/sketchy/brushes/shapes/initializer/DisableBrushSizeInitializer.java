@@ -7,6 +7,7 @@ import android.widget.SeekBar;
 
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class DisableBrushSizeInitializer implements BrushInitializer{
@@ -22,12 +23,14 @@ public class DisableBrushSizeInitializer implements BrushInitializer{
         this.paintHelperManager = paintHelperManager;
     }
 
+
     @Override
     public void initialize(){
         seekBar.setEnabled(false);
-        viewModel.useStrokeWidthForShadowDistance = true;
-        paintHelperManager.getShadowHelper().updateOffsetFactor(1);
+        viewModel.shadowOffsetType = ShadowOffsetType.USE_STROKE_WIDTH;
+        paintHelperManager.getShadowHelper().updateOffsetFactor();
     }
+
 
     @Override
     public void deInitialize(){

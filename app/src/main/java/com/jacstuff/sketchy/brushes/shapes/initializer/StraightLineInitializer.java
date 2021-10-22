@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes.initializer;
 import android.app.Activity;
 
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class StraightLineInitializer implements BrushInitializer{
@@ -16,12 +17,15 @@ public class StraightLineInitializer implements BrushInitializer{
         this.paintHelperManager = paintHelperManager;
     }
 
+
     @Override
     public void initialize(){
-        viewModel.useStrokeWidthForShadowDistance = true;
-        paintHelperManager.getShadowHelper().updateOffsetFactor(1);
+        viewModel.shadowOffsetType = ShadowOffsetType.USE_STROKE_WIDTH;
+        paintHelperManager.getShadowHelper().updateOffsetFactor();
     }
 
+
+    @Override
     public void deInitialize(){
         //do nothing
     }

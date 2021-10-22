@@ -7,6 +7,7 @@ import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.color.ColorHelper;
+import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowHelper;
 import com.jacstuff.sketchy.paintview.helpers.size.SizeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -25,7 +26,7 @@ public class PaintHelperManager {
     public PaintHelperManager(MainActivity mainActivity, PaintView paintView, MainViewModel viewModel){
         gradientHelper = new GradientHelper(viewModel, mainActivity.getResources().getInteger(R.integer.gradient_radius_max));
         blurHelper = new BlurHelper();
-        shadowHelper = new ShadowHelper(paintView, viewModel);
+        shadowHelper = new ShadowHelper(viewModel);
         angleHelper = new AngleHelper();
         kaleidoscopeHelper = new KaleidoscopeHelper(paintView, viewModel);
         styleHelper = new StyleHelper(mainActivity);

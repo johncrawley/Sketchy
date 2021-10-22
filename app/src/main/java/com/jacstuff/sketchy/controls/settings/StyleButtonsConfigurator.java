@@ -5,6 +5,8 @@ import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
+
 import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner;
 
 
@@ -44,14 +46,15 @@ public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushSt
         paintView.setBrushStyle(brushStyle);
     }
 
+
     private void setupSeekBar(){
         seekBarConfigurator.configure(R.id.lineWidthSeekBar,
                 R.integer.line_width_default,
                 progress -> {
                     if(paintView != null) {
                         paintView.setLineWidth(progress);
-                        if(viewModel.useStrokeWidthForShadowDistance){
-                            paintHelperManager.getShadowHelper().updateOffsetFactor(1);
+                        if(viewModel.shadowOffsetType == ShadowOffsetType.USE_STROKE_WIDTH){
+                            paintHelperManager.getShadowHelper().updateOffsetFactor();
                         }
                     }
                 });
@@ -62,10 +65,6 @@ public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushSt
         setupSpinner(activity, R.id.strokeCapSpinner, R.array.stroke_cap_array,  x -> paintHelperManager.getStyleHelper().setStokeCap(x));
         setupSpinner(activity, R.id.strokeJoinSpinner,R.array.stroke_join_array, x -> paintHelperManager.getStyleHelper().setStrokeJoin(x));
     }
-
-
-
-
 
 
 }
