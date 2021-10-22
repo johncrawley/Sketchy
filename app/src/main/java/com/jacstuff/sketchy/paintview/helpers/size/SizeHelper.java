@@ -1,8 +1,8 @@
 package com.jacstuff.sketchy.paintview.helpers.size;
 
-import android.app.Activity;
 
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.helpers.BrushSizeSeekBarManager;
 import com.jacstuff.sketchy.paintview.helpers.size.initializer.FixedSizeInitializer;
 import com.jacstuff.sketchy.paintview.helpers.size.initializer.VaryingSizeInitializer;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -18,21 +18,21 @@ public class SizeHelper {
     private final PaintView paintView;
     private Map<SizeSequenceType, SizeSequence> sizeSequenceMap;
     private final SizeSequence stationarySequence;
-    private final Activity activity;
+    private final VaryingSizeInitializer varyingSizeInitializer;
 
 
-    public SizeHelper(Activity activity, MainViewModel viewModel, PaintView paintView){
-        this.activity = activity;
+    public SizeHelper(MainViewModel viewModel, PaintView paintView, BrushSizeSeekBarManager brushSizeSeekBarManager){
         this.viewModel = viewModel;
         this.paintView = paintView;
-        stationarySequence = new StationarySizeSequence(new FixedSizeInitializer(activity), viewModel);
+        stationarySequence = new StationarySizeSequence(new FixedSizeInitializer(brushSizeSeekBarManager), viewModel);
+        varyingSizeInitializer = new VaryingSizeInitializer(brushSizeSeekBarManager);
         initSizeSequenceMap();
+
     }
 
 
     private void initSizeSequenceMap(){
         sizeSequenceMap = new HashMap<>();
-        VaryingSizeInitializer varyingSizeInitializer = new VaryingSizeInitializer(activity);
         sizeSequenceMap.put(SizeSequenceType.STATIONARY, stationarySequence);
         sizeSequenceMap.put(SizeSequenceType.INCREASING,        new IncreasingSizeSequence(varyingSizeInitializer, viewModel));
         sizeSequenceMap.put(SizeSequenceType.DECREASING,        new DecreasingSizeSequence(varyingSizeInitializer, viewModel));

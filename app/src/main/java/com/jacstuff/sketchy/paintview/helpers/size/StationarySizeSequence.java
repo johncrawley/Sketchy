@@ -8,6 +8,7 @@ public class StationarySizeSequence extends AbstractSizeSequence implements Size
 
     private boolean hasChanged = false;
 
+
     public StationarySizeSequence(SizeInitializer sizeInitializer, MainViewModel viewModel){
         super(sizeInitializer, viewModel);
     }

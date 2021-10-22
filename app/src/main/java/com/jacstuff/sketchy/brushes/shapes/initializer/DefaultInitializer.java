@@ -13,6 +13,7 @@ public class DefaultInitializer implements BrushInitializer {
 
     @Override
     public void init(Activity activity, MainViewModel viewModel, PaintHelperManager paintHelperManager){
+        paintHelperManager.getBrushSizeSeekBarManager().setCurrentShapeAffectedByBrushSize(true);
         this.viewModel = viewModel;
     }
 

@@ -20,6 +20,7 @@ public class StraightLineInitializer implements BrushInitializer{
 
     @Override
     public void initialize(){
+        paintHelperManager.getBrushSizeSeekBarManager().setCurrentShapeAffectedByBrushSize(true);
         viewModel.shadowOffsetType = ShadowOffsetType.USE_STROKE_WIDTH;
         paintHelperManager.getShadowHelper().updateOffsetFactor();
     }

@@ -34,10 +34,6 @@ public class SizeSequenceOptionsConfigurator extends AbstractButtonConfigurator<
         buttonConfig.setParentButton(R.id.sizeSequenceButton);
         buttonConfig.setDefaultSelection(R.id.fillStyleButton);
 
-        //new SizeSequenceMaxSeekBar(activity, paintView);
-        //new SizeSequenceMinSeekBar(activity, paintView);
-        //new SizeSequenceStepSeekBar(activity, paintView);
-
         configureSeekBars();
         setupOtherOptions();
     }

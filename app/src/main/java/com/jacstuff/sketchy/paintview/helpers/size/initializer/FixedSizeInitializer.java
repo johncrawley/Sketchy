@@ -1,19 +1,16 @@
 package com.jacstuff.sketchy.paintview.helpers.size.initializer;
 
-import android.app.Activity;
-import android.widget.SeekBar;
-
-import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.paintview.helpers.BrushSizeSeekBarManager;
 
 public class FixedSizeInitializer implements SizeInitializer{
 
-    private final SeekBar brushSizeSeekBar;
+    private final BrushSizeSeekBarManager brushSizeSeekBarManager;
 
-    public FixedSizeInitializer(Activity activity){
-        brushSizeSeekBar = activity.findViewById(R.id.brushSizeSeekBar);
+    public FixedSizeInitializer(BrushSizeSeekBarManager brushSizeSeekBarManager){
+        this.brushSizeSeekBarManager = brushSizeSeekBarManager;
     }
 
     public void init(){
-        brushSizeSeekBar.setEnabled(true);
+        brushSizeSeekBarManager.setStandardSizeModeEnabled(true);
     }
 }

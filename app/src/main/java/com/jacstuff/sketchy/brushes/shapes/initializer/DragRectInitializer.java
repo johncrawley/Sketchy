@@ -12,19 +12,17 @@ public class DragRectInitializer implements BrushInitializer{
 
     private MainViewModel viewModel;
     private PaintHelperManager paintHelperManager;
-    private SeekBar seekBar;
 
     @Override
     public void init(Activity activity, MainViewModel viewModel, PaintHelperManager paintHelperManager){
         this.viewModel = viewModel;
         this.paintHelperManager = paintHelperManager;
-        seekBar = activity.findViewById(R.id.brushSizeSeekBar);
     }
 
 
     @Override
     public void initialize(){
-        seekBar.setEnabled(false);
+        paintHelperManager.getBrushSizeSeekBarManager().setCurrentShapeAffectedByBrushSize(false);
         viewModel.shadowOffsetType = ShadowOffsetType.USE_SET_VALUE;
         paintHelperManager.getShadowHelper().updateOffsetFactor();
     }
@@ -32,6 +30,6 @@ public class DragRectInitializer implements BrushInitializer{
 
     @Override
     public void deInitialize(){
-        seekBar.setEnabled(true);
+        //do nothing
     }
 }
