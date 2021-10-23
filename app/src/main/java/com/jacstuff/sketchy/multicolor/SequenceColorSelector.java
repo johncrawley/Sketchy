@@ -54,10 +54,15 @@ public class SequenceColorSelector implements ColorSelector {
 
     public void setSequenceType(ColorSequenceType type){
         colorSequenceControls.colorSequenceType = type;
-        if(colorSequenceControls.colorSequenceType == ColorSequenceType.BLEND){
-           blendCalculator.reset(calculateNextBlendTargetColor(), calculateNextBlendTargetColor());
-        }
+        resetBlendSequenceType();
         updateRangeIndexes();
+    }
+
+
+    private void resetBlendSequenceType(){
+        if(colorSequenceControls.colorSequenceType == ColorSequenceType.BLEND){
+            blendCalculator.reset(calculateNextBlendTargetColor(), calculateNextBlendTargetColor());
+        }
     }
 
 
@@ -76,22 +81,20 @@ public class SequenceColorSelector implements ColorSelector {
                 calculateNextRandomIndex();
                 break;
             case BLEND:
-                if(isForSingleColor){
-                    calculateNextStrobeIndex();
-                }
-                else{
-                    return calculateNextBlendColor();
-                }
+                return calculateNextBlendColor();
         }
         return colors.get(currentIndex);
     }
 
 
     private int calculateNextBlendColor(){
+        if(isForSingleColor){
+            calculateNextStrobeIndex();
+            return colors.get(currentIndex);
+        }
         int nextBlendColor = blendCalculator.getNextShade();
         if(blendCalculator.hasReachedTargetShade()){
-            getNextStrobeShade();
-            blendCalculator.setTargetShade(colors.get(currentIndex));
+            blendCalculator.setTargetShade(calculateNextBlendTargetColor());
         }
         return nextBlendColor;
     }
@@ -100,11 +103,6 @@ public class SequenceColorSelector implements ColorSelector {
     private int calculateNextBlendTargetColor(){
         calculateNextRandomIndex();
         return colors.get(currentIndex);
-    }
-
-
-    private void getNextStrobeShade(){
-        currentIndex = strobeCalculator.getNextStrobeIndex(currentIndex, colors.size()-1);
     }
 
 
@@ -127,10 +125,14 @@ public class SequenceColorSelector implements ColorSelector {
             calculateRangesWhenUsingBrightnessControl();
             return;
         }
+        calculateAndApplyResetIndex();
+    }
+
+
+    private void calculateAndApplyResetIndex(){
         sequenceMaxIndex = getMaxIndexOfSequence(colorSequenceControls.colorSequenceMaxPercentage, colors);
         int minIndex = getMinIndexOfSequence(colorSequenceControls.colorSequenceMinPercentage, colors);
         sequenceMinIndex = minIndex < sequenceMaxIndex ? minIndex : sequenceMaxIndex -1;
-
         resetIndex = Math.min(Math.max(resetIndex, sequenceMinIndex), sequenceMaxIndex);
         currentIndex = resetIndex;
     }

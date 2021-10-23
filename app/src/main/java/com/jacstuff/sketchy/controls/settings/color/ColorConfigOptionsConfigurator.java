@@ -44,6 +44,7 @@ public class ColorConfigOptionsConfigurator extends AbstractButtonConfigurator<V
         //do nothing
     }
 
+
     private void setupSeekBars(){
         SequenceColorSelector allColorsSequenceSelector = paintHelperManager.getColorHelper().getAllColorsSequenceSelector();
         ColorSelector shadeColorSelector = paintHelperManager.getColorHelper().getShadeColorSelector();
