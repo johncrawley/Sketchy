@@ -20,8 +20,6 @@ public enum AngleType {
     PLUS_FIFTEEN(15,true),
     MINUS_THIRTY(-30, true),
     PLUS_THIRTY(30, true),
-    MINUS_NINTY(-90, true),
-    PLUS_NINTY(90, true),
     RANDOM(0, "?"),
     OTHER(0, "_");
 

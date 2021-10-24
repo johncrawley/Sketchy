@@ -30,7 +30,6 @@ public class TextControls {
     private final SeekBarConfigurator seekBarConfigurator;
 
 
-
      public TextControls(MainActivity activity, PaintGroup paintGroup, SeekBarConfigurator seekBarConfigurator) {
          this.activity = activity;
          textInput = activity.findViewById(R.id.textShapeInput);
@@ -121,6 +120,7 @@ public class TextControls {
         assignCheckBoxListener(checkedChangeListener, R.id.checkboxTextBold, R.id.checkboxTextStrikethrough, R.id.checkboxTextUnderline);
     }
 
+
     private void setupFontSpinner(){
       /*
             SettingsUtils.setupSpinner2(activity,
@@ -131,7 +131,6 @@ public class TextControls {
          */
         Typeface customTypeface = ResourcesCompat.getFont(activity, R.font.playfair_regular);
         paintGroup.setTypeface(customTypeface);
-
 
     }
 

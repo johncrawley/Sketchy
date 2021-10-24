@@ -70,11 +70,17 @@ public class ShadowHelper {
 
     public void setType(ShadowType shadowType){
         this.shadowType = shadowType;
-        assignShadow();
+        if(shadowType == ShadowType.NONE){
+            paint.clearShadowLayer();
+            return;
+        }
+        viewModel.shadowOffsetX = calculateOffsetFrom(shadowType.offsetX);
+        viewModel.shadowOffsetY = calculateOffsetFrom(shadowType.offsetY);
+        setShadowLayer();
     }
 
 
-    public void assignShadow() {
+    private void assignShadow() {
         if(shadowType == ShadowType.NONE){
             paint.clearShadowLayer();
             return;
@@ -86,11 +92,22 @@ public class ShadowHelper {
         viewModel.shadowOffsetX = calculateOffsetFrom(shadowType.offsetX);
         viewModel.shadowOffsetY = calculateOffsetFrom(shadowType.offsetY);
 
-        if(previousX == viewModel.shadowOffsetX && previousY == viewModel.shadowOffsetY && !hasSizeBeenUpdated && !hasDistanceBeenUpdated){
+        if( isShadowOffsetAndDistanceTheSame(previousX, previousY) && !hasSizeBeenUpdated){
             return;
         }
+
         hasSizeBeenUpdated = false;
         hasDistanceBeenUpdated = false;
+        setShadowLayer();
+    }
+
+
+    private boolean isShadowOffsetAndDistanceTheSame(float previousX, float previousY){
+        return previousX == viewModel.shadowOffsetX && previousY == viewModel.shadowOffsetY && !hasDistanceBeenUpdated;
+    }
+
+
+    private void setShadowLayer(){
         paint.setShadowLayer(viewModel.shadowSize, viewModel.shadowOffsetX, viewModel.shadowOffsetY, Color.BLACK);
     }
 
