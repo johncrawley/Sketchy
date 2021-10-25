@@ -1,6 +1,5 @@
 package com.jacstuff.sketchy;
 
-import android.app.ActionBar;
 import android.content.Intent;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -22,7 +21,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.Toolbar;
 
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
