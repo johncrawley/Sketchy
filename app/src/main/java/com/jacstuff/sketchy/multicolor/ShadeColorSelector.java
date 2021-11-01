@@ -105,7 +105,9 @@ public class ShadeColorSelector implements ColorSelector {
         if(colorSequenceControls.isResetOnRelease || isAtLastIndex){
             colorSelectorForSingleColorMultiShades.resetCurrentIndex();
             currentIndex = 0;
-            blendCalculator.reset(getShadeFromCurrentIndexAtFixedBrightness(), getNextBlendTarget());
+            if(ids.size() > 0) {
+                blendCalculator.reset(getShadeFromCurrentIndexAtFixedBrightness(), getNextBlendTarget());
+            }
         }
     }
 
@@ -143,6 +145,9 @@ public class ShadeColorSelector implements ColorSelector {
 
 
     private int getShadeFromCurrentIndexAtFixedBrightness(){
+        if(currentIndex >= ids.size()){
+            return Color.BLACK;
+        }
         String shadeListKey = ids.get(currentIndex);
         List<Integer> shadesList =  shadesMap.get(shadeListKey);
         if(shadesList == null || doesKeyEqual(shadeListKey, Color.BLACK)){
@@ -196,7 +201,7 @@ public class ShadeColorSelector implements ColorSelector {
         //do nothing
     }
 
-    
+
     /*
     private int getRandomShade(){
 
