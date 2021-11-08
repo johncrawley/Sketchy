@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:paddingTop="@dimen/shape_options_padding_top"
-        android:layout_marginTop="@dimen/menu_buttons_layout_top_margin">
+        android:layout_marginTop="@dimen/menu_buttons_layout_top_margin_portrait">
 
         <LinearLayout
             android:id="@+id/controlPanelLayoutGroup1"

@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toTopOf="@id/includedSelectionControls"
 
         android:weightSum="1"
-        android:padding="@dimen/paint_view_layout_padding">
+        android:padding="@dimen/paint_view_layout_padding_portrait">
 
         <com.jacstuff.sketchy.paintview.PaintView
             android:id="@+id/paintView"
@@ -39,7 +39,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_margin="@dimen/paint_view_margin"  />
-
     </LinearLayout>
 
 

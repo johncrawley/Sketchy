@@ -7,8 +7,8 @@
     android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/seekbar_layout_vertical_margin"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/seekbar_padding_top"
-    android:paddingBottom="@dimen/seekbar_padding_bottom"
+    android:paddingTop="@dimen/brush_size_seekbar_padding_top_portrait"
+    android:paddingBottom="@dimen/brush_size_seekbar_padding_bottom_portrait"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
