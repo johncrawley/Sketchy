@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
 import com.jacstuff.sketchy.brushes.AngleType;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.Random;
 
@@ -10,9 +11,11 @@ public class AngleHelper {
     private int increment;
     private AngleType angleType;
     private final Random random;
+    private final MainViewModel viewModel;
 
 
-    public AngleHelper(){
+    public AngleHelper(MainViewModel viewModel){
+        this.viewModel = viewModel;
         random = new Random(System.currentTimeMillis());
         angleType = AngleType.ZERO;
     }
@@ -42,9 +45,11 @@ public class AngleHelper {
         this.currentAngle = angle;
     }
 
+
     public void setOtherAngle(int angle){
         angleType = AngleType.OTHER;
         this.currentAngle = angle;
+        viewModel.angle = angle;
     }
 
 

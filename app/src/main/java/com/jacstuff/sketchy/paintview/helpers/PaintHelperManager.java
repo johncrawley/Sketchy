@@ -28,7 +28,7 @@ public class PaintHelperManager {
         gradientHelper = new GradientHelper(viewModel, mainActivity.getResources().getInteger(R.integer.gradient_radius_max));
         blurHelper = new BlurHelper();
         shadowHelper = new ShadowHelper(viewModel);
-        angleHelper = new AngleHelper();
+        angleHelper = new AngleHelper(viewModel);
         kaleidoscopeHelper = new KaleidoscopeHelper(paintView, viewModel);
         styleHelper = new StyleHelper(mainActivity);
         brushSizeSeekBarManager = new BrushSizeSeekBarManager(mainActivity);
