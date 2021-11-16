@@ -4,6 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24739583333333334" />
+        <entry key="app/src/main/res/layout/controls_rotation.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/settings_panel_rotation_increment.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/settings_panel_rotation_precise.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/settings_panel_rotation_preset.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/settings_panel_rotation_waver.xml" value="0.24583333333333332" />
       </map>
     </option>
   </component>

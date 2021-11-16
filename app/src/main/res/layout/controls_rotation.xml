@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:paddingTop="@dimen/menu_padding_top"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/settings_panel_include_horizontal_padding">
+        <include
+            android:id="@+id/settingsRotationPresetInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/settings_panel_rotation_preset" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/settings_panel_include_horizontal_padding">
+        <include
+            android:id="@+id/settingsRotationPreciseInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/settings_panel_rotation_precise" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/settings_panel_include_horizontal_padding">
+        <include
+            android:id="@+id/settingsRotationIncrementInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/settings_panel_rotation_increment" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/settings_panel_include_horizontal_padding">
+        <include
+            android:id="@+id/settingsRotationWaverInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/settings_panel_rotation_waver" />
+    </LinearLayout>
+
+
+    <HorizontalScrollView
+        android:id="@+id/angleControlsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/rotationOptionsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/menu_buttons_layout_top_margin"
+            android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/shape_options_padding_top">
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

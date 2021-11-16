@@ -94,7 +94,7 @@ public class ButtonConfigHandler<T>{
     }
 
 
-    Set<Integer> getButtonIds(){
+    public Set<Integer> getButtonIds(){
         return buttonIds;
     }
 

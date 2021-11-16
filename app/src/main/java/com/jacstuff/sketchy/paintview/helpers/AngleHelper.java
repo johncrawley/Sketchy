@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
 import com.jacstuff.sketchy.brushes.AngleType;
+import com.jacstuff.sketchy.brushes.RotationType;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.Random;
@@ -12,12 +13,14 @@ public class AngleHelper {
     private AngleType angleType;
     private final Random random;
     private final MainViewModel viewModel;
+    private RotationType rotationType;
 
 
     public AngleHelper(MainViewModel viewModel){
         this.viewModel = viewModel;
         random = new Random(System.currentTimeMillis());
         angleType = AngleType.ZERO;
+        rotationType = RotationType.PRESET;
     }
 
 
@@ -27,6 +30,10 @@ public class AngleHelper {
         if (angleType.isIncremental()) {
             increment = angleType.get();
         }
+    }
+
+    public void setRotationType(RotationType rotationType){
+        this.rotationType = rotationType;
     }
 
 

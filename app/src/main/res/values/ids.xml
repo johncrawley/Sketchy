@@ -35,6 +35,13 @@
     <item name="degreesRandomButton" type="id"/>
 
 
+    <item name="presetRotationButton" type="id"/>
+    <item name="incrementingRotationButton" type="id"/>
+    <item name="waveringRotationButton" type="id"/>
+    <item name="preciseRotationButton" type="id"/>
+    <item name="randomRotationButton" type="id"/>
+
+
     <item name="noBlurButton" type="id"/>
     <item name="innerBlurButton" type="id"/>
     <item name="normalBlurButton" type="id"/>

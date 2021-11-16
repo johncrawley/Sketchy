@@ -87,8 +87,6 @@ public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushSh
                 progress -> {
                     viewModel.astroid_shape_curve_rate = progress;
                     paintView.recalculateBrush();
-                    // TODO: add a call to brush to notify percentage changed,
-                    //  so that the actual value can be recalculated
                 } );
     }
 
