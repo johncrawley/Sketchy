@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy;
 
+import android.content.Context;
 import android.content.Intent;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -8,13 +9,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +44,7 @@ import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
 import com.jacstuff.sketchy.tasks.ColorAutoScroller;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 
@@ -145,6 +150,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if( id == R.id.action_about){
             startActivity(new Intent(this, AboutDialogActivity.class));
+        }
+        else if( id == R.id.action_share){
+            shareSketch();
         }
         return true;
     }
@@ -285,6 +293,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.setType("image/png");
         intent.putExtra(Intent.EXTRA_TITLE, "sketch");
         activityResultLauncher.launch(intent);
+    }
+
+
+    private void shareSketch(){
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_SEND);
+        i.setType("image/*");
+        i.putExtra(Intent.EXTRA_STREAM, getImageUri(MainActivity.this, paintView.getBitmap()));
+        startActivity(Intent.createChooser(i, getString(R.string.share_to)));
+    }
+
+
+    public Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, getString(R.string.shared_image_title), null);
+        return Uri.parse(path);
     }
 
 
