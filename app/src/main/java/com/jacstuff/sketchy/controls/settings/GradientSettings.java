@@ -9,10 +9,10 @@ import com.jacstuff.sketchy.paintview.PaintView;
 
 import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner;
 
-public class GradientButtonsConfigurator extends AbstractButtonConfigurator<GradientType> implements ButtonsConfigurator<GradientType> {
+public class GradientSettings extends AbstractButtonConfigurator<GradientType> implements ButtonsConfigurator<GradientType> {
 
 
-    public GradientButtonsConfigurator(MainActivity activity, PaintView paintView){
+    public GradientSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
     }
 

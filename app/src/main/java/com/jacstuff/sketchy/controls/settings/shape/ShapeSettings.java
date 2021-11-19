@@ -13,11 +13,11 @@ import com.jacstuff.sketchy.controls.settings.ButtonsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 
-public class ShapeButtonsConfigurator extends AbstractButtonConfigurator<BrushShape> implements ButtonsConfigurator<BrushShape> {
+public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implements ButtonsConfigurator<BrushShape> {
 
     private final int minBrushSize;
 
-    public ShapeButtonsConfigurator(MainActivity activity, PaintView paintView){
+    public ShapeSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
         childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
         childSettingsPanelManager.add(R.id.astroidShapeButton, R.id.settingsPanelAstroidShapeInclude);

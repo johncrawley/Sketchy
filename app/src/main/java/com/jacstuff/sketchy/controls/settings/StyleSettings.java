@@ -10,10 +10,10 @@ import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner;
 
 
-public class StyleButtonsConfigurator extends AbstractButtonConfigurator<BrushStyle> implements ButtonsConfigurator<BrushStyle>{
+public class StyleSettings extends AbstractButtonConfigurator<BrushStyle> implements ButtonsConfigurator<BrushStyle>{
 
 
-    public StyleButtonsConfigurator(MainActivity activity, PaintView paintView){
+    public StyleSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
         setupSpinners();
     }

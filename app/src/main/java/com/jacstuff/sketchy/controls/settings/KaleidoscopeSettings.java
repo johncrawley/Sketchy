@@ -6,10 +6,10 @@ import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 
-public class KaleidoscopeButtonsConfigurator extends AbstractButtonConfigurator<Integer> implements ButtonsConfigurator<Integer>{
+public class KaleidoscopeSettings extends AbstractButtonConfigurator<Integer> implements ButtonsConfigurator<Integer>{
 
 
-    public KaleidoscopeButtonsConfigurator(MainActivity activity, PaintView paintView){
+    public KaleidoscopeSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
     }
 

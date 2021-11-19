@@ -247,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+
     private void setupColorPickerSeekbar(){
         SeekBar colorPickerSeekBar = findViewById(R.id.colorPickerSeekBar);
         int totalSeekBarMargin = (int)(getResources().getDimension(R.dimen.gradient_color_picker_seek_bar_horizontal_margin) * 2);

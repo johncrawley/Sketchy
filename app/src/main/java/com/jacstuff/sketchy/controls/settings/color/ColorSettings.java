@@ -17,11 +17,11 @@ import java.util.Map;
 
 import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner;
 
-public class ColorConfigOptionsConfigurator extends AbstractButtonConfigurator<Void> implements ButtonsConfigurator<Void> {
+public class ColorSettings extends AbstractButtonConfigurator<Void> implements ButtonsConfigurator<Void> {
 
     private Map<String, ColorSequenceType> sequenceTypeMap;
 
-    public ColorConfigOptionsConfigurator(MainActivity activity, PaintView paintView){
+    public ColorSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
         initSequenceTypeMap();
     }

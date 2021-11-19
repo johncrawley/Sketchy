@@ -7,10 +7,10 @@ import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.size.SizeSequenceType;
 
-public class SizeSequenceOptionsConfigurator extends AbstractButtonConfigurator<SizeSequenceType> implements ButtonsConfigurator<SizeSequenceType> {
+public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenceType> implements ButtonsConfigurator<SizeSequenceType> {
 
 
-    public SizeSequenceOptionsConfigurator(MainActivity activity, PaintView paintView) {
+    public SizeSequenceSettings(MainActivity activity, PaintView paintView) {
         super(activity, paintView);
         //setupSpinners();
     }

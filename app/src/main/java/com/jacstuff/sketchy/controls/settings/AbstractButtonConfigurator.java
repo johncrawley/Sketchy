@@ -9,7 +9,6 @@ import com.jacstuff.sketchy.paintview.PaintView;
 
 public abstract class AbstractButtonConfigurator<T> implements SelectableDefault {
 
-
     public MainActivity activity;
     public MainViewModel viewModel;
     public PaintView paintView;
@@ -17,6 +16,7 @@ public abstract class AbstractButtonConfigurator<T> implements SelectableDefault
     public ButtonConfigHandler<T> buttonConfig;
     public PaintHelperManager paintHelperManager;
     protected final SeekBarConfigurator seekBarConfigurator;
+
 
     public AbstractButtonConfigurator(MainActivity activity, PaintView paintView){
         this.activity = activity;
