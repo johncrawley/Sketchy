@@ -14,11 +14,11 @@
 
 
     <string-array name="color_sequence_type_array">
+        <item>@string/spinner_item_color_sequence_blend</item>
         <item>@string/spinner_item_color_sequence_strobe</item>
         <item>@string/spinner_item_color_sequence_forwards</item>
         <item>@string/spinner_item_color_sequence_backwards</item>
         <item>@string/spinner_item_color_sequence_random</item>
-        <item>@string/spinner_item_color_sequence_blend</item>
     </string-array>
 
 
