@@ -25,7 +25,7 @@
     <integer name="number_of_shades">15</integer>
     <integer name="shade_increment">7</integer>
     <integer name="shade_increment_denominator">100</integer>
-    <integer name="gradient_radius_max">150</integer>
+    <integer name="gradient_radius_max">200</integer>
     <integer name="gradient_radius_min">1</integer>
     <integer name="gradient_radius_default">30</integer>
     <integer name="gradient_radius_offset_x_default">100</integer>

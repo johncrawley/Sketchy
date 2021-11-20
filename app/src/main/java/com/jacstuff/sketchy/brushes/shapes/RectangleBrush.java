@@ -33,7 +33,6 @@ public class RectangleBrush extends AbstractBrush implements Brush {
         float height =  Math.abs(y2 - touchDownPoint.y );
         float halfWidth = width /2;
         float halfHeight =  height /2;
-        paintView.getPaintHelperManager().getGradientHelper().recalculateGradientLengthForRectangle(touchDownPoint, width, height);
         canvas.drawRect(-halfWidth, -halfHeight, halfWidth, halfHeight, paint);
     }
 

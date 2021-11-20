@@ -1,13 +1,11 @@
 package com.jacstuff.sketchy.controls.settings;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.GradientType;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 
-import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner;
 
 public class GradientSettings extends AbstractButtonConfigurator<GradientType> implements ButtonsConfigurator<GradientType> {
 

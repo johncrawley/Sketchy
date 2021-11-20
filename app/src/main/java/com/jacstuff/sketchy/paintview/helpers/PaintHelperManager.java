@@ -25,7 +25,8 @@ public class PaintHelperManager {
     private final BrushSizeSeekBarManager brushSizeSeekBarManager;
 
     public PaintHelperManager(MainActivity mainActivity, PaintView paintView, MainViewModel viewModel){
-        gradientHelper = new GradientHelper(viewModel, mainActivity.getResources().getInteger(R.integer.gradient_radius_max));
+        int gradientRadiusMax = mainActivity.getResources().getInteger(R.integer.gradient_radius_max);
+        gradientHelper = new GradientHelper(viewModel, gradientRadiusMax);
         blurHelper = new BlurHelper();
         shadowHelper = new ShadowHelper(viewModel);
         angleHelper = new AngleHelper(viewModel);
@@ -38,6 +39,7 @@ public class PaintHelperManager {
     }
 
 
+
     public void init(Paint paint, Paint shadowPaint, Paint previewPaint, PaintGroup paintGroup){
         gradientHelper.init(paint);
         blurHelper.init(paint);
@@ -45,6 +47,10 @@ public class PaintHelperManager {
         styleHelper.init(paintGroup);
         colorHelper.init(paint, shadowPaint);
         tileHelper.init(paint, previewPaint);
+    }
+
+    public void initDimensions(int width, int height){
+        gradientHelper.initDimensions(width, height);
     }
 
 

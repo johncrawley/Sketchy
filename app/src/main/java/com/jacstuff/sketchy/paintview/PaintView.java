@@ -74,6 +74,7 @@ public class PaintView extends View {
             drawPlainBackgroundAndSaveToHistory();
         }
         paintHelperManager.getKaleidoscopeHelper().setCanvas(canvas);
+        paintHelperManager.initDimensions(getWidth(), getHeight());
         invalidate();
     }
 
