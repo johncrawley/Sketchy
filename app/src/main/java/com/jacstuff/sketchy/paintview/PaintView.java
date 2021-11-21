@@ -142,7 +142,6 @@ public class PaintView extends View {
         if(currentBrush != null) {
             currentBrush.setBrushSize(brushSize);
         }
-        paintHelperManager.getGradientHelper().updateBrushSize(brushSize);
         paintHelperManager.getShadowHelper().updateOffsetFactor(brushSize/2);
     }
 

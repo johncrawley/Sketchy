@@ -50,7 +50,6 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int sizeSequenceIncrement = 2;
     public boolean isSizeSequenceRepeated = true;
     public boolean isSizeSequenceResetOnTouchUp = true;
-    public int halfBrushSize = 10;
     public int radialGradientRadius=1;
     public int clampRadialGradientRadius=10;
     public int linearGradientLength=100;

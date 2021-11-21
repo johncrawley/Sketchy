@@ -20,7 +20,7 @@ public class GradientHelper {
     private int maxGradientLength;
 
 
-    public GradientHelper(MainViewModel viewModel, int maxGradientFactor){
+    public GradientHelper(MainViewModel viewModel){
         this.viewModel = viewModel;
     }
 
@@ -35,13 +35,6 @@ public class GradientHelper {
         this.paint = paint;
         gradientType = GradientType.NONE;
     }
-
-
-    public void updateBrushSize(int brushSize){
-        viewModel.halfBrushSize = brushSize / 2;
-    }
-
-
 
 
     public void setGradientType(GradientType gradientType){
@@ -71,7 +64,7 @@ public class GradientHelper {
         int g = 0;
         int b = 0;
         int MAX = 256;
-        int highest = MAX-1;
+        int highest = MAX - 1;
         int modVal = progress % MAX;
         int minusModVal = MAX - modVal;
 
@@ -100,14 +93,12 @@ public class GradientHelper {
             g = highest;
             b = modVal;
         }
-
         viewModel.secondaryColor = Color.argb(255,r,g,b);
     }
 
 
     private int getOffset(int progress){
         int percentage = progress -100;
-       // return (int)((viewModel.brushSize /100f) * percentage);
         return (int)((maxGradientLength /100f) * percentage);
     }
 
@@ -115,11 +106,11 @@ public class GradientHelper {
     public void calculateGradientLength(){
         viewModel.radialGradientRadius = 1 + RADIAL_GRADIENT_NUMERATOR / radiusFactor;
         viewModel.clampRadialGradientRadius = 1 + viewModel.radialGradientRadius * CLAMP_RADIAL_GRADIENT_FACTOR;
-        viewModel.linearGradientLength = calculateLinearGradientLength2();
+        viewModel.linearGradientLength = calculateLinearGradientLength();
     }
 
 
-    private int calculateLinearGradientLength2(){
+    private int calculateLinearGradientLength(){
         float length =  maxGradientLength / (float) viewModel.gradient;
         return Math.max(1, (int) length);
     }
@@ -139,6 +130,73 @@ public class GradientHelper {
     }
 
 
+    public void assignGradient(float x, float y, int color){
+        int gradientColor = getGradientColor();
+
+        switch(gradientType){
+            case NONE:
+                paint.setShader(null);
+                break;
+
+            case DIAGONAL_MIRROR:
+                paint.setShader(new LinearGradient(-viewModel.linearGradientLength,
+                        -viewModel.linearGradientLength,
+                        viewModel.linearGradientLength,
+                        viewModel.linearGradientLength,
+                        color,
+                        gradientColor,
+                        Shader.TileMode.MIRROR));
+                break;
+
+            case HORIZONTAL_MIRROR:
+                paint.setShader(new LinearGradient( -viewModel.linearGradientLength,
+                        y,
+                        viewModel.linearGradientLength,
+                        y,
+                        color,
+                        gradientColor,
+                        Shader.TileMode.MIRROR));
+                break;
+
+            case VERTICAL_MIRROR:
+                paint.setShader(new LinearGradient(x,
+                        - viewModel.linearGradientLength,
+                        x,
+                        viewModel.linearGradientLength,
+                        color,
+                        gradientColor,
+                        Shader.TileMode.MIRROR));
+                break;
+
+            case RADIAL_CLAMP:
+                paint.setShader(new RadialGradient(viewModel.radialGradientOffsetX,
+                        viewModel.radialGradientOffsetY,
+                        viewModel.clampRadialGradientRadius,
+                        new int []{color,gradientColor},
+                        null,
+                        Shader.TileMode.CLAMP ));
+                break;
+
+            case RADIAL_REPEAT:
+                paint.setShader(new RadialGradient(viewModel.radialGradientOffsetX,
+                        viewModel.radialGradientOffsetY,
+                        viewModel.radialGradientRadius,
+                        new int []{color,gradientColor},
+                        null,
+                        Shader.TileMode.REPEAT ));
+                break;
+
+            case RADIAL_MIRROR:
+                paint.setShader(new RadialGradient(viewModel.radialGradientOffsetX,
+                        viewModel.radialGradientOffsetY,
+                        viewModel.radialGradientRadius,
+                        new int []{color,gradientColor},
+                        null,
+                        Shader.TileMode.MIRROR ));
+        }
+    }
+
+
     private int getGradientColor(){
         switch(viewModel.gradientColorType) {
             case SELECTED:
@@ -148,63 +206,6 @@ public class GradientHelper {
                 return viewModel.previousColor;
         }
         return Color.TRANSPARENT;
-    }
-
-
-    public void assignGradient(float x, float y, int color){
-        int oldColor = getGradientColor();
-
-        switch(gradientType){
-
-            case NONE:
-                paint.setShader(null);
-                break;
-            case DIAGONAL_MIRROR:
-                paint.setShader(new LinearGradient(-viewModel.linearGradientLength,
-                        -viewModel.linearGradientLength,
-                        viewModel.linearGradientLength,
-                        viewModel.linearGradientLength,
-                        color,
-                        oldColor,
-                        Shader.TileMode.MIRROR));
-                break;
-            case HORIZONTAL_MIRROR:
-                paint.setShader(new LinearGradient( -viewModel.linearGradientLength,
-                        y,
-                        viewModel.linearGradientLength,
-                        y,
-                        color,
-                        oldColor,
-                        Shader.TileMode.MIRROR));
-                break;
-            case VERTICAL_MIRROR:
-                paint.setShader(new LinearGradient(x, - viewModel.linearGradientLength, x,  + viewModel.linearGradientLength, color, oldColor, Shader.TileMode.MIRROR));
-                break;
-            case RADIAL_CLAMP:
-                paint.setShader(new RadialGradient(viewModel.radialGradientOffsetX,
-                        viewModel.radialGradientOffsetY,
-                        viewModel.clampRadialGradientRadius,
-                        new int []{color,oldColor},
-                        null,
-                        Shader.TileMode.CLAMP ));
-                break;
-            case RADIAL_REPEAT:
-                paint.setShader(new RadialGradient(viewModel.radialGradientOffsetX,
-                        viewModel.radialGradientOffsetY,
-                        viewModel.radialGradientRadius,
-                        new int []{color,oldColor},
-                        null,
-                        Shader.TileMode.REPEAT ));
-                break;
-            case RADIAL_MIRROR:
-                paint.setShader(new RadialGradient(viewModel.radialGradientOffsetX,
-                        viewModel.radialGradientOffsetY,
-                        viewModel.radialGradientRadius,
-                        new int []{color,oldColor},
-                        null,
-                        Shader.TileMode.MIRROR ));
-                break;
-        }
     }
 
 }
