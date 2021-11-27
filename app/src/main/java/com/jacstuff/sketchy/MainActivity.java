@@ -128,11 +128,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public ButtonLayoutParams getColorButtonLayoutParams(){
-        return this.colorButtonLayoutParams;
-    }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -155,6 +150,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             shareSketch();
         }
         return true;
+    }
+
+
+    public ButtonLayoutParams getColorButtonLayoutParams(){
+        return this.colorButtonLayoutParams;
     }
 
 

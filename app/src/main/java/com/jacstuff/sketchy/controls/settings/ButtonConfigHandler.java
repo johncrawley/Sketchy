@@ -110,15 +110,10 @@ public class ButtonConfigHandler<T>{
         int viewId = view.getId();
         buttonUtils.switchSelection(view.getId(), buttonIds);
         buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
-        log("handleClick(), about to save recent click for buttonCategory:" + buttonCategory.toString());
         viewModelHelper.saveRecentClick(buttonCategory, viewId);
         assignBackgroundAndTextToParentButtonFrom(view);
     }
 
-
-    private void log(String msg){
-        System.out.println("^^^ ButtonConfigHandler: " + msg);
-    }
 
     private void assignBackgroundAndTextToParentButtonFrom(View view){
         if(parentButton == null){

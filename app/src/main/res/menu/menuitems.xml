@@ -24,7 +24,6 @@
         app:showAsAction="ifRoom"
         tools:ignore="AlwaysShowAction"/>
 
-
     <item
         android:id="@+id/action_open"
         android:icon="@android:drawable/ic_menu_gallery"

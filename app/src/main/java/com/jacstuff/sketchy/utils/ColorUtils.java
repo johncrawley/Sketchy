@@ -1,5 +1,9 @@
 package com.jacstuff.sketchy.utils;
 
+import android.graphics.Color;
+
+import java.util.Random;
+
 public class ColorUtils {
 
     public enum Rgb {
@@ -29,6 +33,17 @@ public class ColorUtils {
                 + getComponentFrom(color, Rgb.GREEN) + ","
                 + getComponentFrom(color, Rgb.BLUE);
 
+    }
+
+    public static int getRandomColor(Random random){
+        int r = getRandomComponent(random);
+        int g = getRandomComponent(random);
+        int b = getRandomComponent(random);
+        return Color.argb(255,r,g,b);
+    }
+
+    public static int getRandomComponent(Random random){
+        return random.nextInt(255);
     }
 
 

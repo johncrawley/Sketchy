@@ -138,6 +138,7 @@
     <string name="spinner_item_gradient_color_selected">Selected</string>
     <string name="spinner_item_gradient_color_previous">Previous Color</string>
     <string name="spinner_item_gradient_color_transparent">Transparent</string>
+    <string name="spinner_item_gradient_color_random">Random</string>
 
     <string name="confirm_wipe_text">Clear the canvas without saving?</string>
 

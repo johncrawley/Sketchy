@@ -120,5 +120,6 @@
     <item name="sizeSequenceStrobeIncreasingButton" type="id"/>
     <item name="sizeSequenceStrobeDecreasingButton" type="id"/>
     <item name="sizeSequenceRandomButton" type="id"/>
+    <item name="sizeSequenceCenterPointButton" type="id"/>
 
 </resources>

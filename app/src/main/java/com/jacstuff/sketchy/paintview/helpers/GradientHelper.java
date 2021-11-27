@@ -6,8 +6,11 @@ import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 
+import com.jacstuff.sketchy.utils.ColorUtils;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.brushes.GradientType;
+
+import java.util.Random;
 
 public class GradientHelper {
 
@@ -18,10 +21,12 @@ public class GradientHelper {
     final int RADIAL_GRADIENT_NUMERATOR= 1100;
     int radiusFactor;
     private int maxGradientLength;
+    private final Random random;
 
 
     public GradientHelper(MainViewModel viewModel){
         this.viewModel = viewModel;
+        random = new Random(System.currentTimeMillis());
     }
 
 
@@ -204,6 +209,9 @@ public class GradientHelper {
 
             case PREVIOUS:
                 return viewModel.previousColor;
+
+            case RANDOM:
+                return ColorUtils.getRandomColor(random);
         }
         return Color.TRANSPARENT;
     }

@@ -26,12 +26,14 @@
         <item>@string/spinner_item_gradient_color_selected</item>
         <item>@string/spinner_item_gradient_color_previous</item>
         <item>@string/spinner_item_gradient_color_transparent</item>
+        <item>@string/spinner_item_gradient_color_random</item>
     </string-array>
 
     <string-array name="gradient_color_values">
         <item>SELECTED</item>
         <item>PREVIOUS</item>
         <item>TRANSPARENT</item>
+        <item>RANDOM</item>
     </string-array>
 
 

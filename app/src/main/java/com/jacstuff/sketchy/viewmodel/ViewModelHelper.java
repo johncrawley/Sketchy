@@ -97,7 +97,6 @@ public class ViewModelHelper {
     }
 
 
-
     private void initViewModelSettings(){
         if(viewModel.settingsButtonsClickMap == null){
             viewModel.settingsButtonsClickMap = new HashMap<>();
@@ -135,7 +134,6 @@ public class ViewModelHelper {
             Integer buttonId = viewModel.settingsButtonsClickMap.get(buttonCategory);
             clickOn(buttonId);
         }
-        log("retrieveRecentButtonSettings() : viewModel.useSeekBarAngle = "  + viewModel.useSeekBarAngle);
         if(viewModel.useSeekBarAngle){
             setAngleBasedOnSeekBar();
             deselectCurrentlySelectedAngleButton();
@@ -160,13 +158,11 @@ public class ViewModelHelper {
         paintHelperManager.getAngleHelper().setAngle(angle);
         String buttonText = "" + angle + mainActivity.getString(R.string.degrees_symbol);
         Button angleButton =  mainActivity.findViewById(R.id.angleButton);
-        log("setting text on angleButton, based on seekBar:  angle: " + angle);
         angleButton.setText(buttonText);
     }
 
 
     private void deselectCurrentlySelectedAngleButton(){
-        log("Entered deselectCurrentlySelectedAngleButton()");
         Integer selectedPresetButtonId = viewModel.settingsButtonsClickMap.get(ButtonCategory.ANGLE);
         if(selectedPresetButtonId == null){
             return;
@@ -174,10 +170,6 @@ public class ViewModelHelper {
         buttonUtils.deselectButton(selectedPresetButtonId);
     }
 
-
-    private void log(String msg){
-        System.out.println("^^^ ViewModelHelper: " + msg);
-    }
 
     private void clickOn(Integer id){
         if(id == null){
