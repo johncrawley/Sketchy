@@ -24,7 +24,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
             drawToCanvas(x,y, paint);
             return;
         }
-        paintHelperManager.getSizeHelper().onTouchDown();
+        paintHelperManager.getSizeHelper().onTouchDown(x, y);
         drawToCanvas(x,y, paint);
     }
 
@@ -38,7 +38,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
         }
         updateColorGradientAndAngle(x,y);
         paintView.disablePreviewLayer();
-        paintHelperManager.getSizeHelper().assignNextBrushSize();
+        paintHelperManager.getSizeHelper().assignNextBrushSize(x,y);
         drawToCanvas(x,y, paint);
         paintView.enablePreviewLayer();
         drawPreviewWhenInfinityModeOff(x, y);
@@ -55,14 +55,14 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
             paintView.disablePreviewLayer();
             paintView.invalidate();
             paintView.pushHistory();
-            paintHelperManager.getSizeHelper().assignNextBrushSize();
+            paintHelperManager.getSizeHelper().assignNextBrushSize(x,y);
             return;
         }
         paintHelperManager.getColorHelper().resetCurrentIndex();
         paintView.disablePreviewLayer();
         paintView.invalidate();
         paintView.pushHistory();
-        paintHelperManager.getSizeHelper().assignNextBrushSize();
+        paintHelperManager.getSizeHelper().assignNextBrushSize(x,y);
     }
 
 

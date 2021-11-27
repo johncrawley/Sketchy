@@ -41,7 +41,7 @@ public class RandomSizeSequence extends  AbstractSizeSequence implements  SizeSe
 
 
     @Override
-    public int getNextBrushSize(){
+    public int getNextBrushSize(float x, float y){
         if(currentSize == targetSize){
             assignNextTargetSize();
         }

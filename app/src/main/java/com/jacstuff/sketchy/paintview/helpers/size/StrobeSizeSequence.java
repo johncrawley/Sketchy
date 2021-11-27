@@ -34,7 +34,7 @@ public class StrobeSizeSequence extends AbstractSizeSequence implements SizeSequ
 
 
     @Override
-    public  int getNextBrushSize(){
+    public  int getNextBrushSize(float x, float y){
 
         if(viewModel.sizeSequenceMax < viewModel.sizeSequenceMin){
             return viewModel.sizeSequenceMin;

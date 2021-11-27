@@ -30,7 +30,7 @@ public class TileHelper {
 
 
     public void draw(float x, float y, BasicDrawer basicDrawer) {
-        int currentBrushSize = paintHelperManager.getSizeHelper().getCurrentBrushSize();
+        int currentBrushSize = paintHelperManager.getSizeHelper().getCurrentBrushSize(x,y);
         int columnOffset = currentBrushSize + spacing;
         for (int i = 0; i < columns; i++) {
             if(isColorUpdated){
@@ -44,7 +44,7 @@ public class TileHelper {
 
 
     public void drawPreview(float x, float y, BasicDrawer basicDrawer) {
-        int currentBrushSize = paintHelperManager.getSizeHelper().getCurrentBrushSize();
+        int currentBrushSize = paintHelperManager.getSizeHelper().getCurrentBrushSize(x, y);
         int columnOffset = currentBrushSize + spacing;
         for (int i = 0; i < columns; i++) {
             float offsetX = (columnOffset * i) + x;

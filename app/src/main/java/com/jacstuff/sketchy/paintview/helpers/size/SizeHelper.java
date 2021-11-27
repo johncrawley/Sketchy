@@ -39,6 +39,7 @@ public class SizeHelper {
         sizeSequenceMap.put(SizeSequenceType.STROBE_INCREASING, new StrobeSizeSequence(varyingSizeInitializer, viewModel, true));
         sizeSequenceMap.put(SizeSequenceType.STROBE_DECREASING, new StrobeSizeSequence(varyingSizeInitializer, viewModel, false));
         sizeSequenceMap.put(SizeSequenceType.RANDOM,            new RandomSizeSequence(varyingSizeInitializer, viewModel));
+        sizeSequenceMap.put(SizeSequenceType.CENTER_POINT,      new CenterPointSizeSequence(varyingSizeInitializer, viewModel));
         setSequence(SizeSequenceType.STATIONARY);
     }
 
@@ -52,20 +53,20 @@ public class SizeHelper {
     }
 
 
-    public void onTouchDown(){
+    public void onTouchDown(float x, float y){
         currentSequence.reset();
-        assignNextBrushSize();
+        assignNextBrushSize(x,y);
     }
 
 
-    public void assignNextBrushSize(){
+    public void assignNextBrushSize(float x, float y){
         if(currentSequence.hasSizeChanged()) {
-            paintView.setBrushSize(currentSequence.getNextBrushSize());
+            paintView.setBrushSize(currentSequence.getNextBrushSize(x,y));
         }
     }
 
-    public int getCurrentBrushSize(){
-        return currentSequence.getNextBrushSize();
+    public int getCurrentBrushSize(float x, float y){
+        return currentSequence.getNextBrushSize(x, y);
     }
 
 

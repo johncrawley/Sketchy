@@ -2,7 +2,7 @@ package com.jacstuff.sketchy.paintview.helpers.size;
 
 public interface SizeSequence {
 
-    int getNextBrushSize();
+    int getNextBrushSize(float x, float y);
     int getBrushSize();
     void init();
     boolean hasSizeChanged();

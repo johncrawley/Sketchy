@@ -20,7 +20,7 @@ public class IncreasingSizeSequence extends AbstractSizeSequence implements Size
 
 
     @Override
-    public int getNextBrushSize(){
+    public int getNextBrushSize(float x, float y){
         if(viewModel.isSizeSequenceRepeated && currentSize == viewModel.sizeSequenceMax){
             currentSize = viewModel.sizeSequenceMin;
             return currentSize;
