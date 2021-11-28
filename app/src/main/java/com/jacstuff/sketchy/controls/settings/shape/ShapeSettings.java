@@ -85,7 +85,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         seekBarConfigurator.configure(R.id.astroidShapeCurveSeekBar,
                 R.integer.astroid_shape_curve_seek_bar_default,
                 progress -> {
-                    viewModel.astroid_shape_curve_rate = progress;
+                    viewModel.astroidShapeCurveRate = progress;
                     paintView.recalculateBrush();
                 } );
     }

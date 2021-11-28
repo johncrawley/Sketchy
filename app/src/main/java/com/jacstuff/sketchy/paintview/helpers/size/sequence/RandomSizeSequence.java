@@ -1,11 +1,11 @@
-package com.jacstuff.sketchy.paintview.helpers.size;
+package com.jacstuff.sketchy.paintview.helpers.size.sequence;
 
 import com.jacstuff.sketchy.paintview.helpers.size.initializer.SizeInitializer;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.Random;
 
-public class RandomSizeSequence extends  AbstractSizeSequence implements  SizeSequence{
+public class RandomSizeSequence extends  AbstractSizeSequence implements SizeSequence {
 
     private final Random random;
     private int targetSize;

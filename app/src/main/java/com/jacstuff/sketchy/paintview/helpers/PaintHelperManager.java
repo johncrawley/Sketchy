@@ -3,10 +3,10 @@ package com.jacstuff.sketchy.paintview.helpers;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.color.ColorHelper;
+import com.jacstuff.sketchy.paintview.helpers.gradient.GradientHelper;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowHelper;
 import com.jacstuff.sketchy.paintview.helpers.size.SizeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;

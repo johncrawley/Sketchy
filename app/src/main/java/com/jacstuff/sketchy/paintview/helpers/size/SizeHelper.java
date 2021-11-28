@@ -3,8 +3,17 @@ package com.jacstuff.sketchy.paintview.helpers.size;
 
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.BrushSizeSeekBarManager;
+import com.jacstuff.sketchy.paintview.helpers.gradient.GradientColorType;
 import com.jacstuff.sketchy.paintview.helpers.size.initializer.FixedSizeInitializer;
 import com.jacstuff.sketchy.paintview.helpers.size.initializer.VaryingSizeInitializer;
+import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.CenterPointSizeSequence;
+import com.jacstuff.sketchy.paintview.helpers.size.sequence.DecreasingSizeSequence;
+import com.jacstuff.sketchy.paintview.helpers.size.sequence.IncreasingSizeSequence;
+import com.jacstuff.sketchy.paintview.helpers.size.sequence.RandomSizeSequence;
+import com.jacstuff.sketchy.paintview.helpers.size.sequence.SizeSequence;
+import com.jacstuff.sketchy.paintview.helpers.size.sequence.StationarySizeSequence;
+import com.jacstuff.sketchy.paintview.helpers.size.sequence.StrobeSizeSequence;
+import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.ProximityFocalPoint;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.HashMap;
@@ -19,6 +28,7 @@ public class SizeHelper {
     private Map<SizeSequenceType, SizeSequence> sizeSequenceMap;
     private final SizeSequence stationarySequence;
     private final VaryingSizeInitializer varyingSizeInitializer;
+    private int canvasWidth, canvasHeight;
 
 
     public SizeHelper(MainViewModel viewModel, PaintView paintView, BrushSizeSeekBarManager brushSizeSeekBarManager){
@@ -27,7 +37,6 @@ public class SizeHelper {
         stationarySequence = new StationarySizeSequence(new FixedSizeInitializer(brushSizeSeekBarManager), viewModel);
         varyingSizeInitializer = new VaryingSizeInitializer(brushSizeSeekBarManager);
         initSizeSequenceMap();
-
     }
 
 
@@ -39,7 +48,7 @@ public class SizeHelper {
         sizeSequenceMap.put(SizeSequenceType.STROBE_INCREASING, new StrobeSizeSequence(varyingSizeInitializer, viewModel, true));
         sizeSequenceMap.put(SizeSequenceType.STROBE_DECREASING, new StrobeSizeSequence(varyingSizeInitializer, viewModel, false));
         sizeSequenceMap.put(SizeSequenceType.RANDOM,            new RandomSizeSequence(varyingSizeInitializer, viewModel));
-        sizeSequenceMap.put(SizeSequenceType.CENTER_POINT,      new CenterPointSizeSequence(varyingSizeInitializer, viewModel));
+        sizeSequenceMap.put(SizeSequenceType.CENTER_POINT,      new CenterPointSizeSequence(varyingSizeInitializer, viewModel, paintView));
         setSequence(SizeSequenceType.STATIONARY);
     }
 
@@ -53,8 +62,14 @@ public class SizeHelper {
     }
 
 
+    public void setProximityFocalPoint(String focalPoint){
+        viewModel.sizeSequenceProximityFocalPoint = ProximityFocalPoint.valueOf(focalPoint.toUpperCase());
+    }
+
+
     public void onTouchDown(float x, float y){
         currentSequence.reset();
+        currentSequence.onTouchDown(x,y);
         assignNextBrushSize(x,y);
     }
 

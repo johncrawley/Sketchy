@@ -1,9 +1,9 @@
-package com.jacstuff.sketchy.paintview.helpers.size;
+package com.jacstuff.sketchy.paintview.helpers.size.sequence;
 
 import com.jacstuff.sketchy.paintview.helpers.size.initializer.SizeInitializer;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-public class StationarySizeSequence extends AbstractSizeSequence implements SizeSequence{
+public class StationarySizeSequence extends AbstractSizeSequence implements SizeSequence {
 
     private boolean hasChanged = false;
 

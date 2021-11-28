@@ -9,6 +9,12 @@
     android:focusable="true">
 
 
+    <include
+        android:id="@+id/settingsPanelSizeSequenceProximityInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        layout="@layout/settings_panel_size_sequence_proximity" />
 
     <LinearLayout
         android:id="@+id/includedLineWidthSeekBarWrapper"

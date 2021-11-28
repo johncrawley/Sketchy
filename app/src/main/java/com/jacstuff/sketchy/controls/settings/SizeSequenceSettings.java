@@ -3,15 +3,22 @@ package com.jacstuff.sketchy.controls.settings;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.size.SizeSequenceType;
+
+import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner;
+import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner2;
 
 public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenceType> implements ButtonsConfigurator<SizeSequenceType> {
 
 
     public SizeSequenceSettings(MainActivity activity, PaintView paintView) {
         super(activity, paintView);
+
+       // childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
+        childSettingsPanelManager.add(R.id.sizeSequenceCenterPointButton, R.id.settingsPanelSizeSequenceProximityInclude);
         //setupSpinners();
     }
 
@@ -37,12 +44,16 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
 
         configureSeekBars();
         setupOtherOptions();
+        setupSpinners();
     }
 
 
     @Override
     public void handleClick(int viewId, SizeSequenceType sizeSequenceType) {
         paintHelperManager.getSizeHelper().setSequence(sizeSequenceType);
+        if(childSettingsPanelManager != null){
+            childSettingsPanelManager.select(viewId);
+        }
     }
 
 
@@ -71,6 +82,15 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
 
         SwitchMaterial resetOnTouchUp = activity.findViewById(R.id.sizeSequenceIsResetSwitch);
         resetOnTouchUp.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isSizeSequenceResetOnTouchUp = isChecked);
+    }
+
+
+    private void setupSpinners(){
+        setupSpinner2(activity,
+                R.id.sizeSequenceFocalPointSpinner,
+                R.array.size_sequence_proximity_focal_point_array,
+                R.array.size_sequence_proximity_focal_point_values,
+                x -> paintHelperManager.getSizeHelper().setProximityFocalPoint(x));
     }
 
 

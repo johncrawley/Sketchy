@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/layout/settings_panel_rotation_precise.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/layout/settings_panel_rotation_preset.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/layout/settings_panel_rotation_waver.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/settings_panel_size_sequence_proximity.xml" value="0.25052083333333336" />
       </map>
     </option>
   </component>

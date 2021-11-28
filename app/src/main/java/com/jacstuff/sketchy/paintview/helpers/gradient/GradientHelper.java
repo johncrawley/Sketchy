@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.paintview.helpers;
+package com.jacstuff.sketchy.paintview.helpers.gradient;
 
 import android.graphics.Color;
 import android.graphics.LinearGradient;

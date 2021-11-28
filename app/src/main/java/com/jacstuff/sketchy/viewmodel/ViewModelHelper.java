@@ -11,7 +11,7 @@ import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.helpers.GradientHelper;
+import com.jacstuff.sketchy.paintview.helpers.gradient.GradientHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 

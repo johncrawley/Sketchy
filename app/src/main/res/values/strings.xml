@@ -134,11 +134,25 @@
     <string name="stroke_join_spinner_bevel_item">Bevel</string>
 
 
+    <string name="focal_point_spinner_label">Focal Point</string>
+
     <string name="gradient_color_spinner_label">Gradient Color</string>
     <string name="spinner_item_gradient_color_selected">Selected</string>
     <string name="spinner_item_gradient_color_previous">Previous Color</string>
     <string name="spinner_item_gradient_color_transparent">Transparent</string>
     <string name="spinner_item_gradient_color_random">Random</string>
+
+
+    <string name="spinner_item_size_sequence_proximity_point">Point</string>
+    <string name="spinner_item_size_sequence_proximity_horizontal_line">Horizontal Line</string>
+    <string name="spinner_item_size_sequence_proximity_vertical_line">Vertical Line</string>
+
+
+    <string name="spinner_item_size_sequence_proximity_focal_point_center">Middle Of Canvas</string>
+    <string name="spinner_item_size_sequence_proximity_focal_point_on_touch_down">On Touch Down</string>
+
+
+
 
     <string name="confirm_wipe_text">Clear the canvas without saving?</string>
 

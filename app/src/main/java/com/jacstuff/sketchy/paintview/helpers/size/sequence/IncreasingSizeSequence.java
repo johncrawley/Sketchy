@@ -1,9 +1,9 @@
-package com.jacstuff.sketchy.paintview.helpers.size;
+package com.jacstuff.sketchy.paintview.helpers.size.sequence;
 
 import com.jacstuff.sketchy.paintview.helpers.size.initializer.SizeInitializer;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-public class IncreasingSizeSequence extends AbstractSizeSequence implements SizeSequence{
+public class IncreasingSizeSequence extends AbstractSizeSequence implements SizeSequence {
 
     private int currentSize;
 
