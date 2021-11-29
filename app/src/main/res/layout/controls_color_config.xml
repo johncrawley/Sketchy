@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            layout="@layout/seek_bar_color_sequence_steps" />
+            layout="@layout/seek_bar_color_sequence_gradation" />
     </LinearLayout>
 
 

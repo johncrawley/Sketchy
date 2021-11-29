@@ -160,7 +160,7 @@
     <string name="spinner_color_sequence_type_label">Sequence Type</string>
     <string name="spinner_item_color_sequence_forwards">Forwards</string>
     <string name="spinner_item_color_sequence_backwards">Backwards</string>
-    <string name="spinner_item_color_sequence_strobe">Strobe</string>
+    <string name="spinner_item_color_sequence_over_and_back">Over and Back</string>
     <string name="spinner_item_color_sequence_random">Random</string>
     <string name="spinner_item_color_sequence_blend">Blend</string>
     <string name="spinner_item_color_sequence_shuffle">Shuffle</string>

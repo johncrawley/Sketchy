@@ -67,8 +67,8 @@ public class ColorSettings extends AbstractButtonConfigurator<Void> implements B
                     shadeColorSelector.updateRangeIndexes();
                 });
 
-        seekBarConfigurator.configure(R.id.colorSequenceStepsSeekBar,
-                R.integer.seek_bar_color_sequence_steps_default,
+        seekBarConfigurator.configure(R.id.colorSequenceGradationSeekBar,
+                R.integer.seek_bar_color_sequence_gradation_default,
                 progress -> {
                     viewModel.getColorSequenceControls().skippedShades = 1 + progress;
                     allColorsSequenceSelector.updateRangeIndexes();
@@ -89,7 +89,7 @@ public class ColorSettings extends AbstractButtonConfigurator<Void> implements B
         sequenceTypeMap = new HashMap<>();
         put(sequenceTypeMap, R.string.spinner_item_color_sequence_forwards, ColorSequenceType.FORWARDS);
         put(sequenceTypeMap, R.string.spinner_item_color_sequence_backwards, ColorSequenceType.BACKWARDS);
-        put(sequenceTypeMap, R.string.spinner_item_color_sequence_strobe, ColorSequenceType.STROBE);
+        put(sequenceTypeMap, R.string.spinner_item_color_sequence_over_and_back, ColorSequenceType.STROBE);
         put(sequenceTypeMap, R.string.spinner_item_color_sequence_random, ColorSequenceType.RANDOM);
         put(sequenceTypeMap, R.string.spinner_item_color_sequence_blend, ColorSequenceType.BLEND);
     }
