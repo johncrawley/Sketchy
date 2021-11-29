@@ -7,11 +7,12 @@
     android:paddingHorizontal="@dimen/paint_view_layout_margin"
     android:layout_height="wrap_content">
 
+
     <LinearLayout
-        android:id="@+id/sizeSequenceProximityFocalPointLayout"
+        android:id="@+id/sizeSequenceProximityTypeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/style_spinner_margin_vertical"
+        android:layout_marginVertical="@dimen/proximity_spinner_margin_vertical"
         android:paddingHorizontal="@dimen/spinner_layout_horizontal_padding">
 
         <TextView
@@ -19,12 +20,33 @@
             android:layout_height="wrap_content"
             android:labelFor="@id/sizeSequenceFocalPointSpinner"
             android:layout_marginEnd="@dimen/spinner_label_margin_end"
-            android:text="@string/focal_point_spinner_label"/>
+            android:text="@string/proximity_type_spinner_label"/>
+
+        <Spinner
+            android:id="@+id/sizeSequenceProximityTypeSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sizeSequenceProximityFocalPointLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/proximity_spinner_margin_vertical"
+        android:paddingHorizontal="@dimen/spinner_layout_horizontal_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/sizeSequenceFocalPointSpinner"
+            android:layout_marginEnd="@dimen/spinner_label_margin_end"
+            android:text="@string/proximity_placement_spinner_label"/>
 
         <Spinner
             android:id="@+id/sizeSequenceFocalPointSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
 
 </LinearLayout>

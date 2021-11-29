@@ -134,7 +134,8 @@
     <string name="stroke_join_spinner_bevel_item">Bevel</string>
 
 
-    <string name="focal_point_spinner_label">Focal Point</string>
+    <string name="proximity_type_spinner_label">Proximity Type</string>
+    <string name="proximity_placement_spinner_label">Placement</string>
 
     <string name="gradient_color_spinner_label">Gradient Color</string>
     <string name="spinner_item_gradient_color_selected">Selected</string>

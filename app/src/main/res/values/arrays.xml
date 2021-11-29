@@ -50,7 +50,6 @@
     </string-array>
 
 
-
     <string-array name="size_sequence_proximity_focal_point_array">
         <item>@string/spinner_item_size_sequence_proximity_focal_point_center</item>
         <item>@string/spinner_item_size_sequence_proximity_focal_point_on_touch_down</item>

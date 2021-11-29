@@ -6,14 +6,15 @@ import com.jacstuff.sketchy.paintview.helpers.size.sequence.AbstractSizeSequence
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.SizeSequence;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-public class CenterPointSizeSequence extends AbstractSizeSequence implements SizeSequence {
+public class ProximitySizeSequence extends AbstractSizeSequence implements SizeSequence {
 
     private int currentSize;
     private final PaintView paintView;
     private float centerX, centerY;
     private float touchDownX, touchDownY;
 
-    public CenterPointSizeSequence(SizeInitializer sizeInitializer, MainViewModel mainViewModel, PaintView paintView){
+
+    public ProximitySizeSequence(SizeInitializer sizeInitializer, MainViewModel mainViewModel, PaintView paintView){
         super(sizeInitializer, mainViewModel);
         this.paintView = paintView;
     }
@@ -34,8 +35,24 @@ public class CenterPointSizeSequence extends AbstractSizeSequence implements Siz
 
     @Override
     public int getNextBrushSize(float x, float y){
+
         setCenterXY();
-        return Math.min(viewModel.sizeSequenceMax, 1 + getDistanceFromCenter(x,y));
+        int size = ((int)(getDistance(x,y) / 12f) * viewModel.sizeSequenceIncrement);
+
+        return Math.max(viewModel.sizeSequenceMin, Math.min(viewModel.sizeSequenceMax, size));
+    }
+
+
+    private int getDistance(float x, float y){
+        switch (viewModel.proximityType){
+            case POINT:
+                return getDistanceFromFocalPoint(x,y);
+            case HORIZONTAL_LINE:
+                return Math.abs((int)centerY - (int)y);
+            case VERTICAL_LINE:
+               return Math.abs((int)centerX - (int) x);
+        }
+        return 1;
     }
 
 
@@ -50,7 +67,7 @@ public class CenterPointSizeSequence extends AbstractSizeSequence implements Siz
     }
 
 
-    private int getDistanceFromCenter(float x, float y){
+    private int getDistanceFromFocalPoint(float x, float y){
         double diffX = centerX - x;
         double diffY = centerY - y;
         return (int) Math.sqrt( Math.pow(diffX,2) + Math.pow(diffY,2) );

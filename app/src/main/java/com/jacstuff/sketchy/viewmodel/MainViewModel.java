@@ -5,6 +5,7 @@ import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.helpers.gradient.GradientColorType;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.ProximityFocalPoint;
+import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.ProximityType;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
@@ -52,8 +53,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public boolean isSizeSequenceRepeated = true;
     public boolean isSizeSequenceResetOnTouchUp = true;
     public ProximityFocalPoint sizeSequenceProximityFocalPoint;
-    public int proximityTouchDownX;
-    public int proximityTouchDownY;
+    public ProximityType proximityType;
 
     public int radialGradientRadius=1;
     public int clampRadialGradientRadius=10;

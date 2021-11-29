@@ -3,10 +3,9 @@ package com.jacstuff.sketchy.paintview.helpers.size;
 
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.BrushSizeSeekBarManager;
-import com.jacstuff.sketchy.paintview.helpers.gradient.GradientColorType;
 import com.jacstuff.sketchy.paintview.helpers.size.initializer.FixedSizeInitializer;
 import com.jacstuff.sketchy.paintview.helpers.size.initializer.VaryingSizeInitializer;
-import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.CenterPointSizeSequence;
+import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.ProximitySizeSequence;
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.DecreasingSizeSequence;
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.IncreasingSizeSequence;
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.RandomSizeSequence;
@@ -14,6 +13,7 @@ import com.jacstuff.sketchy.paintview.helpers.size.sequence.SizeSequence;
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.StationarySizeSequence;
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.StrobeSizeSequence;
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.ProximityFocalPoint;
+import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.ProximityType;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.HashMap;
@@ -48,7 +48,7 @@ public class SizeHelper {
         sizeSequenceMap.put(SizeSequenceType.STROBE_INCREASING, new StrobeSizeSequence(varyingSizeInitializer, viewModel, true));
         sizeSequenceMap.put(SizeSequenceType.STROBE_DECREASING, new StrobeSizeSequence(varyingSizeInitializer, viewModel, false));
         sizeSequenceMap.put(SizeSequenceType.RANDOM,            new RandomSizeSequence(varyingSizeInitializer, viewModel));
-        sizeSequenceMap.put(SizeSequenceType.CENTER_POINT,      new CenterPointSizeSequence(varyingSizeInitializer, viewModel, paintView));
+        sizeSequenceMap.put(SizeSequenceType.CENTER_POINT,      new ProximitySizeSequence(varyingSizeInitializer, viewModel, paintView));
         setSequence(SizeSequenceType.STATIONARY);
     }
 
@@ -59,6 +59,11 @@ public class SizeHelper {
             currentSequence = stationarySequence;
         }
         currentSequence.init();
+    }
+
+
+    public void setProximityType(String proximityType){
+        viewModel.proximityType = ProximityType.valueOf(proximityType.toUpperCase());
     }
 
 

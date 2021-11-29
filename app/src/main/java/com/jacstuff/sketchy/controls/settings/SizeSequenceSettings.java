@@ -91,6 +91,13 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
                 R.array.size_sequence_proximity_focal_point_array,
                 R.array.size_sequence_proximity_focal_point_values,
                 x -> paintHelperManager.getSizeHelper().setProximityFocalPoint(x));
+
+
+        setupSpinner2(activity,
+                R.id.sizeSequenceProximityTypeSpinner,
+                R.array.size_sequence_proximity_type,
+                R.array.size_sequence_proximity_type_values,
+                x -> paintHelperManager.getSizeHelper().setProximityType(x));
     }
 
 
