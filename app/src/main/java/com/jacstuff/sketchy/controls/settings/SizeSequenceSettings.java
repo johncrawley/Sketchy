@@ -19,6 +19,10 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
 
        // childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
         childSettingsPanelManager.add(R.id.sizeSequenceCenterPointButton, R.id.settingsPanelSizeSequenceProximityInclude);
+        childSettingsPanelManager.add(R.id.sizeSequenceIncreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
+        childSettingsPanelManager.add(R.id.sizeSequenceDecreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
+        childSettingsPanelManager.add(R.id.sizeSequenceStrobeIncreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
+        childSettingsPanelManager.add(R.id.sizeSequenceStrobeDecreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
         //setupSpinners();
     }
 

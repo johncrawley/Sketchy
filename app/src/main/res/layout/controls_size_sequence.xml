@@ -17,6 +17,15 @@
         layout="@layout/settings_panel_size_sequence_proximity" />
 
 
+    <include
+        android:id="@+id/settingsPanelSizeSequenceResetInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        layout="@layout/settings_panel_size_sequence_reset" />
+
+
+
     <LinearLayout
         android:id="@+id/includedLineWidthSeekBarWrapper"
         android:layout_width="match_parent"
@@ -47,41 +56,6 @@
             layout="@layout/seek_bar_size_sequence_step" />
 
     </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/sizeSequenceOptionsCheckboxesLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/style_spinner_margin_vertical"
-        android:layout_marginBottom="@dimen/size_sequence_spinner_layout_margin_bottom"
-        android:paddingHorizontal="@dimen/spinner_layout_horizontal_padding">
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/sizeSequenceIsRepeatedSwitch"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:checked="true"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
-            android:paddingTop="@dimen/switch_option_padding_top"
-            android:paddingBottom="@dimen/switch_option_padding_bottom"
-            android:text="@string/size_sequence_is_repeated_label" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/sizeSequenceIsResetSwitch"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:checked="true"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
-            android:paddingTop="@dimen/switch_option_padding_top"
-            android:paddingBottom="@dimen/switch_option_padding_bottom"
-            android:text="@string/size_sequence_is_reset_on_release_label" />
-    </LinearLayout>
-
-
 
     <HorizontalScrollView
         android:id="@+id/controlsScrollView"
