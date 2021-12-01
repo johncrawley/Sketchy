@@ -52,6 +52,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int sizeSequenceIncrement = 2;
     public boolean isSizeSequenceRepeated = true;
     public boolean isSizeSequenceResetOnTouchUp = true;
+    public boolean isProximityInverted = false;
     public ProximityFocalPoint sizeSequenceProximityFocalPoint;
     public ProximityType proximityType;
 

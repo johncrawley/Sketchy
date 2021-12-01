@@ -2,6 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -10,9 +11,10 @@
         android:id="@+id/sizeSequenceOptionsCheckboxesLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/size_seq_switch_layout_h_padding"
         android:layout_marginTop="@dimen/style_spinner_margin_vertical"
         android:layout_marginBottom="@dimen/size_sequence_spinner_layout_margin_bottom"
-        >
+            tools:ignore="UselessParent">
 
 
         <com.google.android.material.switchmaterial.SwitchMaterial

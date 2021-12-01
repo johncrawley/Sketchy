@@ -2,9 +2,7 @@ package com.jacstuff.sketchy.controls.childpanel;
 
 import android.app.Activity;
 import android.view.View;
-import android.view.ViewGroup;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

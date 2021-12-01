@@ -40,7 +40,7 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
         buttonConfig.add(R.id.sizeSequenceStrobeIncreasingButton, R.drawable.button_size_sequence_strobe_increasing, SizeSequenceType.STROBE_INCREASING);
         buttonConfig.add(R.id.sizeSequenceStrobeDecreasingButton, R.drawable.button_size_sequence_strobe_decreasing, SizeSequenceType.STROBE_DECREASING);
         buttonConfig.add(R.id.sizeSequenceRandomButton, R.drawable.button_size_sequence_random, SizeSequenceType.RANDOM);
-        buttonConfig.add(R.id.sizeSequenceCenterPointButton, R.drawable.button_size_sequence_random, SizeSequenceType.CENTER_POINT);
+        buttonConfig.add(R.id.sizeSequenceCenterPointButton, R.drawable.button_size_sequence_proximity, SizeSequenceType.CENTER_POINT);
 
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.sizeSequenceButton);
@@ -86,6 +86,10 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
 
         SwitchMaterial resetOnTouchUp = activity.findViewById(R.id.sizeSequenceIsResetSwitch);
         resetOnTouchUp.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isSizeSequenceResetOnTouchUp = isChecked);
+
+
+        SwitchMaterial invertProximity = activity.findViewById(R.id.sizeSequenceProximityInvert);
+        invertProximity.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isProximityInverted = isChecked);
     }
 
 

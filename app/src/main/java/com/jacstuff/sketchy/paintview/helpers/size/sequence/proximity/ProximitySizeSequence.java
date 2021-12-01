@@ -35,10 +35,11 @@ public class ProximitySizeSequence extends AbstractSizeSequence implements SizeS
 
     @Override
     public int getNextBrushSize(float x, float y){
-
         setCenterXY();
         int size = ((int)(getDistance(x,y) / 12f) * viewModel.sizeSequenceIncrement);
-
+        if(viewModel.isProximityInverted){
+            size = viewModel.sizeSequenceMax - size;
+        }
         return Math.max(viewModel.sizeSequenceMin, Math.min(viewModel.sizeSequenceMax, size));
     }
 

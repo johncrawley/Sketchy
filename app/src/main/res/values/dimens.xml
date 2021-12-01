@@ -63,6 +63,7 @@
     <dimen name="settings_panel_include_horizontal_padding">22dp</dimen>
     <dimen name="menu_seekbar_include_horizontal_padding">12dp</dimen>
     <dimen name="spinner_layout_horizontal_padding">22dp</dimen>
+    <dimen name="size_seq_switch_layout_h_padding">12dp</dimen>
     <dimen name="seekbar_brush_size_include_horizontal_padding">12dp</dimen>
     <dimen name="seekbar_horizontal_padding">12dp</dimen>
     <dimen name="seekbar_layout_vertical_margin">16dp</dimen>
