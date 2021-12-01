@@ -23,6 +23,7 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
         childSettingsPanelManager.add(R.id.sizeSequenceDecreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
         childSettingsPanelManager.add(R.id.sizeSequenceStrobeIncreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
         childSettingsPanelManager.add(R.id.sizeSequenceStrobeDecreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
+        childSettingsPanelManager.setOffButtonAndDefaultLayout(R.id.sizeSequenceStationaryButton, R.id.sizeSequenceMainSettingsPanel);
         //setupSpinners();
     }
 
@@ -44,7 +45,7 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
 
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.sizeSequenceButton);
-        buttonConfig.setDefaultSelection(R.id.fillStyleButton);
+        buttonConfig.setDefaultSelection(R.id.sizeSequenceStationaryButton);
 
         configureSeekBars();
         setupOtherOptions();
@@ -59,6 +60,7 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
             childSettingsPanelManager.select(viewId);
         }
     }
+
 
 
     private void configureSeekBars(){
