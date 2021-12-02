@@ -65,6 +65,8 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public boolean snapRectangleToEdge =true;
 
 
+    public boolean isPlacementQuantizationEnabled = false;
+
     public int shadowSize = 1;
     public int shadowDistance =1;
     public float shadowOffsetX;

@@ -23,6 +23,7 @@ public class PaintHelperManager {
     private final ColorHelper colorHelper;
     private final TileHelper tileHelper;
     private final BrushSizeSeekBarManager brushSizeSeekBarManager;
+    private final PlacementHelper placementHelper;
 
     public PaintHelperManager(MainActivity mainActivity, PaintView paintView, MainViewModel viewModel){
         gradientHelper = new GradientHelper(viewModel);
@@ -35,8 +36,8 @@ public class PaintHelperManager {
         sizeHelper = new SizeHelper(viewModel, paintView, brushSizeSeekBarManager);
         colorHelper = new ColorHelper(viewModel, kaleidoscopeHelper);
         tileHelper = new TileHelper(viewModel, this);
+        placementHelper = new PlacementHelper(viewModel);
     }
-
 
 
     public void init(Paint paint, Paint shadowPaint, Paint previewPaint, PaintGroup paintGroup){
@@ -47,6 +48,7 @@ public class PaintHelperManager {
         colorHelper.init(paint, shadowPaint);
         tileHelper.init(paint, previewPaint);
     }
+
 
     public void initDimensions(int width, int height){
         gradientHelper.initDimensions(width, height);
@@ -72,10 +74,15 @@ public class PaintHelperManager {
         return brushSizeSeekBarManager;
     }
 
+
     public StyleHelper getStyleHelper(){
         return styleHelper;
     }
 
+
+    public PlacementHelper getPlacementHelper(){
+        return this.placementHelper;
+    }
 
     public KaleidoscopeHelper getKaleidoscopeHelper(){
         return kaleidoscopeHelper;
@@ -91,5 +98,7 @@ public class PaintHelperManager {
     public ColorHelper getColorHelper(){ return colorHelper;}
 
     public TileHelper getTileHelper(){ return tileHelper;}
+
+
 
 }

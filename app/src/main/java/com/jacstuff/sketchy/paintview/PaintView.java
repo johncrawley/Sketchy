@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.paintview.helpers.PlacementHelper;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -27,7 +28,7 @@ public class PaintView extends View {
     private Paint paint, shadowPaint, previewPaint;
     private Paint drawPaint;
     private PaintGroup paintGroup;
-    private int brushSize;
+    private int brushSize, halfBrushSize;
     private Bitmap bitmap, previewBitmap;
     private Canvas canvas;
     private BrushStyle currentBrushStyle = BrushStyle.FILL;
@@ -41,7 +42,7 @@ public class PaintView extends View {
     private SettingsPopup settingsPopup;
     private final Context context;
     private BitmapLoader bitmapLoader;
-
+    private PlacementHelper placementHelper;
 
     public PaintView(Context context) {
         this(context, null);
@@ -59,6 +60,7 @@ public class PaintView extends View {
     public void setPaintHelperManager(PaintHelperManager paintHelperManager){
         this.paintHelperManager = paintHelperManager;
         this.paintHelperManager.init(paint, shadowPaint, previewPaint, paintGroup);
+        placementHelper = paintHelperManager.getPlacementHelper();
     }
 
 
@@ -139,6 +141,7 @@ public class PaintView extends View {
 
     public void setBrushSize(int brushSize){
         this.brushSize = brushSize;
+        this.halfBrushSize = brushSize / 2;
         if(currentBrush != null) {
             currentBrush.setBrushSize(brushSize);
         }
@@ -228,10 +231,10 @@ public class PaintView extends View {
     }
 
 
-
     private void drawWithBrush(MotionEvent event){
-        float x = event.getX();
-        float y = event.getY();
+        float x = placementHelper.getX(event.getX());
+        float y = placementHelper.getY(event.getY());
+
 
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
