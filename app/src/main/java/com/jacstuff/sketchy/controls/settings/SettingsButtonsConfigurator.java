@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.controls.settings;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.controls.settings.color.ColorSettings;
+import com.jacstuff.sketchy.controls.settings.placement.PlacementSettings;
 import com.jacstuff.sketchy.controls.settings.shape.ShapeSettings;
 import com.jacstuff.sketchy.paintview.PaintView;
 
@@ -29,6 +30,7 @@ public class SettingsButtonsConfigurator {
         configurators.add(new AngleSettings(activity, paintView));
         configurators.add(new SizeSequenceSettings(activity, paintView));
         configurators.add(new ColorSettings(activity, paintView));
+        configurators.add(new PlacementSettings(activity, paintView));
     }
 
 

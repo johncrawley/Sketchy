@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:paddingTop="@dimen/menu_padding_top"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:id="@+id/placementMainSettingsPanel"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/enableQuantizationSwitchLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/size_seq_switch_layout_h_padding"
+        android:layout_marginTop="@dimen/style_spinner_margin_vertical"
+        android:layout_marginBottom="@dimen/size_sequence_spinner_layout_margin_bottom"
+        >
+
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/enableQuantizationSwitch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:checked="true"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
+            android:paddingTop="@dimen/switch_option_padding_top"
+            android:paddingBottom="@dimen/switch_option_padding_bottom"
+            android:text="@string/enable_quantization_label" />
+    </LinearLayout>
+
+    </LinearLayout>
+    <HorizontalScrollView
+        android:id="@+id/controlsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity = "center">
+
+        <LinearLayout
+            android:id="@+id/placementOptionsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/menu_buttons_layout_top_margin"
+            android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/shape_options_padding_top"/>
+    </HorizontalScrollView>
+</LinearLayout>

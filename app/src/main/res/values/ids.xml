@@ -12,6 +12,11 @@
     <item name="shadowButton" type="id"/>
     <item name="kaleidoButton" type="id"/>
     <item name="sizeSequenceButton" type="id"/>
+    <item name="placementButton" type="id"/>
+
+
+    <item name="normalPlacementButton" type="id"/>
+    <item name="quantizationButton" type="id"/>
 
     <item name="zeroDegreesButton" type="id"/>
     <item name="degrees30Button" type="id"/>

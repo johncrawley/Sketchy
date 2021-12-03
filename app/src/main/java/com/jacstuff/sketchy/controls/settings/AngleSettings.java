@@ -33,6 +33,7 @@ public class AngleSettings extends AbstractButtonConfigurator<AngleType> impleme
         add(R.id.degrees225Button, AngleType.TWO_TWENTY_FIVE);
         add(R.id.degrees270Button, AngleType.TWO_SEVENTY);
         add(R.id.degrees315Button, AngleType.THREE_FIFTEEN);
+
         add(R.id.degreesMinus1Button, AngleType.MINUS_ONE);
         add(R.id.degreesPlus1Button, AngleType.PLUS_ONE);
         add(R.id.degreesMinus5Button, AngleType.MINUS_FIVE);
@@ -41,6 +42,7 @@ public class AngleSettings extends AbstractButtonConfigurator<AngleType> impleme
         add(R.id.degreesPlus15Button, AngleType.PLUS_FIFTEEN);
         add(R.id.degreesMinus30Button, AngleType.MINUS_THIRTY);
         add(R.id.degreesPlus30Button, AngleType.PLUS_THIRTY);
+
         add(R.id.degreesRandomButton, AngleType.RANDOM);
 
         buttonConfig.setupClickHandler();
@@ -77,12 +79,6 @@ public class AngleSettings extends AbstractButtonConfigurator<AngleType> impleme
     }
 
 
-    private void setAngleParentButtonText(int progress){
-        String buttonText = "" + progress + activity.getString(R.string.degrees_symbol);
-        parentButton.setText(buttonText);
-    }
-
-
     @Override
     public void handleClick(int viewId, AngleType angleType){
         paintHelperManager.getAngleHelper().setAngle(angleType);
@@ -99,4 +95,8 @@ public class AngleSettings extends AbstractButtonConfigurator<AngleType> impleme
     }
 
 
+    private void setAngleParentButtonText(int progress){
+        String buttonText = "" + progress + activity.getString(R.string.degrees_symbol);
+        parentButton.setText(buttonText);
+    }
 }
