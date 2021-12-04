@@ -177,6 +177,8 @@
     <string name="switch_label_color_sequence_reset_on_release">Reset on Release</string>
     <string name="size_sequence_is_repeated_label">Repeat</string>
     <string name="enable_quantization_label">Enable Quantization for x and y</string>
+    <string name="lock_quantization_label">Lock Spacing</string>
+    <string name="quantization_include_line_width_label">Include line Width</string>
     <string name="size_sequence_proximity_invert_label">Invert</string>
     <string name="size_sequence_is_reset_on_release_label">Reset on Release</string>
     <string name="shadow_radius_seekbar_label">Shadow Focus</string>

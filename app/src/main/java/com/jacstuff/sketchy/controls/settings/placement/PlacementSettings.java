@@ -20,6 +20,7 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
     public PlacementSettings(MainActivity activity, PaintView paintView) {
         super(activity, paintView);
 
+        childSettingsPanelManager.add(R.id.quantizationButton, R.id.placementMainSettingsPanel);
     }
 
 
@@ -49,7 +50,7 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
 
 
     public void setupSwitches(){
-        SwitchMaterial repeatSequence = activity.findViewById(R.id.enableQuantizationSwitch);
+        SwitchMaterial repeatSequence = activity.findViewById(R.id.quantizationButtonIncludeLineWidthSwitch);
         repeatSequence.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isPlacementQuantizationEnabled = isChecked);
 
     }

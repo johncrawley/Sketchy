@@ -47,6 +47,7 @@ public class PaintHelperManager {
         styleHelper.init(paintGroup);
         colorHelper.init(paint, shadowPaint);
         tileHelper.init(paint, previewPaint);
+        placementHelper.init(paint);
     }
 
 

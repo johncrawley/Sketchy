@@ -37,6 +37,21 @@
             android:paddingTop="@dimen/switch_option_padding_top"
             android:paddingBottom="@dimen/switch_option_padding_bottom"
             android:text="@string/enable_quantization_label" />
+
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/quantizationButtonIncludeLineWidthSwitch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:checked="true"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
+            android:paddingTop="@dimen/switch_option_padding_top"
+            android:paddingBottom="@dimen/switch_option_padding_bottom"
+            android:text="@string/quantization_include_line_width_label" />
+
+
     </LinearLayout>
 
     </LinearLayout>
