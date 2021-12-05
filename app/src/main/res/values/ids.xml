@@ -16,7 +16,8 @@
 
 
     <item name="normalPlacementButton" type="id"/>
-    <item name="quantizationButton" type="id"/>
+    <item name="quantizationPlacementButton" type="id"/>
+    <item name="randomPlacementButton" type="id"/>
 
     <item name="zeroDegreesButton" type="id"/>
     <item name="degrees30Button" type="id"/>

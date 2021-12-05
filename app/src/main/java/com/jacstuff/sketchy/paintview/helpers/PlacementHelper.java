@@ -5,13 +5,19 @@ import android.graphics.Paint;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
+import java.util.Random;
+
 public class PlacementHelper {
 
     private final MainViewModel viewModel;
+    private final PaintView paintView;
     private Paint paint;
+    private Random random;
 
-    public PlacementHelper(MainViewModel viewModel){
+    public PlacementHelper(PaintView paintView, MainViewModel viewModel){
+        this.paintView = paintView;
         this.viewModel = viewModel;
+        random = new Random(System.currentTimeMillis());
     }
 
 
@@ -21,16 +27,31 @@ public class PlacementHelper {
 
 
     public float getX(float x){
-        if(viewModel.isPlacementQuantizationEnabled){
-            return (viewModel.brushSize/2f) + x - (x % (viewModel.brushSize + getLineSizeFactor()));
+        switch (viewModel.placementType){
+            case QUANTIZATION:
+                return (viewModel.brushSize/2f) + x - (x % (viewModel.brushSize + getLineSizeFactor()));
+            case RANDOM:
+                return getRandomX();
         }
         return x;
     }
 
+    private float getRandomX(){
+        return random.nextInt(paintView.getWidth());
+    }
+
+
+    private float getRandomY(){
+        return random.nextInt(paintView.getHeight());
+    }
+
 
     public float getY(float y){
-        if(viewModel.isPlacementQuantizationEnabled){
-            return (viewModel.brushSize/2f) + y - (y % (viewModel.brushSize + getLineSizeFactor()));
+        switch (viewModel.placementType){
+            case QUANTIZATION:
+                return (viewModel.brushSize/2f) + y - (y % (viewModel.brushSize + getLineSizeFactor()));
+            case RANDOM:
+                return getRandomY();
         }
         return y;
     }

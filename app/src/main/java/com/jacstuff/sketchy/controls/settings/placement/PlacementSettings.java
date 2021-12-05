@@ -8,10 +8,6 @@ import com.jacstuff.sketchy.controls.settings.AbstractButtonConfigurator;
 import com.jacstuff.sketchy.controls.settings.ButtonConfigHandler;
 import com.jacstuff.sketchy.controls.settings.ButtonsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.helpers.size.SizeSequenceType;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
-
-import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner2;
 
 public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType> implements ButtonsConfigurator<PlacementType> {
 
@@ -20,7 +16,7 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
     public PlacementSettings(MainActivity activity, PaintView paintView) {
         super(activity, paintView);
 
-        childSettingsPanelManager.add(R.id.quantizationButton, R.id.placementMainSettingsPanel);
+        childSettingsPanelManager.add(R.id.quantizationPlacementButton, R.id.placementMainSettingsPanel);
     }
 
 
@@ -34,7 +30,8 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
         setupSwitches();
 
         buttonConfig.add(R.id.normalPlacementButton, R.drawable.button_blur_off, PlacementType.NONE);
-        buttonConfig.add(R.id.quantizationButton, R.drawable.button_blur_outer, PlacementType.QUANTIZATION);
+        buttonConfig.add(R.id.quantizationPlacementButton, R.drawable.button_blur_outer, PlacementType.QUANTIZATION);
+        buttonConfig.add(R.id.randomPlacementButton, R.drawable.button_size_sequence_random, PlacementType.RANDOM);
         buttonConfig.setParentButton(R.id.placementButton);
 
         buttonConfig.setupClickHandler();
@@ -45,7 +42,7 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
 
     @Override
     public void handleClick(int viewId, PlacementType placementType) {
-        viewModel.isPlacementQuantizationEnabled = placementType == PlacementType.QUANTIZATION;
+        viewModel.placementType = placementType;
     }
 
 

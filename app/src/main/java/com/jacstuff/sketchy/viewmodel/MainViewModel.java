@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.viewmodel;
 
 import android.graphics.Color;
 import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.controls.settings.placement.PlacementType;
 import com.jacstuff.sketchy.paintview.helpers.gradient.GradientColorType;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.ProximityFocalPoint;
@@ -65,6 +66,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public boolean snapRectangleToEdge =true;
 
 
+    public PlacementType placementType = PlacementType.NONE;
     public boolean isPlacementQuantizationEnabled = false;
     public boolean isPlacementQuantizationLineWidthIncluded = true;
 
