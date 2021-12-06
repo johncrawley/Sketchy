@@ -31,18 +31,20 @@ public class PlacementHelper {
             case QUANTIZATION:
                 return (viewModel.brushSize/2f) + x - (x % (viewModel.brushSize + getLineSizeFactor()));
             case RANDOM:
-                return getRandomX();
+                return getRandomX(x);
         }
         return x;
     }
 
-    private float getRandomX(){
-        return random.nextInt(paintView.getWidth());
+
+
+    private float getRandomY(float y){
+        return ( y-viewModel.randomPlacementMaxDistanceY) + (2 * (random.nextInt((int)viewModel.randomPlacementMaxDistanceY)));
     }
 
 
-    private float getRandomY(){
-        return random.nextInt(paintView.getHeight());
+    private float getRandomX(float x){
+        return (x -viewModel.randomPlacementMaxDistanceX) + (2 * (random.nextInt((int)viewModel.randomPlacementMaxDistanceX)));
     }
 
 
@@ -51,9 +53,16 @@ public class PlacementHelper {
             case QUANTIZATION:
                 return (viewModel.brushSize/2f) + y - (y % (viewModel.brushSize + getLineSizeFactor()));
             case RANDOM:
-                return getRandomY();
+                return getRandomY(y);
         }
         return y;
+    }
+
+
+    public void updateMaxRandomDistance(){
+        viewModel.randomPlacementMaxDistanceX = 2 + (paintView.getWidth() / 100f) * viewModel.randomPlacementMaxDistancePercentage;
+        viewModel.randomPlacementMaxDistanceY = 2 + (paintView.getHeight() / 100f) * viewModel.randomPlacementMaxDistancePercentage;
+
     }
 
 

@@ -8,8 +8,25 @@
     android:clickable="true"
     android:focusable="true">
 
+
+
     <LinearLayout
-        android:id="@+id/placementMainSettingsPanel"
+        android:id="@+id/placementRandomSettingsPanel"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/settingsPanelTextShapeInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/seek_bar_placement_random_distance" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/placementQuantizationSettingsPanel"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,20 +41,6 @@
         android:layout_marginTop="@dimen/style_spinner_margin_vertical"
         android:layout_marginBottom="@dimen/size_sequence_spinner_layout_margin_bottom"
         >
-
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/enableQuantizationSwitch"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:checked="true"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
-            android:paddingTop="@dimen/switch_option_padding_top"
-            android:paddingBottom="@dimen/switch_option_padding_bottom"
-            android:text="@string/enable_quantization_label" />
-
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/quantizationButtonIncludeLineWidthSwitch"

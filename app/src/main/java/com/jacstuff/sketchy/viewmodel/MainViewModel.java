@@ -67,8 +67,10 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
 
 
     public PlacementType placementType = PlacementType.NONE;
-    public boolean isPlacementQuantizationEnabled = false;
     public boolean isPlacementQuantizationLineWidthIncluded = true;
+    public int randomPlacementMaxDistancePercentage;
+    public float randomPlacementMaxDistanceX = 1;
+    public float randomPlacementMaxDistanceY = 1;
 
     public int shadowSize = 1;
     public int shadowDistance =1;
