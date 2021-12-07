@@ -40,7 +40,6 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.placementButton);
         buttonConfig.setDefaultSelection(R.id.normalPlacementButton);
-
     }
 
 
@@ -64,8 +63,11 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
 
 
     private void setupSwitches(){
-        SwitchMaterial repeatSequence = activity.findViewById(R.id.quantizationButtonIncludeLineWidthSwitch);
-        repeatSequence.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isPlacementQuantizationLineWidthIncluded = isChecked);
+        SwitchMaterial isLineWidthIncludedSwitch = activity.findViewById(R.id.quantizationButtonIncludeLineWidthSwitch);
+        isLineWidthIncludedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isPlacementQuantizationLineWidthIncluded = isChecked);
+
+        SwitchMaterial isQuantizationLockedSwitch = activity.findViewById(R.id.quantizationIsLockedSwitch);
+        isQuantizationLockedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isPlacementQuantizationLocked = isChecked);
     }
 
 

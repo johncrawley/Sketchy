@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -232,8 +233,9 @@ public class PaintView extends View {
 
 
     private void drawWithBrush(MotionEvent event){
-        float x = placementHelper.getX(event.getX());
-        float y = placementHelper.getY(event.getY());
+        PointF point = placementHelper.calculatePoint(event.getX(), event.getY());
+        float x = point.x;
+        float y = point.y;
 
 
         switch(event.getAction()) {

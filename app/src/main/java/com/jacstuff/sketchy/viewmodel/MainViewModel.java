@@ -67,6 +67,9 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
 
 
     public PlacementType placementType = PlacementType.NONE;
+    public boolean isPlacementQuantizationLocked = false;
+    public float placementQuantizationFactor;
+    public float placementQuantizationSavedBrushSize;
     public boolean isPlacementQuantizationLineWidthIncluded = true;
     public int randomPlacementMaxDistancePercentage;
     public float randomPlacementMaxDistanceX = 1;
