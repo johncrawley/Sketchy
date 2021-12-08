@@ -8,7 +8,6 @@ import com.jacstuff.sketchy.controls.settings.AbstractButtonConfigurator;
 import com.jacstuff.sketchy.controls.settings.ButtonConfigHandler;
 import com.jacstuff.sketchy.controls.settings.ButtonsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.helpers.PlacementHelper;
 
 public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType> implements ButtonsConfigurator<PlacementType> {
 
@@ -16,8 +15,9 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
     public PlacementSettings(MainActivity activity, PaintView paintView) {
         super(activity, paintView);
 
-        childSettingsPanelManager.add(R.id.quantizationPlacementButton, R.id.placementQuantizationSettingsPanel);
-        childSettingsPanelManager.add(R.id.randomPlacementButton, R.id.placementRandomSettingsPanel);
+        subPanelManager.add(R.id.quantizationPlacementButton, R.id.placementQuantizationSettingsPanel);
+        subPanelManager.add(R.id.randomPlacementButton, R.id.placementRandomSettingsPanel);
+        subPanelManager.registerButtonWithoutPanel(R.id.normalPlacementButton);
 
     }
 
@@ -46,8 +46,8 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
     @Override
     public void handleClick(int viewId, PlacementType placementType) {
         viewModel.placementType = placementType;
-        if(childSettingsPanelManager != null){
-            childSettingsPanelManager.select(viewId);
+        if(subPanelManager != null){
+            subPanelManager.select(viewId);
         }
     }
 

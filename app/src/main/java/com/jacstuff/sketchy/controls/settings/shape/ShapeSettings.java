@@ -19,8 +19,8 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
 
     public ShapeSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
-        childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
-        childSettingsPanelManager.add(R.id.astroidShapeButton, R.id.settingsPanelAstroidShapeInclude);
+        subPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
+        subPanelManager.add(R.id.astroidShapeButton, R.id.settingsPanelAstroidShapeInclude);
         new TextControls(activity, paintView.getPaintGroup(), seekBarConfigurator);
         minBrushSize = activity.getResources().getInteger(R.integer.brush_size_min_default);
     }
@@ -94,8 +94,8 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
     @Override
     public void handleClick(int viewId, BrushShape brushShape){
         paintView.setBrushShape(brushShape);
-        if(childSettingsPanelManager != null){
-            childSettingsPanelManager.select(viewId);
+        if(subPanelManager != null){
+            subPanelManager.select(viewId);
         }
     }
 

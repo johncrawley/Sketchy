@@ -4,7 +4,7 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
-import com.jacstuff.sketchy.controls.childpanel.ChildSettingsPanelManager;
+import com.jacstuff.sketchy.controls.subpanel.SubPanelManager;
 import com.jacstuff.sketchy.paintview.PaintView;
 
 public abstract class AbstractButtonConfigurator<T> implements SelectableDefault {
@@ -12,7 +12,7 @@ public abstract class AbstractButtonConfigurator<T> implements SelectableDefault
     public MainActivity activity;
     public MainViewModel viewModel;
     public PaintView paintView;
-    public ChildSettingsPanelManager childSettingsPanelManager;
+    public SubPanelManager subPanelManager;
     public ButtonConfigHandler<T> buttonConfig;
     public PaintHelperManager paintHelperManager;
     protected final SeekBarConfigurator seekBarConfigurator;
@@ -24,7 +24,7 @@ public abstract class AbstractButtonConfigurator<T> implements SelectableDefault
         this.paintView = paintView;
         seekBarConfigurator = activity.getSeekBarConfigurator();
         this.paintHelperManager = activity.getPaintHelperManager();
-        childSettingsPanelManager = new ChildSettingsPanelManager(activity);
+        subPanelManager = new SubPanelManager(activity);
         configure();
     }
 

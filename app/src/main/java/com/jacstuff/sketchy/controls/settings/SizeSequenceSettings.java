@@ -3,12 +3,10 @@ package com.jacstuff.sketchy.controls.settings;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.size.SizeSequenceType;
 
-import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner;
 import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner2;
 
 public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenceType> implements ButtonsConfigurator<SizeSequenceType> {
@@ -18,12 +16,12 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
         super(activity, paintView);
 
        // childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
-        childSettingsPanelManager.add(R.id.sizeSequenceCenterPointButton, R.id.settingsPanelSizeSequenceProximityInclude);
-        childSettingsPanelManager.add(R.id.sizeSequenceIncreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
-        childSettingsPanelManager.add(R.id.sizeSequenceDecreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
-        childSettingsPanelManager.add(R.id.sizeSequenceStrobeIncreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
-        childSettingsPanelManager.add(R.id.sizeSequenceStrobeDecreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
-        childSettingsPanelManager.setOffButtonAndDefaultLayout(R.id.sizeSequenceStationaryButton, R.id.sizeSequenceMainSettingsPanel);
+        subPanelManager.add(R.id.sizeSequenceCenterPointButton, R.id.settingsPanelSizeSequenceProximityInclude);
+        subPanelManager.add(R.id.sizeSequenceIncreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
+        subPanelManager.add(R.id.sizeSequenceDecreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
+        subPanelManager.add(R.id.sizeSequenceStrobeIncreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
+        subPanelManager.add(R.id.sizeSequenceStrobeDecreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
+        subPanelManager.setOffButtonAndDefaultLayout(R.id.sizeSequenceStationaryButton, R.id.sizeSequenceMainSettingsPanel);
         //setupSpinners();
     }
 
@@ -56,8 +54,8 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
     @Override
     public void handleClick(int viewId, SizeSequenceType sizeSequenceType) {
         paintHelperManager.getSizeHelper().setSequence(sizeSequenceType);
-        if(childSettingsPanelManager != null){
-            childSettingsPanelManager.select(viewId);
+        if(subPanelManager != null){
+            subPanelManager.select(viewId);
         }
     }
 

@@ -36,7 +36,7 @@ public class PlacementHelper {
     }
 
 
-    public float getX(float x){
+    private float getX(float x){
         switch (viewModel.placementType){
             case QUANTIZATION:
                 return getQuantized(x);
@@ -47,7 +47,7 @@ public class PlacementHelper {
     }
 
 
-    public float getY(float y){
+    private float getY(float y){
         switch (viewModel.placementType){
             case QUANTIZATION:
                 return getQuantized(y);
