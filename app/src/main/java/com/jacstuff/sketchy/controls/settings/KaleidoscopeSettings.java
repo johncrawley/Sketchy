@@ -11,6 +11,8 @@ public class KaleidoscopeSettings extends AbstractButtonConfigurator<Integer> im
 
     public KaleidoscopeSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
+        subPanelManager.setDefaultLayout(R.id.kaleidoscopeOptionsInclude);
+        subPanelManager.registerButtonWithoutPanel(R.id.kOffButton);
     }
 
 

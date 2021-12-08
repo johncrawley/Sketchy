@@ -46,13 +46,11 @@ public class SubPanelManager {
         }
     }
 
+
     public void addExclusion(int buttonId, int layoutId){
         excludeMap.put(buttonId, layoutId);
     }
 
-    public void setDefaultLayoutId(int id){
-        this.defaultLayoutId = id;
-    }
 
     public void registerButtonWithoutPanel(int buttonId){
         buttonIdsWithoutPanels.add(buttonId);
@@ -72,6 +70,7 @@ public class SubPanelManager {
 
 
     public void select(int buttonId){
+
         showOrHideDefaultLayout(buttonId);
 
         hideAllSubPanelsIfButtonIsOffButton(buttonId);

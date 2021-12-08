@@ -46,9 +46,6 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
     @Override
     public void handleClick(int viewId, PlacementType placementType) {
         viewModel.placementType = placementType;
-        if(subPanelManager != null){
-            subPanelManager.select(viewId);
-        }
     }
 
 

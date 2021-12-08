@@ -94,9 +94,6 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
     @Override
     public void handleClick(int viewId, BrushShape brushShape){
         paintView.setBrushShape(brushShape);
-        if(subPanelManager != null){
-            subPanelManager.select(viewId);
-        }
     }
 
 }

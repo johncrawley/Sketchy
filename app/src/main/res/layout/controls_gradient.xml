@@ -10,6 +10,7 @@
     android:focusable="true">
 
     <LinearLayout
+        android:id="@+id/gradientMainSettingsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -34,36 +35,38 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             layout="@layout/seek_bar_gradient_offset_y" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/gradientColorSpinnerLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/style_spinner_margin_vertical"
-        android:paddingHorizontal="@dimen/gradient_color_type_padding_horizontal">
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/gradientColorSpinnerLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:labelFor="@id/gradientColorSpinner"
-            android:layout_marginEnd="@dimen/spinner_label_margin_end"
-            android:text="@string/gradient_color_spinner_label"/>
+            android:layout_marginVertical="@dimen/style_spinner_margin_vertical"
+            android:paddingHorizontal="@dimen/gradient_color_type_padding_horizontal">
 
-        <Spinner
-            android:id="@+id/gradientColorSpinner"
-            android:entries="@array/gradient_color_values"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/gradientColorSpinner"
+                android:layout_marginEnd="@dimen/spinner_label_margin_end"
+                android:text="@string/gradient_color_spinner_label"/>
+
+            <Spinner
+                android:id="@+id/gradientColorSpinner"
+                android:entries="@array/gradient_color_values"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/colorPickerSeekBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/gradient_color_picker_seek_bar_horizontal_margin"
+            android:max="@integer/gradient_color_picker_seek_bar_max"
+            android:progress="@integer/gradient_color_picker_seek_bar_default"/>
     </LinearLayout>
 
-    <SeekBar
-        android:id="@+id/colorPickerSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/gradient_color_picker_seek_bar_horizontal_margin"
-        android:max="@integer/gradient_color_picker_seek_bar_max"
-        android:progress="@integer/gradient_color_picker_seek_bar_default"/>
+
 
     <HorizontalScrollView
         android:id="@+id/controlsScrollView"

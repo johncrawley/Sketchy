@@ -109,7 +109,7 @@ public class ButtonConfigHandler<T>{
     private void handleClick(View view){
         int viewId = view.getId();
         buttonUtils.switchSelection(view.getId(), buttonIds);
-        buttonsConfigurator.handleClick(viewId, buttonActionMap.get(viewId));
+        buttonsConfigurator.onClick(viewId, buttonActionMap.get(viewId));
         viewModelHelper.saveRecentClick(buttonCategory, viewId);
         assignBackgroundAndTextToParentButtonFrom(view);
     }

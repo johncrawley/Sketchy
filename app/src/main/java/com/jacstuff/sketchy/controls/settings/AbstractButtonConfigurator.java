@@ -32,6 +32,14 @@ public abstract class AbstractButtonConfigurator<T> implements SelectableDefault
     public abstract void configure();
 
 
+    public void onClick(int viewId, T actionType){
+        if(subPanelManager!= null){
+            subPanelManager.select(viewId);
+        }
+        handleClick(viewId, actionType);
+    }
+
+
     public abstract void handleClick(int viewId, T actionType);
 
 
@@ -43,7 +51,7 @@ public abstract class AbstractButtonConfigurator<T> implements SelectableDefault
 
 
     public void handleDefaultClick(int viewId, T actionType){
-        handleClick(viewId, actionType);
+        onClick(viewId, actionType);
     }
 
 

@@ -54,9 +54,6 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
     @Override
     public void handleClick(int viewId, SizeSequenceType sizeSequenceType) {
         paintHelperManager.getSizeHelper().setSequence(sizeSequenceType);
-        if(subPanelManager != null){
-            subPanelManager.select(viewId);
-        }
     }
 
 

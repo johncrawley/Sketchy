@@ -12,6 +12,7 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
 
     public GradientSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
+        subPanelManager.setOffButtonAndDefaultLayout(R.id.noGradientButton, R.id.gradientMainSettingsLayout);
     }
 
 

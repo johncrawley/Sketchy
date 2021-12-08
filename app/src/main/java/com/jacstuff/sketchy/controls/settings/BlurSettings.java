@@ -11,6 +11,7 @@ public class BlurSettings extends AbstractButtonConfigurator<BlurType> implement
 
     public BlurSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
+        subPanelManager.setOffButtonAndDefaultLayout(R.id.noBlurButton, R.id.blurMainSettingsLayout);
     }
 
 

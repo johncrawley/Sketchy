@@ -11,6 +11,7 @@ public class ShadowSettings extends AbstractButtonConfigurator<ShadowType> imple
 
     public ShadowSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
+        subPanelManager.setOffButtonAndDefaultLayout(R.id.noShadowButton, R.id.shadowMainSettingsLayout);
     }
 
 
