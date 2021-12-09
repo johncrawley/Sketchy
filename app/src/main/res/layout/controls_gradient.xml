@@ -58,9 +58,10 @@
         </LinearLayout>
 
         <SeekBar
-            android:id="@+id/colorPickerSeekBar"
+            android:id="@+id/gradientColorPickerSeekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:indeterminate="false"
             android:layout_marginHorizontal="@dimen/gradient_color_picker_seek_bar_horizontal_margin"
             android:max="@integer/gradient_color_picker_seek_bar_max"
             android:progress="@integer/gradient_color_picker_seek_bar_default"/>

@@ -245,13 +245,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        View colorPickerSeekBar = findViewById(R.id.colorPickerSeekBar);
+        View colorPickerSeekBar = findViewById(R.id.gradientColorPickerSeekBar);
         colorPickerSeekBar.addOnLayoutChangeListener((view, i, i1, i2, i3, i4, i5, i6, i7) -> setupColorPickerSeekbar());
     }
 
 
     private void setupColorPickerSeekbar(){
-        SeekBar colorPickerSeekBar = findViewById(R.id.colorPickerSeekBar);
+        SeekBar colorPickerSeekBar = findViewById(R.id.gradientColorPickerSeekBar);
         int width = colorPickerSeekBar.getWidth() - (colorPickerSeekBar.getPaddingStart() + colorPickerSeekBar.getPaddingEnd());
         LinearGradient linearGradient = new LinearGradient(0, 0,  width, 0,
                 new int[] { 0xFF000000, 0xFF0000FF, 0xFF00FF00, 0xFF00FFFF,
@@ -261,11 +261,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         shape.getPaint().setShader(linearGradient);
         colorPickerSeekBar.setProgressDrawable(shape);
         colorPickerSeekBar.setMax(256*7-1);
-    }
-
-
-    private float getDimen(int dimensionId){
-        return getResources().getDimension(dimensionId);
+        Integer savedSeekBarProgress = viewModel.seekBarValue.get(R.id.gradientColorPickerSeekBar);
+        if(savedSeekBarProgress != null) {
+            colorPickerSeekBar.setProgress(savedSeekBarProgress);
+        }
     }
 
 

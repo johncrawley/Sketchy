@@ -19,7 +19,6 @@ public class SettingsButtonsConfigurator {
 
         // needs to be instantiated first, otherwise parent button icons won't get updated
         new MenuButtonsConfigurator(activity);
-
         configurators = new ArrayList<>();
         configurators.add(new ShapeSettings(activity, paintView));
         configurators.add(new StyleSettings(activity, paintView));

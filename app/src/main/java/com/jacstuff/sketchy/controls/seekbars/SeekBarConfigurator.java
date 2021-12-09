@@ -20,18 +20,6 @@ public class SeekBarConfigurator {
 
     public void configure(int seekBarId, int defaultResourceId,
                           Consumer<Integer> progressFinishedConsumer,
-                          Consumer<Integer> progressConsumer,
-                          Consumer<Integer> progressStartedConsumer){
-
-        SeekBar seekBar = activity.findViewById(seekBarId);
-        viewModel = activity.getViewModel();
-        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
-        setDefaultValue(defaultResourceId, seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer);
-    }
-
-
-    public void configure(int seekBarId, int defaultResourceId,
-                          Consumer<Integer> progressFinishedConsumer,
                           Consumer<Integer> progressConsumer){
         configure( seekBarId, defaultResourceId,  progressFinishedConsumer,progressConsumer, null);
     }
@@ -39,6 +27,19 @@ public class SeekBarConfigurator {
 
     public void configure(int seekBarId, int defaultResourceId, Consumer<Integer> progressFinishedConsumer){
         configure(seekBarId, defaultResourceId,  progressFinishedConsumer,null, null);
+    }
+
+
+    public void configure(int seekBarId,
+                          int defaultResourceId,
+                          Consumer<Integer> progressFinishedConsumer,
+                          Consumer<Integer> progressConsumer,
+                          Consumer<Integer> progressStartedConsumer){
+
+        SeekBar seekBar = activity.findViewById(seekBarId);
+        viewModel = activity.getViewModel();
+        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
+        setDefaultValue(defaultResourceId, seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer);
     }
 
 
@@ -57,9 +58,10 @@ public class SeekBarConfigurator {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                viewModel.seekBarValue.put(seekBarId, seekBar.getProgress());
+                int progress = seekBar.getProgress();
+                viewModel.seekBarValue.put(seekBarId, progress);
                 if(progressFinishedConsumer != null){
-                    progressFinishedConsumer.accept(seekBar.getProgress());
+                    progressFinishedConsumer.accept(progress);
                 }
             }
 
@@ -73,7 +75,8 @@ public class SeekBarConfigurator {
     }
 
 
-    public void setDefaultValue(int defaultResourceId, int seekBarId,
+    public void setDefaultValue(int defaultResourceId,
+                                int seekBarId,
                                 Consumer<Integer> progressStartedConsumer,
                                 Consumer<Integer> progressConsumer,
                                 Consumer<Integer> progressFinishedConsumer){
@@ -82,6 +85,10 @@ public class SeekBarConfigurator {
         acceptIfNotNull(progressStartedConsumer, progress);
         acceptIfNotNull(progressConsumer, progress);
         acceptIfNotNull(progressFinishedConsumer, progress);
+        SeekBar seekBar = activity.findViewById(seekBarId);
+        if(seekBar != null){
+            seekBar.setProgress(progress);
+        }
     }
 
 
@@ -93,17 +100,17 @@ public class SeekBarConfigurator {
 
 
     private int getSavedOrDefault(int defaultResourceId, int seekBarId){
-        int defaultValue = getValueOf(defaultResourceId);
         if(!viewModel.isFirstExecution){
             Integer savedValue = viewModel.seekBarValue.get(seekBarId);
             if(savedValue != null) {
                 return savedValue;
             }
         }
-        return defaultValue;
+        return getInt(defaultResourceId);
     }
 
-    protected int getValueOf(int id){
+
+    protected int getInt(int id){
         return activity.getResources().getInteger(id);
     }
 }

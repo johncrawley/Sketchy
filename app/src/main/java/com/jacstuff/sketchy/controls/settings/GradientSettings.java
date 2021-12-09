@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.controls.settings;
 
+
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.GradientType;
@@ -42,8 +43,7 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
     private void configureSeekBars(){
         seekBarConfigurator.configure( R.id.gradientSizeSeekBar,
                 R.integer.gradient_radius_default,
-                progress ->{
-                    paintHelperManager.getGradientHelper().setGradientRadius(progress); } );
+                progress ->paintHelperManager.getGradientHelper().setGradientRadius(progress) );
 
         seekBarConfigurator.configure( R.id.gradientOffsetXSeekBar,
                 R.integer.gradient_radius_offset_x_default,
@@ -54,12 +54,9 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
                 progress ->  paintHelperManager.getGradientHelper().setGradientOffsetY(progress));
 
 
-        seekBarConfigurator.configure( R.id.colorPickerSeekBar,
+        seekBarConfigurator.configure( R.id.gradientColorPickerSeekBar,
                 R.integer.gradient_color_picker_seek_bar_default,
-                progress -> {
-                    paintHelperManager.getGradientHelper().setGradientColor(progress);
-                    System.out.println("GradientSettings.configureSeekBars() actual color seekBar width: " + activity.findViewById(R.id.colorPickerSeekBar).getWidth());
-                });
+                progress -> paintHelperManager.getGradientHelper().setGradientColor(progress));
 
     }
 

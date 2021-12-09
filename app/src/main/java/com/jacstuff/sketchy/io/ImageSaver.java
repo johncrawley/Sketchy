@@ -79,7 +79,10 @@ public class ImageSaver {
     public void saveImageToCacheFile(PaintView paintView){
         try{
             FileOutputStream fileOutputStream = context.openFileOutput(CACHE_IMAGE_FILENAME, Context.MODE_PRIVATE);
-            fileOutputStream.write(getImageByteArrayFrom(paintView));
+            byte[] bytes = getImageByteArrayFrom(paintView);
+            if(bytes.length > 0) {
+                fileOutputStream.write(bytes);
+            }
             fileOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -122,7 +125,10 @@ public class ImageSaver {
 
     private byte[] getImageByteArrayFrom(PaintView paintView){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        paintView.getBitmap().compress(Bitmap.CompressFormat.PNG, 100, stream);
+        Bitmap bitmap = paintView.getBitmap();
+        if(bitmap != null){
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        }
         return stream.toByteArray();
     }
 
