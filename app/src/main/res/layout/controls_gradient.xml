@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
+        android:paddingHorizontal="@dimen/gradient_main_settings_layout_horizontal_padding">
         <include
             android:id="@+id/gradientSeekBarInclude"
             android:layout_width="match_parent"
@@ -65,7 +65,6 @@
             android:max="@integer/gradient_color_picker_seek_bar_max"
             android:progress="@integer/gradient_color_picker_seek_bar_default"/>
     </LinearLayout>
-
 
 
     <HorizontalScrollView

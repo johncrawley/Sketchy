@@ -60,6 +60,7 @@
     <dimen name="seekbar_brush_size_padding_start">6dp</dimen>
     <dimen name="seekbar_brush_size_padding_end">12dp</dimen>
     <dimen name="seekbar_include_horizontal_padding">22dp</dimen>
+    <dimen name="gradient_main_settings_layout_horizontal_padding">22dp</dimen>
     <dimen name="settings_panel_include_horizontal_padding">22dp</dimen>
     <dimen name="menu_seekbar_include_horizontal_padding">12dp</dimen>
     <dimen name="spinner_layout_horizontal_padding">22dp</dimen>

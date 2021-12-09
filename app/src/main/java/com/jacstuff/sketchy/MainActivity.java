@@ -242,18 +242,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 paintView.init(settingsPopup, brushFactory);
                 settingsButtonsConfigurator.selectDefaults();
                 viewModelHelper.onResume();
-                setupColorPickerSeekbar();
             }
         });
+
+        View colorPickerSeekBar = findViewById(R.id.colorPickerSeekBar);
+        colorPickerSeekBar.addOnLayoutChangeListener((view, i, i1, i2, i3, i4, i5, i6, i7) -> setupColorPickerSeekbar());
     }
 
 
     private void setupColorPickerSeekbar(){
         SeekBar colorPickerSeekBar = findViewById(R.id.colorPickerSeekBar);
-        int totalSeekBarMargin = (int)(getResources().getDimension(R.dimen.gradient_color_picker_seek_bar_horizontal_margin) * 2);
-        int totalControlPanelMargin = (int)(getResources().getDimension(R.dimen.settings_buttons_layout_padding_horizontal) * 2);
-        int seekBarWidth = paintView.getWidth() - (totalSeekBarMargin + totalControlPanelMargin);
-        LinearGradient linearGradient = new LinearGradient(0, 0, seekBarWidth, 0,
+        int width = colorPickerSeekBar.getWidth() - (colorPickerSeekBar.getPaddingStart() + colorPickerSeekBar.getPaddingEnd());
+        LinearGradient linearGradient = new LinearGradient(0, 0,  width, 0,
                 new int[] { 0xFF000000, 0xFF0000FF, 0xFF00FF00, 0xFF00FFFF,
                         0xFFFF0000, 0xFFFF00FF, 0xFFFFFF00, 0xFFFFFFFF},
                 null, Shader.TileMode.CLAMP);
@@ -261,6 +261,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         shape.getPaint().setShader(linearGradient);
         colorPickerSeekBar.setProgressDrawable(shape);
         colorPickerSeekBar.setMax(256*7-1);
+    }
+
+
+    private float getDimen(int dimensionId){
+        return getResources().getDimension(dimensionId);
     }
 
 

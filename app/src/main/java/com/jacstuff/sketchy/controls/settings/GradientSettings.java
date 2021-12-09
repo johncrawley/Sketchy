@@ -42,7 +42,8 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
     private void configureSeekBars(){
         seekBarConfigurator.configure( R.id.gradientSizeSeekBar,
                 R.integer.gradient_radius_default,
-                progress ->  paintHelperManager.getGradientHelper().setGradientRadius(progress));
+                progress ->{
+                    paintHelperManager.getGradientHelper().setGradientRadius(progress); } );
 
         seekBarConfigurator.configure( R.id.gradientOffsetXSeekBar,
                 R.integer.gradient_radius_offset_x_default,
@@ -55,7 +56,10 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
 
         seekBarConfigurator.configure( R.id.colorPickerSeekBar,
                 R.integer.gradient_color_picker_seek_bar_default,
-                progress ->  paintHelperManager.getGradientHelper().setGradientColor(progress));
+                progress -> {
+                    paintHelperManager.getGradientHelper().setGradientColor(progress);
+                    System.out.println("GradientSettings.configureSeekBars() actual color seekBar width: " + activity.findViewById(R.id.colorPickerSeekBar).getWidth());
+                });
 
     }
 
