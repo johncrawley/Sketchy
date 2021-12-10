@@ -2,8 +2,10 @@ package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.helpers.PlacementHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 
@@ -16,7 +18,10 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
 
 
     @Override
-    public void down(float x, float y, Paint paint) {
+    public void down(float x1, float y1, Paint paint) {
+        PointF point = placementHelper.calculatePoint(x1,y1);
+        float x = point.x;
+        float y = point.y;
         updateColorGradientAndAngle(x,y);
         kaleidoscopeHelper.setCenter(x,y);
         if(!viewModel.isDrawOnMoveModeEnabled){
@@ -30,7 +35,10 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
 
 
     @Override
-    public void move(float x, float y, Paint paint) {
+    public void move(float x1, float y1, Paint paint) {
+        PointF point = placementHelper.calculatePoint(x1,y1);
+        float x = point.x;
+        float y = point.y;
         if(!viewModel.isDrawOnMoveModeEnabled){
             paintView.enablePreviewLayer();
             drawToCanvas(x,y, paint);

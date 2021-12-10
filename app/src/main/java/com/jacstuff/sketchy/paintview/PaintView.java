@@ -232,10 +232,8 @@ public class PaintView extends View {
 
 
     private void drawWithBrush(MotionEvent event){
-        PointF point = placementHelper.calculatePoint(event.getX(), event.getY());
-        float x = point.x;
-        float y = point.y;
-
+        float x = event.getX();
+        float y = event.getY();
 
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :

@@ -28,8 +28,6 @@ public class SizeHelper {
     private Map<SizeSequenceType, SizeSequence> sizeSequenceMap;
     private final SizeSequence stationarySequence;
     private final VaryingSizeInitializer varyingSizeInitializer;
-    private int canvasWidth, canvasHeight;
-
 
     public SizeHelper(MainViewModel viewModel, PaintView paintView, BrushSizeSeekBarManager brushSizeSeekBarManager){
         this.viewModel = viewModel;

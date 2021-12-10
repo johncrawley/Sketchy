@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes.drawer;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.PathBrush;
@@ -41,20 +42,26 @@ public class PathDrawer extends BasicDrawer{
 
 
     @Override
-    public void down(float x, float y, Paint paint) {
+    public void down(float x1, float y1, Paint paint) {
+        PointF adjustedPoint = placementHelper.calculatePoint(x1,y1);
+        float x = adjustedPoint.x;
+        float y = adjustedPoint.y;
         updateColorGradientAndAngle(x,y);
-        Point point = new Point((int)x, (int)y);
+        Point pathPoint = new Point((int)x, (int)y);
         paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
-        drawToCanvas(point, (c) -> draw(point, (paintArg, brushArg) -> brushArg.onTouchDown(point, c, paintArg)));
+        drawToCanvas(pathPoint, (c) -> draw(pathPoint, (paintArg, brushArg) -> brushArg.onTouchDown(pathPoint, c, paintArg)));
     }
 
 
     @Override
-    public void move(float x, float y, Paint paint) {
+    public void move(float x1, float y1, Paint paint) {
+        PointF adjustedPoint = placementHelper.calculatePoint(x1,y1);
+        float x = adjustedPoint.x;
+        float y = adjustedPoint.y;
         updateColorGradientAndAngle(x,y);
-        Point point = new Point((int)x, (int)y);
+        Point pathPoint = new Point((int)x, (int)y);
         paintView.disablePreviewLayer();
-        drawToCanvas(point, (c) -> draw(point, (paintArg, brushArg) -> brushArg.onTouchMove(point, c, paintArg)));
+        drawToCanvas(pathPoint, (c) -> draw(pathPoint, (paintArg, brushArg) -> brushArg.onTouchMove(pathPoint, c, paintArg)));
         drawFlickerGuard(x,y);
     }
 

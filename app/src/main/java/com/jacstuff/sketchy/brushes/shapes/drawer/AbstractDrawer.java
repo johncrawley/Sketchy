@@ -8,6 +8,7 @@ import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.paintview.helpers.PlacementHelper;
 import com.jacstuff.sketchy.paintview.helpers.TileHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -25,6 +26,7 @@ public abstract class AbstractDrawer implements Drawer {
     boolean isColorChangedOnDown = true;
     final Paint shadowPaint;
     final Paint paint;
+    final PlacementHelper placementHelper;
 
 
     AbstractDrawer(PaintView paintView, MainViewModel viewModel){
@@ -32,6 +34,7 @@ public abstract class AbstractDrawer implements Drawer {
         this.canvas =  paintView.getCanvas();
         this.viewModel = viewModel;
         this.paintHelperManager = paintView.getPaintHelperManager();
+        this.placementHelper = paintHelperManager.getPlacementHelper();
         kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
         tileHelper = paintHelperManager.getTileHelper();
         kaleidoscopeDrawer = new KaleidoscopeDrawer(paintView, viewModel, kaleidoscopeHelper);
