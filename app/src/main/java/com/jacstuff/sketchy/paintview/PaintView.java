@@ -29,7 +29,7 @@ public class PaintView extends View {
     private Paint paint, shadowPaint, previewPaint;
     private Paint drawPaint;
     private PaintGroup paintGroup;
-    private int brushSize, halfBrushSize;
+    private int brushSize;
     private Bitmap bitmap, previewBitmap;
     private Canvas canvas;
     private BrushStyle currentBrushStyle = BrushStyle.FILL;
@@ -142,7 +142,6 @@ public class PaintView extends View {
 
     public void setBrushSize(int brushSize){
         this.brushSize = brushSize;
-        this.halfBrushSize = brushSize / 2;
         if(currentBrush != null) {
             currentBrush.setBrushSize(brushSize);
         }

@@ -32,6 +32,7 @@ public class GradientHelper {
 
     public void initDimensions(int paintViewWidth, int paintViewHeight){
         maxGradientLength = Math.max(paintViewWidth, paintViewHeight);
+        calculateGradientLength();
     }
 
 
@@ -116,6 +117,7 @@ public class GradientHelper {
 
 
     private int calculateLinearGradientLength(){
+        maxGradientLength = maxGradientLength == 0 ? 1000 : maxGradientLength;
         float length =  maxGradientLength / (float) viewModel.gradient;
         return Math.max(1, (int) length);
     }
@@ -137,26 +139,26 @@ public class GradientHelper {
 
     public void assignGradient(float x, float y, int color){
         int gradientColor = getGradientColor();
-
+        int length = viewModel.linearGradientLength;
         switch(gradientType){
             case NONE:
                 paint.setShader(null);
                 break;
 
             case DIAGONAL_MIRROR:
-                paint.setShader(new LinearGradient(-viewModel.linearGradientLength,
-                        -viewModel.linearGradientLength,
-                        viewModel.linearGradientLength,
-                        viewModel.linearGradientLength,
+                paint.setShader(new LinearGradient(-length,
+                        -length,
+                        length,
+                        length,
                         color,
                         gradientColor,
                         Shader.TileMode.MIRROR));
                 break;
 
             case HORIZONTAL_MIRROR:
-                paint.setShader(new LinearGradient( -viewModel.linearGradientLength,
+                paint.setShader(new LinearGradient( -length,
                         y,
-                        viewModel.linearGradientLength,
+                        length,
                         y,
                         color,
                         gradientColor,
@@ -165,9 +167,9 @@ public class GradientHelper {
 
             case VERTICAL_MIRROR:
                 paint.setShader(new LinearGradient(x,
-                        - viewModel.linearGradientLength,
+                        -length,
                         x,
-                        viewModel.linearGradientLength,
+                        length,
                         color,
                         gradientColor,
                         Shader.TileMode.MIRROR));
