@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.paintview.helpers;
+package com.jacstuff.sketchy.paintview.helpers.placement;
 
 import android.graphics.Paint;
 import android.graphics.PointF;
@@ -12,14 +12,12 @@ import java.util.Random;
 public class PlacementHelper {
 
     private final MainViewModel viewModel;
-    private final PaintView paintView;
     private Paint paint;
-    private final Random random;
+    private final RandomPlacement randomPlacement;
 
     public PlacementHelper(PaintView paintView, MainViewModel viewModel){
-        this.paintView = paintView;
         this.viewModel = viewModel;
-        random = new Random(System.currentTimeMillis());
+        this.randomPlacement = new RandomPlacement(viewModel, paintView);
     }
 
 
@@ -41,7 +39,7 @@ public class PlacementHelper {
             case QUANTIZATION:
                 return getQuantized(x);
             case RANDOM:
-                return getRandomX(x);
+                return randomPlacement.getX(x);
         }
         return x;
     }
@@ -52,11 +50,10 @@ public class PlacementHelper {
             case QUANTIZATION:
                 return getQuantized(y);
             case RANDOM:
-                return getRandomY(y);
+                return randomPlacement.getY(y);
         }
         return y;
     }
-
 
 
     private float getQuantized(float a){
@@ -78,19 +75,8 @@ public class PlacementHelper {
     }
 
 
-    private float getRandomY(float y){
-        return ( y-viewModel.randomPlacementMaxDistanceY) + (2 * (random.nextInt((int)viewModel.randomPlacementMaxDistanceY)));
-    }
-
-
-    private float getRandomX(float x){
-        return (x -viewModel.randomPlacementMaxDistanceX) + (2 * (random.nextInt((int)viewModel.randomPlacementMaxDistanceX)));
-    }
-
-
     public void updateMaxRandomDistance(){
-        viewModel.randomPlacementMaxDistanceX = 2 + (paintView.getWidth() / 100f) * viewModel.randomPlacementMaxDistancePercentage;
-        viewModel.randomPlacementMaxDistanceY = 2 + (paintView.getHeight() / 100f) * viewModel.randomPlacementMaxDistancePercentage;
+        randomPlacement.updateMaxRandomDistance();
     }
 
 

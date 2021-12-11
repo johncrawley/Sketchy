@@ -5,13 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
-import com.jacstuff.sketchy.paintview.helpers.PlacementHelper;
+import com.jacstuff.sketchy.paintview.helpers.placement.PlacementHelper;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.brushes.BrushShape;

@@ -2,13 +2,12 @@ package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.view.MotionEvent;
 
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
-import com.jacstuff.sketchy.paintview.helpers.PlacementHelper;
+import com.jacstuff.sketchy.paintview.helpers.placement.PlacementHelper;
 import com.jacstuff.sketchy.paintview.helpers.TileHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 

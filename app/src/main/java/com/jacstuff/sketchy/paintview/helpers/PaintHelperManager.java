@@ -7,6 +7,7 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.color.ColorHelper;
 import com.jacstuff.sketchy.paintview.helpers.gradient.GradientHelper;
+import com.jacstuff.sketchy.paintview.helpers.placement.PlacementHelper;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowHelper;
 import com.jacstuff.sketchy.paintview.helpers.size.SizeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;

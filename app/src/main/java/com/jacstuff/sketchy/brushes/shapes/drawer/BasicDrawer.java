@@ -5,7 +5,6 @@ import android.graphics.Point;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.helpers.PlacementHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 
