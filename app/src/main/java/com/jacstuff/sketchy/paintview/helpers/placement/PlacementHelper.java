@@ -15,9 +15,9 @@ public class PlacementHelper {
     private Paint paint;
     private final RandomPlacement randomPlacement;
 
-    public PlacementHelper(PaintView paintView, MainViewModel viewModel){
+    public PlacementHelper(MainViewModel viewModel){
         this.viewModel = viewModel;
-        this.randomPlacement = new RandomPlacement(viewModel, paintView);
+        this.randomPlacement = new RandomPlacement(viewModel);
     }
 
 
@@ -25,6 +25,10 @@ public class PlacementHelper {
         this.paint = paint;
         updateMaxRandomDistance();
         calculateQuantizationFactor();
+    }
+
+    public void initDimensions(int width, int height){
+        randomPlacement.initDimensions(width, height);
     }
 
 

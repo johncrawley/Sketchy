@@ -37,7 +37,7 @@ public class PaintHelperManager {
         sizeHelper = new SizeHelper(viewModel, paintView, brushSizeSeekBarManager);
         colorHelper = new ColorHelper(viewModel, kaleidoscopeHelper);
         tileHelper = new TileHelper(viewModel, this);
-        placementHelper = new PlacementHelper(paintView, viewModel);
+        placementHelper = new PlacementHelper(viewModel);
     }
 
 
@@ -54,6 +54,7 @@ public class PaintHelperManager {
 
     public void initDimensions(int width, int height){
         gradientHelper.initDimensions(width, height);
+        placementHelper.initDimensions(width, height);
     }
 
 
