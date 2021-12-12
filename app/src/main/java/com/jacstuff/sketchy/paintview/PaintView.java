@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.paintview.helpers.SensitivityHelper;
 import com.jacstuff.sketchy.paintview.helpers.placement.PlacementHelper;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
@@ -43,6 +44,7 @@ public class PaintView extends View {
     private final Context context;
     private BitmapLoader bitmapLoader;
     private PlacementHelper placementHelper;
+    private SensitivityHelper sensitivityHelper;
 
     public PaintView(Context context) {
         this(context, null);
@@ -61,6 +63,7 @@ public class PaintView extends View {
         this.paintHelperManager = paintHelperManager;
         this.paintHelperManager.init(paint, shadowPaint, previewPaint, paintGroup);
         placementHelper = paintHelperManager.getPlacementHelper();
+        sensitivityHelper = paintHelperManager.getSensitivityHelper();
     }
 
 
@@ -231,6 +234,9 @@ public class PaintView extends View {
 
 
     private void drawWithBrush(MotionEvent event){
+        if(!sensitivityHelper.shouldDraw()){
+            return;
+        }
         float x = event.getX();
         float y = event.getY();
 

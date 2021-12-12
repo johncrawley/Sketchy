@@ -25,6 +25,7 @@ public class PaintHelperManager {
     private final TileHelper tileHelper;
     private final BrushSizeSeekBarManager brushSizeSeekBarManager;
     private final PlacementHelper placementHelper;
+    private final SensitivityHelper sensitivityHelper;
 
     public PaintHelperManager(MainActivity mainActivity, PaintView paintView, MainViewModel viewModel){
         gradientHelper = new GradientHelper(viewModel);
@@ -38,6 +39,7 @@ public class PaintHelperManager {
         colorHelper = new ColorHelper(viewModel, kaleidoscopeHelper);
         tileHelper = new TileHelper(viewModel, this);
         placementHelper = new PlacementHelper(viewModel);
+        sensitivityHelper = new SensitivityHelper(viewModel);
     }
 
 
@@ -85,6 +87,11 @@ public class PaintHelperManager {
 
     public PlacementHelper getPlacementHelper(){
         return this.placementHelper;
+    }
+
+
+    public SensitivityHelper getSensitivityHelper(){
+        return this.sensitivityHelper;
     }
 
     public KaleidoscopeHelper getKaleidoscopeHelper(){
