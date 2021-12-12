@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.paintview.PaintView;
@@ -12,10 +13,13 @@ public class DragRectDrawer extends BasicDrawer{
 
     private float downX, downY;
     private int angleOnTouchDown;
+    private final RectCalc rectCalc;
+
 
     public DragRectDrawer(PaintView paintView, MainViewModel viewModel){
         super(paintView, viewModel);
         isColorChangedOnDown = false;
+        rectCalc = new RectCalc();
     }
 
 
@@ -46,7 +50,7 @@ public class DragRectDrawer extends BasicDrawer{
     @Override
     public void move(float x, float y, Paint paint) {
         paintView.enablePreviewLayer();
-        rotateAndDrawMove(x,y,paint);
+        rotateAndDrawMove2(x,y,paint);
         paintView.invalidate();
     }
 
@@ -58,7 +62,7 @@ public class DragRectDrawer extends BasicDrawer{
             kaleidoscopeDrawer.drawKaleidoscope(x, y, paint);
         }
         else{
-            rotateAndDrawMove(x,y,paint);
+            rotateAndDrawMove2(x,y,paint);
         }
         paintView.pushHistory();
         paintView.invalidate();
@@ -72,12 +76,41 @@ public class DragRectDrawer extends BasicDrawer{
         canvas.restore();
     }
 
+    public void rotateAndDrawMove2(float x, float y, Paint paint){
+        canvas.save();
+        translateToTopCornerOfRect();
+        rotateThenDrawShadowAndObject2(x, y, paint);
+        canvas.restore();
+    }
+
+    private void translateToTopCornerOfRect(){
+        canvas.translate(downX, downY);
+    }
+
+
+
+
+    public PointF calculateRect(float x1, float y1, float x2, float y2, int angle){
+        PointF p1 = new PointF();
+        p1.x = x1;
+        p1.y = y1;
+        PointF p2 = new PointF();
+        p2.x = x2;
+        p2.y = y2;
+        log("calculateRect() p1 : " + p1.toString() +  " p2: " + p2.toString());
+        return rectCalc.calculateRect(p1,p2,angle);
+    }
+
+
+    private void log(String msg){
+        System.out.println("^^^ DragRectDrawer: " + msg);
+    }
+
 
     private void translateToMiddleOfRect(float x2, float y2){
         float middleOfRectX = downX + ((x2-downX)/2f);
         float middleOfRectY = downY + ((y2-downY)/2f);
         canvas.translate(middleOfRectX, middleOfRectY);
-
     }
 
 
@@ -96,6 +129,21 @@ public class DragRectDrawer extends BasicDrawer{
             brush.onTouchMove(x, y, paintView.getShadowPaint());
         }
         brush.onTouchMove(x,y, paint);
+
+
+    }
+
+
+    private void rotateThenDrawShadowAndObject2(float x, float y, Paint paint){
+        rotateToAngle();
+        PointF bottomCorner =  calculateRect(downX, downY, x, y, paintHelperManager.getAngleHelper().getAngle());
+        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
+           // brush.onTouchMove(bottomCorner.x, bottomCorner.y, paintView.getShadowPaint());
+
+            brush.onTouchMove(x,y, paintView.getShadowPaint());
+        }
+        brush.onTouchMove(bottomCorner.x, bottomCorner.y, paint);
+        //brush.onTouchMove(x,y, paint);
     }
 
 
@@ -105,6 +153,7 @@ public class DragRectDrawer extends BasicDrawer{
             canvas.rotate(angleOnTouchDown);
         }
         else{
+            int angle = angleHelper.getAngle();
             canvas.rotate(angleHelper.getAngle());
         }
     }
