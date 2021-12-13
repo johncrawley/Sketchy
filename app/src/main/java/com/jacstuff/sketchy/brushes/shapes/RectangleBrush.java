@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 
@@ -35,7 +36,10 @@ public class RectangleBrush extends AbstractBrush implements Brush {
         float height2 =  y2 - touchDownPoint.y;
         float halfWidth = width /2;
         float halfHeight =  height /2;
-
+        int color = paint.getColor();
+        paint.setColor(Color.RED);
+        canvas.drawCircle(0, 0, 3, paint);
+        paint.setColor(color);
         canvas.drawRect(0, 0, width2, height2, paint);
     }
 

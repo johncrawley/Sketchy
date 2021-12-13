@@ -7,7 +7,7 @@ import android.graphics.Point;
 
 public class LineOutlineDrawer implements LineDrawer {
 
-    private Canvas canvas;
+    private final Canvas canvas;
 
     public LineOutlineDrawer(Canvas canvas){
         this.canvas = canvas;
@@ -66,7 +66,6 @@ public class LineOutlineDrawer implements LineDrawer {
         float y = ((top / divisor) * p1.y ) + ((1.0f/divisor) * p2.y );
         return new Point((int)x, (int) y);
     }
-
 
 
     private float getDistance(Point p1, Point p2){

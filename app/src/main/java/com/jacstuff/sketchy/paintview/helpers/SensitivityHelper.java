@@ -12,7 +12,7 @@ public class SensitivityHelper {
     public SensitivityHelper(MainViewModel viewModel){
         this.viewModel = viewModel;
         currentCount = 0;
-        maxCount = 8;
+        maxCount = 12;
     }
 
     private boolean isEnabled(){
