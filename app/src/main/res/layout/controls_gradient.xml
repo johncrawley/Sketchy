@@ -15,26 +15,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/gradient_main_settings_layout_horizontal_padding">
-        <include
-            android:id="@+id/gradientSeekBarInclude"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            layout="@layout/seek_bar_gradient_radius" />
-
-        <include
-            android:id="@+id/gradientOffsetXSeekBarInclude"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            layout="@layout/seek_bar_gradient_offset_x" />
-
-        <include
-            android:id="@+id/gradientOffsetYSeekBarInclude"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            layout="@layout/seek_bar_gradient_offset_y" />
 
         <LinearLayout
             android:id="@+id/gradientColorSpinnerLayout"
@@ -65,6 +45,28 @@
             android:layout_marginHorizontal="@dimen/gradient_color_picker_seek_bar_horizontal_margin"
             android:max="@integer/gradient_color_picker_seek_bar_max"
             android:progress="@integer/gradient_color_picker_seek_bar_default"/>
+        <include
+            android:id="@+id/gradientSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/seek_bar_gradient_radius" />
+
+        <include
+            android:id="@+id/gradientOffsetXSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/seek_bar_gradient_offset_x" />
+
+        <include
+            android:id="@+id/gradientOffsetYSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/seek_bar_gradient_offset_y" />
+
+
     </LinearLayout>
 
 

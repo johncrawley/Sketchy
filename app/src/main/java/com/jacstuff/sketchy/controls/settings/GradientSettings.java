@@ -1,19 +1,29 @@
 package com.jacstuff.sketchy.controls.settings;
 
 
+import android.view.View;
+
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.GradientType;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.helpers.gradient.GradientColorType;
 
 
 public class GradientSettings extends AbstractButtonConfigurator<GradientType> implements ButtonsConfigurator<GradientType> {
 
-
+    private final View gradientColorPickerSeekBar;
     public GradientSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
+        gradientColorPickerSeekBar = activity.findViewById(R.id.gradientColorPickerSeekBar);
+        setVisibilityOfColorPickerSeekBar();
         subPanelManager.setOffButtonAndDefaultLayout(R.id.noGradientButton, R.id.gradientMainSettingsLayout);
+    }
+
+    private void setVisibilityOfColorPickerSeekBar(){
+        int visibility = GradientColorType.SELECTED == viewModel.gradientColorType ? View.VISIBLE : View.INVISIBLE;
+        gradientColorPickerSeekBar.setVisibility(visibility);
     }
 
 
@@ -43,7 +53,7 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
     private void configureSeekBars(){
         seekBarConfigurator.configure( R.id.gradientSizeSeekBar,
                 R.integer.gradient_radius_default,
-                progress ->paintHelperManager.getGradientHelper().setGradientRadius(progress) );
+                progress ->paintHelperManager.getGradientHelper().setGradientLength(progress) );
 
         seekBarConfigurator.configure( R.id.gradientOffsetXSeekBar,
                 R.integer.gradient_radius_offset_x_default,
@@ -66,7 +76,10 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
                 R.id.gradientColorSpinner,
                 R.array.gradient_color_array,
                 R.array.gradient_color_values,
-                x -> paintHelperManager.getGradientHelper().setGradientColorType(x));
+                x -> {
+                    paintHelperManager.getGradientHelper().setGradientColorType(x);
+                    setVisibilityOfColorPickerSeekBar();
+                });
     }
 
 

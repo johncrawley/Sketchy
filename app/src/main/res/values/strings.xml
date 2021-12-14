@@ -153,8 +153,6 @@
     <string name="spinner_item_size_sequence_proximity_focal_point_on_touch_down">On Touch Down</string>
 
 
-
-
     <string name="confirm_wipe_text">Clear the canvas without saving?</string>
 
     <string name="spinner_color_sequence_type_label">Sequence Type</string>
@@ -166,7 +164,7 @@
     <string name="spinner_item_color_sequence_shuffle">Shuffle</string>
     <string name="confirm_wipe_confirm_button">Yes</string>
     <string name="confirm_wipe_cancel_button">No</string>
-    <string name="gradient_size_seekbar_label">Gradient Factor</string>
+    <string name="gradient_size_seekbar_label">Gradient Length</string>
     <string name="gradient_offset_x_seekbar_label">X-Axis Offset</string>
     <string name="gradient_offset_y_seekbar_label">Y-Axis Offset</string>
     <string name="random_placement_max_distance_seekbar_label">Maximum distance</string>
@@ -193,7 +191,7 @@
     <string name="single_color_sequence_controls_label">Single Color Sequence Brightness Range</string>
     <string name="seekbar_label_color_sequence_max_index">Maximum</string>
     <string name="seekbar_label_color_sequence_minimum_index">Minimum</string>
-    <string name="seekbar_label_color_sequence_steps_index">Gradation</string>
+    <string name="seekbar_label_color_sequence_steps_index">Blend Rate</string>
     <string name="seekbar_label_color_sequence_starting_index">Sequence Starting Index</string>
     <string name="size_sequence_increments_seekbar_label">Step Size</string>
     <string name="switch_label_draw_on_move_mode">Draw On Move</string>
@@ -215,7 +213,5 @@
     <string name="color_checked">✔</string>
     <string name="degrees_symbol">°</string>
     <string name="multi_random_button_checked_tag">123</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

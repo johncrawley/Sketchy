@@ -48,8 +48,9 @@ public class GradientHelper {
     }
 
 
-    public void setGradientRadius(int progress){
-        radiusFactor = Math.max(1, progress);
+    public void setGradientLength(int progress){
+        int length = 200 - progress;
+        radiusFactor = Math.max(1, length);
         viewModel.gradient = radiusFactor;
         calculateGradientLength();
     }
