@@ -30,17 +30,9 @@ public class RectangleBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchMove(float x2, float y2, Paint paint) {
-        float width = Math.abs(x2 - touchDownPoint.x);
-        float height =  Math.abs(y2 - touchDownPoint.y );
-        float width2 = x2 - touchDownPoint.x;
-        float height2 =  y2 - touchDownPoint.y;
-        float halfWidth = width /2;
-        float halfHeight =  height /2;
-        int color = paint.getColor();
-        paint.setColor(Color.RED);
-        canvas.drawCircle(0, 0, 3, paint);
-        paint.setColor(color);
-        canvas.drawRect(0, 0, width2, height2, paint);
+        float width = x2 - touchDownPoint.x;
+        float height =  y2 - touchDownPoint.y;
+        canvas.drawRect(0, 0, width, height, paint);
     }
 
 

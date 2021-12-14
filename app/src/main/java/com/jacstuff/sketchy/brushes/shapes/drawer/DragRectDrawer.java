@@ -83,11 +83,10 @@ public class DragRectDrawer extends BasicDrawer{
         canvas.restore();
     }
 
+
     private void translateToTopCornerOfRect(){
         canvas.translate(downX, downY);
     }
-
-
 
 
     public PointF calculateRect(float x1, float y1, float x2, float y2, int angle){
@@ -97,13 +96,7 @@ public class DragRectDrawer extends BasicDrawer{
         PointF p2 = new PointF();
         p2.x = x2;
         p2.y = y2;
-        log("calculateRect() p1 : " + p1.toString() +  " p2: " + p2.toString());
         return rectCalc.calculateRect(p1,p2,angle);
-    }
-
-
-    private void log(String msg){
-        System.out.println("^^^ DragRectDrawer: " + msg);
     }
 
 
@@ -129,8 +122,6 @@ public class DragRectDrawer extends BasicDrawer{
             brush.onTouchMove(x, y, paintView.getShadowPaint());
         }
         brush.onTouchMove(x,y, paint);
-
-
     }
 
 
