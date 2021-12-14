@@ -14,11 +14,9 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
 
     public PlacementSettings(MainActivity activity, PaintView paintView) {
         super(activity, paintView);
-
         subPanelManager.add(R.id.quantizationPlacementButton, R.id.placementQuantizationSettingsPanel);
         subPanelManager.add(R.id.randomPlacementButton, R.id.placementRandomSettingsPanel);
         subPanelManager.registerButtonWithoutPanel(R.id.normalPlacementButton);
-
     }
 
 
@@ -32,9 +30,9 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
         setupSwitches();
         setupSeekBars();
 
-        buttonConfig.add(R.id.normalPlacementButton, R.drawable.button_blur_off, PlacementType.NONE);
-        buttonConfig.add(R.id.quantizationPlacementButton, R.drawable.button_blur_outer, PlacementType.QUANTIZATION);
-        buttonConfig.add(R.id.randomPlacementButton, R.drawable.button_size_sequence_random, PlacementType.RANDOM);
+        buttonConfig.add(R.id.normalPlacementButton, R.drawable.button_placement_normal, PlacementType.NORMAL);
+        buttonConfig.add(R.id.quantizationPlacementButton, R.drawable.button_placement_quantization, PlacementType.QUANTIZATION);
+        buttonConfig.add(R.id.randomPlacementButton, R.drawable.button_placement_random, PlacementType.RANDOM);
         buttonConfig.setParentButton(R.id.placementButton);
 
         buttonConfig.setupClickHandler();
@@ -64,7 +62,7 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
         isLineWidthIncludedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isPlacementQuantizationLineWidthIncluded = isChecked);
 
         SwitchMaterial isQuantizationLockedSwitch = activity.findViewById(R.id.quantizationIsLockedSwitch);
-        isQuantizationLockedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isPlacementQuantizationLocked = isChecked);
+        isQuantizationLockedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> paintHelperManager.getPlacementHelper().setQuantizationLock(isChecked));
     }
 
 

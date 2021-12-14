@@ -68,7 +68,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public boolean snapRectangleToEdge =true;
 
 
-    public PlacementType placementType = PlacementType.NONE;
+    public PlacementType placementType = PlacementType.NORMAL;
     public boolean isPlacementQuantizationLocked = false;
     public float placementQuantizationFactor;
     public float placementQuantizationSavedBrushSize;

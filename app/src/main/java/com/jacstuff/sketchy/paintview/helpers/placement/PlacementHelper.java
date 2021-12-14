@@ -73,6 +73,12 @@ public class PlacementHelper {
     }
 
 
+    public void setQuantizationLock(boolean isChecked){
+        calculateQuantizationFactor();
+        viewModel.isPlacementQuantizationLocked = isChecked;
+    }
+
+
     private void calculateQuantizationFactor(){
         viewModel.placementQuantizationSavedBrushSize = viewModel.brushSize / 2f;
         viewModel.placementQuantizationFactor = viewModel.brushSize + getLineSizeFactor();
