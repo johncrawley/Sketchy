@@ -61,7 +61,7 @@ public class PlacementHelper {
 
 
     private float getQuantized(float a){
-        return (viewModel.placementQuantizationSavedBrushSize) + a - (a % (viewModel.placementQuantizationFactor));
+        return (viewModel.placementQuantizationSavedBrushSize) + a - (a % (viewModel.quantizationPlacementSpacing + viewModel.placementQuantizationFactor));
     }
 
 

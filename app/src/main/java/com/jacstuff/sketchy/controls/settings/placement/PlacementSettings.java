@@ -54,6 +54,12 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
                     viewModel.randomPlacementMaxDistancePercentage = progress;
                     paintHelperManager.getPlacementHelper().updateMaxRandomDistance();
                 } );
+
+        seekBarConfigurator.configure(R.id.placementQuantizationSpacingSeekBar,
+                R.integer.quantization_spacing_default,
+                progress -> {
+                    viewModel.quantizationPlacementSpacing = progress;
+                } );
     }
 
 

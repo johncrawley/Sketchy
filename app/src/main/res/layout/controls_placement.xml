@@ -8,8 +8,6 @@
     android:clickable="true"
     android:focusable="true">
 
-
-
     <LinearLayout
         android:id="@+id/placementRandomSettingsPanel"
         android:visibility="gone"
@@ -33,45 +31,49 @@
         android:orientation="vertical">
 
 
-    <LinearLayout
-        android:id="@+id/enableQuantizationSwitchLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/size_seq_switch_layout_h_padding"
-        android:layout_marginTop="@dimen/style_spinner_margin_vertical"
-        android:layout_marginBottom="@dimen/size_sequence_spinner_layout_margin_bottom"
-        >
+        <LinearLayout
+            android:id="@+id/enableQuantizationSwitchLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/size_seq_switch_layout_h_padding"
+            android:layout_marginTop="@dimen/style_spinner_margin_vertical"
+            android:layout_marginBottom="@dimen/size_sequence_spinner_layout_margin_bottom"
+            >
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/quantizationButtonIncludeLineWidthSwitch"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:checked="true"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
-            android:paddingTop="@dimen/switch_option_padding_top"
-            android:paddingBottom="@dimen/switch_option_padding_bottom"
-            android:text="@string/quantization_include_line_width_label" />
-
-
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/quantizationIsLockedSwitch"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:checked="false"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
-            android:paddingTop="@dimen/switch_option_padding_top"
-            android:paddingBottom="@dimen/switch_option_padding_bottom"
-            android:text="@string/quantization_is_locked_switch_label" />
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/quantizationButtonIncludeLineWidthSwitch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="true"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
+                android:paddingTop="@dimen/switch_option_padding_top"
+                android:paddingBottom="@dimen/switch_option_padding_bottom"
+                android:text="@string/quantization_include_line_width_label" />
 
 
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/quantizationIsLockedSwitch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="false"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
+                android:paddingTop="@dimen/switch_option_padding_top"
+                android:paddingBottom="@dimen/switch_option_padding_bottom"
+                android:text="@string/quantization_is_locked_switch_label" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/placementSpacingSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/seek_bar_placement_quantization_spacing"/>
     </LinearLayout>
 
-    </LinearLayout>
     <HorizontalScrollView
         android:id="@+id/controlsScrollView"
         android:layout_width="match_parent"
