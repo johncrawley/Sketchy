@@ -36,6 +36,7 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
         buttonConfig.setParentButton(R.id.placementButton);
 
         buttonConfig.setupClickHandler();
+        buttonConfig.setDefaultSelection(R.id.placementLockPanel);
         buttonConfig.setParentButton(R.id.placementButton);
         buttonConfig.setDefaultSelection(R.id.normalPlacementButton);
     }
@@ -69,6 +70,14 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
 
         SwitchMaterial isQuantizationLockedSwitch = activity.findViewById(R.id.quantizationIsLockedSwitch);
         isQuantizationLockedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> paintHelperManager.getPlacementHelper().setQuantizationLock(isChecked));
+
+
+        SwitchMaterial lockHorizontalSwitch = activity.findViewById(R.id.lockHorizontalSwitch);
+        lockHorizontalSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isPlacementHorizontalLocked = isChecked);
+
+
+        SwitchMaterial lockVerticalSwitch = activity.findViewById(R.id.lockVerticalSwitch);
+        lockVerticalSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isPlacementVerticalLocked = isChecked);
     }
 
 

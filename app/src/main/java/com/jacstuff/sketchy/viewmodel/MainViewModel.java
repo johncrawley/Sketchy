@@ -76,7 +76,9 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int randomPlacementMaxDistancePercentage;
     public int quantizationPlacementSpacing;
     public float randomPlacementMaxDistance = 1;
-
+    public boolean isPlacementHorizontalLocked, isPlacementVerticalLocked;
+    public float touchDownXForLock, touchDownYForLock;
+    public float quantizedTouchDownXForLock, quantizedTouchDownYForLock;
 
     public int shadowSize = 1;
     public int shadowDistance =1;

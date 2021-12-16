@@ -43,6 +43,7 @@ public class PathDrawer extends BasicDrawer{
 
     @Override
     public void down(float x1, float y1, Paint paint) {
+        placementHelper.registerTouchDown(x1, y1);
         PointF adjustedPoint = placementHelper.calculatePoint(x1,y1);
         float x = adjustedPoint.x;
         float y = adjustedPoint.y;

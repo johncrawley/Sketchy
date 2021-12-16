@@ -4,10 +4,7 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.controls.settings.placement.PlacementType;
-import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
-
-import java.util.Random;
 
 public class PlacementHelper {
 
@@ -38,7 +35,20 @@ public class PlacementHelper {
     }
 
 
+    public void registerTouchDown(float x, float y){
+        viewModel.touchDownXForLock = x;
+        viewModel.touchDownYForLock = y;
+        viewModel.quantizedTouchDownXForLock = getQuantized(x);
+        viewModel.quantizedTouchDownYForLock = getQuantized(y);
+    }
+
+
     private float getX(float x){
+        if(viewModel.isPlacementHorizontalLocked){
+            return viewModel.placementType == PlacementType.QUANTIZATION ?
+                    viewModel.quantizedTouchDownXForLock :
+                    viewModel.touchDownXForLock;
+        }
         switch (viewModel.placementType){
             case QUANTIZATION:
                 return getQuantized(x);
@@ -50,6 +60,13 @@ public class PlacementHelper {
 
 
     private float getY(float y){
+        if(viewModel.isPlacementVerticalLocked){
+
+            return viewModel.placementType == PlacementType.QUANTIZATION ?
+                    viewModel.quantizedTouchDownYForLock :
+                    viewModel.touchDownYForLock;
+        }
+
         switch (viewModel.placementType){
             case QUANTIZATION:
                 return getQuantized(y);
