@@ -57,7 +57,6 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
     }
 
 
-
     private void configureSeekBars(){
         seekBarConfigurator.configure(R.id.sizeSequenceMaxSeekBar,
                 R.integer.size_sequence_max_default,
