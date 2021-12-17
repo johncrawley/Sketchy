@@ -2,6 +2,8 @@ package com.jacstuff.sketchy.controls.settings;
 
 
 import android.view.View;
+import android.widget.Button;
+import android.widget.SeekBar;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
@@ -14,12 +16,17 @@ import com.jacstuff.sketchy.paintview.helpers.gradient.GradientColorType;
 public class GradientSettings extends AbstractButtonConfigurator<GradientType> implements ButtonsConfigurator<GradientType> {
 
     private final View gradientColorPickerSeekBar;
+
     public GradientSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
         gradientColorPickerSeekBar = activity.findViewById(R.id.gradientColorPickerSeekBar);
         setVisibilityOfColorPickerSeekBar();
         subPanelManager.setOffButtonAndDefaultLayout(R.id.noGradientButton, R.id.gradientMainSettingsLayout);
+        subPanelManager.add(R.id.gradientRadialClampButton, R.id.radialGradientSettingsLayout);
+        subPanelManager.add(R.id.gradientRadialMirrorButton, R.id.radialGradientSettingsLayout);
+        subPanelManager.add(R.id.gradientRadialRepeatButton, R.id.radialGradientSettingsLayout);
     }
+
 
     private void setVisibilityOfColorPickerSeekBar(){
         int visibility = GradientColorType.SELECTED == viewModel.gradientColorType ? View.VISIBLE : View.INVISIBLE;
@@ -42,6 +49,7 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
         buttonConfig.setDefaultSelection(R.id.noGradientButton);
         configureSeekBars();
         setupSpinner();
+        setupRadialGradientOffsetResetButton();
     }
 
 
@@ -82,5 +90,20 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
                 });
     }
 
+
+    private void setupRadialGradientOffsetResetButton(){
+        Button resetButton = activity.findViewById(R.id.resetRadialGradientOffsetsButton);
+        SeekBar offsetXSeekBar=  activity.findViewById(R.id.gradientOffsetXSeekBar);
+        SeekBar offsetYSeekBar=  activity.findViewById(R.id.gradientOffsetYSeekBar);
+        int offsetXDefault = activity.getResources().getInteger(R.integer.gradient_radius_offset_x_default);
+        int offsetYDefault = activity.getResources().getInteger(R.integer.gradient_radius_offset_y_default);
+
+        resetButton.setOnClickListener( v-> {
+            offsetXSeekBar.setProgress(offsetXDefault);
+            paintHelperManager.getGradientHelper().setGradientOffsetX(offsetXDefault);
+            offsetYSeekBar.setProgress(offsetYDefault);
+            paintHelperManager.getGradientHelper().setGradientOffsetY(offsetYDefault);
+        });
+    }
 
 }

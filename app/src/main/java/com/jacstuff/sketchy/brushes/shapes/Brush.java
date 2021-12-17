@@ -30,6 +30,7 @@ public interface Brush {
 
     void setBrushSize(int brushSize);
     void setStyle(BrushStyle style);
+    boolean isDrawnFromCenter(); //i.e. is canvas (0,0) translated to centre of shape before drawing.
     void reinitialize();
     void add(BrushStyle brushStyle, Style style);
     void notifyStrokeWidthChanged();

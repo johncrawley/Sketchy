@@ -9,12 +9,57 @@
     android:clickable="true"
     android:focusable="true">
 
+
+    <LinearLayout
+        android:id="@+id/radialGradientSettingsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:paddingHorizontal="@dimen/gradient_main_settings_layout_horizontal_padding">
+
+
+        <LinearLayout
+            android:id="@+id/radialGradientOffsetSlidersLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/gradientOffsetXSeekBarInclude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                layout="@layout/seek_bar_gradient_offset_x" />
+
+            <include
+                android:id="@+id/gradientOffsetYSeekBarInclude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                layout="@layout/seek_bar_gradient_offset_y" />
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/resetRadialGradientOffsetsButton"
+            android:layout_weight=".2"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:paddingHorizontal="8dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gradient_radial_offset_reset_button_text"
+            />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/gradientMainSettingsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/gradient_main_settings_layout_horizontal_padding">
+
 
         <LinearLayout
             android:id="@+id/gradientColorSpinnerLayout"
@@ -51,20 +96,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             layout="@layout/seek_bar_gradient_radius" />
-
-        <include
-            android:id="@+id/gradientOffsetXSeekBarInclude"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            layout="@layout/seek_bar_gradient_offset_x" />
-
-        <include
-            android:id="@+id/gradientOffsetYSeekBarInclude"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            layout="@layout/seek_bar_gradient_offset_y" />
 
 
     </LinearLayout>

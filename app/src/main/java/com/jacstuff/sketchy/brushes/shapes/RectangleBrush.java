@@ -18,6 +18,7 @@ public class RectangleBrush extends AbstractBrush implements Brush {
         super(BrushShape.DRAG_RECTANGLE);
         brushInitializer = new DragRectInitializer();
         drawerType = DrawerFactory.Type.DRAG_RECT;
+        isDrawnFromCenter = false;
     }
 
 
@@ -39,5 +40,6 @@ public class RectangleBrush extends AbstractBrush implements Brush {
     public void onTouchUp(float x, float y, Paint paint){
         onTouchMove(x,y, paint);
     }
+
 
 }

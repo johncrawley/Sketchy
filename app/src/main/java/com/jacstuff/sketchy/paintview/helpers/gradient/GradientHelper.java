@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 
+import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.utils.ColorUtils;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.brushes.GradientType;
@@ -22,6 +23,7 @@ public class GradientHelper {
     int radiusFactor;
     private int maxGradientLength;
     private final Random random;
+    private Brush brush;
 
 
     public GradientHelper(MainViewModel viewModel){
@@ -33,6 +35,11 @@ public class GradientHelper {
     public void initDimensions(int paintViewWidth, int paintViewHeight){
         maxGradientLength = Math.max(paintViewWidth, paintViewHeight);
         calculateGradientLength();
+    }
+
+
+    public void updateBrush(Brush brush){
+        this.brush = brush;
     }
 
 
@@ -177,8 +184,8 @@ public class GradientHelper {
                 break;
 
             case RADIAL_CLAMP:
-                paint.setShader(new RadialGradient(viewModel.radialGradientOffsetX,
-                        viewModel.radialGradientOffsetY,
+                paint.setShader(new RadialGradient(getRadialGradientOffsetX(x),
+                        getRadialGradientOffsetY(y),
                         viewModel.clampRadialGradientRadius,
                         new int []{color,gradientColor},
                         null,
@@ -186,8 +193,8 @@ public class GradientHelper {
                 break;
 
             case RADIAL_REPEAT:
-                paint.setShader(new RadialGradient(viewModel.radialGradientOffsetX,
-                        viewModel.radialGradientOffsetY,
+                paint.setShader(new RadialGradient(getRadialGradientOffsetX(x),
+                        getRadialGradientOffsetY(y),
                         viewModel.radialGradientRadius,
                         new int []{color,gradientColor},
                         null,
@@ -195,8 +202,8 @@ public class GradientHelper {
                 break;
 
             case RADIAL_MIRROR:
-                paint.setShader(new RadialGradient(viewModel.radialGradientOffsetX,
-                        viewModel.radialGradientOffsetY,
+                paint.setShader(new RadialGradient(getRadialGradientOffsetX(x),
+                        getRadialGradientOffsetY(y),
                         viewModel.radialGradientRadius,
                         new int []{color,gradientColor},
                         null,
@@ -204,6 +211,17 @@ public class GradientHelper {
         }
     }
 
+    public int getRadialGradientOffsetX(float x){
+        return getInitialOffset(x) + viewModel.radialGradientOffsetX;
+    }
+
+    public int getRadialGradientOffsetY(float y){
+        return getInitialOffset(y) + viewModel.radialGradientOffsetY;
+    }
+
+    public int getInitialOffset(float a){
+        return brush == null || brush.isDrawnFromCenter() ? 0 : (int)a;
+    }
 
     private int getGradientColor(){
         switch(viewModel.gradientColorType) {

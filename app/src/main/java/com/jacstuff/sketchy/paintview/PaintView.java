@@ -136,6 +136,7 @@ public class PaintView extends View {
         currentBrush.onDeallocate();
         currentBrush = brushFactory.getReinitializedBrushFor(brushShape, currentBrushStyle);
         currentBrush.setBrushSize(brushSize);
+        paintHelperManager.getGradientHelper().updateBrush(currentBrush);
     }
 
 

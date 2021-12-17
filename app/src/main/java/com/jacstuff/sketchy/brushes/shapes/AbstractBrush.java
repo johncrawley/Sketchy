@@ -37,6 +37,7 @@ public abstract class AbstractBrush implements  Brush{
     PaintView paintView;
     DrawerFactory.Type drawerType;
     BrushInitializer brushInitializer;
+    boolean isDrawnFromCenter;
 
 
     AbstractBrush(BrushShape brushShape){
@@ -46,6 +47,7 @@ public abstract class AbstractBrush implements  Brush{
         this.brushShape = brushShape;
         this.drawerType = DrawerFactory.Type.BASIC;
         brushInitializer = new DefaultInitializer();
+        isDrawnFromCenter = true;
     }
 
 
@@ -75,6 +77,10 @@ public abstract class AbstractBrush implements  Brush{
 
     void postInit(){
         // do nothing
+    }
+
+    public boolean isDrawnFromCenter(){
+        return isDrawnFromCenter;
     }
 
 

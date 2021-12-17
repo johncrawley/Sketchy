@@ -20,6 +20,7 @@ public class DragRectDrawer extends BasicDrawer{
         super(paintView, viewModel);
         isColorChangedOnDown = false;
         rectCalc = new RectCalc();
+
     }
 
 
