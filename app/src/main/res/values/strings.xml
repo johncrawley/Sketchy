@@ -167,7 +167,7 @@
     <string name="gradient_size_seekbar_label">Gradient Length</string>
     <string name="gradient_offset_x_seekbar_label">X-Axis Offset</string>
     <string name="gradient_offset_y_seekbar_label">Y-Axis Offset</string>
-    <string name="gradient_radial_offset_reset_button_text"></string>
+    <string name="gradient_radial_offset_reset_button_text">⬕</string>
     <string name="random_placement_max_distance_seekbar_label">Maximum distance</string>
     <string name="angle_seekbar_label">Rotation</string>
     <string name="kaleidoscope_fixed_position_label">Centre Kaleidoscope</string>

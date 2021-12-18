@@ -20,7 +20,7 @@ public class GradientHelper {
     private final MainViewModel viewModel;
     final int CLAMP_RADIAL_GRADIENT_FACTOR = 12;
     final int RADIAL_GRADIENT_NUMERATOR= 1100;
-    int radiusFactor;
+    float radiusFactor;
     private int maxGradientLength;
     private final Random random;
     private Brush brush;
@@ -58,7 +58,7 @@ public class GradientHelper {
     public void setGradientLength(int progress){
         int length = 200 - progress;
         radiusFactor = Math.max(1, length);
-        viewModel.gradient = radiusFactor;
+        viewModel.gradient = (int)radiusFactor;
         calculateGradientLength();
     }
 
@@ -118,7 +118,8 @@ public class GradientHelper {
 
 
     public void calculateGradientLength(){
-        viewModel.radialGradientRadius = 1 + RADIAL_GRADIENT_NUMERATOR / radiusFactor;
+        float radius = 1 + (RADIAL_GRADIENT_NUMERATOR / radiusFactor) ;
+        viewModel.radialGradientRadius = (int) (radius * 2f);
         viewModel.clampRadialGradientRadius = 1 + viewModel.radialGradientRadius * CLAMP_RADIAL_GRADIENT_FACTOR;
         viewModel.linearGradientLength = calculateLinearGradientLength();
     }
@@ -142,6 +143,10 @@ public class GradientHelper {
 
     public void setGradientColorType(String type){
         viewModel.gradientColorType = GradientColorType.valueOf(type.toUpperCase());
+    }
+
+    private void log(String msg){
+        System.out.println("^^^ GradientHelper: " + msg);
     }
 
 
@@ -211,16 +216,17 @@ public class GradientHelper {
         }
     }
 
-    public int getRadialGradientOffsetX(float x){
+
+    public float getRadialGradientOffsetX(float x){
         return getInitialOffset(x) + viewModel.radialGradientOffsetX;
     }
 
-    public int getRadialGradientOffsetY(float y){
+    public float getRadialGradientOffsetY(float y){
         return getInitialOffset(y) + viewModel.radialGradientOffsetY;
     }
 
-    public int getInitialOffset(float a){
-        return brush == null || brush.isDrawnFromCenter() ? 0 : (int)a;
+    public float getInitialOffset(float a){
+        return brush == null || brush.isDrawnFromCenter() ? 0 : a;
     }
 
     private int getGradientColor(){

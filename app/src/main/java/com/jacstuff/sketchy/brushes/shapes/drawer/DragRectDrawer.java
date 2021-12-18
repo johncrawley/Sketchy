@@ -72,6 +72,8 @@ public class DragRectDrawer extends BasicDrawer{
 
     public void rotateAndDrawMove(float x, float y, Paint paint){
         canvas.save();
+        //paintHelperManager.getGradientHelper().assignGradient((downX + x)/2, (downY + y)/2, viewModel.color);
+        paintHelperManager.getGradientHelper().assignGradient((x - downX) /2, (y - downY)/2, viewModel.color);
         translateToTopCornerOfRect();
         rotateThenDrawShadowAndObject(x, y, paint);
         canvas.restore();
