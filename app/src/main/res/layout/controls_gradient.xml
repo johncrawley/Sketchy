@@ -11,6 +11,25 @@
 
 
     <LinearLayout
+        android:id="@+id/linearGradientSettingsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:paddingHorizontal="@dimen/gradient_main_settings_layout_horizontal_padding">
+
+            <include
+                android:id="@+id/gradientLinearOffsetSeekBarInclude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                layout="@layout/seek_bar_gradient_linear_offset" />
+
+        </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/radialGradientSettingsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

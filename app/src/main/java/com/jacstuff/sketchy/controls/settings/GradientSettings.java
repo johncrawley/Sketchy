@@ -25,6 +25,8 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
         subPanelManager.add(R.id.gradientRadialClampButton, R.id.radialGradientSettingsLayout);
         subPanelManager.add(R.id.gradientRadialMirrorButton, R.id.radialGradientSettingsLayout);
         subPanelManager.add(R.id.gradientRadialRepeatButton, R.id.radialGradientSettingsLayout);
+
+        // linearGradientSettingsLayout
     }
 
 

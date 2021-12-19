@@ -25,6 +25,7 @@
     <integer name="number_of_shades">15</integer>
     <integer name="shade_increment">7</integer>
     <integer name="shade_increment_denominator">100</integer>
+
     <integer name="gradient_radius_max">200</integer>
     <integer name="gradient_radius_min">1</integer>
     <integer name="gradient_radius_default">170</integer>
@@ -34,8 +35,9 @@
     <integer name="gradient_radius_offset_y_max">200</integer>
     <integer name="gradient_color_picker_seek_bar_max">100</integer>
     <integer name="gradient_color_picker_seek_bar_default">50</integer>
-    <integer name="placement_random_max_distance_default">10</integer>
-    <integer name="placement_random_max_distance_max">100</integer>
+    <integer name="gradient_linear_offset_seek_bar_default">100</integer>
+    <integer name="gradient_linear_offset_seek_bar_max">100</integer>
+
     <integer name="line_width_max">100</integer>
     <integer name="line_width_min">1</integer>
     <integer name="line_width_default">10</integer>
@@ -72,6 +74,8 @@
     <integer name="placement_offset_x_default">50</integer>
     <integer name="placement_offset_y_max">100</integer>
     <integer name="placement_offset_y_default">50</integer>
+    <integer name="placement_random_max_distance_default">10</integer>
+    <integer name="placement_random_max_distance_max">100</integer>
 
     <fraction name="skew_seekbar_min">-1</fraction>
     <fraction name="skew_seekbar_max">1.1</fraction>
