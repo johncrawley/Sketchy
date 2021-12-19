@@ -79,6 +79,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public boolean isPlacementHorizontalLocked, isPlacementVerticalLocked;
     public float touchDownXForLock, touchDownYForLock;
     public float quantizedTouchDownXForLock, quantizedTouchDownYForLock;
+    public int placementOffsetX, placementOffsetY;
 
     public int shadowSize = 1;
     public int shadowDistance =1;

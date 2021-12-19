@@ -67,6 +67,12 @@
     <integer name="quantization_spacing_max">100</integer>
     <integer name="quantization_spacing_default">0</integer>
 
+
+    <integer name="placement_offset_x_max">100</integer>
+    <integer name="placement_offset_x_default">50</integer>
+    <integer name="placement_offset_y_max">100</integer>
+    <integer name="placement_offset_y_default">50</integer>
+
     <fraction name="skew_seekbar_min">-1</fraction>
     <fraction name="skew_seekbar_max">1.1</fraction>
     <fraction name="skew_seekbar_default">0</fraction>

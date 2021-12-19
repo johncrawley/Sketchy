@@ -38,6 +38,10 @@ public class SeekBarConfigurator {
 
         SeekBar seekBar = activity.findViewById(seekBarId);
         viewModel = activity.getViewModel();
+        if(seekBar == null){
+            System.out.println("WARNING - SEEK BAR not found!");
+            return;
+        }
         seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
         setDefaultValue(defaultResourceId, seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer);
     }

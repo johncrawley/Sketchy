@@ -35,7 +35,7 @@ public class KaleidoscopeSettings extends AbstractButtonConfigurator<Integer> im
         add(R.id.k16Button, 16);
 
         buttonConfig.setupClickHandler();
-        buttonConfig.setParentButton(R.id.kaleidoButton);
+        buttonConfig.setParentButton(R.id.kaleidoscopeButton);
         buttonConfig.setDefaultSelection(R.id.kOffButton);
         setupKaleidoscopeOptions();
     }

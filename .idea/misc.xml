@@ -6,8 +6,10 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.21296296296296297" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24739583333333334" />
         <entry key="app/src/main/res/layout/controls_gradient.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/controls_placement.xml" value="0.20208333333333334" />
+        <entry key="app/src/main/res/layout/controls_placement.xml" value="0.25" />
         <entry key="app/src/main/res/layout/controls_rotation.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/seek_bar_placement_offset_x_offset.xml" value="0.26614583333333336" />
+        <entry key="app/src/main/res/layout/seek_bar_placement_offset_y.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/seek_bar_placement_quantization_spacing.xml" value="0.35054347826086957" />
         <entry key="app/src/main/res/layout/seek_bar_placement_random_distance.xml" value="0.18854166666666666" />
         <entry key="app/src/main/res/layout/seekbar_placement_quantization_spacing.xml" value="0.21666666666666667" />

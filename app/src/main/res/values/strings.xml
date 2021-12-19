@@ -196,6 +196,8 @@
     <string name="seekbar_label_color_sequence_starting_index">Sequence Starting Index</string>
     <string name="size_sequence_increments_seekbar_label">Step Size</string>
     <string name="placement_quantization_spacing_seekbar_label">Extra Spacing</string>
+    <string name="placement_offset_x_seekbar_label">X-Axis Offset</string>
+    <string name="placement_offset_y_seekbar_label">Y-Axis Offset</string>
     <string name="switch_label_draw_on_move_mode">Draw On Move</string>
     <string name="switch_label_placement_lock_horizontal">Lock X-Axis</string>
     <string name="switch_label_placement_lock_vertical">Lock Y-Axis</string>

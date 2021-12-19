@@ -1,8 +1,10 @@
 package com.jacstuff.sketchy.paintview.helpers.placement;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.PointF;
 
+import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.settings.placement.PlacementType;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -11,10 +13,13 @@ public class PlacementHelper {
     private final MainViewModel viewModel;
     private Paint paint;
     private final RandomPlacement randomPlacement;
+    private final int offsetDefault;
+    private final int OFFSET_MULTIPLE = 5;
 
-    public PlacementHelper(MainViewModel viewModel){
+    public PlacementHelper(MainViewModel viewModel, Context context){
         this.viewModel = viewModel;
         this.randomPlacement = new RandomPlacement(viewModel);
+        offsetDefault = context.getResources().getInteger(R.integer.placement_offset_x_default);
     }
 
 
@@ -50,6 +55,8 @@ public class PlacementHelper {
                     viewModel.touchDownXForLock;
         }
         switch (viewModel.placementType){
+            case OFFSET:
+                return x + (viewModel.placementOffsetX - offsetDefault) * OFFSET_MULTIPLE;
             case QUANTIZATION:
                 return getQuantized(x);
             case RANDOM:
@@ -68,6 +75,8 @@ public class PlacementHelper {
         }
 
         switch (viewModel.placementType){
+            case OFFSET:
+                return y + (viewModel.placementOffsetY - offsetDefault) * OFFSET_MULTIPLE;
             case QUANTIZATION:
                 return getQuantized(y);
             case RANDOM:
