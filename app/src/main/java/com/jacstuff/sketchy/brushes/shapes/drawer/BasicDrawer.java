@@ -11,6 +11,8 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 public class BasicDrawer extends AbstractDrawer implements Drawer {
 
 
+    private float x,y;
+
     public BasicDrawer(PaintView paintView, MainViewModel viewModel){
         super(paintView, viewModel);
     }
@@ -19,9 +21,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
     @Override
     public void down(float x1, float y1, Paint paint) {
         placementHelper.registerTouchDown(x1, y1);
-        PointF point = placementHelper.calculatePoint(x1,y1);
-        float x = point.x;
-        float y = point.y;
+        calculateXYFrom(x1, y1);
         updateColorGradientAndAngle(x,y);
         kaleidoscopeHelper.setCenter(x,y);
         if(!viewModel.isDrawOnMoveModeEnabled){
@@ -36,9 +36,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
 
     @Override
     public void move(float x1, float y1, Paint paint) {
-        PointF point = placementHelper.calculatePoint(x1,y1);
-        float x = point.x;
-        float y = point.y;
+        calculateXYFrom(x1, y1);
         if(!viewModel.isDrawOnMoveModeEnabled){
             paintView.enablePreviewLayer();
             drawToCanvas(x,y, paint);
@@ -54,19 +52,32 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
 
 
     @Override
-    public void up(float x, float y, Paint paint) {
+    public void up(float x1, float y1, Paint paint) {
+        calculateXYFrom(x1, y1);
         if(!viewModel.isDrawOnMoveModeEnabled){
-            paintView.disablePreviewLayer();
-            drawToCanvas(x,y, paint);
-            paintView.enablePreviewLayer();
-            drawPreviewWhenInfinityModeOff(x, y);
-            paintView.disablePreviewLayer();
-            paintView.invalidate();
-            paintView.pushHistory();
-            paintHelperManager.getSizeHelper().assignNextBrushSize(x,y);
+            drawOnUp(paint);
             return;
         }
         paintHelperManager.getColorHelper().resetCurrentIndex();
+        paintView.disablePreviewLayer();
+        paintView.invalidate();
+        paintView.pushHistory();
+        paintHelperManager.getSizeHelper().assignNextBrushSize(x,y);
+    }
+
+
+    private void calculateXYFrom(float x1, float y1){
+        PointF point = placementHelper.calculatePoint(x1,y1);
+        x = point.x;
+        y = point.y;
+    }
+
+
+    private void drawOnUp(Paint paint){
+        paintView.disablePreviewLayer();
+        drawToCanvas(x,y, paint);
+        paintView.enablePreviewLayer();
+        drawPreviewWhenInfinityModeOff(x, y);
         paintView.disablePreviewLayer();
         paintView.invalidate();
         paintView.pushHistory();
