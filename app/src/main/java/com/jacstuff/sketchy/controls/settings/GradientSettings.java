@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.GradientType;
@@ -25,6 +26,9 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
         subPanelManager.add(R.id.gradientRadialClampButton, R.id.radialGradientSettingsLayout);
         subPanelManager.add(R.id.gradientRadialMirrorButton, R.id.radialGradientSettingsLayout);
         subPanelManager.add(R.id.gradientRadialRepeatButton, R.id.radialGradientSettingsLayout);
+        subPanelManager.add(R.id.gradientHorizontalMirrorButton, R.id.linearGradientSettingsLayout);
+        subPanelManager.add(R.id.gradientVerticallMirrorButton, R.id.linearGradientSettingsLayout);
+        subPanelManager.add(R.id.diagonalMirrorGradientButton, R.id.linearGradientSettingsLayout);
 
         // linearGradientSettingsLayout
     }
@@ -52,6 +56,7 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
         configureSeekBars();
         setupSpinner();
         setupRadialGradientOffsetResetButton();
+        setupSwitches();
     }
 
 
@@ -60,24 +65,37 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
         paintHelperManager.getGradientHelper().setGradientType(gradientType);
     }
 
+
     private void configureSeekBars(){
         seekBarConfigurator.configure( R.id.gradientSizeSeekBar,
                 R.integer.gradient_radius_default,
-                progress ->paintHelperManager.getGradientHelper().setGradientLength(progress) );
+                progress ->paintHelperManager.getGradientHelper().setLength(progress) );
 
         seekBarConfigurator.configure( R.id.gradientOffsetXSeekBar,
                 R.integer.gradient_radius_offset_x_default,
-                progress ->  paintHelperManager.getGradientHelper().setGradientOffsetX(progress));
+                progress ->  paintHelperManager.getGradientHelper().setRadialOffsetX(progress));
 
         seekBarConfigurator.configure( R.id.gradientOffsetYSeekBar,
                 R.integer.gradient_radius_offset_y_default,
-                progress ->  paintHelperManager.getGradientHelper().setGradientOffsetY(progress));
-
+                progress ->  paintHelperManager.getGradientHelper().setRadialOffsetY(progress));
 
         seekBarConfigurator.configure( R.id.gradientColorPickerSeekBar,
                 R.integer.gradient_color_picker_seek_bar_default,
-                progress -> paintHelperManager.getGradientHelper().setGradientColor(progress));
+                progress -> paintHelperManager.getGradientHelper().setColor(progress));
 
+        seekBarConfigurator.configure( R.id.gradientLinearOffsetSeekBar,
+                R.integer.gradient_linear_offset_seek_bar_default,
+                progress -> paintHelperManager.getGradientHelper().setLinearOffset(progress));
+    }
+
+
+    private void setupSwitches(){
+        View includeLinearOffsetLayout = activity.findViewById(R.id.gradientLinearOffsetSeekBarInclude);
+        SwitchMaterial linearRepeatSwitch = activity.findViewById(R.id.gradientLinearRepeatSwitch);
+        linearRepeatSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->{
+            includeLinearOffsetLayout.setVisibility(isChecked ? View.INVISIBLE : View.VISIBLE);
+            viewModel.isLinearGradientRepeated = isChecked;
+        });
     }
 
 
@@ -102,9 +120,9 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
 
         resetButton.setOnClickListener( v-> {
             offsetXSeekBar.setProgress(offsetXDefault);
-            paintHelperManager.getGradientHelper().setGradientOffsetX(offsetXDefault);
+            paintHelperManager.getGradientHelper().setRadialOffsetX(offsetXDefault);
             offsetYSeekBar.setProgress(offsetYDefault);
-            paintHelperManager.getGradientHelper().setGradientOffsetY(offsetYDefault);
+            paintHelperManager.getGradientHelper().setRadialOffsetY(offsetYDefault);
         });
     }
 

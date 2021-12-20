@@ -19,13 +19,25 @@
         android:weightSum="1"
         android:paddingHorizontal="@dimen/gradient_main_settings_layout_horizontal_padding">
 
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/gradientLinearRepeatSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:checked="true"
+            android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
+            android:paddingTop="@dimen/switch_option_padding_top"
+            android:paddingBottom="@dimen/switch_option_padding_bottom"
+            android:text="@string/switch_label_gradient_linear_repeat" />
+
             <include
                 android:id="@+id/gradientLinearOffsetSeekBarInclude"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
+                android:layout_marginBottom="12dp"
                 layout="@layout/seek_bar_gradient_linear_offset" />
-
         </LinearLayout>
 
 

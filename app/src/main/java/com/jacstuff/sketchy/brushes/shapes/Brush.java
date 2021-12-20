@@ -23,6 +23,7 @@ public interface Brush {
     void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint);
 
     int getBrushSize();
+    int getHalfBrushSize();
 
     void onTouchDown(Point p, Canvas canvas, Paint paint);
     void onTouchMove(Point p, Canvas canvas, Paint paint);

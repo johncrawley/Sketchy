@@ -143,7 +143,7 @@ public class ViewModelHelper {
         if(!viewModel.isFirstExecution) {
             if(viewModel.gradient != 0) {
                 GradientHelper gradientHelper = paintHelperManager.getGradientHelper();
-                gradientHelper.setGradientLength(viewModel.gradient);
+                gradientHelper.setLength(viewModel.gradient);
             }
         }
     }

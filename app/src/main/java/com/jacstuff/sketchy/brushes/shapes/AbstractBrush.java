@@ -136,6 +136,12 @@ public abstract class AbstractBrush implements  Brush{
         return brushSize;
     }
 
+
+    @Override
+    public int getHalfBrushSize(){
+        return halfBrushSize;
+    }
+
     public void notifyStrokeWidthChanged(){
         currentStyle.notifyStyleChange();
     }
@@ -188,9 +194,5 @@ public abstract class AbstractBrush implements  Brush{
     void onBrushTouchDown(float x, float y, Paint paint){
         //do nothing
     }
-
-    public void onTouchDownKaleidoscope(Point p, Canvas canvas, Paint paint){}
-    public void onTouchMoveKaleidoscope(Point p, Canvas canvas, Paint paint){}
-    public void onTouchUpKaleidoscope(Point p, Canvas canvas, Paint paint){}
 
 }

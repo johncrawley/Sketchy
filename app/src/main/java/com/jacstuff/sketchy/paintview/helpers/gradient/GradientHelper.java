@@ -55,7 +55,7 @@ public class GradientHelper {
     }
 
 
-    public void setGradientLength(int progress){
+    public void setLength(int progress){
         int length = 200 - progress;
         radiusFactor = Math.max(1, length);
         viewModel.gradient = (int)radiusFactor;
@@ -63,17 +63,22 @@ public class GradientHelper {
     }
 
 
-    public void setGradientOffsetX(int progress){
+    public void setRadialOffsetX(int progress){
         viewModel.radialGradientOffsetX = getOffset(progress);
     }
 
 
-    public void setGradientOffsetY(int progress){
+    public void setRadialOffsetY(int progress){
         viewModel.radialGradientOffsetY = getOffset(progress);
     }
 
 
-    public void setGradientColor(int progress){
+    public void setLinearOffset(int progress){
+        viewModel.gradientLinearOffsetPercentage = progress;
+    }
+
+
+    public void setColor(int progress){
         int r = 0;
         int g = 0;
         int b = 0;
@@ -150,42 +155,66 @@ public class GradientHelper {
     }
 
 
+    private int calculateLinearLength(){
+        if(viewModel.isLinearGradientRepeated){
+            return viewModel.linearGradientLength;
+        }
+        return (int)((viewModel.linearGradientLength / 100f) * viewModel.gradientLinearOffsetPercentage);
+    }
+
+
+    private int calculateLinearStart(){
+        if(viewModel.isLinearGradientRepeated){
+            return viewModel.linearGradientLength;
+        }
+        float brushEdge = brush.getBrushSize() / 15f;
+        return (int)(-brush.getHalfBrushSize() + brushEdge)
+                + (int)((brush.getBrushSize() / 130f) * viewModel.gradientLinearOffsetPercentage);
+    }
+
+
     public void assignGradient(float x, float y, int color){
         int gradientColor = getGradientColor();
-        int length = viewModel.linearGradientLength;
+        int linearStart = calculateLinearStart();
+        int linearEnd = linearStart + viewModel.linearGradientLength;
+
+        Shader.TileMode tileMode = viewModel.isLinearGradientRepeated ?
+                Shader.TileMode.MIRROR :
+                Shader.TileMode.CLAMP;
+
         switch(gradientType){
             case NONE:
                 paint.setShader(null);
                 break;
 
             case DIAGONAL_MIRROR:
-                paint.setShader(new LinearGradient(-length,
-                        -length,
-                        length,
-                        length,
+                paint.setShader(new LinearGradient(linearStart,
+                        linearStart,
+                        linearEnd,
+                        linearEnd,
                         color,
                         gradientColor,
-                        Shader.TileMode.MIRROR));
+                        tileMode));
                 break;
 
             case HORIZONTAL_MIRROR:
-                paint.setShader(new LinearGradient( -length,
+                paint.setShader(new LinearGradient( linearStart,
                         y,
-                        length,
+                        linearEnd,
                         y,
                         color,
                         gradientColor,
-                        Shader.TileMode.MIRROR));
+                        tileMode));
                 break;
 
             case VERTICAL_MIRROR:
                 paint.setShader(new LinearGradient(x,
-                        -length,
+                        linearStart,
                         x,
-                        length,
+                        linearEnd,
                         color,
                         gradientColor,
-                        Shader.TileMode.MIRROR));
+                        tileMode));
                 break;
 
             case RADIAL_CLAMP:
@@ -221,13 +250,16 @@ public class GradientHelper {
         return getInitialOffset(x) + viewModel.radialGradientOffsetX;
     }
 
+
     public float getRadialGradientOffsetY(float y){
         return getInitialOffset(y) + viewModel.radialGradientOffsetY;
     }
 
+
     public float getInitialOffset(float a){
         return brush == null || brush.isDrawnFromCenter() ? 0 : a;
     }
+
 
     private int getGradientColor(){
         switch(viewModel.gradientColorType) {

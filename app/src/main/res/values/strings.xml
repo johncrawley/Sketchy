@@ -165,9 +165,11 @@
     <string name="confirm_wipe_confirm_button">Yes</string>
     <string name="confirm_wipe_cancel_button">No</string>
     <string name="gradient_size_seekbar_label">Gradient Length</string>
+    <string name="gradient_seek_bar_linear_offset_label">Offset</string>
     <string name="gradient_offset_x_seekbar_label">X-Axis Offset</string>
     <string name="gradient_offset_y_seekbar_label">Y-Axis Offset</string>
     <string name="gradient_radial_offset_reset_button_text">⬕</string>
+    <string name="switch_label_gradient_linear_repeat">Repeat</string>
     <string name="random_placement_max_distance_seekbar_label">Maximum distance</string>
     <string name="angle_seekbar_label">Rotation</string>
     <string name="kaleidoscope_fixed_position_label">Centre Kaleidoscope</string>

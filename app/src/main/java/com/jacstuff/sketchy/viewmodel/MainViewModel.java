@@ -66,6 +66,8 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int radialGradientOffsetY = 0;
     public GradientColorType gradientColorType = GradientColorType.SELECTED;
     public boolean snapRectangleToEdge =true;
+    public int gradientLinearOffsetPercentage = 100;
+    public boolean isLinearGradientRepeated = true;
 
 
     public PlacementType placementType = PlacementType.NORMAL;

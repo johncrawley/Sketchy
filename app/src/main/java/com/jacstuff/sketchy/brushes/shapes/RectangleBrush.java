@@ -33,6 +33,8 @@ public class RectangleBrush extends AbstractBrush implements Brush {
         float width = x2 - touchDownPoint.x;
         float height =  y2 - touchDownPoint.y;
         canvas.drawRect(0, 0, width, height, paint);
+        float calculatedSize = ((touchDownPoint.x - x2) + (touchDownPoint.y - y2))*2;
+        setBrushSize( (int)calculatedSize);
     }
 
 
