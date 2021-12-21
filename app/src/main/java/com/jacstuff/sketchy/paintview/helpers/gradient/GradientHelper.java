@@ -24,6 +24,7 @@ public class GradientHelper {
     private int maxGradientLength;
     private final Random random;
     private Brush brush;
+    private int gradientColor;
 
 
     public GradientHelper(MainViewModel viewModel){
@@ -174,7 +175,12 @@ public class GradientHelper {
 
 
     public void assignGradient(float x, float y, int color){
-        int gradientColor = getGradientColor();
+        assignGradient(x,y, color, true);
+    }
+
+
+    public void assignGradient(float x, float y, int color, boolean shouldNewRandomColorBeAssigned){
+        gradientColor = getGradientColor(shouldNewRandomColorBeAssigned);
         int linearStart = calculateLinearStart();
         int linearEnd = linearStart + viewModel.linearGradientLength;
 
@@ -261,7 +267,7 @@ public class GradientHelper {
     }
 
 
-    private int getGradientColor(){
+    private int getGradientColor(boolean shouldNewRandomColorBeAssigned){
         switch(viewModel.gradientColorType) {
             case SELECTED:
                 return viewModel.secondaryColor;
@@ -270,7 +276,7 @@ public class GradientHelper {
                 return viewModel.previousColor;
 
             case RANDOM:
-                return ColorUtils.getRandomColor(random);
+                return shouldNewRandomColorBeAssigned ? ColorUtils.getRandomColor(random) : gradientColor;
         }
         return Color.TRANSPARENT;
     }
