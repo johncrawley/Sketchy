@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
+import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.controls.settings.placement.PlacementType;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -20,8 +21,8 @@ public class SensitivityHelper {
     }
 
 
-    public boolean shouldDraw(){
-        if(!isEnabled()){
+    public boolean shouldDraw(Brush currentBrush){
+        if(!isEnabled() || !currentBrush.isUsingPlacementHelper()){
             return true;
         }
         if(++currentCount >= maxCount){

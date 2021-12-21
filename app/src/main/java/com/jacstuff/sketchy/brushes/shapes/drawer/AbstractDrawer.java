@@ -33,8 +33,8 @@ public abstract class AbstractDrawer implements Drawer {
         this.canvas =  paintView.getCanvas();
         this.viewModel = viewModel;
         this.paintHelperManager = paintView.getPaintHelperManager();
-        this.placementHelper = paintHelperManager.getPlacementHelper();
         kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
+        placementHelper = paintHelperManager.getPlacementHelper();
         tileHelper = paintHelperManager.getTileHelper();
         kaleidoscopeDrawer = new KaleidoscopeDrawer(paintView, viewModel, kaleidoscopeHelper);
         shadowPaint = paintView.getShadowPaint();
@@ -62,6 +62,7 @@ public abstract class AbstractDrawer implements Drawer {
     public void initExtra(){
         //do nothing
     }
+
 
     @Override
     public boolean isColorChangedOnDown(){

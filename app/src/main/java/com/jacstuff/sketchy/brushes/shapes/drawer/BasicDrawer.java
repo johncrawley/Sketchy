@@ -39,7 +39,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
         //calculateXYFrom(x1, y1);
         PointF point = placementHelper.calculatePoint(x1,y1);
         float x = point.x;
-         float y = point.y;
+        float y = point.y;
         if(!viewModel.isDrawOnMoveModeEnabled){
             paintView.enablePreviewLayer();
             drawToCanvas(x,y, paint);

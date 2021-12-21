@@ -15,6 +15,7 @@ import com.jacstuff.sketchy.brushes.styles.FillStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.helpers.placement.PlacementHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.HashMap;
@@ -61,6 +62,13 @@ public abstract class AbstractBrush implements  Brush{
     public void recalculateDimensions(){
         //do nothing
     }
+
+
+    @Override
+    public boolean isUsingPlacementHelper(){
+        return true;
+    }
+
 
     @Override
     public void init(PaintView paintView, MainActivity mainActivity, DrawerFactory drawerFactory){

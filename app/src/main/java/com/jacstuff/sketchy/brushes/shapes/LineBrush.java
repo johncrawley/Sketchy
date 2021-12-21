@@ -81,4 +81,10 @@ public class LineBrush extends AbstractBrush implements Brush {
         super.setStyle(brushStyle);
         currentLineDrawer = lineDrawerMap.get(brushStyle);
     }
+
+
+    @Override
+    public boolean isUsingPlacementHelper(){
+        return false;
+    }
 }

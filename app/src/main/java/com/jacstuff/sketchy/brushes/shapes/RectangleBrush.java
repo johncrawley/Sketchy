@@ -44,4 +44,9 @@ public class RectangleBrush extends AbstractBrush implements Brush {
     }
 
 
+    @Override
+    public boolean isUsingPlacementHelper(){
+        return false;
+    }
+
 }

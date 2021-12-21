@@ -241,7 +241,7 @@ public class PaintView extends View {
                 currentBrush.touchDown(x, y, paint);
                 break;
             case MotionEvent.ACTION_MOVE :
-                if(!sensitivityHelper.shouldDraw()){
+                if(!sensitivityHelper.shouldDraw(currentBrush)){
                     return;
                 }
                 currentBrush.touchMove(x, y, paint);

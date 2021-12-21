@@ -29,6 +29,8 @@ public interface Brush {
     void onTouchMove(Point p, Canvas canvas, Paint paint);
 
 
+    boolean isUsingPlacementHelper();
+
     void setBrushSize(int brushSize);
     void setStyle(BrushStyle style);
     boolean isDrawnFromCenter(); //i.e. is canvas (0,0) translated to centre of shape before drawing.
