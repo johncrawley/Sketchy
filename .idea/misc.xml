@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/layout/controls_gradient.xml" value="0.33" />
         <entry key="app/src/main/res/layout/controls_placement.xml" value="0.25" />
         <entry key="app/src/main/res/layout/controls_rotation.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/controls_size_sequence.xml" value="0.2786458333333333" />
         <entry key="app/src/main/res/layout/seek_bar_gradient_linear_offset.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/seek_bar_placement_offset_x_offset.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/seek_bar_placement_offset_y.xml" value="0.26614583333333336" />

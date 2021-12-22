@@ -39,7 +39,6 @@
             android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
             android:orientation="horizontal"
             android:paddingTop="@dimen/shape_options_padding_top">
-
         </LinearLayout>
 
     </HorizontalScrollView>

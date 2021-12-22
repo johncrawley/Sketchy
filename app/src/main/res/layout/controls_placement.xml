@@ -13,6 +13,7 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/menu_seekbar_include_horizontal_padding"
         android:orientation="vertical">
 
         <include
@@ -29,19 +30,18 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/menu_seekbar_include_horizontal_padding"
         android:orientation="vertical">
 
         <include
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding"
             android:layout_gravity="center_horizontal"
             layout="@layout/seek_bar_placement_offset_x" />
 
         <include
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding"
             android:layout_gravity="center_horizontal"
             layout="@layout/seek_bar_placement_offset_y" />
 
@@ -53,6 +53,7 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/menu_seekbar_include_horizontal_padding"
         android:orientation="vertical">
 
         <LinearLayout
@@ -71,7 +72,8 @@
                 android:layout_weight="1"
                 android:checked="true"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
+                android:paddingStart="0dp"
+                android:paddingEnd="@dimen/quantization_switch_padding_end"
                 android:paddingTop="@dimen/switch_option_padding_top"
                 android:paddingBottom="@dimen/switch_option_padding_bottom"
                 android:text="@string/quantization_include_line_width_label" />
@@ -84,7 +86,6 @@
                 android:layout_weight="1"
                 android:checked="false"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
                 android:paddingTop="@dimen/switch_option_padding_top"
                 android:paddingBottom="@dimen/switch_option_padding_bottom"
                 android:text="@string/quantization_is_locked_switch_label" />
@@ -94,7 +95,6 @@
             android:id="@+id/placementSpacingSeekBarInclude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding"
             android:layout_gravity="center_horizontal"
             layout="@layout/seek_bar_placement_quantization_spacing"/>
     </LinearLayout>
@@ -102,34 +102,37 @@
     <LinearLayout
         android:id="@+id/placementLockPanel"
         android:visibility="visible"
-        android:weightSum="1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="@dimen/menu_padding_top"
+        android:paddingHorizontal="@dimen/menu_seekbar_include_horizontal_padding"
         android:orientation="horizontal">
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/lockHorizontalSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight=".5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:checked="false"
             android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/switch_option_draw_on_move_padding_horizontal"
-            android:paddingTop="@dimen/switch_option_draw_on_move_padding_top"
+            android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
+            android:paddingTop="@dimen/switch_option_padding_top"
             android:paddingBottom="@dimen/switch_option_padding_bottom"
             android:text="@string/switch_label_placement_lock_horizontal" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/lockVerticalSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight=".5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:checked="false"
             android:gravity="center_vertical"
             android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
             android:paddingTop="@dimen/switch_option_padding_top"
             android:paddingBottom="@dimen/switch_option_padding_bottom"
             android:text="@string/switch_label_placement_lock_vertical" />
+
     </LinearLayout>
 
     <HorizontalScrollView
@@ -142,9 +145,11 @@
             android:id="@+id/placementOptionsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/menu_buttons_layout_top_margin"
             android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
             android:orientation="horizontal"
             android:paddingTop="@dimen/shape_options_padding_top"/>
     </HorizontalScrollView>
+
 </LinearLayout>
