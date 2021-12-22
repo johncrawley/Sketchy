@@ -19,7 +19,7 @@ public class GradientHelper {
     private GradientType gradientType;
     private final MainViewModel viewModel;
     final int CLAMP_RADIAL_GRADIENT_FACTOR = 12;
-    final int RADIAL_GRADIENT_NUMERATOR= 1100;
+    int radialGradientNumerator = 1100;
     float radiusFactor;
     private int maxGradientLength;
     private final Random random;
@@ -35,6 +35,7 @@ public class GradientHelper {
 
     public void initDimensions(int paintViewWidth, int paintViewHeight){
         maxGradientLength = Math.max(paintViewWidth, paintViewHeight);
+        radialGradientNumerator = maxGradientLength;
         calculateGradientLength();
     }
 
@@ -124,8 +125,10 @@ public class GradientHelper {
 
 
     public void calculateGradientLength(){
-        float radius = 1 + (RADIAL_GRADIENT_NUMERATOR / radiusFactor) ;
+        float radius = 1 + (radialGradientNumerator / radiusFactor) ;
         viewModel.radialGradientRadius = (int) (radius * 2f);
+
+
         viewModel.clampRadialGradientRadius = 1 + viewModel.radialGradientRadius * CLAMP_RADIAL_GRADIENT_FACTOR;
         viewModel.linearGradientLength = calculateLinearGradientLength();
     }

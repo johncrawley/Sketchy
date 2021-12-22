@@ -9,7 +9,7 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 
 public class PointedOvalBrush extends AbstractBrush implements Brush {
 
-    private float quarterBrushSize;
+    private float midpointHeight;
 
     public PointedOvalBrush(){
         super(BrushShape.POINTED_OVAL);
@@ -20,9 +20,9 @@ public class PointedOvalBrush extends AbstractBrush implements Brush {
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         Point leftPoint = new Point(-halfBrushSize, 0);
         Point rightPoint = new Point(halfBrushSize, 0);
-        int  midPointLength = (int) quarterBrushSize;
-        Point midPointTop = new Point(0, -midPointLength);
-        Point midPointBottom = new Point(0, midPointLength);
+
+        Point midPointTop = new Point(0, -(int)midpointHeight);
+        Point midPointBottom = new Point(0, (int)midpointHeight);
 
         Path path = new Path();
         path.moveTo( leftPoint.x, leftPoint.y);
@@ -42,7 +42,7 @@ public class PointedOvalBrush extends AbstractBrush implements Brush {
     @Override
     public void setBrushSize(int brushSize){
         super.setBrushSize(brushSize);
-        quarterBrushSize = halfBrushSize / 2f;
+        midpointHeight = halfBrushSize / 0.9f;
     }
 
 }
