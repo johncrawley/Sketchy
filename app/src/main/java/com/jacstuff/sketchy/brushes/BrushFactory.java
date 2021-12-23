@@ -7,6 +7,7 @@ import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.AstroidBrush;
 import com.jacstuff.sketchy.brushes.shapes.CrescentBrush;
+import com.jacstuff.sketchy.brushes.shapes.CurvedLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.DiamondBrush;
 import com.jacstuff.sketchy.brushes.shapes.HexagonBrush;
 import com.jacstuff.sketchy.brushes.shapes.PointedOvalBrush;
@@ -80,7 +81,8 @@ public class BrushFactory {
         add(new PentagonBrush());
         add(new HexagonBrush());
         add(new StarBrush());
-        add(new LineBrush());
+        //add(new LineBrush());
+        add(new CurvedLineBrush());
         add(new StraightLineBrush());
         add(new WavyLineBrush());
         add(new ArcBrush());

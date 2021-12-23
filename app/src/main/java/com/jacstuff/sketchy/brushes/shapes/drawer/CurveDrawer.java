@@ -6,24 +6,33 @@ import android.graphics.Point;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-// for drawing lines
+
+// for drawing curves
 // onMove only draws preview line
 // doesn't draw proper line until onUp
 // doesn't draw shadow until onUp
 // indicates that colors shouldn't change onDown
-public class DragLineDrawer extends AbstractDrawer implements Drawer{
+public class CurveDrawer extends AbstractDrawer implements Drawer{
 
 
-    public DragLineDrawer(PaintView paintView, MainViewModel viewModel){
+
+    private enum State{ DRAW_LINE, DRAW_CURVE}
+    private State state;
+
+    public CurveDrawer(PaintView paintView, MainViewModel viewModel){
         super(paintView, viewModel);
         isColorChangedOnDown = false;
+        state = State.DRAW_LINE;
     }
+
 
 
     @Override
     public void down(float x, float y, Paint paint) {
-        updateColorGradientAndAngle(x,y);
-        paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
+        if(state == State.DRAW_LINE) {
+            updateColorGradientAndAngle(x, y);
+            paintHelperManager.getKaleidoscopeHelper().setCenter(x, y);
+        }
         brush.onTouchDown(new Point((int)x, (int)y), canvas,paint);
         paintView.invalidate();
     }

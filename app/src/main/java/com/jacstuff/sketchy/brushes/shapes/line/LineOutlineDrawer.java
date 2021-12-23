@@ -34,8 +34,8 @@ public class LineOutlineDrawer implements LineDrawer {
         }
         else {
             float divisor = distance / brushSize;
-            p5 = getPointFromPerpLine(p1, p3, divisor);
-            p6 = getPointFromPerpLine(p2, p4, divisor);
+            p5 = getPointFromPerpendicularLine(p1, p3, divisor);
+            p6 = getPointFromPerpendicularLine(p2, p4, divisor);
         }
         drawLineFrom(p1, p2, paint);
         drawLineFrom(p1, p5, paint);
@@ -60,7 +60,7 @@ public class LineOutlineDrawer implements LineDrawer {
     }
 
 
-    private Point getPointFromPerpLine(Point p1, Point p2, float divisor){
+    private Point getPointFromPerpendicularLine(Point p1, Point p2, float divisor){
         float top = divisor - 1;
         float x = ((top / divisor) * p1.x ) + ((1.0f/divisor) * p2.x );
         float y = ((top / divisor) * p1.y ) + ((1.0f/divisor) * p2.y );
