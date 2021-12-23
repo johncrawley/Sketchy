@@ -111,6 +111,7 @@
     <item name="bananaShapeButton" type="id"/>
     <item name="astroidShapeButton" type="id"/>
     <item name="pointedOvalShapeButton" type="id"/>
+    <item name="trapezoidShapeButton" type="id"/>
 
     <item name="brokenOutlineStyleButton" type="id"/>
     <item name="fillStyleButton" type="id"/>

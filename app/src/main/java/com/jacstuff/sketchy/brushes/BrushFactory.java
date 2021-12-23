@@ -22,6 +22,7 @@ import com.jacstuff.sketchy.brushes.shapes.StarBrush;
 import com.jacstuff.sketchy.brushes.shapes.StraightLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextOnCircleBrush;
+import com.jacstuff.sketchy.brushes.shapes.TrapezoidBrush;
 import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.WavyLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.XBrush;
@@ -97,6 +98,7 @@ public class BrushFactory {
         add(new DiamondBrush());
         add(new AstroidBrush());
         add(new PointedOvalBrush());
+        add(new TrapezoidBrush());
     }
 
 

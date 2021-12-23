@@ -55,6 +55,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         buttonConfig.add(R.id.textShapeButton,              R.drawable.button_shape_text,               BrushShape.TEXT);
         buttonConfig.add(R.id.rectangleShapeButton,         R.drawable.button_shape_rectangle,          BrushShape.DRAG_RECTANGLE);
         buttonConfig.add(R.id.lineShapeButton,              R.drawable.button_shape_line,               BrushShape.LINE);
+        buttonConfig.add(R.id.trapezoidShapeButton,         R.drawable.button_shape_circle,             BrushShape.TRAPEZOID);
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.shapeButton);
         buttonConfig.setDefaultSelection(R.id.circleShapeButton);
