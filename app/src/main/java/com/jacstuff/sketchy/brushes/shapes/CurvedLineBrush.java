@@ -9,19 +9,10 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
-import com.jacstuff.sketchy.brushes.shapes.line.DefaultLineDrawer;
-import com.jacstuff.sketchy.brushes.shapes.line.LineDrawer;
-import com.jacstuff.sketchy.brushes.shapes.line.LineOutlineDrawer;
-
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class CurvedLineBrush extends AbstractBrush implements Brush {
 
-    private float downX, downY, upX, upY, curveX, curveY;
-    private LineDrawer currentLineDrawer;
-    private Map<BrushStyle, LineDrawer> lineDrawerMap;
+    private float downX, downY, upX, upY;
     public enum State { DRAW_LINE, DRAW_CURVE }
     private State state;
     private final Path path;
@@ -33,27 +24,6 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
         drawerType = DrawerFactory.Type.CURVE;
         state = State.DRAW_LINE;
         path = new Path();
-    }
-
-    @Override
-    void postInit(){
-        setupLineDrawers();
-    }
-
-
-    private void setupLineDrawers(){
-        lineDrawerMap = new HashMap<>();
-        LineDrawer defaultLineDrawer = new DefaultLineDrawer(canvas);
-        LineDrawer outlineDrawer = new LineOutlineDrawer(canvas);
-        lineDrawerMap.put(BrushStyle.FILL, defaultLineDrawer);
-        lineDrawerMap.put(BrushStyle.BROKEN_OUTLINE, defaultLineDrawer);
-        lineDrawerMap.put(BrushStyle.OUTLINE,outlineDrawer );
-        lineDrawerMap.put(BrushStyle.JAGGED,outlineDrawer );
-        lineDrawerMap.put(BrushStyle.WAVY, defaultLineDrawer );
-        lineDrawerMap.put(BrushStyle.SPIKED,outlineDrawer );
-        lineDrawerMap.put(BrushStyle.DOUBLE_EDGE,outlineDrawer );
-        lineDrawerMap.put(BrushStyle.TRANSLATE, outlineDrawer );
-        currentLineDrawer = lineDrawerMap.get(BrushStyle.FILL);
     }
 
 
@@ -71,15 +41,11 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
             path.reset();
             path.moveTo(downX, downY);
             path.quadTo(x,y,upX, upY);
-            path.close();
             canvas.drawPath(path, paint);
             return;
         }
-        currentLineDrawer.draw(downX , downY, x, y, brushSize, paint);
-    }
 
-    private void log(String msg){
-        System.out.println("^^^ CurvedLineBrush: " + msg);
+        canvas.drawLine(downX, downY, x, y, paint);
     }
 
 
@@ -88,14 +54,13 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
         if(state == State.DRAW_CURVE){
             path.reset();
             path.moveTo(downX, downY);
-            log("drawing curve from: " + downX + "," + downY + " controlPoint: " + x +"," + y + " ending: "+  upX + "," + upY);
             path.quadTo( x,y, upX, upY);
             //path.close();
             canvas.drawPath(path, paint);
             state = State.DRAW_LINE;
             return;
         }
-        currentLineDrawer.draw(downX - offsetX, downY - offsetY, x -offsetX, y - offsetY, brushSize, paint);
+        canvas.drawLine(downX, downY, x, y, paint);
         upX = x;
         upY = y;
         state = State.DRAW_CURVE;
@@ -111,7 +76,6 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
     @Override
     public void setStyle(BrushStyle brushStyle){
         super.setStyle(brushStyle);
-        currentLineDrawer = lineDrawerMap.get(brushStyle);
     }
 
 

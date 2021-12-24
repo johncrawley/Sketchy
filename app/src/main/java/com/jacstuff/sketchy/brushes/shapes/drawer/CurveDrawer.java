@@ -34,7 +34,7 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
             paintHelperManager.getKaleidoscopeHelper().setCenter(x, y);
         }
         brush.onTouchDown(new Point((int)x, (int)y), canvas,paint);
-        paintView.invalidate();
+        //paintView.invalidate();
     }
 
 
@@ -48,15 +48,22 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
 
     @Override
     public void up(float x, float y, Paint paint) {
-        paintView.disablePreviewLayer();
+        if(state == State.DRAW_CURVE){
+            paintView.disablePreviewLayer();
+        }
         if(kaleidoscopeHelper.isEnabled()){
             kaleidoscopeDrawer.drawKaleidoscope(x, y, paint);
         }
         else{
             drawDragLine(x,y, paint);
         }
-        paintView.pushHistory();
-        paintView.invalidate();
+        if(state == State.DRAW_CURVE) {
+            paintView.pushHistory();
+            paintView.invalidate();
+            state = State.DRAW_LINE;
+            return;
+        }
+        state = State.DRAW_CURVE;
     }
 
 
