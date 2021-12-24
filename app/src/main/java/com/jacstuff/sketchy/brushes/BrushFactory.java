@@ -82,7 +82,7 @@ public class BrushFactory {
         add(new PentagonBrush());
         add(new HexagonBrush());
         add(new StarBrush());
-        //add(new LineBrush());
+        add(new LineBrush());
         add(new CurvedLineBrush());
         add(new StraightLineBrush());
         add(new WavyLineBrush());

@@ -46,6 +46,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         buttonConfig.add(R.id.arcShapeButton,               R.drawable.button_shape_arc,                BrushShape.ARC);
         buttonConfig.add(R.id.ovalShapeButton,              R.drawable.button_shape_oval,               BrushShape.OVAL);
         buttonConfig.add(R.id.crescentShapeButton,          R.drawable.button_shape_crescent,           BrushShape.CRESCENT);
+        buttonConfig.add(R.id.trapezoidShapeButton,         R.drawable.button_shape_trapezoid,          BrushShape.TRAPEZOID);
         buttonConfig.add(R.id.xShapeButton,                 R.drawable.button_shape_x,                  BrushShape.X);
         buttonConfig.add(R.id.starShapeButton,              R.drawable.button_shape_star,               BrushShape.STAR);
         buttonConfig.add(R.id.bananaShapeButton,            R.drawable.button_shape_banana,             BrushShape.BANANA);
@@ -55,7 +56,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         buttonConfig.add(R.id.textShapeButton,              R.drawable.button_shape_text,               BrushShape.TEXT);
         buttonConfig.add(R.id.rectangleShapeButton,         R.drawable.button_shape_rectangle,          BrushShape.DRAG_RECTANGLE);
         buttonConfig.add(R.id.lineShapeButton,              R.drawable.button_shape_line,               BrushShape.LINE);
-        buttonConfig.add(R.id.trapezoidShapeButton,         R.drawable.button_shape_circle,             BrushShape.TRAPEZOID);
+        buttonConfig.add(R.id.curveShapeButton,             R.drawable.button_shape_curve,             BrushShape.CURVE);
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.shapeButton);
         buttonConfig.setDefaultSelection(R.id.circleShapeButton);

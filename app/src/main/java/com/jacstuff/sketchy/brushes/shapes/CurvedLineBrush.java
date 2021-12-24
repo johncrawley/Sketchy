@@ -19,7 +19,7 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
 
 
     public CurvedLineBrush() {
-        super(BrushShape.LINE);
+        super(BrushShape.CURVE);
         brushInitializer = new LineInitializer();
         drawerType = DrawerFactory.Type.CURVE;
         state = State.DRAW_LINE;
