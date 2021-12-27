@@ -25,6 +25,8 @@ public interface Brush {
     int getBrushSize();
     int getHalfBrushSize();
 
+    void reset();
+
     void onTouchDown(Point p, Canvas canvas, Paint paint);
     void onTouchMove(Point p, Canvas canvas, Paint paint);
 

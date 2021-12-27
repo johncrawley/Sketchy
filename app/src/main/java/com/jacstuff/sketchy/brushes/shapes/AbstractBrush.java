@@ -63,6 +63,11 @@ public abstract class AbstractBrush implements  Brush{
         //do nothing
     }
 
+    @Override
+    public void reset(){
+        //do nothing
+    }
+
 
     @Override
     public boolean isUsingPlacementHelper(){

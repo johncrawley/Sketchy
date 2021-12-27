@@ -8,7 +8,6 @@ import android.graphics.Point;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.drawer.CurveDrawer;
-import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
 
 public class CurvedLineBrush extends AbstractBrush implements Brush {
@@ -30,6 +29,16 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
     public void postInit(){
         super.postInit();
         this.drawer = new CurveDrawer(paintView, mainViewModel, this);
+    }
+
+
+    @Override
+    public void reset(){
+        downX = 0;
+        downY = 0;
+        upX = 0;
+        upY = 0;
+        resetState();
     }
 
     public void resetState(){
@@ -69,7 +78,6 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
             canvas.drawPath(path, paint);
             return;
         }
-
         canvas.drawLine(downX, downY, x, y, paint);
     }
 
@@ -80,15 +88,12 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
             path.reset();
             path.moveTo(downX, downY);
             path.quadTo( x,y, upX, upY);
-            //path.close();
             canvas.drawPath(path, paint);
-            //state = State.DRAW_LINE;
             return;
         }
         canvas.drawLine(downX, downY, x, y, paint);
         upX = x;
         upY = y;
-        //state = State.DRAW_CURVE;
     }
 
 

@@ -26,7 +26,7 @@ public class PaintView extends View {
 
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
     private Paint paint, shadowPaint, previewPaint;
-    private Paint drawPaint;
+    private Paint drawPaint, blankPaint;
     private PaintGroup paintGroup;
     private int brushSize;
     private Bitmap bitmap, previewBitmap;
@@ -43,6 +43,7 @@ public class PaintView extends View {
     private final Context context;
     private BitmapLoader bitmapLoader;
     private SensitivityHelper sensitivityHelper;
+
 
     public PaintView(Context context) {
         this(context, null);
@@ -159,6 +160,8 @@ public class PaintView extends View {
 
     public void resetCanvas(){
         isCanvasLocked = true;
+        invalidate();
+        currentBrush.reset();
         drawPlainBackgroundAndSaveToHistory();
         isCanvasLocked = false;
     }
@@ -185,6 +188,9 @@ public class PaintView extends View {
         paint.setAntiAlias(true);
         paint.setDither(true);
         paintGroup = new PaintGroup(paint, previewPaint, shadowPaint);
+        blankPaint = new Paint();
+        blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        blankPaint.setColor(DEFAULT_BG_COLOR);
     }
 
 
@@ -195,9 +201,6 @@ public class PaintView extends View {
 
 
     private void drawPlainBackgroundAndSaveToHistory(){
-        Paint blankPaint = new Paint();
-        blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        blankPaint.setColor(DEFAULT_BG_COLOR);
         canvas.drawRect(0,0, getWidth(), getHeight(), blankPaint);
         bitmapHistory.push(bitmap);
         invalidate();
@@ -261,6 +264,7 @@ public class PaintView extends View {
 
 
     public void undo(){
+        currentBrush.reset();
         loadHistoryItem(true);
     }
 
