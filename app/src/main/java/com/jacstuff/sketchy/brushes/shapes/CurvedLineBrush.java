@@ -7,6 +7,7 @@ import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
+import com.jacstuff.sketchy.brushes.shapes.drawer.CurveDrawer;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
 
@@ -21,11 +22,35 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
     public CurvedLineBrush() {
         super(BrushShape.CURVE);
         brushInitializer = new LineInitializer();
-        drawerType = DrawerFactory.Type.CURVE;
         state = State.DRAW_LINE;
         path = new Path();
     }
 
+    @Override
+    public void postInit(){
+        super.postInit();
+        this.drawer = new CurveDrawer(paintView, mainViewModel, this);
+    }
+
+    public void resetState(){
+        state = State.DRAW_LINE;
+    }
+
+    public void setStateTo(State state){
+        this.state = state;
+    }
+
+    public State getState(){
+        return  state;
+    }
+
+    public boolean isInDrawLineMode(){
+        return state == State.DRAW_LINE;
+    }
+
+    public boolean isInDrawCurveMode(){
+        return state == State.DRAW_CURVE;
+    }
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
@@ -57,13 +82,13 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
             path.quadTo( x,y, upX, upY);
             //path.close();
             canvas.drawPath(path, paint);
-            state = State.DRAW_LINE;
+            //state = State.DRAW_LINE;
             return;
         }
         canvas.drawLine(downX, downY, x, y, paint);
         upX = x;
         upY = y;
-        state = State.DRAW_CURVE;
+        //state = State.DRAW_CURVE;
     }
 
 

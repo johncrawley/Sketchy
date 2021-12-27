@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes.drawer;
 import android.graphics.Paint;
 import android.graphics.Point;
 
+import com.jacstuff.sketchy.brushes.shapes.CurvedLineBrush;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -14,22 +15,18 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 // indicates that colors shouldn't change onDown
 public class CurveDrawer extends AbstractDrawer implements Drawer{
 
+    private final CurvedLineBrush curvedLineBrush;
 
-
-    private enum State{ DRAW_LINE, DRAW_CURVE}
-    private State state;
-
-    public CurveDrawer(PaintView paintView, MainViewModel viewModel){
+    public CurveDrawer(PaintView paintView, MainViewModel viewModel, CurvedLineBrush curvedLineBrush){
         super(paintView, viewModel);
         isColorChangedOnDown = false;
-        state = State.DRAW_LINE;
+        this.curvedLineBrush = curvedLineBrush;
     }
-
 
 
     @Override
     public void down(float x, float y, Paint paint) {
-        if(state == State.DRAW_LINE) {
+        if(curvedLineBrush.isInDrawLineMode()) {
             updateColorGradientAndAngle(x, y);
             paintHelperManager.getKaleidoscopeHelper().setCenter(x, y);
         }
@@ -48,7 +45,7 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
 
     @Override
     public void up(float x, float y, Paint paint) {
-        if(state == State.DRAW_CURVE){
+        if(curvedLineBrush.isInDrawCurveMode()){
             paintView.disablePreviewLayer();
         }
         if(kaleidoscopeHelper.isEnabled()){
@@ -57,13 +54,13 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
         else{
             drawDragLine(x,y, paint);
         }
-        if(state == State.DRAW_CURVE) {
+        if(curvedLineBrush.isInDrawCurveMode()) {
             paintView.pushHistory();
             paintView.invalidate();
-            state = State.DRAW_LINE;
+            curvedLineBrush.setStateTo(CurvedLineBrush.State.DRAW_LINE);
             return;
         }
-        state = State.DRAW_CURVE;
+        curvedLineBrush.setStateTo(CurvedLineBrush.State.DRAW_CURVE);
     }
 
 
