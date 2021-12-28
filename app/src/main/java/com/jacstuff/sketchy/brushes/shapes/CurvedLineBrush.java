@@ -72,10 +72,7 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
     @Override
     public void onTouchMove(float x, float y, Paint paint) {
         if(state == State.DRAW_CURVE){
-            path.reset();
-            path.moveTo(downX, downY);
-            path.quadTo(x,y,upX, upY);
-            canvas.drawPath(path, paint);
+            drawCurve(x, y, paint);
             return;
         }
         canvas.drawLine(downX, downY, x, y, paint);
@@ -85,15 +82,20 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
     @Override
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint) {
         if(state == State.DRAW_CURVE){
-            path.reset();
-            path.moveTo(downX, downY);
-            path.quadTo( x,y, upX, upY);
-            canvas.drawPath(path, paint);
+            drawCurve(x, y, paint);
             return;
         }
         canvas.drawLine(downX, downY, x, y, paint);
         upX = x;
         upY = y;
+    }
+
+
+    private void drawCurve(float x, float y, Paint paint){
+        path.reset();
+        path.moveTo(downX, downY);
+        path.quadTo( x,y, upX, upY);
+        canvas.drawPath(path, paint);
     }
 
 

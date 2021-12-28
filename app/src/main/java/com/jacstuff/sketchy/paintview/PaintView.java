@@ -159,6 +159,7 @@ public class PaintView extends View {
 
 
     public void resetCanvas(){
+        disablePreviewLayer();
         isCanvasLocked = true;
         invalidate();
         currentBrush.reset();
@@ -201,6 +202,7 @@ public class PaintView extends View {
 
 
     private void drawPlainBackgroundAndSaveToHistory(){
+
         canvas.drawRect(0,0, getWidth(), getHeight(), blankPaint);
         bitmapHistory.push(bitmap);
         invalidate();
