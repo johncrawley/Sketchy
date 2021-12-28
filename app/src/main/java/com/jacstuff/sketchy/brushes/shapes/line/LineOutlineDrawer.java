@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 
+import static com.jacstuff.sketchy.utils.MathUtils.getDistance;
+
 
 public class LineOutlineDrawer implements LineDrawer {
 
@@ -68,10 +70,5 @@ public class LineOutlineDrawer implements LineDrawer {
     }
 
 
-    private float getDistance(Point p1, Point p2){
-        double ac = Math.abs(p2.y - p1.y);
-        double cb = Math.abs(p2.x - p1.x);
-        return (float)Math.hypot(ac, cb);
-    }
 
 }

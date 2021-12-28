@@ -4,11 +4,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.drawer.CurveDrawer;
 import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
+import com.jacstuff.sketchy.utils.MathUtils;
 
 public class CurvedLineBrush extends AbstractBrush implements Brush {
 
@@ -94,8 +96,22 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
     private void drawCurve(float x, float y, Paint paint){
         path.reset();
         path.moveTo(downX, downY);
-        path.quadTo( x,y, upX, upY);
+        PointF point = getModifiedPoint(x,y);
+        path.quadTo( point.x, point.y, upX, upY);
         canvas.drawPath(path, paint);
+    }
+
+
+    private PointF getModifiedPoint(float x, float y){
+        PointF point = new PointF();
+        float lineMidpointX = (upX + downX) /2;
+        float lineMidpointY = (upY + downY) /2;
+        float distance = MathUtils.getDistance(x,y, lineMidpointX, lineMidpointY);
+        float d = distance == 0 ? 1 : distance;
+
+        point.x = x + (d * (x - lineMidpointX))/distance;
+        point.y = y + (d * (y - lineMidpointY))/distance;
+        return point;
     }
 
 
