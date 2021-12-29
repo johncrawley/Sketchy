@@ -31,6 +31,7 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
     public void postInit(){
         super.postInit();
         this.drawer = new CurveDrawer(paintView, mainViewModel, this);
+        drawer.init();
     }
 
 
@@ -74,7 +75,7 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
     @Override
     public void onTouchMove(float x, float y, Paint paint) {
         if(state == State.DRAW_CURVE){
-            drawCurve(x, y, paint);
+            drawCurve(x, y, 0,0, paint);
             return;
         }
         canvas.drawLine(downX, downY, x, y, paint);
@@ -82,9 +83,15 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
 
 
     @Override
+    public void onTouchUp(float x, float y, Paint paint) {
+        onTouchUp(x, y, 0,0, paint);
+    }
+
+
+    @Override
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint) {
         if(state == State.DRAW_CURVE){
-            drawCurve(x, y, paint);
+            drawCurve(x, y, offsetX, offsetY, paint);
             return;
         }
         canvas.drawLine(downX, downY, x, y, paint);
@@ -93,11 +100,24 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
     }
 
 
-    private void drawCurve(float x, float y, Paint paint){
+    @Override
+    public void setStyle(BrushStyle brushStyle){
+        super.setStyle(brushStyle);
+    }
+
+
+    @Override
+    public boolean isUsingPlacementHelper(){
+        return false;
+    }
+
+
+
+    private void drawCurve(float x, float y, float offsetX, float offsetY, Paint paint){
         path.reset();
-        path.moveTo(downX, downY);
+        path.moveTo(downX - offsetX, downY - offsetY);
         PointF point = getModifiedPoint(x,y);
-        path.quadTo( point.x, point.y, upX, upY);
+        path.quadTo( point.x - offsetX, point.y - offsetY, upX - offsetX, upY - offsetY);
         canvas.drawPath(path, paint);
     }
 
@@ -115,20 +135,4 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
     }
 
 
-    @Override
-    public void onTouchUp(float x, float y, Paint paint) {
-        onTouchUp(x, y, 0,0, paint);
-    }
-
-
-    @Override
-    public void setStyle(BrushStyle brushStyle){
-        super.setStyle(brushStyle);
-    }
-
-
-    @Override
-    public boolean isUsingPlacementHelper(){
-        return false;
-    }
 }
