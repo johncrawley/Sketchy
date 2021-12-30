@@ -39,7 +39,7 @@ public class PaintHelperManager {
         colorHelper = new ColorHelper(viewModel, kaleidoscopeHelper);
         tileHelper = new TileHelper(viewModel, this);
         placementHelper = new PlacementHelper(viewModel, mainActivity);
-        sensitivityHelper = new SensitivityHelper(viewModel);
+        sensitivityHelper = new SensitivityHelper(viewModel, angleHelper);
     }
 
 
