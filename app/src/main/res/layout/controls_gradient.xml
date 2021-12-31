@@ -127,17 +127,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             layout="@layout/seek_bar_gradient_radius" />
-
-
     </LinearLayout>
-
 
     <HorizontalScrollView
         android:id="@+id/controlsScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity = "center">
-
         <LinearLayout
             android:id="@+id/gradientOptionsLayout"
             android:layout_width="wrap_content"
@@ -147,9 +143,6 @@
             android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
             android:orientation="horizontal"
             android:paddingTop="@dimen/shape_options_padding_top">
-
         </LinearLayout>
-
     </HorizontalScrollView>
-
 </LinearLayout>

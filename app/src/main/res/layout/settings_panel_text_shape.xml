@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:paddingHorizontal="@dimen/paint_view_layout_margin"
+    android:paddingHorizontal="@dimen/settings_panel_include_horizontal_padding"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -26,6 +26,7 @@
             android:inputType="text"
             android:autofillHints="@string/text_edit_text_autofill_hint"
             android:text="@string/text_edit_text_default"
+            android:maxLength="@integer/text_shape_max_characters"
             android:imeOptions="actionDone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -75,7 +76,6 @@
             android:layout_height="match_parent"
             android:layout_weight=".2"
             android:gravity="center_vertical"
-            android:min="0"
             android:text="@string/text_spacing_seekbar_label"
             />
 
@@ -92,7 +92,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="fill_horizontal"
@@ -103,21 +103,33 @@
             android:id="@+id/checkboxTextBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/checkboxTextStrikethrough"
             android:text="@string/text_bold_checkbox_label" />
 
         <CheckBox
             android:id="@+id/checkboxTextStrikethrough"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkboxTextBold"
+            app:layout_constraintEnd_toStartOf="@+id/checkboxTextUnderline"
             android:text="@string/text_strikethrough_checkbox_label" />
 
         <CheckBox
             android:id="@+id/checkboxTextUnderline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkboxTextStrikethrough"
+            app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/text_underline_checkbox_label" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="8dp">

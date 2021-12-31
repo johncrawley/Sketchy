@@ -26,6 +26,7 @@
         <entry key="app/src/main/res/layout/settings_panel_size_sequence_proximity.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/settings_panel_size_sequence_proximity_type.xml" value="0.20989583333333334" />
         <entry key="app/src/main/res/layout/settings_panel_size_sequence_reset.xml" value="0.20208333333333334" />
+        <entry key="app/src/main/res/layout/settings_panel_text_shape.xml" value="0.225" />
       </map>
     </option>
   </component>

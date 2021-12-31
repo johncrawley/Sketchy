@@ -81,4 +81,6 @@
     <fraction name="skew_seekbar_max">1.1</fraction>
     <fraction name="skew_seekbar_default">0</fraction>
 
+    <integer name="text_shape_max_characters">36</integer>
+
 </resources>
