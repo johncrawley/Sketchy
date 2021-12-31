@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="@dimen/seekbar_padding_top"
+    android:paddingTop="@dimen/brush_size_seekbar_landscape_padding_top"
     android:paddingBottom="@dimen/seekbar_padding_bottom"
     xmlns:android="http://schemas.android.com/apk/res/android">
 

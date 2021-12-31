@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:background="@android:drawable/dialog_holo_light_frame">
 
-
         <include
             android:id="@+id/includeShapeControls"
             android:layout_width="match_parent"

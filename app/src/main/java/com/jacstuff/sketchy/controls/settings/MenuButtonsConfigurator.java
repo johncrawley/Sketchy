@@ -32,11 +32,13 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
         buttonConfig.add(R.id.shapeButton,     R.drawable.button_shape_circle,     R.id.includeShapeControls);
         buttonConfig.add(R.id.styleButton,     R.drawable.button_style_fill,       R.id.includeStyleControls);
         buttonConfig.add(R.id.gradientButton,  R.drawable.button_gradient_off,     R.id.includeGradientControls);
-        buttonConfig.add(R.id.angleButton,     angleStr,                           R.id.includeAngleControls);
 
         buttonConfig.setParentLayout(R.id.controlPanelLayoutGroup2);
+        buttonConfig.add(R.id.angleButton,     angleStr,                           R.id.includeAngleControls);
         buttonConfig.add(R.id.blurButton,       R.drawable.button_blur_off,      R.id.includeBlurControls);
         buttonConfig.add(R.id.shadowButton,     R.drawable.button_shadow_off,    R.id.includeShadowControls);
+
+        buttonConfig.setParentLayout(R.id.controlPanelLayoutGroup3);
         buttonConfig.add(R.id.kaleidoscopeButton,   "K: 1",                      R.id.includeKaleidoscopeControls);
         buttonConfig.add(R.id.sizeSequenceButton, R.drawable.button_size_sequence_stationary,  R.id.includeSizeSequenceControls);
         buttonConfig.add(R.id.placementButton, R.drawable.button_placement_normal,  R.id.includePlacementControls);

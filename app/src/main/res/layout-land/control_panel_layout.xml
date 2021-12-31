@@ -12,12 +12,13 @@
         android:id="@+id/controlPanelGroup1Scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity = "center">
+        android:layout_gravity="center">
 
         <LinearLayout
             android:id="@+id/controlPanelLayoutGroup1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/control_panel_landscape_margin"
             android:orientation="horizontal">
         </LinearLayout>
@@ -28,13 +29,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity = "center">
-            <LinearLayout
-                android:id="@+id/controlPanelLayoutGroup2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/control_panel_landscape_margin"
-                android:orientation="horizontal">
-            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/controlPanelLayoutGroup2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/control_panel_landscape_margin"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
+        android:id="@+id/controlPanelGroup3Scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity = "center">
+        <LinearLayout
+            android:id="@+id/controlPanelLayoutGroup3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/control_panel_landscape_margin"
+            android:orientation="horizontal">
+        </LinearLayout>
     </HorizontalScrollView>
 
 </LinearLayout>
