@@ -138,7 +138,6 @@
             android:id="@+id/gradientOptionsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/menu_buttons_layout_top_margin"
             android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
             android:orientation="horizontal"

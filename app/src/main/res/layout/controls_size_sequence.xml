@@ -15,14 +15,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
     <include
         android:id="@+id/settingsPanelSizeSequenceProximityInclude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
         layout="@layout/settings_panel_size_sequence_proximity" />
-
 
     <include
         android:id="@+id/settingsPanelSizeSequenceResetInclude"
@@ -31,15 +29,12 @@
         android:visibility="gone"
         layout="@layout/settings_panel_size_sequence_reset" />
 
-
-
     <LinearLayout
         android:id="@+id/includedLineWidthSeekBarWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/menu_seekbar_include_horizontal_padding"
         android:orientation="vertical">
-
 
         <include
             android:id="@+id/sizeSequenceMinSeekBarInclude"
@@ -74,7 +69,6 @@
             android:id="@+id/sizeSequenceOptionsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/menu_buttons_layout_top_margin"
             android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
             android:orientation="horizontal"

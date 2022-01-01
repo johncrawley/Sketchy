@@ -42,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/menu_buttons_layout_top_margin"
             android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
-            android:layout_gravity="center_horizontal"
             android:orientation="horizontal"
             android:paddingTop="@dimen/shape_options_padding_top">
         </LinearLayout>
