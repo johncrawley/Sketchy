@@ -20,7 +20,6 @@ public class DragRectDrawer extends BasicDrawer{
         super(paintView, viewModel);
         isColorChangedOnDown = false;
         rectCalc = new RectCalc();
-
     }
 
 
@@ -31,10 +30,11 @@ public class DragRectDrawer extends BasicDrawer{
         angleOnTouchDown = paintHelperManager.getAngleHelper().getAngle();
         paintView.enablePreviewLayer();
         if(viewModel.snapRectangleToEdge){
-            x = x <= 25 ? 0 : x;
-            y = y <= 25 ? 0 : y;
+            x = x <= viewModel.rectangleSnapBounds ? 0 : x;
+            y = y <= viewModel.rectangleSnapBounds ? 0 : y;
+
         }
-        draw(x,y, paint);
+        draw(snapToLowerBounds(x), snapToLowerBounds(y), paint);
     }
 
 
@@ -50,24 +50,29 @@ public class DragRectDrawer extends BasicDrawer{
 
     @Override
     public void move(float x, float y, Paint paint) {
+        float xMove = snapToUpperBounds(x, canvas.getWidth());
+        float yMove = snapToUpperBounds(y, canvas.getHeight());
         paintView.enablePreviewLayer();
-        rotateAndDrawMove(x,y,paint);
+        rotateAndDrawMove(xMove, yMove,paint);
         paintView.invalidate();
     }
 
 
     @Override
     public void up(float x, float y, Paint paint) {
+        float xUp = snapToUpperBounds(x, canvas.getWidth());
+        float yUp = snapToUpperBounds(y, canvas.getHeight());
         paintView.disablePreviewLayer();
         if(kaleidoscopeHelper.isEnabled()){
-            kaleidoscopeDrawer.drawKaleidoscope(x, y, paint);
+            kaleidoscopeDrawer.drawKaleidoscope(xUp, yUp, paint);
         }
         else{
-            rotateAndDrawMove(x,y,paint);
+            rotateAndDrawMove(xUp , yUp, paint);
         }
         paintView.pushHistory();
         paintView.invalidate();
     }
+
 
 
     public void rotateAndDrawMove(float x, float y, Paint paint){
@@ -76,11 +81,6 @@ public class DragRectDrawer extends BasicDrawer{
         translateToTopCornerOfRect();
         rotateThenDrawShadowAndObject(x, y, paint);
         canvas.restore();
-    }
-
-
-    private void translateToTopCornerOfRect(){
-        canvas.translate(downX, downY);
     }
 
 
@@ -111,6 +111,20 @@ public class DragRectDrawer extends BasicDrawer{
             brush.onTouchMove(bottomCorner.x, bottomCorner.y, paintView.getShadowPaint());
         }
         brush.onTouchMove(bottomCorner.x, bottomCorner.y, paint);
+    }
+
+
+    private float snapToUpperBounds(float coordinate, float bound){
+        return coordinate > bound - viewModel.rectangleSnapBounds ? bound : coordinate;
+    }
+
+
+    private float snapToLowerBounds(float coordinate){
+        return coordinate < viewModel.rectangleSnapBounds ? 0 : coordinate;
+    }
+
+    private void translateToTopCornerOfRect(){
+        canvas.translate(downX, downY);
     }
 
 

@@ -65,7 +65,6 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int radialGradientOffsetX = 0;
     public int radialGradientOffsetY = 0;
     public GradientColorType gradientColorType = GradientColorType.SELECTED;
-    public boolean snapRectangleToEdge =true;
     public int gradientLinearOffsetPercentage = 100;
     public boolean isLinearGradientRepeated = true;
 
@@ -102,6 +101,9 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int textSkewSeekBarProgress = 100;
     public int textSpacingSeekBarProgress = 1;
     public int angle = 0;
+
+    public boolean snapRectangleToEdge = true;
+    public int rectangleSnapBounds = 18;
 
 
     public MainViewModel(){
