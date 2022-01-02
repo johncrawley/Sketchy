@@ -67,9 +67,8 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/quantizationButtonIncludeLineWidthSwitch"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:checked="true"
                 android:gravity="center_vertical"
                 android:paddingStart="0dp"
@@ -81,9 +80,8 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/quantizationIsLockedSwitch"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:checked="false"
                 android:gravity="center_vertical"
                 android:paddingTop="@dimen/switch_option_padding_top"
@@ -104,16 +102,14 @@
         android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:paddingTop="@dimen/menu_padding_top"
         android:paddingHorizontal="@dimen/menu_seekbar_include_horizontal_padding"
         android:orientation="horizontal">
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/lockHorizontalSwitch"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:checked="false"
             android:gravity="center_vertical"
             android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
@@ -123,9 +119,8 @@
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/lockVerticalSwitch"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:checked="false"
             android:gravity="center_vertical"
             android:paddingHorizontal="@dimen/switch_option_padding_horizontal"
