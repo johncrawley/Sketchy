@@ -60,6 +60,11 @@ public class SizeHelper {
     }
 
 
+    public boolean isCurrentSequenceStationary(){
+        return currentSequence.equals(stationarySequence);
+    }
+
+
     public void setProximityType(String proximityType){
         viewModel.proximityType = ProximityType.valueOf(proximityType.toUpperCase());
     }

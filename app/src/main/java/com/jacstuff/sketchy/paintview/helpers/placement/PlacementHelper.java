@@ -6,6 +6,7 @@ import android.graphics.PointF;
 
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.settings.placement.PlacementType;
+import com.jacstuff.sketchy.paintview.helpers.size.SizeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class PlacementHelper {
@@ -15,11 +16,13 @@ public class PlacementHelper {
     private final RandomPlacement randomPlacement;
     private final int offsetDefault;
     private final int OFFSET_MULTIPLE = 5;
+    private final SizeHelper sizeHelper;
 
-    public PlacementHelper(MainViewModel viewModel, Context context){
+    public PlacementHelper(MainViewModel viewModel, Context context, SizeHelper sizeHelper){
         this.viewModel = viewModel;
         this.randomPlacement = new RandomPlacement(viewModel);
         offsetDefault = context.getResources().getInteger(R.integer.placement_offset_x_default);
+        this.sizeHelper = sizeHelper;
     }
 
 
@@ -106,8 +109,9 @@ public class PlacementHelper {
 
 
     private void calculateQuantizationFactor(){
-        viewModel.placementQuantizationSavedBrushSize = viewModel.brushSize / 2f;
-        viewModel.placementQuantizationFactor = viewModel.brushSize + getLineSizeFactor();
+        float size = sizeHelper.isCurrentSequenceStationary() ? viewModel.brushSize : viewModel.sizeSequenceMax;
+        viewModel.placementQuantizationSavedBrushSize = size / 2f;
+        viewModel.placementQuantizationFactor = size + getLineSizeFactor();
     }
 
 
