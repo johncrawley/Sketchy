@@ -7,14 +7,9 @@ import com.jacstuff.sketchy.brushes.shapes.CurvedLineBrush;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-
-// for drawing curves
-// onMove only draws preview line
-// doesn't draw proper line until onUp
-// doesn't draw shadow until onUp
-// indicates that colors shouldn't change onDown
 public class CurveDrawer extends AbstractDrawer implements Drawer{
 
+    private float xDown, yDown;
     private final CurvedLineBrush curvedLineBrush;
 
     public CurveDrawer(PaintView paintView, MainViewModel viewModel, CurvedLineBrush curvedLineBrush){
@@ -31,12 +26,19 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
             paintHelperManager.getKaleidoscopeHelper().setCenter(x, y);
         }
         brush.onTouchDown(new Point((int)x, (int)y), canvas,paint);
+        xDown = x;
+        yDown = y;
     }
 
 
     @Override
     public void move(float x, float y, Paint paint) {
         paintView.enablePreviewLayer();
+        if(curvedLineBrush.isInDrawCurveMode()){
+            float gradientX = xDown + ((x - curvedLineBrush.getLineMidpointX()) / 2);
+            float gradientY = yDown + ((y - curvedLineBrush.getLineMidpointY()) / 2);
+            paintHelperManager.getGradientHelper().assignGradient(gradientX, gradientY, viewModel.color, false);
+        }
         brush.onTouchMove(x,y, paint);
         paintView.invalidate();
     }
