@@ -102,8 +102,8 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int textSpacingSeekBarProgress = 1;
     public int angle = 0;
 
-    public boolean snapRectangleToEdge = true;
-    public int rectangleSnapBounds = 18;
+    public boolean isRectangleSnappedToEdges = true;
+    public int rectangleSnapBounds = 28;
 
 
     public MainViewModel(){

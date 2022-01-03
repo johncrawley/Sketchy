@@ -141,7 +141,6 @@
             android:paddingTop="@dimen/text_controls_divisor_padding_top"
             android:paddingBottom="@dimen/text_controls_divisor_padding_bottom"
             android:background="?android:attr/listDivider" />
-
     </LinearLayout>
 
 </LinearLayout>

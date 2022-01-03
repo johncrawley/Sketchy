@@ -34,6 +34,40 @@
         app:layout_constraintBottom_toBottomOf="parent"
         layout="@layout/settings_panel_astroid_shape" />
 
+    <LinearLayout
+        android:id="@+id/settingsPanelRectangle"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="@dimen/settings_panel_include_horizontal_padding"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/rectangleSnapToEdgesSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:checked="true"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/switch_option_padding_horizontal_rectangle_shape"
+            android:paddingTop="@dimen/switch_option_draw_on_move_padding_top"
+            android:paddingBottom="@dimen/switch_option_padding_bottom_rectangle"
+            android:text="@string/switch_label_rectangle_snap_to_edges" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="8dp">
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:paddingTop="@dimen/text_controls_divisor_padding_top"
+                android:paddingBottom="@dimen/text_controls_divisor_padding_bottom"
+                android:background="?android:attr/listDivider" />
+        </LinearLayout>
+    </LinearLayout>
+
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/drawOnMoveSwitch"

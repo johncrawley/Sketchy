@@ -201,6 +201,7 @@
     <string name="placement_offset_x_seekbar_label">X-Axis Offset</string>
     <string name="placement_offset_y_seekbar_label">Y-Axis Offset</string>
     <string name="switch_label_draw_on_move_mode">Draw On Move</string>
+    <string name="switch_label_rectangle_snap_to_edges">Snap To Edges</string>
     <string name="switch_label_placement_lock_horizontal">Lock X-Axis</string>
     <string name="switch_label_placement_lock_vertical">Lock Y-Axis</string>
     <string name="blur_intensity_seekbar_label">Blur Intensity</string>

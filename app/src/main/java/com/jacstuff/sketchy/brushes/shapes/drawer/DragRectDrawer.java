@@ -29,11 +29,6 @@ public class DragRectDrawer extends BasicDrawer{
         paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
         angleOnTouchDown = paintHelperManager.getAngleHelper().getAngle();
         paintView.enablePreviewLayer();
-        if(viewModel.snapRectangleToEdge){
-            x = x <= viewModel.rectangleSnapBounds ? 0 : x;
-            y = y <= viewModel.rectangleSnapBounds ? 0 : y;
-
-        }
         draw(snapToLowerBounds(x), snapToLowerBounds(y), paint);
     }
 
@@ -115,12 +110,12 @@ public class DragRectDrawer extends BasicDrawer{
 
 
     private float snapToUpperBounds(float coordinate, float bound){
-        return coordinate > bound - viewModel.rectangleSnapBounds ? bound : coordinate;
+        return viewModel.isRectangleSnappedToEdges && coordinate > bound - viewModel.rectangleSnapBounds ? bound : coordinate;
     }
 
 
     private float snapToLowerBounds(float coordinate){
-        return coordinate < viewModel.rectangleSnapBounds ? 0 : coordinate;
+        return viewModel.isRectangleSnappedToEdges && coordinate < viewModel.rectangleSnapBounds? 0 : coordinate;
     }
 
     private void translateToTopCornerOfRect(){

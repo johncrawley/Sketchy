@@ -21,6 +21,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         super(activity, paintView);
         subPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
         subPanelManager.add(R.id.astroidShapeButton, R.id.settingsPanelAstroidShapeInclude);
+        subPanelManager.add(R.id.rectangleShapeButton, R.id.settingsPanelRectangle);
         new TextControls(activity, paintView.getPaintGroup(), seekBarConfigurator);
         minBrushSize = activity.getResources().getInteger(R.integer.brush_size_min_default);
     }
@@ -62,8 +63,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         buttonConfig.setDefaultSelection(R.id.circleShapeButton);
 
         configureSeekBars();
-        SwitchMaterial singleDrawModeSwitch = activity.findViewById(R.id.drawOnMoveSwitch);
-        singleDrawModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isDrawOnMoveModeEnabled = isChecked);
+        configureSwitches();
     }
 
 
@@ -98,4 +98,14 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         paintView.setBrushShape(brushShape);
     }
 
+
+    private void configureSwitches(){
+
+        SwitchMaterial singleDrawModeSwitch = activity.findViewById(R.id.drawOnMoveSwitch);
+        singleDrawModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isDrawOnMoveModeEnabled = isChecked);
+
+        SwitchMaterial rectangleBrushSnapToEdges = activity.findViewById(R.id.rectangleSnapToEdgesSwitch);
+        rectangleBrushSnapToEdges.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isRectangleSnappedToEdges = isChecked);
+
+    }
 }
