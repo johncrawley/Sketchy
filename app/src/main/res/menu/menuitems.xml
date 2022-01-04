@@ -24,13 +24,6 @@
         app:showAsAction="ifRoom"
         tools:ignore="AlwaysShowAction"/>
 
-    <item
-        android:id="@+id/action_open"
-        android:icon="@android:drawable/ic_menu_gallery"
-        android:title="@string/action_open"
-        app:showAsAction="ifRoom"
-        tools:ignore="AlwaysShowAction"/>
-
 
     <item
         android:id="@+id/action_share"
@@ -38,6 +31,17 @@
         android:title="@string/action_share"
         app:showAsAction="ifRoom"
         tools:ignore="AlwaysShowAction"/>
+
+
+    <item
+        android:id="@+id/action_open"
+        android:title="@string/action_open"
+        android:icon="@mipmap/ic_action_collection"
+        app:showAsAction="ifRoom"
+        tools:ignore="AlwaysShowAction"/>
+<!--
+    android:icon="@android:drawable/ic_menu_gallery" -->
+
 
     <item
         android:id="@+id/action_about"

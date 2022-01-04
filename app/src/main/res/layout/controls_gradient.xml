@@ -78,12 +78,12 @@
             android:layout_weight=".2"
             android:layout_gravity="center"
             android:layout_width="0dp"
+            android:enabled="false"
             android:paddingHorizontal="8dp"
             android:layout_height="wrap_content"
             android:text="@string/gradient_radial_offset_reset_button_text"
             />
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/gradientMainSettingsLayout"
         android:layout_width="match_parent"
