@@ -76,12 +76,12 @@ public class KaleidoscopeDrawer {
         infinityPaint.setStyle(Paint.Style.FILL);
         infinityPaint.setShader(bitmapShader);
         for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()) {
-            drawGlitchModeSegment(x, y, angle);
+            drawInfinitySegment(x, y, angle);
         }
     }
 
 
-    private void drawGlitchModeSegment(float x, float y, float angle){
+    private void drawInfinitySegment(float x, float y, float angle){
         canvas.save();
         canvas.rotate(angle);
         float gx = x - (kaleidoscopeHelper.getCenterX());
