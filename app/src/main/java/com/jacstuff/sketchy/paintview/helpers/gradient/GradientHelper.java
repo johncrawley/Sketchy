@@ -58,8 +58,8 @@ public class GradientHelper {
 
 
     public void setLength(int progress){
-        int length = 200 - progress;
-        radiusFactor = Math.max(1, length);
+        radiusFactor = Math.max(1, 200 - progress);
+        viewModel.gradientProgress = progress;
         viewModel.gradient = (int)radiusFactor;
         calculateGradientLength();
     }
@@ -127,17 +127,16 @@ public class GradientHelper {
     public void calculateGradientLength(){
         float radius = 1 + (radialGradientNumerator / radiusFactor) ;
         viewModel.radialGradientRadius = (int) (radius * 2f);
-
-
         viewModel.clampRadialGradientRadius = 1 + viewModel.radialGradientRadius * CLAMP_RADIAL_GRADIENT_FACTOR;
-        viewModel.linearGradientLength = calculateLinearGradientLength();
+        calculateLinearGradientLength();
     }
 
 
-    private int calculateLinearGradientLength(){
+    private void calculateLinearGradientLength(){
         maxGradientLength = maxGradientLength == 0 ? 1000 : maxGradientLength;
         float length =  maxGradientLength / (float) viewModel.gradient;
-        return Math.max(1, (int) length);
+        viewModel.linearGradientLength =  Math.max(1, (int) length);
+        viewModel.getLinearGradientNoRepeatLength = 1 + viewModel.gradientProgress * 3;
     }
 
 
@@ -152,18 +151,6 @@ public class GradientHelper {
 
     public void setGradientColorType(String type){
         viewModel.gradientColorType = GradientColorType.valueOf(type.toUpperCase());
-    }
-
-    private void log(String msg){
-        System.out.println("^^^ GradientHelper: " + msg);
-    }
-
-
-    private int calculateLinearLength(){
-        if(viewModel.isLinearGradientRepeated){
-            return viewModel.linearGradientLength;
-        }
-        return (int)((viewModel.linearGradientLength / 100f) * viewModel.gradientLinearOffsetPercentage);
     }
 
 
@@ -185,7 +172,7 @@ public class GradientHelper {
     public void assignGradient(float x, float y, int color, boolean shouldNewRandomColorBeAssigned){
         gradientColor = getGradientColor(shouldNewRandomColorBeAssigned);
         int linearStart = calculateLinearStart();
-        int linearEnd = linearStart + viewModel.linearGradientLength;
+        int linearEnd = (int) getLinearGradientEnd(linearStart);
 
         Shader.TileMode tileMode = viewModel.isLinearGradientRepeated ?
                 Shader.TileMode.MIRROR :
@@ -267,6 +254,14 @@ public class GradientHelper {
 
     public float getInitialOffset(float a){
         return brush == null || brush.isDrawnFromCenter() ? 0 : a;
+    }
+
+
+    private float getLinearGradientEnd(float linearGradientStart){
+        if(viewModel.isLinearGradientRepeated){
+           return linearGradientStart + viewModel.linearGradientLength;
+        }
+        return linearGradientStart + viewModel.getLinearGradientNoRepeatLength;
     }
 
 

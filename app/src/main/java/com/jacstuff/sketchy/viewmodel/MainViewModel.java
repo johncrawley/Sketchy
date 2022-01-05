@@ -58,10 +58,12 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public ProximityType proximityType;
 
     public int gradient;
+    public int gradientProgress;
     public int gradientMaxLength;
     public int radialGradientRadius=1;
     public int clampRadialGradientRadius = 10;
     public int linearGradientLength = 100;
+    public int getLinearGradientNoRepeatLength = 100;
     public int radialGradientOffsetX = 0;
     public int radialGradientOffsetY = 0;
     public GradientColorType gradientColorType = GradientColorType.SELECTED;
