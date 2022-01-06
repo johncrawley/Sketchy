@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.shapes.CurvedLineBrush;
 import com.jacstuff.sketchy.paintview.PaintView;
@@ -10,6 +11,7 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 public class CurveDrawer extends AbstractDrawer implements Drawer{
 
     private float xDown, yDown;
+    private PointF down;
     private final CurvedLineBrush curvedLineBrush;
 
     public CurveDrawer(PaintView paintView, MainViewModel viewModel, CurvedLineBrush curvedLineBrush){
@@ -28,6 +30,9 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
         brush.onTouchDown(new Point((int)x, (int)y), canvas,paint);
         xDown = x;
         yDown = y;
+        down = new PointF();
+        down.x = x;
+        down.y = y;
     }
 
 
@@ -35,14 +40,28 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
     public void move(float x, float y, Paint paint) {
         paintView.enablePreviewLayer();
         if(curvedLineBrush.isInDrawCurveMode()){
-            float gradientX = xDown + ((x - curvedLineBrush.getLineMidpointX()) / 2);
-            float gradientY = yDown + ((y - curvedLineBrush.getLineMidpointY()) / 2);
-            paintHelperManager.getGradientHelper().assignGradient(gradientX, gradientY, viewModel.color, false);
+            PointF up = new PointF();
+            up.x = x;
+            up.y = y;
+
+            //paintHelperManager.getGradientHelper().assignGradient(gradientX, gradientY, viewModel.color, false);
+            paintHelperManager.getGradientHelper().assignGradientForDragShape(down, up, getMidPoint(down, up), false);
         }
         brush.onTouchMove(x,y, paint);
         paintView.invalidate();
     }
 
+
+    private PointF getMidPoint(PointF down, PointF up){
+        PointF mid = new PointF();
+        mid.x = xDown + ((down.x - curvedLineBrush.getLineMidpointX()) / 2);
+        mid.y = yDown + ((down.y - curvedLineBrush.getLineMidpointY()) / 2);
+        return mid;
+    }
+
+    private void log(String msg){
+        System.out.println("^^^ CurveDrawer: " + msg);
+    }
 
     @Override
     public void up(float x, float y, Paint paint) {

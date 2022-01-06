@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.paintview.helpers.gradient;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 
@@ -154,60 +155,93 @@ public class GradientHelper {
     }
 
 
-    private int calculateLinearStart(){
-        if(viewModel.isLinearGradientRepeated){
-            return viewModel.linearGradientLength;
-        }
-        float brushEdge = brush.getBrushSize() / 15f;
-        return (int)(-brush.getHalfBrushSize() + brushEdge)
-                + (int)((brush.getBrushSize() / 130f) * viewModel.gradientLinearOffsetPercentage);
-    }
-
-
     public void assignGradient(float x, float y, int color){
         assignGradient(x,y, color, true);
     }
 
 
-    public void assignGradient(float x, float y, int color, boolean shouldNewRandomColorBeAssigned){
-        gradientColor = getGradientColor(shouldNewRandomColorBeAssigned);
-        int linearStart = calculateLinearStart();
-        int linearEnd = (int) getLinearGradientEnd(linearStart);
+    private void log(String msg){
+        System.out.println("^^^ GradientHelper: " + msg );
+    }
 
+    private int linearStartX, linearStartY, linearEndX, linearEndY;
+
+    public void assignGradientForDragShape(PointF down, PointF up, PointF mid, boolean shouldNewRandomColorBeAssigned) {
+        if (gradientType == GradientType.NONE) {
+            paint.setShader(null);
+            return;
+        }
+        gradientColor = getGradientColor(shouldNewRandomColorBeAssigned);
+        linearStartX = calculateLinearStartForDragShape(down.x, up.x);
+        linearStartY = calculateLinearStartForDragShape(down.y, up.y);
+
+        linearEndX = calculateLinearEndForDragShape(down.x, up.x);
+        linearEndY = calculateLinearEndForDragShape(down.y, up.y);
+        setGradient(mid.x, mid.y, viewModel.color);
+    }
+
+
+    private int calculateLinearStartForDragShape(float brushDownCoordinate, float brushUpCoordinate){
+        float diff = Math.abs(brushUpCoordinate - brushDownCoordinate);
+        return (int)(brushDownCoordinate + (int)((diff / 130f) * viewModel.gradientLinearOffsetPercentage));
+    }
+
+
+    private int calculateLinearEndForDragShape(float brushDownCoordinate, float brushUpCoordinate){
+        float diff = Math.abs(brushUpCoordinate - brushDownCoordinate);
+        return (int)(brushUpCoordinate + (int)((diff / 130f) * viewModel.gradientLinearOffsetPercentage));
+    }
+
+
+    public void assignGradient(float x, float y, int color, boolean shouldNewRandomColorBeAssigned){
+        if(gradientType == GradientType.NONE){
+            paint.setShader(null);
+            return;
+        }
+        gradientColor = getGradientColor(shouldNewRandomColorBeAssigned);
+        linearStartX = calculateLinearStart();
+        //noinspection SuspiciousNameCombination
+        linearStartY = linearStartX;
+        linearEndX = (int) getLinearGradientEnd(linearStartX);
+        //noinspection SuspiciousNameCombination
+        linearEndY = linearEndX;
+        setGradient(x,y, color);
+
+    }
+
+
+    private void setGradient(float x, float y, int color){
         Shader.TileMode tileMode = viewModel.isLinearGradientRepeated ?
                 Shader.TileMode.MIRROR :
                 Shader.TileMode.CLAMP;
 
         switch(gradientType){
-            case NONE:
-                paint.setShader(null);
-                break;
 
-            case DIAGONAL_MIRROR:
-                paint.setShader(new LinearGradient(linearStart,
-                        linearStart,
-                        linearEnd,
-                        linearEnd,
+            case LINEAR_DIAGONAL:
+                paint.setShader(new LinearGradient(linearStartX,
+                        linearStartY,
+                        linearEndX,
+                        linearEndY,
                         color,
                         gradientColor,
                         tileMode));
                 break;
 
-            case HORIZONTAL_MIRROR:
-                paint.setShader(new LinearGradient( linearStart,
+            case LINEAR_HORIZONTAL:
+                paint.setShader(new LinearGradient( linearStartX,
                         y,
-                        linearEnd,
+                        linearEndX,
                         y,
                         color,
                         gradientColor,
                         tileMode));
                 break;
 
-            case VERTICAL_MIRROR:
+            case LINEAR_VERTICAL:
                 paint.setShader(new LinearGradient(x,
-                        linearStart,
+                        linearStartY,
                         x,
-                        linearEnd,
+                        linearEndY,
                         color,
                         gradientColor,
                         tileMode));
@@ -254,6 +288,16 @@ public class GradientHelper {
 
     public float getInitialOffset(float a){
         return brush == null || brush.isDrawnFromCenter() ? 0 : a;
+    }
+
+
+    private int calculateLinearStart(){
+        if(viewModel.isLinearGradientRepeated){
+            return viewModel.linearGradientLength;
+        }
+        float brushEdge = brush.getBrushSize() / 15f;
+        return (int)(-brush.getHalfBrushSize() + brushEdge)
+                + (int)((brush.getBrushSize() / 130f) * viewModel.gradientLinearOffsetPercentage);
     }
 
 
