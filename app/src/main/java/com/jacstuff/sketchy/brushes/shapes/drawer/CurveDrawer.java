@@ -45,7 +45,7 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
             up.y = y;
 
             //paintHelperManager.getGradientHelper().assignGradient(gradientX, gradientY, viewModel.color, false);
-            paintHelperManager.getGradientHelper().assignGradientForDragShape(down, up, getMidPoint(down, up), false);
+            paintHelperManager.getGradientHelper().assignGradientForDragShape(down, getMidPoint(down, up), false);
         }
         brush.onTouchMove(x,y, paint);
         paintView.invalidate();
@@ -54,10 +54,11 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
 
     private PointF getMidPoint(PointF down, PointF up){
         PointF mid = new PointF();
-        mid.x = xDown + ((down.x - curvedLineBrush.getLineMidpointX()) / 2);
-        mid.y = yDown + ((down.y - curvedLineBrush.getLineMidpointY()) / 2);
+        mid.x = down.x + ((up.x - curvedLineBrush.getLineMidpointX()) / 2);
+        mid.y = down.y + ((up.y - curvedLineBrush.getLineMidpointY()) / 2);
         return mid;
     }
+
 
     private void log(String msg){
         System.out.println("^^^ CurveDrawer: " + msg);
