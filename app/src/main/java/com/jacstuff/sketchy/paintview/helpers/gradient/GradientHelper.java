@@ -26,6 +26,7 @@ public class GradientHelper {
     private final Random random;
     private Brush brush;
     private int gradientColor;
+    private int linearStartX, linearStartY, linearEndX, linearEndY;
 
 
     public GradientHelper(MainViewModel viewModel){
@@ -127,28 +128,28 @@ public class GradientHelper {
     }
 
 
-    private int linearStartX, linearStartY, linearEndX, linearEndY;
-
-
-    public void assignGradientForDragShape(PointF down, PointF mid, boolean shouldNewRandomColorBeAssigned) {
+    public void assignGradientForDragShape(PointF down, PointF up, PointF mid, boolean shouldNewRandomColorBeAssigned) {
         if (gradientType == GradientType.NONE) {
             paint.setShader(null);
             return;
         }
-        float halfDimensionX = Math.abs(down.x - mid.x);
-        float halfDimensionY = Math.abs(down.y - mid.y);
+        float fullDimensionX = Math.abs(down.x - up.x);
+        float fullDimensionY = Math.abs(down.y - up.y);
         gradientColor = getGradientColor(shouldNewRandomColorBeAssigned);
-        linearStartX = calculateLinearLengthForDragShape(mid.x, halfDimensionX);
-        linearStartY = calculateLinearLengthForDragShape(mid.y, halfDimensionY);
+        linearStartX = calculateLinearCoorindateForDragShape(down.x, mid.x, fullDimensionX);
+        linearStartY = calculateLinearCoorindateForDragShape(down.y, mid.y, fullDimensionY);
         linearEndX = calculateLinearEndForDragShape(linearStartX);
         linearEndY = calculateLinearEndForDragShape(linearStartY);
         setGradient(mid.x, mid.y, viewModel.color);
     }
 
 
-    private int calculateLinearLengthForDragShape(float brushMidCoordinate, float brushHalfDimension){
-        return (int)(brushMidCoordinate - viewModel.getLinearGradientNoRepeatLength)  - (int)( (brushHalfDimension / 100f) * viewModel.gradientLinearOffsetPercentage);
+    private int calculateLinearCoorindateForDragShape(float brushDownCoordinate, float brushMidCoordinate, float brushHalfDimension){
+        return  (int) brushDownCoordinate
+               - (int)(+ viewModel.getLinearGradientNoRepeatLength)
+               + (int)( (brushHalfDimension / 100f) * viewModel.gradientLinearOffsetPercentage);
     }
+
 
     private int calculateLinearEndForDragShape(float startCoordinate){
         return (int) startCoordinate + viewModel.getLinearGradientNoRepeatLength * 2;
