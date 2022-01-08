@@ -82,40 +82,7 @@ public class GradientHelper {
 
 
     public void setColor(int progress){
-        int r = 0;
-        int g = 0;
-        int b = 0;
-        int MAX = 256;
-        int highest = MAX - 1;
-        int modVal = progress % MAX;
-        int minusModVal = MAX - modVal;
-
-        if(progress < MAX){
-            b = progress;
-        } else if(progress < MAX * 2) {
-            g = modVal;
-            b = minusModVal;
-        } else if(progress < MAX * 3) {
-            g = highest;
-            b = modVal;
-        } else if(progress < MAX * 4) {
-            r = modVal;
-            g = minusModVal;
-            b = minusModVal;
-        } else if(progress < MAX * 5) {
-            r = highest;
-            g = 0;
-            b = modVal;
-        } else if(progress < MAX * 6) {
-            r = highest;
-            g = modVal;
-            b = minusModVal;
-        } else if(progress < MAX * 7) {
-            r = highest;
-            g = highest;
-            b = modVal;
-        }
-        viewModel.secondaryColor = Color.argb(255,r,g,b);
+        viewModel.secondaryColor = ColorUtils.getColorFromSlider(progress);
     }
 
 
