@@ -170,7 +170,7 @@ public class GradientHelper {
         linearEndX = (int) getLinearGradientEnd(linearStartX);
         //noinspection SuspiciousNameCombination
         linearEndY = linearEndX;
-        setGradient(x,y, color);
+        setGradient(x, y, color);
     }
 
 
@@ -178,6 +178,8 @@ public class GradientHelper {
         Shader.TileMode tileMode = viewModel.isLinearGradientRepeated ?
                 Shader.TileMode.MIRROR :
                 Shader.TileMode.CLAMP;
+
+
 
         switch(gradientType){
 

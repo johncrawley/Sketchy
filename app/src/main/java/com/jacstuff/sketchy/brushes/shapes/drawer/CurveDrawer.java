@@ -12,6 +12,7 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
 
     private PointF down;
     private final CurvedLineBrush curvedLineBrush;
+    private PointF lineMidPoint;
 
     public CurveDrawer(PaintView paintView, MainViewModel viewModel, CurvedLineBrush curvedLineBrush){
         super(paintView, viewModel);
@@ -36,23 +37,9 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
     @Override
     public void move(float x, float y, Paint paint) {
         paintView.enablePreviewLayer();
-        if(curvedLineBrush.isInDrawCurveMode()){
-            PointF up = new PointF();
-            up.x = x;
-            up.y = y;
-
-            paintHelperManager.getGradientHelper().assignGradientForDragShape(down, up, getMidPoint(down, up), false);
-        }
+        assignGradientForCurveMode(x, y, false);
         brush.onTouchMove(x,y, paint);
         paintView.invalidate();
-    }
-
-
-    private PointF getMidPoint(PointF down, PointF up){
-        PointF mid = new PointF();
-        mid.x = down.x + ((up.x - curvedLineBrush.getLineMidpointX()) / 2);
-        mid.y = down.y + ((up.y - curvedLineBrush.getLineMidpointY()) / 2);
-        return mid;
     }
 
 
@@ -62,6 +49,7 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
             paintView.disablePreviewLayer();
         }
         if(kaleidoscopeHelper.isEnabled() && curvedLineBrush.isInDrawCurveMode()){
+            assignGradientForCurveMode(x,y, true);
             kaleidoscopeDrawer.drawKaleidoscope(x, y, paint);
         }
         else{
@@ -73,15 +61,9 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
             curvedLineBrush.setStateTo(CurvedLineBrush.State.DRAW_LINE);
             return;
         }
+
+        assignLineMidPoint(x,y);
         curvedLineBrush.setStateTo(CurvedLineBrush.State.DRAW_CURVE);
-    }
-
-
-    void drawDragLine(float x, float y, Paint paint){
-        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
-            brush.onTouchUp(x, y, 0,0, paintView.getShadowPaint());
-        }
-        brush.onTouchUp(x, y, 0, 0, paint);
     }
 
 
@@ -97,6 +79,48 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
     private void brushTouchUp(float x, float y, Paint paint){
         brush.onTouchUp(x,y, kaleidoscopeHelper.getCenterX(), kaleidoscopeHelper.getCenterY(), paint);
     }
+
+
+    private void assignGradientForCurveMode(float x, float y, boolean isUsingKaleidoscopeOffsets){
+        if(!curvedLineBrush.isInDrawCurveMode()) {
+            return;
+        }
+        PointF down = createCoordinatePoint(lineMidPoint.x, lineMidPoint.y, isUsingKaleidoscopeOffsets);
+        PointF up = createCoordinatePoint(x,y, isUsingKaleidoscopeOffsets);
+        paintHelperManager.getGradientHelper().assignGradientForDragShape(down, up, getMidPoint(down, up), false);
+    }
+
+
+    private PointF createCoordinatePoint(float x, float y, boolean isUsingKaleidoscopeOffsets){
+        PointF point = new PointF();
+        point.x = x - (kaleidoscopeHelper.isEnabled() && isUsingKaleidoscopeOffsets ? kaleidoscopeHelper.getCenterX() : 0);
+        point.y = y - (kaleidoscopeHelper.isEnabled() && isUsingKaleidoscopeOffsets ? kaleidoscopeHelper.getCenterY() : 0);
+        return point;
+    }
+
+
+    private void assignLineMidPoint(float lineUpX, float lineUpY){
+        lineMidPoint = new PointF();
+        lineMidPoint.x = (down.x + lineUpX) /2;
+        lineMidPoint.y = (down.y + lineUpY) /2;
+    }
+
+
+    private PointF getMidPoint(PointF down, PointF up){
+        PointF mid = new PointF();
+        mid.x = down.x + ((up.x - curvedLineBrush.getLineMidpointX()) / 2);
+        mid.y = down.y + ((up.y - curvedLineBrush.getLineMidpointY()) / 2);
+        return mid;
+    }
+
+
+    void drawDragLine(float x, float y, Paint paint){
+        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
+            brush.onTouchUp(x, y, 0,0, paintView.getShadowPaint());
+        }
+        brush.onTouchUp(x, y, 0, 0, paint);
+    }
+
 
 }
 
