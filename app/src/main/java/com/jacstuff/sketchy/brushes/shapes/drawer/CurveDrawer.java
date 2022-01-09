@@ -87,7 +87,7 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
         }
         PointF down = createCoordinatePoint(lineMidPoint.x, lineMidPoint.y, isUsingKaleidoscopeOffsets);
         PointF up = createCoordinatePoint(x,y, isUsingKaleidoscopeOffsets);
-        paintHelperManager.getGradientHelper().assignGradientForDragShape(down, up, getMidPoint(down, up), false);
+        paintHelperManager.getGradientHelper().assignGradientForDragShape(down, up, getShapeMidpoint(down, up, isUsingKaleidoscopeOffsets), false);
     }
 
 
@@ -106,11 +106,27 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
     }
 
 
-    private PointF getMidPoint(PointF down, PointF up){
+    private PointF getShapeMidpoint(PointF down, PointF up, boolean isUsingKaleidoscopeOffsets){
         PointF mid = new PointF();
-        mid.x = down.x + ((up.x - curvedLineBrush.getLineMidpointX()) / 2);
-        mid.y = down.y + ((up.y - curvedLineBrush.getLineMidpointY()) / 2);
+        mid.x = down.x + ((up.x - curvedLineBrush.getLineMidpointX() + getKaleidoscopeOffsetX(isUsingKaleidoscopeOffsets)) / 2);
+        mid.y = down.y + ((up.y - curvedLineBrush.getLineMidpointY() + getKaleidoscopeOffsetY(isUsingKaleidoscopeOffsets)) / 2);
         return mid;
+    }
+
+
+    private int getKaleidoscopeOffsetX(boolean isUsingKaleidoscopeOffsets){
+        if(kaleidoscopeHelper.isEnabled() && isUsingKaleidoscopeOffsets){
+            return kaleidoscopeHelper.getCenterX();
+        }
+        return 0;
+    }
+
+
+    private int getKaleidoscopeOffsetY(boolean isUsingKaleidoscopeOffsets){
+        if(kaleidoscopeHelper.isEnabled() && isUsingKaleidoscopeOffsets){
+            return kaleidoscopeHelper.getCenterY();
+        }
+        return 0;
     }
 
 

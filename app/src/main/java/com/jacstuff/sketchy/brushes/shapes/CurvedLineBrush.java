@@ -104,8 +104,8 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
         canvas.drawLine(downX, downY, x, y, paint);
         upX = x;
         upY = y;
-        lineMidpointX = (upX + downX) /2;
-        lineMidpointY = (upY + downY) /2;
+        lineMidpointX = ((upX + downX) /2);
+        lineMidpointY = ((upY + downY) /2);
     }
 
 
