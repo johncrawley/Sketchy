@@ -10,7 +10,6 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class CurveDrawer extends AbstractDrawer implements Drawer{
 
-    private float xDown, yDown;
     private PointF down;
     private final CurvedLineBrush curvedLineBrush;
 
@@ -31,8 +30,6 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
             down.y = y;
         }
         brush.onTouchDown(new Point((int)x, (int)y), canvas,paint);
-        xDown = x;
-        yDown = y;
     }
 
 
@@ -77,17 +74,8 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
             return;
         }
         curvedLineBrush.setStateTo(CurvedLineBrush.State.DRAW_CURVE);
-        assignLineMidPoint(x,y);
     }
 
-
-    private void assignLineMidPoint(float lineUpX, float lineUpY){
-        lineMidPoint = new PointF();
-        lineMidPoint.x = (down.x + lineUpX) /2;
-        lineMidPoint.y = (down.y + lineUpY) /2;
-    }
-
-    PointF lineMidPoint;
 
     void drawDragLine(float x, float y, Paint paint){
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){

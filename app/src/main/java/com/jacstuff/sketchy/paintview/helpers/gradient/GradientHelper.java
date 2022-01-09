@@ -135,17 +135,19 @@ public class GradientHelper {
         }
         float fullDimensionX = Math.abs(down.x - up.x);
         float fullDimensionY = Math.abs(down.y - up.y);
+
         gradientColor = getGradientColor(shouldNewRandomColorBeAssigned);
-        linearStartX = calculateLinearCoorindateForDragShape(down.x, mid.x, fullDimensionX);
-        linearStartY = calculateLinearCoorindateForDragShape(down.y, mid.y, fullDimensionY);
+        linearStartX = getLinearCoordinateForDragShape(down.x, up.x, fullDimensionX);
+        linearStartY = getLinearCoordinateForDragShape(down.y, up.y, fullDimensionY);
         linearEndX = calculateLinearEndForDragShape(linearStartX);
         linearEndY = calculateLinearEndForDragShape(linearStartY);
         setGradient(mid.x, mid.y, viewModel.color);
     }
 
 
-    private int calculateLinearCoorindateForDragShape(float brushDownCoordinate, float brushMidCoordinate, float brushHalfDimension){
-        return  (int) brushDownCoordinate
+    private int getLinearCoordinateForDragShape(float downCoordinate, float upCoordinate, float brushHalfDimension){
+        float startCoordinate = Math.min(downCoordinate, upCoordinate);
+        return  (int) startCoordinate
                - (int)(+ viewModel.getLinearGradientNoRepeatLength)
                + (int)( (brushHalfDimension / 100f) * viewModel.gradientLinearOffsetPercentage);
     }
@@ -169,7 +171,6 @@ public class GradientHelper {
         //noinspection SuspiciousNameCombination
         linearEndY = linearEndX;
         setGradient(x,y, color);
-
     }
 
 
