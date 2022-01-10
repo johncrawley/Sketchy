@@ -106,8 +106,8 @@ public class DragRectDrawer extends BasicDrawer{
 
     private void rotateThenDrawShadowAndObject(float x, float y, Paint paint){
         rotateToAngle();
-        assignGradient(x,y);
         PointF bottomCorner =  calculateRect(downX, downY, x, y, paintHelperManager.getAngleHelper().getAngle());
+        assignGradient(x,y);
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
             brush.onTouchMove(bottomCorner.x, bottomCorner.y, paintView.getShadowPaint());
         }
@@ -151,8 +151,7 @@ public class DragRectDrawer extends BasicDrawer{
     private void assignGradient(float x, float y){
         PointF down = createCoordinatePoint(0, 0);
         PointF up = createCoordinatePoint(x - downX ,y - downY);
-        PointF midUp = createCoordinatePoint(x,y);
-        PointF shapeMidpoint = getShapeMidpoint(midUp);
+        PointF shapeMidpoint = getShapeMidpoint(up);
 
         paintHelperManager.getGradientHelper().assignGradientForDragShape(down, up, shapeMidpoint, false);
     }
@@ -168,8 +167,8 @@ public class DragRectDrawer extends BasicDrawer{
 
     private PointF createCoordinatePoint(float x, float y){
         PointF point = new PointF();
-        point.x = x;// - (kaleidoscopeHelper.isEnabled() && isUsingKaleidoscopeOffsets ? kaleidoscopeHelper.getCenterX() : 0);
-        point.y = y;// - (kaleidoscopeHelper.isEnabled() && isUsingKaleidoscopeOffsets ? kaleidoscopeHelper.getCenterY() : 0);
+        point.x = x;
+        point.y = y;
         return point;
     }
 
