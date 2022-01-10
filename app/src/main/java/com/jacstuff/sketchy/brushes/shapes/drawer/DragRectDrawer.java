@@ -33,22 +33,12 @@ public class DragRectDrawer extends BasicDrawer{
     }
 
 
-    public void draw(float x, float y, Paint paint){
-        canvas.save();
-        downX = x;
-        downY = y;
-        canvas.translate(x, y);
-        brush.onTouchDown(new Point((int)x,(int)y), canvas, paint);
-        canvas.restore();
-    }
-
-
     @Override
     public void move(float x, float y, Paint paint) {
         float xMove = snapToUpperBounds(x, canvas.getWidth());
         float yMove = snapToUpperBounds(y, canvas.getHeight());
         paintView.enablePreviewLayer();
-        rotateAndDrawMove(xMove, yMove,paint);
+        rotateAndDrawMove(xMove, yMove, paint);
         paintView.invalidate();
     }
 
@@ -69,10 +59,18 @@ public class DragRectDrawer extends BasicDrawer{
     }
 
 
+    public void draw(float x, float y, Paint paint){
+        canvas.save();
+        downX = x;
+        downY = y;
+        canvas.translate(x, y);
+        brush.onTouchDown(new Point((int)x,(int)y), canvas, paint);
+        canvas.restore();
+    }
+
 
     public void rotateAndDrawMove(float x, float y, Paint paint){
         canvas.save();
-        paintHelperManager.getGradientHelper().assignGradient((x - downX) /2, (y - downY)/2, viewModel.color, false);
         translateToTopCornerOfRect();
         rotateThenDrawShadowAndObject(x, y, paint);
         canvas.restore();
@@ -99,8 +97,16 @@ public class DragRectDrawer extends BasicDrawer{
     }
 
 
+    private void translateForKaleidoscope(float x, float y){
+        float translateX = getKaleidoscopeTranslation(x, downX, kaleidoscopeHelper.getCenterX());
+        float translateY = getKaleidoscopeTranslation(y, downY, kaleidoscopeHelper.getCenterY());
+        canvas.translate(translateX, translateY);
+    }
+
+
     private void rotateThenDrawShadowAndObject(float x, float y, Paint paint){
         rotateToAngle();
+        assignGradient(x,y);
         PointF bottomCorner =  calculateRect(downX, downY, x, y, paintHelperManager.getAngleHelper().getAngle());
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
             brush.onTouchMove(bottomCorner.x, bottomCorner.y, paintView.getShadowPaint());
@@ -133,14 +139,7 @@ public class DragRectDrawer extends BasicDrawer{
         }
     }
 
-
-    private void translateForKaleidoscope(float x, float y){
-        float translateX = getKaleidoscopeTranslation(x, downX, kaleidoscopeHelper.getCenterX());
-        float translateY = getKaleidoscopeTranslation(y, downY, kaleidoscopeHelper.getCenterY());
-        canvas.translate(translateX, translateY);
-    }
-
-
+    //where 'a' is an x or y coordinate
     private float getKaleidoscopeTranslation(float a, float aDown, float kCenterA){
         float downKa = aDown - kCenterA;
         float ka = a - kCenterA;
@@ -148,6 +147,31 @@ public class DragRectDrawer extends BasicDrawer{
         return downKa + ((ka-downKa) /2f) - rotationCorrection;
     }
 
+
+    private void assignGradient(float x, float y){
+        PointF down = createCoordinatePoint(0, 0);
+        PointF up = createCoordinatePoint(x - downX ,y - downY);
+        PointF midUp = createCoordinatePoint(x,y);
+        PointF shapeMidpoint = getShapeMidpoint(midUp);
+
+        paintHelperManager.getGradientHelper().assignGradientForDragShape(down, up, shapeMidpoint, false);
+    }
+
+
+    private PointF getShapeMidpoint(PointF up){
+        PointF mid = new PointF();
+        mid.x = ((up.x)  / 2 );
+        mid.y = ((up.y)/ 2);
+        return mid;
+    }
+
+
+    private PointF createCoordinatePoint(float x, float y){
+        PointF point = new PointF();
+        point.x = x;// - (kaleidoscopeHelper.isEnabled() && isUsingKaleidoscopeOffsets ? kaleidoscopeHelper.getCenterX() : 0);
+        point.y = y;// - (kaleidoscopeHelper.isEnabled() && isUsingKaleidoscopeOffsets ? kaleidoscopeHelper.getCenterY() : 0);
+        return point;
+    }
 
 }
 

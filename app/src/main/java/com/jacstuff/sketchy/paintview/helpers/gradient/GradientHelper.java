@@ -142,6 +142,7 @@ public class GradientHelper {
         linearEndX = calculateLinearEndForDragShape(linearStartX);
         linearEndY = calculateLinearEndForDragShape(linearStartY);
         setGradient(mid.x, mid.y, viewModel.color);
+
     }
 
 
@@ -178,8 +179,6 @@ public class GradientHelper {
         Shader.TileMode tileMode = viewModel.isLinearGradientRepeated ?
                 Shader.TileMode.MIRROR :
                 Shader.TileMode.CLAMP;
-
-
 
         switch(gradientType){
 
