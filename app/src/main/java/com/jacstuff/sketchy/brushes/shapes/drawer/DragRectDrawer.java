@@ -16,7 +16,7 @@ public class DragRectDrawer extends BasicDrawer{
     private final RectCalc rectCalc;
 
 
-    public DragRectDrawer(PaintView paintView, MainViewModel viewModel){
+    public DragRectDrawer(PaintView paintView, MainViewModel viewModel) {
         super(paintView, viewModel);
         isColorChangedOnDown = false;
         rectCalc = new RectCalc();
@@ -47,6 +47,7 @@ public class DragRectDrawer extends BasicDrawer{
     public void up(float x, float y, Paint paint) {
         float xUp = snapToUpperBounds(x, canvas.getWidth());
         float yUp = snapToUpperBounds(y, canvas.getHeight());
+
         paintView.disablePreviewLayer();
         if(kaleidoscopeHelper.isEnabled()){
             kaleidoscopeDrawer.drawKaleidoscope(xUp, yUp, paint);
@@ -107,7 +108,7 @@ public class DragRectDrawer extends BasicDrawer{
     private void rotateThenDrawShadowAndObject(float x, float y, Paint paint){
         rotateToAngle();
         PointF bottomCorner =  calculateRect(downX, downY, x, y, paintHelperManager.getAngleHelper().getAngle());
-        assignGradient(x,y);
+        assignGradient(x,y, bottomCorner);
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
             brush.onTouchMove(bottomCorner.x, bottomCorner.y, paintView.getShadowPaint());
         }
@@ -148,19 +149,20 @@ public class DragRectDrawer extends BasicDrawer{
     }
 
 
-    private void assignGradient(float x, float y){
+    private void assignGradient(float x, float y, PointF bottomCorner){
         PointF down = createCoordinatePoint(0, 0);
         PointF up = createCoordinatePoint(x - downX ,y - downY);
-        PointF shapeMidpoint = getShapeMidpoint(up);
+        PointF shapeMidpoint = getShapeMidpoint(bottomCorner);
 
         paintHelperManager.getGradientHelper().assignGradientForDragShape(down, up, shapeMidpoint, false);
     }
 
 
-    private PointF getShapeMidpoint(PointF up){
+
+    private PointF getShapeMidpoint(PointF corner){
         PointF mid = new PointF();
-        mid.x = ((up.x)  / 2 );
-        mid.y = ((up.y)/ 2);
+        mid.x = (corner.x - downX) / 2;
+        mid.y = (corner.y - downY) / 2;
         return mid;
     }
 

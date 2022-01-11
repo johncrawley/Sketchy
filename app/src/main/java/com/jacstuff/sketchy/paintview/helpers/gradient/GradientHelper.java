@@ -142,7 +142,6 @@ public class GradientHelper {
         linearEndX = calculateLinearEndForDragShape(linearStartX);
         linearEndY = calculateLinearEndForDragShape(linearStartY);
         setGradient(mid.x, mid.y, viewModel.color);
-
     }
 
 
