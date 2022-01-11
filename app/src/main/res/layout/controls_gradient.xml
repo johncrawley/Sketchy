@@ -79,7 +79,7 @@
             android:layout_gravity="center"
             android:layout_width="0dp"
             android:enabled="false"
-            android:paddingHorizontal="8dp"
+            android:paddingHorizontal="4dp"
             android:layout_height="wrap_content"
             android:text="@string/gradient_radial_offset_reset_button_text"
             />
