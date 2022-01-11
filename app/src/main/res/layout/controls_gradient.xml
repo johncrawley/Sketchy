@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="6dp"
                 layout="@layout/seek_bar_gradient_linear_offset" />
         </LinearLayout>
 
@@ -91,12 +91,12 @@
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/gradient_main_settings_layout_horizontal_padding">
 
-
         <LinearLayout
             android:id="@+id/gradientColorSpinnerLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/style_spinner_margin_vertical"
+            android:layout_marginTop="@dimen/style_spinner_margin_vertical"
+            android:layout_marginBottom="6dp"
             android:paddingHorizontal="@dimen/gradient_color_type_padding_horizontal">
 
             <TextView
