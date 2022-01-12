@@ -14,21 +14,13 @@
         app:layout_constraintStart_toStartOf="parent"
         android:orientation="vertical">
 -->
-        <include
-            android:id="@+id/includedColorControls_land"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            layout="@layout/color_controls" />
 
         <include
             android:id="@+id/includedSelectionControls_land"
             layout="@layout/control_panel_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/includedColorControls_land"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/includedBrushSizeSeekBarWrapper_land"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

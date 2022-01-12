@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/layout-land/brush_size_seek_bar.xml" value="0.19444444444444445" />
         <entry key="app/src/main/res/layout-land/control_panel_layout.xml" value="0.19444444444444445" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24739583333333334" />
+        <entry key="app/src/main/res/layout/controls_color.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/layout/controls_gradient.xml" value="0.33" />
         <entry key="app/src/main/res/layout/controls_placement.xml" value="0.25" />
         <entry key="app/src/main/res/layout/controls_rotation.xml" value="0.24583333333333332" />
