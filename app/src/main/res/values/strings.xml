@@ -187,6 +187,7 @@
     <string name="shadow_radius_seekbar_label">Shadow Focus</string>
     <string name="shadow_distance_seekbar_label">Distance</string>
     <string name="line_width_seekbar_label">Line Width</string>
+    <string name="wavy_style_length_seekbar_label">Length</string>
     <string name="size_sequence_min_seekbar_label">Minimum Width</string>
     <string name="size_sequence_max_seekbar_label">Maximum Width</string>
     <string name="seekbar_label_color_transparency">Transparency</string>

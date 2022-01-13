@@ -38,7 +38,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="6dp"
                 layout="@layout/seek_bar_gradient_linear_offset" />
-        </LinearLayout>
+    </LinearLayout>
 
 
     <LinearLayout
@@ -71,7 +71,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 layout="@layout/seek_bar_gradient_offset_y" />
-
         </LinearLayout>
         <Button
             android:id="@+id/resetRadialGradientOffsetsButton"

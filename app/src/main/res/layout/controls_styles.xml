@@ -10,6 +10,23 @@
     android:focusable="true">
 
     <LinearLayout
+        android:id="@+id/wavyStyleSettingsPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/settings_panel_horizontal_padding">
+
+        <include
+            android:id="@+id/wavyLengthSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="6dp"
+            layout="@layout/seek_bar_wavy_style_length" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/strokeCapSpinnerLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

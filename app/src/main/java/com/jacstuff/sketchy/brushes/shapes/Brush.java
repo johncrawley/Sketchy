@@ -12,6 +12,8 @@ import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.styles.Style;
 import com.jacstuff.sketchy.paintview.PaintView;
 
+import java.util.Map;
+
 
 public interface Brush {
 
@@ -34,10 +36,9 @@ public interface Brush {
     boolean isUsingPlacementHelper();
 
     void setBrushSize(int brushSize);
-    void setStyle(BrushStyle style);
+    void setStyle(Style style);
     boolean isDrawnFromCenter(); //i.e. is canvas (0,0) translated to centre of shape before drawing.
     void reinitialize();
-    void add(BrushStyle brushStyle, Style style);
     void notifyStrokeWidthChanged();
     void recalculateDimensions();
     BrushShape getBrushShape();

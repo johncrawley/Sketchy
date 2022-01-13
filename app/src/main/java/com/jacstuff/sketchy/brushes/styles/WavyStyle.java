@@ -5,14 +5,17 @@ import android.graphics.Path;
 import android.graphics.PathDashPathEffect;
 
 import com.jacstuff.sketchy.paintview.PaintGroup;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class WavyStyle extends AbstractStyle implements Style {
 
     PathDashPathEffect pathDashPathEffect;
     private PaintGroup paintGroup;
+    private final MainViewModel viewModel;
 
-    public WavyStyle(PaintGroup paintGroup){
+    public WavyStyle(PaintGroup paintGroup, MainViewModel viewModel){
         this.paintGroup = paintGroup;
+        this.viewModel = viewModel;
         paintGroup.setStyle(Paint.Style.STROKE);
         pathDashPathEffect = new PathDashPathEffect(createPath(20, 10, 20), 12, 5, PathDashPathEffect.Style.ROTATE);
     }
@@ -27,7 +30,6 @@ public class WavyStyle extends AbstractStyle implements Style {
     }
 
 
-
     private static Path createPath(float height, float length, float thickness) {
         Path p = new Path();
         p.moveTo(-length, 0);
@@ -37,16 +39,17 @@ public class WavyStyle extends AbstractStyle implements Style {
         p.cubicTo(0, height + thickness, 0, -height + thickness, -length, thickness);
         p.close();
 
-
         return p;
     }
 
 
-
     private void assignPath(){
         float length = (float) brushSize / 20;
-        pathDashPathEffect = new PathDashPathEffect(createPath(paintGroup.getLineWidth(), length, paintGroup.getLineWidth()), length * 2, 0, PathDashPathEffect.Style.MORPH);
-        paintGroup.setPathEffect(pathDashPathEffect);
+        paintGroup.setPathEffect(new PathDashPathEffect(
+                createPath(paintGroup.getLineWidth(), viewModel.wavyStyleLength, paintGroup.getLineWidth()),
+                viewModel.wavyStyleLength * 2,
+                0,
+                PathDashPathEffect.Style.MORPH));
     }
 
 

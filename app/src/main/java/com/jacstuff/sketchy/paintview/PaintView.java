@@ -14,7 +14,6 @@ import com.jacstuff.sketchy.paintview.helpers.SensitivityHelper;
 import com.jacstuff.sketchy.paintview.history.BitmapHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.ui.SettingsPopup;
@@ -31,7 +30,6 @@ public class PaintView extends View {
     private int brushSize;
     private Bitmap bitmap, previewBitmap;
     private Canvas canvas;
-    private BrushStyle currentBrushStyle = BrushStyle.FILL;
     private Brush currentBrush;
     private BrushFactory brushFactory;
     private boolean isCanvasLocked;
@@ -127,15 +125,9 @@ public class PaintView extends View {
     }
 
 
-    public void setBrushStyle(BrushStyle brushStyle){
-        currentBrushStyle = brushStyle;
-        currentBrush.setStyle(brushStyle);
-    }
-
-
     public void setBrushShape(BrushShape brushShape){
         currentBrush.onDeallocate();
-        currentBrush = brushFactory.getReinitializedBrushFor(brushShape, currentBrushStyle);
+        currentBrush = brushFactory.getReinitializedBrushFor(brushShape);
         currentBrush.setBrushSize(brushSize);
         paintHelperManager.getGradientHelper().updateBrush(currentBrush);
     }
@@ -197,7 +189,7 @@ public class PaintView extends View {
 
     private void initBrushes(){
         brushFactory.init(this, brushSize);
-        currentBrush = brushFactory.getReinitializedBrushFor(BrushShape.CIRCLE, currentBrushStyle);
+        currentBrush = brushFactory.getReinitializedBrushFor(BrushShape.CIRCLE);
     }
 
 
@@ -268,6 +260,10 @@ public class PaintView extends View {
     public void undo(){
         currentBrush.reset();
         loadHistoryItem(true);
+    }
+
+    public Brush getCurrentBrush(){
+        return currentBrush;
     }
 
 

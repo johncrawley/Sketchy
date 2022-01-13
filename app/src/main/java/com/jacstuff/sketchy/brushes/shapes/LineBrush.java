@@ -76,9 +76,7 @@ public class LineBrush extends AbstractBrush implements Brush {
     }
 
 
-    @Override
     public void setStyle(BrushStyle brushStyle){
-        super.setStyle(brushStyle);
         currentLineDrawer = lineDrawerMap.get(brushStyle);
     }
 

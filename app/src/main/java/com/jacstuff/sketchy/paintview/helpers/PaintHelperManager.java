@@ -33,7 +33,7 @@ public class PaintHelperManager {
         shadowHelper = new ShadowHelper(viewModel);
         angleHelper = new AngleHelper(viewModel);
         kaleidoscopeHelper = new KaleidoscopeHelper(paintView, viewModel);
-        styleHelper = new StyleHelper(mainActivity);
+        styleHelper = new StyleHelper(mainActivity, paintView, viewModel);
         brushSizeSeekBarManager = new BrushSizeSeekBarManager(mainActivity);
         sizeHelper = new SizeHelper(viewModel, paintView, brushSizeSeekBarManager);
         colorHelper = new ColorHelper(viewModel, kaleidoscopeHelper);

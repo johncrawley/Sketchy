@@ -16,6 +16,8 @@ public class StyleSettings extends AbstractButtonConfigurator<BrushStyle> implem
     public StyleSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
         setupSpinners();
+
+        subPanelManager.add(R.id.wavyStyleButton, R.id.wavyStyleSettingsPanel);
     }
 
 
@@ -37,17 +39,17 @@ public class StyleSettings extends AbstractButtonConfigurator<BrushStyle> implem
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.styleButton);
         buttonConfig.setDefaultSelection(R.id.fillStyleButton);
-        setupSeekBar();
+        setupSeekBars();
     }
 
 
     @Override
     public void handleClick(int viewId, BrushStyle brushStyle) {
-        paintView.setBrushStyle(brushStyle);
+        paintHelperManager.getStyleHelper().setBrushStyle(brushStyle);
     }
 
 
-    private void setupSeekBar(){
+    private void setupSeekBars(){
         seekBarConfigurator.configure(R.id.lineWidthSeekBar,
                 R.integer.line_width_default,
                 progress -> {
@@ -56,6 +58,15 @@ public class StyleSettings extends AbstractButtonConfigurator<BrushStyle> implem
                         if(viewModel.shadowOffsetType == ShadowOffsetType.USE_STROKE_WIDTH){
                             paintHelperManager.getShadowHelper().updateOffsetFactor();
                         }
+                    }
+                });
+
+        seekBarConfigurator.configure(R.id.wavyStyleLengthSeekBar,
+                R.integer.wavy_style_length_progress,
+                progress -> {
+                    if(paintView != null) {
+                        viewModel.wavyStyleLength = progress;
+                        paintHelperManager.getStyleHelper().initCurrentStyle();
                     }
                 });
     }

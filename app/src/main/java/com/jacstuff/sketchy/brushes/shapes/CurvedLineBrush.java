@@ -110,12 +110,6 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void setStyle(BrushStyle brushStyle){
-        super.setStyle(brushStyle);
-    }
-
-
-    @Override
     public boolean isUsingPlacementHelper(){
         return false;
     }

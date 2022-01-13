@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public abstract class AbstractBrush implements  Brush{
+public abstract class AbstractBrush implements Brush{
 
     Canvas canvas;
     PaintGroup paintGroup;
@@ -30,7 +30,6 @@ public abstract class AbstractBrush implements  Brush{
     Style currentStyle;
     int halfBrushSize;
     BrushShape brushShape;
-    private final Map<BrushStyle, Style> styleMap;
     private final FillStyle fillStyle;
     Drawer drawer;
     MainViewModel mainViewModel;
@@ -42,7 +41,6 @@ public abstract class AbstractBrush implements  Brush{
 
 
     AbstractBrush(BrushShape brushShape){
-        styleMap = new HashMap<>();
         fillStyle = new FillStyle();
         currentStyle = fillStyle;
         this.brushShape = brushShape;
@@ -112,11 +110,6 @@ public abstract class AbstractBrush implements  Brush{
     }
 
 
-    public void add(BrushStyle brushStyle, Style style){
-        styleMap.put(brushStyle, style);
-    }
-
-
     public BrushShape getBrushShape(){
         return this.brushShape;
     }
@@ -136,13 +129,12 @@ public abstract class AbstractBrush implements  Brush{
     }
 
 
-    public void setStyle(BrushStyle style){
-        currentStyle = styleMap.get(style);
-        if(currentStyle == null){
-            currentStyle = fillStyle;
-        }
+    @Override
+    public void setStyle(Style style){
+        currentStyle = style;
         currentStyle.init(paintGroup, brushSize);
     }
+
 
     @Override
     public int getBrushSize(){

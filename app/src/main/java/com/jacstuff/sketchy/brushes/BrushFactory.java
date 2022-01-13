@@ -39,6 +39,7 @@ import com.jacstuff.sketchy.brushes.styles.TranslateStyle;
 import com.jacstuff.sketchy.brushes.styles.WavyStyle;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.helpers.StyleHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.HashMap;
@@ -53,6 +54,7 @@ public class BrushFactory {
     private DrawerFactory drawerFactory;
     private final MainActivity mainActivity;
     private PathBrush shadowPathBrush;
+    private StyleHelper styleHelper;
 
     public BrushFactory(MainActivity mainActivity){
         this.mainActivity = mainActivity;
@@ -67,8 +69,9 @@ public class BrushFactory {
         drawerFactory.init();
         circleBrush = new CircleBrush();
         PaintGroup paintGroup = paintView.getPaintGroup();
+        styleHelper = paintView.getPaintHelperManager().getStyleHelper();
         setupBrushMap();
-        handleStyles(brushSize, paintGroup);
+        handleStyles(brushSize);
         addLineBrushAndStyles(paintGroup, brushSize);
     }
 
@@ -119,16 +122,8 @@ public class BrushFactory {
     }
 
 
-    private void handleStyles(int brushSize, PaintGroup paintGroup) {
+    private void handleStyles(int brushSize) {
         for (Brush brush : brushMap.values()) {
-            brush.add(BrushStyle.FILL,              new FillStyle());
-            brush.add(BrushStyle.OUTLINE,           new OutlineStyle());
-            brush.add(BrushStyle.BROKEN_OUTLINE,    new DashedStyle(paintGroup));
-            brush.add(BrushStyle.JAGGED,            new JaggedStyle(paintGroup));
-            brush.add(BrushStyle.WAVY,              new WavyStyle(paintGroup));
-            brush.add(BrushStyle.SPIKED,            new SpikedStyle(paintGroup));
-            brush.add(BrushStyle.DOUBLE_EDGE,       new DoubleEdgeStyle(paintGroup));
-            brush.add(BrushStyle.TRANSLATE,         new TranslateStyle(paintGroup));
             brush.setBrushSize(brushSize);
         }
     }
@@ -139,17 +134,17 @@ public class BrushFactory {
         if(lineBrush == null){
             return;
         }
-        lineBrush.add(BrushStyle.FILL, new FillStyleForLines());
-        lineBrush.add(BrushStyle.BROKEN_OUTLINE, new DashedStyleForLines(paintGroup, brushSize));
+       // lineBrush.add(BrushStyle.FILL, new FillStyleForLines());
+       // lineBrush.add(BrushStyle.BROKEN_OUTLINE, new DashedStyleForLines(paintGroup, brushSize));
     }
 
 
-    public Brush getReinitializedBrushFor(BrushShape shape, BrushStyle brushStyle){
+    public Brush getReinitializedBrushFor(BrushShape shape){
         Brush brush =  brushMap.get(shape);
         if(brush == null){
             brush = circleBrush;
         }
-        brush.setStyle(brushStyle);
+        brush.setStyle(styleHelper.getCurrentStyle());
         brush.reinitialize();
         return brush;
     }
