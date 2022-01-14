@@ -36,6 +36,7 @@ public class ColorSettings extends AbstractButtonConfigurator<Void> implements B
                 R.array.color_sequence_type_array,
                 x -> paintHelperManager.getColorHelper().getAllColorsSequenceSelector().setSequenceType(sequenceTypeMap.get(x)));
         setupSwitches();
+        buttonConfig.setParentButton(R.id.colorMenuButton);
     }
 
 

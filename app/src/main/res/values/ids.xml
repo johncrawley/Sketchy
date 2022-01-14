@@ -6,6 +6,7 @@
 
     <item name="gradientButton" type="id"/>
     <item name="shapeButton" type="id"/>
+    <item name="colorMenuButton" type="id"/>
     <item name="styleButton" type="id"/>
     <item name="angleButton" type="id"/>
     <item name="blurButton" type="id"/>

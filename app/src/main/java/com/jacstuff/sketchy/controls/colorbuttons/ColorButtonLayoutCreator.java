@@ -10,6 +10,7 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.ButtonUtils;
+import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ public class ColorButtonLayoutCreator {
     private final ButtonUtils buttonUtils;
     private final MainActivity activity;
     private final MultiShadeButtonIconDrawer multiShadeButtonIconDrawer;
+    private final SettingsPopup settingsPopup;
 
 
     public ColorButtonLayoutCreator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, final List<Integer> colors){
@@ -43,6 +45,7 @@ public class ColorButtonLayoutCreator {
         this.buttonLayoutParams = buttonLayoutParams;
         this.colors = colors;
         buttonUtils = new ButtonUtils(mainActivity);
+        settingsPopup = mainActivity.getSettingsPopup();
         setupColorAndShadeButtons();
     }
 
@@ -61,11 +64,6 @@ public class ColorButtonLayoutCreator {
 
     public LinearLayout getMultiShadesLayout(){
         return shadeLayoutsMap.get(MULTI_SHADE_KEY);
-    }
-
-
-    public Map<Integer, List<Integer>> getMultiColorShades(){
-        return this.multiColorShades;
     }
 
 
@@ -195,6 +193,7 @@ public class ColorButtonLayoutCreator {
         button.setLayoutParams(buttonLayoutParams.getUnselected());
         button.setTag(R.string.tag_button_type, type);
         button.setId(View.generateViewId());
+        settingsPopup.registerToIgnoreForLandscape(button.getId());
         button.setTag(R.string.tag_button_key, key);
         button.setTag(R.string.tag_button_category, ButtonCategory.COLOR_SELECTION);
         buttonUtils.setStandardWidthOn(button);

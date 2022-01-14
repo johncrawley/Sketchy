@@ -6,6 +6,7 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.21296296296296297" />
         <entry key="app/src/main/res/layout-land/brush_size_seek_bar.xml" value="0.19444444444444445" />
         <entry key="app/src/main/res/layout-land/control_panel_layout.xml" value="0.19444444444444445" />
+        <entry key="app/src/main/res/layout-land/selection_controls.xml" value="0.3002645502645503" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24739583333333334" />
         <entry key="app/src/main/res/layout/controls_color.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/layout/controls_gradient.xml" value="0.33" />
@@ -20,6 +21,7 @@
         <entry key="app/src/main/res/layout/seek_bar_placement_random_distance.xml" value="0.18854166666666666" />
         <entry key="app/src/main/res/layout/seek_bar_wavy_style_length.xml" value="0.26927083333333335" />
         <entry key="app/src/main/res/layout/seekbar_placement_quantization_spacing.xml" value="0.21666666666666667" />
+        <entry key="app/src/main/res/layout/selection_controls.xml" value="0.3423913043478261" />
         <entry key="app/src/main/res/layout/setting_panel_size_sequence_reset.xml" value="0.20989583333333334" />
         <entry key="app/src/main/res/layout/settings_panel_rotation_increment.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/layout/settings_panel_rotation_precise.xml" value="0.24583333333333332" />

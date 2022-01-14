@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        settingsPopup = new SettingsPopup(findViewById(R.id.includedSettingsLayout), this);
         buttonReferenceStore = new ButtonReferenceStore();
         toaster = new Toaster(MainActivity.this);
         imageSaver = new ImageSaver(this);
@@ -195,7 +196,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void setupSettingsButtons(){
-        settingsPopup = new SettingsPopup(findViewById(R.id.includedSettingsLayout), this);
         settingsButtonsConfigurator = new SettingsButtonsConfigurator(this, paintView);
     }
 
