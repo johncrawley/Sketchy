@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:paddingTop="@dimen/menu_padding_top"
+    android:clickable="true"
+    android:focusable="true">
+
+    <include
+        android:id="@+id/settingsPanelTextShapeInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingHorizontal="@dimen/settings_panel_include_horizontal_padding"
+        layout="@layout/settings_panel_text_shape" />
+
+
+    <include
+        android:id="@+id/settingsPanelAstroidShapeInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        layout="@layout/settings_panel_astroid_shape" />
+
+    <LinearLayout
+        android:id="@+id/settingsPanelRectangle"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="@dimen/settings_panel_include_horizontal_padding"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/rectangleSnapToEdgesSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:checked="true"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/switch_option_padding_horizontal_rectangle_shape"
+            android:paddingTop="@dimen/switch_option_draw_on_move_padding_top"
+            android:paddingBottom="@dimen/switch_option_padding_bottom_rectangle"
+            android:text="@string/switch_label_rectangle_snap_to_edges" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="8dp">
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:paddingTop="@dimen/text_controls_divisor_padding_top"
+                android:paddingBottom="@dimen/text_controls_divisor_padding_bottom"
+                android:background="?android:attr/listDivider" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/drawOnMoveSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:checked="true"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/switch_option_draw_on_move_padding_horizontal"
+        android:paddingTop="@dimen/switch_option_draw_on_move_padding_top"
+        android:paddingBottom="@dimen/switch_option_padding_bottom"
+        android:text="@string/switch_label_draw_on_move_mode" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
+        <include
+            android:id="@+id/shapeSizeSeekBarInclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/brush_size_seek_bar" />
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/controlsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/shapeOptionsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/shape_menu_buttons_layout_top_margin"
+            android:layout_marginBottom="@dimen/menu_buttons_layout_bottom_margin"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/shape_options_padding_top"/>
+
+    </HorizontalScrollView>
+
+</LinearLayout>

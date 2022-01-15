@@ -16,7 +16,6 @@
             android:paddingHorizontal="12dp"
             layout="@layout/controls_shapes" />
 
-
         <include
             android:id="@+id/includeColorControls"
             android:layout_width="match_parent"
@@ -24,8 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            layout="@layout/color_controls" />
-
+            layout="@layout/controls_color" />
 
         <include
             android:visibility="gone"
