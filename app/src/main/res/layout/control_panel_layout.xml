@@ -13,7 +13,7 @@
         android:layout_marginTop="@dimen/menu_buttons_layout_top_margin_portrait">
 
         <LinearLayout
-            android:id="@+id/controlPanelLayoutGroup1"
+            android:id="@+id/controlPanelLayoutGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
