@@ -62,19 +62,13 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
 
     @Override
     public void handleClick(int viewId, Integer layoutId) {
-        log("Entered handleClick()");
         hideAllPanels();
         if(settingsPopup != null) {
-            log(" settings popup is not null, calling settingsPopup.click()");
             settingsPopup.click(viewId);
         }
         activity.findViewById(layoutId).setVisibility(View.VISIBLE);
-        log("Just after setting the view to visible");
     }
 
-    private void log(String msg){
-        System.out.println("^^^ MenuButtonsConfigurator: " + msg);
-    }
 
     private void hideAllPanels(){
         for(int layoutId : layoutIds){

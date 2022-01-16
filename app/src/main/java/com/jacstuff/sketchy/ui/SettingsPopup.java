@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.utils.ActivityUtils;
 
@@ -37,12 +36,6 @@ public class SettingsPopup {
 
 
     public void registerParentButton(int parentButtonId){
-        if(parentButtonId == R.id.shapeButton){
-            log("Registering shape button!");
-        }
-        if(parentButtonId == R.id.colorMenuButton){
-            log("Registering color menu button!");
-        }
        parentIds.add(parentButtonId);
        ignoreIds.remove(parentButtonId);
     }
@@ -95,11 +88,6 @@ public class SettingsPopup {
         }
         currentParentButtonId = id;
         setVisible();
-    }
-
-
-    private void log(String msg){
-        System.out.println("^^^ SettingsPopup: " + msg);
     }
 
 

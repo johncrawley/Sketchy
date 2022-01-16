@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.LinearLayout;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.multicolor.ShadesStore;
 import com.jacstuff.sketchy.paintview.helpers.color.ColorHelper;
+import com.jacstuff.sketchy.utils.ActivityUtils;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
@@ -41,10 +43,15 @@ public class ColorButtonClickHandler {
     private final ColorHelper colorHelper;
     private Button mainMultiColorButton;
 
+    private Button colorMenuButton;
+    private Drawable multiColorDrawable;
+
 
     public ColorButtonClickHandler(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams){
         this.mainActivity = mainActivity;
         this.buttonLayoutParams = buttonLayoutParams;
+        this.colorMenuButton = mainActivity.findViewById(R.id.colorMenuButton);
+        multiColorDrawable = mainActivity.getDrawable(R.drawable.multi_color_button);
 
         this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         this.mainViewModel = mainActivity.getViewModel();
@@ -169,6 +176,29 @@ public class ColorButtonClickHandler {
     }
 
 
+    private void setColorMenuButtonColor(int color){
+        assignColorMenuButton();
+        if(colorMenuButton!= null && ActivityUtils.isInLandscapeOrientation(mainActivity)){
+            colorMenuButton.setBackgroundColor(color);
+        }
+    }
+
+
+    private void setColorMenuButtonToMultiColor(){
+        assignColorMenuButton();
+        if(colorMenuButton!= null && ActivityUtils.isInLandscapeOrientation(mainActivity)){
+            colorMenuButton.setBackground(multiColorDrawable);
+        }
+    }
+
+
+    private void assignColorMenuButton(){
+        if(colorMenuButton == null){
+            colorMenuButton = mainActivity.findViewById(R.id.colorMenuButton);
+        }
+    }
+
+
     private void onShadeButtonClick(Button button){
         setColorAndUpdateButtons(button);
         previouslySelectedShadeButton = button;
@@ -185,6 +215,7 @@ public class ColorButtonClickHandler {
         deselectButtons(shadeButtonsState.getSelected());
         shadeButtonsState.deselectMulti();
         isMostRecentClickAShade = false;
+        setColorMenuButtonToMultiColor();
     }
 
 
@@ -198,6 +229,7 @@ public class ColorButtonClickHandler {
     private void setPaintColorFrom(Button button){
         int color = getColorOf(button);
         currentColorSelector.setColorList(color);
+        setColorMenuButtonColor(color);
     }
 
 
