@@ -40,7 +40,7 @@ public class ColorButtonLayoutCreator {
         this.context = mainActivity.getApplicationContext();
         this.activity = mainActivity;
         defaultColor = mainActivity.getString(R.string.default_color);
-        multiShadeButtonIconDrawer = new MultiShadeButtonIconDrawer(activity);
+        multiShadeButtonIconDrawer = new MultiShadeButtonIconDrawer(activity, activity.getViewModel());
         setupColorShadeCreator();
         this.buttonLayoutParams = buttonLayoutParams;
         this.colors = colors;

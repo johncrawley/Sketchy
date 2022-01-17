@@ -1,6 +1,8 @@
 package com.jacstuff.sketchy.viewmodel;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.settings.placement.PlacementType;
 import com.jacstuff.sketchy.paintview.helpers.gradient.GradientColorType;
@@ -108,6 +110,8 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int rectangleSnapBounds = 28;
 
     public int wavyStyleLength = 1;
+
+    public Map<Integer, Drawable> buttonDrawableMap;
 
 
     public MainViewModel(){

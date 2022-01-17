@@ -194,7 +194,6 @@ public class PaintView extends View {
 
 
     private void drawPlainBackgroundAndSaveToHistory(){
-
         canvas.drawRect(0,0, getWidth(), getHeight(), blankPaint);
         bitmapHistory.push(bitmap);
         invalidate();

@@ -36,6 +36,7 @@ public class ViewModelHelper {
         this.mainActivity = mainActivity;
         this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         this.buttonUtils = new ButtonUtils(mainActivity);
+        initMaps();
         initControls();
     }
 
@@ -71,6 +72,13 @@ public class ViewModelHelper {
 
     public void saveRecentClick(ButtonCategory buttonCategory, int viewId){
         viewModel.settingsButtonsClickMap.put(buttonCategory, viewId);
+    }
+
+
+    private void initMaps(){
+        if(viewModel.buttonDrawableMap == null) {
+            viewModel.buttonDrawableMap = new HashMap<>();
+        }
     }
 
 

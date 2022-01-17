@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.appcompat.content.res.AppCompatResources;
+
 public class ColorButtonClickHandler {
 
     private Button previouslySelectedShadeButton, previouslySelectedColorButton, previouslySelectedButton;
@@ -44,14 +46,14 @@ public class ColorButtonClickHandler {
     private Button mainMultiColorButton;
 
     private Button colorMenuButton;
-    private Drawable multiColorDrawable;
+    private final Drawable multiColorDrawable;
 
 
     public ColorButtonClickHandler(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams){
         this.mainActivity = mainActivity;
         this.buttonLayoutParams = buttonLayoutParams;
         this.colorMenuButton = mainActivity.findViewById(R.id.colorMenuButton);
-        multiColorDrawable = mainActivity.getDrawable(R.drawable.multi_color_button);
+        multiColorDrawable = AppCompatResources.getDrawable(mainActivity, R.drawable.multi_color_button);
 
         this.buttonReferenceStore = mainActivity.getButtonReferenceStore();
         this.mainViewModel = mainActivity.getViewModel();
