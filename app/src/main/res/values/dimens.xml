@@ -86,6 +86,9 @@
     <dimen name="switch_option_draw_on_move_padding_top">6dp</dimen>
     <dimen name="gradient_color_type_padding_horizontal">12dp</dimen>
     <dimen name="switch_option_draw_on_move_padding_horizontal">32dp</dimen>
+    <dimen name="switch_option_draw_on_move_padding_horizontal_land">28dp</dimen>
+    <dimen name="brush_size_layout_padding_bottom_land">12dp</dimen>
+    <dimen name="color_controls_include_padding_bottom">6dp</dimen>
     <dimen name="shape_options_padding_top">4dp</dimen>
     <dimen name="clear_canvas_dialog_buttons_padding">16dp</dimen>
     <dimen name="clear_canvas_dialog_buttons_layout_bottom_margin">12dp</dimen>

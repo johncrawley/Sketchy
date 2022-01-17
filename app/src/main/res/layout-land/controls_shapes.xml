@@ -76,7 +76,7 @@
         android:layout_weight="1"
         android:checked="true"
         android:gravity="center_vertical"
-        android:paddingHorizontal="@dimen/switch_option_draw_on_move_padding_horizontal"
+        android:paddingHorizontal="@dimen/switch_option_draw_on_move_padding_horizontal_land"
         android:paddingTop="@dimen/switch_option_draw_on_move_padding_top"
         android:paddingBottom="@dimen/switch_option_padding_bottom"
         android:text="@string/switch_label_draw_on_move_mode" />

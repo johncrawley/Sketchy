@@ -9,16 +9,13 @@
     android:clickable="true"
     android:focusable="true">
 
-    <include
-        android:id="@+id/includedColorControls_land"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/color_controls" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding">
+        android:paddingHorizontal="@dimen/seekbar_include_horizontal_padding"
+        android:paddingTop="0dp"
+        android:paddingBottom="@dimen/brush_size_layout_padding_bottom_land">
         <include
             android:id="@+id/colorTransparencySeekBarInclude"
             android:layout_width="match_parent"
@@ -27,4 +24,11 @@
             layout="@layout/seek_bar_color_config_transparency" />
     </LinearLayout>
 
+    <include
+        android:id="@+id/includedColorControls_land"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/color_buttons_panel"
+        android:paddingTop="0dp"
+        android:paddingBottom="@dimen/color_controls_include_padding_bottom"/>
 </LinearLayout>

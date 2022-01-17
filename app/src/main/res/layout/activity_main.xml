@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        layout="@layout/color_controls" />
+        layout="@layout/color_buttons_panel" />
 
     <LinearLayout
         android:id="@+id/paintViewLayout"
