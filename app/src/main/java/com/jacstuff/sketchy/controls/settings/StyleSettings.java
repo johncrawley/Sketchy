@@ -69,6 +69,14 @@ public class StyleSettings extends AbstractButtonConfigurator<BrushStyle> implem
                         paintHelperManager.getStyleHelper().initCurrentStyle();
                     }
                 });
+        seekBarConfigurator.configure(R.id.wavyStyleHeightSeekBar,
+                R.integer.wavy_style_height_progress,
+                progress -> {
+                    if(paintView != null) {
+                        viewModel.wavyStyleHeight = progress;
+                        paintHelperManager.getStyleHelper().initCurrentStyle();
+                    }
+                });
     }
 
 

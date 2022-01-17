@@ -56,8 +56,10 @@
     <integer name="bitmap_history_maximum_size">16</integer>
 
 
-    <integer name="wavy_style_length_max">20</integer>
+    <integer name="wavy_style_length_max">200</integer>
     <integer name="wavy_style_length_progress">2</integer>
+    <integer name="wavy_style_height_max">100</integer>
+    <integer name="wavy_style_height_progress">5</integer>
 
     <integer name="astroid_shape_curve_seek_bar_default">150</integer>
     <integer name="astroid_shape_curve_seek_bar_max">530</integer>

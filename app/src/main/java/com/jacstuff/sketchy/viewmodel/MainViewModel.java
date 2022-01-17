@@ -110,6 +110,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int rectangleSnapBounds = 28;
 
     public int wavyStyleLength = 1;
+    public int wavyStyleHeight = 5;
 
     public Map<Integer, Drawable> buttonDrawableMap;
 

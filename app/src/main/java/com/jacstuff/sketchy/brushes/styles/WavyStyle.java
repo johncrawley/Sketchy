@@ -34,20 +34,22 @@ public class WavyStyle extends AbstractStyle implements Style {
         Path p = new Path();
         p.moveTo(-length, 0);
         p.cubicTo(0, -height, 0, height, length,0);
-
         p.lineTo(length, thickness);
         p.cubicTo(0, height + thickness, 0, -height + thickness, -length, thickness);
         p.close();
-
         return p;
     }
 
 
     private void assignPath(){
-        float length = (float) brushSize / 20;
+        float minLength = 3;
+        float minHeight = 2;
+        float length = minLength + viewModel.wavyStyleLength;
+        float height = minHeight + viewModel.wavyStyleHeight;
+
         paintGroup.setPathEffect(new PathDashPathEffect(
-                createPath(paintGroup.getLineWidth(), viewModel.wavyStyleLength, paintGroup.getLineWidth()),
-                viewModel.wavyStyleLength * 2,
+                createPath(height, length, paintGroup.getLineWidth()),
+                length * 2,
                 0,
                 PathDashPathEffect.Style.MORPH));
     }
