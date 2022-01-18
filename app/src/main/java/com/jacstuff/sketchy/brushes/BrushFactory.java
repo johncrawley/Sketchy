@@ -10,6 +10,7 @@ import com.jacstuff.sketchy.brushes.shapes.CrescentBrush;
 import com.jacstuff.sketchy.brushes.shapes.CurvedLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.DiamondBrush;
 import com.jacstuff.sketchy.brushes.shapes.HexagonBrush;
+import com.jacstuff.sketchy.brushes.shapes.ParallelogramBrush;
 import com.jacstuff.sketchy.brushes.shapes.PointedOvalBrush;
 import com.jacstuff.sketchy.brushes.shapes.LineBrush;
 import com.jacstuff.sketchy.brushes.shapes.OvalBrush;
@@ -102,6 +103,7 @@ public class BrushFactory {
         add(new AstroidBrush());
         add(new PointedOvalBrush());
         add(new TrapezoidBrush());
+        add(new ParallelogramBrush());
     }
 
 

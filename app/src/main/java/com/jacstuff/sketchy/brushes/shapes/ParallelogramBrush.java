@@ -7,15 +7,13 @@ import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
-
-
-public class TrapezoidBrush extends AbstractBrush implements Brush {
+public class ParallelogramBrush extends AbstractBrush implements Brush {
 
     private final Point topRight, topLeft, bottomRight, bottomLeft;
     private final Path path;
 
-    public TrapezoidBrush(){
-        super(BrushShape.TRAPEZOID);
+    public ParallelogramBrush(){
+        super(BrushShape.PARALLELOGRAM);
         path = new Path();
         topRight = new Point();
         topLeft = new Point();
@@ -38,7 +36,7 @@ public class TrapezoidBrush extends AbstractBrush implements Brush {
         bottomLeft.y = halfBrushSize;
         bottomRight.x = halfBrushSize;
         bottomRight.y = halfBrushSize;
-        topRight.x = quarterBrushSize;
+        topRight.x = halfBrushSize + quarterBrushSize;
         topRight.y = -halfBrushSize;
         topLeft.x = -quarterBrushSize;
         topLeft.y = -halfBrushSize;
