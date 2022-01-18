@@ -117,6 +117,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v){
+        int id = v.getId();
+        if(id != paintView.getId() && id != R.id.brushSizeSeekBar){
+            paintView.onTouchUp();
+        }
         settingsPopup.dismiss(v);
         colorButtonClickHandler.onClick(v);
     }
@@ -173,9 +177,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return buttonReferenceStore;
     }
 
+
     public SeekBarConfigurator getSeekBarConfigurator(){
         return this.seekBarConfigurator;
     }
+
 
     public ViewModelHelper getViewModelHelper(){
         return this.viewModelHelper;
@@ -194,6 +200,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void toast(int resId){ toaster.toast(resId); }
 
+
+    public void paintTouchUp(){
+        paintView.onTouchUp();
+    }
 
     private void setupSettingsButtons(){
         settingsButtonsConfigurator = new SettingsButtonsConfigurator(this, paintView);

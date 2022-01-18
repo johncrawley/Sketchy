@@ -78,11 +78,6 @@ public class ButtonConfigHandler<T>{
     }
 
 
-    public void setParentLayout(int layoutId){
-        this.linearLayout = activity.findViewById(layoutId);
-    }
-
-
     public Set<T> getEntries(){
         return new HashSet<>(buttonActionMap.values());
     }
@@ -112,6 +107,7 @@ public class ButtonConfigHandler<T>{
         buttonsConfigurator.onClick(viewId, buttonActionMap.get(viewId));
         viewModelHelper.saveRecentClick(buttonCategory, viewId);
         assignBackgroundAndTextToParentButtonFrom(view);
+        activity.paintTouchUp();
     }
 
 

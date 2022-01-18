@@ -41,6 +41,7 @@ public class PaintView extends View {
     private final Context context;
     private BitmapLoader bitmapLoader;
     private SensitivityHelper sensitivityHelper;
+    private float x, y;
 
 
     public PaintView(Context context) {
@@ -228,23 +229,32 @@ public class PaintView extends View {
 
 
     private void drawWithBrush(MotionEvent event){
-
-        float x = event.getX();
-        float y = event.getY();
-
+        x = event.getX();
+        y = event.getY();
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
                 currentBrush.touchDown(x, y, paint);
                 break;
             case MotionEvent.ACTION_MOVE :
-                if(!sensitivityHelper.shouldDraw(currentBrush)){
-                    return;
-                }
-                currentBrush.touchMove(x, y, paint);
+                onTouchMove();
                 break;
             case MotionEvent.ACTION_UP :
-                currentBrush.touchUp(x, y, paint);
+                onTouchUp();
         }
+    }
+
+
+    public void onTouchUp(){
+        System.out.println("^^^ PaintView entered onTouchUp() About to call brush.touchUp()");
+        currentBrush.touchUp(x,y,paint);
+    }
+
+
+    private void onTouchMove(){
+        if(!sensitivityHelper.shouldDraw(currentBrush)){
+            return;
+        }
+        currentBrush.touchMove(x, y, paint);
     }
 
 
@@ -290,7 +300,7 @@ public class PaintView extends View {
 
 
     private boolean isPopupBeingDismissed(MotionEvent event){
-        if(settingsPopup.isVisible()){
+        if(settingsPopup.isVisible() && event.getAction() == MotionEvent.ACTION_DOWN){
             settingsPopup.dismiss();
             ignoreMoveAndUpActions = true;
             return true;
