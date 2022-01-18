@@ -28,17 +28,6 @@ import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.WavyLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.XBrush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
-import com.jacstuff.sketchy.brushes.styles.DashedStyle;
-import com.jacstuff.sketchy.brushes.styles.DashedStyleForLines;
-import com.jacstuff.sketchy.brushes.styles.DoubleEdgeStyle;
-import com.jacstuff.sketchy.brushes.styles.FillStyle;
-import com.jacstuff.sketchy.brushes.styles.FillStyleForLines;
-import com.jacstuff.sketchy.brushes.styles.JaggedStyle;
-import com.jacstuff.sketchy.brushes.styles.OutlineStyle;
-import com.jacstuff.sketchy.brushes.styles.SpikedStyle;
-import com.jacstuff.sketchy.brushes.styles.TranslateStyle;
-import com.jacstuff.sketchy.brushes.styles.WavyStyle;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.StyleHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -69,11 +58,9 @@ public class BrushFactory {
         initShadowPathBrush();
         drawerFactory.init();
         circleBrush = new CircleBrush();
-        PaintGroup paintGroup = paintView.getPaintGroup();
         styleHelper = paintView.getPaintHelperManager().getStyleHelper();
         setupBrushMap();
         handleStyles(brushSize);
-        addLineBrushAndStyles(paintGroup, brushSize);
     }
 
 
@@ -128,16 +115,6 @@ public class BrushFactory {
         for (Brush brush : brushMap.values()) {
             brush.setBrushSize(brushSize);
         }
-    }
-
-
-    private void addLineBrushAndStyles(PaintGroup paintGroup, int brushSize){
-        Brush lineBrush = brushMap.get(BrushShape.LINE);
-        if(lineBrush == null){
-            return;
-        }
-       // lineBrush.add(BrushStyle.FILL, new FillStyleForLines());
-       // lineBrush.add(BrushStyle.BROKEN_OUTLINE, new DashedStyleForLines(paintGroup, brushSize));
     }
 
 

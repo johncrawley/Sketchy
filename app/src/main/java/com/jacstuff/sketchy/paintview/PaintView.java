@@ -200,6 +200,7 @@ public class PaintView extends View {
         invalidate();
     }
 
+    boolean isTouchDownRegistered = false;
 
     @Override
     protected void onDraw(Canvas viewCanvas) {
@@ -233,7 +234,7 @@ public class PaintView extends View {
         y = event.getY();
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
-                currentBrush.touchDown(x, y, paint);
+                onTouchDown();
                 break;
             case MotionEvent.ACTION_MOVE :
                 onTouchMove();
@@ -244,13 +245,26 @@ public class PaintView extends View {
     }
 
 
+    private void onTouchDown(){
+        isTouchDownRegistered = true;
+        currentBrush.touchDown(x, y, paint);
+    }
+
+
     public void onTouchUp(){
+        if(!isTouchDownRegistered){
+            return;
+        }
+        isTouchDownRegistered = false;
         System.out.println("^^^ PaintView entered onTouchUp() About to call brush.touchUp()");
         currentBrush.touchUp(x,y,paint);
     }
 
 
     private void onTouchMove(){
+        if(!isTouchDownRegistered){
+            return;
+        }
         if(!sensitivityHelper.shouldDraw(currentBrush)){
             return;
         }
@@ -270,6 +284,7 @@ public class PaintView extends View {
         currentBrush.reset();
         loadHistoryItem(true);
     }
+
 
     public Brush getCurrentBrush(){
         return currentBrush;
