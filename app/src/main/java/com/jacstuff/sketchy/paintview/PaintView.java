@@ -42,6 +42,7 @@ public class PaintView extends View {
     private BitmapLoader bitmapLoader;
     private SensitivityHelper sensitivityHelper;
     private float x, y;
+    boolean isTouchDownRegistered = false;
 
 
     public PaintView(Context context) {
@@ -200,7 +201,6 @@ public class PaintView extends View {
         invalidate();
     }
 
-    boolean isTouchDownRegistered = false;
 
     @Override
     protected void onDraw(Canvas viewCanvas) {
@@ -256,7 +256,6 @@ public class PaintView extends View {
             return;
         }
         isTouchDownRegistered = false;
-        System.out.println("^^^ PaintView entered onTouchUp() About to call brush.touchUp()");
         currentBrush.touchUp(x,y,paint);
     }
 

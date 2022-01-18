@@ -11,7 +11,6 @@ import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.helpers.gradient.GradientHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
@@ -86,7 +85,6 @@ public class ViewModelHelper {
         retrieveBitmapHistory();
         retrieveRecentButtonSettings();
         retrieveColorAndShade();
-        restoreSeekBarSettings();
         setDefaultPropertiesFromResources();
         mainActivity.loadStoredImage();
         viewModel.isFirstExecution = false;
@@ -144,16 +142,6 @@ public class ViewModelHelper {
             deselectCurrentlySelectedAngleButton();
         }
         mainActivity.getSettingsPopup().dismiss();
-    }
-
-
-    private void restoreSeekBarSettings(){
-        if(!viewModel.isFirstExecution) {
-            if(viewModel.gradient != 0) {
-                GradientHelper gradientHelper = paintHelperManager.getGradientHelper();
-                gradientHelper.setLength(viewModel.gradient);
-            }
-        }
     }
 
 

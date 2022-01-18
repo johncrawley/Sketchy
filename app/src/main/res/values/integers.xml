@@ -33,8 +33,8 @@
     <integer name="gradient_radius_offset_x_max">200</integer>
     <integer name="gradient_radius_offset_y_default">100</integer>
     <integer name="gradient_radius_offset_y_max">200</integer>
-    <integer name="gradient_color_picker_seek_bar_max">100</integer>
-    <integer name="gradient_color_picker_seek_bar_default">50</integer>
+    <integer name="gradient_color_picker_seek_bar_max">300</integer>
+    <integer name="gradient_color_picker_seek_bar_default">300</integer>
     <integer name="gradient_linear_offset_seek_bar_default">50</integer>
     <integer name="gradient_linear_offset_seek_bar_max">100</integer>
 

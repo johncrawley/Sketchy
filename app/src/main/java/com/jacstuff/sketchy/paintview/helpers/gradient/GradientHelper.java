@@ -94,10 +94,15 @@ public class GradientHelper {
 
 
     public void calculateGradientLength(){
+        calculateRadialGradient();
+        calculateLinearGradientLength();
+    }
+
+
+    private void calculateRadialGradient(){
         float radius = 1 + (radialGradientNumerator / radiusFactor) ;
         viewModel.radialGradientRadius = (int) (radius * 2f);
         viewModel.clampRadialGradientRadius = 1 + viewModel.radialGradientRadius * CLAMP_RADIAL_GRADIENT_FACTOR;
-        calculateLinearGradientLength();
     }
 
 
@@ -163,13 +168,13 @@ public class GradientHelper {
             paint.setShader(null);
             return;
         }
+        int start =  calculateLinearStart();
         gradientColor = getGradientColor(shouldNewRandomColorBeAssigned);
-        linearStartX = calculateLinearStart();
-        //noinspection SuspiciousNameCombination
-        linearStartY = linearStartX;
-        linearEndX = (int) getLinearGradientEnd(linearStartX);
-        //noinspection SuspiciousNameCombination
-        linearEndY = linearEndX;
+        linearStartX =start;
+        linearStartY = start;
+        int end = (int) getLinearGradientEnd(linearStartX);
+        linearEndX = end;
+        linearEndY = end;
         setGradient(x, y, color);
     }
 
