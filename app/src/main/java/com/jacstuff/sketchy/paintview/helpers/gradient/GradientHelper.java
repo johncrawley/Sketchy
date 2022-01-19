@@ -8,6 +8,7 @@ import android.graphics.RadialGradient;
 import android.graphics.Shader;
 
 import com.jacstuff.sketchy.brushes.shapes.Brush;
+import com.jacstuff.sketchy.paintview.helpers.color.InfinityModeRandomGradientBlender;
 import com.jacstuff.sketchy.utils.ColorUtils;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.brushes.GradientType;
@@ -27,11 +28,13 @@ public class GradientHelper {
     private Brush brush;
     private int gradientColor;
     private int linearStartX, linearStartY, linearEndX, linearEndY;
-
+    private final InfinityModeRandomGradientBlender gradientBlender;
 
     public GradientHelper(MainViewModel viewModel){
         this.viewModel = viewModel;
         random = new Random(System.currentTimeMillis());
+        gradientBlender = new InfinityModeRandomGradientBlender(random);
+
     }
 
 
@@ -287,9 +290,20 @@ public class GradientHelper {
                 return viewModel.previousColor;
 
             case RANDOM:
-                return shouldNewRandomColorBeAssigned ? ColorUtils.getRandomColor(random) : gradientColor;
+                return getRandomColor(shouldNewRandomColorBeAssigned);
         }
         return Color.TRANSPARENT;
+    }
+
+
+    private int getRandomColor(boolean shouldNewRandomColorBeAssigned){
+        if(shouldNewRandomColorBeAssigned){
+            if(viewModel.isInfinityModeEnabled){
+                return gradientBlender.getNextInfinityModeShade();
+            }
+            return ColorUtils.getRandomColor(random);
+        }
+        return gradientColor;
     }
 
 }
