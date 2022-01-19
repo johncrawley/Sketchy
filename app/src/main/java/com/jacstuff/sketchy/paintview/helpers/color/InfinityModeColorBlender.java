@@ -42,8 +42,7 @@ public class InfinityModeColorBlender {
         viewModel.previousColor = getNextShadeOfColor(viewModel.previousColor, nextTargetSecondaryShade);
         paint.setColor(nextShade);
         viewModel.color = nextShade;
-
-        if(nextShade == targetColor){
+        if(ColorUtils.areEqual(nextShade, targetColor)){
             hasBlendStarted = false;
         }
         if(viewModel.previousColor == nextTargetSecondaryShade){

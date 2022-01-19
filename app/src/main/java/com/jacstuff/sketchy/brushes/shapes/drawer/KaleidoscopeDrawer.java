@@ -20,7 +20,7 @@ public class KaleidoscopeDrawer {
     final Paint infinityPaint;
     Bitmap infinityImage;
     Drawer parentDrawer;
-
+    private int segmentLength;
 
     public KaleidoscopeDrawer(PaintView paintView, MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
         this.paintView = paintView;
@@ -33,6 +33,7 @@ public class KaleidoscopeDrawer {
 
     public void setCanvas(Canvas canvas){
         this.canvas = canvas;
+        segmentLength = canvas.getWidth() /5;
     }
 
 
@@ -44,6 +45,7 @@ public class KaleidoscopeDrawer {
     public void drawKaleidoscope(float x, float y, Paint paint){
         createInfinityBitmap();
         canvas.save();
+
         rotateAndDrawAroundAxis(x,y, paint);
         drawInfinityModeSegments(x,y);
         canvas.restore();
@@ -52,7 +54,8 @@ public class KaleidoscopeDrawer {
 
     void createInfinityBitmap(){
         if(viewModel.isInfinityModeEnabled) {
-            infinityImage = Bitmap.createScaledBitmap(paintView.getBitmap(), 500, 500, false);
+            segmentLength = (int)(Math.max(canvas.getWidth(), canvas.getHeight()) / 2f);
+            infinityImage = Bitmap.createScaledBitmap(paintView.getBitmap(), segmentLength, segmentLength, false);
         }
     }
 

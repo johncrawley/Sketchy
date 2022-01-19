@@ -58,6 +58,13 @@ public class ColorUtils {
     }
 
 
+    public static boolean areEqual(int color1, int color2){
+        return areEqual(color1, color2, Rgb.RED)
+                && areEqual(color1, color2, Rgb.GREEN)
+                && areEqual(color1, color2, Rgb.BLUE);
+    }
+
+
     public static int getColorFromSlider(int progress){
         int r = 0;
         int g = 0;

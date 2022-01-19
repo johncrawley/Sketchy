@@ -21,7 +21,7 @@ public class InfinityModeRandomGradientBlender {
 
     public int getNextInfinityModeShade(){
         currentShade = getNextShadeOfColor(currentShade, targetShade);
-        if(currentShade == targetShade){
+        if(ColorUtils.areEqual(currentShade, targetShade)){
             targetShade = getRandomColor();
         }
         return currentShade;
