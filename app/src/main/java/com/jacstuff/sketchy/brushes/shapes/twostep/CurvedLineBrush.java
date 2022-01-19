@@ -10,7 +10,7 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.AbstractBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.TwoStepDrawer;
-import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
+import com.jacstuff.sketchy.brushes.shapes.initializer.DragRectInitializer;
 import com.jacstuff.sketchy.utils.MathUtils;
 
 public class CurvedLineBrush extends AbstractBrush implements Brush, TwoStepBrush{
@@ -23,7 +23,7 @@ public class CurvedLineBrush extends AbstractBrush implements Brush, TwoStepBrus
 
     public CurvedLineBrush() {
         super(BrushShape.CURVE);
-        brushInitializer = new LineInitializer();
+        brushInitializer = new DragRectInitializer();
         path = new Path();
         isDrawnFromCenter = false;
         resetState();
