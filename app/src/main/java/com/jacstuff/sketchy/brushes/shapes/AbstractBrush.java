@@ -24,29 +24,33 @@ import java.util.Map;
 
 public abstract class AbstractBrush implements Brush{
 
-    Canvas canvas;
+    public Canvas canvas;
     PaintGroup paintGroup;
     int brushSize;
     Style currentStyle;
     int halfBrushSize;
     BrushShape brushShape;
     private final FillStyle fillStyle;
-    Drawer drawer;
-    MainViewModel mainViewModel;
+    public Drawer drawer;
+    public MainViewModel mainViewModel;
     MainActivity mainActivity;
-    PaintView paintView;
+    public PaintView paintView;
     DrawerFactory.Type drawerType;
-    BrushInitializer brushInitializer;
-    boolean isDrawnFromCenter;
+    public BrushInitializer brushInitializer;
+    public boolean isDrawnFromCenter;
 
 
-    AbstractBrush(BrushShape brushShape){
+    public AbstractBrush(BrushShape brushShape){
         fillStyle = new FillStyle();
         currentStyle = fillStyle;
         this.brushShape = brushShape;
         this.drawerType = DrawerFactory.Type.BASIC;
         brushInitializer = new DefaultInitializer();
         isDrawnFromCenter = true;
+    }
+
+    public void setBrushShape(BrushShape brushShape){
+        this.brushShape = brushShape;
     }
 
 
@@ -86,7 +90,7 @@ public abstract class AbstractBrush implements Brush{
     }
 
 
-    void postInit(){
+    public void postInit(){
         // do nothing
     }
 
@@ -191,12 +195,12 @@ public abstract class AbstractBrush implements Brush{
     }
 
 
-    void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         //do nothing
     }
 
 
-    void onBrushTouchDown(float x, float y, Paint paint){
+    public void onBrushTouchDown(float x, float y, Paint paint){
         //do nothing
     }
 

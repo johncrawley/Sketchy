@@ -4,26 +4,27 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 
-import com.jacstuff.sketchy.brushes.shapes.CurvedLineBrush;
+import com.jacstuff.sketchy.brushes.shapes.twostep.StepState;
+import com.jacstuff.sketchy.brushes.shapes.twostep.TwoStepBrush;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-public class CurveDrawer extends AbstractDrawer implements Drawer{
+public class TwoStepDrawer extends AbstractDrawer implements Drawer{
 
     private PointF down;
-    private final CurvedLineBrush curvedLineBrush;
+    final TwoStepBrush twoStepBrush;
     private PointF lineMidPoint;
 
-    public CurveDrawer(PaintView paintView, MainViewModel viewModel, CurvedLineBrush curvedLineBrush){
+    public TwoStepDrawer(PaintView paintView, MainViewModel viewModel, TwoStepBrush twoStepBrush){
         super(paintView, viewModel);
         isColorChangedOnDown = false;
-        this.curvedLineBrush = curvedLineBrush;
+        this.twoStepBrush = twoStepBrush;
     }
 
 
     @Override
     public void down(float x, float y, Paint paint) {
-        if(curvedLineBrush.isInDrawLineMode()) {
+        if(twoStepBrush.isInFirstStep()) {
             updateColorGradientAndAngle(x, y);
             paintHelperManager.getKaleidoscopeHelper().setCenter(x, y);
             down = new PointF();
@@ -45,25 +46,25 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
 
     @Override
     public void up(float x, float y, Paint paint) {
-        if(curvedLineBrush.isInDrawCurveMode()){
+        if(twoStepBrush.isInSecondStep()){
             paintView.disablePreviewLayer();
         }
-        if(kaleidoscopeHelper.isEnabled() && curvedLineBrush.isInDrawCurveMode()){
+        if(kaleidoscopeHelper.isEnabled() && twoStepBrush.isInSecondStep()){
             assignGradientForCurveMode(x,y, true);
             kaleidoscopeDrawer.drawKaleidoscope(x, y, paint);
         }
         else{
             drawDragLine(x,y, paint);
         }
-        if(curvedLineBrush.isInDrawCurveMode()) {
+        if(twoStepBrush.isInSecondStep()) {
             paintView.pushHistory();
             paintView.invalidate();
-            curvedLineBrush.setStateTo(CurvedLineBrush.State.DRAW_LINE);
+            twoStepBrush.setStateTo(StepState.FIRST);
             return;
         }
 
         assignLineMidPoint(x,y);
-        curvedLineBrush.setStateTo(CurvedLineBrush.State.DRAW_CURVE);
+        twoStepBrush.setStateTo(StepState.SECOND);
     }
 
 
@@ -82,12 +83,13 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
 
 
     private void assignGradientForCurveMode(float x, float y, boolean isUsingKaleidoscopeOffsets){
-        if(!curvedLineBrush.isInDrawCurveMode()) {
+        if(!twoStepBrush.isInSecondStep()) {
             return;
         }
         PointF down = createCoordinatePoint(lineMidPoint.x, lineMidPoint.y, isUsingKaleidoscopeOffsets);
         PointF up = createCoordinatePoint(x,y, isUsingKaleidoscopeOffsets);
-        paintHelperManager.getGradientHelper().assignGradientForDragShape(down, up, getShapeMidpoint(down, up, isUsingKaleidoscopeOffsets), false);
+        PointF mid = getShapeMidpoint(down, up, isUsingKaleidoscopeOffsets);
+        paintHelperManager.getGradientHelper().assignGradientForDragShape(down, up, mid, false);
     }
 
 
@@ -106,15 +108,15 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
     }
 
 
-    private PointF getShapeMidpoint(PointF down, PointF up, boolean isUsingKaleidoscopeOffsets){
-        PointF mid = new PointF();
-        mid.x = down.x + ((up.x - curvedLineBrush.getLineMidpointX() + getKaleidoscopeOffsetX(isUsingKaleidoscopeOffsets)) / 2);
-        mid.y = down.y + ((up.y - curvedLineBrush.getLineMidpointY() + getKaleidoscopeOffsetY(isUsingKaleidoscopeOffsets)) / 2);
+    PointF getShapeMidpoint(PointF down, PointF up, boolean isUsingKaleidoscopeOffsets){
+        PointF mid = twoStepBrush.getLineMidPoint();
+        mid.x = down.x + ((up.x - mid.x + getKaleidoscopeOffsetX(isUsingKaleidoscopeOffsets)) / 2);
+        mid.y = down.y + ((up.y - mid.y + getKaleidoscopeOffsetY(isUsingKaleidoscopeOffsets)) / 2);
         return mid;
     }
 
 
-    private int getKaleidoscopeOffsetX(boolean isUsingKaleidoscopeOffsets){
+    int getKaleidoscopeOffsetX(boolean isUsingKaleidoscopeOffsets){
         if(kaleidoscopeHelper.isEnabled() && isUsingKaleidoscopeOffsets){
             return kaleidoscopeHelper.getCenterX();
         }
@@ -122,7 +124,7 @@ public class CurveDrawer extends AbstractDrawer implements Drawer{
     }
 
 
-    private int getKaleidoscopeOffsetY(boolean isUsingKaleidoscopeOffsets){
+    int getKaleidoscopeOffsetY(boolean isUsingKaleidoscopeOffsets){
         if(kaleidoscopeHelper.isEnabled() && isUsingKaleidoscopeOffsets){
             return kaleidoscopeHelper.getCenterY();
         }

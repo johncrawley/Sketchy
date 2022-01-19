@@ -22,7 +22,7 @@ public class AstroidBrush extends AbstractBrush implements Brush {
 
 
         @Override
-        void postInit(){
+        public void postInit(){
             recalculateDimensions();
         }
 

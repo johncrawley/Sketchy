@@ -51,6 +51,16 @@ public abstract class AbstractDrawer implements Drawer {
     }
 
 
+    public void setPaintView(PaintView paintView){
+        this.paintView = paintView;
+    }
+
+
+    public void setViewModel(MainViewModel viewModel){
+        this.viewModel = viewModel;
+    }
+
+
     void updateColorGradientAndAngle(float x, float y){
         paintHelperManager.getColorHelper().assignColors();
         updateGradient(x,y);

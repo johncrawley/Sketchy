@@ -7,7 +7,7 @@ import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.AstroidBrush;
 import com.jacstuff.sketchy.brushes.shapes.CrescentBrush;
-import com.jacstuff.sketchy.brushes.shapes.CurvedLineBrush;
+import com.jacstuff.sketchy.brushes.shapes.twostep.CurvedLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.DiamondBrush;
 import com.jacstuff.sketchy.brushes.shapes.HexagonBrush;
 import com.jacstuff.sketchy.brushes.shapes.ParallelogramBrush;
@@ -24,6 +24,7 @@ import com.jacstuff.sketchy.brushes.shapes.StraightLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextOnCircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.TrapezoidBrush;
+import com.jacstuff.sketchy.brushes.shapes.twostep.ArbitraryTriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.WavyLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.XBrush;
@@ -91,6 +92,7 @@ public class BrushFactory {
         add(new PointedOvalBrush());
         add(new TrapezoidBrush());
         add(new ParallelogramBrush());
+        add(new ArbitraryTriangleBrush());
     }
 
 

@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.twostep;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -7,33 +7,33 @@ import android.graphics.Point;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.brushes.BrushStyle;
-import com.jacstuff.sketchy.brushes.shapes.drawer.CurveDrawer;
+import com.jacstuff.sketchy.brushes.shapes.AbstractBrush;
+import com.jacstuff.sketchy.brushes.shapes.Brush;
+import com.jacstuff.sketchy.brushes.shapes.drawer.TwoStepDrawer;
 import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
 import com.jacstuff.sketchy.utils.MathUtils;
 
-public class CurvedLineBrush extends AbstractBrush implements Brush {
+public class CurvedLineBrush extends AbstractBrush implements Brush, TwoStepBrush{
 
-    private float downX, downY, upX, upY;
+    float downX, downY, upX, upY;
     private float lineMidpointX, lineMidpointY;
-    public enum State { DRAW_LINE, DRAW_CURVE }
-    private State state;
-    private final Path path;
+    private StepState state;
+    final Path path;
 
 
     public CurvedLineBrush() {
         super(BrushShape.CURVE);
         brushInitializer = new LineInitializer();
-        state = State.DRAW_LINE;
         path = new Path();
         isDrawnFromCenter = false;
+        resetState();
     }
 
 
     @Override
     public void postInit(){
         super.postInit();
-        this.drawer = new CurveDrawer(paintView, mainViewModel, this);
+        this.drawer = new TwoStepDrawer(paintView, mainViewModel, this);
         drawer.init();
     }
 
@@ -49,30 +49,30 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
 
 
     public void resetState(){
-        state = State.DRAW_LINE;
+        state = StepState.FIRST;
     }
 
 
-    public void setStateTo(State state){
+    public void setStateTo(StepState state){
         this.state = state;
     }
 
-    public State getState(){
-        return  state;
+    public StepState getState(){
+        return state;
     }
 
-    public boolean isInDrawLineMode(){
-        return state == State.DRAW_LINE;
+    public boolean isInFirstStep(){
+        return state == StepState.FIRST;
     }
 
-    public boolean isInDrawCurveMode(){
-        return state == State.DRAW_CURVE;
+    public boolean isInSecondStep(){
+        return state == StepState.SECOND;
     }
 
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
-        if (state == State.DRAW_LINE) {
+        if (state == StepState.FIRST) {
             downX = p.x;
             downY = p.y;
         }
@@ -81,8 +81,8 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchMove(float x, float y, Paint paint) {
-        if(state == State.DRAW_CURVE){
-            drawCurve(x, y, 0,0, paint);
+        if(state == StepState.SECOND){
+            drawShape(x, y, 0,0, paint);
             return;
         }
         canvas.drawLine(downX, downY, x, y, paint);
@@ -97,8 +97,8 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint) {
-        if(state == State.DRAW_CURVE){
-            drawCurve(x, y, offsetX, offsetY, paint);
+        if(state == StepState.SECOND){
+            drawShape(x, y, offsetX, offsetY, paint);
             return;
         }
         canvas.drawLine(downX, downY, x, y, paint);
@@ -115,17 +115,21 @@ public class CurvedLineBrush extends AbstractBrush implements Brush {
     }
 
 
-    public float getLineMidpointX(){
-        return lineMidpointX;
+    @Override
+    public PointF getLineMidPoint() {
+       PointF p = new PointF();
+       p.x = lineMidpointX;
+       p.y = lineMidpointY;
+       return p;
+    }
+
+    @Override
+    public PointF getShapeMidPoint() {
+        return null;
     }
 
 
-    public float getLineMidpointY(){
-        return lineMidpointY;
-    }
-
-
-    private void drawCurve(float x, float y, float offsetX, float offsetY, Paint paint){
+    void drawShape(float x, float y, float offsetX, float offsetY, Paint paint){
         path.reset();
         path.moveTo(downX - offsetX, downY - offsetY);
         PointF point = getModifiedPoint(x,y);
