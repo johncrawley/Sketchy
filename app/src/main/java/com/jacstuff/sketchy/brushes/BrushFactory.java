@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.brushes;
 
 import com.jacstuff.sketchy.MainActivity;
+import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.shapes.ArcBrush;
 import com.jacstuff.sketchy.brushes.shapes.BananaBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
@@ -47,25 +48,42 @@ public class BrushFactory {
     private PathBrush shadowPathBrush;
     private StyleHelper styleHelper;
 
+
     public BrushFactory(MainActivity mainActivity){
         this.mainActivity = mainActivity;
         this.mainViewModel = mainActivity.getViewModel();
     }
 
 
-    public void init(PaintView paintView, int brushSize){
+    public void init(PaintView paintView, int brushSize, int maxDimension){
         this.paintView = paintView;
         drawerFactory = new DrawerFactory(paintView, mainViewModel);
         initShadowPathBrush();
         drawerFactory.init();
         circleBrush = new CircleBrush();
         styleHelper = paintView.getPaintHelperManager().getStyleHelper();
-        setupBrushMap();
+        setupBrushMap(maxDimension);
         handleStyles(brushSize);
     }
 
 
-    private void setupBrushMap(){
+    public Brush getReinitializedBrushFor(BrushShape shape){
+        Brush brush =  brushMap.get(shape);
+        if(brush == null){
+            brush = circleBrush;
+        }
+        brush.setStyle(styleHelper.getCurrentStyle());
+        brush.reinitialize();
+        return brush;
+    }
+
+
+    public PathBrush getShadowPathBrush(){
+        return shadowPathBrush;
+    }
+
+
+    private void setupBrushMap(int maxDimension){
         brushMap = new HashMap<>();
         add(circleBrush);
         add(new RoundedRectangleBrush());
@@ -76,7 +94,7 @@ public class BrushFactory {
         add(new StarBrush());
         add(new LineBrush());
         add(new CurvedLineBrush());
-        add(new StraightLineBrush());
+        add(new StraightLineBrush(getMaxBrushSize(), maxDimension));
         add(new WavyLineBrush());
         add(new ArcBrush());
         add(new TextBrush());
@@ -102,10 +120,6 @@ public class BrushFactory {
     }
 
 
-    public PathBrush getShadowPathBrush(){
-        return shadowPathBrush;
-    }
-
 
     private void add(Brush brush){
         brush.init(paintView, mainActivity, drawerFactory);
@@ -120,14 +134,9 @@ public class BrushFactory {
     }
 
 
-    public Brush getReinitializedBrushFor(BrushShape shape){
-        Brush brush =  brushMap.get(shape);
-        if(brush == null){
-            brush = circleBrush;
-        }
-        brush.setStyle(styleHelper.getCurrentStyle());
-        brush.reinitialize();
-        return brush;
+
+    private int getMaxBrushSize(){
+        return mainActivity.getResources().getInteger(R.integer.brush_size_max);
     }
 
 }

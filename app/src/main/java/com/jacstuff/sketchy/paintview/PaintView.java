@@ -190,9 +190,15 @@ public class PaintView extends View {
 
 
     private void initBrushes(){
-        brushFactory.init(this, brushSize);
+        brushFactory.init(this, brushSize, getMaxDimension());
         currentBrush = brushFactory.getReinitializedBrushFor(BrushShape.CIRCLE);
     }
+
+
+    private int getMaxDimension(){
+        return Math.max(getWidth(), getHeight());
+    }
+
 
 
     private void drawPlainBackgroundAndSaveToHistory(){

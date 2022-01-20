@@ -6,7 +6,6 @@ import android.graphics.Point;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.shapes.initializer.BrushInitializer;
@@ -15,11 +14,7 @@ import com.jacstuff.sketchy.brushes.styles.FillStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.helpers.placement.PlacementHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public abstract class AbstractBrush implements Brush{
@@ -30,7 +25,6 @@ public abstract class AbstractBrush implements Brush{
     Style currentStyle;
     int halfBrushSize;
     BrushShape brushShape;
-    private final FillStyle fillStyle;
     public Drawer drawer;
     public MainViewModel mainViewModel;
     MainActivity mainActivity;
@@ -41,8 +35,7 @@ public abstract class AbstractBrush implements Brush{
 
 
     public AbstractBrush(BrushShape brushShape){
-        fillStyle = new FillStyle();
-        currentStyle = fillStyle;
+        currentStyle = new FillStyle();
         this.brushShape = brushShape;
         this.drawerType = DrawerFactory.Type.BASIC;
         brushInitializer = new DefaultInitializer();
