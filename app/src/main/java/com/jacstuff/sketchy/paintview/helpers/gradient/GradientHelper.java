@@ -291,6 +291,8 @@ public class GradientHelper {
 
             case RANDOM:
                 return getRandomColor(shouldNewRandomColorBeAssigned);
+            case RANDOM_BLEND:
+                return getNextRandomBlend();
         }
         return Color.TRANSPARENT;
     }
@@ -299,11 +301,16 @@ public class GradientHelper {
     private int getRandomColor(boolean shouldNewRandomColorBeAssigned){
         if(shouldNewRandomColorBeAssigned){
             if(viewModel.isInfinityModeEnabled){
-                return gradientBlender.getNextInfinityModeShade();
+                return getNextRandomBlend();
             }
             return ColorUtils.getRandomColor(random);
         }
         return gradientColor;
+    }
+
+
+    private int getNextRandomBlend(){
+        return gradientBlender.getNextInfinityModeShade();
     }
 
 }

@@ -27,6 +27,7 @@
         <item>@string/spinner_item_gradient_color_previous</item>
         <item>@string/spinner_item_gradient_color_transparent</item>
         <item>@string/spinner_item_gradient_color_random</item>
+        <item>@string/spinner_item_gradient_color_random_blend</item>
     </string-array>
 
     <string-array name="gradient_color_values">
@@ -34,6 +35,7 @@
         <item>PREVIOUS</item>
         <item>TRANSPARENT</item>
         <item>RANDOM</item>
+        <item>RANDOM_BLEND</item>
     </string-array>
 
 

@@ -142,6 +142,7 @@
     <string name="spinner_item_gradient_color_previous">Previous Color</string>
     <string name="spinner_item_gradient_color_transparent">Transparent</string>
     <string name="spinner_item_gradient_color_random">Random</string>
+    <string name="spinner_item_gradient_color_random_blend">Random Blend</string>
 
 
     <string name="spinner_item_size_sequence_proximity_point">Point</string>
