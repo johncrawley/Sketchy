@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
 import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.controls.colorbuttons.ButtonShadesStore;
 import com.jacstuff.sketchy.controls.settings.placement.PlacementType;
 import com.jacstuff.sketchy.paintview.helpers.gradient.GradientColorType;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
@@ -42,6 +43,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public Map<Integer, Integer> seekBarValue;
 
     public Map<ButtonCategory, Integer> settingsButtonsClickMap;
+    public ButtonShadesStore buttonShadesStore;
 
 
     public boolean isKaleidoscopeCentred = true;

@@ -11,6 +11,7 @@ import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.ui.SettingsPopup;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,10 +35,13 @@ public class ColorButtonLayoutCreator {
     private final MainActivity activity;
     private final MultiShadeButtonIconDrawer multiShadeButtonIconDrawer;
     private final SettingsPopup settingsPopup;
+    private final MainViewModel viewModel;
+    private LinearLayout reusableShadesLayout;
 
 
     public ColorButtonLayoutCreator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, final List<Integer> colors){
         this.context = mainActivity.getApplicationContext();
+        this.viewModel = mainActivity.getViewModel();
         this.activity = mainActivity;
         defaultColor = mainActivity.getString(R.string.default_color);
         multiShadeButtonIconDrawer = new MultiShadeButtonIconDrawer(activity, activity.getViewModel());
@@ -101,6 +105,7 @@ public class ColorButtonLayoutCreator {
     private void addColorAndShadeButtons(int color){
         addColorButton(color, createColorKey(color, ButtonType.COLOR));
         List<Integer> shades = colorShadeCreator.generateShadesFrom(color);
+        viewModel.buttonShadesStore.addShades(color, shades);
         addShadesToLayoutMap(color, shades);
         addMultiColorShades(color, shades);
         addMultiColorShadesForSequences(color, colorShadeCreatorForSequences.generateShadesFrom(color));
@@ -144,6 +149,32 @@ public class ColorButtonLayoutCreator {
             shadeLayout.addView(buttonLayout);
         }
         return shadeLayout;
+    }
+
+
+    private void createReusableShadesLayout(List<Integer> shades, ButtonType buttonType){
+        reusableShadesLayout = new LinearLayout(context);
+        for(int shade: shades){
+            LinearLayout buttonLayout = createShadeButton(shade, buttonType);
+            reusableShadesLayout.addView(buttonLayout);
+        }
+    }
+
+
+    private void assignShadesToReusableShadesLayout(List<Integer> shades, ButtonType buttonType){
+        reusableShadesLayout = new LinearLayout(context);
+        for(int i=0; i< reusableShadesLayout.getChildCount(); i++){
+            LinearLayout wrapperLayout = (LinearLayout) reusableShadesLayout.getChildAt(i);
+            Button button = (Button)wrapperLayout.getChildAt(0);
+            int shade = shades.get(i);
+            String key = createColorKey(shade, buttonType);
+            button.setBackgroundColor(shade);
+            button.setTag(R.string.tag_button_key, key);
+        }
+        for(int shade: shades){
+            LinearLayout buttonLayout = createShadeButton(shade, buttonType);
+            reusableShadesLayout.addView(buttonLayout);
+        }
     }
 
 

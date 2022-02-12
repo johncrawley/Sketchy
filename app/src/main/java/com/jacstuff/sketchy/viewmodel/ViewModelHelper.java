@@ -9,6 +9,7 @@ import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
+import com.jacstuff.sketchy.controls.colorbuttons.ButtonShadesStore;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
@@ -37,6 +38,7 @@ public class ViewModelHelper {
         this.buttonUtils = new ButtonUtils(mainActivity);
         initMaps();
         initControls();
+        initShadesStore();
     }
 
 
@@ -45,6 +47,13 @@ public class ViewModelHelper {
         this.buttonClickHandler = buttonClickHandler;
         this.paintView = paintView;
         initViewModelSettings();
+    }
+
+
+    private void initShadesStore(){
+        if(viewModel.buttonShadesStore == null){
+            viewModel.buttonShadesStore = new ButtonShadesStore();
+        }
     }
 
 
@@ -78,6 +87,7 @@ public class ViewModelHelper {
         if(viewModel.buttonDrawableMap == null) {
             viewModel.buttonDrawableMap = new HashMap<>();
         }
+
     }
 
 
