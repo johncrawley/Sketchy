@@ -45,6 +45,8 @@ public class ColorButtonClickHandler {
     private final ColorHelper colorHelper;
     private Button mainMultiColorButton;
 
+    private LinearLayout reusableShadesLayout;
+
     private Button colorMenuButton;
     private final Drawable multiColorDrawable;
 
@@ -105,6 +107,11 @@ public class ColorButtonClickHandler {
 
     public void setShadeLayoutsMap(Map<String, LinearLayout> shadeLayoutsMap){
         this.shadeLayoutsMap = shadeLayoutsMap;
+    }
+
+
+    public void setReusableShadesLayout(LinearLayout reusableShadesLayout){
+        this.reusableShadesLayout = reusableShadesLayout;
     }
 
 

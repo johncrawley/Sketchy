@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -66,6 +67,11 @@ public class ColorButtonLayoutCreator {
     }
 
 
+    public LinearLayout getReusableShadesLayout(){
+        return reusableShadesLayout;
+    }
+
+
     public LinearLayout getMultiShadesLayout(){
         return shadeLayoutsMap.get(MULTI_SHADE_KEY);
     }
@@ -97,6 +103,7 @@ public class ColorButtonLayoutCreator {
         for(int color : colors){
             addColorAndShadeButtons(color);
         }
+        initReusableShadesLayout();
         addMultiColorButton();
         addMultiColorShadeButtons();
     }
@@ -152,28 +159,25 @@ public class ColorButtonLayoutCreator {
     }
 
 
-    private void createReusableShadesLayout(List<Integer> shades, ButtonType buttonType){
+    private void initReusableShadesLayout(){
+        List<Integer> shades = colorShadeCreator.generateShadesFrom(Color.BLACK);
         reusableShadesLayout = new LinearLayout(context);
         for(int shade: shades){
-            LinearLayout buttonLayout = createShadeButton(shade, buttonType);
+            LinearLayout buttonLayout = createShadeButton(shade, ButtonType.SHADE);
             reusableShadesLayout.addView(buttonLayout);
         }
     }
 
 
-    private void assignShadesToReusableShadesLayout(List<Integer> shades, ButtonType buttonType){
+    private void assignShadesToReusableShadesLayout(List<Integer> shades){
         reusableShadesLayout = new LinearLayout(context);
         for(int i=0; i< reusableShadesLayout.getChildCount(); i++){
             LinearLayout wrapperLayout = (LinearLayout) reusableShadesLayout.getChildAt(i);
             Button button = (Button)wrapperLayout.getChildAt(0);
             int shade = shades.get(i);
-            String key = createColorKey(shade, buttonType);
+            String key = createColorKey(shade, ButtonType.SHADE);
             button.setBackgroundColor(shade);
             button.setTag(R.string.tag_button_key, key);
-        }
-        for(int shade: shades){
-            LinearLayout buttonLayout = createShadeButton(shade, buttonType);
-            reusableShadesLayout.addView(buttonLayout);
         }
     }
 

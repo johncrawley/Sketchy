@@ -221,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         colorButtonClickHandler.setShadesStore(shadesStore);
         colorButtonLayoutCreator.addColorButtonLayoutsTo(colorButtonGroupLayout);
         colorButtonClickHandler.setShadeLayoutsMap(colorButtonLayoutCreator.getShadeLayoutsMap());
+        colorButtonClickHandler.setReusableShadesLayout(colorButtonLayoutCreator.getReusableShadesLayout());
         colorButtonClickHandler.onClick(getDefaultColorButton());
     }
 
