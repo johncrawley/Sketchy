@@ -8,6 +8,7 @@ import android.graphics.RadialGradient;
 import android.graphics.Shader;
 
 import com.jacstuff.sketchy.brushes.shapes.Brush;
+import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.color.InfinityModeRandomGradientBlender;
 import com.jacstuff.sketchy.utils.ColorUtils;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -29,9 +30,11 @@ public class GradientHelper {
     private int gradientColor;
     private int linearStartX, linearStartY, linearEndX, linearEndY;
     private final InfinityModeRandomGradientBlender gradientBlender;
+    private KaleidoscopeHelper kaleidoscopeHelper;
 
-    public GradientHelper(MainViewModel viewModel){
+    public GradientHelper(MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
         this.viewModel = viewModel;
+        this.kaleidoscopeHelper = kaleidoscopeHelper;
         random = new Random(System.currentTimeMillis());
         gradientBlender = new InfinityModeRandomGradientBlender(random);
 
@@ -292,7 +295,7 @@ public class GradientHelper {
             case RANDOM:
                 return getRandomColor(shouldNewRandomColorBeAssigned);
             case RANDOM_BLEND:
-                return getNextRandomBlend();
+                return getNextRandomBlend(shouldNewRandomColorBeAssigned);
         }
         return Color.TRANSPARENT;
     }
@@ -300,8 +303,8 @@ public class GradientHelper {
 
     private int getRandomColor(boolean shouldNewRandomColorBeAssigned){
         if(shouldNewRandomColorBeAssigned){
-            if(viewModel.isInfinityModeEnabled){
-                return getNextRandomBlend();
+            if(kaleidoscopeHelper.isInfinityModeEnabled()){
+                return gradientBlender.getNextInfinityModeShade();
             }
             return ColorUtils.getRandomColor(random);
         }
@@ -309,8 +312,11 @@ public class GradientHelper {
     }
 
 
-    private int getNextRandomBlend(){
-        return gradientBlender.getNextInfinityModeShade();
+    private int getNextRandomBlend(boolean shouldNewRandomColorBeAssigned){
+        if(shouldNewRandomColorBeAssigned){
+                return gradientBlender.getNextInfinityModeShade();
+        }
+        return gradientColor;
     }
 
 }

@@ -28,11 +28,11 @@ public class PaintHelperManager {
     private final SensitivityHelper sensitivityHelper;
 
     public PaintHelperManager(MainActivity mainActivity, PaintView paintView, MainViewModel viewModel){
-        gradientHelper = new GradientHelper(viewModel);
         blurHelper = new BlurHelper();
         shadowHelper = new ShadowHelper(viewModel);
         angleHelper = new AngleHelper(viewModel);
         kaleidoscopeHelper = new KaleidoscopeHelper(paintView, viewModel);
+        gradientHelper = new GradientHelper(viewModel, kaleidoscopeHelper);
         styleHelper = new StyleHelper(mainActivity, paintView, viewModel);
         brushSizeSeekBarManager = new BrushSizeSeekBarManager(mainActivity);
         sizeHelper = new SizeHelper(viewModel, paintView, brushSizeSeekBarManager);
