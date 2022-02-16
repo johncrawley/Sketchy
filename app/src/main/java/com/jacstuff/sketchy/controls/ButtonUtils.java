@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.controls.colorbuttons.ButtonType;
+
 import java.util.List;
 import java.util.Set;
 
@@ -130,4 +132,40 @@ public class ButtonUtils {
     private View findViewById(int id){
         return activity.findViewById(id);
     }
+
+
+    public LinearLayout createShadeButton(final int color, ButtonType buttonType){
+        String key = createColorKey(color, buttonType);
+        Button button = createButton(color, buttonType, key);
+        return wrapInMarginLayout(buttonLayoutParams, button);
+    }
+
+
+    public String createColorKey(int color, ButtonType buttonType){
+        return buttonType + "_" + color;
+    }
+
+
+    public Button createButton(int color, ButtonType type, String key){
+        Button button = createGenericColorButton(type, key);
+        button.setTag(R.string.tag_button_color, color);
+        button.setBackgroundColor(color);
+        return button;
+    }
+
+
+    public Button createGenericColorButton(ButtonType type, String key){
+        Button button = new Button(activity);
+        button.setLayoutParams(buttonLayoutParams.getUnselected());
+        button.setTag(R.string.tag_button_type, type);
+        button.setId(View.generateViewId());
+        activity.getSettingsPopup().registerToIgnoreForLandscape(button.getId());
+        button.setTag(R.string.tag_button_key, key);
+        button.setTag(R.string.tag_button_category, ButtonCategory.COLOR_SELECTION);
+        setStandardWidthOn(button);
+        activity.getButtonReferenceStore().add(button);
+        button.setOnClickListener(activity);
+        return button;
+    }
+
 }

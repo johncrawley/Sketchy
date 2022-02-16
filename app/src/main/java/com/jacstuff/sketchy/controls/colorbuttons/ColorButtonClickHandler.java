@@ -45,7 +45,7 @@ public class ColorButtonClickHandler {
     private final ColorHelper colorHelper;
     private Button mainMultiColorButton;
 
-    private LinearLayout reusableShadesLayout;
+    private ReusableShadesLayoutHolder reusableShadesLayoutHolder;
 
     private Button colorMenuButton;
     private final Drawable multiColorDrawable;
@@ -110,8 +110,8 @@ public class ColorButtonClickHandler {
     }
 
 
-    public void setReusableShadesLayout(LinearLayout reusableShadesLayout){
-        this.reusableShadesLayout = reusableShadesLayout;
+    public void setReusableShadesLayoutHolder(ReusableShadesLayoutHolder reusableShadesLayoutHolder){
+        this.reusableShadesLayoutHolder = reusableShadesLayoutHolder;
     }
 
 
@@ -220,7 +220,7 @@ public class ColorButtonClickHandler {
         assignMultiSelector(button, colors);
         previouslySelectedColorButton = button;
         selectButton(button);
-        assignShadeLayoutFrom(button);
+        assignMultiShadeLayoutFrom(button);
         deselectButtons(shadeButtonsState.getSelected());
         shadeButtonsState.deselectMulti();
         isMostRecentClickAShade = false;
@@ -313,7 +313,7 @@ public class ColorButtonClickHandler {
 
 
     private void selectMultiShadeButton(Button button){
-        int buttonColor = (int)button.getTag(R.string.tag_button_color);
+        int buttonColor = getColorOf(button);
         currentColorSelector.add(buttonColor, getShadesFrom(button));
         button.setTag(buttonStatusTag, ButtonStatus.SELECTED);
         shadeButtonsState.setSelected(button);
@@ -328,6 +328,14 @@ public class ColorButtonClickHandler {
 
 
     private void assignShadeLayoutFrom(Button button){
+        shadesLayout.removeAllViews();
+        reusableShadesLayoutHolder.assignShadesToReusableShadesLayout(getColorOf(button));
+        LinearLayout reusableLayout = reusableShadesLayoutHolder.getLayout();
+        shadesLayout.addView(reusableLayout);
+    }
+
+
+    private void assignMultiShadeLayoutFrom(Button button){
         LinearLayout shadeLayout = shadeLayoutsMap.get(getKeyFrom(button));
         if (shadeLayout != null) {
             shadesLayout.removeAllViews();

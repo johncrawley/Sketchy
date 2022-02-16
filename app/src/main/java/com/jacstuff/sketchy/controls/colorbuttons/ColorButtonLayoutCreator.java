@@ -1,17 +1,13 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
 import com.jacstuff.sketchy.controls.ButtonUtils;
-import com.jacstuff.sketchy.ui.SettingsPopup;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
@@ -35,9 +31,8 @@ public class ColorButtonLayoutCreator {
     private final ButtonUtils buttonUtils;
     private final MainActivity activity;
     private final MultiShadeButtonIconDrawer multiShadeButtonIconDrawer;
-    private final SettingsPopup settingsPopup;
     private final MainViewModel viewModel;
-    private LinearLayout reusableShadesLayout;
+    private final ReusableShadesLayoutHolder reusableShadesLayoutHolder;
 
 
     public ColorButtonLayoutCreator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, final List<Integer> colors){
@@ -50,7 +45,7 @@ public class ColorButtonLayoutCreator {
         this.buttonLayoutParams = buttonLayoutParams;
         this.colors = colors;
         buttonUtils = new ButtonUtils(mainActivity);
-        settingsPopup = mainActivity.getSettingsPopup();
+        reusableShadesLayoutHolder = new ReusableShadesLayoutHolder(mainActivity, buttonUtils);
         setupColorAndShadeButtons();
     }
 
@@ -64,11 +59,6 @@ public class ColorButtonLayoutCreator {
 
     public Map<String, LinearLayout> getShadeLayoutsMap (){
         return this.shadeLayoutsMap;
-    }
-
-
-    public LinearLayout getReusableShadesLayout(){
-        return reusableShadesLayout;
     }
 
 
@@ -103,31 +93,34 @@ public class ColorButtonLayoutCreator {
         for(int color : colors){
             addColorAndShadeButtons(color);
         }
-        initReusableShadesLayout();
         addMultiColorButton();
         addMultiColorShadeButtons();
     }
 
 
     private void addColorAndShadeButtons(int color){
-        addColorButton(color, createColorKey(color, ButtonType.COLOR));
-        List<Integer> shades = colorShadeCreator.generateShadesFrom(color);
-        viewModel.buttonShadesStore.addShades(color, shades);
-        addShadesToLayoutMap(color, shades);
+        addColorButton(color);
+        List<Integer> shades = viewModel.buttonShadesStore.getShadesFor(color, colorShadeCreator);
+        reusableShadesLayoutHolder.initReusableShadesLayout();
         addMultiColorShades(color, shades);
-        addMultiColorShadesForSequences(color, colorShadeCreatorForSequences.generateShadesFrom(color));
+        addMultiColorShadesForSequences(color);
+    }
+
+
+    public ReusableShadesLayoutHolder getReusableShadesLayoutHolder(){
+        return this.reusableShadesLayoutHolder;
     }
 
 
     private void addMultiColorButton(){
-        Button button = createGenericColorButton(ButtonType.MULTICOLOR, MULTI_SHADE_KEY);
+        Button button = buttonUtils.createGenericColorButton(ButtonType.MULTICOLOR, MULTI_SHADE_KEY);
         button.setBackgroundResource(R.drawable.multi_color_button);
         buttonUtils.putButtonInLayoutAndAddToList(button, buttonLayoutParams, colorButtonLayouts);
     }
 
 
     private void addMultiColorShadeButtons(){
-        LinearLayout shadeLayout = createLayoutWithButtonsFrom(colors, ButtonType.MULTI_SHADE);
+        LinearLayout shadeLayout = createLayoutWithButtonsFrom(colors);
         shadeLayout.setId(R.id.multiShadeLayout);
         shadeLayoutsMap.put(MULTI_SHADE_KEY, shadeLayout);
     }
@@ -138,73 +131,31 @@ public class ColorButtonLayoutCreator {
     }
 
 
-    private void addMultiColorShadesForSequences(int color, List<Integer> shades){
-        multiColorShadesForSequences.put(color, shades);
+    private void addMultiColorShadesForSequences(int color){
+        multiColorShadesForSequences.put(color, viewModel.buttonShadesStore.getShadesFor(color, colorShadeCreatorForSequences));
     }
 
 
-    private void addShadesToLayoutMap(int color, List<Integer> shades){
-        LinearLayout shadeLayout = createLayoutWithButtonsFrom(shades, ButtonType.SHADE);
-        shadeLayoutsMap.put(createColorKey(color, ButtonType.COLOR), shadeLayout);
-    }
-
-
-    private LinearLayout createLayoutWithButtonsFrom(List<Integer> shades, ButtonType buttonType){
+    private LinearLayout createLayoutWithButtonsFrom(List<Integer> shades){
         LinearLayout shadeLayout = new LinearLayout(context);
         for(int shade: shades){
-            LinearLayout buttonLayout = createShadeButton(shade, buttonType);
+            LinearLayout buttonLayout = buttonUtils.createShadeButton(shade, ButtonType.MULTI_SHADE);
+            addDrawableToMultiShadeButton(buttonLayout, shade);
             shadeLayout.addView(buttonLayout);
         }
         return shadeLayout;
     }
 
 
-    private void initReusableShadesLayout(){
-        List<Integer> shades = colorShadeCreator.generateShadesFrom(Color.BLACK);
-        reusableShadesLayout = new LinearLayout(context);
-        for(int shade: shades){
-            LinearLayout buttonLayout = createShadeButton(shade, ButtonType.SHADE);
-            reusableShadesLayout.addView(buttonLayout);
-        }
+    private void addDrawableToMultiShadeButton(LinearLayout buttonLayout, int color){
+        Button button = (Button) buttonLayout.getChildAt(0);
+        multiShadeButtonIconDrawer.drawBackgroundOf(button, multiColorShades.get(color));
     }
 
 
-    private void assignShadesToReusableShadesLayout(List<Integer> shades){
-        reusableShadesLayout = new LinearLayout(context);
-        for(int i=0; i< reusableShadesLayout.getChildCount(); i++){
-            LinearLayout wrapperLayout = (LinearLayout) reusableShadesLayout.getChildAt(i);
-            Button button = (Button)wrapperLayout.getChildAt(0);
-            int shade = shades.get(i);
-            String key = createColorKey(shade, ButtonType.SHADE);
-            button.setBackgroundColor(shade);
-            button.setTag(R.string.tag_button_key, key);
-        }
-    }
-
-
-    private LinearLayout createShadeButton(final int color, ButtonType buttonType){
-        String key = createColorKey(color, buttonType);
-        Button button = createButton(color, buttonType, key);
-        if(buttonType == ButtonType.MULTI_SHADE){
-            addMultiShadeDrawableTo(button, color);
-        }
-        return buttonUtils.wrapInMarginLayout(buttonLayoutParams, button);
-    }
-
-
-    private void addMultiShadeDrawableTo(Button button, final int color){
-        final List<Integer> shades = multiColorShades.get(color);
-        multiShadeButtonIconDrawer.drawBackgroundOf(button, shades);
-    }
-
-
-    private String createColorKey(int color, ButtonType buttonType){
-        return buttonType + "_" + color;
-    }
-
-
-    private void addColorButton(int currentColor, String key){
-        Button button = createButton(currentColor, ButtonType.COLOR, key);
+    private void addColorButton(int color){
+        String key = buttonUtils.createColorKey(color, ButtonType.COLOR);
+        Button button = buttonUtils.createButton(color, ButtonType.COLOR, key);
         if(defaultColor.equals(key)){
             button.setTag(R.string.tag_button_default_color);
         }
@@ -213,29 +164,5 @@ public class ColorButtonLayoutCreator {
         }
         buttonUtils.putButtonInLayoutAndAddToList(button, buttonLayoutParams, colorButtonLayouts);
     }
-
-
-    private Button createButton(int color, ButtonType type, String key){
-        Button button = createGenericColorButton(type, key);
-        button.setTag(R.string.tag_button_color, color);
-        button.setBackgroundColor(color);
-        return button;
-    }
-
-
-    private Button createGenericColorButton(ButtonType type, String key){
-        Button button = new Button(context);
-        button.setLayoutParams(buttonLayoutParams.getUnselected());
-        button.setTag(R.string.tag_button_type, type);
-        button.setId(View.generateViewId());
-        settingsPopup.registerToIgnoreForLandscape(button.getId());
-        button.setTag(R.string.tag_button_key, key);
-        button.setTag(R.string.tag_button_category, ButtonCategory.COLOR_SELECTION);
-        buttonUtils.setStandardWidthOn(button);
-        activity.getButtonReferenceStore().add(button);
-        button.setOnClickListener(activity);
-        return button;
-    }
-
 
 }
