@@ -24,7 +24,6 @@ class ColorShadeCreator {
         List<Integer> shades = getDarkShadesFrom(color);
         List<Integer> lightShades= createShadesOf(color, true);
         shades.addAll(lightShades);
-
         return cropExtra(shades);
     }
 
@@ -35,6 +34,7 @@ class ColorShadeCreator {
         darkShades.remove(darkShades.size()-1);
         return darkShades;
     }
+
 
     private List<Integer> cropExtra(List<Integer> shades){
         int difference = shades.size() - NUMBER_OF_SHADES;
