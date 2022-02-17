@@ -26,6 +26,13 @@
     <integer name="shade_increment">7</integer>
     <integer name="shade_increment_denominator">100</integer>
 
+
+    <integer name="button_width">120</integer>
+    <integer name="button_height">120</integer>
+    <integer name="button_default_unselected_border_width">2</integer>
+    <integer name="button_default_selected_border_width">12</integer>
+    <integer name="color_button_selected_border_width">22</integer>
+
     <integer name="gradient_radius_max">200</integer>
     <integer name="gradient_radius_min">1</integer>
     <integer name="gradient_radius_default">170</integer>

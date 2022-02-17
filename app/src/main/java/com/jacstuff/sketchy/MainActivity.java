@@ -68,8 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ActivityResultLauncher <Intent> loadImageActivityResultLauncher;
     private ColorButtonLayoutCreator colorButtonLayoutCreator;
     private SeekBarConfigurator seekBarConfigurator;
-
-    private final ButtonLayoutParams colorButtonLayoutParams = new ButtonLayoutParams(120, 120, 22);
+    private ButtonLayoutParams colorButtonLayoutParams;
 
 
     @Override
@@ -79,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         settingsPopup = new SettingsPopup(findViewById(R.id.includedSettingsLayout), this);
         buttonReferenceStore = new ButtonReferenceStore();
         toaster = new Toaster(MainActivity.this);
+        colorButtonLayoutParams = new ButtonLayoutParams(MainActivity.this, R.integer.color_button_selected_border_width);
         imageSaver = new ImageSaver(this);
         seekBarConfigurator = new SeekBarConfigurator(this);
         setupViewModel();

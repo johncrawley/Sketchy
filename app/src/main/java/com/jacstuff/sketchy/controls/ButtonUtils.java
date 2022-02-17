@@ -20,7 +20,7 @@ public class ButtonUtils {
 
     public ButtonUtils(MainActivity activity){
         this.activity = activity;
-        buttonLayoutParams = new ButtonLayoutParams(120, 120, 15, 2);
+        buttonLayoutParams = new ButtonLayoutParams(activity);
     }
 
 
