@@ -90,6 +90,7 @@ public class ColorButtonLayoutCreator {
 
 
     private void setupColorAndShadeButtons(){
+        reusableShadesLayoutHolder.initReusableShadesLayout();
         for(int color : colors){
             addColorAndShadeButtons(color);
         }
@@ -101,7 +102,6 @@ public class ColorButtonLayoutCreator {
     private void addColorAndShadeButtons(int color){
         addColorButton(color);
         List<Integer> shades = viewModel.buttonShadesStore.getShadesFor(color, colorShadeCreator);
-        reusableShadesLayoutHolder.initReusableShadesLayout();
         addMultiColorShades(color, shades);
         addMultiColorShadesForSequences(color);
     }

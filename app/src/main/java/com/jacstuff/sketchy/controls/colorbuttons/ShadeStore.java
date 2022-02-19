@@ -33,7 +33,4 @@ public class ShadeStore {
         return shadesMap.get(key);
     }
 
-
-
-
 }

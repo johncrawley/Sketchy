@@ -69,12 +69,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ColorButtonLayoutCreator colorButtonLayoutCreator;
     private SeekBarConfigurator seekBarConfigurator;
     private ButtonLayoutParams colorButtonLayoutParams;
-
+    Profiler profiler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+         profiler = new Profiler();
         settingsPopup = new SettingsPopup(findViewById(R.id.includedSettingsLayout), this);
         buttonReferenceStore = new ButtonReferenceStore();
         toaster = new Toaster(MainActivity.this);
@@ -86,10 +87,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initPaintHelperManager();
         setupColorAndShadeButtons();
         setupSettingsButtons();
+
         viewModelHelper.init(colorButtonClickHandler, paintView);
+
         setupColorAutoScroll();
+
         initActivityResultLauncher();
         initActivityResultLauncherForLoad();
+        profiler.stop();
     }
 
 
@@ -215,10 +220,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
         colorButtonClickHandler = new ColorButtonClickHandler(this, colorButtonLayoutParams);
         colorButtonClickHandler.setColorsMap(colors);
+        profiler.start();
         colorButtonLayoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams, colors);
         ShadesStore shadesStore = new ShadesStore();
         shadesStore.setShades(colorButtonLayoutCreator.getMultiColorShadesForSequences());
         colorButtonClickHandler.setShadesStore(shadesStore);
+        profiler.start();
         colorButtonLayoutCreator.addColorButtonLayoutsTo(colorButtonGroupLayout);
         colorButtonClickHandler.setShadeLayoutsMap(colorButtonLayoutCreator.getShadeLayoutsMap());
         colorButtonClickHandler.setReusableShadesLayoutHolder(colorButtonLayoutCreator.getReusableShadesLayoutHolder());
