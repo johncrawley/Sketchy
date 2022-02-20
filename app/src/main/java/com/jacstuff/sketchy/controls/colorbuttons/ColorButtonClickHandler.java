@@ -7,7 +7,6 @@ import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.multicolor.ShadesStore;
 import com.jacstuff.sketchy.paintview.helpers.color.ColorHelper;
 import com.jacstuff.sketchy.utils.ActivityUtils;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -28,12 +27,10 @@ import androidx.appcompat.content.res.AppCompatResources;
 public class ColorButtonClickHandler {
 
     private Button previouslySelectedShadeButton, previouslySelectedColorButton, previouslySelectedButton;
-    private List<Integer> colors;
     private final ButtonLayoutParams buttonLayoutParams;
     private Map<String, LinearLayout> shadeLayoutsMap;
     private boolean isMostRecentClickAShade = false; //for use when selecting a button after rotate/resume
     private final LinearLayout shadesLayout;
-    private ShadesStore shadesStore;
     private Map<ButtonType, ColorSelector> colorSelectors;
     private final MainActivity mainActivity;
     private ColorSelector currentColorSelector;
@@ -85,11 +82,6 @@ public class ColorButtonClickHandler {
     }
 
 
-    public void setColorsMap(final List<Integer> colors){
-       this.colors = colors;
-    }
-
-
     public String getMostRecentColorButtonKey(){
         return buttonReferenceStore.getKeyFrom(previouslySelectedColorButton);
     }
@@ -112,11 +104,6 @@ public class ColorButtonClickHandler {
 
     public void setReusableShadesLayoutHolder(ReusableShadesLayoutHolder reusableShadesLayoutHolder){
         this.reusableShadesLayoutHolder = reusableShadesLayoutHolder;
-    }
-
-
-    public void setShadesStore(ShadesStore shadesStore){
-        this.shadesStore = shadesStore;
     }
 
 
@@ -217,7 +204,7 @@ public class ColorButtonClickHandler {
 
     private void onMultiColorButtonClick(Button button){
         deselectPreviousButtons();
-        assignMultiSelector(button, colors);
+        assignMultiSelector(button, mainViewModel.mainColors);
         previouslySelectedColorButton = button;
         selectButton(button);
         assignMultiShadeLayoutFrom(button);
@@ -373,7 +360,7 @@ public class ColorButtonClickHandler {
 
     private List<Integer> getShadesFrom(Button button){
         int color = (int)button.getTag(R.string.tag_button_color);
-        return shadesStore.getShadesFor(color);
+        return mainViewModel.sequenceShadeStore.getShadesOf(color);
     }
 
 

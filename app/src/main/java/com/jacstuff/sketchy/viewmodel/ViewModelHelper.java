@@ -9,12 +9,14 @@ import com.jacstuff.sketchy.brushes.AngleType;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.ButtonUtils;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
+import com.jacstuff.sketchy.controls.colorbuttons.ColorShadeCreator;
 import com.jacstuff.sketchy.controls.colorbuttons.ShadeStore;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -56,7 +58,18 @@ public class ViewModelHelper {
         }
         if(viewModel.sequenceShadeStore == null){
             viewModel.sequenceShadeStore = new ShadeStore();
+            int numberOfSequenceShades  = getInt(R.integer.color_sequences_shade_number);
+            int shadeIncrement          = getInt(R.integer.color_sequences_step_size);
+            viewModel.sequenceShadeStore.setShadeCreator(new ColorShadeCreator(numberOfSequenceShades, shadeIncrement));
         }
+        if(viewModel.mainColors == null){
+            viewModel.mainColors = new ArrayList<>(50);
+        }
+    }
+
+
+    private int getInt(int resId){
+        return mainActivity.getResources().getInteger(resId);
     }
 
 

@@ -45,6 +45,8 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public Map<ButtonCategory, Integer> settingsButtonsClickMap;
     public ShadeStore buttonShadesStore;
     public ShadeStore sequenceShadeStore;
+    public List<Integer> mainColors;
+    public int numberOfSequenceShadesForButtons;
 
 
     public boolean isKaleidoscopeCentred = true;

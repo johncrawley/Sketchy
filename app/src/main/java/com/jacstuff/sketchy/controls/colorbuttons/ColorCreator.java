@@ -11,6 +11,14 @@ public class ColorCreator {
     private ColorCreator(){}
 
 
+    public static void generateMainColorsAndAddTo(List<Integer> emptyList){
+        if(!emptyList.isEmpty()){
+            return;
+        }
+        emptyList.addAll(generate());
+    }
+
+
     public static List<Integer> generate(){
         List<Integer> colors = new ArrayList<>();
 
@@ -38,11 +46,11 @@ public class ColorCreator {
         return colors;
     }
 
+
     private static void add(List<Integer> list, String key, int r, int g, int b){
         int color = ColorConverter.getIntFrom(r,g,b);
         add(list, key, color);
     }
-
 
 
     private static void add(List<Integer> list, String key, int colorCode){

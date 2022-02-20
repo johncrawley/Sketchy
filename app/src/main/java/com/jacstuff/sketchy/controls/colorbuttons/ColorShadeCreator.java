@@ -9,12 +9,12 @@ import java.util.List;
 
 import static com.jacstuff.sketchy.utils.ColorUtils.Rgb.*;
 
-class ColorShadeCreator {
+public class ColorShadeCreator {
 
     private final int NUMBER_OF_SHADES;
     private final int SHADE_INCREMENT;
 
-    ColorShadeCreator(int numberOfShades, int shadeIncrement){
+    public ColorShadeCreator(int numberOfShades, int shadeIncrement){
         NUMBER_OF_SHADES = numberOfShades;
         SHADE_INCREMENT = shadeIncrement;
     }

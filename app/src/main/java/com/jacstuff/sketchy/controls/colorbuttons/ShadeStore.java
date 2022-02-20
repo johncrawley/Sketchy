@@ -8,13 +8,29 @@ import java.util.Map;
 public class ShadeStore {
 
     private final Map<Integer, List<Integer>> shadesMap;
+    private ColorShadeCreator colorShadeCreator;
+
 
     public ShadeStore(){
         shadesMap = new HashMap<>();
     }
 
+
     public void addShades(int key, List<Integer> shades){
         shadesMap.put(key, shades);
+    }
+
+
+    public void setShadeCreator(ColorShadeCreator colorShadeCreator){
+        this.colorShadeCreator = colorShadeCreator;
+    }
+
+
+    public List<Integer> getShadesOf(int key){
+        if(colorShadeCreator != null){
+            return getShadesFor(key, colorShadeCreator);
+        }
+        return new ArrayList<>();
     }
 
 

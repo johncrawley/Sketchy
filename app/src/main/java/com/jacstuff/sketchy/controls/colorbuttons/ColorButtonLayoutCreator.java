@@ -18,12 +18,10 @@ import java.util.Map;
 
 public class ColorButtonLayoutCreator {
 
-    private ColorShadeCreator colorShadeCreator, colorShadeCreatorForSequences;
+    private ColorShadeCreator colorShadeCreator;
     private final Map<Integer, List<Integer>> multiColorShades = new HashMap<>();
-    private final Map<Integer, List<Integer>> multiColorShadesForSequences = new HashMap<>();
     private final List<LinearLayout> colorButtonLayouts = new ArrayList<>();
     private final Context context;
-    private final List<Integer> colors;
     private final Map<String, LinearLayout> shadeLayoutsMap = new HashMap<>();
     private final String MULTI_SHADE_KEY = "multi shade key";
     private final ButtonLayoutParams buttonLayoutParams;
@@ -35,15 +33,14 @@ public class ColorButtonLayoutCreator {
     private final ReusableShadesLayoutHolder reusableShadesLayoutHolder;
 
 
-    public ColorButtonLayoutCreator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, final List<Integer> colors){
+    public ColorButtonLayoutCreator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams){
         this.context = mainActivity.getApplicationContext();
         this.viewModel = mainActivity.getViewModel();
         this.activity = mainActivity;
         defaultColor = mainActivity.getString(R.string.default_color);
-        multiShadeButtonIconDrawer = new MultiShadeButtonIconDrawer(activity, activity.getViewModel());
+        multiShadeButtonIconDrawer = new MultiShadeButtonIconDrawer(activity, viewModel);
         setupColorShadeCreator();
         this.buttonLayoutParams = buttonLayoutParams;
-        this.colors = colors;
         buttonUtils = new ButtonUtils(mainActivity);
         reusableShadesLayoutHolder = new ReusableShadesLayoutHolder(mainActivity, buttonUtils);
         setupColorAndShadeButtons();
@@ -67,31 +64,21 @@ public class ColorButtonLayoutCreator {
     }
 
 
-    public Map<Integer, List<Integer>> getMultiColorShadesForSequences(){
-        return this.multiColorShadesForSequences;
+    public ReusableShadesLayoutHolder getReusableShadesLayoutHolder(){
+        return this.reusableShadesLayoutHolder;
     }
 
 
     private void setupColorShadeCreator(){
-
-        int numberOfSequenceShades  = getRes(R.integer.color_sequences_shade_number);
-        int shadeIncrement          = getRes(R.integer.color_sequences_step_size);
-        colorShadeCreatorForSequences = new ColorShadeCreator(numberOfSequenceShades, shadeIncrement);
-
-        int numberOfSequenceShadesForButtons = getRes(R.integer.color_sequences_for_buttons_shade_number);
-        int shadeIncrementForButtons         = getRes(R.integer.color_sequences_for_buttons_step_size);
-        colorShadeCreator = new ColorShadeCreator(numberOfSequenceShadesForButtons, shadeIncrementForButtons);
-    }
-
-
-    private int getRes(int resId){
-        return activity.getResources().getInteger(resId);
+        viewModel.numberOfSequenceShadesForButtons = getInt(R.integer.color_sequences_for_buttons_shade_number);
+        int shadeIncrementForButtons         = getInt(R.integer.color_sequences_for_buttons_step_size);
+        colorShadeCreator = new ColorShadeCreator(viewModel.numberOfSequenceShadesForButtons, shadeIncrementForButtons);
     }
 
 
     private void setupColorAndShadeButtons(){
-        reusableShadesLayoutHolder.initReusableShadesLayout();
-        for(int color : colors){
+        reusableShadesLayoutHolder.initReusableShadesLayout(colorShadeCreator);
+        for(int color : viewModel.mainColors){
             addColorAndShadeButtons(color);
         }
         addMultiColorButton();
@@ -103,12 +90,6 @@ public class ColorButtonLayoutCreator {
         addColorButton(color);
         List<Integer> shades = viewModel.buttonShadesStore.getShadesFor(color, colorShadeCreator);
         addMultiColorShades(color, shades);
-        addMultiColorShadesForSequences(color);
-    }
-
-
-    public ReusableShadesLayoutHolder getReusableShadesLayoutHolder(){
-        return this.reusableShadesLayoutHolder;
     }
 
 
@@ -120,7 +101,7 @@ public class ColorButtonLayoutCreator {
 
 
     private void addMultiColorShadeButtons(){
-        LinearLayout shadeLayout = createLayoutWithButtonsFrom(colors);
+        LinearLayout shadeLayout = createLayoutWithButtonsFrom(viewModel.mainColors);
         shadeLayout.setId(R.id.multiShadeLayout);
         shadeLayoutsMap.put(MULTI_SHADE_KEY, shadeLayout);
     }
@@ -128,11 +109,6 @@ public class ColorButtonLayoutCreator {
 
     private void addMultiColorShades(int color, List<Integer> shades){
         multiColorShades.put(color, shades);
-    }
-
-
-    private void addMultiColorShadesForSequences(int color){
-        multiColorShadesForSequences.put(color, viewModel.buttonShadesStore.getShadesFor(color, colorShadeCreatorForSequences));
     }
 
 
@@ -163,6 +139,11 @@ public class ColorButtonLayoutCreator {
             button.setTag(R.string.tag_button_color_button);
         }
         buttonUtils.putButtonInLayoutAndAddToList(button, buttonLayoutParams, colorButtonLayouts);
+    }
+
+
+    private int getInt(int resId){
+        return activity.getResources().getInteger(resId);
     }
 
 }

@@ -35,7 +35,6 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.io.ImageSaver;
-import com.jacstuff.sketchy.multicolor.ShadesStore;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.utils.Toaster;
@@ -45,8 +44,6 @@ import com.jacstuff.sketchy.tasks.ColorAutoScroller;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.io.ByteArrayOutputStream;
-import java.util.List;
-
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -216,16 +213,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     void setupColorAndShadeButtons(){
-        List<Integer> colors = ColorCreator.generate();
+        ColorCreator.generateMainColorsAndAddTo(viewModel.mainColors);
         colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
         colorButtonClickHandler = new ColorButtonClickHandler(this, colorButtonLayoutParams);
-        colorButtonClickHandler.setColorsMap(colors);
-        profiler.start();
-        colorButtonLayoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams, colors);
-        ShadesStore shadesStore = new ShadesStore();
-        shadesStore.setShades(colorButtonLayoutCreator.getMultiColorShadesForSequences());
-        colorButtonClickHandler.setShadesStore(shadesStore);
-        profiler.start();
+        colorButtonLayoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams);
         colorButtonLayoutCreator.addColorButtonLayoutsTo(colorButtonGroupLayout);
         colorButtonClickHandler.setShadeLayoutsMap(colorButtonLayoutCreator.getShadeLayoutsMap());
         colorButtonClickHandler.setReusableShadesLayoutHolder(colorButtonLayoutCreator.getReusableShadesLayoutHolder());

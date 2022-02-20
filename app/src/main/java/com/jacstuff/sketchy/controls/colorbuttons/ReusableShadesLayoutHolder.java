@@ -31,8 +31,8 @@ public class ReusableShadesLayoutHolder {
     }
 
 
-    public void initReusableShadesLayout(){
-        List<Integer> shades = viewModel.buttonShadesStore.getShadesFor(Color.BLACK);
+    public void initReusableShadesLayout(ColorShadeCreator colorShadeCreator){
+        List<Integer> shades = viewModel.buttonShadesStore.getShadesFor(Color.BLACK, colorShadeCreator);
         reusableShadesLayout = new LinearLayout(context);
         for(int shade: shades){
             LinearLayout buttonLayout = buttonUtils.createShadeButton(shade, ButtonType.SHADE);
@@ -43,8 +43,11 @@ public class ReusableShadesLayoutHolder {
 
     public void assignShadesToReusableShadesLayout(int color){
         List<Integer> shades = viewModel.buttonShadesStore.getShadesFor(color);
-        for(int i=0; i< reusableShadesLayout.getChildCount(); i++){
+        for(int i=0; i< viewModel.numberOfSequenceShadesForButtons; i++){
             LinearLayout wrapperLayout = (LinearLayout) reusableShadesLayout.getChildAt(i);
+            if(wrapperLayout == null){
+                return;
+            }
             Button button = (Button)wrapperLayout.getChildAt(0);
             int shade = shades.get(i);
             String key = buttonUtils.createColorKey(shade, ButtonType.SHADE);
