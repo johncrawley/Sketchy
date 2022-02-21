@@ -4,13 +4,16 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.paintview.PaintGroup;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class DashedStyle extends AbstractStyle implements Style {
 
     private PaintGroup paintGroup;
+    private final MainViewModel viewModel;
 
-    public DashedStyle(PaintGroup paintGroup){
+    public DashedStyle(PaintGroup paintGroup, MainViewModel viewModel){
         this.paintGroup = paintGroup;
+        this.viewModel = viewModel;
         assignPath();
     }
 
@@ -25,10 +28,8 @@ public class DashedStyle extends AbstractStyle implements Style {
 
 
     private void assignPath(){
-        float lineWidthFactor = paintGroup.getLineWidth() / 2;
-        float baseOffStroke = 30;
-        float onStroke = 6;
-        float offStroke = baseOffStroke + lineWidthFactor;
+        float onStroke = 1 + viewModel.dottedStyleDashLength;
+        float offStroke = 2 + viewModel.dottedStyleSpacing;
         paintGroup.setPathEffect(new DashPathEffect(new float[] {onStroke, offStroke}, 0));
     }
 

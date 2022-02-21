@@ -117,7 +117,7 @@
     <item name="trapezoidShapeButton" type="id"/>
     <item name="parallelogramShapeButton" type="id"/>
 
-    <item name="brokenOutlineStyleButton" type="id"/>
+    <item name="dottedStyleButton" type="id"/>
     <item name="fillStyleButton" type="id"/>
     <item name="outlineStyleButton" type="id"/>
     <item name="jaggedStyleButton" type="id"/>

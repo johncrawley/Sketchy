@@ -71,12 +71,19 @@
     <integer name="astroid_shape_curve_seek_bar_default">150</integer>
     <integer name="astroid_shape_curve_seek_bar_max">530</integer>
 
+    <integer name="style_dashed_length_default">15</integer>
+    <integer name="style_dashed_length_max">150</integer>
+
+    <integer name="style_dashed_spacing_default">15</integer>
+    <integer name="style_dashed_spacing_max">150</integer>
+
 
     <integer name="size_sequence_max_default">100</integer>
     <integer name="size_sequence_min_default">10</integer>
     <integer name="size_sequence_step_default">5</integer>
     <integer name="size_sequence_step_min">1</integer>
     <integer name="size_sequence_step_max">20</integer>
+
 
 
     <integer name="quantization_spacing_max">100</integer>

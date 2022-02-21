@@ -76,7 +76,7 @@ public class StyleHelper {
         styleMap = new HashMap<>();
         styleMap.put(BrushStyle.FILL, new FillStyle());
         styleMap.put(BrushStyle.OUTLINE,           new OutlineStyle());
-        styleMap.put(BrushStyle.BROKEN_OUTLINE,    new DashedStyle(paintGroup));
+        styleMap.put(BrushStyle.BROKEN_OUTLINE,    new DashedStyle(paintGroup, viewModel));
         styleMap.put(BrushStyle.JAGGED,            new JaggedStyle(paintGroup));
         styleMap.put(BrushStyle.WAVY,              new WavyStyle(paintGroup, viewModel));
         styleMap.put(BrushStyle.SPIKED,            new SpikedStyle(paintGroup));

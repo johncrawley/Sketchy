@@ -117,6 +117,9 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int wavyStyleLength = 1;
     public int wavyStyleHeight = 5;
 
+    public int dottedStyleDashLength = 15;
+    public int dottedStyleSpacing = 15;
+
     public Map<Integer, Drawable> buttonDrawableMap;
 
 

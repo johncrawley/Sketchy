@@ -18,6 +18,7 @@ public class StyleSettings extends AbstractButtonConfigurator<BrushStyle> implem
         setupSpinners();
 
         subPanelManager.add(R.id.wavyStyleButton, R.id.wavyStyleSettingsPanel);
+        subPanelManager.add(R.id.dottedStyleButton, R.id.dashedStyleSettingsPanel);
     }
 
 
@@ -27,7 +28,7 @@ public class StyleSettings extends AbstractButtonConfigurator<BrushStyle> implem
                 this,
                 ButtonCategory.STYLE,
                 R.id.styleOptionsLayout);
-        buttonConfig.add(R.id.brokenOutlineStyleButton, R.drawable.button_style_dotted,      BrushStyle.BROKEN_OUTLINE);
+        buttonConfig.add(R.id.dottedStyleButton, R.drawable.button_style_dotted,      BrushStyle.BROKEN_OUTLINE);
         buttonConfig.add(R.id.fillStyleButton,          R.drawable.button_style_fill,        BrushStyle.FILL);
         buttonConfig.add(R.id.outlineStyleButton,       R.drawable.button_style_outline,     BrushStyle.OUTLINE);
         buttonConfig.add(R.id.jaggedStyleButton,        R.drawable.button_style_jagged,      BrushStyle.JAGGED);
@@ -74,6 +75,24 @@ public class StyleSettings extends AbstractButtonConfigurator<BrushStyle> implem
                 progress -> {
                     if(paintView != null) {
                         viewModel.wavyStyleHeight = progress;
+                        paintHelperManager.getStyleHelper().initCurrentStyle();
+                    }
+                });
+
+        seekBarConfigurator.configure(R.id.dashedStyleDashLengthSeekBar,
+                R.integer.style_dashed_length_default,
+                progress -> {
+                    if(paintView != null) {
+                        viewModel.dottedStyleDashLength = progress;
+                        paintHelperManager.getStyleHelper().initCurrentStyle();
+                    }
+                });
+
+        seekBarConfigurator.configure(R.id.dashedStyleSpacingSeekBar,
+                R.integer.style_dashed_spacing_default,
+                progress -> {
+                    if(paintView != null) {
+                        viewModel.dottedStyleSpacing = progress;
                         paintHelperManager.getStyleHelper().initCurrentStyle();
                     }
                 });
