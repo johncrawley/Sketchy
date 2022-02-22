@@ -114,6 +114,9 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public boolean isRectangleSnappedToEdges = true;
     public int rectangleSnapBounds = 28;
 
+    public boolean doesRandomBrushMorph = true;
+    public int randomBrushNumberOfPoints = 7;
+
     public int wavyStyleLength = 1;
     public int wavyStyleHeight = 5;
 
