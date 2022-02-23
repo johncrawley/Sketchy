@@ -11,7 +11,7 @@ public class SpikedStyle extends AbstractStyle implements Style {
     private PathDashPathEffect pathDashPathEffect;
     private PaintGroup paintGroup;
 
-    public SpikedStyle(PaintGroup paintGroup){
+    public SpikedStyle(){
         pathDashPathEffect = new PathDashPathEffect(createPath(20), 12, 5, PathDashPathEffect.Style.ROTATE);
     }
 
@@ -26,7 +26,6 @@ public class SpikedStyle extends AbstractStyle implements Style {
 
 
     private static Path createPath(float lineWidthFactor) {
-
         Path p = new Path();
         p.moveTo(1 * lineWidthFactor, 1);
         p.lineTo(1,-1);

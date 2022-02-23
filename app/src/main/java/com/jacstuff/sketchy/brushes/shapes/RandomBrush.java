@@ -17,6 +17,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
     private final List<Point> points, targetPoints;
     private final MainViewModel viewModel;
     private final Random random;
+    private int quarterBrushSize;
 
 
     public RandomBrush(MainViewModel viewModel) {
@@ -34,6 +35,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
     public void setBrushSize(int brushSize) {
         super.setBrushSize(brushSize);
         setRandomPoints();
+        quarterBrushSize = halfBrushSize /2;
     }
 
 
@@ -117,10 +119,9 @@ public class RandomBrush extends AbstractBrush implements Brush {
 
 
     private int createRandomCoordinate(){
-        int bound = Math.max(2, brushSize);
-        return -halfBrushSize + random.nextInt(bound);
+        int value = quarterBrushSize + random.nextInt(2 + quarterBrushSize);
+        return random.nextBoolean() ? value : value * -1;
     }
-
 
 
 }

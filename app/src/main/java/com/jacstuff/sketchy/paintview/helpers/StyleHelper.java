@@ -42,62 +42,6 @@ public class StyleHelper {
     }
 
 
-    private void setupStrokeMap(){
-        strokeCapMap = new HashMap<>(3);
-        put(strokeCapMap, R.string.stroke_cap_spinner_round_item,  Paint.Cap.ROUND);
-        put(strokeCapMap, R.string.stroke_cap_spinner_square_item, Paint.Cap.SQUARE);
-        put(strokeCapMap, R.string.stroke_cap_spinner_butt_item,   Paint.Cap.BUTT);
-    }
-
-
-    private void setupJoinMap(){
-        strokeJoinMap = new HashMap<>(3);
-        put(strokeJoinMap, R.string.stroke_join_spinner_mitre_item, Paint.Join.MITER);
-        put(strokeJoinMap, R.string.stroke_join_spinner_round_item, Paint.Join.ROUND);
-        put(strokeJoinMap, R.string.stroke_join_spinner_bevel_item, Paint.Join.BEVEL);
-    }
-
-
-    public void setBrushStyle(BrushStyle brushStyle){
-        currentStyle = styleMap.get(brushStyle);
-        initCurrentStyle();
-        paintView.getCurrentBrush().setStyle(currentStyle);
-    }
-
-    public Style getCurrentStyle(){
-        return currentStyle;
-    }
-
-    public void initCurrentStyle(){
-        currentStyle.init(paintGroup, (int)paintGroup.getLineWidth());
-    }
-
-    private void setupStyleMap(){
-        styleMap = new HashMap<>();
-        styleMap.put(BrushStyle.FILL, new FillStyle());
-        styleMap.put(BrushStyle.OUTLINE,           new OutlineStyle());
-        styleMap.put(BrushStyle.BROKEN_OUTLINE,    new DashedStyle(paintGroup, viewModel));
-        styleMap.put(BrushStyle.JAGGED,            new JaggedStyle(paintGroup));
-        styleMap.put(BrushStyle.WAVY,              new WavyStyle(paintGroup, viewModel));
-        styleMap.put(BrushStyle.SPIKED,            new SpikedStyle(paintGroup));
-        styleMap.put(BrushStyle.DOUBLE_EDGE,       new DoubleEdgeStyle(paintGroup));
-        styleMap.put(BrushStyle.TRANSLATE,         new TranslateStyle(paintGroup));
-
-        currentStyle = styleMap.get(BrushStyle.FILL);
-    }
-
-
-    private <T> void put(Map<String, T> map, int id, T item){
-        String str = getStr(id);
-        map.put(str, item);
-    }
-
-
-    private String getStr(int resId){
-        return context.getResources().getString(resId);
-    }
-
-
     public void init(PaintGroup paintGroup){
         this.paintGroup = paintGroup;
         setupStyleMap();
@@ -117,6 +61,65 @@ public class StyleHelper {
         if(strokeJoin != null){
             paintGroup.setStrokeJoin(strokeJoin);
         }
+    }
+
+
+    public void setBrushStyle(BrushStyle brushStyle){
+        currentStyle = styleMap.get(brushStyle);
+        initCurrentStyle();
+        paintView.getCurrentBrush().setStyle(currentStyle);
+    }
+
+
+    public Style getCurrentStyle(){
+        return currentStyle;
+    }
+
+
+    public void initCurrentStyle(){
+        currentStyle.init(paintGroup, (int)paintGroup.getLineWidth());
+    }
+
+
+    private void setupStrokeMap(){
+        strokeCapMap = new HashMap<>(3);
+        put(strokeCapMap, R.string.stroke_cap_spinner_round_item,  Paint.Cap.ROUND);
+        put(strokeCapMap, R.string.stroke_cap_spinner_square_item, Paint.Cap.SQUARE);
+        put(strokeCapMap, R.string.stroke_cap_spinner_butt_item,   Paint.Cap.BUTT);
+    }
+
+
+    private void setupJoinMap(){
+        strokeJoinMap = new HashMap<>(3);
+        put(strokeJoinMap, R.string.stroke_join_spinner_mitre_item, Paint.Join.MITER);
+        put(strokeJoinMap, R.string.stroke_join_spinner_round_item, Paint.Join.ROUND);
+        put(strokeJoinMap, R.string.stroke_join_spinner_bevel_item, Paint.Join.BEVEL);
+    }
+
+
+    private void setupStyleMap(){
+        styleMap = new HashMap<>();
+        styleMap.put(BrushStyle.FILL, new FillStyle());
+        styleMap.put(BrushStyle.OUTLINE,           new OutlineStyle());
+        styleMap.put(BrushStyle.BROKEN_OUTLINE,    new DashedStyle(paintGroup, viewModel));
+        styleMap.put(BrushStyle.JAGGED,            new JaggedStyle(paintGroup));
+        styleMap.put(BrushStyle.WAVY,              new WavyStyle(paintGroup, viewModel));
+        styleMap.put(BrushStyle.SPIKED,            new SpikedStyle());
+        styleMap.put(BrushStyle.DOUBLE_EDGE,       new DoubleEdgeStyle(paintGroup));
+        styleMap.put(BrushStyle.TRANSLATE,         new TranslateStyle(paintGroup));
+
+        currentStyle = styleMap.get(BrushStyle.FILL);
+    }
+
+
+    private <T> void put(Map<String, T> map, int id, T item){
+        String str = getStr(id);
+        map.put(str, item);
+    }
+
+
+    private String getStr(int resId){
+        return context.getResources().getString(resId);
     }
 
 }
