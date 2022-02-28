@@ -34,6 +34,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         layout="@layout/settings_panel_astroid_shape" />
 
+
+    <include
+        android:id="@+id/settingsPanelRandomBrushInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        layout="@layout/settings_panel_brush_random" />
+
     <LinearLayout
         android:id="@+id/settingsPanelRectangle"
         android:orientation="vertical"

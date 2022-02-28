@@ -26,6 +26,8 @@
     <integer name="shade_increment">7</integer>
     <integer name="shade_increment_denominator">100</integer>
 
+    <integer name="brush_random_vertices_default">0</integer>
+    <integer name="brush_random_vertices_max">8</integer>
 
     <integer name="button_width">120</integer>
     <integer name="button_height">120</integer>

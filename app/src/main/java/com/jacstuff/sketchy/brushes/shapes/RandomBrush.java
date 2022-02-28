@@ -81,7 +81,8 @@ public class RandomBrush extends AbstractBrush implements Brush {
 
     private void addRandomPoints(List<Point> list){
         list.clear();
-        for(int i=0; i < viewModel.randomBrushNumberOfPoints; i++){
+        int numberOfVertices = 3 + viewModel.randomBrushNumberOfPoints;
+        for(int i=0; i < numberOfVertices; i++){
             list.add(createRandomPoint());
         }
     }

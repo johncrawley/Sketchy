@@ -22,6 +22,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         subPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
         subPanelManager.add(R.id.astroidShapeButton, R.id.settingsPanelAstroidShapeInclude);
         subPanelManager.add(R.id.rectangleShapeButton, R.id.settingsPanelRectangle);
+        subPanelManager.add(R.id.randomShapeButton, R.id.settingsPanelRandomBrushInclude);
         new TextControls(activity, paintView.getPaintGroup(), seekBarConfigurator);
         minBrushSize = activity.getResources().getInteger(R.integer.brush_size_min_default);
     }
@@ -86,6 +87,14 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         seekBarConfigurator.configure(R.id.colorTransparencySeekBar,
                 R.integer.color_transparency_default,
                 progress -> paintHelperManager.getColorHelper().updateTransparency(progress));
+
+
+        seekBarConfigurator.configure(R.id.randomShapeVerticesSeekBar,
+                R.integer.brush_random_vertices_default,
+                progress -> {
+                    viewModel.randomBrushNumberOfPoints = progress;
+                    paintView.recalculateBrush();
+                } );
 
         seekBarConfigurator.configure(R.id.astroidShapeCurveSeekBar,
                 R.integer.astroid_shape_curve_seek_bar_default,
