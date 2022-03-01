@@ -117,5 +117,8 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
 
         SwitchMaterial rectangleBrushSnapToEdges = activity.findViewById(R.id.rectangleSnapToEdgesSwitch);
         rectangleBrushSnapToEdges.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isRectangleSnappedToEdges = isChecked);
+
+        SwitchMaterial randomShapeMorph = activity.findViewById(R.id.randomBrushMorphEnabledSwitch);
+        randomShapeMorph.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.doesRandomBrushMorph = isChecked);
     }
 }

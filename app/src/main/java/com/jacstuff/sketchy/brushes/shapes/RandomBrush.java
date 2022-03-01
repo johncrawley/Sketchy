@@ -18,6 +18,9 @@ public class RandomBrush extends AbstractBrush implements Brush {
     private final MainViewModel viewModel;
     private final Random random;
     private int quarterBrushSize;
+    private int xSign = 1;
+    private int ySign = 1;
+    private boolean wasXSignAdjustedLast;
 
 
     public RandomBrush(MainViewModel viewModel) {
@@ -115,14 +118,26 @@ public class RandomBrush extends AbstractBrush implements Brush {
 
 
     private Point createRandomPoint(){
-       return new Point(createRandomCoordinate(), createRandomCoordinate());
+        adjustSigns();
+       return new Point(createRandomCoordinate(xSign), createRandomCoordinate(ySign));
     }
 
 
-    private int createRandomCoordinate(){
+    private void adjustSigns(){
+        if(wasXSignAdjustedLast){
+            ySign *= -1;
+        }
+        else{
+            xSign *= -1;
+        }
+        wasXSignAdjustedLast = !wasXSignAdjustedLast;
+    }
+
+
+    private int createRandomCoordinate(int sign){
         int value = quarterBrushSize + random.nextInt(2 + quarterBrushSize);
-        return random.nextBoolean() ? value : value * -1;
+        return value * sign;
+       // return random.nextBoolean() ? value : value * -1;
     }
-
 
 }
