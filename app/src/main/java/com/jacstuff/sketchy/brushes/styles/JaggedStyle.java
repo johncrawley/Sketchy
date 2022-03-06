@@ -3,50 +3,61 @@ package com.jacstuff.sketchy.brushes.styles;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathDashPathEffect;
-import android.graphics.PathEffect;
 
 import com.jacstuff.sketchy.paintview.PaintGroup;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class JaggedStyle  extends AbstractStyle implements Style {
 
     private PathDashPathEffect pathDashPathEffect;
     private PaintGroup paintGroup;
+    private final MainViewModel viewModel;
+    private final int jaggedAdvance = 12;
 
-    public JaggedStyle(PaintGroup paintGroup){
+
+    public JaggedStyle( PaintGroup paintGroup, MainViewModel viewModel){
         this.paintGroup = paintGroup;
-        pathDashPathEffect = new PathDashPathEffect(createPath(20, 10), 12, 5, PathDashPathEffect.Style.ROTATE);
+        this.viewModel = viewModel;
+        pathDashPathEffect = createJaggedPath(20);
     }
 
 
-        @Override
-        public void init(PaintGroup paintGroup, int brushSize ) {
-            this.paintGroup = paintGroup;
-            this.brushSize = brushSize;
-            paintGroup.setStyle(Paint.Style.STROKE);
-            assignPath();
-        }
+    @Override
+    public void init(PaintGroup paintGroup, int brushSize ) {
+        this.paintGroup = paintGroup;
+        this.brushSize = brushSize;
+        paintGroup.setStyle(Paint.Style.STROKE);
+        assignPath();
+    }
 
 
-        private static Path createPath(float val, float val2) {
-            Path p = new Path();
-            p.moveTo(-1 -val2, val);
-            p.lineTo(val,val + val2);
-            p.lineTo(val,-val);
-            p.lineTo(-val2,-val - val2);
-            p.close();
-            return p;
-        }
+    private void assignPath(){
+        pathDashPathEffect = createJaggedPath(paintGroup.getLineWidth() / 4);
+        paintGroup.setPathEffect(pathDashPathEffect);
+    }
 
 
-        private void assignPath(){
-            float jaggedVal1 = paintGroup.getLineWidth() / 4;
-            float  jaggedVal2 = jaggedVal1 /2;
-            pathDashPathEffect = new PathDashPathEffect(createPath(jaggedVal1, jaggedVal2), 12, 5, PathDashPathEffect.Style.ROTATE);
-            paintGroup.setPathEffect(pathDashPathEffect);
-        }
+    private PathDashPathEffect createJaggedPath(float unitLength){
+        return new PathDashPathEffect(createPath(unitLength), jaggedAdvance, 5, PathDashPathEffect.Style.ROTATE);
+    }
 
 
-        void onDrawAfterSettingsChanged(){
+    private Path createPath(float twoUnits) {
+        Path p = new Path();
+        float oneUnit = twoUnits /2;
+        float smallHeight = twoUnits + 0.1f;
+        float largeHeight = (oneUnit * 3) + viewModel.jaggedStyleExtraHeight;
+
+        p.moveTo(-1 -oneUnit, smallHeight);
+        p.lineTo(twoUnits,largeHeight );
+        p.lineTo(twoUnits,-smallHeight);
+        p.lineTo(-oneUnit,-largeHeight);
+        p.close();
+        return p;
+    }
+
+
+    void onDrawAfterSettingsChanged(){
             assignPath();
         }
 
