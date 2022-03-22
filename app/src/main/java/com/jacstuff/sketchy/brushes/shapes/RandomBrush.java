@@ -21,6 +21,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
     private int xSign = 1;
     private int ySign = 1;
     private boolean wasXSignAdjustedLast;
+    private boolean areNewPointsRequired;
 
 
     public RandomBrush(MainViewModel viewModel) {
@@ -30,17 +31,26 @@ public class RandomBrush extends AbstractBrush implements Brush {
         random = new Random(System.currentTimeMillis());
         points = new ArrayList<>(initialCapacity);
         targetPoints = new ArrayList<>(initialCapacity);
-        setRandomPoints();
+        assignRandomPoints();
     }
 
 
     @Override
     public void setBrushSize(int brushSize) {
+        int oldQuarterSize = quarterBrushSize;
         super.setBrushSize(brushSize);
-        setRandomPoints();
         quarterBrushSize = halfBrushSize /2;
+        if(!mainViewModel.doesRandomBrushMorph){
+           adjustPointsWithBrushSizeDifference(quarterBrushSize - oldQuarterSize);
+        }
     }
 
+
+    @Override
+    public void reinitialize(){
+        super.reinitialize();
+        assignRandomPoints();
+    }
 
     @Override
     public void touchMove(float x, float y, Paint paint){
@@ -50,8 +60,19 @@ public class RandomBrush extends AbstractBrush implements Brush {
 
 
     @Override
+    public void touchUp(float x, float y, Paint paint){
+        super.touchUp(x,y,paint);
+        areNewPointsRequired = true;
+    }
+
+
+    @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
         Path path = new Path();
+        if(areNewPointsRequired){
+            assignRandomPoints();
+            areNewPointsRequired = false;
+        }
         Point firstPoint = points.get(0);
         path.moveTo(firstPoint.x, firstPoint.y);
         for(int i=1; i<points.size(); i++){
@@ -65,18 +86,23 @@ public class RandomBrush extends AbstractBrush implements Brush {
     private void adjustPoints(){
         if(viewModel.doesRandomBrushMorph){
             for(int i=0; i< points.size(); i++){
-                Point p = points.get(i);
-                Point target = targetPoints.get(i);
-                adjustPoint(p, target);
-                if(areEqual(p,target)){
-                    assignNewTarget(i);
-                }
+               adjustPoint(i);
             }
         }
     }
 
 
-    private void setRandomPoints(){
+    private void adjustPoint(int index){
+        Point p = points.get(index);
+        Point target = targetPoints.get(index);
+        adjustPoint(p, target);
+        if(areEqual(p, target)){
+            assignNewTarget(index);
+        }
+    }
+
+
+    private void assignRandomPoints(){
         addRandomPoints(points);
         addRandomPoints(targetPoints);
     }
@@ -104,6 +130,28 @@ public class RandomBrush extends AbstractBrush implements Brush {
         else if(p.y > target.y){
             p.y--;
         }
+    }
+
+
+    private void adjustPointsWithBrushSizeDifference(int quarterBrushSizeDifference){
+        for(Point p : points){
+            adjustPointWithBrushSizeDifference(p, quarterBrushSizeDifference);
+        }
+    }
+
+
+    private void adjustPointWithBrushSizeDifference(Point p, int diff){
+        p.x = adjustCoordinateToDifference(p.x, diff);
+        p.y = adjustCoordinateToDifference(p.y, diff);
+    }
+
+
+    private int adjustCoordinateToDifference(int value, int diff){
+        if(value < 0){
+            diff *= - 1;
+        }
+        return value + diff;
+        //return value < 0 ? value - quarterBrushSizeDifference : value + quarterBrushSizeDifference;
     }
 
 
