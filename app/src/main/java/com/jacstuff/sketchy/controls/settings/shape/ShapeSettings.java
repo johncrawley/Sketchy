@@ -61,6 +61,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         buttonConfig.add(R.id.lineShapeButton,              R.drawable.button_shape_line,               BrushShape.LINE);
         buttonConfig.add(R.id.curveShapeButton,             R.drawable.button_shape_curve,              BrushShape.CURVE);
         buttonConfig.add(R.id.triangleArbitraryShapeButton, R.drawable.button_shape_triangle_arbitrary, BrushShape.TRIANGLE_ARBITRARY);
+        buttonConfig.add(R.id.spiralShapeButton, R.drawable.button_shape_star, BrushShape.SPIRAL);
         buttonConfig.add(R.id.randomShapeButton , R.drawable.button_shape_circle, BrushShape.RANDOM);
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.shapeButton);

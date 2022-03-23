@@ -66,13 +66,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ColorButtonLayoutCreator colorButtonLayoutCreator;
     private SeekBarConfigurator seekBarConfigurator;
     private ButtonLayoutParams colorButtonLayoutParams;
-    Profiler profiler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         profiler = new Profiler();
         settingsPopup = new SettingsPopup(findViewById(R.id.includedSettingsLayout), this);
         buttonReferenceStore = new ButtonReferenceStore();
         toaster = new Toaster(MainActivity.this);
@@ -84,14 +83,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initPaintHelperManager();
         setupColorAndShadeButtons();
         setupSettingsButtons();
-
         viewModelHelper.init(colorButtonClickHandler, paintView);
-
         setupColorAutoScroll();
-
         initActivityResultLauncher();
         initActivityResultLauncherForLoad();
-        profiler.stop();
     }
 
 
