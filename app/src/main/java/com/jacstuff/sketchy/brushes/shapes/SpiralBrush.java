@@ -17,32 +17,31 @@ public class SpiralBrush extends AbstractBrush implements Brush {
 
     public void setBrushSize(int size){
         super.setBrushSize(size);
-        spiralProgression = this.brushSize /10;
+        spiralProgression = this.brushSize /20;
     }
+
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-        float angle;
-        double x,y;
-        Path path = new Path();
-        for (int i=0; i< brushSize; i++) {
-          //  angle = 0.1f * i;
-           // angle = 0.1f * spiralProgression * i;
-            //angle = (0.1f + spiralProgression) * i;
-            float scale =  1 - (float)i / brushSize;
-           // int numRevs = 10;
-            //float angle2 = (float)(i * 2 * Math.PI / (brushSize / numRevs));
-            angle = 0.1f * i;
-            x= ((1 + angle) * Math.cos(angle)) + (0.1 * i);
-            y= ((1 + angle) * Math.sin(angle))+ (0.1 * i);
-            path.lineTo((float)x, (float)y);
-        }
-       // canvas.drawPath(path, paint);
-        onDraw(canvas, paint, 20, 12);
+        drawAltSpiral(paint);
+       // onDraw(canvas, paint, 20, 12);
     }
 
 
-    protected void onDraw(Canvas canvas, Paint paint, int spacing, int numberOfTwists){
+    private void drawAltSpiral(Paint paint){
+        float angle;
+        double x,y;
+        Path path = new Path();
+        for (int i=0; i< halfBrushSize; i++) {
+            angle = (0.1f + spiralProgression) * i;
+            x= ((1 + angle) * Math.cos(angle));
+            y= ((1 + angle) * Math.sin(angle));
+            path.lineTo((float)x, (float)y);
+        }
+        canvas.drawPath(path, paint);
+    }
+
+    private void drawSpiral(Canvas canvas, Paint paint, int spacing, int numberOfTwists){
 
         int centerX = 0;
         int centerY = 0;
