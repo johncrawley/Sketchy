@@ -106,6 +106,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public boolean isInfinityModeEnabled = false;
 
     public int astroidShapeCurveRate = 100;
+    public boolean isCrazySpiralAltModeEnabled = false;
     public boolean useSeekBarAngle = false;
     public int textSkewSeekBarProgress = 100;
     public int textSpacingSeekBarProgress = 1;

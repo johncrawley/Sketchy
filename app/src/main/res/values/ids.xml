@@ -97,6 +97,7 @@
     <item name="curveShapeButton" type="id"/>
     <item name="triangleArbitraryShapeButton" type="id"/>
     <item name="spiralShapeButton" type="id"/>
+    <item name="crazySpiralShapeButton" type="id"/>
     <item name="randomShapeButton" type="id"/>
     <item name="diamondShapeButton" type="id"/>
     <item name="straightLineShapeButton" type="id"/>

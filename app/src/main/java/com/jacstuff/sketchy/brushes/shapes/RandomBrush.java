@@ -6,7 +6,6 @@ import android.graphics.Path;
 import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.Random;
 public class RandomBrush extends AbstractBrush implements Brush {
 
     private final List<Point> points, targetPoints;
-    private final MainViewModel viewModel;
     private final Random random;
     private int quarterBrushSize;
     private int xSign = 1;
@@ -24,14 +22,12 @@ public class RandomBrush extends AbstractBrush implements Brush {
     private boolean areNewPointsRequired;
 
 
-    public RandomBrush(MainViewModel viewModel) {
+    public RandomBrush() {
         super(BrushShape.RANDOM);
         int initialCapacity = 12;
-        this.viewModel = viewModel;
         random = new Random(System.currentTimeMillis());
         points = new ArrayList<>(initialCapacity);
         targetPoints = new ArrayList<>(initialCapacity);
-        assignRandomPoints();
     }
 
 
@@ -84,7 +80,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
 
 
     private void adjustPoints(){
-        if(viewModel.doesRandomBrushMorph){
+        if(mainViewModel.doesRandomBrushMorph){
             for(int i=0; i< points.size(); i++){
                adjustPoint(i);
             }
@@ -110,7 +106,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
 
     private void addRandomPoints(List<Point> list){
         list.clear();
-        int numberOfVertices = 3 + viewModel.randomBrushNumberOfPoints;
+        int numberOfVertices = 3 + mainViewModel.randomBrushNumberOfPoints;
         for(int i=0; i < numberOfVertices; i++){
             list.add(createRandomPoint());
         }
