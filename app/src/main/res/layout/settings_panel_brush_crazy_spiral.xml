@@ -19,44 +19,15 @@
     </LinearLayout>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/randomBrushMorphEnabledSwitch"
+        android:id="@+id/crazySpiralAltModeEnabledSwitch"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:checked="true"
+        android:checked="false"
         android:gravity="center_vertical"
         android:paddingHorizontal="@dimen/switch_option_random_shape_morph_padding_horizontal"
         android:paddingTop="@dimen/switch_option_padding_top"
         android:paddingBottom="@dimen/switch_option_padding_bottom"
-        android:text="@string/brush_random_morph_switch_label" />
-
-    <LinearLayout
-        android:id="@+id/randomShapeVerticesSeekBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/text_controls_text_padding_horizontal"
-        android:paddingVertical="@dimen/convex_square_midpoint_seekbar_padding_vertical">
-
-        <TextView
-            android:id="@+id/randomShapeVerticesSeekBarLabel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".2"
-            android:gravity="center_vertical"
-            android:text="@string/seekbar_label_shape_random_vertices"
-            />
-
-        <SeekBar
-            android:id="@+id/randomShapeVerticesSeekBar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".7"
-            android:indeterminate="false"
-            android:gravity="fill_horizontal"
-            android:max="@integer/brush_random_vertices_max"
-            android:paddingBottom="@dimen/seekbar_text_controls_padding_bottom"
-            android:progress="@integer/brush_random_vertices_default" />
-    </LinearLayout>
+        android:text="@string/brush_crazy_spiral_alt_mode_switch_label" />
 
     <LinearLayout
         android:layout_width="match_parent"

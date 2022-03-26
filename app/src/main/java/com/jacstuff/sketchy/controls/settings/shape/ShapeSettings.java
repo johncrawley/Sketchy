@@ -23,6 +23,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         subPanelManager.add(R.id.astroidShapeButton, R.id.settingsPanelAstroidShapeInclude);
         subPanelManager.add(R.id.rectangleShapeButton, R.id.settingsPanelRectangle);
         subPanelManager.add(R.id.randomShapeButton, R.id.settingsPanelRandomBrushInclude);
+        subPanelManager.add(R.id.crazySpiralShapeButton, R.id.settingsPanelCrazySpiralBrushInclude);
         new TextControls(activity, paintView.getPaintGroup(), seekBarConfigurator);
         minBrushSize = activity.getResources().getInteger(R.integer.brush_size_min_default);
     }
@@ -122,5 +123,8 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
 
         SwitchMaterial randomShapeMorph = activity.findViewById(R.id.randomBrushMorphEnabledSwitch);
         randomShapeMorph.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.doesRandomBrushMorph = isChecked);
+
+        SwitchMaterial crazySpiralBrushSwitch = activity.findViewById(R.id.crazySpiralAltModeEnabledSwitch);
+        crazySpiralBrushSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isCrazySpiralAltModeEnabled = isChecked);
     }
 }
