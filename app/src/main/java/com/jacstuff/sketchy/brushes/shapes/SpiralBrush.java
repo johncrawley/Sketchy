@@ -9,9 +9,12 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 
 public class SpiralBrush extends AbstractBrush implements Brush {
 
+    private float savedStrokeWidth;
+    private final Path path;
 
     public SpiralBrush(){
         super(BrushShape.SPIRAL);
+        path = new Path();
     }
 
 
@@ -22,30 +25,26 @@ public class SpiralBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-       drawSpiral(canvas, paint, 20, 12);
+        int extraSpacing = 10;
+       drawSpiral(canvas, paint,  (int)paint.getStrokeWidth() + extraSpacing, 1 + (brushSize/30));
     }
 
 
-
-
     private void drawSpiral(Canvas canvas, Paint paint, int spacing, int numberOfTwists){
-
-        int centerX = 0;
-        int centerY = 0;
-        Path path = new Path();
-
-        int left = centerX - spacing;
-        int right = centerX + spacing;
-        int top = centerY - spacing;
-        int bottom = centerY + spacing;
-
+        path.reset();
+        int left = -spacing;
+        int right =  spacing;
+        int top =  -spacing;
+        int bottom = spacing;
         int startAngle = 0;
         int arcAngle = 180;
+        int halfSpacing = spacing/2;
         path.moveTo(right, bottom);
+
         for(int i = 0; i < numberOfTwists * 2; i++){
             path.addArc(left, top, right, bottom, startAngle, arcAngle);
-            top -= spacing /2;
-            bottom += spacing /2;
+            top -= halfSpacing;
+            bottom += halfSpacing;
             if(i%2 == 0){
                 right += spacing;
             }
@@ -57,4 +56,22 @@ public class SpiralBrush extends AbstractBrush implements Brush {
         canvas.drawPath(path, paint);
     }
 
+
+    @Override
+    public void onDeallocate(){
+        super.onDeallocate();
+        paintGroup.setStrokeWidth(savedStrokeWidth);
+        paintGroup.setStyle(savedStyle);
+    }
+
+    private Paint.Style savedStyle;
+
+    @Override
+    public void reinitialize(){
+        super.reinitialize();
+        savedStyle = Paint.Style.valueOf(paintGroup.getStyle());
+        paintGroup.setStyle(Paint.Style.STROKE);
+        savedStrokeWidth = paintGroup.getLineWidth();
+        paintGroup.setStrokeWidth( 1 + (savedStrokeWidth/20));
+    }
 }

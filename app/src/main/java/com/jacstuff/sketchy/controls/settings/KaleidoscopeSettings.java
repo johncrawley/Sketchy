@@ -25,6 +25,8 @@ public class KaleidoscopeSettings extends AbstractButtonConfigurator<Integer> im
 
         add(R.id.kOffButton,1);
         add(R.id.k2Button,2);
+        add(R.id.k3Button,3);
+        add(R.id.k4Button,4);
         add(R.id.k5Button,5);
         add(R.id.k6Button,6);
         add(R.id.k7Button,7);

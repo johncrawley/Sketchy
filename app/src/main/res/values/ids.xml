@@ -70,6 +70,8 @@
 
     <item name="kOffButton" type="id"/>
     <item name="k2Button" type="id"/>
+    <item name="k3Button" type="id"/>
+    <item name="k4Button" type="id"/>
     <item name="k5Button" type="id"/>
     <item name="k6Button" type="id"/>
     <item name="k7Button" type="id"/>
