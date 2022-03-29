@@ -28,6 +28,36 @@
         android:paddingTop="@dimen/switch_option_padding_top"
         android:paddingBottom="@dimen/switch_option_padding_bottom"
         android:text="@string/brush_crazy_spiral_alt_mode_switch_label" />
+
+    <LinearLayout
+        android:id="@+id/crazySpiralShapeTypeSeekBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/text_controls_text_padding_horizontal"
+        android:paddingVertical="@dimen/convex_square_midpoint_seekbar_padding_vertical">
+
+        <TextView
+            android:id="@+id/crazySpiralShapeTypeSeekBarLabel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".2"
+            android:gravity="center_vertical"
+            android:text="@string/seekbar_label_shape_crazy_spiral_type"
+            />
+
+        <SeekBar
+            android:id="@+id/crazySpiralShapeTypeSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7"
+            android:indeterminate="false"
+            android:gravity="fill_horizontal"
+            android:max="@integer/brush_crazy_spiral_type_max"
+            android:paddingBottom="@dimen/seekbar_text_controls_padding_bottom"
+            android:progress="@integer/brush_crazy_spiral_type_default" />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="8dp">

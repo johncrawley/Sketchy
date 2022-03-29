@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.spirals;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -6,11 +6,13 @@ import android.graphics.Path;
 import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.Brush;
 
-public class CrazySpiralBrush extends AbstractBrush implements Brush {
+public class CrazySpiralBrush extends AbstractSpiral implements Brush {
 
     private float normalMultiplier, altMultiplier;
     private final Path path;
+    private int quarterBrushSize;
 
     public CrazySpiralBrush(){
         super(BrushShape.CRAZY_SPIRAL);
@@ -20,10 +22,17 @@ public class CrazySpiralBrush extends AbstractBrush implements Brush {
 
     public void setBrushSize(int size){
         super.setBrushSize(size);
-        float spiralProgression = this.brushSize /20f;
+        //float spiralProgression = this.brushSize /20f;
+        float spiralProgression = mainViewModel.crazySpiralType * 3;
         normalMultiplier = 0.2f * spiralProgression;
         altMultiplier = 0.1f + spiralProgression;
+        quarterBrushSize = 1 + (size / 4);
+    }
 
+
+    @Override
+    public void recalculateDimensions(){
+        setBrushSize(brushSize);
     }
 
 
@@ -34,12 +43,23 @@ public class CrazySpiralBrush extends AbstractBrush implements Brush {
 
 
     private void drawSpiral(Paint paint){
+        saveStrokeWidth(paint);
         path.reset();
-        float multiplier = mainViewModel.isCrazySpiralAltModeEnabled ? altMultiplier : normalMultiplier;
-        for (int i=0; i< halfBrushSize; i++) {
-            drawSpiralSection(multiplier, i);
+        for (int i=0; i< getNumberOfSections(); i++) {
+            drawSpiralSection(getMultiplier(), i);
         }
         canvas.drawPath(path, paint);
+        recallStrokeWidth(paint);
+    }
+
+
+    private int getNumberOfSections(){
+        return mainViewModel.isCrazySpiralAltModeEnabled ? quarterBrushSize / 4 : quarterBrushSize;
+    }
+
+
+    private float getMultiplier(){
+        return mainViewModel.isCrazySpiralAltModeEnabled ? altMultiplier : normalMultiplier;
     }
 
 

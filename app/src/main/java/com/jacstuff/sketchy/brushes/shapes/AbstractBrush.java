@@ -20,8 +20,8 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 public abstract class AbstractBrush implements Brush{
 
     public Canvas canvas;
-    PaintGroup paintGroup;
-    int brushSize;
+    protected PaintGroup paintGroup;
+    protected int brushSize;
     Style currentStyle;
     int halfBrushSize;
     BrushShape brushShape;

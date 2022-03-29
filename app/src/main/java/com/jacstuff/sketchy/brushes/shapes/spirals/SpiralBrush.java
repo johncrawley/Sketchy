@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.spirals;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -6,10 +6,10 @@ import android.graphics.Path;
 import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.Brush;
 
-public class SpiralBrush extends AbstractBrush implements Brush {
+public class SpiralBrush extends AbstractSpiral implements Brush {
 
-    private float savedStrokeWidth;
     private final Path path;
 
     public SpiralBrush() {
@@ -25,7 +25,6 @@ public class SpiralBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
-        int extraSpacing = 10;
         drawSpiral(canvas, paint,  1 + (brushSize / 30));
     }
 
@@ -58,33 +57,4 @@ public class SpiralBrush extends AbstractBrush implements Brush {
         recallStrokeWidth(paint);
     }
 
-
-    private void saveStrokeWidth(Paint paint) {
-        savedStrokeWidth = paint.getStrokeWidth();
-        paint.setStrokeWidth(1+ (savedStrokeWidth / 10));
-    }
-
-
-    private void recallStrokeWidth(Paint paint){
-        paint.setStrokeWidth(savedStrokeWidth);
-    }
-
-
-    @Override
-    public void onDeallocate(){
-        super.onDeallocate();
-        paintGroup.setStrokeWidth(savedStrokeWidth);
-        paintGroup.setStyle(savedStyle);
-    }
-
-    private Paint.Style savedStyle;
-
-    @Override
-    public void reinitialize(){
-        super.reinitialize();
-        savedStyle = Paint.Style.valueOf(paintGroup.getStyle());
-        paintGroup.setStyle(Paint.Style.STROKE);
-        savedStrokeWidth = paintGroup.getLineWidth();
-        paintGroup.setStrokeWidth( 1 + (savedStrokeWidth/20));
-    }
 }

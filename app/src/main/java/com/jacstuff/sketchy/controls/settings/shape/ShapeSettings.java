@@ -105,6 +105,13 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
                     viewModel.astroidShapeCurveRate = progress;
                     paintView.recalculateBrush();
                 } );
+
+        seekBarConfigurator.configure(R.id.crazySpiralShapeTypeSeekBar,
+                R.integer.brush_crazy_spiral_type_default,
+                progress -> {
+                    viewModel.crazySpiralType = progress;
+                    paintView.recalculateBrush();
+                } );
     }
 
 
