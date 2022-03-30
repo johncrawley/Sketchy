@@ -31,7 +31,7 @@ public class SpiralBrush extends AbstractSpiral implements Brush {
 
     private void drawSpiral(Canvas canvas, Paint paint, int numberOfTwists) {
         path.reset();
-        saveStrokeWidth(paint);
+        saveSettings(paint);
         int spacing = (int) paint.getStrokeWidth() + mainViewModel.spiralExtraSpacing;
         int left = -spacing;
         int right = spacing;
@@ -54,7 +54,7 @@ public class SpiralBrush extends AbstractSpiral implements Brush {
             startAngle = startAngle + arcAngle;
         }
         canvas.drawPath(path, paint);
-        recallStrokeWidth(paint);
+        recallSettings(paint);
     }
 
 }

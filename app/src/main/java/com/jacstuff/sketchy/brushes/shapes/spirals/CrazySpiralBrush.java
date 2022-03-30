@@ -14,6 +14,7 @@ public class CrazySpiralBrush extends AbstractSpiral implements Brush {
     private final Path path;
     private int quarterBrushSize;
 
+
     public CrazySpiralBrush(){
         super(BrushShape.CRAZY_SPIRAL);
         path = new Path();
@@ -23,7 +24,7 @@ public class CrazySpiralBrush extends AbstractSpiral implements Brush {
     public void setBrushSize(int size){
         super.setBrushSize(size);
         //float spiralProgression = this.brushSize /20f;
-        float spiralProgression = mainViewModel.crazySpiralType * 3;
+        float spiralProgression = 3 + mainViewModel.crazySpiralType * 3;
         normalMultiplier = 0.2f * spiralProgression;
         altMultiplier = 0.1f + spiralProgression;
         quarterBrushSize = 1 + (size / 4);
@@ -43,13 +44,13 @@ public class CrazySpiralBrush extends AbstractSpiral implements Brush {
 
 
     private void drawSpiral(Paint paint){
-        saveStrokeWidth(paint);
+        saveSettings(paint);
         path.reset();
         for (int i=0; i< getNumberOfSections(); i++) {
             drawSpiralSection(getMultiplier(), i);
         }
         canvas.drawPath(path, paint);
-        recallStrokeWidth(paint);
+        recallSettings(paint);
     }
 
 

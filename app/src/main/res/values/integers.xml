@@ -28,7 +28,7 @@
 
     <integer name="brush_random_vertices_default">0</integer>
     <integer name="brush_random_vertices_max">8</integer>
-    <integer name="brush_crazy_spiral_type_max">10</integer>
+    <integer name="brush_crazy_spiral_type_max">7</integer>
     <integer name="brush_crazy_spiral_type_default">0</integer>
 
     <integer name="button_width">120</integer>

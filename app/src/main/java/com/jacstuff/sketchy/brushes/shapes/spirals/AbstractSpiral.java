@@ -16,32 +16,17 @@ public abstract class AbstractSpiral extends AbstractBrush {
     }
 
 
-    void saveStrokeWidth(Paint paint) {
+    void saveSettings(Paint paint) {
         savedStrokeWidth = paint.getStrokeWidth();
         paint.setStrokeWidth(1+ (savedStrokeWidth / 10));
+        savedStyle = paint.getStyle();
+        paint.setStyle(Paint.Style.STROKE);
     }
 
 
-    void recallStrokeWidth(Paint paint){
+    void recallSettings(Paint paint){
+        paint.setStyle(savedStyle);
         paint.setStrokeWidth(savedStrokeWidth);
-    }
-
-
-    @Override
-    public void onDeallocate(){
-        super.onDeallocate();
-        paintGroup.setStrokeWidth(savedStrokeWidth);
-        paintGroup.setStyle(savedStyle);
-    }
-
-
-    @Override
-    public void reinitialize(){
-        super.reinitialize();
-        savedStyle = Paint.Style.valueOf(paintGroup.getStyle());
-        paintGroup.setStyle(Paint.Style.STROKE);
-        savedStrokeWidth = paintGroup.getLineWidth();
-        paintGroup.setStrokeWidth( 1 + (savedStrokeWidth/20));
     }
 
 }
