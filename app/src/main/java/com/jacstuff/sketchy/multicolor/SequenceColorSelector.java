@@ -1,7 +1,6 @@
 package com.jacstuff.sketchy.multicolor;
 
-
-import com.jacstuff.sketchy.viewmodel.ControlsHolder;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
 import java.util.ArrayList;
@@ -17,13 +16,15 @@ public class SequenceColorSelector implements ColorSelector {
     private final StrobeCalculator strobeCalculator;
     private final boolean isUsingBrightnessRange, isForSingleColor;
     private final BlendCalculator blendCalculator;
+    private final MainViewModel viewModel;
 
-    public SequenceColorSelector(ControlsHolder viewModel){
+    public SequenceColorSelector(MainViewModel viewModel){
         this(viewModel, false, false);
     }
 
 
-    public SequenceColorSelector(ControlsHolder viewModel, boolean isUsingBrightnessRange, boolean isForSingleColor){
+    public SequenceColorSelector(MainViewModel viewModel, boolean isUsingBrightnessRange, boolean isForSingleColor){
+        this.viewModel = viewModel;
         this.colorSequenceControls = viewModel.getColorSequenceControls();
         this.isUsingBrightnessRange = isUsingBrightnessRange;
         random = new Random(System.currentTimeMillis());
@@ -78,12 +79,22 @@ public class SequenceColorSelector implements ColorSelector {
                 calculateNextStrobeIndex();
                 break;
             case RANDOM:
-                calculateNextRandomIndex();
+                calculateRandomOrBlend();
                 break;
             case BLEND:
                 return calculateNextBlendColor();
         }
         return colors.get(currentIndex);
+    }
+
+
+    private void calculateRandomOrBlend(){
+        if(viewModel.isUsingDangerousBrush){
+            calculateNextBlendColor();
+            return;
+        }
+
+        calculateNextRandomIndex();
     }
 
 

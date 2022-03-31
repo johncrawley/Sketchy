@@ -24,7 +24,8 @@ public class CrazySpiralBrush extends AbstractSpiral implements Brush {
     public void setBrushSize(int size){
         super.setBrushSize(size);
         //float spiralProgression = this.brushSize /20f;
-        float spiralProgression = 3 + mainViewModel.crazySpiralType * 3;
+        final int MINIMUM_PROGRESSION = 3;
+        float spiralProgression = MINIMUM_PROGRESSION + mainViewModel.crazySpiralType * 3;
         normalMultiplier = 0.2f * spiralProgression;
         altMultiplier = 0.1f + spiralProgression;
         quarterBrushSize = 1 + (size / 4);
@@ -69,4 +70,5 @@ public class CrazySpiralBrush extends AbstractSpiral implements Brush {
         path.lineTo((float)((1 + angle) * Math.cos(angle))
                 ,(float)((1 + angle) * Math.sin(angle)));
     }
+
 }

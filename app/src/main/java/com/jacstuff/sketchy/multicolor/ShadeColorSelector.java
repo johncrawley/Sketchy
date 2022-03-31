@@ -22,9 +22,11 @@ public class ShadeColorSelector implements ColorSelector {
     private int currentIndex = 0;
     private boolean isAtLastIndex;
     private final BlendCalculator blendCalculator;
+    private MainViewModel viewModel;
 
 
     public ShadeColorSelector(MainViewModel viewModel){
+        this.viewModel = viewModel;
         colorSequenceControls = viewModel.getColorSequenceControls();
         strobeCalculatorForMultiColor = new StrobeCalculator(viewModel);
         blendCalculator = new BlendCalculator(viewModel);
@@ -129,6 +131,9 @@ public class ShadeColorSelector implements ColorSelector {
 
 
     private int getNextRandomShade(){
+        if(viewModel.isUsingDangerousBrush){
+            return getNextStrobeShade();
+        }
         int oldIndex = currentIndex;
         while(currentIndex == oldIndex){
             currentIndex = random.nextInt(ids.size());

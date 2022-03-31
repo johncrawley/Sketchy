@@ -109,6 +109,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public boolean isCrazySpiralAltModeEnabled = false;
     public int crazySpiralType;
     public int spiralExtraSpacing = 10;
+    public boolean isUsingDangerousBrush = false;
     public boolean useSeekBarAngle = false;
     public int textSkewSeekBarProgress = 100;
     public int textSpacingSeekBarProgress = 1;

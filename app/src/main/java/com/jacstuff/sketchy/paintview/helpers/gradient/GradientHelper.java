@@ -30,7 +30,7 @@ public class GradientHelper {
     private int gradientColor;
     private int linearStartX, linearStartY, linearEndX, linearEndY;
     private final InfinityModeRandomGradientBlender gradientBlender;
-    private KaleidoscopeHelper kaleidoscopeHelper;
+    private final KaleidoscopeHelper kaleidoscopeHelper;
 
     public GradientHelper(MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
         this.viewModel = viewModel;
@@ -302,6 +302,9 @@ public class GradientHelper {
 
 
     private int getRandomColor(boolean shouldNewRandomColorBeAssigned){
+        if(viewModel.isUsingDangerousBrush){
+            return getNextRandomBlend(shouldNewRandomColorBeAssigned);
+        }
         if(shouldNewRandomColorBeAssigned){
             if(kaleidoscopeHelper.isInfinityModeEnabled()){
                 return gradientBlender.getNextInfinityModeShade();
