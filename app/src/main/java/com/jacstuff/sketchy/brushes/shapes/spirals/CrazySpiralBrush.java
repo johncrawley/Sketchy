@@ -13,21 +13,19 @@ public class CrazySpiralBrush extends AbstractSpiral implements Brush {
     private float normalMultiplier, altMultiplier;
     private final Path path;
     private int quarterBrushSize;
-
+    private final float[] normalProgressionArray, altProgressionArray;
 
     public CrazySpiralBrush(){
         super(BrushShape.CRAZY_SPIRAL);
         path = new Path();
+        normalProgressionArray = new float[]{9, 11, 16,18, 22, 27, 31, 33};
+        altProgressionArray = new float[]{9, 12, 13.4f, 15, 18, 20, 21, 23};
     }
 
 
     public void setBrushSize(int size){
         super.setBrushSize(size);
-        //float spiralProgression = this.brushSize /20f;
-        final int MINIMUM_PROGRESSION = 3;
-        float spiralProgression = MINIMUM_PROGRESSION + mainViewModel.crazySpiralType * 3;
-        normalMultiplier = 0.2f * spiralProgression;
-        altMultiplier = 0.1f + spiralProgression;
+        updateMultipliers();
         quarterBrushSize = 1 + (size / 4);
     }
 
@@ -41,6 +39,12 @@ public class CrazySpiralBrush extends AbstractSpiral implements Brush {
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         drawSpiral(paint);
+    }
+
+
+    private void updateMultipliers(){
+        normalMultiplier = 0.2f * normalProgressionArray[mainViewModel.crazySpiralType];
+        altMultiplier = 0.1f + altProgressionArray[mainViewModel.crazySpiralType];;
     }
 
 
