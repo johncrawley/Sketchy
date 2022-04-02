@@ -19,7 +19,7 @@ public class CrazySpiralBrush extends AbstractSpiral implements Brush {
         super(BrushShape.CRAZY_SPIRAL);
         path = new Path();
         normalProgressionArray = new float[]{9, 11, 16,18, 22, 27, 31, 33};
-        altProgressionArray = new float[]{9, 12, 13.4f, 15, 18, 20, 21, 23};
+        altProgressionArray = new float[]{9, 12, 13.4f, 15, 16.93f, 20, 21, 22.95f};
     }
 
 
@@ -44,7 +44,7 @@ public class CrazySpiralBrush extends AbstractSpiral implements Brush {
 
     private void updateMultipliers(){
         normalMultiplier = 0.2f * normalProgressionArray[mainViewModel.crazySpiralType];
-        altMultiplier = 0.1f + altProgressionArray[mainViewModel.crazySpiralType];;
+        altMultiplier = 0.1f + altProgressionArray[mainViewModel.crazySpiralType];
     }
 
 
