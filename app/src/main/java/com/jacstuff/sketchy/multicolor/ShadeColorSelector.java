@@ -131,7 +131,7 @@ public class ShadeColorSelector implements ColorSelector {
 
 
     private int getNextRandomShade(){
-        if(viewModel.isUsingDangerousBrush){
+        if(viewModel.isRandomColorDisabled()){
             return getNextStrobeShade();
         }
         int oldIndex = currentIndex;

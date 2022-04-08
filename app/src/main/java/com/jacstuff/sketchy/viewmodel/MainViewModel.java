@@ -115,6 +115,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int textSpacingSeekBarProgress = 1;
     public int angle = 0;
 
+
     public boolean isRectangleSnappedToEdges = true;
     public int rectangleSnapBounds = 28;
 
@@ -134,5 +135,10 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
 
     public MainViewModel(){
         seekBarValue = new HashMap<>();
+    }
+
+
+    public boolean isRandomColorDisabled(){
+        return isUsingDangerousBrush && isDrawOnMoveModeEnabled;
     }
 }

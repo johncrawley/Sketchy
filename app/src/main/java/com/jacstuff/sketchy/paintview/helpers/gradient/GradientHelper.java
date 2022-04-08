@@ -302,7 +302,7 @@ public class GradientHelper {
 
 
     private int getRandomColor(boolean shouldNewRandomColorBeAssigned){
-        if(viewModel.isUsingDangerousBrush){
+        if(viewModel.isRandomColorDisabled()){
             return getNextRandomBlend(shouldNewRandomColorBeAssigned);
         }
         if(shouldNewRandomColorBeAssigned){

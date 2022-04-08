@@ -89,7 +89,7 @@ public class SequenceColorSelector implements ColorSelector {
 
 
     private void calculateRandomOrBlend(){
-        if(viewModel.isUsingDangerousBrush){
+        if(viewModel.isRandomColorDisabled()){
             calculateNextBlendColor();
             return;
         }
