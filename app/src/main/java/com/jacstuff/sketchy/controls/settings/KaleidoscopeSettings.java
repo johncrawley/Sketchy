@@ -1,6 +1,5 @@
 package com.jacstuff.sketchy.controls.settings;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
@@ -49,11 +48,8 @@ public class KaleidoscopeSettings extends AbstractButtonConfigurator<Integer> im
 
 
     public void setupKaleidoscopeOptions(){
-       SwitchMaterial kaleidoscopeInfinityMode = activity.findViewById(R.id.kaleidoscopeInfinityMode);
-       kaleidoscopeInfinityMode.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isInfinityModeEnabled = isChecked);
-
-        SwitchMaterial kaleidoscopeCentredSwitch = activity.findViewById(R.id.kaleidoscopeCentredSwitch);
-        kaleidoscopeCentredSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isKaleidoscopeCentred = isChecked);
+        setupSwitch(R.id.kaleidoscopeInfinityMode, b ->viewModel.isInfinityModeEnabled = b );
+        setupSwitch(R.id.kaleidoscopeCentredSwitch, b ->viewModel.isKaleidoscopeCentred = b );
     }
 
 

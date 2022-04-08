@@ -2,7 +2,6 @@ package com.jacstuff.sketchy.controls.settings.shape;
 
 import android.os.Build;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -122,16 +121,9 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
 
 
     private void configureSwitches(){
-        SwitchMaterial singleDrawModeSwitch = activity.findViewById(R.id.drawOnMoveSwitch);
-        singleDrawModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isDrawOnMoveModeEnabled = isChecked);
-
-        SwitchMaterial rectangleBrushSnapToEdges = activity.findViewById(R.id.rectangleSnapToEdgesSwitch);
-        rectangleBrushSnapToEdges.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isRectangleSnappedToEdges = isChecked);
-
-        SwitchMaterial randomShapeMorph = activity.findViewById(R.id.randomBrushMorphEnabledSwitch);
-        randomShapeMorph.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.doesRandomBrushMorph = isChecked);
-
-        SwitchMaterial crazySpiralBrushSwitch = activity.findViewById(R.id.crazySpiralAltModeEnabledSwitch);
-        crazySpiralBrushSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isCrazySpiralAltModeEnabled = isChecked);
+        setupSwitch(R.id.drawOnMoveSwitch, b -> viewModel.isDrawOnMoveModeEnabled = b);
+        setupSwitch(R.id.rectangleSnapToEdgesSwitch, b -> viewModel.isRectangleSnappedToEdges = b);
+        setupSwitch(R.id.randomBrushMorphEnabledSwitch, b -> viewModel.doesRandomBrushMorph = b);
+        setupSwitch(R.id.crazySpiralAltModeEnabledSwitch, b -> viewModel.isCrazySpiralAltModeEnabled = b);
     }
 }

@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.GradientType;
@@ -105,10 +104,9 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
 
     private void setupSwitches(){
         View includeLinearOffsetLayout = activity.findViewById(R.id.gradientLinearOffsetSeekBarInclude);
-        SwitchMaterial linearRepeatSwitch = activity.findViewById(R.id.gradientLinearRepeatSwitch);
-        linearRepeatSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->{
-            includeLinearOffsetLayout.setVisibility(isChecked ? View.INVISIBLE : View.VISIBLE);
-            viewModel.isLinearGradientRepeated = isChecked;
+        setupSwitch(R.id.gradientLinearRepeatSwitch, b ->{
+            includeLinearOffsetLayout.setVisibility(b ? View.INVISIBLE : View.VISIBLE);
+            viewModel.isLinearGradientRepeated = b;
         });
     }
 

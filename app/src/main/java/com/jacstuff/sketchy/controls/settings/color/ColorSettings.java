@@ -1,6 +1,6 @@
 package com.jacstuff.sketchy.controls.settings.color;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
+
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
@@ -31,10 +31,7 @@ public class ColorSettings extends AbstractButtonConfigurator<Void> implements B
     public void configure(){
         buttonConfig = new ButtonConfigHandler<>(activity, this, ButtonCategory.COLOR_CONFIG, R.id.colorConfigLayout);
         setupSeekBars();
-        setupSpinner(activity,
-                R.id.colorSequenceTypeSpinner,
-                R.array.color_sequence_type_array,
-                x -> paintHelperManager.getColorHelper().getAllColorsSequenceSelector().setSequenceType(sequenceTypeMap.get(x)));
+        setupSpinners();
         setupSwitches();
         buttonConfig.setParentButton(R.id.colorMenuButton);
     }
@@ -43,6 +40,15 @@ public class ColorSettings extends AbstractButtonConfigurator<Void> implements B
     @Override
     public void handleClick(int viewId, Void actionType) {
         //do nothing
+    }
+
+
+    private void setupSpinners(){
+        setupSpinner(activity,
+                R.id.colorSequenceTypeSpinner,
+                R.array.color_sequence_type_array,
+                x -> paintHelperManager.getColorHelper().getAllColorsSequenceSelector().setSequenceType(sequenceTypeMap.get(x)));
+
     }
 
 
@@ -78,11 +84,8 @@ public class ColorSettings extends AbstractButtonConfigurator<Void> implements B
 
 
     private void setupSwitches(){
-        SwitchMaterial colorSequenceRepeatSwitch = activity.findViewById(R.id.colorSequenceRepeatSwitch);
-        colorSequenceRepeatSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.getColorSequenceControls().doesRepeat = isChecked);
-
-        SwitchMaterial colorSequenceResetOnReleaseSwitch = activity.findViewById(R.id.colorSequenceResetOnReleaseSwitch);
-        colorSequenceResetOnReleaseSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.getColorSequenceControls().isResetOnRelease = isChecked);
+        setupSwitch(R.id.colorSequenceRepeatSwitch, b -> viewModel.getColorSequenceControls().doesRepeat = b);
+        setupSwitch(R.id.colorSequenceResetOnReleaseSwitch, b -> viewModel.getColorSequenceControls().isResetOnRelease = b);
     }
 
 

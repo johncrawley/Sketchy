@@ -1,6 +1,5 @@
 package com.jacstuff.sketchy.controls.settings.placement;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
@@ -73,20 +72,10 @@ public class PlacementSettings  extends AbstractButtonConfigurator<PlacementType
 
 
     private void setupSwitches(){
-        SwitchMaterial isLineWidthIncludedSwitch = activity.findViewById(R.id.quantizationButtonIncludeLineWidthSwitch);
-        isLineWidthIncludedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isPlacementQuantizationLineWidthIncluded = isChecked);
-
-        SwitchMaterial isQuantizationLockedSwitch = activity.findViewById(R.id.quantizationIsLockedSwitch);
-        isQuantizationLockedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> paintHelperManager.getPlacementHelper().setQuantizationLock(isChecked));
-
-
-        SwitchMaterial lockHorizontalSwitch = activity.findViewById(R.id.lockHorizontalSwitch);
-        lockHorizontalSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isPlacementHorizontalLocked = isChecked);
-
-
-        SwitchMaterial lockVerticalSwitch = activity.findViewById(R.id.lockVerticalSwitch);
-        lockVerticalSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isPlacementVerticalLocked = isChecked);
+        setupSwitch(R.id.quantizationButtonIncludeLineWidthSwitch, b -> viewModel.isPlacementQuantizationLineWidthIncluded = b);
+        setupSwitch(R.id.quantizationIsLockedSwitch, b ->  paintHelperManager.getPlacementHelper().setQuantizationLock(b));
+        setupSwitch(R.id.lockHorizontalSwitch, b -> viewModel.isPlacementHorizontalLocked = b);
+        setupSwitch(R.id.lockVerticalSwitch, b -> viewModel.isPlacementVerticalLocked = b);
     }
-
 
 }

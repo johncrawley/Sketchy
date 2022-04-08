@@ -1,6 +1,5 @@
 package com.jacstuff.sketchy.controls.settings;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
@@ -15,14 +14,12 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
     public SizeSequenceSettings(MainActivity activity, PaintView paintView) {
         super(activity, paintView);
 
-       // childSettingsPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
         subPanelManager.add(R.id.sizeSequenceCenterPointButton, R.id.settingsPanelSizeSequenceProximityInclude);
         subPanelManager.add(R.id.sizeSequenceIncreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
         subPanelManager.add(R.id.sizeSequenceDecreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
         subPanelManager.add(R.id.sizeSequenceStrobeIncreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
         subPanelManager.add(R.id.sizeSequenceStrobeDecreasingButton, R.id.settingsPanelSizeSequenceResetInclude);
         subPanelManager.setOffButtonAndDefaultLayout(R.id.sizeSequenceStationaryButton, R.id.sizeSequenceMainSettingsPanel);
-        //setupSpinners();
     }
 
 
@@ -77,15 +74,9 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
 
 
     public void setupOtherOptions(){
-        SwitchMaterial repeatSequence = activity.findViewById(R.id.sizeSequenceIsRepeatedSwitch);
-        repeatSequence.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isSizeSequenceRepeated = isChecked);
-
-        SwitchMaterial resetOnTouchUp = activity.findViewById(R.id.sizeSequenceIsResetSwitch);
-        resetOnTouchUp.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isSizeSequenceResetOnTouchUp = isChecked);
-
-
-        SwitchMaterial invertProximity = activity.findViewById(R.id.sizeSequenceProximityInvert);
-        invertProximity.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.isProximityInverted = isChecked);
+        setupSwitch(R.id.sizeSequenceIsRepeatedSwitch, b -> viewModel.isSizeSequenceRepeated = b);
+        setupSwitch(R.id.sizeSequenceIsResetSwitch, b -> viewModel.isSizeSequenceResetOnTouchUp = b);
+        setupSwitch(R.id.sizeSequenceProximityInvert, b -> viewModel.isProximityInverted = b);
     }
 
 
