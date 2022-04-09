@@ -119,6 +119,16 @@
     <string name="content_description_radial_repeat_gradient_button">A repeated radial gradient will be applied</string>
 
 
+    <string name="content_description_red_component_increase_value">Increase Red</string>
+    <string name="content_description_red_component_decrease_value">Decrease Red</string>
+    <string name="content_description_green_component_increase_value">Increase Green</string>
+    <string name="content_description_green_component_decrease_value">Decrease Green</string>
+    <string name="content_description_blue_component_increase_value">Increase Blue</string>
+    <string name="content_description_blue_component_decrease_value">Decrease Blue</string>
+
+    <string name="color_creator_default_component_value">0</string>
+
+
     <string name="toast_open_file_error">Unable to open the selected file</string>
     <string name="toast_save_sketch_error">Error: unable to save the sketch</string>
     <string name="toast_save_sketch_success">Sketch saved</string>
