@@ -34,8 +34,11 @@ public class SensitivityHelper {
 
     private boolean isEnabled(){
         return viewModel.placementType == PlacementType.RANDOM
-                || angleHelper.getAngleType() == AngleType.RANDOM
-                || isLargeIncrementalAngleEnabled();
+                || (viewModel.isDrawOnMoveModeEnabled
+                        && (
+                             angleHelper.getAngleType() == AngleType.RANDOM
+                            || isLargeIncrementalAngleEnabled())
+                );
     }
     
     private boolean isLargeIncrementalAngleEnabled(){

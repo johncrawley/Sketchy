@@ -11,7 +11,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottomtoBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
        >
 
         <LinearLayout
@@ -22,7 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottomtoBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageButton
                 android:id="@+id/redComponentUpButton"
@@ -57,7 +57,7 @@
             app:layout_constraintEnd_toStartOf="@id/blueSelectorLayout"
             app:layout_constraintStart_toEndOf="@id/redSelectorLayout"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottomtoBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageButton
                 android:id="@+id/greenComponentUpButton"
@@ -93,7 +93,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/greenSelectorLayout"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottomtoBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageButton
                 android:id="@+id/blueComponentUpButton"
