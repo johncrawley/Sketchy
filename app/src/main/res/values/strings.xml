@@ -10,6 +10,7 @@
     <string name="action_wipe">Wipe</string>
     <string name="action_undo">Undo</string>
     <string name="share_to">Share To</string>
+    <string name="shared_prefs_name">sketchty_prefs</string>
     <string name="shared_image_title">Sketchty Image</string>
     <string name="about_created_by">Created by John Crawley</string>
     <string name="about_year_info">2020 – 2022</string>
@@ -215,6 +216,10 @@
     <string name="seekbar_label_color_sequence_minimum_index">Minimum</string>
     <string name="seekbar_label_color_sequence_steps_index">Blend Rate</string>
     <string name="seekbar_label_color_sequence_starting_index">Sequence Starting Index</string>
+
+    <string name="button_add_color_save_label">Save</string>
+    <string name="button_add_color_cancel_label">Cancel</string>
+
     <string name="size_sequence_increments_seekbar_label">Step Size</string>
     <string name="placement_quantization_spacing_seekbar_label">Extra Spacing</string>
     <string name="placement_offset_x_seekbar_label">X-Axis Offset</string>

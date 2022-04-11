@@ -18,7 +18,7 @@ public abstract class AbstractSpiral extends AbstractBrush {
 
     void saveSettings(Paint paint) {
         savedStrokeWidth = paint.getStrokeWidth();
-        paint.setStrokeWidth(1+ (savedStrokeWidth / 10));
+        paint.setStrokeWidth(1+ (savedStrokeWidth / 8));
         savedStyle = paint.getStyle();
         paint.setStyle(Paint.Style.STROKE);
     }

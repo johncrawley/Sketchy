@@ -47,7 +47,7 @@ import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private final String SHARED_PREFS_NAME = "SketchtyPrefs";
+    public String SHARED_PREFS_NAME = "SketchtyPrefs";
     private final String SAVED_ORIENTATION = "savedOrientation";
     private final String SAVED_WAS_APP_STOPPED_PROPERLY = "wasAppStoppedProperly";
     private PaintView paintView;
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         colorButtonLayoutParams = new ButtonLayoutParams(MainActivity.this, R.integer.color_button_selected_border_width);
         imageSaver = new ImageSaver(this);
         seekBarConfigurator = new SeekBarConfigurator(this);
+        SHARED_PREFS_NAME = getString(R.string.shared_prefs_name);
         setupViewModel();
         setupPaintViewAndDefaultSelections();
         initPaintHelperManager();

@@ -35,12 +35,14 @@ public class ColorUtils {
 
     }
 
+
     public static int getRandomColor(Random random){
         int r = getRandomComponent(random);
         int g = getRandomComponent(random);
         int b = getRandomComponent(random);
         return Color.argb(255,r,g,b);
     }
+
 
     public static int getRandomComponent(Random random){
         return random.nextInt(255);
