@@ -16,6 +16,9 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.provider.MediaStore;
@@ -37,6 +40,7 @@ import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.ui.CreateColorFragment;
 import com.jacstuff.sketchy.utils.Toaster;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
@@ -152,7 +156,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if( id == R.id.action_share){
             shareSketch();
         }
+        else if(id == R.id.action_add_color){
+            openAddColorDialog();
+        }
         return true;
+    }
+
+
+    private void openAddColorDialog(){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        CreateColorFragment configureDialogFragment = CreateColorFragment.newInstance();
+        configureDialogFragment.show(ft, "dialog");
+
     }
 
 

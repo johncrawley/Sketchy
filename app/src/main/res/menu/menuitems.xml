@@ -42,6 +42,11 @@
 <!--
     android:icon="@android:drawable/ic_menu_gallery" -->
 
+    <item
+        android:id="@+id/action_add_color"
+        android:title="@string/action_add_color"
+        android:icon="@android:drawable/ic_menu_add"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_about"

@@ -7,6 +7,7 @@
     <string name="action_open">Open</string>
     <string name="action_share">Share</string>
     <string name="action_about">About</string>
+    <string name="action_add_color">Add Color</string>
     <string name="action_wipe">Wipe</string>
     <string name="action_undo">Undo</string>
     <string name="share_to">Share To</string>
@@ -205,6 +206,10 @@
     <string name="wavy_style_height_seekbar_label">Wave Height</string>
     <string name="size_sequence_min_seekbar_label">Minimum Width</string>
     <string name="size_sequence_max_seekbar_label">Maximum Width</string>
+    <string name="seekbar_label_add_color_red">R</string>
+    <string name="seekbar_label_add_color_green">G</string>
+    <string name="seekbar_label_add_color_blue">B</string>
+
     <string name="seekbar_label_style_dashed_length">Dash Length</string>
     <string name="seekbar_label_shape_random_vertices">Vertices</string>
     <string name="seekbar_label_shape_crazy_spiral_type">Type</string>

@@ -32,10 +32,10 @@ public class CreateColorFragment extends DialogFragment {
     private TextView redComponentTextView, greenComponentTextView, blueComponentTextView;
 
 
-
-    static CreateColorFragment newInstance() {
+    public static CreateColorFragment newInstance() {
         return new CreateColorFragment();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +63,7 @@ public class CreateColorFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupOkButton(view);
+        setupCancelButton(view);
     }
 
 
@@ -74,6 +75,12 @@ public class CreateColorFragment extends DialogFragment {
             int b = getColorFrom(blueComponentTextView);
             saveColor(r,g,b);
         });
+    }
+
+
+    private void setupCancelButton(View parentView){
+        Button cancelButton = parentView.findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener((View v) -> dismiss());
     }
 
 
