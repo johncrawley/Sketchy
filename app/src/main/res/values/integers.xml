@@ -89,6 +89,11 @@
     <integer name="size_sequence_step_max">20</integer>
 
 
+    <integer name="seek_bar_color_component_progress">0</integer>
+    <integer name="seek_bar_color_component_max">255</integer>
+
+
+
 
     <integer name="quantization_spacing_max">100</integer>
     <integer name="quantization_spacing_default">0</integer>

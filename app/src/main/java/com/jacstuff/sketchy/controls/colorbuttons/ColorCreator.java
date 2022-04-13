@@ -1,9 +1,14 @@
 package com.jacstuff.sketchy.controls.colorbuttons;
 
+import android.content.Context;
 import android.graphics.Color;
 
+import com.jacstuff.sketchy.ui.UserColorStore;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ColorCreator {
 
@@ -11,11 +16,12 @@ public class ColorCreator {
     private ColorCreator(){}
 
 
-    public static void generateMainColorsAndAddTo(List<Integer> emptyList){
+    public static void generateMainColorsAndAddTo(List<Integer> emptyList, Context context){
         if(!emptyList.isEmpty()){
             return;
         }
         emptyList.addAll(generate());
+        emptyList.addAll(getUserSavedColors(context));
     }
 
 
@@ -50,6 +56,16 @@ public class ColorCreator {
     private static void add(List<Integer> list, String key, int r, int g, int b){
         int color = ColorConverter.getIntFrom(r,g,b);
         add(list, key, color);
+    }
+
+
+    private static List<Integer> getUserSavedColors(Context context){
+        Set<String> colorStrSet = UserColorStore.get(context);
+        List<Integer> colors = new ArrayList<>(colorStrSet.size());
+        for(String colorStr: colorStrSet){
+            colors.add(Integer.parseInt(colorStr));
+        }
+        return colors;
     }
 
 

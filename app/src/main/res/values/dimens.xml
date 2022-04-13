@@ -47,6 +47,7 @@
     <dimen name="menu_seekbar_padding_top">8dp</dimen>
     <dimen name="menu_padding_top">8dp</dimen>
     <dimen name="menu_padding_bottom">12dp</dimen>
+    <dimen name="add_color_preview_margin">16dp</dimen>
     <dimen name="text_spacing_seekbar_padding_vertical">0dp</dimen>
     <dimen name="convex_square_midpoint_seekbar_padding_vertical">12dp</dimen>
     <dimen name="text_controls_checkboxes_group_padding_top">8dp</dimen>

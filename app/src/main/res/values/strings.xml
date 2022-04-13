@@ -209,6 +209,7 @@
     <string name="seekbar_label_add_color_red">R</string>
     <string name="seekbar_label_add_color_green">G</string>
     <string name="seekbar_label_add_color_blue">B</string>
+    <string name="add_color_default_value">0</string>
 
     <string name="seekbar_label_style_dashed_length">Dash Length</string>
     <string name="seekbar_label_shape_random_vertices">Vertices</string>

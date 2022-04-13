@@ -1,128 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/colorComponentSelectorLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-           >
-            <LinearLayout
-                android:id="@+id/redSelectorLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toStartOf="@+id/greenSelectorLayout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+    <LinearLayout
+        android:id="@+id/colorPreviewLayout"
+        android:orientation="vertical"
+        android:layout_width="150dp"
+        android:layout_margin="@dimen/add_color_preview_margin"
+        android:background="@color/colorPrimaryDark"
+        android:layout_height="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/colorComponentsSeekBarLayout">
 
-                <ImageButton
-                    android:id="@+id/redComponentUpButton"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/content_description_red_component_increase_value"
-                    android:background="@android:drawable/arrow_up_float">
-                </ImageButton>
-                <TextView
-                    android:id="@+id/redComponentTextView"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:text="@string/color_creator_default_component_value">
-                </TextView>
-                <ImageButton
-                    android:id="@+id/redComponentDownButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@android:drawable/arrow_down_float"
-                    android:contentDescription="@string/content_description_red_component_decrease_value">
-                </ImageButton>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/greenSelectorLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toStartOf="@id/blueSelectorLayout"
-                app:layout_constraintStart_toEndOf="@id/redSelectorLayout"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
-
-                <ImageButton
-                    android:id="@+id/greenComponentUpButton"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="wrap_content"
-                    android:background="@android:drawable/arrow_up_float"
-                    android:contentDescription="@string/content_description_green_component_increase_value">
-                </ImageButton>
-                <TextView
-                    android:id="@+id/greenComponentTextView"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:text="@string/color_creator_default_component_value">
-                </TextView>
-                <ImageButton
-                    android:id="@+id/greenComponentDownButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@android:drawable/arrow_down_float"
-                    android:contentDescription="@string/content_description_green_component_decrease_value">
-                </ImageButton>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/blueSelectorLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/greenSelectorLayout"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
-
-                <ImageButton
-                    android:id="@+id/blueComponentUpButton"
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="wrap_content"
-                    android:background="@android:drawable/arrow_up_float"
-                    android:contentDescription="@string/content_description_blue_component_increase_value">
-                </ImageButton>
-                <TextView
-                    android:id="@+id/blueComponentTextView"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:text="@string/color_creator_default_component_value">
-                </TextView>
-                <ImageButton
-                    android:id="@+id/blueComponentDownButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:contentDescription="@string/content_description_blue_component_decrease_value"
-                    android:background="@android:drawable/arrow_down_float">
-                </ImageButton>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    -->
+        <Space
+            android:layout_width="150dp"
+            android:layout_height="150dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/colorComponentsSeekBarLayout"
@@ -131,8 +28,8 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/colorPreviewLayout"
+        app:layout_constraintBottom_toTopOf="@+id/buttonsLayout">
 
 
         <TextView
@@ -140,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="244"
+            android:text="@string/add_color_default_value"
             />
 
 
@@ -165,15 +62,17 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:text="@string/seekbar_label_add_color_red"
+                android:textColor="@color/color_component_label_red"
+                android:textStyle="bold"
                 />
 
             <SeekBar
                 android:id="@+id/redComponentSeekBar"
-                android:layout_width="0dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:indeterminate="false"
-                android:progress="@integer/size_sequence_max_default"
-                android:max="@integer/brush_size_max"
+                android:progress="@integer/seek_bar_color_component_progress"
+                android:max="@integer/seek_bar_color_component_max"
                 app:layout_constraintHorizontal_weight="7"
                 app:layout_constraintStart_toEndOf="@+id/redComponentSeekBarLabel"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -189,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="244"
+            android:text="@string/add_color_default_value"
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -213,6 +112,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:text="@string/seekbar_label_add_color_green"
+                android:textColor="@color/color_component_label_green"
+                android:textStyle="bold"
                 />
 
             <SeekBar
@@ -220,8 +121,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:indeterminate="false"
-                android:progress="@integer/size_sequence_max_default"
-                android:max="@integer/brush_size_max"
+                android:progress="@integer/seek_bar_color_component_progress"
+                android:max="@integer/seek_bar_color_component_max"
                 app:layout_constraintHorizontal_weight="7"
                 app:layout_constraintStart_toEndOf="@+id/greenComponentSeekBarLabel"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -236,7 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="244"
+            android:text="@string/add_color_default_value"
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -256,11 +157,13 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="@dimen/seekbar_label_horizontal_padding"
-                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:text="@string/seekbar_label_add_color_blue"
+                android:textColor="@color/color_component_label_blue"
+                android:textStyle="bold"
                 />
 
             <SeekBar
@@ -268,9 +171,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:indeterminate="false"
-                android:progress="@integer/size_sequence_max_default"
-                android:max="@integer/brush_size_max"
-                app:layout_constraintHorizontal_weight="7"
+                android:progress="@integer/seek_bar_color_component_progress"
+                android:max="@integer/seek_bar_color_component_max"
+                app:layout_constraintHorizontal_weight="9"
                 app:layout_constraintStart_toEndOf="@+id/blueComponentSeekBarLabel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
