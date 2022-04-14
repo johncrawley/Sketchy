@@ -165,13 +165,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void openAddColorDialog(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
+        String tag = "dialog";
+        Fragment previous = getSupportFragmentManager().findFragmentByTag(tag);
+        if (previous != null) {
+            ft.remove(previous);
         }
         ft.addToBackStack(null);
         CreateColorFragment configureDialogFragment = CreateColorFragment.newInstance();
-        configureDialogFragment.show(ft, "dialog");
+        configureDialogFragment.show(ft, tag);
+        System.out.flush();
 
     }
 
