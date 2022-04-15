@@ -19,10 +19,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
-
-import java.util.Set;
 
 public class CreateColorFragment extends DialogFragment {
 
@@ -141,10 +140,23 @@ public class CreateColorFragment extends DialogFragment {
             return;
         }
         if(UserColorStore.save(color, context)){
+            createColorAndShadeButtonsFor(color);
             createColorSavedToast();
         }
         else {
             createColorExistsToast();
+        }
+    }
+
+
+    private void createColorAndShadeButtonsFor(int color){
+        MainActivity activity = (MainActivity) getActivity();
+        if(activity != null) {
+            activity.addUserGeneratedColorAndShadeButtons(color);
+
+        }
+        else{
+            System.out.println("^^^CreateColorFragment.createColorAndShadeButtonsFor() activity is null!");
         }
     }
 

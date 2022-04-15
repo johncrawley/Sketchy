@@ -77,17 +77,24 @@ public class ColorButtonLayoutCreator {
 
 
     private void setupColorAndShadeButtons(){
+        addMultiColorButton();
         reusableShadesLayoutHolder.initReusableShadesLayout(colorShadeCreator);
         for(int color : viewModel.mainColors){
             addColorAndShadeButtons(color);
         }
-        addMultiColorButton();
         addMultiColorShadeButtons();
     }
 
 
-    private void addColorAndShadeButtons(int color){
+    public void addColorAndShadeButtons(int color){
         addColorButton(color);
+        List<Integer> shades = viewModel.buttonShadesStore.getShadesFor(color, colorShadeCreator);
+        addMultiColorShades(color, shades);
+    }
+
+
+    public void addUserGeneratedColorAndShadeButtons(int color, LinearLayout parentLayout){
+        parentLayout.addView(createUserColorButton(color));
         List<Integer> shades = viewModel.buttonShadesStore.getShadesFor(color, colorShadeCreator);
         addMultiColorShades(color, shades);
     }
@@ -139,6 +146,31 @@ public class ColorButtonLayoutCreator {
             button.setTag(R.string.tag_button_color_button);
         }
         buttonUtils.putButtonInLayoutAndAddToList(button, buttonLayoutParams, colorButtonLayouts);
+    }
+
+
+    private LinearLayout createUserColorButton(int color){
+        String key = buttonUtils.createColorKey(color, ButtonType.COLOR);
+        Button button = buttonUtils.createButton(color, ButtonType.COLOR, key);
+        if(defaultColor.equals(key)){
+            button.setTag(R.string.tag_button_default_color);
+        }
+        else{
+            button.setTag(R.string.tag_button_color_button);
+        }
+        addMultiShadeButtonFor(color);
+        return buttonUtils.wrapInMarginLayout(buttonLayoutParams, button);
+    }
+
+
+    private void addMultiShadeButtonFor(int color){
+        LinearLayout multiShadeLayout = shadeLayoutsMap.get(MULTI_SHADE_KEY);
+        if(multiShadeLayout == null){
+            return;
+        }
+        LinearLayout buttonLayout = buttonUtils.createShadeButton(color, ButtonType.MULTI_SHADE);
+        addDrawableToMultiShadeButton(buttonLayout, color);
+        multiShadeLayout.addView(buttonLayout);
     }
 
 

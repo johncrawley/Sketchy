@@ -31,7 +31,6 @@ public class MultiShadeButtonIconDrawer {
 
 
     public void drawBackgroundOf(Button button, final List<Integer> shades){
-
         if(shades == null){
             return;
         }

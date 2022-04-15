@@ -35,7 +35,7 @@ public class ColorCreator {
         add(colors,"black", Color.BLACK);
         add(colors,"peach"    , 255,229,180);
         add(colors,"light_blue",0,  130,255);
-        add(colors,"teal"     , 0,  128,128);
+        add(colors,"off-teal"  , 9,  128,78);
         add(colors,"brown"    , 127,51,0);
         add(colors,"cyan", Color.CYAN);
         add(colors,"red", Color.RED);
@@ -47,7 +47,7 @@ public class ColorCreator {
         add(colors,"blue", Color.BLUE);
         add(colors,"white", Color.WHITE);
         add(colors,"olive"    , 128,128,0);
-        add(colors,"purple"   , 178,0,255);
+        add(colors,"purple"   , 140,40,255);
 
         return colors;
     }

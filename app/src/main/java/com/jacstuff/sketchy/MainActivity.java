@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ColorButtonLayoutCreator colorButtonLayoutCreator;
     private SeekBarConfigurator seekBarConfigurator;
     private ButtonLayoutParams colorButtonLayoutParams;
+    private CreateColorFragment createColorFragment;
 
 
     @Override
@@ -160,8 +161,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    CreateColorFragment createColorFragment;
-
 
     private void openAddColorDialog(){
         if(createColorFragment == null) {
@@ -232,6 +231,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         colorButtonClickHandler.setShadeLayoutsMap(colorButtonLayoutCreator.getShadeLayoutsMap());
         colorButtonClickHandler.setReusableShadesLayoutHolder(colorButtonLayoutCreator.getReusableShadesLayoutHolder());
         colorButtonClickHandler.onClick(getDefaultColorButton());
+    }
+
+
+    public void addUserGeneratedColorAndShadeButtons(int color){
+        colorButtonLayoutCreator.addUserGeneratedColorAndShadeButtons(color, colorButtonGroupLayout);
     }
 
 
