@@ -160,8 +160,8 @@ public class CreateColorFragment extends DialogFragment {
 
 
     public void onDismiss(@NonNull DialogInterface dialog){
+        super.onDismiss(dialog);
         Activity activity = getActivity();
-
     }
 
 

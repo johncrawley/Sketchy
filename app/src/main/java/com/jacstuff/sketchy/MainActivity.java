@@ -17,8 +17,6 @@ import android.graphics.drawable.shapes.RectShape;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.provider.MediaStore;
@@ -162,19 +160,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+    CreateColorFragment createColorFragment;
+
 
     private void openAddColorDialog(){
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        String tag = "dialog";
-        Fragment previous = getSupportFragmentManager().findFragmentByTag(tag);
-        if (previous != null) {
-            ft.remove(previous);
+        if(createColorFragment == null) {
+            createColorFragment = CreateColorFragment.newInstance();
         }
-        ft.addToBackStack(null);
-        CreateColorFragment configureDialogFragment = CreateColorFragment.newInstance();
-        configureDialogFragment.show(ft, tag);
-        System.out.flush();
-
+        createColorFragment.show(getSupportFragmentManager(), "createColorDialog");
     }
 
 
