@@ -65,6 +65,9 @@ public class ViewModelHelper {
         if(viewModel.mainColors == null){
             viewModel.mainColors = new ArrayList<>(50);
         }
+        if(viewModel.recentlyAddedColors == null){
+            viewModel.recentlyAddedColors = new ArrayList<>(20);
+        }
     }
 
 

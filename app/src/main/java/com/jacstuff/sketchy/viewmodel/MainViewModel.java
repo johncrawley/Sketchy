@@ -46,6 +46,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public ShadeStore buttonShadesStore;
     public ShadeStore sequenceShadeStore;
     public List<Integer> mainColors;
+    public List<Integer> recentlyAddedColors;
     public int numberOfSequenceShadesForButtons;
 
 
