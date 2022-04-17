@@ -71,7 +71,7 @@ public class ColorButtonLayoutCreator {
 
     private void setupColorShadeCreator(){
         viewModel.numberOfSequenceShadesForButtons = getInt(R.integer.color_sequences_for_buttons_shade_number);
-        int shadeIncrementForButtons         = getInt(R.integer.color_sequences_for_buttons_step_size);
+        int shadeIncrementForButtons = getInt(R.integer.color_sequences_for_buttons_step_size);
         colorShadeCreator = new ColorShadeCreator(viewModel.numberOfSequenceShadesForButtons, shadeIncrementForButtons);
     }
 
@@ -82,15 +82,29 @@ public class ColorButtonLayoutCreator {
         for(int color : viewModel.mainColors){
             addColorAndShadeButtons(color);
         }
+        for(int color : viewModel.userColors){
+            addUserGeneratedColorAndShadeButtons(color);
+        }
         for(int color: viewModel.recentlyAddedColors){
-            addColorAndShadeButtons(color);
+            addUserGeneratedColorAndShadeButtons(color);
         }
         addMultiColorShadeButtons();
     }
 
 
     private void addColorAndShadeButtons(int color){
-        addColorButton(color);
+        addColorButton(color, false);
+        addShadeButtonsFor(color);
+    }
+
+
+    private void addUserGeneratedColorAndShadeButtons(int color){
+        addColorButton(color, true);
+        addShadeButtonsFor(color);
+    }
+
+
+    private void addShadeButtonsFor(int color){
         List<Integer> shades = viewModel.buttonShadesStore.getShadesFor(color, colorShadeCreator);
         addMultiColorShades(color, shades);
     }
@@ -154,29 +168,43 @@ public class ColorButtonLayoutCreator {
     }
 
 
-    private void addColorButton(int color){
-        String key = buttonUtils.createColorKey(color, ButtonType.COLOR);
-        Button button = buttonUtils.createButton(color, ButtonType.COLOR, key);
-        if(defaultColor.equals(key)){
-            button.setTag(R.string.tag_button_default_color);
-        }
-        else{
-            button.setTag(R.string.tag_button_color_button);
-        }
+    private void addColorButton(int color, boolean isCustomColor){
+        Button button = createColorButton(color, isCustomColor);
         buttonUtils.putButtonInLayoutAndAddToList(button, buttonLayoutParams, colorButtonLayouts);
     }
 
 
     private LinearLayout createUserColorButton(int color){
+        Button button = createColorButton(color, true);
+        return buttonUtils.wrapInMarginLayout(buttonLayoutParams, button);
+    }
+
+
+    private Button createColorButton(int color, boolean isCustomColor){
         String key = buttonUtils.createColorKey(color, ButtonType.COLOR);
         Button button = buttonUtils.createButton(color, ButtonType.COLOR, key);
+        if(isCustomColor){
+            addLongClickDeleteListenerTo(button);
+        }
         if(defaultColor.equals(key)){
             button.setTag(R.string.tag_button_default_color);
         }
         else{
             button.setTag(R.string.tag_button_color_button);
         }
-        return buttonUtils.wrapInMarginLayout(buttonLayoutParams, button);
+        return button;
+    }
+
+
+    private void addLongClickDeleteListenerTo(Button button){
+        button.setOnLongClickListener(view -> {
+            System.out.println("^^^ hey there!");
+            int color = (int)view.getTag(R.string.tag_button_color);
+            activity.startDeleteColorConfirmationFragment(color);
+            return true;
+        }
+        );
+
     }
 
 

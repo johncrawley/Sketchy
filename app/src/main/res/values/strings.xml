@@ -210,6 +210,7 @@
     <string name="seekbar_label_add_color_green">G</string>
     <string name="seekbar_label_add_color_blue">B</string>
     <string name="add_color_default_value">0</string>
+    <string name="delete_color_confirmation_text">Are you sure you want to remove this custom colour?</string>
 
     <string name="seekbar_label_style_dashed_length">Dash Length</string>
     <string name="seekbar_label_shape_random_vertices">Vertices</string>
@@ -225,6 +226,7 @@
 
     <string name="button_add_color_save_label">Save</string>
     <string name="button_add_color_cancel_label">Cancel</string>
+    <string name="button_delete_color_delete_label">Remove</string>
 
     <string name="size_sequence_increments_seekbar_label">Step Size</string>
     <string name="placement_quantization_spacing_seekbar_label">Extra Spacing</string>

@@ -17,6 +17,8 @@ import android.graphics.drawable.shapes.RectShape;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.provider.MediaStore;
@@ -39,6 +41,7 @@ import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.ui.CreateColorFragment;
+import com.jacstuff.sketchy.ui.DeleteColorFragment;
 import com.jacstuff.sketchy.utils.Toaster;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
@@ -169,6 +172,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         createColorFragment.show(getSupportFragmentManager(), "createColorDialog");
     }
 
+    private void log(String msg){
+        System.out.println("MainActivity: " + msg);
+    }
+
+    public void startDeleteColorConfirmationFragment(int color){
+        String tag = "delte_color_confirmation";
+        log("entered startDeleteColorConfirmationFragment()");
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(tag);
+        if (prev != null) {
+            fragmentTransaction.remove(prev);
+        }
+        fragmentTransaction.addToBackStack(null);
+        DeleteColorFragment deleteColorFragment = DeleteColorFragment.newInstance(color);
+        deleteColorFragment.show(fragmentTransaction, tag);
+    }
+
 
     public ButtonLayoutParams getColorButtonLayoutParams(){
         return this.colorButtonLayoutParams;
@@ -224,6 +244,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void setupColorAndShadeButtons(){
         ColorCreator.generateMainColorsAndAddTo(viewModel.mainColors, this);
+        ColorCreator.loadUserColorsAndAddTo(viewModel.userColors, this);
         colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
         colorButtonClickHandler = new ColorButtonClickHandler(this, colorButtonLayoutParams);
         colorButtonLayoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams);

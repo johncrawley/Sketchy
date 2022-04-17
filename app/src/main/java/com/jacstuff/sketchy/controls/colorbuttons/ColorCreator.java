@@ -21,7 +21,13 @@ public class ColorCreator {
             return;
         }
         emptyList.addAll(generate());
-        emptyList.addAll(UserColorStore.get(context));
+    }
+
+    public static void loadUserColorsAndAddTo(List<Integer> list, Context context){
+        if(!list.isEmpty()){
+            return;
+        }
+        list.addAll(UserColorStore.get(context));
     }
 
 

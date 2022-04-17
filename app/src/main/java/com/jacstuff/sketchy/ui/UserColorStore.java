@@ -52,4 +52,29 @@ public class UserColorStore {
         }
         return false;
     }
+
+
+    public static void delete(int color, Context context){
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        String savedColorsStr = prefs.getString(SAVED_COLORS_PREF_NAME,"");
+        String colorStr = String.valueOf(color);
+        log("delete() : color to delete: " + color);
+        log("delete() : existing colors: " + savedColorsStr);
+        String[] colorArray = savedColorsStr.split(DELIMITER);
+        StringBuilder str = new StringBuilder();
+        for (String s : colorArray) {
+            if (s.equals(colorStr)) {
+                continue;
+            }
+            str.append(s);
+            str.append(",");
+        }
+        String output = str.substring(0, str.length()-1);
+        log("delete() amended color string: " + output);
+        prefs.edit().putString(SAVED_COLORS_PREF_NAME, output).apply();
+    }
+
+    private static void log(String msg){
+        System.out.println("UserColorStore: " + msg);
+    }
 }

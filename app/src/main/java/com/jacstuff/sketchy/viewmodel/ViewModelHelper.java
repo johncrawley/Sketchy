@@ -68,6 +68,9 @@ public class ViewModelHelper {
         if(viewModel.recentlyAddedColors == null){
             viewModel.recentlyAddedColors = new ArrayList<>(20);
         }
+        if(viewModel.userColors == null){
+            viewModel.userColors = new ArrayList<>(20);
+        }
     }
 
 
