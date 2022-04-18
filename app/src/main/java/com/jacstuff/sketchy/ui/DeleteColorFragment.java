@@ -4,18 +4,15 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutCreator;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import androidx.annotation.NonNull;
@@ -28,15 +25,18 @@ public class DeleteColorFragment extends DialogFragment {
 
     private MainViewModel viewModel;
     private final int color;
+    private ColorButtonLayoutCreator colorButtonLayoutCreator;
 
 
     public static DeleteColorFragment newInstance(int color) {
         return new DeleteColorFragment(color);
     }
 
+
     public DeleteColorFragment(int color){
         this.color = color;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,15 +45,23 @@ public class DeleteColorFragment extends DialogFragment {
         if(getActivity() == null){
             return rootView;
         }
+        MainActivity mainActivity = (MainActivity)getActivity();
+        colorButtonLayoutCreator = mainActivity.getColorButtonLayoutCreator();
         ViewModelProvider vmp = new ViewModelProvider(getActivity());
         viewModel = vmp.get(MainViewModel.class);
-
+        setupPreviewColor(rootView);
 
         if(dialog != null){
             dialog.setTitle("Remove custom colour");
         }
 
         return rootView;
+    }
+
+
+    private void setupPreviewColor(View rootView){
+        View colorPreviewLayout = rootView.findViewById(R.id.deleteColorPreviewLayout);
+        colorPreviewLayout.setBackgroundColor(color);
     }
 
 
@@ -67,7 +75,10 @@ public class DeleteColorFragment extends DialogFragment {
 
     private void setupDeleteButton(View parentView){
         Button saveButton = parentView.findViewById(R.id.deleteColorButton);
-        saveButton.setOnClickListener((View v) -> deleteColor(color));
+        saveButton.setOnClickListener((View v) -> {
+            deleteColor(color);
+            dismiss();
+        });
     }
 
 
@@ -77,17 +88,22 @@ public class DeleteColorFragment extends DialogFragment {
     }
 
 
-    private void updateComponentTextView(TextView textView, int progress){
-        textView.setText(String.valueOf(progress));
-    }
-
-
     private void deleteColor(int color){
         Context context = getContext();
         if(context == null){
             return;
         }
         UserColorStore.delete(color, context);
+        removeFromRecentlyAddedColors(color);
+        colorButtonLayoutCreator.removeButtonsFor(color);
+    }
+
+
+    private void removeFromRecentlyAddedColors(int color){
+        int index = viewModel.recentlyAddedColors.indexOf(color);
+        if(index != -1){
+            viewModel.recentlyAddedColors.remove(index);
+        }
     }
 
 

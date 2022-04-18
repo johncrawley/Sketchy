@@ -112,6 +112,7 @@ public class ButtonUtils {
 
     public LinearLayout wrapInMarginLayout(ButtonLayoutParams layoutParams, Button button){
         LinearLayout layout = new LinearLayout(activity);
+        layout.setId(View.generateViewId());
         layout.setGravity(Gravity.CENTER);
         layout.setBackgroundColor(Color.DKGRAY);
         layout.setMinimumWidth(layoutParams.getButtonWidth());

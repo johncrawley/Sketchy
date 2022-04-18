@@ -57,21 +57,32 @@ public class UserColorStore {
     public static void delete(int color, Context context){
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         String savedColorsStr = prefs.getString(SAVED_COLORS_PREF_NAME,"");
-        String colorStr = String.valueOf(color);
-        log("delete() : color to delete: " + color);
-        log("delete() : existing colors: " + savedColorsStr);
-        String[] colorArray = savedColorsStr.split(DELIMITER);
+        if(savedColorsStr == null){
+            savedColorsStr = "";
+        }
+        String str = removeColorFrom(savedColorsStr, String.valueOf(color));
+        String output = str.isEmpty() ? str : removeLastCommaFrom(str);
+        prefs.edit().putString(SAVED_COLORS_PREF_NAME, output).apply();
+    }
+
+
+    private static String removeLastCommaFrom(String str){
+        int lastIndex = String.valueOf(str.charAt(str.length()-1)).equals(DELIMITER) ? str.length() - 1 : str.length();
+       return str.substring(0, lastIndex);
+    }
+
+
+    private static String removeColorFrom(String savedColorsStr, String colorStr){
+        String[] savedColorsArray = savedColorsStr.split(DELIMITER);
         StringBuilder str = new StringBuilder();
-        for (String s : colorArray) {
+        for (String s : savedColorsArray) {
             if (s.equals(colorStr)) {
                 continue;
             }
             str.append(s);
             str.append(",");
         }
-        String output = str.substring(0, str.length()-1);
-        log("delete() amended color string: " + output);
-        prefs.edit().putString(SAVED_COLORS_PREF_NAME, output).apply();
+        return str.toString();
     }
 
     private static void log(String msg){

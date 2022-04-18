@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final String SAVED_WAS_APP_STOPPED_PROPERLY = "wasAppStoppedProperly";
     private PaintView paintView;
     private ImageSaver imageSaver;
-    private LinearLayout colorButtonGroupLayout;
+   // private LinearLayout colorButtonGroupLayout;
     private ColorButtonClickHandler colorButtonClickHandler;
     private Toaster toaster;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(id == R.id.action_add_color){
             openAddColorDialog();
         }
+
         return true;
     }
 
@@ -172,13 +173,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         createColorFragment.show(getSupportFragmentManager(), "createColorDialog");
     }
 
-    private void log(String msg){
-        System.out.println("MainActivity: " + msg);
-    }
 
     public void startDeleteColorConfirmationFragment(int color){
-        String tag = "delte_color_confirmation";
-        log("entered startDeleteColorConfirmationFragment()");
+        String tag = "delete_color_confirmation";
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag(tag);
         if (prev != null) {
@@ -245,27 +242,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void setupColorAndShadeButtons(){
         ColorCreator.generateMainColorsAndAddTo(viewModel.mainColors, this);
         ColorCreator.loadUserColorsAndAddTo(viewModel.userColors, this);
-        colorButtonGroupLayout = findViewById(R.id.colorButtonGroup);
         colorButtonClickHandler = new ColorButtonClickHandler(this, colorButtonLayoutParams);
         colorButtonLayoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams);
-        colorButtonLayoutCreator.addColorButtonLayoutsTo(colorButtonGroupLayout);
+        colorButtonLayoutCreator.addColorButtonLayouts();
         colorButtonClickHandler.setShadeLayoutsMap(colorButtonLayoutCreator.getShadeLayoutsMap());
         colorButtonClickHandler.setReusableShadesLayoutHolder(colorButtonLayoutCreator.getReusableShadesLayoutHolder());
-        colorButtonClickHandler.onClick(getDefaultColorButton());
+        colorButtonClickHandler.onClick(colorButtonLayoutCreator.getDefaultColorButton());
     }
 
 
     public void addUserGeneratedColorAndShadeButtons(int color){
-        colorButtonLayoutCreator.addUserGeneratedColorAndShadeButtons(color, colorButtonGroupLayout);
-    }
-
-
-    private View getDefaultColorButton(){
-        View defaultButton = colorButtonGroupLayout.findViewWithTag(R.string.tag_button_default_color);
-        if(defaultButton == null){
-            defaultButton = colorButtonGroupLayout.findViewWithTag(R.string.tag_button_color_button);
-        }
-        return defaultButton;
+        colorButtonLayoutCreator.addUserGeneratedColorAndShadeButtons(color);
     }
 
 

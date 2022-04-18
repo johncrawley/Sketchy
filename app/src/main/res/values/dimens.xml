@@ -101,4 +101,5 @@
     <dimen name="settings_panel_horizontal_padding">12dp</dimen>
     <dimen name="settings_buttons_layout_padding_horizontal">12dp</dimen>
 
+    <dimen name="delete_color_preview_layout_length">50dp</dimen>
 </resources>

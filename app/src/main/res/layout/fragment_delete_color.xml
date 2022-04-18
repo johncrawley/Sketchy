@@ -5,12 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:id="@+id/colorPreviewLayout"
+        android:id="@+id/deleteColorPreviewLayout"
         android:orientation="vertical"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/delete_color_preview_layout_length"
+        android:layout_height="@dimen/delete_color_preview_layout_length"
         android:layout_margin="@dimen/add_color_preview_margin"
         android:background="@color/colorPrimaryDark"
-        android:layout_height="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,7 +28,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorPreviewLayout"
+        app:layout_constraintTop_toBottomOf="@+id/deleteColorPreviewLayout"
         app:layout_constraintBottom_toTopOf="@+id/buttonsLayout">
 
 

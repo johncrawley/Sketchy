@@ -39,8 +39,6 @@
         android:icon="@mipmap/ic_action_collection"
         app:showAsAction="ifRoom"
         tools:ignore="AlwaysShowAction"/>
-<!--
-    android:icon="@android:drawable/ic_menu_gallery" -->
 
     <item
         android:id="@+id/action_add_color"
