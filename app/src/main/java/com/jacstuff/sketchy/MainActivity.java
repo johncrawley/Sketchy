@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ColorCreator.generateMainColorsAndAddTo(viewModel.mainColors, this);
         ColorCreator.loadUserColorsAndAddTo(viewModel.userColors, this);
         colorButtonClickHandler = new ColorButtonClickHandler(this, colorButtonLayoutParams);
-        colorButtonLayoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams);
+        colorButtonLayoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams, colorButtonClickHandler);
         colorButtonLayoutCreator.addColorButtonLayouts();
         colorButtonClickHandler.setShadeLayoutsMap(colorButtonLayoutCreator.getShadeLayoutsMap());
         colorButtonClickHandler.setReusableShadesLayoutHolder(colorButtonLayoutCreator.getReusableShadesLayoutHolder());

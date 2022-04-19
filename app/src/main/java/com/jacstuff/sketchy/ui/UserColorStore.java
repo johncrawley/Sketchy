@@ -85,7 +85,4 @@ public class UserColorStore {
         return str.toString();
     }
 
-    private static void log(String msg){
-        System.out.println("UserColorStore: " + msg);
-    }
 }

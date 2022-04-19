@@ -2,23 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/colorPreviewLayout"
         android:orientation="vertical"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/add_color_preview_layout_length"
+        android:layout_height="@dimen/add_color_preview_layout_length"
         android:layout_margin="@dimen/add_color_preview_margin"
-        android:background="@color/colorPrimaryDark"
-        android:layout_height="150dp"
+        android:elevation="3dp"
+        android:background="#000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/colorComponentsSeekBarLayout">
 
-        <Space
-            android:layout_width="150dp"
-            android:layout_height="150dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,9 +44,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="1"
-            android:paddingTop="@dimen/menu_seekbar_padding_top"
-            android:paddingBottom="@dimen/menu_seekbar_padding_bottom"
+            android:weightSum="10"
+            android:paddingTop="@dimen/color_component_seekbar_padding_top"
+            android:paddingBottom="@dimen/color_component_seekbar_padding_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -57,7 +56,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="@dimen/seekbar_label_horizontal_padding"
-                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -73,7 +72,7 @@
                 android:indeterminate="false"
                 android:progress="@integer/seek_bar_color_component_progress"
                 android:max="@integer/seek_bar_color_component_max"
-                app:layout_constraintHorizontal_weight="7"
+                app:layout_constraintHorizontal_weight="9"
                 app:layout_constraintStart_toEndOf="@+id/redComponentSeekBarLabel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -95,9 +94,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="1"
-            android:paddingTop="@dimen/menu_seekbar_padding_top"
-            android:paddingBottom="@dimen/menu_seekbar_padding_bottom"
+            android:weightSum="10"
+            android:paddingTop="@dimen/color_component_seekbar_padding_top"
+            android:paddingBottom="@dimen/color_component_seekbar_padding_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -107,7 +106,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="@dimen/seekbar_label_horizontal_padding"
-                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -123,7 +122,7 @@
                 android:indeterminate="false"
                 android:progress="@integer/seek_bar_color_component_progress"
                 android:max="@integer/seek_bar_color_component_max"
-                app:layout_constraintHorizontal_weight="7"
+                app:layout_constraintHorizontal_weight="9"
                 app:layout_constraintStart_toEndOf="@+id/greenComponentSeekBarLabel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -145,9 +144,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="1"
-            android:paddingTop="@dimen/menu_seekbar_padding_top"
-            android:paddingBottom="@dimen/menu_seekbar_padding_bottom"
+            android:weightSum="10"
+            android:paddingTop="@dimen/color_component_seekbar_padding_top"
+            android:paddingBottom="@dimen/color_component_seekbar_padding_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -190,6 +189,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonsLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        android:paddingVertical="@dimen/dialog_button_layout_padding_vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/colorComponentsSeekBarLayout"
         app:layout_constraintBottom_toBottomOf="parent">

@@ -264,6 +264,13 @@ public class ColorButtonClickHandler {
     }
 
 
+    public void deselectMultiShadeButton(Button button){
+        if(isSelected(button)){
+            deselectShadeButton(button);
+        }
+    }
+
+
     private void handleClickWhenMultiDisabled(Button button){
         if(!isSelected(button)){
             selectMultiShadeButton(button);

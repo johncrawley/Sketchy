@@ -22,7 +22,7 @@ public class ShadeColorSelector implements ColorSelector {
     private int currentIndex = 0;
     private boolean isAtLastIndex;
     private final BlendCalculator blendCalculator;
-    private MainViewModel viewModel;
+    private final MainViewModel viewModel;
 
 
     public ShadeColorSelector(MainViewModel viewModel){

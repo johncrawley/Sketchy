@@ -38,7 +38,7 @@ public class CreateColorFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.add_color_panel, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_add_color, container, false);
         Dialog dialog =  getDialog();
         if(getActivity() == null){
             return rootView;

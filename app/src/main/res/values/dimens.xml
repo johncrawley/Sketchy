@@ -45,6 +45,9 @@
     <dimen name="brush_size_seekbar_padding_bottom_portrait">12dp</dimen>
     <dimen name="menu_seekbar_padding_bottom">2dp</dimen>
     <dimen name="menu_seekbar_padding_top">8dp</dimen>
+    <dimen name="color_component_seekbar_padding_bottom">6dp</dimen>
+    <dimen name="color_component_seekbar_padding_top">0dp</dimen>
+    <dimen name="dialog_button_layout_padding_vertical">12dp</dimen>
     <dimen name="menu_padding_top">8dp</dimen>
     <dimen name="menu_padding_bottom">12dp</dimen>
     <dimen name="add_color_preview_margin">16dp</dimen>
@@ -102,4 +105,5 @@
     <dimen name="settings_buttons_layout_padding_horizontal">12dp</dimen>
 
     <dimen name="delete_color_preview_layout_length">50dp</dimen>
+    <dimen name="add_color_preview_layout_length">90dp</dimen>
 </resources>
