@@ -214,7 +214,7 @@
 
     <string name="seekbar_label_style_dashed_length">Dash Length</string>
     <string name="seekbar_label_shape_random_vertices">Vertices</string>
-    <string name="seekbar_label_shape_crazy_spiral_type">Type</string>
+    <string name="seekbar_label_shape_crazy_spiral_type">Variation</string>
     <string name="seekbar_label_style_dashed_spacing">Spacing</string>
     <string name="seekbar_label_color_transparency">Transparency</string>
     <string name="seekbar_label_color_multi_shade_brightness">Multi-shade brightness</string>

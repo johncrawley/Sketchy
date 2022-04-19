@@ -48,6 +48,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
         assignRandomPoints();
     }
 
+
     @Override
     public void touchMove(float x, float y, Paint paint){
         super.touchMove(x, y, paint);
@@ -78,6 +79,11 @@ public class RandomBrush extends AbstractBrush implements Brush {
         canvas.drawPath(path, paint);
     }
 
+    @Override
+    public void recalculateDimensions(){
+        super.recalculateDimensions();
+        assignRandomPoints();
+    }
 
     private void adjustPoints(){
         if(mainViewModel.doesRandomBrushMorph){
