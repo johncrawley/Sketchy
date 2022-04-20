@@ -264,9 +264,17 @@ public class ColorButtonClickHandler {
     }
 
 
-    public void deselectMultiShadeButton(Button button){
-        if(isSelected(button)){
-            deselectShadeButton(button);
+    public void deselectMultiShadeButtonForRemoval(Button button){
+        deselectShadeButton(button);
+        removeMultiShade(button);
+    }
+
+
+    private void removeMultiShade(Button button){
+        int buttonColor = (int)button.getTag(R.string.tag_button_color);
+        ColorSelector colorSelector = colorSelectors.get(ButtonType.MULTI_SHADE);
+        if(colorSelector!=null){
+            colorSelector.remove(buttonColor);
         }
     }
 

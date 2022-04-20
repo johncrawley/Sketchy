@@ -81,7 +81,7 @@ public class ColorButtonLayoutCreator {
     private void deselectAndRemoveMultiShadeButton(int color){
         ButtonAndLayoutId buttonAndLayoutId = multiColorToIdMap.get(color);
         if(buttonAndLayoutId != null) {
-            colorButtonClickHandler.deselectMultiShadeButton(buttonAndLayoutId.getButton());
+            colorButtonClickHandler.deselectMultiShadeButtonForRemoval(buttonAndLayoutId.getButton());
             removeButtonFromLayout(buttonAndLayoutId.getLayoutId(), getMultiShadesLayout());
         }
     }
