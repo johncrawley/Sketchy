@@ -112,7 +112,7 @@ public class GradientSettings extends AbstractButtonConfigurator<GradientType> i
 
 
     private void setupSpinner(){
-        SettingsUtils.setupSpinner2(activity,
+        SettingsUtils.setupSpinnerWithLabels(activity,
                 R.id.gradientColorSpinner,
                 R.array.gradient_color_array,
                 R.array.gradient_color_values,

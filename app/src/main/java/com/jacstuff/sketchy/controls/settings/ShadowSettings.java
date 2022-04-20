@@ -5,6 +5,7 @@ import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.ShadowType;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.utils.ColorUtils;
 
 public class ShadowSettings extends AbstractButtonConfigurator<ShadowType> implements ButtonsConfigurator<ShadowType>{
 
@@ -54,9 +55,12 @@ public class ShadowSettings extends AbstractButtonConfigurator<ShadowType> imple
                 R.integer.shadow_distance_default,
                 progress -> paintHelperManager.getShadowHelper().setShadowDistance(progress));
 
-
-
-
+        seekBarConfigurator.configure(R.id.shadowColorPickerSeekBar,
+                R.integer.shadow_color_default_progress,
+                progress -> {
+                    viewModel.shadowColor = ColorUtils.getColorFromSlider(progress);
+                    paintHelperManager.getShadowHelper().setShadowLayer();
+                });
     }
 
 }

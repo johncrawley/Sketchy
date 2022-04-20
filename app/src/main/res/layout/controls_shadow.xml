@@ -29,6 +29,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             layout="@layout/seek_bar_shadow_distance" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/shadow_color_label_vertical_padding"
+            android:paddingHorizontal="@dimen/seekbar_label_horizontal_padding"
+            android:text="@string/shadow_color_label"/>
+
+        <SeekBar
+            android:id="@+id/shadowColorPickerSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:layout_marginHorizontal="@dimen/gradient_color_picker_seek_bar_horizontal_margin"
+            android:max="@integer/gradient_color_picker_seek_bar_max"
+            android:progress="@integer/shadow_color_default_progress"/>
+
     </LinearLayout>
 
     <HorizontalScrollView

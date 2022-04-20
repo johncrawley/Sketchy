@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.ShadowType;
+import com.jacstuff.sketchy.utils.ColorUtils;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class ShadowHelper {
@@ -107,8 +108,9 @@ public class ShadowHelper {
     }
 
 
-    private void setShadowLayer(){
-        paint.setShadowLayer(viewModel.shadowSize, viewModel.shadowOffsetX, viewModel.shadowOffsetY, Color.BLACK);
+    public void setShadowLayer(){
+        int color = ColorUtils.getColorFromSlider(viewModel.shadowColor);
+        paint.setShadowLayer(viewModel.shadowSize, viewModel.shadowOffsetX, viewModel.shadowOffsetY, color);
     }
 
 

@@ -37,7 +37,6 @@ public class GradientHelper {
         this.kaleidoscopeHelper = kaleidoscopeHelper;
         random = new Random(System.currentTimeMillis());
         gradientBlender = new InfinityModeRandomGradientBlender(random);
-
     }
 
 

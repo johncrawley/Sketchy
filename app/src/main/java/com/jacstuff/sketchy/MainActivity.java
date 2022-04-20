@@ -10,10 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -27,7 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
@@ -40,6 +35,7 @@ import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.ui.ColorPickerSeekBarConfigurator;
 import com.jacstuff.sketchy.ui.CreateColorFragment;
 import com.jacstuff.sketchy.ui.DeleteColorFragment;
 import com.jacstuff.sketchy.utils.Toaster;
@@ -72,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SeekBarConfigurator seekBarConfigurator;
     private ButtonLayoutParams colorButtonLayoutParams;
     private CreateColorFragment createColorFragment;
+    private ColorPickerSeekBarConfigurator colorPickerSeekBarConfigurer;
+
 
 
     @Override
@@ -86,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         seekBarConfigurator = new SeekBarConfigurator(this);
         SHARED_PREFS_NAME = getString(R.string.shared_prefs_name);
         setupViewModel();
+        colorPickerSeekBarConfigurer = new ColorPickerSeekBarConfigurator(this, viewModel);
         setupPaintViewAndDefaultSelections();
         initPaintHelperManager();
         setupColorAndShadeButtons();
@@ -276,28 +275,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 viewModelHelper.onResume();
             }
         });
-
-        View colorPickerSeekBar = findViewById(R.id.gradientColorPickerSeekBar);
-        colorPickerSeekBar.addOnLayoutChangeListener((view, i, i1, i2, i3, i4, i5, i6, i7) -> setupColorPickerSeekbar());
+        colorPickerSeekBarConfigurer.setupOnCreation(R.id.gradientColorPickerSeekBar);
+        colorPickerSeekBarConfigurer.setupOnCreation(R.id.shadowColorPickerSeekBar);
     }
 
-
-    private void setupColorPickerSeekbar(){
-        SeekBar colorPickerSeekBar = findViewById(R.id.gradientColorPickerSeekBar);
-        int width = colorPickerSeekBar.getWidth() - (colorPickerSeekBar.getPaddingStart() + colorPickerSeekBar.getPaddingEnd());
-        LinearGradient linearGradient = new LinearGradient(0, 0,  width, 0,
-                new int[] { 0xFF000000, 0xFF0000FF, 0xFF00FF00, 0xFF00FFFF,
-                        0xFFFF0000, 0xFFFF00FF, 0xFFFFFF00, 0xFFFFFFFF},
-                null, Shader.TileMode.CLAMP);
-        ShapeDrawable shape = new ShapeDrawable(new RectShape());
-        shape.getPaint().setShader(linearGradient);
-        colorPickerSeekBar.setProgressDrawable(shape);
-        colorPickerSeekBar.setMax(256*7-1);
-        Integer savedSeekBarProgress = viewModel.seekBarValue.get(R.id.gradientColorPickerSeekBar);
-        if(savedSeekBarProgress != null) {
-            colorPickerSeekBar.setProgress(savedSeekBarProgress);
-        }
-    }
 
 
     private void initActivityResultLauncher(){

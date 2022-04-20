@@ -64,6 +64,7 @@
     <dimen name="spinner_label_margin_end">8dp</dimen>
     <dimen name="text_skew_seekbar_padding_vertical">0dp</dimen>
     <dimen name="seekbar_label_horizontal_padding">12dp</dimen>
+    <dimen name="shadow_color_label_vertical_padding">6dp</dimen>
     <dimen name="seekbar_brush_size_padding_start">6dp</dimen>
     <dimen name="seekbar_brush_size_padding_end">12dp</dimen>
     <dimen name="seekbar_include_horizontal_padding">22dp</dimen>

@@ -6,7 +6,7 @@ import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.size.SizeSequenceType;
 
-import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner2;
+import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinnerWithLabels;
 
 public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenceType> implements ButtonsConfigurator<SizeSequenceType> {
 
@@ -81,14 +81,14 @@ public class SizeSequenceSettings extends AbstractButtonConfigurator<SizeSequenc
 
 
     private void setupSpinners(){
-        setupSpinner2(activity,
+        setupSpinnerWithLabels(activity,
                 R.id.sizeSequenceFocalPointSpinner,
                 R.array.size_sequence_proximity_focal_point_array,
                 R.array.size_sequence_proximity_focal_point_values,
                 x -> paintHelperManager.getSizeHelper().setProximityFocalPoint(x));
 
 
-        setupSpinner2(activity,
+        setupSpinnerWithLabels(activity,
                 R.id.sizeSequenceProximityTypeSpinner,
                 R.array.size_sequence_proximity_type,
                 R.array.size_sequence_proximity_type_values,

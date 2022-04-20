@@ -34,7 +34,7 @@ public class SettingsUtils {
     }
 
 
-    public static void setupSpinner2(Activity activity, int spinnerId, int itemsArrayId, int valuesArrayId, final Consumer<String> paintAction){
+    public static void setupSpinnerWithLabels(Activity activity, int spinnerId, int itemsArrayId, int valuesArrayId, final Consumer<String> paintAction){
         Spinner spinner = activity.findViewById(spinnerId);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity,
