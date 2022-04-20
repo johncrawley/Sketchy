@@ -167,6 +167,9 @@
 
 
     <string name="confirm_wipe_text">Clear the canvas without saving?</string>
+    <string name="color_created_toast_text">Colour Added</string>
+    <string name="color_already_exists_toast_text">Colour Already Exists</string>
+    <string name="color_removed_toast_text">Colour Removed</string>
 
     <string name="spinner_color_sequence_type_label">Sequence Type</string>
     <string name="spinner_item_color_sequence_forwards">Forwards</string>
@@ -224,7 +227,7 @@
     <string name="seekbar_label_color_sequence_steps_index">Blend Rate</string>
     <string name="seekbar_label_color_sequence_starting_index">Sequence Starting Index</string>
 
-    <string name="button_add_color_save_label">Save</string>
+    <string name="button_add_color_save_label">Add</string>
     <string name="button_add_color_cancel_label">Cancel</string>
     <string name="button_delete_color_delete_label">Remove</string>
 

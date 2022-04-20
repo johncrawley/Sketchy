@@ -40,6 +40,7 @@
             android:id="@+id/deleteColorConfirmationTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/delete_color_confirmation_text_horizontal_padding"
             android:gravity="center_horizontal"
             android:text="@string/delete_color_confirmation_text"
             />

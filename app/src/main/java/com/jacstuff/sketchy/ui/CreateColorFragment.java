@@ -1,9 +1,7 @@
 package com.jacstuff.sketchy.ui;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +11,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
+
 
 public class CreateColorFragment extends DialogFragment {
 
@@ -115,8 +115,8 @@ public class CreateColorFragment extends DialogFragment {
 
             }
         });
-
     }
+
 
     private void updateComponentTextView(TextView textView, int progress){
         textView.setText(String.valueOf(progress));
@@ -141,10 +141,10 @@ public class CreateColorFragment extends DialogFragment {
         }
         if(UserColorStore.save(color, context)){
             createColorAndShadeButtonsFor(color);
-            createColorSavedToast();
+            showToast(R.string.color_created_toast_text);
         }
         else {
-            createColorExistsToast();
+            showToast(R.string.color_already_exists_toast_text);
         }
     }
 
@@ -153,27 +153,12 @@ public class CreateColorFragment extends DialogFragment {
         MainActivity activity = (MainActivity) getActivity();
         if(activity != null) {
             activity.addUserGeneratedColorAndShadeButtons(color);
-
-        }
-        else{
-            System.out.println("^^^CreateColorFragment.createColorAndShadeButtonsFor() activity is null!");
         }
     }
 
 
-    private void createColorSavedToast(){
-
-    }
-
-
-    private void createColorExistsToast(){
-
-    }
-
-
-    public void onDismiss(@NonNull DialogInterface dialog){
-        super.onDismiss(dialog);
-        Activity activity = getActivity();
+    private void showToast(int messageId){
+        Toast.makeText(getContext(), messageId, Toast.LENGTH_LONG).show();
     }
 
 
