@@ -38,6 +38,7 @@ import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.ui.ColorPickerSeekBarConfigurator;
 import com.jacstuff.sketchy.ui.CreateColorFragment;
 import com.jacstuff.sketchy.ui.DeleteColorFragment;
+import com.jacstuff.sketchy.ui.EditColorFragment;
 import com.jacstuff.sketchy.utils.Toaster;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
@@ -186,6 +187,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    public void startEditColorFragment(int color, int index){
+        String tag = "edit_color";
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(tag);
+        if (prev != null) {
+            fragmentTransaction.remove(prev);
+        }
+        fragmentTransaction.addToBackStack(null);
+        Bundle bundle = new Bundle();
+        bundle.putInt(EditColorFragment.ORIGINAL_COLOR_TAG, color);
+        bundle.putInt(EditColorFragment.COLOR_INDEX_TAG, index);
+        EditColorFragment editColorFragment = EditColorFragment.newInstance();
+        editColorFragment.setArguments(bundle);
+        editColorFragment.show(fragmentTransaction, tag);
+    }
+
+
     public ButtonLayoutParams getColorButtonLayoutParams(){
         return this.colorButtonLayoutParams;
     }
@@ -239,14 +257,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     void setupColorAndShadeButtons(){
-        ColorCreator.generateMainColorsAndAddTo(viewModel.mainColors, this);
-        ColorCreator.loadUserColorsAndAddTo(viewModel.userColors, this);
+       // ColorCreator.generateMainColorsAndAddTo(viewModel.mainColors, this);
+        ColorCreator.loadUserColorsAndAddTo(viewModel.mainColors, this);
+
+       // ColorCreator.loadUserColorsAndAddTo(viewModel.userColors, this);
         colorButtonClickHandler = new ColorButtonClickHandler(this, colorButtonLayoutParams);
         colorButtonLayoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams, colorButtonClickHandler);
         colorButtonLayoutCreator.addColorButtonLayouts();
         colorButtonClickHandler.setShadeLayoutsMap(colorButtonLayoutCreator.getShadeLayoutsMap());
         colorButtonClickHandler.setReusableShadesLayoutHolder(colorButtonLayoutCreator.getReusableShadesLayoutHolder());
         colorButtonClickHandler.onClick(colorButtonLayoutCreator.getDefaultColorButton());
+    }
+
+
+    public void replaceColorButton(int index, int amendedColor){
+        colorButtonLayoutCreator.replaceColorButton(index, amendedColor);
     }
 
 

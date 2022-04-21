@@ -6,9 +6,8 @@ import android.graphics.Color;
 import com.jacstuff.sketchy.ui.UserColorStore;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 public class ColorCreator {
 
@@ -20,22 +19,40 @@ public class ColorCreator {
         if(!emptyList.isEmpty()){
             return;
         }
-        emptyList.addAll(generate());
+        emptyList.addAll(generate(context));
     }
 
     public static void loadUserColorsAndAddTo(List<Integer> list, Context context){
+        generate(context);
         if(!list.isEmpty()){
             return;
         }
-        list.addAll(UserColorStore.get(context));
+        list.addAll(UserColorStore.getAllColors(context));
+        printList(list);
+    }
+
+    private static void log(String msg){
+        System.out.println("^^^ ColorCreator: "+ msg);
+    }
+
+    private static void printList(List<Integer> colors){
+        StringBuilder str =  new StringBuilder();
+        for(int color: colors){
+            str.append(color);
+            str.append(",");
+        }
+        log(str.toString());
     }
 
 
-    public static List<Integer> generate(){
+    public static List<Integer> generate(Context context){
+
         List<Integer> colors = new ArrayList<>();
-
+        if(UserColorStore.arePropertiesInitialized(context)){
+            log("Color Preferences are initialized, won't be adding again!");
+            return colors;
+        }
         add(colors,"magenta", Color.MAGENTA);
-
         add(colors,"green", Color.GREEN);
         add(colors,"yellow", Color.YELLOW);
         add(colors,"black", Color.BLACK);
@@ -54,7 +71,7 @@ public class ColorCreator {
         add(colors,"white", Color.WHITE);
         add(colors,"olive"    , 128,128,0);
         add(colors,"purple"   , 140,40,255);
-
+        UserColorStore.initStore(colors, context);
         return colors;
     }
 
