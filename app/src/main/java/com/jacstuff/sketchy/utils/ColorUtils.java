@@ -66,8 +66,12 @@ public class ColorUtils {
                 && areEqual(color1, color2, Rgb.BLUE);
     }
 
-
     public static int getColorFromSlider(int progress){
+        return getColorFromSlider(progress, 255);
+    }
+
+
+    public static int getColorFromSlider(int progress, int alpha){
         int r = 0;
         int g = 0;
         int b = 0;
@@ -101,7 +105,7 @@ public class ColorUtils {
             g = highest;
             b = modVal;
         }
-        return Color.argb(255,r,g,b);
+        return Color.argb(alpha,r,g,b);
     }
 
 }

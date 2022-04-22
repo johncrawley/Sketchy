@@ -205,6 +205,7 @@
     <string name="shadow_radius_seekbar_label">Shadow Focus</string>
     <string name="shadow_color_label">Color</string>
     <string name="shadow_distance_seekbar_label">Distance</string>
+    <string name="shadow_intensity_seekbar_label">Intensity</string>
     <string name="line_width_seekbar_label">Line Width</string>
     <string name="wavy_style_length_seekbar_label">Wave Length</string>
     <string name="wavy_style_height_seekbar_label">Wave Height</string>

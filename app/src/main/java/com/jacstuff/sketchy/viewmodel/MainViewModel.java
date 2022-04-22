@@ -99,6 +99,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public float shadowOffsetY;
     public ShadowOffsetType shadowOffsetType = ShadowOffsetType.USE_SHAPE_WIDTH;
     public int shadowColor;
+    public int shadowIntensity;
 
     public int colorAlpha = 0;
     public int secondaryColor = Color.WHITE;

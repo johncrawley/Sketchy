@@ -55,6 +55,12 @@ public class ShadowSettings extends AbstractButtonConfigurator<ShadowType> imple
                 R.integer.shadow_distance_default,
                 progress -> paintHelperManager.getShadowHelper().setShadowDistance(progress));
 
+        seekBarConfigurator.configure(R.id.shadowIntensitySeekBar,
+                R.integer.shadow_intensity_default,
+                progress -> {
+                    viewModel.shadowIntensity = progress;
+                    paintHelperManager.getShadowHelper().setShadowLayer();
+                });
         seekBarConfigurator.configure(R.id.shadowColorPickerSeekBar,
                 R.integer.shadow_color_default_progress,
                 progress -> {

@@ -109,8 +109,17 @@ public class ShadowHelper {
 
 
     public void setShadowLayer(){
-        int color = ColorUtils.getColorFromSlider(viewModel.shadowColor);
-        paint.setShadowLayer(viewModel.shadowSize, viewModel.shadowOffsetX, viewModel.shadowOffsetY, color);
+        int color = ColorUtils.getColorFromSlider(viewModel.shadowColor, viewModel.shadowIntensity);
+        int modifiedColor = getModifiedColor(color, viewModel.shadowIntensity);
+        paint.setShadowLayer(viewModel.shadowSize, viewModel.shadowOffsetX, viewModel.shadowOffsetY, modifiedColor);
+    }
+
+
+    public int getModifiedColor(int color, int newAlpha){
+        int r = Color.red(color);
+        int g = Color.green(color);
+        int b = Color.blue(color);
+        return Color.argb(newAlpha,r,g,b);
     }
 
 

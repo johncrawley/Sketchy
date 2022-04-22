@@ -26,6 +26,7 @@
         <entry key="app/src/main/res/layout/seek_bar_placement_quantization_spacing.xml" value="0.35054347826086957" />
         <entry key="app/src/main/res/layout/seek_bar_placement_random_distance.xml" value="0.18854166666666666" />
         <entry key="app/src/main/res/layout/seek_bar_random_shape_edges.xml" value="0.22864583333333333" />
+        <entry key="app/src/main/res/layout/seek_bar_shadow_intensity.xml" value="0.20677083333333332" />
         <entry key="app/src/main/res/layout/seek_bar_size_sequence_max.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/layout/seek_bar_style_dotted_dot_width.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/layout/seek_bar_style_dotted_space_width.xml" value="0.23489583333333333" />

@@ -56,11 +56,13 @@
     <integer name="shadow_radius_max">100</integer>
     <integer name="shadow_radius_default">10</integer>
     <integer name="shadow_distance_max">100</integer>
+    <integer name="shadow_intensity_default">255</integer>
+    <integer name="shadow_intensity_max">255</integer>
     <integer name="shadow_distance_default">10</integer>
     <integer name="shadow_color_default_progress">0</integer>
     <integer name="angle_max">359</integer>
     <integer name="angle_min">0</integer>
-    <integer name="angle_default">100</integer>
+    <integer name="angle_default">0</integer>
     <integer name="text_skew_seekbar_default">100</integer>
     <integer name="text_skew_seekbar_max">200</integer>
     <integer name="text_spacing_seekbar_default">1</integer>
