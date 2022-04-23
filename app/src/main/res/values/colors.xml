@@ -16,7 +16,7 @@
     <color name="paint_view_border">#291F1F</color>
     <color name="multi_shade_bg_alt">#FFF9C4</color>
     <color name="multi_shade_bg">#F5F5F5</color>
-    <color name="color_component_label_red">#FF0000</color>
-    <color name="color_component_label_green">#00FF00</color>
-    <color name="color_component_label_blue">#0000FF</color>
+    <color name="color_component_label_red">#DD0000</color>
+    <color name="color_component_label_green">#00BB00</color>
+    <color name="color_component_label_blue">#0000DD</color>
 </resources>

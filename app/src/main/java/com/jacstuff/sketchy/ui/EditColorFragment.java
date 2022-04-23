@@ -11,24 +11,19 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.utils.ColorUtils;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModelProvider;
 
 
 public class EditColorFragment extends DialogFragment {
 
-
-    private MainViewModel viewModel;
     private TextView redComponentTextView, greenComponentTextView, blueComponentTextView;
+    private int initialRedComponent, initialGreenComponent, initialBlueComponent;
     private LinearLayout colorPreviewLayout;
     public final static String ORIGINAL_COLOR_TAG = "amended_color";
     public final static String COLOR_INDEX_TAG = "color_index";
@@ -44,24 +39,22 @@ public class EditColorFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_add_color, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_edit_color, container, false);
         Dialog dialog =  getDialog();
         Bundle bundle = getArguments();
         if(getActivity() == null || bundle == null){
             return rootView;
         }
         activity = (MainActivity)getActivity();
-        ViewModelProvider vmp = new ViewModelProvider(getActivity());
-        viewModel = vmp.get(MainViewModel.class);
         originalColor = bundle.getInt(ORIGINAL_COLOR_TAG);
         colorIndex = bundle.getInt(COLOR_INDEX_TAG);
-
+        assignInitialColorComponents();
         setupComponentTextViews(rootView);
         setupColorPreview(rootView);
 
         setupSeekBars(rootView);
         if(dialog != null){
-            dialog.setTitle("Edit");
+            dialog.setTitle(activity.getString(R.string.edit_color_dialog_title));
         }
 
         return rootView;
@@ -76,10 +69,25 @@ public class EditColorFragment extends DialogFragment {
     }
 
 
+    private void assignInitialColorComponents(){
+        initialRedComponent = Color.red(originalColor);
+        initialGreenComponent = Color.green(originalColor);
+        initialBlueComponent = Color.blue(originalColor);
+    }
+
+
     private void setupComponentTextViews(View rootView){
-        redComponentTextView = rootView.findViewById(R.id.redComponentTextView);
-        greenComponentTextView = rootView.findViewById(R.id.greenComponentTextView);
-        blueComponentTextView = rootView.findViewById(R.id.blueComponentTextView);
+        redComponentTextView = assignTextView(rootView, R.id.redComponentTextView, initialRedComponent);
+        greenComponentTextView = assignTextView(rootView, R.id.greenComponentTextView, initialGreenComponent);
+        blueComponentTextView = assignTextView(rootView, R.id.blueComponentTextView, initialBlueComponent);
+    }
+
+
+    private TextView assignTextView(View rootView, int textViewId, int initialValue){
+        TextView textView = rootView.findViewById(textViewId);
+        String text = String.valueOf(initialValue);
+        textView.setText(text);
+        return textView;
     }
 
 
@@ -91,7 +99,10 @@ public class EditColorFragment extends DialogFragment {
 
     private void setupOkButton(View parentView){
         Button saveButton = parentView.findViewById(R.id.saveColorButton);
-        saveButton.setOnClickListener((View v) -> editColor(getColorFromComponents()));
+        saveButton.setOnClickListener((View v) -> {
+            editColor(getColorFromComponents());
+            dismiss();
+        });
     }
 
 
@@ -110,15 +121,15 @@ public class EditColorFragment extends DialogFragment {
 
 
     private void setupSeekBars(View parentView){
-        setupSeekBar(parentView, R.id.redComponentSeekBar, R.id.redComponentTextView, ColorUtils.Rgb.RED);
-        setupSeekBar(parentView, R.id.greenComponentSeekBar, R.id.greenComponentTextView, ColorUtils.Rgb.GREEN);
-        setupSeekBar(parentView, R.id.blueComponentSeekBar, R.id.blueComponentTextView, ColorUtils.Rgb.BLUE);
+        setupSeekBar(parentView, R.id.redComponentSeekBar, R.id.redComponentTextView, initialRedComponent);
+        setupSeekBar(parentView, R.id.greenComponentSeekBar, R.id.greenComponentTextView, initialGreenComponent);
+        setupSeekBar(parentView, R.id.blueComponentSeekBar, R.id.blueComponentTextView, initialBlueComponent);
     }
 
 
-    private void setupSeekBar(View parentView, int seekBarId, int textViewId, ColorUtils.Rgb rgb){
+    private void setupSeekBar(View parentView, int seekBarId, int textViewId, int colorComponent){
         SeekBar seekBar = parentView.findViewById(seekBarId);
-        seekBar.setProgress(ColorUtils.getComponentFrom(originalColor, rgb));
+        seekBar.setProgress(colorComponent);
         TextView textView = parentView.findViewById(textViewId);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -129,12 +140,10 @@ public class EditColorFragment extends DialogFragment {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
     }
@@ -164,20 +173,5 @@ public class EditColorFragment extends DialogFragment {
         UserColorStore.editColor(color, colorIndex, context);
         activity.replaceColorButton(colorIndex, color);
     }
-
-
-
-    private void createColorAndShadeButtonsFor(int color){
-        MainActivity activity = (MainActivity) getActivity();
-        if(activity != null) {
-            activity.addUserGeneratedColorAndShadeButtons(color);
-        }
-    }
-
-
-    private void showToast(int messageId){
-        Toast.makeText(getContext(), messageId, Toast.LENGTH_LONG).show();
-    }
-
 
 }

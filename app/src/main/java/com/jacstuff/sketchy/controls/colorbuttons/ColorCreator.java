@@ -11,16 +11,8 @@ import java.util.List;
 
 public class ColorCreator {
 
-    // to prevent instantiation
     private ColorCreator(){}
 
-
-    public static void generateMainColorsAndAddTo(List<Integer> emptyList, Context context){
-        if(!emptyList.isEmpty()){
-            return;
-        }
-        emptyList.addAll(generate(context));
-    }
 
     public static void loadUserColorsAndAddTo(List<Integer> list, Context context){
         generate(context);
@@ -28,29 +20,14 @@ public class ColorCreator {
             return;
         }
         list.addAll(UserColorStore.getAllColors(context));
-        printList(list);
-    }
-
-    private static void log(String msg){
-        System.out.println("^^^ ColorCreator: "+ msg);
-    }
-
-    private static void printList(List<Integer> colors){
-        StringBuilder str =  new StringBuilder();
-        for(int color: colors){
-            str.append(color);
-            str.append(",");
-        }
-        log(str.toString());
     }
 
 
-    public static List<Integer> generate(Context context){
+    public static void generate(Context context){
 
         List<Integer> colors = new ArrayList<>();
         if(UserColorStore.arePropertiesInitialized(context)){
-            log("Color Preferences are initialized, won't be adding again!");
-            return colors;
+            return;
         }
         add(colors,"magenta", Color.MAGENTA);
         add(colors,"green", Color.GREEN);
@@ -72,7 +49,6 @@ public class ColorCreator {
         add(colors,"olive"    , 128,128,0);
         add(colors,"purple"   , 140,40,255);
         UserColorStore.initStore(colors, context);
-        return colors;
     }
 
 
@@ -85,7 +61,6 @@ public class ColorCreator {
     private static void add(List<Integer> list, String key, int colorCode){
         list.add(colorCode);
     }
-
 
 
 }

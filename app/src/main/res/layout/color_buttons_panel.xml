@@ -15,11 +15,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/colorButtonGroup"
+            android:id="@+id/colorButtonParentLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/colorButtonGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            </LinearLayout>
         </LinearLayout>
+
     </HorizontalScrollView>
 
 

@@ -67,7 +67,7 @@
 
             <SeekBar
                 android:id="@+id/redComponentSeekBar"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:indeterminate="false"
                 android:progress="@integer/seek_bar_color_component_progress"
@@ -208,7 +208,7 @@
             android:id="@+id/saveColorButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_add_color_save_label"
+            android:text="@string/button_edit_color_save_label"
             app:layout_constraintStart_toEndOf="@+id/cancelButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

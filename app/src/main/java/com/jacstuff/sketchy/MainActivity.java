@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
@@ -36,9 +37,8 @@ import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.ui.ColorPickerSeekBarConfigurator;
-import com.jacstuff.sketchy.ui.CreateColorFragment;
-import com.jacstuff.sketchy.ui.DeleteColorFragment;
 import com.jacstuff.sketchy.ui.EditColorFragment;
+import com.jacstuff.sketchy.ui.UserColorStore;
 import com.jacstuff.sketchy.utils.Toaster;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
@@ -68,8 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ColorButtonLayoutCreator colorButtonLayoutCreator;
     private SeekBarConfigurator seekBarConfigurator;
     private ButtonLayoutParams colorButtonLayoutParams;
-    private CreateColorFragment createColorFragment;
-    private ColorPickerSeekBarConfigurator colorPickerSeekBarConfigurer;
+    private ColorPickerSeekBarConfigurator colorPickerSeekBarConfigurator;
 
 
 
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         seekBarConfigurator = new SeekBarConfigurator(this);
         SHARED_PREFS_NAME = getString(R.string.shared_prefs_name);
         setupViewModel();
-        colorPickerSeekBarConfigurer = new ColorPickerSeekBarConfigurator(this, viewModel);
+        colorPickerSeekBarConfigurator = new ColorPickerSeekBarConfigurator(this, viewModel);
         setupPaintViewAndDefaultSelections();
         initPaintHelperManager();
         setupColorAndShadeButtons();
@@ -158,32 +157,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if( id == R.id.action_share){
             shareSketch();
         }
-        else if(id == R.id.action_add_color){
-            openAddColorDialog();
+        else if(id == R.id.action_reset_colors){
+            showResetColorsDialog();
         }
 
         return true;
     }
 
 
-    private void openAddColorDialog(){
-        if(createColorFragment == null) {
-            createColorFragment = CreateColorFragment.newInstance();
-        }
-        createColorFragment.show(getSupportFragmentManager(), "createColorDialog");
-    }
+    private void showResetColorsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(R.string.reset_colors_dialog_title);
+        builder.setMessage(R.string.reset_colors_dialog_message);
+        builder.setCancelable(false);
 
+        builder.setPositiveButton(R.string.reset_colors_confirmation_button, (dialogInterface, i) ->{
+            dialogInterface.dismiss();
+            UserColorStore.resetColorsToDefault(MainActivity.this);
+            colorButtonLayoutCreator.reloadButtons();
+        } );
 
-    public void startDeleteColorConfirmationFragment(int color){
-        String tag = "delete_color_confirmation";
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag(tag);
-        if (prev != null) {
-            fragmentTransaction.remove(prev);
-        }
-        fragmentTransaction.addToBackStack(null);
-        DeleteColorFragment deleteColorFragment = DeleteColorFragment.newInstance(color);
-        deleteColorFragment.show(fragmentTransaction, tag);
+        builder.setNegativeButton(R.string.reset_colors_cancel_button, (dialogInterface, i) -> dialogInterface.dismiss());
+        builder.show();
     }
 
 
@@ -275,11 +270,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void addUserGeneratedColorAndShadeButtons(int color){
-        colorButtonLayoutCreator.addUserGeneratedColorAndShadeButtons(color);
-    }
-
-
     private void setupColorAutoScroll() {
         if (viewModel.isFirstExecution){
             new ColorAutoScroller(findViewById(R.id.colorScrollView));
@@ -300,8 +290,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 viewModelHelper.onResume();
             }
         });
-        colorPickerSeekBarConfigurer.setupOnCreation(R.id.gradientColorPickerSeekBar);
-        colorPickerSeekBarConfigurer.setupOnCreation(R.id.shadowColorPickerSeekBar);
+        colorPickerSeekBarConfigurator.setupOnCreation(R.id.gradientColorPickerSeekBar);
+        colorPickerSeekBarConfigurator.setupOnCreation(R.id.shadowColorPickerSeekBar);
     }
 
 

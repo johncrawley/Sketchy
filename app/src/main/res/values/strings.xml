@@ -7,10 +7,15 @@
     <string name="action_open">Open</string>
     <string name="action_share">Share</string>
     <string name="action_about">About</string>
-    <string name="action_add_color">Add Color</string>
+    <string name="action_add_color">Reset Palette</string>
     <string name="action_wipe">Wipe</string>
     <string name="action_undo">Undo</string>
     <string name="share_to">Share To</string>
+    <string name="reset_colors_dialog_title">Reset Palette To Default?</string>
+    <string name="reset_colors_dialog_message">Are you sure you want to reset all colour buttons to their default values?</string>
+    <string name="edit_color_dialog_title">Edit Color Button</string>
+    <string name="reset_colors_confirmation_button">Yes</string>
+    <string name="reset_colors_cancel_button">No</string>
     <string name="shared_prefs_name">sketchty_prefs</string>
     <string name="shared_image_title">Sketchty Image</string>
     <string name="about_created_by">Created by John Crawley</string>
@@ -229,7 +234,7 @@
     <string name="seekbar_label_color_sequence_steps_index">Blend Rate</string>
     <string name="seekbar_label_color_sequence_starting_index">Sequence Starting Index</string>
 
-    <string name="button_add_color_save_label">Add</string>
+    <string name="button_edit_color_save_label">Save</string>
     <string name="button_add_color_cancel_label">Cancel</string>
     <string name="button_delete_color_delete_label">Remove</string>
 

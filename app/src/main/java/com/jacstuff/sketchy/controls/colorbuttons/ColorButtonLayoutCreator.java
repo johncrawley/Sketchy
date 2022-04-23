@@ -33,19 +33,16 @@ public class ColorButtonLayoutCreator {
     private final MultiShadeButtonIconDrawer multiShadeButtonIconDrawer;
     private final MainViewModel viewModel;
     private final ReusableShadesLayoutHolder reusableShadesLayoutHolder;
-    private final LinearLayout colorButtonGroupLayout;
-    private final Map<Integer, Integer> colorToIdMap;
-    private final Map<Integer, ButtonAndLayoutId> multiColorToIdMap;
+    private final LinearLayout colorButtonGroupLayout, colorButtonParentLayout;
     private final ColorButtonClickHandler colorButtonClickHandler;
 
 
     public ColorButtonLayoutCreator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, ColorButtonClickHandler colorButtonClickHandler){
         this.context = mainActivity.getApplicationContext();
         colorButtonGroupLayout = mainActivity.findViewById(R.id.colorButtonGroup);
+        colorButtonParentLayout = mainActivity.findViewById(R.id.colorButtonParentLayout);
         this.colorButtonClickHandler = colorButtonClickHandler;
         this.viewModel = mainActivity.getViewModel();
-        colorToIdMap = new HashMap<>();
-        multiColorToIdMap = new HashMap<>();
         this.activity = mainActivity;
         defaultColor = mainActivity.getString(R.string.default_color);
         multiShadeButtonIconDrawer = new MultiShadeButtonIconDrawer(activity, viewModel);
@@ -53,18 +50,15 @@ public class ColorButtonLayoutCreator {
         this.buttonLayoutParams = buttonLayoutParams;
         buttonUtils = new ButtonUtils(mainActivity);
         reusableShadesLayoutHolder = new ReusableShadesLayoutHolder(mainActivity, buttonUtils);
+        addMultiColorButton();
         setupColorAndShadeButtons();
     }
 
 
-    public void addUserGeneratedColorAndShadeButtons(int color){
-        System.out.println("^^^ ColorButtLayoutCreator, addUserGeneratedColorAndShadeButtons() color: " + color);
-    }
-
-
-    public void removeButtonsFor(int color){
-        removeButtonFromLayout(color, colorToIdMap, colorButtonGroupLayout);
-        deselectAndRemoveMultiShadeButton(color);
+    public void reloadButtons(){
+        removeAllColorAndShadeButtons();
+        setupColorAndShadeButtons();
+        addColorButtonLayouts();
     }
 
 
@@ -85,10 +79,8 @@ public class ColorButtonLayoutCreator {
 
 
     public void replaceColorButton(int index, int amendedColor){
-        int prefixedButtons = 1;
-        int actualIndex = index + prefixedButtons;
-        colorButtonGroupLayout.removeViewAt(actualIndex);
-         addColorButtonAtIndex(actualIndex, amendedColor);
+        colorButtonGroupLayout.removeViewAt(index);
+         addColorButtonAtIndex(index, amendedColor);
          addShadeButtonsFor(amendedColor);
          replaceMultiShadeButton(index, amendedColor);
     }
@@ -111,30 +103,6 @@ public class ColorButtonLayoutCreator {
         LinearLayout multiShadeButtonLayout = (LinearLayout) getMultiShadesLayout().getChildAt(index);
         Button multiShadeButton = (Button) multiShadeButtonLayout.getChildAt(0);
         colorButtonClickHandler.deselectMultiShadeButtonForRemoval(multiShadeButton);
-    }
-
-
-    private void removeButtonFromLayout(int color, Map<Integer, Integer> colorIdMap, LinearLayout layout){
-        Integer id = colorIdMap.get(color);
-        if(id != null){
-            View view = layout.findViewById(id);
-            layout.removeView(view);
-        }
-    }
-
-
-    private void deselectAndRemoveMultiShadeButton(int color){
-        ButtonAndLayoutId buttonAndLayoutId = multiColorToIdMap.get(color);
-        if(buttonAndLayoutId != null) {
-            colorButtonClickHandler.deselectMultiShadeButtonForRemoval(buttonAndLayoutId.getButton());
-            removeButtonFromLayout(buttonAndLayoutId.getLayoutId(), getMultiShadesLayout());
-        }
-    }
-
-
-    private void removeButtonFromLayout(int id, LinearLayout layout){
-        View view = layout.findViewById(id);
-        layout.removeView(view);
     }
 
 
@@ -161,10 +129,19 @@ public class ColorButtonLayoutCreator {
 
 
     private void setupColorAndShadeButtons(){
-        addMultiColorButton();
         reusableShadesLayoutHolder.initReusableShadesLayout(colorShadeCreator);
         loadColorsFromPreferences();
         addMultiColorShadeButtons();
+    }
+
+
+    private void removeAllColorAndShadeButtons(){
+        colorButtonGroupLayout.removeAllViews();
+        colorButtonLayouts.clear();
+        LinearLayout multiShadesLayout = getMultiShadesLayout();
+        if(multiShadesLayout !=null) {
+            multiShadesLayout.removeAllViews();
+        }
     }
 
     private void loadColorsFromPreferences(){
@@ -190,7 +167,8 @@ public class ColorButtonLayoutCreator {
     private void addMultiColorButton(){
         Button button = buttonUtils.createGenericColorButton(ButtonType.MULTICOLOR, MULTI_SHADE_KEY);
         button.setBackgroundResource(R.drawable.multi_color_button);
-        buttonUtils.putButtonInLayoutAndAddToList(button, buttonLayoutParams, colorButtonLayouts);
+        LinearLayout multiColorButtonLayout = buttonUtils.wrapInMarginLayout(buttonLayoutParams, button);
+        colorButtonParentLayout.addView(multiColorButtonLayout, 0);
     }
 
 
@@ -231,8 +209,6 @@ public class ColorButtonLayoutCreator {
 
         int id = View.generateViewId();
         buttonLayout.setId(id);
-        Button button = (Button)buttonLayout.getChildAt(0);
-        multiColorToIdMap.put(color, new ButtonAndLayoutId(button, id));
         addDrawableToMultiShadeButton(buttonLayout, color);
         return buttonLayout;
     }
@@ -252,9 +228,7 @@ public class ColorButtonLayoutCreator {
 
     private LinearLayout createColorButtonInLayout(int color, int index){
         Button button = createColorButton(color, index);
-        LinearLayout buttonLayout = buttonUtils.wrapInMarginLayout(buttonLayoutParams, button);
-        colorToIdMap.put(color, buttonLayout.getId());
-        return buttonLayout;
+        return buttonUtils.wrapInMarginLayout(buttonLayoutParams, button);
     }
 
 
