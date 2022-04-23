@@ -11,23 +11,27 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 public class TriangleBrush extends AbstractBrush implements Brush {
 
 
-    private final Point leftPoint, rightPoint, topPoint, centreBottom;
+    private final Point leftPoint, rightPoint, topPoint;
+    private int height;
 
     public TriangleBrush(){
         super(BrushShape.TRIANGLE);
         leftPoint = new Point();
         rightPoint = new Point();
         topPoint = new Point();
-        centreBottom = new Point();
     }
 
+    @Override
+    public void reinitialize(){
+        super.reinitialize();
+        recalculateDimensions();
+    }
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-        centreBottom.set(0, halfBrushSize);
-        leftPoint.set(centreBottom.x - halfBrushSize, centreBottom.y);
-        rightPoint.set(centreBottom.x + halfBrushSize, centreBottom.y);
-        topPoint.set(0, - halfBrushSize);
+        leftPoint.set(-halfBrushSize, height);
+        rightPoint.set(halfBrushSize, height);
+        topPoint.set(0, -height);
 
         Path path = new Path();
         path.moveTo(leftPoint.x, leftPoint.y);
@@ -36,4 +40,19 @@ public class TriangleBrush extends AbstractBrush implements Brush {
         path.close();
         canvas.drawPath(path, paint);
     }
+
+
+    @Override
+    public void setBrushSize(int brushSize){
+        super.setBrushSize(brushSize);
+        recalculateDimensions();
+    }
+
+
+    @Override
+    public void recalculateDimensions(){
+        super.recalculateDimensions();
+        height = (int)((brushSize/ 100f) * mainViewModel.triangleHeight);
+    }
+
 }

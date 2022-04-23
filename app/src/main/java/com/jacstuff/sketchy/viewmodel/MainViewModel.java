@@ -110,6 +110,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public boolean isInfinityModeEnabled = false;
 
     public int astroidShapeCurveRate = 100;
+    public int triangleHeight = 50;
     public boolean isCrazySpiralAltModeEnabled = false;
     public int crazySpiralType;
     public int spiralExtraSpacing = 10;

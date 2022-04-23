@@ -222,6 +222,7 @@
     <string name="add_color_default_value">0</string>
     <string name="delete_color_confirmation_text">Remove this custom colour?</string>
 
+    <string name="seekbar_label_shape_triangle_height">Height</string>
     <string name="seekbar_label_style_dashed_length">Dash Length</string>
     <string name="seekbar_label_shape_random_vertices">Vertices</string>
     <string name="seekbar_label_shape_crazy_spiral_type">Variation</string>
