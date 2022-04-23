@@ -49,6 +49,9 @@ public class ReusableShadesLayoutHolder {
                 return;
             }
             Button button = (Button)wrapperLayout.getChildAt(0);
+            if(shades.size() < i){
+                continue;
+            }
             int shade = shades.get(i);
             String key = buttonUtils.createColorKey(shade, ButtonType.SHADE);
             button.setBackgroundColor(shade);

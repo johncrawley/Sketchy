@@ -83,6 +83,14 @@ public class ColorButtonLayoutCreator {
          addColorButtonAtIndex(index, amendedColor);
          addShadeButtonsFor(amendedColor);
          replaceMultiShadeButton(index, amendedColor);
+         clickOnButton(index);
+    }
+
+
+    private void clickOnButton(int index){
+        LinearLayout buttonLayout = (LinearLayout) colorButtonGroupLayout.getChildAt(index);
+        Button button = (Button)buttonLayout.getChildAt(0);
+        colorButtonClickHandler.onClick(button);
     }
 
 
@@ -251,6 +259,7 @@ public class ColorButtonLayoutCreator {
         button.setOnLongClickListener(view -> {
             int color = (int)view.getTag(R.string.tag_button_color);
             activity.startEditColorFragment(color, index);
+            colorButtonClickHandler.onClick(view);
             return true;
         });
     }
