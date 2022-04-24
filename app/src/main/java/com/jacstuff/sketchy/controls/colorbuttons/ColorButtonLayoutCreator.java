@@ -124,6 +124,13 @@ public class ColorButtonLayoutCreator {
     }
 
 
+    private void deselectAllMultiShadeButtons(){
+        for(int i=0; i< multiShadeButtonLayout.getChildCount(); i++){
+            deselectMultiShadeButton(i);
+        }
+    }
+
+
     public Map<String, LinearLayout> getShadeLayoutsMap (){
         return this.shadeLayoutsMap;
     }
@@ -148,20 +155,21 @@ public class ColorButtonLayoutCreator {
 
     private void setupColorAndShadeButtons(){
         reusableShadesLayoutHolder.initReusableShadesLayout(colorShadeCreator);
-        loadColorsFromPreferences();
-        addMultiColorShadeButtons();
+        List<Integer> colors = UserColorStore.getAllColors(context);
+        loadColorsFromPreferences(colors);
+        addMultiColorShadeButtons(colors);
     }
 
 
     private void removeAllColorAndShadeButtons(){
         colorButtonGroupLayout.removeAllViews();
         colorButtonLayouts.clear();
+        deselectAllMultiShadeButtons();
         multiShadeButtonLayout.removeAllViews();
     }
 
 
-    private void loadColorsFromPreferences(){
-        List<Integer> colors = UserColorStore.getAllColors(context);
+    private void loadColorsFromPreferences(List<Integer> colors ){
         for(int i=0; i< colors.size(); i++){
             addColorAndShadeButtons(colors.get(i), i);
         }
@@ -188,11 +196,10 @@ public class ColorButtonLayoutCreator {
     }
 
 
-    private void addMultiColorShadeButtons(){
-        for(int shade: viewModel.mainColors){
-            multiShadeButtonLayout.addView(createMultiShadeButton(shade));
+    private void addMultiColorShadeButtons( List<Integer> colors ){
+        for(int color: colors){
+            multiShadeButtonLayout.addView(createMultiShadeButton(color));
         }
-       // shadeLayout.setId(R.id.multiShadeLayout);
     }
 
 
