@@ -15,28 +15,30 @@
     <style name="CustomDialog" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="android:windowNoTitle">false</item>
         <item name="android:windowTitleStyle">@style/dialog_title_style</item>
+        <item name="colorAccent">#3949AB</item>
+        <item name="colorPrimary">@color/darkToolbar</item>
     </style>
+
 
     <style name="dialog_title_style" parent="android:Widget.TextView">
         <item name="android:background">@color/darkToolbar</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textStyle">bold</item>>
+        <item name="android:textStyle">bold</item>
         <item name="android:padding">10dp</item>
     </style>
 
 
     <style name="MyTheme" parent="@android:style/Theme.Holo.Light">
             <item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>
-        </style>
+    </style>
 
-        <style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
-            <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
-        </style>
+    <style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
+    </style>
 
-        <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-            <item name="android:textColor">@color/appIconBackgroundOriginal</item>
-        </style>
-
+    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/appIconBackgroundOriginal</item>
+    </style>
 
 
     <style name="dialogTheme" parent="Theme.MaterialComponents.Light.Dialog">
@@ -44,10 +46,12 @@
         <item name="android:background">@color/dialog_background</item>
     </style>
 
+
     <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
 
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.ui;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -130,6 +131,7 @@ public class EditColorFragment extends DialogFragment {
     private void setupSeekBar(View parentView, int seekBarId, int textViewId, int colorComponent){
         SeekBar seekBar = parentView.findViewById(seekBarId);
         seekBar.setProgress(colorComponent);
+        //seekBar.getThumb().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
         TextView textView = parentView.findViewById(textViewId);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
