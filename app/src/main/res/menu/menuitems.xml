@@ -40,6 +40,14 @@
         app:showAsAction="ifRoom"
         tools:ignore="AlwaysShowAction"/>
 
+
+
+    <item
+        android:id="@+id/action_take_picture"
+        android:title="@string/action_take_picture"
+        android:icon="@android:drawable/ic_menu_camera"
+        app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/action_reset_colors"
         android:title="@string/action_add_color"

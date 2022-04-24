@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.21296296296296297" />
+        <entry key="app/src/main/res/drawable/splash_screen.xml" value="0.225" />
         <entry key="app/src/main/res/layout-land/brush_size_seek_bar.xml" value="0.19444444444444445" />
         <entry key="app/src/main/res/layout-land/control_panel_layout.xml" value="0.19444444444444445" />
         <entry key="app/src/main/res/layout-land/controls_shapes.xml" value="0.16887125220458554" />
@@ -50,6 +51,7 @@
         <entry key="app/src/main/res/layout/settings_panel_size_sequence_proximity_type.xml" value="0.20989583333333334" />
         <entry key="app/src/main/res/layout/settings_panel_size_sequence_reset.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/layout/settings_panel_text_shape.xml" value="0.225" />
+        <entry key="app/src/main/res/xml/file_paths.xml" value="0.16614583333333333" />
       </map>
     </option>
   </component>

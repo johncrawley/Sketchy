@@ -11,13 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,6 +49,11 @@ import com.jacstuff.sketchy.tasks.ColorAutoScroller;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -63,8 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MainViewModel viewModel;
     private ButtonReferenceStore buttonReferenceStore;
     private PaintHelperManager paintHelperManager;
-    private ActivityResultLauncher<Intent> activityResultLauncher;
-    private ActivityResultLauncher <Intent> loadImageActivityResultLauncher;
+    private ActivityResultLauncher<Intent> activityResultLauncher, loadImageActivityResultLauncher, cameraActivityResultLauncher;
     private ColorButtonLayoutCreator colorButtonLayoutCreator;
     private SeekBarConfigurator seekBarConfigurator;
     private ButtonLayoutParams colorButtonLayoutParams;
@@ -91,8 +98,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupSettingsButtons();
         viewModelHelper.init(colorButtonClickHandler, paintView);
         setupColorAutoScroll();
+        initActivityResultLaunchers();
+    }
+
+
+    private void initActivityResultLaunchers(){
         initActivityResultLauncher();
         initActivityResultLauncherForLoad();
+        initActivityResultLauncherForCamera();
     }
 
 
@@ -146,10 +159,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             paintView.undo();
         }
         else if( id == R.id.action_save) {
-            startSaveDocumentActivity();
+           startSaveDocumentActivity();
         }
         else if(  id == R.id.action_open) {
             startOpenDocumentActivity();
+        }
+        else if(  id == R.id.action_take_picture) {
+            startTakePictureActivity();
         }
         else if( id == R.id.action_about){
             startActivity(new Intent(this, AboutDialogActivity.class));
@@ -246,16 +262,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintView.onTouchUp();
     }
 
+
     private void setupSettingsButtons(){
         settingsButtonsConfigurator = new SettingsButtonsConfigurator(this, paintView);
     }
 
 
     void setupColorAndShadeButtons(){
-       // ColorCreator.generateMainColorsAndAddTo(viewModel.mainColors, this);
         ColorCreator.loadUserColorsAndAddTo(viewModel.mainColors, this);
-
-       // ColorCreator.loadUserColorsAndAddTo(viewModel.userColors, this);
         colorButtonClickHandler = new ColorButtonClickHandler(this, colorButtonLayoutParams);
         colorButtonLayoutCreator = new ColorButtonLayoutCreator(this, colorButtonLayoutParams, colorButtonClickHandler);
         colorButtonLayoutCreator.addColorButtonLayouts();
@@ -310,13 +324,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initActivityResultLauncherForLoad(){
         loadImageActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if(result == null || result.getData() == null){
-                    return;
-                }
-                imageSaver.loadImage(result.getData(), paintView);
-            });
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result == null || result.getData() == null){
+                        return;
+                    }
+                    imageSaver.loadImage(result.getData(), paintView);
+                });
+    }
+
+
+    private void initActivityResultLauncherForCamera(){
+        cameraActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result == null){
+                        return;
+                    }
+                    File photoFile = new File(currentPhotoPath);
+                    if (result.getResultCode() == RESULT_OK) {
+                        try {
+                            FileInputStream fis = new FileInputStream(photoFile);
+                            Bitmap bitmap = BitmapFactory.decodeStream(fis);
+                            paintView.loadBitmap(bitmap);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if(photoFile.exists()){
+                        photoFile.delete();
+                    }
+                });
     }
 
 
@@ -329,6 +367,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    private void startTakePictureActivity(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File photoFile = null;
+        try {
+            photoFile = createImageFile();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        // Continue only if the File was successfully created
+        if (photoFile != null) {
+            Uri photoURI = FileProvider.getUriForFile(this,
+                    "com.jcrawley.android.fileprovider",
+                    photoFile);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            cameraActivityResultLauncher.launch(intent);
+        }
+    }
+
+
     private void shareSketch(){
         Intent i = new Intent();
         i.setAction(Intent.ACTION_SEND);
@@ -336,6 +393,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         i.putExtra(Intent.EXTRA_STREAM, getImageUri(MainActivity.this, paintView.getBitmap()));
         startActivity(Intent.createChooser(i, getString(R.string.share_to)));
     }
+
+    String currentPhotoPath;
+
+
+    private File createImageFile() throws IOException {
+        String imageFileName = "saved_photo_" + System.currentTimeMillis() + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File imageFile = File.createTempFile(imageFileName, ".jpg", storageDir );
+        currentPhotoPath = imageFile.getAbsolutePath();
+        return imageFile;
+    }
+
 
 
     public Uri getImageUri(Context context, Bitmap bitmap) {
