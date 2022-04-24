@@ -50,7 +50,6 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
         buttonConfig.add(R.id.sizeSequenceButton, R.drawable.button_size_sequence_stationary,  R.id.includeSizeSequenceControls);
         buttonConfig.add(R.id.placementButton, R.drawable.button_placement_normal,  R.id.includePlacementControls);
 
-
         buttonConfig.setParentLayout(activity.getColorButtonLayoutCreator().getMultiShadesLayout());
         buttonConfig.add(R.id.colorConfigButton, R.drawable.button_color_config, R.id.includeColorConfigControls, activity.getColorButtonLayoutParams());
 
