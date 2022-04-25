@@ -82,6 +82,33 @@ public class PaintView extends View {
     }
 
 
+    @Override
+    protected void onDraw(Canvas viewCanvas) {
+        viewCanvas.save();
+        viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, drawPaint);
+        viewCanvas.restore();
+    }
+
+
+    @Override
+    @SuppressWarnings("ClickableViewAccessibility")
+    public boolean onTouchEvent(MotionEvent event) {
+        if(isPopupBeingDismissed(event) || isCanvasLocked){
+            return true;
+        }
+        try {
+            drawWithBrush(event);
+        }
+        //catch(IllegalArgumentException e){
+        catch (Exception e){
+            e.printStackTrace();
+            //do nothing, sometimes there's an illegalArgException related to drawing gradients
+            // immediately after rotating screen
+        }
+        return true;
+    }
+
+
     public PaintGroup getPaintGroup(){
         return this.paintGroup;
     }
@@ -205,33 +232,6 @@ public class PaintView extends View {
         canvas.drawRect(0,0, getWidth(), getHeight(), blankPaint);
         bitmapHistory.push(bitmap);
         invalidate();
-    }
-
-
-    @Override
-    protected void onDraw(Canvas viewCanvas) {
-        viewCanvas.save();
-        viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, drawPaint);
-        viewCanvas.restore();
-    }
-
-
-    @Override
-    @SuppressWarnings("ClickableViewAccessibility")
-    public boolean onTouchEvent(MotionEvent event) {
-        if(isPopupBeingDismissed(event) || isCanvasLocked){
-            return true;
-        }
-        try {
-            drawWithBrush(event);
-        }
-        //catch(IllegalArgumentException e){
-        catch (Exception e){
-            e.printStackTrace();
-            //do nothing, sometimes there's an illegalArgException related to drawing gradients
-            // immediately after rotating screen
-        }
-        return true;
     }
 
 

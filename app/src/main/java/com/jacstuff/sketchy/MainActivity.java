@@ -41,6 +41,7 @@ import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.ui.ColorPickerSeekBarConfigurator;
 import com.jacstuff.sketchy.ui.EditColorFragment;
+import com.jacstuff.sketchy.ui.LoadPhotoDialogFragment;
 import com.jacstuff.sketchy.ui.UserColorStore;
 import com.jacstuff.sketchy.utils.Toaster;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -165,7 +166,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startOpenDocumentActivity();
         }
         else if(  id == R.id.action_take_picture) {
-            startTakePictureActivity();
+
+            startLoadPhotoPreviewFragment();
+           // startTakePictureActivity();
         }
         else if( id == R.id.action_about){
             startActivity(new Intent(this, AboutDialogActivity.class));
@@ -212,6 +215,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EditColorFragment editColorFragment = EditColorFragment.newInstance();
         editColorFragment.setArguments(bundle);
         editColorFragment.show(fragmentTransaction, tag);
+    }
+
+
+
+    public void startLoadPhotoPreviewFragment(){
+        String tag = "load_photo_preview";
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(tag);
+        if (prev != null) {
+            fragmentTransaction.remove(prev);
+        }
+
+        fragmentTransaction.addToBackStack(null);
+        Bundle bundle = new Bundle();
+        LoadPhotoDialogFragment loadPhotoDialogFragment = LoadPhotoDialogFragment.newInstance();
+       // loadPhotoDialogFragment.setArguments(bundle);
+        loadPhotoDialogFragment.show(fragmentTransaction, tag);
     }
 
 
@@ -351,11 +371,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             e.printStackTrace();
                         }
                     }
+                    startLoadPhotoPreviewFragment();
                     if(photoFile.exists()){
                         photoFile.delete();
                     }
                 });
     }
+
+
 
 
     private void startSaveDocumentActivity(){
