@@ -314,6 +314,13 @@ public class PaintView extends View {
     }
 
 
+    public void drawBitmap(Bitmap loadedBitmap, float offsetX, float offsetY){
+        Paint loadedBitmapPaint = new Paint();
+        canvas.drawBitmap(loadedBitmap, offsetX, offsetY, loadedBitmapPaint);
+        bitmapHistory.push(bitmap);
+    }
+
+
     int getScreenOrientation(){
         return context.getResources().getConfiguration().orientation;
     }

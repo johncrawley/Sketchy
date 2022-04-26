@@ -166,9 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startOpenDocumentActivity();
         }
         else if(  id == R.id.action_take_picture) {
-
-            startLoadPhotoPreviewFragment();
-           // startTakePictureActivity();
+           startTakePictureActivity();
         }
         else if( id == R.id.action_about){
             startActivity(new Intent(this, AboutDialogActivity.class));
@@ -219,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-    public void startLoadPhotoPreviewFragment(){
+    public void startLoadPhotoPreviewFragment(String photoFilePath){
         String tag = "load_photo_preview";
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag(tag);
@@ -229,8 +227,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         fragmentTransaction.addToBackStack(null);
         Bundle bundle = new Bundle();
+        bundle.putInt(LoadPhotoDialogFragment.WIDTH_TAG, paintView.getWidth());
+        bundle.putInt(LoadPhotoDialogFragment.HEIGHT_TAG, paintView.getHeight());
+        bundle.putString(LoadPhotoDialogFragment.PHOTO_FILE_PATH_TAG, photoFilePath);
         LoadPhotoDialogFragment loadPhotoDialogFragment = LoadPhotoDialogFragment.newInstance();
-       // loadPhotoDialogFragment.setArguments(bundle);
+        loadPhotoDialogFragment.setArguments(bundle);
         loadPhotoDialogFragment.show(fragmentTransaction, tag);
     }
 
@@ -267,6 +268,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public SettingsPopup getSettingsPopup(){
         return this.settingsPopup;
+    }
+
+
+    public PaintView getPaintView(){
+        return this.paintView;
     }
 
 
@@ -361,19 +367,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if(result == null){
                         return;
                     }
-                    File photoFile = new File(currentPhotoPath);
                     if (result.getResultCode() == RESULT_OK) {
-                        try {
-                            FileInputStream fis = new FileInputStream(photoFile);
-                            Bitmap bitmap = BitmapFactory.decodeStream(fis);
-                            paintView.loadBitmap(bitmap);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    startLoadPhotoPreviewFragment();
-                    if(photoFile.exists()){
-                        photoFile.delete();
+                        startLoadPhotoPreviewFragment(currentPhotoPath);
                     }
                 });
     }
@@ -427,7 +422,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         currentPhotoPath = imageFile.getAbsolutePath();
         return imageFile;
     }
-
 
 
     public Uri getImageUri(Context context, Bitmap bitmap) {

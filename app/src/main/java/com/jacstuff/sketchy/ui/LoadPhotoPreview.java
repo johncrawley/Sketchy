@@ -1,13 +1,16 @@
 package com.jacstuff.sketchy.ui;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.jacstuff.sketchy.paintview.PaintView;
 
 
 public class LoadPhotoPreview extends View {
@@ -16,6 +19,12 @@ public class LoadPhotoPreview extends View {
     private Bitmap bitmap;
     private Canvas canvas;
     private final Paint drawPaint, paint;
+    private float photoX, photoY;
+    private float diffX, diffY;
+    private Bitmap photoBitmap;
+
+    private Bitmap halfSizePhoto;
+
 
     public LoadPhotoPreview(Context context) {
         this(context, null);
@@ -26,6 +35,7 @@ public class LoadPhotoPreview extends View {
         super(context, attrs);
         this.context = context;
         paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
         drawPaint = new Paint();
     }
 
@@ -37,15 +47,50 @@ public class LoadPhotoPreview extends View {
         if(height == 0){
             height = 500;
         }
-        log("Entered init() width: " + getWidth() + " height: " + getHeight());
+
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         invalidate();
     }
 
+    public void drawAmendedBitmapTo(PaintView paintView){
+        Bitmap amendedBitmap= Bitmap.createBitmap(photoBitmap, 0,0, photoBitmap.getWidth(), photoBitmap.getHeight(), getRotateOnlyMatrix(), true);
+        paintView.drawBitmap(amendedBitmap, photoX*2 , photoY * 2);
+    }
 
-    private void log(String msg){
-        System.out.println("^^^ LoadPhotoPreview: "+  msg);
+
+    public void loadBitmap(Bitmap photo){
+        halfSizePhoto = Bitmap.createBitmap(photo, 0,0, photo.getWidth(), photo.getHeight(), getRotateAndShrinkMatrix(), true);
+        photoBitmap = photo;
+        drawPhotoAtPosition(0,0);
+        invalidate();
+    }
+
+
+    private void drawPhotoAtPosition(float xOffset, float yOffset){
+        canvas.drawBitmap(halfSizePhoto, xOffset, yOffset, paint);
+    }
+
+
+    private Matrix getRotateAndShrinkMatrix(){
+        int angle = getScreenOrientation() == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
+        Matrix m = new Matrix();
+        m.postRotate(angle);
+        m.postScale(.5f, .5f);
+        return m;
+    }
+
+
+    private Matrix getRotateOnlyMatrix(){
+        int angle = getScreenOrientation() == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
+        Matrix m = new Matrix();
+        m.postRotate(angle);
+        return m;
+    }
+
+
+    int getScreenOrientation(){
+        return context.getResources().getConfiguration().orientation;
     }
 
 
@@ -60,9 +105,19 @@ public class LoadPhotoPreview extends View {
     @Override
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
-        log("Entered onTouchEvent()" + event.getX() + ","  + event.getY());
-        paint.setColor(Color.DKGRAY);
-        canvas.drawCircle(event.getX(),event.getY(),100f, paint);
+        int action = event.getAction();
+        float x = event.getX();
+        float y = event.getY();
+        if(action == MotionEvent.ACTION_DOWN){
+            diffX = x - photoX;
+            diffY = y - photoY;
+        }
+        else if (action == MotionEvent.ACTION_MOVE){
+            canvas.drawRect(0,0,getWidth(), getHeight(), paint);
+            photoX = (x - diffX);
+            photoY = (y - diffY);
+            drawPhotoAtPosition(photoX, photoY);
+        }
         invalidate();
         return true;
     }
