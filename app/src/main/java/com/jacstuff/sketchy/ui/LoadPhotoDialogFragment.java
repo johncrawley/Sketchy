@@ -29,13 +29,12 @@ public class LoadPhotoDialogFragment extends DialogFragment {
     public final static String PHOTO_FILE_PATH_TAG = "photo_file_path";
     private MainActivity activity;
     private int previewWidth, previewHeight;
-    String photoFilePath;
-
+    private String photoFilePath;
+    private Bundle bundle;
 
     public static LoadPhotoDialogFragment newInstance() {
         return new LoadPhotoDialogFragment();
     }
-    Bundle bundle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

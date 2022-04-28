@@ -43,6 +43,9 @@ public class ShadeColorSelector implements ColorSelector {
         if(ids.size() == 1){
             return colorSelectorForSingleColorMultiShades.getNextColor();
         }
+        if(viewModel.isRandomColorDisabled()){
+            return calculateNextBlendColor();
+        }
         switch(colorSequenceControls.colorSequenceType){
             case FORWARDS:
                 return getNextShadeForwards();
@@ -131,9 +134,6 @@ public class ShadeColorSelector implements ColorSelector {
 
 
     private int getNextRandomShade(){
-        if(viewModel.isRandomColorDisabled()){
-            return getNextStrobeShade();
-        }
         int oldIndex = currentIndex;
         while(currentIndex == oldIndex){
             currentIndex = random.nextInt(ids.size());

@@ -68,6 +68,9 @@ public class SequenceColorSelector implements ColorSelector {
 
 
     public int getNextColor(){
+        if(viewModel.isRandomColorDisabled()){
+            return calculateNextBlendColor();
+        }
         switch (colorSequenceControls.colorSequenceType){
             case FORWARDS:
                 calculateNextForwardIndex();
@@ -79,22 +82,12 @@ public class SequenceColorSelector implements ColorSelector {
                 calculateNextStrobeIndex();
                 break;
             case RANDOM:
-                calculateRandomOrBlend();
+                calculateNextRandomIndex();
                 break;
             case BLEND:
                 return calculateNextBlendColor();
         }
         return colors.get(currentIndex);
-    }
-
-
-    private void calculateRandomOrBlend(){
-        if(viewModel.isRandomColorDisabled()){
-            calculateNextBlendColor();
-            return;
-        }
-
-        calculateNextRandomIndex();
     }
 
 
