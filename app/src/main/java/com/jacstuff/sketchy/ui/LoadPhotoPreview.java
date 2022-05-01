@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 
 import com.jacstuff.sketchy.paintview.PaintView;
@@ -24,6 +25,7 @@ public class LoadPhotoPreview extends View {
     private Bitmap photoBitmap;
 
     private Bitmap halfSizePhoto;
+    private ScaleGestureDetector scaleGestureDetector;
 
 
     public LoadPhotoPreview(Context context) {
@@ -37,6 +39,7 @@ public class LoadPhotoPreview extends View {
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         drawPaint = new Paint();
+        setupScaleGestureDetector();
     }
 
 
@@ -105,6 +108,10 @@ public class LoadPhotoPreview extends View {
     @Override
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
+        boolean wasScaled = scaleGestureDetector.onTouchEvent(event);
+        if(wasScaled){
+            return true;
+        }
         int action = event.getAction();
         float x = event.getX();
         float y = event.getY();
@@ -120,5 +127,27 @@ public class LoadPhotoPreview extends View {
         }
         invalidate();
         return true;
+    }
+
+
+    private void setupScaleGestureDetector(){
+        scaleGestureDetector = new ScaleGestureDetector(context, new ScaleGestureDetector.OnScaleGestureListener() {
+            @Override
+            public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
+                System.out.println("^^^ Scaling!");
+                return false;
+            }
+
+            @Override
+            public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
+                System.out.println("^^^ on scale begin!");
+                return false;
+            }
+
+            @Override
+            public void onScaleEnd(ScaleGestureDetector scaleGestureDetector) {
+
+            }
+        });
     }
 }
