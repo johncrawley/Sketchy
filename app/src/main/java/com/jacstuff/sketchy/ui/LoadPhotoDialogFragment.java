@@ -89,7 +89,7 @@ public class LoadPhotoDialogFragment extends DialogFragment {
         try {
             FileInputStream fis = new FileInputStream(photoFile);
             Bitmap bitmap = BitmapFactory.decodeStream(fis);
-            loadPhotoPreview.loadBitmap(bitmap);
+            loadPhotoPreview.loadAndDrawBitmap(bitmap);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

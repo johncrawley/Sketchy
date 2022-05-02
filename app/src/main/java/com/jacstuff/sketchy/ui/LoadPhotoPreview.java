@@ -23,8 +23,10 @@ public class LoadPhotoPreview extends View {
     private float photoX, photoY;
     private float diffX, diffY;
     private Bitmap photoBitmap;
+    private float currentScale = 1;
+    boolean wasScaled;
 
-    private Bitmap halfSizePhoto;
+    private Bitmap scaledPhoto;
     private ScaleGestureDetector scaleGestureDetector;
 
 
@@ -57,38 +59,48 @@ public class LoadPhotoPreview extends View {
     }
 
     public void drawAmendedBitmapTo(PaintView paintView){
-        Bitmap amendedBitmap= Bitmap.createBitmap(photoBitmap, 0,0, photoBitmap.getWidth(), photoBitmap.getHeight(), getRotateOnlyMatrix(), true);
+        Bitmap amendedBitmap= Bitmap.createBitmap(photoBitmap, 0,0, photoBitmap.getWidth(), photoBitmap.getHeight(), getRotateAndScaledMatrix(false), true);
         paintView.drawBitmap(amendedBitmap, photoX*2 , photoY * 2);
     }
 
 
-    public void loadBitmap(Bitmap photo){
-        halfSizePhoto = Bitmap.createBitmap(photo, 0,0, photo.getWidth(), photo.getHeight(), getRotateAndShrinkMatrix(), true);
+    public void loadAndDrawBitmap(Bitmap photo){
+        loadAndDrawBitmap(photo, 0,0);
+    }
+
+
+    public void loadAndDrawBitmap(Bitmap photo, int x, int y){
+        scaledPhoto = Bitmap.createBitmap(photo, 0,0, photo.getWidth(), photo.getHeight(), getRotateAndScaledMatrix(false), true);
         photoBitmap = photo;
-        drawPhotoAtPosition(0,0);
+        drawPhotoAtPosition(x,y);
         invalidate();
     }
 
 
+    private void drawBitmap(){
+        scaledPhoto = Bitmap.createBitmap(photoBitmap, 0,0, photoBitmap.getWidth(), photoBitmap.getHeight(), getRotateAndShrinkMatrix(), true);
+        drawBackgroundAndPhoto();
+    }
+
+
     private void drawPhotoAtPosition(float xOffset, float yOffset){
-        canvas.drawBitmap(halfSizePhoto, xOffset, yOffset, paint);
+        canvas.drawBitmap(scaledPhoto, xOffset, yOffset, paint);
     }
 
 
     private Matrix getRotateAndShrinkMatrix(){
-        int angle = getScreenOrientation() == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
-        Matrix m = new Matrix();
-        m.postRotate(angle);
-        m.postScale(.5f, .5f);
-        return m;
+        return getRotateAndScaledMatrix(true);
     }
 
 
-    private Matrix getRotateOnlyMatrix(){
+    public Matrix getRotateAndScaledMatrix(boolean isUsingPreviewScale){
         int angle = getScreenOrientation() == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
-        Matrix m = new Matrix();
-        m.postRotate(angle);
-        return m;
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        final float PREVIEW_SCALE_FACTOR = 2;
+        float scale = isUsingPreviewScale ? currentScale / PREVIEW_SCALE_FACTOR : currentScale;
+        matrix.postScale(scale, scale);
+        return matrix;
     }
 
 
@@ -99,54 +111,103 @@ public class LoadPhotoPreview extends View {
 
     @Override
     protected void onDraw(Canvas viewCanvas) {
-       // viewCanvas.save();
         viewCanvas.drawBitmap(bitmap, 0, 0, drawPaint);
-       // viewCanvas.restore();
     }
 
 
     @Override
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
-        boolean wasScaled = scaleGestureDetector.onTouchEvent(event);
-        if(wasScaled){
-            return true;
-        }
+
         int action = event.getAction();
         float x = event.getX();
         float y = event.getY();
+
         if(action == MotionEvent.ACTION_DOWN){
             diffX = x - photoX;
             diffY = y - photoY;
         }
         else if (action == MotionEvent.ACTION_MOVE){
-            canvas.drawRect(0,0,getWidth(), getHeight(), paint);
-            photoX = (x - diffX);
-            photoY = (y - diffY);
-            drawPhotoAtPosition(photoX, photoY);
+            scaleGestureDetector.onTouchEvent(event);
+            if(wasScaled){
+                return true;
+            }
+            redrawPhoto(x,y);
         }
-        invalidate();
+        else if (action == MotionEvent.ACTION_UP){
+            wasScaled = false;
+        }
         return true;
+    }
+
+
+    private void redrawPhoto(float x, float y){
+        photoX = (x - diffX);
+        photoY = (y - diffY);
+        drawBackgroundAndPhoto();
+    }
+
+
+    private void drawBackgroundAndPhoto(){
+        canvas.drawRect(0,0,getWidth(), getHeight(), paint);
+        drawPhotoAtPosition(photoX, photoY);
+        invalidate();
+    }
+
+
+    private void zoomOut(){
+        final float minimumScale = 0.05f;
+        currentScale -= getScaleIncrement();
+        if(currentScale < minimumScale){
+            currentScale = minimumScale;
+        }
+        drawBitmap();
+    }
+
+
+    private void zoomIn(){
+        final float maximumScale = 2.0f;
+        currentScale += getScaleIncrement();
+        if(currentScale > maximumScale){
+            currentScale = maximumScale;
+        }
+        drawBitmap();
+    }
+
+
+    private float getScaleIncrement(){
+        float SCALE_INCREMENT = 0.02f;
+        return SCALE_INCREMENT * (1 + (currentScale * 4));
     }
 
 
     private void setupScaleGestureDetector(){
         scaleGestureDetector = new ScaleGestureDetector(context, new ScaleGestureDetector.OnScaleGestureListener() {
-            @Override
-            public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
-                System.out.println("^^^ Scaling!");
-                return false;
-            }
+
+            private float previousSpan;
 
             @Override
             public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
-                System.out.println("^^^ on scale begin!");
+                float currentSpan = scaleGestureDetector.getCurrentSpan();
+                if(currentSpan > previousSpan){
+                    zoomIn();
+                }
+                else{
+                    zoomOut();
+                }
+                previousSpan = currentSpan;
+                wasScaled = true;
+                return false;
+            }
+
+
+            @Override
+            public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
                 return false;
             }
 
             @Override
             public void onScaleEnd(ScaleGestureDetector scaleGestureDetector) {
-
             }
         });
     }
