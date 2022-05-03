@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -19,7 +22,7 @@ public class LoadPhotoPreview extends View {
     private final Context context;
     private Bitmap bitmap;
     private Canvas canvas;
-    private final Paint drawPaint, paint;
+    private final Paint drawPaint, paint, borderPaint;
     private float photoX, photoY;
     private float diffX, diffY;
     private Bitmap photoBitmap;
@@ -40,6 +43,9 @@ public class LoadPhotoPreview extends View {
         this.context = context;
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
+        borderPaint = new Paint();
+        borderPaint.setStyle(Paint.Style.FILL);
+        borderPaint.setColor(Color.DKGRAY);
         drawPaint = new Paint();
         setupScaleGestureDetector();
     }
@@ -52,11 +58,11 @@ public class LoadPhotoPreview extends View {
         if(height == 0){
             height = 500;
         }
-
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         invalidate();
     }
+
 
     public void drawAmendedBitmapTo(PaintView paintView){
         Bitmap amendedBitmap= Bitmap.createBitmap(photoBitmap, 0,0, photoBitmap.getWidth(), photoBitmap.getHeight(), getRotateAndScaledMatrix(false), true);
@@ -150,8 +156,19 @@ public class LoadPhotoPreview extends View {
 
     private void drawBackgroundAndPhoto(){
         canvas.drawRect(0,0,getWidth(), getHeight(), paint);
+        drawPhotoBorderRect();
         drawPhotoAtPosition(photoX, photoY);
         invalidate();
+    }
+
+
+    private void drawPhotoBorderRect(){
+        int borderWidth = 4;
+        float left = photoX - borderWidth;
+        float top = photoY - borderWidth;
+        float right = photoX + scaledPhoto.getWidth() + borderWidth;
+        float bottom = photoY + scaledPhoto.getHeight() +  borderWidth;
+        canvas.drawRect(new RectF(left, top, right, bottom), borderPaint);
     }
 
 
@@ -166,7 +183,7 @@ public class LoadPhotoPreview extends View {
 
 
     private void zoomIn(){
-        final float maximumScale = 2.0f;
+        final float maximumScale = 1f;
         currentScale += getScaleIncrement();
         if(currentScale > maximumScale){
             currentScale = maximumScale;
@@ -176,8 +193,8 @@ public class LoadPhotoPreview extends View {
 
 
     private float getScaleIncrement(){
-        float SCALE_INCREMENT = 0.02f;
-        return SCALE_INCREMENT * (1 + (currentScale * 4));
+        final float SCALE_INCREMENT = 0.02f;
+        return SCALE_INCREMENT * (1 + currentScale / 2f);
     }
 
 
@@ -199,7 +216,6 @@ public class LoadPhotoPreview extends View {
                 wasScaled = true;
                 return false;
             }
-
 
             @Override
             public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
