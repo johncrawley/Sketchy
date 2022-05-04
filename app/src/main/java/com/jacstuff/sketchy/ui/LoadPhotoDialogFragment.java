@@ -48,9 +48,9 @@ public class LoadPhotoDialogFragment extends DialogFragment {
         previewHeight = getBundleInt(HEIGHT_TAG) / 2;
         photoFilePath = bundle.getString(PHOTO_FILE_PATH_TAG);
         LinearLayout photoPreviewLayout = rootView.findViewById(R.id.photoPreviewLayout);
-        View photoPreview = photoPreviewLayout.getChildAt(0);
+        View photoPreview = photoPreviewLayout.getChildAt(1);
         photoPreview.setLayoutParams(new LinearLayout.LayoutParams(previewWidth, previewHeight));
-
+        log("setLayoutParams");
         activity = (MainActivity)getActivity();
 
         setupOkButton(rootView);
@@ -61,6 +61,9 @@ public class LoadPhotoDialogFragment extends DialogFragment {
         return rootView;
     }
 
+    private void log(String msg){
+        System.out.println("^^^ LoadPhotoDialogFragment : " + msg);
+    }
 
     private int getBundleInt(String key){
         if(bundle == null){
@@ -101,7 +104,7 @@ public class LoadPhotoDialogFragment extends DialogFragment {
 
     private void setupOkButton(View parentView){
         Button saveButton = parentView.findViewById(R.id.loadPhotoOkButton);
-        saveButton.setOnClickListener((View v) ->dismiss());
+        saveButton.setOnClickListener((View v) -> dismiss());
     }
 
 
