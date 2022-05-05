@@ -26,11 +26,12 @@ public class LoadPhotoPreview extends View {
     private float diffX, diffY;
     private Bitmap photoBitmap;
     private float currentScale = 1;
-    private final float PREVIEW_SCALE_FACTOR = 2;
+    private float previewScaleFactor = 2;
     boolean wasScaled;
 
     private Bitmap scaledPhoto;
     private ScaleGestureDetector scaleGestureDetector;
+    private int rotation = 0;
 
 
     public LoadPhotoPreview(Context context) {
@@ -51,17 +52,19 @@ public class LoadPhotoPreview extends View {
     }
 
 
-    public void init(int width, int height) {
+    public void init(int width, int height, int previewScaleFactor) {
         width = width == 0 ? 500 : width;
         height = height == 0 ? 500 : height;
+        this.previewScaleFactor = previewScaleFactor;
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
+        canvas.drawRect(0,0,width,height, paint);
     }
 
 
     public void drawAmendedBitmapTo(PaintView paintView){
         Bitmap amendedBitmap = Bitmap.createBitmap(photoBitmap, 0,0, photoBitmap.getWidth(), photoBitmap.getHeight(), getRotateAndScaledMatrix(true), true);
-        paintView.drawBitmap(amendedBitmap, photoX * PREVIEW_SCALE_FACTOR , photoY * PREVIEW_SCALE_FACTOR);
+        paintView.drawBitmap(amendedBitmap, photoX * previewScaleFactor , photoY * previewScaleFactor);
     }
 
 
@@ -72,38 +75,38 @@ public class LoadPhotoPreview extends View {
     }
 
 
-    private void drawBitmap(){
-        scaledPhoto = Bitmap.createBitmap(photoBitmap, 0,0, photoBitmap.getWidth(), photoBitmap.getHeight(), getRotateAndScaledMatrix(false), true);
-        drawBackgroundAndPhoto();
-
-        log("Entered drawBitmap() scaledBitmap width: " + scaledPhoto.getWidth());
+    public void rotate(){
+        rotation += 90;
+        if(rotation >= Integer.MAX_VALUE - 100){
+            rotation = 0;
+        }
+        drawBitmap();
     }
 
 
-    private void log(String msg){
-        System.out.println("^^^ LoadPhotoPreview: " + msg);
+    private void drawBitmap(){
+        scaledPhoto = Bitmap.createBitmap(photoBitmap, 0,0, photoBitmap.getWidth(), photoBitmap.getHeight(), getRotateAndScaledMatrix(false), true);
+        drawBackgroundAndPhoto();
     }
 
 
     private void setInitialScale(float photoWidth){
-        log("photoWidth: " + photoWidth + " canvas.getWidth() : " + canvas.getWidth());
         currentScale = (canvas.getWidth() *2)/ photoWidth;
-        log(" multiplying calculated scale * photoWidth: " + currentScale * photoWidth + " and * 2 :" + currentScale * photoWidth * 2);
+        currentScale += 0.02f; //required extra width because the matrix scaling operation falls short
     }
 
 
     public Matrix getRotateAndScaledMatrix(boolean isUsingPreviewScale){
-        int angle = getScreenOrientation() == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
+        int initialAngle = getScreenOrientation() == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
         Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
+        matrix.postRotate((initialAngle + rotation) % 360);
         float scale = isUsingPreviewScale ? currentScale * 2 : currentScale;
-        log("getRotateAndScaledMatrix("  + isUsingPreviewScale + ") scale used: " + scale);
         matrix.postScale(scale, scale);
         return matrix;
     }
 
 
-    int getScreenOrientation(){
+    private int getScreenOrientation(){
         return context.getResources().getConfiguration().orientation;
     }
 
@@ -141,7 +144,6 @@ public class LoadPhotoPreview extends View {
 
 
     private void redrawPhoto(float x, float y){
-        log("Entered redrawPhoto()");
         photoX = (x - diffX);
         photoY = (y - diffY);
         drawBackgroundAndPhoto();
@@ -149,12 +151,10 @@ public class LoadPhotoPreview extends View {
 
 
     private void drawBackgroundAndPhoto(){
-        log("about to drawBackgroundAndPhoto: canvasWidth: " + canvas.getWidth());
         drawBackground();
         drawPhotoBorderRect();
         drawPhotoAtPosition(photoX, photoY);
         invalidate();
-        log("exiting drawBackgroundAndPhoto() canvasWidth: " + canvas.getWidth());
     }
 
 
@@ -174,13 +174,12 @@ public class LoadPhotoPreview extends View {
 
 
     private void drawPhotoAtPosition(float xOffset, float yOffset){
-        log("Entered drawPhotoAtPosition(), scaledPhoto width: " + scaledPhoto.getWidth());
         canvas.drawBitmap(scaledPhoto, xOffset, yOffset, paint);
     }
 
 
     private void zoomOut(){
-        final float minimumScale = 0.1f;
+        final float minimumScale = 0.05f;
         currentScale -= getScaleIncrement();
         if(currentScale < minimumScale){
             currentScale = minimumScale;

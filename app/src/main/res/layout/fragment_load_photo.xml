@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/backgroundColor">
+    android:background="@color/backgroundColor">
 
     <LinearLayout
         android:id="@+id/photoPreviewLayout"
@@ -19,12 +19,19 @@
             android:layout_width="40dp"
             android:layout_height="20dp"/>
 
-
-        <com.jacstuff.sketchy.ui.LoadPhotoPreview
-            android:id="@+id/loadPhotoPreview"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:padding="2dp"
+            android:elevation="3dp"
+            android:background="@color/appIconBackground">
+            <com.jacstuff.sketchy.ui.LoadPhotoPreview
+                android:id="@+id/loadPhotoPreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -40,11 +47,16 @@
         app:layout_constraintTop_toBottomOf="@+id/photoPreviewLayout">
 
         <Button
+            android:id="@+id/rotateImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/preview_dialog_rotate_button" />
+
+        <Button
             android:id="@+id/loadPhotoOkButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@android:string/ok" />
-
     </LinearLayout>
 
 

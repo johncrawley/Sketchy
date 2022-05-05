@@ -31,6 +31,9 @@ public class LoadPhotoDialogFragment extends DialogFragment {
     private int previewWidth, previewHeight;
     private String photoFilePath;
     private Bundle bundle;
+    private final int PREVIEW_SCALE_FACTOR = 2;
+    private LoadPhotoPreview loadPhotoPreview;
+
 
     public static LoadPhotoDialogFragment newInstance() {
         return new LoadPhotoDialogFragment();
@@ -39,30 +42,35 @@ public class LoadPhotoDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_load_photo, container, false);
-        Dialog dialog =  getDialog();
-        bundle = getArguments();
-        if(bundle == null){
-            return rootView;
-        }
-        previewWidth = getBundleInt(WIDTH_TAG) / 2;
-        previewHeight = getBundleInt(HEIGHT_TAG) / 2;
-        photoFilePath = bundle.getString(PHOTO_FILE_PATH_TAG);
-        LinearLayout photoPreviewLayout = rootView.findViewById(R.id.photoPreviewLayout);
-        View photoPreview = photoPreviewLayout.getChildAt(1);
-        photoPreview.setLayoutParams(new LinearLayout.LayoutParams(previewWidth, previewHeight));
-        log("setLayoutParams");
+        assignBundleData();
+        assignLayoutParams(rootView);
         activity = (MainActivity)getActivity();
-
         setupOkButton(rootView);
-        if(dialog != null){
-            dialog.setTitle(activity.getString(R.string.adjust_photo_dialog_title));
-        }
-
+        setupDialog();
         return rootView;
     }
 
-    private void log(String msg){
-        System.out.println("^^^ LoadPhotoDialogFragment : " + msg);
+
+    private void assignBundleData(){
+        bundle = getArguments();
+        if(bundle != null){
+            previewWidth = getBundleInt(WIDTH_TAG) / PREVIEW_SCALE_FACTOR;
+            previewHeight = getBundleInt(HEIGHT_TAG) / PREVIEW_SCALE_FACTOR;
+            photoFilePath = bundle.getString(PHOTO_FILE_PATH_TAG);
+        }
+    }
+
+
+    private void setupDialog(){
+        Dialog dialog =  getDialog();
+        if(dialog != null){
+            dialog.setTitle(activity.getString(R.string.adjust_photo_dialog_title));
+        }
+    }
+
+    private void assignLayoutParams(View rootView){
+        View photoPreview = rootView.findViewById(R.id.loadPhotoPreview);
+        photoPreview.setLayoutParams(new LinearLayout.LayoutParams(previewWidth, previewHeight));
     }
 
     private int getBundleInt(String key){
@@ -72,14 +80,12 @@ public class LoadPhotoDialogFragment extends DialogFragment {
         return bundle.getInt(key);
     }
 
-    LoadPhotoPreview loadPhotoPreview;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         loadPhotoPreview = view.findViewById(R.id.loadPhotoPreview);
-        loadPhotoPreview.init(previewWidth, previewHeight);
+        loadPhotoPreview.init(previewWidth, previewHeight, PREVIEW_SCALE_FACTOR);
         loadPictureIntoPreview();
     }
 
@@ -105,6 +111,9 @@ public class LoadPhotoDialogFragment extends DialogFragment {
     private void setupOkButton(View parentView){
         Button saveButton = parentView.findViewById(R.id.loadPhotoOkButton);
         saveButton.setOnClickListener((View v) -> dismiss());
+
+        Button rotateButton = parentView.findViewById(R.id.rotateImageButton);
+        rotateButton.setOnClickListener((View v) -> loadPhotoPreview.rotate());
     }
 
 

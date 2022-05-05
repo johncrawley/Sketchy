@@ -38,6 +38,7 @@
     <string name="save_dialogue_save_button">SAVE</string>
     <string name="save_dialogue_cancel_button">@android:string/cancel</string>
     <string name="bitmap_intent_extra">bitmap_intent_extra</string>
+    <string name="preview_dialog_rotate_button">Rotate</string>
     <string name="selected_button_text">S</string>
 
     <string name="content_description_large_brush_indicator">Indicates a larger size for paint brush</string>
