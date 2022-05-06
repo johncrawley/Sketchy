@@ -15,6 +15,7 @@ public class UserColorStore {
     private static final String PREF_SAVED_COLOR = "saved_color_";
     private static final String PREF_DEFAULT_COLOR = "default_color_";
     private static final String PREF_ARE_PROPS_INITIALIZED = "default_color_";
+    private static final String PREF_COLOR_STORE_VERSION = "color_store_version";
     private static final String PREF_NUMBER_OF_COLORS = "number_of_colors";
     private static final String DELIMITER =",";
 
@@ -41,9 +42,10 @@ public class UserColorStore {
     }
 
 
-    public static boolean arePropertiesInitialized(Context context){
+    public static boolean arePropertiesInitialized(Context context, int colorStoreVersion){
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME,0);
-        return prefs.getBoolean(PREF_ARE_PROPS_INITIALIZED, false);
+        return prefs.getBoolean(PREF_ARE_PROPS_INITIALIZED, false)
+                && prefs.getInt(PREF_COLOR_STORE_VERSION, -1) == colorStoreVersion;
     }
 
 
@@ -75,12 +77,35 @@ public class UserColorStore {
     }
 
 
-    public static void initStore(List<Integer> colors, Context context){
+    public static void initStore(List<Integer> colors, Context context, int version){
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        wipeAllPropsIfExistingVersionIsNot(version, context);
+
         if(prefs.contains(PREF_ARE_PROPS_INITIALIZED)) {
             return;
         }
+        addColorProps(colors, prefs.edit());
+    }
+
+
+    private static void wipeAllPropsIfExistingVersionIsNot(int version, Context context){
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        int existingColorStoreVersion =  prefs.getInt(PREF_COLOR_STORE_VERSION, -1);
+        if(version == existingColorStoreVersion){
+            return;
+        }
         SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(PREF_ARE_PROPS_INITIALIZED);
+        int numberOfExistingColors = prefs.getInt(PREF_NUMBER_OF_COLORS, 0);
+        for(int i = 0; i < numberOfExistingColors; i++){
+            editor.remove(PREF_SAVED_COLOR + i);
+            editor.remove(PREF_DEFAULT_COLOR + i);
+        }
+        editor.apply();
+    }
+
+
+    private static void addColorProps(List<Integer> colors, SharedPreferences.Editor editor){
         for (int i = 0; i < colors.size(); i++) {
             editor.putInt(PREF_SAVED_COLOR + i, colors.get(i));
             editor.putInt(PREF_DEFAULT_COLOR + i, colors.get(i));
@@ -115,36 +140,5 @@ public class UserColorStore {
         return PREF_SAVED_COLOR + index;
     }
 
-
-    public static void delete(int color, Context context){
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        String savedColorsStr = prefs.getString(PREF_SAVED_COLORS_LIST,"");
-        if(savedColorsStr == null){
-            savedColorsStr = "";
-        }
-        String str = removeColorFrom(savedColorsStr, String.valueOf(color));
-        String output = str.isEmpty() ? str : removeLastCommaFrom(str);
-        prefs.edit().putString(PREF_SAVED_COLORS_LIST, output).apply();
-    }
-
-
-    private static String removeLastCommaFrom(String str){
-        int lastIndex = String.valueOf(str.charAt(str.length()-1)).equals(DELIMITER) ? str.length() - 1 : str.length();
-       return str.substring(0, lastIndex);
-    }
-
-
-    private static String removeColorFrom(String savedColorsStr, String colorStr){
-        String[] savedColorsArray = savedColorsStr.split(DELIMITER);
-        StringBuilder str = new StringBuilder();
-        for (String s : savedColorsArray) {
-            if (s.equals(colorStr)) {
-                continue;
-            }
-            str.append(s);
-            str.append(",");
-        }
-        return str.toString();
-    }
 
 }

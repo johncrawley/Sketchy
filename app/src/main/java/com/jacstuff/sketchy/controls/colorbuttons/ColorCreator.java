@@ -22,11 +22,11 @@ public class ColorCreator {
         list.addAll(UserColorStore.getAllColors(context));
     }
 
-
+    //NB Update the COLOR_STORE_VERSION every time a color is added or amended here
     public static void generate(Context context){
-
+        final int COLOR_STORE_VERSION = 0;
         List<Integer> colors = new ArrayList<>();
-        if(UserColorStore.arePropertiesInitialized(context)){
+        if(UserColorStore.arePropertiesInitialized(context, COLOR_STORE_VERSION)){
             return;
         }
         add(colors,"magenta", Color.MAGENTA);
@@ -48,7 +48,23 @@ public class ColorCreator {
         add(colors,"white", Color.WHITE);
         add(colors,"olive"    , 128,128,0);
         add(colors,"purple"   , 140,40,255);
-        UserColorStore.initStore(colors, context);
+        add(colors,"lime", 215,255,0);
+        add(colors,"lilac", 215,214,255);
+        add(colors,"neon blue", 0,206,255);
+        add(colors,"light pink", 255,201,255);
+        add(colors,"green off-mint", 221,255,186);
+        add(colors,"grey blue", 220,230,255);
+        add(colors,"off peach", 239,197,184);
+        add(colors,"baby blue", 137,207,240);
+        add(colors,"light red-orange", 255,90,73);
+        add(colors,"dark maroon", 70,3,49);
+        add(colors,"navy with green", 0,30,70);
+        add(colors,"user1", 77,64,111);
+        add(colors,"user2", 40,100,50);
+        add(colors,"user3", 150,100,140);
+        add(colors,"user4", 100,150,100);
+        add(colors,"user5", 155,129,108);
+        UserColorStore.initStore(colors, context, COLOR_STORE_VERSION);
     }
 
 
