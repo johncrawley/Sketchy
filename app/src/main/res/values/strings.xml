@@ -180,6 +180,8 @@
     <string name="color_already_exists_toast_text">Colour Already Exists</string>
     <string name="color_removed_toast_text">Colour Removed</string>
 
+    <string name="camera_permission_not_given_text">Cannot take a photo without permission to use the camera</string>
+
     <string name="spinner_color_sequence_type_label">Sequence Type</string>
     <string name="spinner_item_color_sequence_forwards">Forwards</string>
     <string name="spinner_item_color_sequence_backwards">Backwards</string>
