@@ -62,6 +62,7 @@ public class ImageSaver {
         if(uri == null){
             return;
         }
+        
         try{
             InputStream input = context.getContentResolver().openInputStream(uri);
             if(input == null){

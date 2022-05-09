@@ -17,6 +17,7 @@ import com.jacstuff.sketchy.paintview.PaintView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -96,14 +97,11 @@ public class LoadPhotoDialogFragment extends DialogFragment {
         }
         File photoFile = new File(photoFilePath);
         try {
-            FileInputStream fis = new FileInputStream(photoFile);
-            Bitmap bitmap = BitmapFactory.decodeStream(fis);
+            InputStream inputStream = new FileInputStream(photoFile);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             loadPhotoPreview.loadAndDrawBitmap(bitmap);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        if(photoFile.exists()){
-            photoFile.delete();
         }
     }
 
@@ -114,6 +112,11 @@ public class LoadPhotoDialogFragment extends DialogFragment {
 
         Button rotateButton = parentView.findViewById(R.id.rotateImageButton);
         rotateButton.setOnClickListener((View v) -> loadPhotoPreview.rotate());
+    }
+
+    public void onDestroy(){
+        super.onDestroy();
+        activity.removeTemporaryPhotoFile();
     }
 
 
