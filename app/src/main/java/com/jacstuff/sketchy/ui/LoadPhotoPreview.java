@@ -75,18 +75,12 @@ public class LoadPhotoPreview extends View {
 
 
     public void loadAndDrawBitmap(Bitmap photo, boolean isRotatedInitially){
-        boolean isPhotoNull = photo == null;
-        log("Entered loadAndDrawBitmap() photo is null? " +  isPhotoNull);
         if(isRotatedInitially){
             initialRotation = 90;
         }
         setInitialScale(photo.getWidth());
         photoBitmap = photo;
         drawBitmap();
-    }
-
-    private void log(String msg){
-        System.out.println("^^^LoadPhotoPreview: " + msg);
     }
 
 

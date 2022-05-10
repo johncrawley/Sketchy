@@ -33,7 +33,7 @@ public class LoadPhotoDialogFragment extends DialogFragment {
     public final static String WIDTH_TAG = "width";
     public final static String HEIGHT_TAG = "height";
     public final static String PHOTO_FILE_PATH_TAG = "photo_file_path";
-    public final static String IS_FROM_FILE = "photo_file_path";
+    public final static String IS_FROM_FILE = "is_image_from_file";
     private MainActivity activity;
     private int previewWidth, previewHeight;
     private String photoFilePath;
@@ -67,7 +67,6 @@ public class LoadPhotoDialogFragment extends DialogFragment {
             previewHeight = getBundleInt(HEIGHT_TAG) / PREVIEW_SCALE_FACTOR;
             photoFilePath = bundle.getString(PHOTO_FILE_PATH_TAG);
             isPhotoFromFile = bundle.getBoolean(IS_FROM_FILE, false);
-            log("Entered assignBundleData, photoFilePAth: " + photoFilePath);
         }
     }
 
@@ -100,19 +99,12 @@ public class LoadPhotoDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         loadPhotoPreview = view.findViewById(R.id.loadPhotoPreview);
         loadPhotoPreview.init(previewWidth, previewHeight, PREVIEW_SCALE_FACTOR);
-        log("Entered onViewCreated()");
         if(isPhotoFromFile){
-            log("isPhotoFromFile is true!");
             initLoadFileResultLauncher();
             startOpenDocumentActivity();
             return;
         }
-        log("About to loadPictureIntoPReview");
         loadPhotoIntoPreview();
-    }
-
-    private void log(String msg){
-        System.out.println("^^^ LoadPhotoDialogFragment : " + msg);
     }
 
 
@@ -164,18 +156,14 @@ public class LoadPhotoDialogFragment extends DialogFragment {
 
     private void loadPhotoIntoPreview(){
         if(photoFilePath == null){
-            log("loadPhotoIntoPreview() photoFilePAth is null!");
             return;
         }
         File photoFile = new File(photoFilePath);
         try {
             InputStream inputStream = new FileInputStream(photoFile);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-
-            log("loadPhotoIntoPreview() about to loadAndDrawBitmap!");
             loadPhotoPreview.loadAndDrawBitmap(bitmap);
         } catch (FileNotFoundException e) {
-            log("loadPhotoIntoPreview() File not found!");
             e.printStackTrace();
         }
     }

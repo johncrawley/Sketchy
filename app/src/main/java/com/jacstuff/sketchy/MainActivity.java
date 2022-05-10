@@ -216,8 +216,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editColorFragment.show(fragmentTransaction, tag);
     }
 
+
     public void startLoadPhotoPreviewFragment(String photoFilePath){
-        log("entered startLoadPhotoPreviewFragment() photoFilePath: " + photoFilePath);
         startLoadPhotoPreviewFragment(photoFilePath, false);
     }
 
@@ -233,9 +233,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Bundle bundle = new Bundle();
         bundle.putInt(LoadPhotoDialogFragment.WIDTH_TAG, paintView.getWidth());
         bundle.putInt(LoadPhotoDialogFragment.HEIGHT_TAG, paintView.getHeight());
-        bundle.putString(LoadPhotoDialogFragment.PHOTO_FILE_PATH_TAG, photoFilePath);
-
         bundle.putBoolean(LoadPhotoDialogFragment.IS_FROM_FILE, isLoadingFromFile);
+        bundle.putString(LoadPhotoDialogFragment.PHOTO_FILE_PATH_TAG, photoFilePath);
         LoadPhotoDialogFragment loadPhotoDialogFragment = LoadPhotoDialogFragment.newInstance();
         loadPhotoDialogFragment.setArguments(bundle);
         loadPhotoDialogFragment.show(fragmentTransaction, tag);
@@ -377,8 +376,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void startTakePictureActivity(){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photoFile = createTempImageFile();
-
-        log("startTakePictureActivity() currentPhotoPath: " + currentPhotoPath);
         if (photoFile == null) {
             Toast.makeText(MainActivity.this, R.string.unable_to_create_temporary_file_text, Toast.LENGTH_SHORT).show();
             return;
@@ -432,7 +429,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         File photoFile = null;
         try {
             photoFile = createImageFile();
-            log("createTempImageFile() currentPhotoPath: " + currentPhotoPath);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -454,13 +450,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File imageFile = File.createTempFile(imageFileName, ".jpg", storageDir );
         currentPhotoPath = imageFile.getAbsolutePath();
-        log("createImageFile() currentPhotoPath: " + currentPhotoPath);
         return imageFile;
     }
 
-    private void log(String msg){
-        System.out.println("^^^ MainActivity: " + msg);
-    }
 
     public Uri getImageUri(Context context, Bitmap bitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
