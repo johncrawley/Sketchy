@@ -32,6 +32,7 @@ public class LoadPhotoPreview extends View {
     private Bitmap scaledPhoto;
     private ScaleGestureDetector scaleGestureDetector;
     private int rotation = 0;
+    private int initialRotation = 0;
 
 
     public LoadPhotoPreview(Context context) {
@@ -69,9 +70,23 @@ public class LoadPhotoPreview extends View {
 
 
     public void loadAndDrawBitmap(Bitmap photo){
+        loadAndDrawBitmap(photo, true);
+    }
+
+
+    public void loadAndDrawBitmap(Bitmap photo, boolean isRotatedInitially){
+        boolean isPhotoNull = photo == null;
+        log("Entered loadAndDrawBitmap() photo is null? " +  isPhotoNull);
+        if(isRotatedInitially){
+            initialRotation = 90;
+        }
         setInitialScale(photo.getWidth());
         photoBitmap = photo;
         drawBitmap();
+    }
+
+    private void log(String msg){
+        System.out.println("^^^LoadPhotoPreview: " + msg);
     }
 
 
@@ -97,12 +112,19 @@ public class LoadPhotoPreview extends View {
 
 
     public Matrix getRotateAndScaledMatrix(boolean isUsingPreviewScale){
-        int initialAngle = getScreenOrientation() == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
         Matrix matrix = new Matrix();
-        matrix.postRotate((initialAngle + rotation) % 360);
+        matrix.postRotate((getInitialAngle() + rotation) % 360);
         float scale = isUsingPreviewScale ? currentScale * 2 : currentScale;
         matrix.postScale(scale, scale);
         return matrix;
+    }
+
+
+    private int getInitialAngle(){
+        if(initialRotation == 0){
+            return 0;
+        }
+       return getScreenOrientation() == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
     }
 
 

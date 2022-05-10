@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MainViewModel viewModel;
     private ButtonReferenceStore buttonReferenceStore;
     private PaintHelperManager paintHelperManager;
-    private ActivityResultLauncher<Intent> activityResultLauncher, loadImageActivityResultLauncher, cameraActivityResultLauncher;
+    private ActivityResultLauncher<Intent> saveSketchActivityResultLauncher, cameraActivityResultLauncher;
     private ColorButtonLayoutCreator colorButtonLayoutCreator;
     private SeekBarConfigurator seekBarConfigurator;
     private ButtonLayoutParams colorButtonLayoutParams;
@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initActivityResultLaunchers(){
         initSaveFileResultLauncher();
-        initLoadFileResultLauncher();
         initActivityResultLauncherForCamera();
     }
 
@@ -160,19 +159,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(id == R.id.action_undo){
             paintView.undo();
         }
-        else if( id == R.id.action_save) {
+        else if(id == R.id.action_save) {
            startSaveDocumentActivity();
         }
-        else if(  id == R.id.action_open) {
-            startOpenDocumentActivity();
+        else if(id == R.id.action_open) {
+            startDialogForOpenDocument();
+          //  startOpenDocumentActivity();
         }
-        else if(  id == R.id.action_take_picture) {
+        else if(id == R.id.action_take_picture) {
             checkPermissionAndStartCamera();
         }
-        else if( id == R.id.action_about){
+        else if(id == R.id.action_about){
             startActivity(new Intent(this, AboutDialogActivity.class));
         }
-        else if( id == R.id.action_share){
+        else if(id == R.id.action_share){
             shareSketch();
         }
         else if(id == R.id.action_reset_colors){
@@ -216,8 +216,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editColorFragment.show(fragmentTransaction, tag);
     }
 
-
     public void startLoadPhotoPreviewFragment(String photoFilePath){
+        log("entered startLoadPhotoPreviewFragment() photoFilePath: " + photoFilePath);
+        startLoadPhotoPreviewFragment(photoFilePath, false);
+    }
+
+
+    public void startLoadPhotoPreviewFragment(String photoFilePath, boolean isLoadingFromFile){
         String tag = "load_photo_preview";
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag(tag);
@@ -229,6 +234,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bundle.putInt(LoadPhotoDialogFragment.WIDTH_TAG, paintView.getWidth());
         bundle.putInt(LoadPhotoDialogFragment.HEIGHT_TAG, paintView.getHeight());
         bundle.putString(LoadPhotoDialogFragment.PHOTO_FILE_PATH_TAG, photoFilePath);
+
+        bundle.putBoolean(LoadPhotoDialogFragment.IS_FROM_FILE, isLoadingFromFile);
         LoadPhotoDialogFragment loadPhotoDialogFragment = LoadPhotoDialogFragment.newInstance();
         loadPhotoDialogFragment.setArguments(bundle);
         loadPhotoDialogFragment.show(fragmentTransaction, tag);
@@ -336,9 +343,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     private void initSaveFileResultLauncher(){
-        activityResultLauncher = registerForActivityResult(
+        saveSketchActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if(result == null || result.getData() == null){
@@ -346,26 +352,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 imageSaver.saveImageToFile(result.getData(), paintView);
             });
-    }
-
-
-    private void initLoadFileResultLauncher(){
-        loadImageActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if(result == null){
-                        return;
-                    }
-                    Intent data = result.getData();
-                    if(data == null){
-                        return;
-                    }
-                    Uri uri = data.getData();
-                    if(uri == null){
-                        return;
-                    }
-                   imageSaver.loadImage(result.getData(), paintView);
-                });
     }
 
 
@@ -392,6 +378,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photoFile = createTempImageFile();
 
+        log("startTakePictureActivity() currentPhotoPath: " + currentPhotoPath);
         if (photoFile == null) {
             Toast.makeText(MainActivity.this, R.string.unable_to_create_temporary_file_text, Toast.LENGTH_SHORT).show();
             return;
@@ -399,6 +386,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Uri photoURI = FileProvider.getUriForFile(this, "com.jcrawley.android.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
         cameraActivityResultLauncher.launch(intent);
+    }
+
+
+    private void startDialogForOpenDocument(){
+        startLoadPhotoPreviewFragment(currentPhotoPath, true);
     }
 
 
@@ -416,9 +408,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void removeTemporaryPhotoFile(){
+    public void removeTemporaryPhotoFile() {
+        if(currentPhotoPath == null){
+            return;
+        }
         File file = new File(currentPhotoPath);
-        file.delete();
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
 
@@ -427,7 +424,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/png");
         intent.putExtra(Intent.EXTRA_TITLE, "sketch");
-        activityResultLauncher.launch(intent);
+        saveSketchActivityResultLauncher.launch(intent);
     }
 
 
@@ -435,6 +432,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         File photoFile = null;
         try {
             photoFile = createImageFile();
+            log("createTempImageFile() currentPhotoPath: " + currentPhotoPath);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -456,26 +454,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File imageFile = File.createTempFile(imageFileName, ".jpg", storageDir );
         currentPhotoPath = imageFile.getAbsolutePath();
+        log("createImageFile() currentPhotoPath: " + currentPhotoPath);
         return imageFile;
     }
 
+    private void log(String msg){
+        System.out.println("^^^ MainActivity: " + msg);
+    }
 
     public Uri getImageUri(Context context, Bitmap bitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, getString(R.string.shared_image_title), null);
         return Uri.parse(path);
-    }
-
-
-    private void startOpenDocumentActivity(){
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("image/*");
-        File photoFile = createTempImageFile();
-        Uri photoURI = FileProvider.getUriForFile(this, "com.jcrawley.android.fileprovider", photoFile);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-        loadImageActivityResultLauncher.launch(intent);
     }
 
 

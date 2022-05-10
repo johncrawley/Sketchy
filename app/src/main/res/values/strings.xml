@@ -16,6 +16,7 @@
     <string name="reset_colors_dialog_message">Are you sure you want to reset all colour buttons to their default values?</string>
     <string name="edit_color_dialog_title">Edit Color Button</string>
     <string name="adjust_photo_dialog_title">Adjust Photo</string>
+    <string name="adjust_image_dialog_title">Adjust Image</string>
     <string name="load_photo_dialog_title">Load Photo</string>
     <string name="reset_colors_confirmation_button">Yes</string>
     <string name="reset_colors_cancel_button">No</string>
