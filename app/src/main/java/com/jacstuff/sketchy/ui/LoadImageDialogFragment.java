@@ -28,45 +28,61 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class LoadPhotoDialogFragment extends DialogFragment {
+public class LoadImageDialogFragment extends DialogFragment {
 
-    public final static String WIDTH_TAG = "width";
-    public final static String HEIGHT_TAG = "height";
     public final static String PHOTO_FILE_PATH_TAG = "photo_file_path";
     public final static String IS_FROM_FILE = "is_image_from_file";
     private MainActivity activity;
     private int previewWidth, previewHeight;
     private String photoFilePath;
-    private Bundle bundle;
     private final int PREVIEW_SCALE_FACTOR = 2;
     private LoadPhotoPreview loadPhotoPreview;
     private boolean isPhotoFromFile;
     private ActivityResultLauncher<Intent>  loadImageActivityResultLauncher;
 
 
-    public static LoadPhotoDialogFragment newInstance() {
-        return new LoadPhotoDialogFragment();
+    public static LoadImageDialogFragment newInstance() {
+        return new LoadImageDialogFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_load_photo, container, false);
+        activity = (MainActivity)getActivity();
         assignBundleData();
         assignLayoutParams(rootView);
-        activity = (MainActivity)getActivity();
         setupOkButton(rootView);
         setupDialog();
         return rootView;
     }
 
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        loadPhotoPreview = view.findViewById(R.id.loadPhotoPreview);
+        loadPhotoPreview.init(previewWidth, previewHeight, PREVIEW_SCALE_FACTOR);
+        if(isPhotoFromFile){
+            initLoadFileResultLauncher();
+            startOpenDocumentActivity();
+            return;
+        }
+        loadPhotoIntoPreview();
+    }
+
+
     private void assignBundleData(){
-        bundle = getArguments();
+        Bundle bundle = getArguments();
         if(bundle != null){
-            previewWidth = getBundleInt(WIDTH_TAG) / PREVIEW_SCALE_FACTOR;
-            previewHeight = getBundleInt(HEIGHT_TAG) / PREVIEW_SCALE_FACTOR;
             photoFilePath = bundle.getString(PHOTO_FILE_PATH_TAG);
             isPhotoFromFile = bundle.getBoolean(IS_FROM_FILE, false);
+        }
+        PaintView paintView = activity.getPaintView();
+
+        previewWidth = paintView.getWidth()/PREVIEW_SCALE_FACTOR;
+        previewHeight = paintView.getHeight()/PREVIEW_SCALE_FACTOR;
+        if(previewHeight == 0 || previewWidth == 0){
+            dismiss(); // if the user has just rotated the screen, better to just cancel the dialog
         }
     }
 
@@ -83,28 +99,6 @@ public class LoadPhotoDialogFragment extends DialogFragment {
     private void assignLayoutParams(View rootView){
         View photoPreview = rootView.findViewById(R.id.loadPhotoPreview);
         photoPreview.setLayoutParams(new LinearLayout.LayoutParams(previewWidth, previewHeight));
-    }
-
-
-    private int getBundleInt(String key){
-        if(bundle == null){
-            return 500;
-        }
-        return bundle.getInt(key);
-    }
-
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        loadPhotoPreview = view.findViewById(R.id.loadPhotoPreview);
-        loadPhotoPreview.init(previewWidth, previewHeight, PREVIEW_SCALE_FACTOR);
-        if(isPhotoFromFile){
-            initLoadFileResultLauncher();
-            startOpenDocumentActivity();
-            return;
-        }
-        loadPhotoIntoPreview();
     }
 
 
@@ -170,7 +164,7 @@ public class LoadPhotoDialogFragment extends DialogFragment {
 
 
     private void setupOkButton(View parentView){
-        setupButtonClick(parentView, R.id.loadPhotoOkButton, this::dismiss);
+        setupButtonClick(parentView, R.id.loadPhotoOkButton, this::assignPhotoToPaintViewAndDismiss);
         setupButtonClick(parentView, R.id.rotateImageButton, ()-> loadPhotoPreview.rotate());
     }
 
@@ -187,11 +181,10 @@ public class LoadPhotoDialogFragment extends DialogFragment {
     }
 
 
-    @Override
-    public void dismiss(){
-        super.dismiss();
+    private void assignPhotoToPaintViewAndDismiss(){
         PaintView paintView = activity.getPaintView();
         loadPhotoPreview.drawAmendedBitmapTo(paintView);
+        dismiss();
     }
 
 

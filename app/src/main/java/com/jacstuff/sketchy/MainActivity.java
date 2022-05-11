@@ -45,7 +45,7 @@ import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.ui.ColorPickerSeekBarConfigurator;
 import com.jacstuff.sketchy.ui.EditColorFragment;
-import com.jacstuff.sketchy.ui.LoadPhotoDialogFragment;
+import com.jacstuff.sketchy.ui.LoadImageDialogFragment;
 import com.jacstuff.sketchy.ui.UserColorStore;
 import com.jacstuff.sketchy.utils.Toaster;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -231,14 +231,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         fragmentTransaction.addToBackStack(null);
         Bundle bundle = new Bundle();
-        bundle.putInt(LoadPhotoDialogFragment.WIDTH_TAG, paintView.getWidth());
-        bundle.putInt(LoadPhotoDialogFragment.HEIGHT_TAG, paintView.getHeight());
-        bundle.putBoolean(LoadPhotoDialogFragment.IS_FROM_FILE, isLoadingFromFile);
-        bundle.putString(LoadPhotoDialogFragment.PHOTO_FILE_PATH_TAG, photoFilePath);
-        LoadPhotoDialogFragment loadPhotoDialogFragment = LoadPhotoDialogFragment.newInstance();
+        bundle.putBoolean(LoadImageDialogFragment.IS_FROM_FILE, isLoadingFromFile);
+        bundle.putString(LoadImageDialogFragment.PHOTO_FILE_PATH_TAG, photoFilePath);
+        LoadImageDialogFragment loadPhotoDialogFragment = LoadImageDialogFragment.newInstance();
         loadPhotoDialogFragment.setArguments(bundle);
         loadPhotoDialogFragment.show(fragmentTransaction, tag);
     }
+
 
 
     public ButtonLayoutParams getColorButtonLayoutParams(){

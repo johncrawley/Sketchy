@@ -93,37 +93,12 @@ public class LoadPhotoPreview extends View {
     }
 
 
-    private void drawBitmap(){
-        scaledPhoto = Bitmap.createBitmap(photoBitmap, 0,0, photoBitmap.getWidth(), photoBitmap.getHeight(), getRotateAndScaledMatrix(false), true);
-        drawBackgroundAndPhoto();
-    }
-
-
-    private void setInitialScale(float photoWidth){
-        currentScale = (canvas.getWidth() *2)/ photoWidth;
-        currentScale += 0.02f; //required extra width because the matrix scaling operation falls short
-    }
-
-
     public Matrix getRotateAndScaledMatrix(boolean isUsingPreviewScale){
         Matrix matrix = new Matrix();
         matrix.postRotate((getInitialAngle() + rotation) % 360);
         float scale = isUsingPreviewScale ? currentScale * 2 : currentScale;
         matrix.postScale(scale, scale);
         return matrix;
-    }
-
-
-    private int getInitialAngle(){
-        if(initialRotation == 0){
-            return 0;
-        }
-       return getScreenOrientation() == Configuration.ORIENTATION_LANDSCAPE ? -90 : 90;
-    }
-
-
-    private int getScreenOrientation(){
-        return context.getResources().getConfiguration().orientation;
     }
 
 
@@ -136,11 +111,9 @@ public class LoadPhotoPreview extends View {
     @Override
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
-
         int action = event.getAction();
         float x = event.getX();
         float y = event.getY();
-
         if(action == MotionEvent.ACTION_DOWN){
             diffX = x - photoX;
             diffY = y - photoY;
@@ -156,6 +129,31 @@ public class LoadPhotoPreview extends View {
             wasScaled = false;
         }
         return true;
+    }
+
+
+    private int getInitialAngle(){
+        if(initialRotation == 0){
+            return 0;
+        }
+        return getScreenOrientation() == Configuration.ORIENTATION_LANDSCAPE ? 0 : 90;
+    }
+
+
+    private int getScreenOrientation(){
+        return context.getResources().getConfiguration().orientation;
+    }
+
+
+    private void drawBitmap(){
+        scaledPhoto = Bitmap.createBitmap(photoBitmap, 0,0, photoBitmap.getWidth(), photoBitmap.getHeight(), getRotateAndScaledMatrix(false), true);
+        drawBackgroundAndPhoto();
+    }
+
+
+    private void setInitialScale(float photoWidth){
+        currentScale = (canvas.getWidth() *2)/ photoWidth;
+        currentScale += 0.02f; //required extra width because the matrix scaling operation falls short
     }
 
 
