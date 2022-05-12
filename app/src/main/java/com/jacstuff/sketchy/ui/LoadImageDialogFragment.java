@@ -50,6 +50,7 @@ public class LoadImageDialogFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.fragment_load_photo, container, false);
         activity = (MainActivity)getActivity();
         assignBundleData();
+        assignWidthAndHeight();
         assignLayoutParams(rootView);
         setupOkButton(rootView);
         setupDialog();
@@ -77,8 +78,11 @@ public class LoadImageDialogFragment extends DialogFragment {
             photoFilePath = bundle.getString(PHOTO_FILE_PATH_TAG);
             isPhotoFromFile = bundle.getBoolean(IS_FROM_FILE, false);
         }
-        PaintView paintView = activity.getPaintView();
+    }
 
+
+    private void assignWidthAndHeight(){
+        PaintView paintView = activity.getPaintView();
         previewWidth = paintView.getWidth()/PREVIEW_SCALE_FACTOR;
         previewHeight = paintView.getHeight()/PREVIEW_SCALE_FACTOR;
         if(previewHeight == 0 || previewWidth == 0){

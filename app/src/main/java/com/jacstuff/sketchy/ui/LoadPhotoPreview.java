@@ -27,7 +27,8 @@ public class LoadPhotoPreview extends View {
     private Bitmap photoBitmap;
     private float currentScale = 1;
     private float previewScaleFactor = 2;
-    boolean wasScaled;
+    private boolean wasScaled;
+    private float initialScale;
 
     private Bitmap scaledPhoto;
     private ScaleGestureDetector scaleGestureDetector;
@@ -64,8 +65,17 @@ public class LoadPhotoPreview extends View {
 
 
     public void drawAmendedBitmapTo(PaintView paintView){
-        Bitmap amendedBitmap = Bitmap.createBitmap(photoBitmap, 0,0, photoBitmap.getWidth(), photoBitmap.getHeight(), getRotateAndScaledMatrix(true), true);
-        paintView.drawBitmap(amendedBitmap, photoX * previewScaleFactor , photoY * previewScaleFactor);
+        Bitmap amendedBitmap = Bitmap.createBitmap(photoBitmap,
+                0,
+                0,
+                photoBitmap.getWidth(),
+                photoBitmap.getHeight(),
+                getRotateAndScaledMatrix(true),
+                true);
+
+        paintView.drawBitmap(amendedBitmap,
+                photoX * previewScaleFactor ,
+                photoY * previewScaleFactor);
     }
 
 
@@ -154,6 +164,7 @@ public class LoadPhotoPreview extends View {
     private void setInitialScale(float photoWidth){
         currentScale = (canvas.getWidth() *2)/ photoWidth;
         currentScale += 0.02f; //required extra width because the matrix scaling operation falls short
+        initialScale = currentScale;
     }
 
 
@@ -193,7 +204,7 @@ public class LoadPhotoPreview extends View {
 
 
     private void zoomOut(){
-        final float minimumScale = 0.05f;
+        final float minimumScale = 0.03f;
         currentScale -= getScaleIncrement();
         if(currentScale < minimumScale){
             currentScale = minimumScale;
@@ -203,7 +214,7 @@ public class LoadPhotoPreview extends View {
 
 
     private void zoomIn(){
-        final float maximumScale = 1f;
+        final float maximumScale = Math.max(1f , initialScale);
         currentScale += getScaleIncrement();
         if(currentScale > maximumScale){
             currentScale = maximumScale;
@@ -213,6 +224,9 @@ public class LoadPhotoPreview extends View {
 
 
     private float getScaleIncrement(){
+        if(currentScale < 0.08f){
+            return 0.005f;
+        }
         return currentScale < 0.3 ? 0.01f : 0.05f;
     }
 
