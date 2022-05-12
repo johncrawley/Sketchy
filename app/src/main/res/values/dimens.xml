@@ -23,6 +23,7 @@
     <dimen name="about_text_primary_font_size">30sp</dimen>
     <dimen name="about_text_secondary_font_size">22sp</dimen>
     <dimen name="about_text_created_by_font_size">18sp</dimen>
+    <dimen name="about_text_years_font_size">14sp</dimen>
     <dimen name="about_text_version_font_size">24sp</dimen>
     <dimen name="about_text_side_padding">14dp</dimen>
     <dimen name="shade_scroll_view_bottom_margin">8dp</dimen>

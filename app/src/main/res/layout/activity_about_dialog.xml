@@ -35,6 +35,18 @@
         app:layout_constraintTop_toBottomOf="@id/appGraphic" />
 
     <TextView
+        android:id="@+id/yearInfoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/about_text_padding"
+        android:text="@string/about_year_info"
+        android:textAlignment="center"
+        android:textSize="@dimen/about_text_years_font_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appVersion" />
+
+    <TextView
         android:id="@+id/createdBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,18 +56,6 @@
         android:textSize="@dimen/about_text_created_by_font_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appVersion" />
-
-    <TextView
-        android:id="@+id/yearInfoText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/about_text_padding"
-        android:text="@string/about_year_info"
-        android:textAlignment="center"
-        android:textSize="@dimen/about_text_created_by_font_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createdBy" />
+        app:layout_constraintTop_toBottomOf="@+id/yearInfoText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
