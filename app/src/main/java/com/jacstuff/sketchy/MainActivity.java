@@ -239,7 +239,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     public ButtonLayoutParams getColorButtonLayoutParams(){
         return this.colorButtonLayoutParams;
     }

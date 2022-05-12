@@ -50,13 +50,15 @@
             android:id="@+id/rotateImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/preview_dialog_rotate_button" />
+            android:text="@string/preview_dialog_rotate_button"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/loadPhotoOkButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@android:string/ok" />
+            android:text="@android:string/ok"
+            style="?android:attr/buttonBarButtonStyle"  />
     </LinearLayout>
 
 

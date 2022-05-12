@@ -76,6 +76,7 @@
     <string name="content_description_shadow_button">Selects shadow</string>
     <string name="content_description_kaleidoscope_button">Selects kaleidoscope modes</string>
 
+    <string name="content_description_splash_screen">Loading App</string>
     <string name="content_description_kaleidoscope_off_button">Turns off kaleidoscope mode</string>
     <string name="content_description_kaleidoscope_2_button">Switches to kaleidoscope mode with 2 segments</string>
     <string name="content_description_kaleidoscope_5_button">Switches to kaleidoscope mode with 5 segments</string>
