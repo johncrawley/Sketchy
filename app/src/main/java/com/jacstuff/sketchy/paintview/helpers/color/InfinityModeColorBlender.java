@@ -3,12 +3,10 @@ package com.jacstuff.sketchy.paintview.helpers.color;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.utils.ColorUtils;
-import com.jacstuff.sketchy.controls.colorbuttons.ColorConverter;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import static com.jacstuff.sketchy.controls.colorbuttons.ColorConverter.getNextShadeOfColor;
-import static com.jacstuff.sketchy.utils.ColorUtils.Rgb.*;
 
 
 public class InfinityModeColorBlender {
@@ -41,6 +39,7 @@ public class InfinityModeColorBlender {
         int nextShade = getNextShadeOfColor(currentColor, targetColor);
         viewModel.previousColor = getNextShadeOfColor(viewModel.previousColor, nextTargetSecondaryShade);
         paint.setColor(nextShade);
+        paint.setAlpha(viewModel.colorAlpha);
         viewModel.color = nextShade;
         if(ColorUtils.areEqual(nextShade, targetColor)){
             hasBlendStarted = false;

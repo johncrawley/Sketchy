@@ -80,7 +80,7 @@ public class ColorHelper {
 
     private void setColorAndAlpha(Paint paint){
         paint.setColor(viewModel.color);
-        paint.setAlpha( viewModel.colorAlpha);
+        paint.setAlpha(viewModel.colorAlpha);
     }
 
 }
