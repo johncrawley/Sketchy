@@ -114,6 +114,7 @@
     <item name="crescentShapeButton" type="id"/>
     <item name="pathShapeButton" type="id"/>
     <item name="rectangleShapeButton" type="id"/>
+    <item name="variableCircleShapeButton" type="id"/>
     <item name="arcShapeButton" type="id"/>
     <item name="xShapeButton" type="id"/>
     <item name="bananaShapeButton" type="id"/>
