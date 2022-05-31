@@ -60,7 +60,7 @@ public class DragRectDrawer extends BasicDrawer{
     }
 
 
-    public void draw(float x, float y, Paint paint){
+    private void draw(float x, float y, Paint paint){
         canvas.save();
         downX = x;
         downY = y;
@@ -70,22 +70,11 @@ public class DragRectDrawer extends BasicDrawer{
     }
 
 
-    public void rotateAndDrawMove(float x, float y, Paint paint){
+    private void rotateAndDrawMove(float x, float y, Paint paint){
         canvas.save();
         translateToTopCornerOfRect();
         rotateThenDrawShadowAndObject(x, y, paint);
         canvas.restore();
-    }
-
-
-    public PointF calculateRect(float x1, float y1, float x2, float y2, int angle){
-        PointF p1 = new PointF();
-        p1.x = x1;
-        p1.y = y1;
-        PointF p2 = new PointF();
-        p2.x = x2;
-        p2.y = y2;
-        return rectCalc.calculateRect(p1,p2,angle);
     }
 
 
@@ -112,7 +101,19 @@ public class DragRectDrawer extends BasicDrawer{
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
             brush.onTouchMove(bottomCorner.x, bottomCorner.y, paintView.getShadowPaint());
         }
+        //brush.onTouchMove(x,y,paint);
         brush.onTouchMove(bottomCorner.x, bottomCorner.y, paint);
+    }
+
+
+    private PointF calculateRect(float x1, float y1, float x2, float y2, int angle){
+        PointF p1 = new PointF();
+        p1.x = x1;
+        p1.y = y1;
+        PointF p2 = new PointF();
+        p2.x = x2;
+        p2.y = y2;
+        return rectCalc.calculateRect(p1,p2,angle);
     }
 
 
@@ -124,6 +125,7 @@ public class DragRectDrawer extends BasicDrawer{
     private float snapToLowerBounds(float coordinate){
         return viewModel.isRectangleSnappedToEdges && coordinate < viewModel.rectangleSnapBounds? 0 : coordinate;
     }
+
 
     private void translateToTopCornerOfRect(){
         canvas.translate(downX, downY);
@@ -141,11 +143,16 @@ public class DragRectDrawer extends BasicDrawer{
     }
 
     //where 'a' is an x or y coordinate
-    private float getKaleidoscopeTranslation(float a, float aDown, float kCenterA){
+    private float getKaleidoscopeTranslation(float aUp, float aDown, float kCenterA){
         float downKa = aDown - kCenterA;
-        float ka = a - kCenterA;
-        float rotationCorrection = Math.abs(aDown - a) / 2;
-        return downKa + ((ka-downKa) /2f) - rotationCorrection;
+        float ka = Math.max(aUp, aDown) - kCenterA;
+        float rotationCorrection = Math.abs(aDown - Math.abs(aUp)) / 2;
+        return downKa + ((ka-downKa) /2f) - rotationCorrection + calculateReverseDirectionCorrection(aDown, aUp);
+    }
+
+
+    private float calculateReverseDirectionCorrection(float downCoordinate, float upCoordinate){
+        return upCoordinate < downCoordinate ? ((Math.abs(downCoordinate) - Math.abs(upCoordinate)) / 2f) : 0;
     }
 
 

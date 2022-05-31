@@ -45,7 +45,6 @@ public class KaleidoscopeDrawer {
     public void drawKaleidoscope(float x, float y, Paint paint){
         createInfinityBitmap();
         canvas.save();
-
         rotateAndDrawAroundAxis(x,y, paint);
         drawInfinityModeSegments(x,y);
         canvas.restore();

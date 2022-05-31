@@ -2,6 +2,14 @@ package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.PointF;
 
+/*
+    In order to draw a drag-rectangle at an angle, so that the bottom corner is on the touch-point,
+     - we need to:
+        - calculate the distance between the 2 corners
+        - create a rectangle that is horizontal with the appropriate side length
+        - rotate it into position.
+ */
+
 public class RectCalc {
 
     public PointF calculateRect(PointF p1, PointF p2, int angle){
@@ -19,8 +27,8 @@ public class RectCalc {
 
     private PointF translateToZero(PointF p1, PointF p2){
         PointF p = new PointF();
-        p.x = p2.x - p1.x;
-        p.y = p2.y - p1.y;
+        p.x = Math.abs(p2.x) - Math.abs(p1.x);
+        p.y = Math.abs(p2.y) - Math.abs(p1.y);
         return p;
     }
 
