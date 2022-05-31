@@ -202,6 +202,52 @@ public class PaintView extends View {
     }
 
 
+    public void onTouchUp(){
+        if(!isTouchDownRegistered){
+            return;
+        }
+        isTouchDownRegistered = false;
+        currentBrush.touchUp(x,y,paint);
+    }
+
+
+    public void recalculateBrush(){
+        if(currentBrush == null){
+            return;
+        }
+        currentBrush.recalculateDimensions();
+    }
+
+
+    public void undo(){
+        currentBrush.reset();
+        loadHistoryItem(true);
+    }
+
+
+    public Brush getCurrentBrush(){
+        return currentBrush;
+    }
+
+
+    public void loadBitmap(Bitmap bm){
+        bitmapLoader.drawBitmapToScale(bm);
+        bitmapHistory.push(bitmap);
+    }
+
+
+    public void drawBitmap(Bitmap loadedBitmap, float offsetX, float offsetY){
+        Paint loadedBitmapPaint = new Paint();
+        canvas.drawBitmap(loadedBitmap, offsetX, offsetY, loadedBitmapPaint);
+        bitmapHistory.push(bitmap);
+    }
+
+
+    int getScreenOrientation(){
+        return context.getResources().getConfiguration().orientation;
+    }
+
+
     private void initPaints(){
         paint = createPaint(Color.WHITE);
         previewPaint = createPaint(Color.DKGRAY);
@@ -225,7 +271,6 @@ public class PaintView extends View {
     private int getMaxDimension(){
         return Math.max(getWidth(), getHeight());
     }
-
 
 
     private void drawPlainBackgroundAndSaveToHistory(){
@@ -257,15 +302,6 @@ public class PaintView extends View {
     }
 
 
-    public void onTouchUp(){
-        if(!isTouchDownRegistered){
-            return;
-        }
-        isTouchDownRegistered = false;
-        currentBrush.touchUp(x,y,paint);
-    }
-
-
     private void onTouchMove(){
         if(!isTouchDownRegistered){
             return;
@@ -274,25 +310,6 @@ public class PaintView extends View {
             return;
         }
         currentBrush.touchMove(x, y, paint);
-    }
-
-
-    public void recalculateBrush(){
-        if(currentBrush == null){
-            return;
-        }
-        currentBrush.recalculateDimensions();
-    }
-
-
-    public void undo(){
-        currentBrush.reset();
-        loadHistoryItem(true);
-    }
-
-
-    public Brush getCurrentBrush(){
-        return currentBrush;
     }
 
 
@@ -305,24 +322,6 @@ public class PaintView extends View {
         bitmapLoader.drawBitmapToScale(historyBitmap);
         disablePreviewLayer();
         invalidate();
-    }
-
-
-    public void loadBitmap(Bitmap bm){
-        bitmapLoader.drawBitmapToScale(bm);
-        bitmapHistory.push(bitmap);
-    }
-
-
-    public void drawBitmap(Bitmap loadedBitmap, float offsetX, float offsetY){
-        Paint loadedBitmapPaint = new Paint();
-        canvas.drawBitmap(loadedBitmap, offsetX, offsetY, loadedBitmapPaint);
-        bitmapHistory.push(bitmap);
-    }
-
-
-    int getScreenOrientation(){
-        return context.getResources().getConfiguration().orientation;
     }
 
 

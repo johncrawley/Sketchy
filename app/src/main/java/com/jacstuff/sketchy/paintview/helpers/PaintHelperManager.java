@@ -36,7 +36,7 @@ public class PaintHelperManager {
         styleHelper = new StyleHelper(mainActivity, paintView, viewModel);
         brushSizeSeekBarManager = new BrushSizeSeekBarManager(mainActivity);
         sizeHelper = new SizeHelper(viewModel, paintView, brushSizeSeekBarManager);
-        colorHelper = new ColorHelper(viewModel, kaleidoscopeHelper);
+        colorHelper = new ColorHelper(paintView, viewModel, kaleidoscopeHelper);
         tileHelper = new TileHelper(viewModel, this);
         placementHelper = new PlacementHelper(viewModel, mainActivity, sizeHelper);
         sensitivityHelper = new SensitivityHelper(viewModel, angleHelper);

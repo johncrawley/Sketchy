@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.multicolor.SequenceColorSelector;
 import com.jacstuff.sketchy.multicolor.ShadeColorSelector;
+import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -17,8 +18,10 @@ public class ColorHelper {
     private final KaleidoscopeHelper kaleidoscopeHelper;
     private final SequenceColorSelector allColorsSequenceSelector;
     private final ShadeColorSelector shadeColorSelector;
+    private final PaintView paintView;
 
-    public ColorHelper(MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
+    public ColorHelper(PaintView paintView, MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
+        this.paintView = paintView;
         this.viewModel = viewModel;
         this.kaleidoscopeHelper = kaleidoscopeHelper;
         allColorsSequenceSelector = new SequenceColorSelector(viewModel);
@@ -64,7 +67,9 @@ public class ColorHelper {
 
 
     public void assignColors(){
-        if(kaleidoscopeHelper.isEnabled() && viewModel.isInfinityModeEnabled){
+        if(kaleidoscopeHelper.isEnabled()
+                && viewModel.isInfinityModeEnabled
+                && paintView.getCurrentBrush().isColorChangedOnDown()){
             infinityModeColorBlender.assignNextInfinityModeColor();
             return;
         }
