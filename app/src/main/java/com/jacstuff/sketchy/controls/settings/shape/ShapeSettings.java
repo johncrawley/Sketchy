@@ -59,13 +59,13 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         buttonConfig.add(R.id.pointedOvalShapeButton,       R.drawable.button_shape_pointed_oval,       BrushShape.POINTED_OVAL);
         buttonConfig.add(R.id.textShapeButton,              R.drawable.button_shape_text,               BrushShape.TEXT);
         buttonConfig.add(R.id.rectangleShapeButton,         R.drawable.button_shape_rectangle,          BrushShape.DRAG_RECTANGLE);
-        buttonConfig.add(R.id.variableCircleShapeButton,    R.drawable.button_shape_circle,             BrushShape.VARIABLE_CIRCLE);
+        buttonConfig.add(R.id.variableCircleShapeButton,    R.drawable.button_variable_circle,          BrushShape.VARIABLE_CIRCLE);
         buttonConfig.add(R.id.lineShapeButton,              R.drawable.button_shape_line,               BrushShape.LINE);
         buttonConfig.add(R.id.curveShapeButton,             R.drawable.button_shape_curve,              BrushShape.CURVE);
         buttonConfig.add(R.id.triangleArbitraryShapeButton, R.drawable.button_shape_triangle_arbitrary, BrushShape.TRIANGLE_ARBITRARY);
-        buttonConfig.add(R.id.spiralShapeButton, R.drawable.button_shape_spiral, BrushShape.SPIRAL);
-        buttonConfig.add(R.id.crazySpiralShapeButton, R.drawable.button_shape_crazy_spiral, BrushShape.CRAZY_SPIRAL);
-        buttonConfig.add(R.id.randomShapeButton , R.drawable.button_shape_random, BrushShape.RANDOM);
+        buttonConfig.add(R.id.spiralShapeButton,            R.drawable.button_shape_spiral,             BrushShape.SPIRAL);
+        buttonConfig.add(R.id.crazySpiralShapeButton,       R.drawable.button_shape_crazy_spiral,       BrushShape.CRAZY_SPIRAL);
+        buttonConfig.add(R.id.randomShapeButton ,           R.drawable.button_shape_random,             BrushShape.RANDOM);
         buttonConfig.setupClickHandler();
         buttonConfig.setParentButton(R.id.shapeButton);
         buttonConfig.setDefaultSelection(R.id.circleShapeButton);

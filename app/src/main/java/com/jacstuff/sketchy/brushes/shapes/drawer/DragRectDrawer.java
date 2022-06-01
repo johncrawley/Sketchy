@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.AngleType;
+import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.AngleHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -14,6 +15,7 @@ public class DragRectDrawer extends BasicDrawer{
     private float downX, downY;
     private int angleOnTouchDown;
     private final RectCalc rectCalc;
+    private float kaleidoscopeTranslationX, kaleidoscopeTranslationY;
 
 
     public DragRectDrawer(PaintView paintView, MainViewModel viewModel) {
@@ -50,6 +52,7 @@ public class DragRectDrawer extends BasicDrawer{
 
         paintView.disablePreviewLayer();
         if(kaleidoscopeHelper.isEnabled()){
+            assignKaleidoscopeTranslations(xUp, yUp);
             kaleidoscopeDrawer.drawKaleidoscope(xUp, yUp, paint);
         }
         else{
@@ -57,6 +60,12 @@ public class DragRectDrawer extends BasicDrawer{
         }
         paintView.pushHistory();
         paintView.invalidate();
+    }
+
+
+    private void assignKaleidoscopeTranslations(float xUp, float yUp){
+        kaleidoscopeTranslationX = getKaleidoscopeTranslation(xUp, downX, kaleidoscopeHelper.getCenterX());
+        kaleidoscopeTranslationY = getKaleidoscopeTranslation(yUp, downY, kaleidoscopeHelper.getCenterY());
     }
 
 
@@ -81,16 +90,14 @@ public class DragRectDrawer extends BasicDrawer{
     @Override
     public void drawKaleidoscopeSegment(float x, float y, Paint paint){
         canvas.save();
-        translateForKaleidoscope(x, y);
+        translateForKaleidoscope();
         rotateThenDrawShadowAndObject(x, y, paint);
         canvas.restore();
     }
 
 
-    private void translateForKaleidoscope(float x, float y){
-        float translateX = getKaleidoscopeTranslation(x, downX, kaleidoscopeHelper.getCenterX());
-        float translateY = getKaleidoscopeTranslation(y, downY, kaleidoscopeHelper.getCenterY());
-        canvas.translate(translateX, translateY);
+    private void translateForKaleidoscope(){
+        canvas.translate(kaleidoscopeTranslationX, kaleidoscopeTranslationY);
     }
 
 
@@ -118,7 +125,9 @@ public class DragRectDrawer extends BasicDrawer{
 
 
     private float snapToUpperBounds(float coordinate, float bound){
-        return viewModel.isRectangleSnappedToEdges && coordinate > bound - viewModel.rectangleSnapBounds ? bound : coordinate;
+        return viewModel.isRectangleSnappedToEdges
+                && coordinate > bound - viewModel.rectangleSnapBounds
+                && brush.getBrushShape() == BrushShape.DRAG_RECTANGLE ? bound : coordinate;
     }
 
 
@@ -141,6 +150,7 @@ public class DragRectDrawer extends BasicDrawer{
             canvas.rotate(angleHelper.getAngle());
         }
     }
+
 
     //where 'a' is an x or y coordinate
     private float getKaleidoscopeTranslation(float aUp, float aDown, float kCenterA){
