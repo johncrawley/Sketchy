@@ -13,7 +13,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-        android:id="@+id/label"
+        android:id="@+id/multiShadeBrightnessSeekBarLabel"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
@@ -33,7 +33,7 @@
         android:progress="@integer/seek_bar_multi_shade_brightness_default"
         android:max="@integer/seek_bar_multi_shade_brightness_max"
         app:layout_constraintHorizontal_weight="7"
-        app:layout_constraintStart_toEndOf="@+id/label"
+        app:layout_constraintStart_toEndOf="@+id/multiShadeBrightnessSeekBarLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

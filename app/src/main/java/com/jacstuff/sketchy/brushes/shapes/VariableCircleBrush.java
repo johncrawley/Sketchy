@@ -30,7 +30,7 @@ public class VariableCircleBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchMove(float x2, float y2, Paint paint) {
-        float radius = MathUtils.getDistance(touchDownPoint.x,touchDownPoint.y, x2, y2);
+        float radius = MathUtils.getDistance(touchDownPoint.x, touchDownPoint.y, x2, y2);
         canvas.drawCircle(0, 0, radius, paint);
         float calculatedSize = ((touchDownPoint.x - x2) + (touchDownPoint.y - y2)) * 2;
         setBrushSize( (int)calculatedSize);

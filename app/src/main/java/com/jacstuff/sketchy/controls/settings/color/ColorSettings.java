@@ -1,6 +1,8 @@
 package com.jacstuff.sketchy.controls.settings.color;
 
 
+import android.view.View;
+
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.ButtonCategory;
@@ -47,8 +49,22 @@ public class ColorSettings extends AbstractButtonConfigurator<Void> implements B
         setupSpinner(activity,
                 R.id.colorSequenceTypeSpinner,
                 R.array.color_sequence_type_array,
-                x -> paintHelperManager.getColorHelper().getAllColorsSequenceSelector().setSequenceType(sequenceTypeMap.get(x)));
+                x -> {
+                    ColorSequenceType type = sequenceTypeMap.get(x);
+                    paintHelperManager.getColorHelper().getAllColorsSequenceSelector().setSequenceType(type);
+                    setVisibilityOnBlendSeekBar(type);
+                } );
+    }
 
+
+    private void setVisibilityOnBlendSeekBar(ColorSequenceType selectedColorSequenceType){
+        View blendControl = activity.findViewById(R.id.colorSequenceGradationSeekBar);
+        View blendControlLabel = activity.findViewById(R.id.colorSequenceGradationSeekBarLabel);
+        if(blendControl != null){
+            int visibility = selectedColorSequenceType == ColorSequenceType.BLEND ? View.VISIBLE : View.INVISIBLE;
+            blendControl.setVisibility(visibility);
+            blendControlLabel.setVisibility(visibility);
+        }
     }
 
 
