@@ -83,4 +83,5 @@ public abstract class AbstractDrawer implements Drawer {
     public boolean isColorChangedOnDown(){
         return isColorChangedOnDown;
     }
+
 }

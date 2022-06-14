@@ -26,7 +26,10 @@
         <entry key="app/src/main/res/layout/fragment_edit_color.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_load_photo.xml" value="0.30833333333333335" />
         <entry key="app/src/main/res/layout/landscape_control_panel.xml" value="0.2296875" />
+        <entry key="app/src/main/res/layout/seek_bar_color_sequence_gradation.xml" value="0.23020833333333332" />
         <entry key="app/src/main/res/layout/seek_bar_gradient_linear_offset.xml" value="0.26614583333333336" />
+        <entry key="app/src/main/res/layout/seek_bar_multi_shade_brightness.xml" value="0.23020833333333332" />
+        <entry key="app/src/main/res/layout/seek_bar_placement_offset_x.xml" value="0.23020833333333332" />
         <entry key="app/src/main/res/layout/seek_bar_placement_offset_x_offset.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/seek_bar_placement_offset_y.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/seek_bar_placement_quantization_spacing.xml" value="0.35054347826086957" />

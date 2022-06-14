@@ -2,11 +2,15 @@ package com.jacstuff.sketchy.controls.settings;
 
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.Button;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.controls.ButtonCategory;
+import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 import com.jacstuff.sketchy.utils.ActivityUtils;
 
@@ -18,8 +22,8 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
     private final SettingsPopup settingsPopup;
 
 
-    public MenuButtonsConfigurator(MainActivity activity){
-        super(activity, null);
+    public MenuButtonsConfigurator(MainActivity activity, PaintView paintView){
+        super(activity, paintView);
         settingsPopup = activity.getSettingsPopup();
         settingsPopup.registerParentButton(R.id.colorConfigButton);
     }
@@ -56,16 +60,40 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
         buttonConfig.setupClickHandler();
         layoutIds = buttonConfig.getEntries();
         buttonConfig.setDefaultSelection(R.id.shapeButton);
+        shapeButton = activity.findViewById(R.id.shapeButton);
     }
 
 
     @Override
     public void handleClick(int viewId, Integer layoutId) {
         hideAllPanels();
+        if(handleSpecialMode(viewId)){
+            return;
+        }
         if(settingsPopup != null) {
             settingsPopup.click(viewId);
         }
         activity.findViewById(layoutId).setVisibility(View.VISIBLE);
+    }
+
+    private Button shapeButton;
+
+    private boolean handleSpecialMode(int viewId){
+        if(isUsingLineShapeInConnectedMode(viewId)) {
+            if(viewModel.hasFirstLineBeenDrawn) {
+                viewModel.hasFirstLineBeenDrawn = false;
+                shapeButton.setBackgroundResource(R.drawable.button_shape_line);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    private boolean isUsingLineShapeInConnectedMode(int viewId){
+        return viewId == R.id.shapeButton
+              &&  paintView.getCurrentBrush().getBrushShape() == BrushShape.LINE
+               && viewModel.isConnectingLinesModeEnabled;
     }
 
 

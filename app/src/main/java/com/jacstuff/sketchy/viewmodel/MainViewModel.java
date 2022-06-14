@@ -137,6 +137,9 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
 
     public Map<Integer, Drawable> buttonDrawableMap;
 
+    public boolean hasFirstLineBeenDrawn = false;
+    public boolean isConnectingLinesModeEnabled = true;
+
 
     public MainViewModel(){
         seekBarValue = new HashMap<>();

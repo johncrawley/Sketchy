@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
-import com.jacstuff.sketchy.controls.settings.SettingsUtils;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 

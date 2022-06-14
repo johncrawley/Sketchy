@@ -207,7 +207,7 @@ public class PaintView extends View {
             return;
         }
         isTouchDownRegistered = false;
-        currentBrush.touchUp(x,y,paint);
+        currentBrush.touchUp(x, y, paint);
     }
 
 
@@ -283,6 +283,7 @@ public class PaintView extends View {
     private void drawWithBrush(MotionEvent event){
         x = event.getX();
         y = event.getY();
+
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
                 onTouchDown();
@@ -292,6 +293,7 @@ public class PaintView extends View {
                 break;
             case MotionEvent.ACTION_UP :
                 onTouchUp();
+                break;
         }
     }
 

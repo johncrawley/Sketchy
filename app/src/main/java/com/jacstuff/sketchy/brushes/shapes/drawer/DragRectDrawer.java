@@ -108,7 +108,6 @@ public class DragRectDrawer extends BasicDrawer{
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
             brush.onTouchMove(bottomCorner.x, bottomCorner.y, paintView.getShadowPaint());
         }
-        //brush.onTouchMove(x,y,paint);
         brush.onTouchMove(bottomCorner.x, bottomCorner.y, paint);
     }
 

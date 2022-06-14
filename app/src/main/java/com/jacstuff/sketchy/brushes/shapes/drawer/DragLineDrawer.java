@@ -32,8 +32,9 @@ public class DragLineDrawer extends AbstractDrawer implements Drawer{
     @Override
     public void move(float x, float y, Paint paint) {
         paintView.enablePreviewLayer();
-        brush.onTouchMove(x,y, paint);
+        brush.onTouchMove(x, y, paint);
         paintView.invalidate();
+
     }
 
 

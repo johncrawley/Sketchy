@@ -107,6 +107,15 @@ public abstract class AbstractBrush implements Brush{
     }
 
 
+    public void touchPointerDown(float x, float y, Paint paint){
+        //do nothing
+    }
+
+
+    public void touchPointerUp(float x, float y, Paint paint){
+        //do nothing
+    }
+
     public BrushShape getBrushShape(){
         return this.brushShape;
     }
