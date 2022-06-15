@@ -18,12 +18,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
 
     public ShapeSettings(MainActivity activity, PaintView paintView){
         super(activity, paintView);
-        subPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
-        subPanelManager.add(R.id.astroidShapeButton, R.id.settingsPanelAstroidShapeInclude);
-        subPanelManager.add(R.id.rectangleShapeButton, R.id.settingsPanelRectangle);
-        subPanelManager.add(R.id.randomShapeButton, R.id.settingsPanelRandomBrushInclude);
-        subPanelManager.add(R.id.crazySpiralShapeButton, R.id.settingsPanelCrazySpiralBrushInclude);
-        subPanelManager.add(R.id.triangleShapeButton, R.id.settingsPanelTriangleBrushInclude);
+        configureSubPanel();
         new TextControls(activity, paintView.getPaintGroup(), seekBarConfigurator);
         minBrushSize = activity.getResources().getInteger(R.integer.brush_size_min_default);
     }
@@ -35,11 +30,18 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
                 this,
                 ButtonCategory.SHAPE,
                 R.id.shapeOptionsLayout);
+        createButtons();
+        buttonConfig.setupClickHandler();
+        buttonConfig.setParentButton(R.id.shapeButton);
+        buttonConfig.setDefaultSelection(R.id.circleShapeButton);
+        configureSeekBars();
+        configureSwitches();
+    }
+
+
+    private void createButtons(){
         buttonConfig.add(R.id.circleShapeButton,            R.drawable.button_shape_circle,             BrushShape.CIRCLE);
         buttonConfig.add(R.id.squareShapeButton,            R.drawable.button_shape_square,             BrushShape.SQUARE);
-        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            buttonConfig.add(R.id.pathShapeButton,          R.drawable.button_shape_path,               BrushShape.PATH);
-        }
         buttonConfig.add(R.id.straightLineShapeButton,      R.drawable.button_shape_straight_line,      BrushShape.STRAIGHT_LINE);
         buttonConfig.add(R.id.roundedRectangleShapeButton,  R.drawable.button_shape_rounded_rect,       BrushShape.ROUNDED_RECTANGLE);
         buttonConfig.add(R.id.triangleShapeButton,          R.drawable.button_shape_triangle,           BrushShape.TRIANGLE);
@@ -66,12 +68,21 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         buttonConfig.add(R.id.spiralShapeButton,            R.drawable.button_shape_spiral,             BrushShape.SPIRAL);
         buttonConfig.add(R.id.crazySpiralShapeButton,       R.drawable.button_shape_crazy_spiral,       BrushShape.CRAZY_SPIRAL);
         buttonConfig.add(R.id.randomShapeButton ,           R.drawable.button_shape_random,             BrushShape.RANDOM);
-        buttonConfig.setupClickHandler();
-        buttonConfig.setParentButton(R.id.shapeButton);
-        buttonConfig.setDefaultSelection(R.id.circleShapeButton);
 
-        configureSeekBars();
-        configureSwitches();
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            buttonConfig.add(R.id.pathShapeButton,          R.drawable.button_shape_path,               BrushShape.PATH);
+        }
+    }
+
+
+    private void configureSubPanel(){
+        subPanelManager.add(R.id.textShapeButton, R.id.settingsPanelTextShapeInclude);
+        subPanelManager.add(R.id.astroidShapeButton, R.id.settingsPanelAstroidShapeInclude);
+        subPanelManager.add(R.id.rectangleShapeButton, R.id.settingsPanelRectangle);
+        subPanelManager.add(R.id.randomShapeButton, R.id.settingsPanelRandomBrushInclude);
+        subPanelManager.add(R.id.crazySpiralShapeButton, R.id.settingsPanelCrazySpiralBrushInclude);
+        subPanelManager.add(R.id.triangleShapeButton, R.id.settingsPanelTriangleBrushInclude);
+        subPanelManager.add(R.id.lineShapeButton, R.id.settingsPanelLineBrushInclude);
     }
 
 
@@ -135,5 +146,6 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         setupSwitch(R.id.rectangleSnapToEdgesSwitch, b -> viewModel.isRectangleSnappedToEdges = b);
         setupSwitch(R.id.randomBrushMorphEnabledSwitch, b -> viewModel.doesRandomBrushMorph = b);
         setupSwitch(R.id.crazySpiralAltModeEnabledSwitch, b -> viewModel.isCrazySpiralAltModeEnabled = b);
+        setupSwitch(R.id.connectedLineModeEnabled, b -> viewModel.isConnectedLinesModeEnabled = b);
     }
 }

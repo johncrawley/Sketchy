@@ -46,7 +46,7 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint) {
-        if(mainViewModel.isConnectingLinesModeEnabled){
+        if(mainViewModel.isConnectedLinesModeEnabled){
             mainViewModel.hasFirstLineBeenDrawn = true;
             shapeButton.setBackgroundResource(R.drawable.button_shape_line_connected);
         }

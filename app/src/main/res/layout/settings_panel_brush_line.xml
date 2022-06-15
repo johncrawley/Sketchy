@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:paddingHorizontal="@dimen/settings_panel_include_horizontal_padding"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/lineBrushCheckboxLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/size_seq_switch_layout_h_padding"
+        android:layout_marginTop="@dimen/style_spinner_margin_vertical"
+        android:layout_marginBottom="@dimen/size_sequence_spinner_layout_margin_bottom"
+        tools:ignore="UselessParent">
+    </LinearLayout>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/connectedLineModeEnabled"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:checked="false"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/switch_option_random_shape_morph_padding_horizontal"
+        android:paddingTop="@dimen/switch_option_padding_top"
+        android:paddingBottom="@dimen/switch_option_padding_bottom"
+        android:text="@string/brush_line_connected_mode_switch_label" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="8dp">
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingTop="@dimen/text_controls_divisor_padding_top"
+            android:paddingBottom="@dimen/text_controls_divisor_padding_bottom"
+            android:background="?android:attr/listDivider" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -210,6 +210,7 @@
     <string name="size_sequence_is_repeated_label">Repeat</string>
     <string name="brush_random_morph_switch_label">Morph on Move</string>
     <string name="brush_crazy_spiral_alt_mode_switch_label">Alternative Mode</string>
+    <string name="brush_line_connected_mode_switch_label">Connect Lines</string>
     <string name="enable_quantization_label">Enable Quantization for x and y</string>
     <string name="lock_quantization_label">Lock Spacing</string>
     <string name="quantization_include_line_width_label">Include line Width</string>

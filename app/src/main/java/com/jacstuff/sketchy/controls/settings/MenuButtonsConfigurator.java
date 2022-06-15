@@ -1,8 +1,5 @@
 package com.jacstuff.sketchy.controls.settings;
 
-import android.app.Activity;
-import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
 
@@ -93,7 +90,7 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
     private boolean isUsingLineShapeInConnectedMode(int viewId){
         return viewId == R.id.shapeButton
               &&  paintView.getCurrentBrush().getBrushShape() == BrushShape.LINE
-               && viewModel.isConnectingLinesModeEnabled;
+               && viewModel.isConnectedLinesModeEnabled;
     }
 
 
