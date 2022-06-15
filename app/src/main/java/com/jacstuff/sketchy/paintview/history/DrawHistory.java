@@ -107,7 +107,7 @@ public class DrawHistory {
     private HistoryItem assignViewModelPropsAndGetFirst(){
         HistoryItem historyItem = history.peekFirst();
         if(historyItem == null){
-            return historyItem;
+            return null;
         }
         PointF previousLineDown = historyItem.getConnectedLinePreviousDown();
         if(previousLineDown != null) {

@@ -75,4 +75,11 @@ public class LineBrush extends AbstractBrush implements Brush {
     public boolean isUsingPlacementHelper(){
         return false;
     }
+
+
+    @Override
+    public void reset(){
+        mainViewModel.hasFirstLineBeenDrawn = false;
+        shapeButton.setBackgroundResource(R.drawable.button_shape_line);
+    }
 }

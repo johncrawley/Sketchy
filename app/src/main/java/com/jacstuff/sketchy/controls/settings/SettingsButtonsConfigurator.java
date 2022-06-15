@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.controls.settings;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.controls.settings.color.ColorSettings;
+import com.jacstuff.sketchy.controls.settings.menu.MenuButtonsConfigurator;
 import com.jacstuff.sketchy.controls.settings.placement.PlacementSettings;
 import com.jacstuff.sketchy.controls.settings.shape.ShapeSettings;
 import com.jacstuff.sketchy.paintview.PaintView;
