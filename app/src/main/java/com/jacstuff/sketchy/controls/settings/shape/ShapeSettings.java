@@ -39,9 +39,20 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
     }
 
 
+    @Override
+    public void handleClick(int viewId, BrushShape brushShape){
+        paintView.setBrushShape(brushShape);
+    }
+
+
     private void createButtons(){
         buttonConfig.add(R.id.circleShapeButton,            R.drawable.button_shape_circle,             BrushShape.CIRCLE);
         buttonConfig.add(R.id.squareShapeButton,            R.drawable.button_shape_square,             BrushShape.SQUARE);
+
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            buttonConfig.add(R.id.pathShapeButton,          R.drawable.button_shape_path,               BrushShape.PATH);
+        }
+
         buttonConfig.add(R.id.straightLineShapeButton,      R.drawable.button_shape_straight_line,      BrushShape.STRAIGHT_LINE);
         buttonConfig.add(R.id.roundedRectangleShapeButton,  R.drawable.button_shape_rounded_rect,       BrushShape.ROUNDED_RECTANGLE);
         buttonConfig.add(R.id.triangleShapeButton,          R.drawable.button_shape_triangle,           BrushShape.TRIANGLE);
@@ -68,10 +79,6 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         buttonConfig.add(R.id.spiralShapeButton,            R.drawable.button_shape_spiral,             BrushShape.SPIRAL);
         buttonConfig.add(R.id.crazySpiralShapeButton,       R.drawable.button_shape_crazy_spiral,       BrushShape.CRAZY_SPIRAL);
         buttonConfig.add(R.id.randomShapeButton ,           R.drawable.button_shape_random,             BrushShape.RANDOM);
-
-        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            buttonConfig.add(R.id.pathShapeButton,          R.drawable.button_shape_path,               BrushShape.PATH);
-        }
     }
 
 
@@ -132,12 +139,6 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
                     viewModel.crazySpiralType = progress;
                     paintView.recalculateBrush();
                 } );
-    }
-
-
-    @Override
-    public void handleClick(int viewId, BrushShape brushShape){
-        paintView.setBrushShape(brushShape);
     }
 
 

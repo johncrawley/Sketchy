@@ -139,6 +139,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
 
     public boolean hasFirstLineBeenDrawn = false;
     public boolean isConnectedLinesModeEnabled = false;
+    public float nextLineDownX, nextLineDownY;
 
 
     public MainViewModel(){

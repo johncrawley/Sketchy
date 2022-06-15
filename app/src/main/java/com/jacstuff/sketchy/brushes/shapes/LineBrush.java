@@ -30,10 +30,13 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-        if(mainViewModel.doesRandomBrushMorph)
         if(!mainViewModel.hasFirstLineBeenDrawn) {
             xDown = p.x;
             yDown = p.y;
+        }
+        else if(mainViewModel.isConnectedLinesModeEnabled){
+            xDown = mainViewModel.nextLineDownX;
+            yDown = mainViewModel.nextLineDownY;
         }
     }
 
@@ -55,8 +58,10 @@ public class LineBrush extends AbstractBrush implements Brush {
                 x - offsetX,
                 y - offsetY,
                 paint);
-        xDown = x;
-        yDown = y;
+        mainViewModel.nextLineDownX = x;
+        mainViewModel.nextLineDownY = y;
+       // xDown = x;
+       // yDown = y;
     }
 
 
