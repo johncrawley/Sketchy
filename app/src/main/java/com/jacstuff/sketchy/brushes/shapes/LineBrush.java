@@ -23,10 +23,12 @@ public class LineBrush extends AbstractBrush implements Brush {
         drawerType = DrawerFactory.Type.DRAG_LINE;
     }
 
+
     @Override
     public void postInit(){
         shapeButton = mainActivity.findViewById(R.id.shapeButton);
     }
+
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
@@ -60,8 +62,6 @@ public class LineBrush extends AbstractBrush implements Brush {
                 paint);
         mainViewModel.nextLineDownX = x;
         mainViewModel.nextLineDownY = y;
-       // xDown = x;
-       // yDown = y;
     }
 
 

@@ -3,21 +3,25 @@ package com.jacstuff.sketchy.paintview.history;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.ArrayDeque;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
 
-public class BitmapHistory {
+public class DrawHistory {
 
     private final Context context;
     private ArrayDeque<HistoryItem> history;
+    private final MainViewModel viewModel;
 
-    public BitmapHistory(Context context){
+    public DrawHistory(Context context, MainViewModel viewModel){
         this.context = context;
+        this.viewModel = viewModel;
         history = new ArrayDeque<>(50);
     }
 
@@ -32,7 +36,7 @@ public class BitmapHistory {
 
     private boolean hasSpaceFor(Bitmap bitmap){
         int bytesPerBitmap = bitmap.getAllocationByteCount();
-        return bytesPerBitmap * 3 < getAvailableMemoryBytes();
+        return bytesPerBitmap * 3f < getAvailableMemoryBytes();
     }
 
 
@@ -49,7 +53,17 @@ public class BitmapHistory {
             }
             history.removeLast();
         }
-        history.addFirst(new HistoryItem(Bitmap.createBitmap(bitmap), getCurrentScreenOrientation()));
+        history.addFirst(new HistoryItem(Bitmap.createBitmap(bitmap),
+                getCurrentScreenOrientation(),
+                getPreviousLineDown()));
+    }
+
+
+    private PointF getPreviousLineDown(){
+        PointF p = new PointF();
+        p.x = viewModel.nextLineDownX;
+        p.y = viewModel.nextLineDownY;
+        return p;
     }
 
 
@@ -78,15 +92,29 @@ public class BitmapHistory {
         if(history.size() > 1) {
             history.removeFirst(); // this is the bitmap of what we currently see, so just get rid of it
         }
-        return history.peekFirst();
+        return assignViewModelPropsAndGetFirst();
     }
 
 
     public HistoryItem getCurrent(){
         if(null != history && history.size() > 0) {
-            return history.peekFirst();
+            return assignViewModelPropsAndGetFirst();
         }
         return null;
+    }
+
+
+    private HistoryItem assignViewModelPropsAndGetFirst(){
+        HistoryItem historyItem = history.peekFirst();
+        if(historyItem == null){
+            return historyItem;
+        }
+        PointF previousLineDown = historyItem.getConnectedLinePreviousDown();
+        if(previousLineDown != null) {
+            viewModel.nextLineDownX = previousLineDown.x;
+            viewModel.nextLineDownY = previousLineDown.y;
+        }
+        return historyItem;
     }
 
 

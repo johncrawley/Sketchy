@@ -11,12 +11,13 @@ import android.view.View;
 
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.helpers.SensitivityHelper;
-import com.jacstuff.sketchy.paintview.history.BitmapHistory;
+import com.jacstuff.sketchy.paintview.history.DrawHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.ui.SettingsPopup;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import static com.jacstuff.sketchy.paintview.helpers.PaintFactory.createPaint;
 
@@ -36,10 +37,10 @@ public class PaintView extends View {
     private PaintHelperManager paintHelperManager;
     private boolean isPreviewLayerToBeDrawn;
     private boolean ignoreMoveAndUpActions = false;
-    private final BitmapHistory bitmapHistory;
+    private DrawHistory bitmapHistory;
     private SettingsPopup settingsPopup;
     private final Context context;
-    private BitmapLoader bitmapLoader;
+    private BitmapLoader drawHistory;
     private SensitivityHelper sensitivityHelper;
     private float x, y;
     boolean isTouchDownRegistered = false;
@@ -54,7 +55,6 @@ public class PaintView extends View {
         super(context, attrs);
         this.context = context;
         initPaints();
-        bitmapHistory = new BitmapHistory(context);
     }
 
 
@@ -65,12 +65,13 @@ public class PaintView extends View {
     }
 
 
-    public void init(SettingsPopup settingsPopup, BrushFactory brushFactory) {
+    public void init(SettingsPopup settingsPopup, BrushFactory brushFactory, MainViewModel viewModel) {
+        bitmapHistory = new DrawHistory(context, viewModel);
         this.settingsPopup = settingsPopup;
         this.brushFactory = brushFactory;
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        bitmapLoader = new BitmapLoader(this, canvas, drawPaint);
+        drawHistory = new BitmapLoader(this, canvas, drawPaint);
         initBrushes();
 
         if(bitmapHistory.isEmpty()){
@@ -113,7 +114,7 @@ public class PaintView extends View {
         return this.paintGroup;
     }
 
-    public BitmapHistory getBitmapHistory(){
+    public DrawHistory getBitmapHistory(){
         return bitmapHistory;
     }
 
@@ -231,7 +232,7 @@ public class PaintView extends View {
 
 
     public void loadBitmap(Bitmap bm){
-        bitmapLoader.drawBitmapToScale(bm);
+        drawHistory.drawBitmapToScale(bm);
         bitmapHistory.push(bitmap);
     }
 
@@ -317,11 +318,11 @@ public class PaintView extends View {
 
     private void loadHistoryItem(boolean isCurrentDiscarded){
         HistoryItem historyItem = isCurrentDiscarded ?  bitmapHistory.getPrevious() : bitmapHistory.getCurrent();
-        Bitmap historyBitmap = bitmapLoader.getCorrectlyOrientatedBitmapFrom(historyItem);
+        Bitmap historyBitmap = drawHistory.getCorrectlyOrientatedBitmapFrom(historyItem);
         if(historyBitmap == null){
             return;
         }
-        bitmapLoader.drawBitmapToScale(historyBitmap);
+        drawHistory.drawBitmapToScale(historyBitmap);
         disablePreviewLayer();
         invalidate();
     }
