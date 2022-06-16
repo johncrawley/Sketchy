@@ -4,9 +4,6 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.widget.Button;
-
-import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
@@ -15,18 +12,11 @@ import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
 public class LineBrush extends AbstractBrush implements Brush {
 
     private float xDown, yDown;
-    private Button shapeButton;
 
     public LineBrush() {
         super(BrushShape.LINE);
         brushInitializer = new LineInitializer();
         drawerType = DrawerFactory.Type.DRAG_LINE;
-    }
-
-
-    @Override
-    public void postInit(){
-        shapeButton = mainActivity.findViewById(R.id.shapeButton);
     }
 
 
@@ -51,10 +41,7 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint) {
-        if(mainViewModel.isConnectedLinesModeEnabled){
-            mainViewModel.hasFirstLineBeenDrawn = true;
-            shapeButton.setBackgroundResource(R.drawable.button_shape_line_connected);
-        }
+        mainActivity.getConnectLineIconModifier().setConnectedIconAndState();
         canvas.drawLine(xDown - offsetX,
                 yDown - offsetY,
                 x - offsetX,
@@ -79,7 +66,6 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void reset(){
-        mainViewModel.hasFirstLineBeenDrawn = false;
-        shapeButton.setBackgroundResource(R.drawable.button_shape_line);
+        mainActivity.getConnectLineIconModifier().resetIconAndState();
     }
 }

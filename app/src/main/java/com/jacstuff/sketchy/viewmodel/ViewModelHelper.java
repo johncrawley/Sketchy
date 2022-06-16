@@ -92,7 +92,9 @@ public class ViewModelHelper {
 
 
     public void onPause(){
-        viewModel.bitmapHistoryItems = paintView.getBitmapHistory().getAll();
+        if(paintView!= null && paintView.getDrawHistory() != null) {
+            viewModel.bitmapHistoryItems = paintView.getDrawHistory().getAll();
+        }
         viewModel.mostRecentColorButtonKey = buttonClickHandler.getMostRecentColorButtonKey();
         viewModel.mostRecentShadeButtonKey = buttonClickHandler.getMostRecentShadeButtonKey();
         viewModel.isMostRecentClickAShade = buttonClickHandler.isMostRecentClickAShade();
@@ -141,7 +143,7 @@ public class ViewModelHelper {
 
     private void retrieveBitmapHistory(){
         if(viewModel.bitmapHistoryItems != null) {
-            paintView.getBitmapHistory().setAll(viewModel.bitmapHistoryItems);
+            paintView.getDrawHistory().setAll(viewModel.bitmapHistoryItems);
             paintView.assignMostRecentBitmap();
         }
     }

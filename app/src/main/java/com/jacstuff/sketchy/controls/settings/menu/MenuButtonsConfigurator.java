@@ -1,11 +1,9 @@
 package com.jacstuff.sketchy.controls.settings.menu;
 
 import android.view.View;
-import android.widget.Button;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.settings.AbstractButtonConfigurator;
 import com.jacstuff.sketchy.controls.settings.ButtonConfigHandler;
@@ -20,14 +18,13 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
 
     private Set<Integer> layoutIds;
     private final SettingsPopup settingsPopup;
-    private final ConnectedLineIconModifier connectedLineIconModifier;
+    private ConnectedLineIconModifier connectedLineIconModifier;
 
 
     public MenuButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity, paintView);
         settingsPopup = activity.getSettingsPopup();
         settingsPopup.registerParentButton(R.id.colorConfigButton);
-        connectedLineIconModifier = new ConnectedLineIconModifier(paintView, viewModel, activity);
     }
 
     @Override
@@ -62,16 +59,19 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
         buttonConfig.setupClickHandler();
         layoutIds = buttonConfig.getEntries();
         buttonConfig.setDefaultSelection(R.id.shapeButton);
-
+        connectedLineIconModifier = activity.getConnectLineIconModifier();
+        connectedLineIconModifier.assignShapeButton();
     }
 
 
     @Override
     public void handleClick(int viewId, Integer layoutId) {
         hideAllPanels();
-        if(connectedLineIconModifier.handleSpecialMode(viewId)){
+        if(connectedLineIconModifier.isShapeButtonAndInConnectedLineMode(viewId)){
+            connectedLineIconModifier.revertIconAndState();
             return;
         }
+
         if(settingsPopup != null) {
             settingsPopup.click(viewId);
         }

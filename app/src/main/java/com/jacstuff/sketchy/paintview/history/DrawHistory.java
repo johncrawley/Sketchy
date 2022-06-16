@@ -3,9 +3,9 @@ package com.jacstuff.sketchy.paintview.history;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.PointF;
 
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.controls.settings.menu.ConnectedLineIconModifier;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.ArrayDeque;
@@ -18,10 +18,13 @@ public class DrawHistory {
     private final Context context;
     private ArrayDeque<HistoryItem> history;
     private final MainViewModel viewModel;
+    private final ConnectedLineIconModifier connectedLineIconModifier;
 
-    public DrawHistory(Context context, MainViewModel viewModel){
+
+    public DrawHistory(Context context, MainViewModel viewModel, ConnectedLineIconModifier connectedLineIconModifier){
         this.context = context;
         this.viewModel = viewModel;
+        this.connectedLineIconModifier = connectedLineIconModifier;
         history = new ArrayDeque<>(50);
     }
 
@@ -55,15 +58,7 @@ public class DrawHistory {
         }
         history.addFirst(new HistoryItem(Bitmap.createBitmap(bitmap),
                 getCurrentScreenOrientation(),
-                getPreviousLineDown()));
-    }
-
-
-    private PointF getPreviousLineDown(){
-        PointF p = new PointF();
-        p.x = viewModel.nextLineDownX;
-        p.y = viewModel.nextLineDownY;
-        return p;
+                viewModel));
     }
 
 
@@ -80,6 +75,7 @@ public class DrawHistory {
         return history.size() > limit;
     }
 
+
     private int getCurrentScreenOrientation(){
         return context.getResources().getConfiguration().orientation;
     }
@@ -92,28 +88,37 @@ public class DrawHistory {
         if(history.size() > 1) {
             history.removeFirst(); // this is the bitmap of what we currently see, so just get rid of it
         }
-        return assignViewModelPropsAndGetFirst();
+        return assignPropsToViewModelAndGetLatestItem();
     }
 
 
     public HistoryItem getCurrent(){
         if(null != history && history.size() > 0) {
-            return assignViewModelPropsAndGetFirst();
+            return assignPropsToViewModelAndGetLatestItem();
         }
         return null;
     }
 
 
-    private HistoryItem assignViewModelPropsAndGetFirst(){
+    public void updateNewestItemWithState(){
+        if(history.isEmpty()){
+            return;
+        }
+        HistoryItem historyItem = history.peekFirst();
+        if(historyItem == null){
+            return;
+        }
+        historyItem.updateViewModelState(viewModel);
+    }
+
+
+    private HistoryItem assignPropsToViewModelAndGetLatestItem(){
         HistoryItem historyItem = history.peekFirst();
         if(historyItem == null){
             return null;
         }
-        PointF previousLineDown = historyItem.getConnectedLinePreviousDown();
-        if(previousLineDown != null) {
-            viewModel.nextLineDownX = previousLineDown.x;
-            viewModel.nextLineDownY = previousLineDown.y;
-        }
+        historyItem.assignSavedStateTo(viewModel);
+        connectedLineIconModifier.updateLineIconBackground();
         return historyItem;
     }
 

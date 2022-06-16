@@ -40,9 +40,11 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutCreator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
+import com.jacstuff.sketchy.controls.settings.menu.ConnectedLineIconModifier;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
+import com.jacstuff.sketchy.paintview.history.DrawHistory;
 import com.jacstuff.sketchy.ui.ColorPickerSeekBarConfigurator;
 import com.jacstuff.sketchy.ui.EditColorFragment;
 import com.jacstuff.sketchy.ui.LoadImageDialogFragment;
@@ -79,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ButtonLayoutParams colorButtonLayoutParams;
     private ColorPickerSeekBarConfigurator colorPickerSeekBarConfigurator;
     private String currentPhotoPath;
+    private DrawHistory drawHistory;
+    private ConnectedLineIconModifier connectedLineIconModifier;
 
 
     @Override
@@ -284,6 +288,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    public ConnectedLineIconModifier getConnectLineIconModifier(){
+        return connectedLineIconModifier;
+    }
+
+
     public void toast(int resId) {
         toaster.toast(resId);
     }
@@ -296,6 +305,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupSettingsButtons(){
         settingsButtonsConfigurator = new SettingsButtonsConfigurator(this, paintView);
+    }
+
+
+    public DrawHistory getDrawHistory(){
+        return drawHistory;
     }
 
 
@@ -324,13 +338,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupPaintViewAndDefaultSelections(){
         paintView = findViewById(R.id.paintView);
+       connectedLineIconModifier = new ConnectedLineIconModifier(paintView, viewModel, MainActivity.this);
+        drawHistory = new DrawHistory(MainActivity.this, viewModel, connectedLineIconModifier);
+        connectedLineIconModifier.setDrawHistory(drawHistory);
         BrushFactory brushFactory = new BrushFactory(this);
         final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                paintView.init(settingsPopup, brushFactory, viewModel);
+
+                paintView.init(settingsPopup, brushFactory, viewModel, drawHistory);
                 settingsButtonsConfigurator.selectDefaults();
                 viewModelHelper.onResume();
             }
