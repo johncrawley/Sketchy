@@ -139,11 +139,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v){
         int id = v.getId();
-        if(id != paintView.getId() && id != R.id.brushSizeSeekBar){
-            paintView.onTouchUp();
-        }
+        releasePaintViewTouch(id);
         settingsPopup.dismiss(v);
         colorButtonClickHandler.onClick(v);
+    }
+
+
+    private void releasePaintViewTouch(int currentViewId){
+        if(currentViewId != paintView.getId() && currentViewId != R.id.brushSizeSeekBar){
+            paintView.onTouchUp();
+        }
     }
 
 

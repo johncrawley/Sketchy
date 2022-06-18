@@ -33,6 +33,12 @@ public class SingleColorSelector implements ColorSelector {
 
 
     @Override
+    public void removeAllBut (int id){
+        //do nothing
+    }
+
+
+    @Override
     public void reset() {
         //do nothing
     }

@@ -234,4 +234,9 @@ public class SequenceColorSelector implements ColorSelector {
         // do nothing
     }
 
+    @Override
+    public void removeAllBut (int id){
+        //do nothing
+    }
+
 }

@@ -17,6 +17,7 @@ public interface ColorSelector {
     void add(int id, List<Integer> shades);
 
     void remove(int id);
+    void removeAllBut (int id);
 
     void resetCurrentIndex();
 

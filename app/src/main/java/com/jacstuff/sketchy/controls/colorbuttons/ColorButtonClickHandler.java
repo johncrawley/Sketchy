@@ -140,6 +140,15 @@ public class ColorButtonClickHandler {
     }
 
 
+    public boolean onLongClick(View view){
+        shadeButtonsState.deselectAll();
+        currentColorSelector.reset();
+        onClick(view);
+        return true;
+    }
+
+
+
     private boolean isColorButton(View view){
         return view != null && ButtonCategory.COLOR_SELECTION == view.getTag(R.string.tag_button_category);
     }

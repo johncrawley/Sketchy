@@ -142,6 +142,14 @@ public class ButtonUtils {
     }
 
 
+    public Button createShadeButtonOnly(final int color, ButtonType buttonType){
+        String key = createColorKey(color, buttonType);
+        return createButton(color, buttonType, key);
+    }
+
+
+
+
     public String createColorKey(int color, ButtonType buttonType){
         return buttonType + "_" + color;
     }

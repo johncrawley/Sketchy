@@ -85,6 +85,13 @@ public class ShadeColorSelector implements ColorSelector {
     }
 
 
+
+    @Override
+    public void removeAllBut(int id){
+       //
+    }
+
+
     private int getNextBlendTarget(){
         return getNextShadeForwards();
     }

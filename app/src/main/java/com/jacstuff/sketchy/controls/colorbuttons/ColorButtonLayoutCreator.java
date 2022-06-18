@@ -209,8 +209,9 @@ public class ColorButtonLayoutCreator {
 
 
     private LinearLayout createMultiShadeButton(int color){
-        LinearLayout buttonLayout = buttonUtils.createShadeButton(color, ButtonType.MULTI_SHADE);
-
+        Button button =  buttonUtils.createShadeButtonOnly(color, ButtonType.MULTI_SHADE);
+        button.setOnLongClickListener(colorButtonClickHandler::onLongClick);
+        LinearLayout buttonLayout = buttonUtils.wrapInMarginLayout(buttonLayoutParams, button);
         int id = View.generateViewId();
         buttonLayout.setId(id);
         addDrawableToMultiShadeButton(buttonLayout, color);
@@ -262,7 +263,8 @@ public class ColorButtonLayoutCreator {
 
 
     private void addMultiShadeButtonFor(int color, int index){
-        multiShadeButtonLayout.addView(createMultiShadeButton(color), index);
+        LinearLayout buttonLayout = createMultiShadeButton(color);
+        multiShadeButtonLayout.addView(buttonLayout, index);
     }
 
 

@@ -25,6 +25,7 @@ public class RandomShadeButtonsState {
         selectedButtons.remove(button);
     }
 
+    public void deselectAll(){selectedButtons.clear();}
 
     public void selectMulti(){
         isMultiSelected = true;
