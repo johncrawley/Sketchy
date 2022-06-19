@@ -88,7 +88,9 @@ public class ShadeColorSelector implements ColorSelector {
 
     @Override
     public void removeAllBut(int id){
-       //
+        System.out.println("Entered ShadeColorSelector removeAllBut");
+        ids.clear();
+        //ids.add(String.valueOf(id));
     }
 
 

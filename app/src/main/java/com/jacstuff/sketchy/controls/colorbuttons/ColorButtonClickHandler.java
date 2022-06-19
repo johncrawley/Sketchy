@@ -41,9 +41,7 @@ public class ColorButtonClickHandler {
     private final MainViewModel mainViewModel;
     private final ColorHelper colorHelper;
     private Button mainMultiColorButton;
-
     private ReusableShadesLayoutHolder reusableShadesLayoutHolder;
-
     private Button colorMenuButton;
     private final Drawable multiColorDrawable;
 
@@ -141,8 +139,10 @@ public class ColorButtonClickHandler {
 
 
     public boolean onLongClick(View view){
+        System.out.println("entered onLongClick()");
+        currentColorSelector.removeAllBut(view.getId());
+        deselectButtons(shadeButtonsState.getSelected());
         shadeButtonsState.deselectAll();
-        currentColorSelector.reset();
         onClick(view);
         return true;
     }
