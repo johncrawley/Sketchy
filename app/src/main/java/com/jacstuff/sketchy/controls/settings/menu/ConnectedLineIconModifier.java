@@ -65,6 +65,9 @@ public class ConnectedLineIconModifier {
 
 
     public void updateLineIconBackground(){
+        if(!isUsingLineBrush()){
+            return;
+        }
         if(isUsingLineShapeInConnectedMode()){
             if(viewModel.hasFirstLineBeenDrawn){
                 assignConnectedLineIconToShapeButton();
@@ -83,9 +86,17 @@ public class ConnectedLineIconModifier {
 
 
     private void assignDefaultLineIconToShapeButton(){
-        shapeButton.setBackgroundResource(R.drawable.button_shape_line);
+        if(isUsingLineBrush()){
+            shapeButton.setBackgroundResource(R.drawable.button_shape_line);
+        }
     }
 
+
+    private boolean isUsingLineBrush(){
+        return paintView != null
+                && paintView.getCurrentBrush() != null
+                && paintView.getCurrentBrush().getBrushShape() == BrushShape.LINE;
+    }
 
     private void assignConnectedLineIconToShapeButton(){
         shapeButton.setBackgroundResource(R.drawable.button_shape_line_connected);
