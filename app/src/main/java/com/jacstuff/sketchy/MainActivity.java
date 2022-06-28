@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,6 +59,8 @@ import com.jacstuff.sketchy.ui.SettingsPopup;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String currentPhotoPath;
     private DrawHistory drawHistory;
     private ConnectedLineIconModifier connectedLineIconModifier;
+    private Map<Integer, Runnable> menuActions;
 
 
     @Override
@@ -155,40 +159,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menuitems, menu);
+        menuActions = new HashMap<>();
+        menuActions.put(R.id.action_new,    () -> paintView.resetCanvas());
+        menuActions.put(R.id.action_undo,   () -> paintView.undo());
+        menuActions.put(R.id.action_open,           this::startDialogForOpenDocument);
+        menuActions.put(R.id.action_save,           this::startSaveDocumentActivity);
+        menuActions.put(R.id.action_take_picture,   this :: checkPermissionAndStartCamera);
+        menuActions.put(R.id.action_about,          this :: startAboutActivity);
+        menuActions.put(R.id.action_share,          this :: shareSketch);
+        menuActions.put(R.id.action_reset_colors,   this :: showResetColorsDialog);
         return super.onCreateOptionsMenu(menu);
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.action_new){
-            paintView.resetCanvas();
-        }
-        else if(id == R.id.action_undo){
-            paintView.undo();
-        }
-        else if(id == R.id.action_save) {
-           startSaveDocumentActivity();
-        }
-        else if(id == R.id.action_open) {
-            startDialogForOpenDocument();
-          //  startOpenDocumentActivity();
-        }
-        else if(id == R.id.action_take_picture) {
-            checkPermissionAndStartCamera();
-        }
-        else if(id == R.id.action_about){
-            startActivity(new Intent(this, AboutDialogActivity.class));
-        }
-        else if(id == R.id.action_share){
-            shareSketch();
-        }
-        else if(id == R.id.action_reset_colors){
-            showResetColorsDialog();
-        }
 
+        Runnable runnable = menuActions.get(item.getItemId());
+        if(runnable != null) {
+            runnable.run();
+        }
         return true;
+    }
+
+
+    private void startAboutActivity(){
+        startActivity(new Intent(this, AboutDialogActivity.class));
     }
 
 
@@ -313,11 +309,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public DrawHistory getDrawHistory(){
-        return drawHistory;
-    }
-
-
     void setupColorAndShadeButtons(){
         ColorCreator.loadUserColorsAndAddTo(viewModel.mainColors, this);
         colorButtonClickHandler = new ColorButtonClickHandler(this, colorButtonLayoutParams);
@@ -432,7 +423,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         File file = new File(currentPhotoPath);
         if (file.exists()) {
-            file.delete();
+            boolean wasFileDeleted = file.delete();
+            Log.d("removeTempPhotoFile", "wasFileDeleted: " + wasFileDeleted);
         }
     }
 
