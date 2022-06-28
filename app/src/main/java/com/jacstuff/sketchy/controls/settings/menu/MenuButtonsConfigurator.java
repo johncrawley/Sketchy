@@ -14,7 +14,9 @@ import com.jacstuff.sketchy.utils.ActivityUtils;
 
 import java.util.Set;
 
-public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer> implements ButtonsConfigurator<Integer> {
+public class MenuButtonsConfigurator
+        extends AbstractButtonConfigurator<Integer>
+        implements ButtonsConfigurator<Integer> {
 
     private Set<Integer> layoutIds;
     private final SettingsPopup settingsPopup;
@@ -54,7 +56,10 @@ public class MenuButtonsConfigurator extends AbstractButtonConfigurator<Integer>
         buttonConfig.add(R.id.placementButton, R.drawable.button_placement_normal,  R.id.includePlacementControls);
 
         buttonConfig.setParentLayout(activity.getColorButtonLayoutCreator().getMultiShadesLayout());
-        buttonConfig.add(R.id.colorConfigButton, R.drawable.button_color_config, R.id.includeColorConfigControls, activity.getColorButtonLayoutParams());
+        buttonConfig.addFirst(R.id.colorConfigButton,
+                R.drawable.button_color_config,
+                R.id.includeColorConfigControls,
+                activity.getColorButtonLayoutParams());
 
         buttonConfig.setupClickHandler();
         layoutIds = buttonConfig.getEntries();
