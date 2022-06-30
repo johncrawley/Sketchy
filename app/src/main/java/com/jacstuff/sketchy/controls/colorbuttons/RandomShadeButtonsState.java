@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.controls.colorbuttons;
 
 import android.widget.Button;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,7 +37,7 @@ public class RandomShadeButtonsState {
     }
 
     public Collection<Button> getSelected(){
-        return selectedButtons;
+        return new ArrayList<>(selectedButtons);
     }
 
 
@@ -47,10 +48,6 @@ public class RandomShadeButtonsState {
 
     public void deselectMulti(){
         isMultiSelected = false;
-    }
-
-    public boolean isAnySelected(){
-        return selectedButtons.size() > 0;
     }
 
 }

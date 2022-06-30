@@ -132,21 +132,19 @@ public class ColorButtonClickHandler {
                 onMultiColorButtonClick(button);
                 break;
             case MULTI_SHADE:
-                clickShadeButtonMultiMode(button);
+                clickMultiShadeButton(button);
         }
         previouslySelectedButton = button;
     }
 
 
     public boolean onLongClick(View view){
-        System.out.println("entered onLongClick()");
         currentColorSelector.removeAllBut(view.getId());
-        deselectButtons(shadeButtonsState.getSelected());
+        deselectShadeButtons(shadeButtonsState.getSelected());
         shadeButtonsState.deselectAll();
         onClick(view);
         return true;
     }
-
 
 
     private boolean isColorButton(View view){
@@ -260,7 +258,7 @@ public class ColorButtonClickHandler {
     }
 
 
-    private void clickShadeButtonMultiMode(Button button){
+    private void clickMultiShadeButton(Button button){
         if(!shadeButtonsState.isMultiSelected()){
             handleClickWhenMultiDisabled(button);
             return;
@@ -371,6 +369,13 @@ public class ColorButtonClickHandler {
     private void deselectButtons(Collection<Button> buttons){
         for(Button b: buttons){
             deselectButton(b);
+        }
+    }
+
+
+    private void deselectShadeButtons(Collection<Button> buttons){
+        for(Button b: buttons){
+            deselectShadeButton(b);
         }
     }
 
