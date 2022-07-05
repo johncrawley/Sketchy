@@ -43,11 +43,11 @@ public class ColorCreator {
         add(colors,"orange"   , 255,106,0);
         add(colors,"gold"     , 255,215,0);
         add(colors,"beige"    , 245,245,220);
-        add(colors,"gray", Color.GRAY);
         add(colors,"blue", Color.BLUE);
         add(colors,"white", Color.WHITE);
         add(colors,"olive"    , 128,128,0);
         add(colors,"purple"   , 140,40,255);
+        add(colors,"gray", Color.GRAY);
         add(colors,"lime", 215,255,0);
         add(colors,"lilac", 215,214,255);
         add(colors,"neon blue", 0,206,255);

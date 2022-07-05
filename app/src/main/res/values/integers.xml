@@ -88,7 +88,7 @@
     <integer name="style_dashed_spacing_max">150</integer>
 
 
-    <integer name="size_sequence_max_default">200</integer>
+    <integer name="size_sequence_max_default">290</integer>
     <integer name="size_sequence_min_default">10</integer>
     <integer name="size_sequence_step_default">5</integer>
     <integer name="size_sequence_step_min">1</integer>
