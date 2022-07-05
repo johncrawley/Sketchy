@@ -265,6 +265,7 @@ public class ColorButtonClickHandler {
         }
         if(isSelected(button)){
            deselectShadeButton(button);
+            autoClickMultiColorButton();
             return;
         }
         selectMultiShadeButton(button);
@@ -273,6 +274,7 @@ public class ColorButtonClickHandler {
 
     public void deselectMultiShadeButtonForRemoval(Button button){
         deselectShadeButton(button);
+        autoClickMultiColorButton();
         removeMultiShade(button);
     }
 
@@ -306,18 +308,6 @@ public class ColorButtonClickHandler {
 
     private boolean isSelected(Button button){
        return ButtonStatus.SELECTED.equals(button.getTag(buttonStatusTag));
-    }
-
-
-    private void deselectShadeButton(Button button){
-        int buttonColor = (int)button.getTag(R.string.tag_button_color);
-        currentColorSelector.remove(buttonColor);
-        button.setTag(buttonStatusTag, ButtonStatus.UNSELECTED);
-        deselectButton(button);
-        shadeButtonsState.deselect(button);
-        if(shadeButtonsState.getSelectedCount() == 0){
-            onClick(mainMultiColorButton);
-        }
     }
 
 
@@ -376,6 +366,22 @@ public class ColorButtonClickHandler {
     private void deselectShadeButtons(Collection<Button> buttons){
         for(Button b: buttons){
             deselectShadeButton(b);
+        }
+    }
+
+
+    private void deselectShadeButton(Button button){
+        int buttonColor = (int)button.getTag(R.string.tag_button_color);
+        currentColorSelector.remove(buttonColor);
+        button.setTag(buttonStatusTag, ButtonStatus.UNSELECTED);
+        deselectButton(button);
+        shadeButtonsState.deselect(button);
+    }
+
+
+    private void autoClickMultiColorButton(){
+        if(shadeButtonsState.getSelectedCount() == 0){
+            onClick(mainMultiColorButton);
         }
     }
 
