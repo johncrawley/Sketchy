@@ -64,6 +64,7 @@ public class ColorCreator {
         add(colors,"user3", 150,100,140);
         add(colors,"user4", 100,150,100);
         add(colors,"user5", 155,129,108);
+        add(colors,"user6", 217,204,118);
         UserColorStore.initStore(colors, context, COLOR_STORE_VERSION);
     }
 
