@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/layout/controls_shadow.xml" value="0.18385416666666668" />
         <entry key="app/src/main/res/layout/controls_shapes.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/controls_size_sequence.xml" value="0.2786458333333333" />
+        <entry key="app/src/main/res/layout/edit_color_button_bar.xml" value="0.19166666666666668" />
         <entry key="app/src/main/res/layout/fragment_add_color.xml" value="0.22239583333333332" />
         <entry key="app/src/main/res/layout/fragment_delete_color.xml" value="0.21041666666666667" />
         <entry key="app/src/main/res/layout/fragment_edit_color.xml" value="0.1" />
