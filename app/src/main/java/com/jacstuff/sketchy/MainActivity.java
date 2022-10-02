@@ -343,7 +343,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onGlobalLayout() {
                 linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
                 paintView.init(settingsPopup, brushFactory, viewModel, drawHistory);
                 settingsButtonsConfigurator.selectDefaults();
                 viewModelHelper.onResume();

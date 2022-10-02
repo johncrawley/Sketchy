@@ -14,8 +14,10 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24739583333333334" />
         <entry key="app/src/main/res/layout/add_color_panel.xml" value="0.40185185185185185" />
         <entry key="app/src/main/res/layout/color_buttons_panel.xml" value="0.21354166666666666" />
+        <entry key="app/src/main/res/layout/control_selector_panel.xml" value="0.2346014492753623" />
         <entry key="app/src/main/res/layout/controls_color.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/layout/controls_gradient.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/controls_kaleidoscope.xml" value="0.2798913043478261" />
         <entry key="app/src/main/res/layout/controls_placement.xml" value="0.25" />
         <entry key="app/src/main/res/layout/controls_rotation.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/layout/controls_shadow.xml" value="0.18385416666666668" />
