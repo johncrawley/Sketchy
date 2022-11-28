@@ -174,7 +174,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         Runnable runnable = menuActions.get(item.getItemId());
         if(runnable != null) {
             runnable.run();

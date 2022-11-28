@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.GradientDrawable;
 
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 
@@ -15,6 +16,8 @@ public class BitmapLoader {
     private final PaintView paintView;
     private final Canvas canvas;
     private final Paint drawPaint;
+    private int largestCanvasWidthForLandscape, largestCanvasHeightForLandscape;
+    private int largestCanvasWidthForPortrait, largestCanvasHeightForPortrait;
 
 
     public BitmapLoader(PaintView paintView, Canvas canvas, Paint drawPaint){
@@ -43,7 +46,7 @@ public class BitmapLoader {
 
     void drawBitmapToScale(Bitmap bitmapToDraw){
         Rect src = new Rect(0,0, bitmapToDraw.getWidth(), bitmapToDraw.getHeight());
-        Rect dest = new Rect(0,0, paintView.getWidth(), paintView.getHeight());
+        Rect dest = createCanvasRect();
         canvas.drawBitmap(bitmapToDraw, src, dest, drawPaint);
     }
 
@@ -53,6 +56,30 @@ public class BitmapLoader {
         Matrix m = new Matrix();
         m.postRotate(angle);
         return Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), m, true);
+    }
+
+
+    /*
+        On rare occasions, selecting "undo" was painting a history bitmap that was smaller than the canvas dimensions.
+        This method is an attempt to always create the largest destination Rect for the loaded history bitmap,
+         comparing the previously measured size of paintView to the current.
+     */
+    private Rect createCanvasRect(){
+        return paintView.isInPortrait() ? createPortraitCanvasRect() : createLandscapeCanvasRect();
+    }
+
+
+    private Rect createPortraitCanvasRect(){
+        largestCanvasWidthForPortrait = Math.max(paintView.getMeasuredWidth(), largestCanvasWidthForPortrait);
+        largestCanvasHeightForPortrait = Math.max(paintView.getMeasuredHeight(), largestCanvasHeightForPortrait);
+        return new Rect(0,0, largestCanvasWidthForPortrait, largestCanvasHeightForPortrait);
+    }
+
+
+    private Rect createLandscapeCanvasRect(){
+        largestCanvasWidthForLandscape = Math.max(paintView.getMeasuredWidth(), largestCanvasWidthForLandscape);
+        largestCanvasHeightForLandscape = Math.max(paintView.getMeasuredHeight(), largestCanvasHeightForLandscape);
+        return new Rect(0,0, largestCanvasWidthForLandscape, largestCanvasHeightForLandscape);
     }
 
 

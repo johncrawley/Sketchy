@@ -59,6 +59,11 @@ public class PaintView extends View {
     }
 
 
+    public boolean isInPortrait(){
+        return getMeasuredHeight() > getMeasuredWidth();
+    }
+
+
     public void setPaintHelperManager(PaintHelperManager paintHelperManager){
         this.paintHelperManager = paintHelperManager;
         this.paintHelperManager.init(paint, shadowPaint, previewPaint, paintGroup);
