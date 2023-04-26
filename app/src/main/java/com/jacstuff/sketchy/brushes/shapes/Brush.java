@@ -50,4 +50,5 @@ public interface Brush {
 
     boolean isColorChangedOnDown();
 
+    default boolean isOnFirstStep(){ return true;}
 }

@@ -7,17 +7,15 @@ import android.graphics.Point;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.brushes.shapes.AbstractBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.TwoStepDrawer;
 import com.jacstuff.sketchy.brushes.shapes.initializer.DragRectInitializer;
 import com.jacstuff.sketchy.utils.MathUtils;
 
-public class CurvedLineBrush extends AbstractBrush implements Brush, TwoStepBrush{
+public class CurvedLineBrush extends AbstractTwoStepBrush implements Brush, TwoStepBrush{
 
     float downX, downY, upX, upY;
     private float lineMidpointX, lineMidpointY;
-    private StepState state;
     final Path path;
 
 
@@ -48,31 +46,10 @@ public class CurvedLineBrush extends AbstractBrush implements Brush, TwoStepBrus
     }
 
 
-    public void resetState(){
-        state = StepState.FIRST;
-    }
-
-
-    public void setStateTo(StepState state){
-        this.state = state;
-    }
-
-    public StepState getState(){
-        return state;
-    }
-
-    public boolean isInFirstStep(){
-        return state == StepState.FIRST;
-    }
-
-    public boolean isInSecondStep(){
-        return state == StepState.SECOND;
-    }
-
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
-        if (state == StepState.FIRST) {
+        if (stepState == StepState.FIRST) {
             downX = p.x;
             downY = p.y;
         }
@@ -81,7 +58,7 @@ public class CurvedLineBrush extends AbstractBrush implements Brush, TwoStepBrus
 
     @Override
     public void onTouchMove(float x, float y, Paint paint) {
-        if(state == StepState.SECOND){
+        if(stepState == StepState.SECOND){
             drawShape(x, y, 0,0, paint);
             return;
         }
@@ -97,7 +74,7 @@ public class CurvedLineBrush extends AbstractBrush implements Brush, TwoStepBrus
 
     @Override
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint) {
-        if(state == StepState.SECOND){
+        if(stepState == StepState.SECOND){
             drawShape(x, y, offsetX, offsetY, paint);
             return;
         }
@@ -122,6 +99,7 @@ public class CurvedLineBrush extends AbstractBrush implements Brush, TwoStepBrus
        p.y = lineMidpointY;
        return p;
     }
+
 
     @Override
     public PointF getShapeMidPoint() {

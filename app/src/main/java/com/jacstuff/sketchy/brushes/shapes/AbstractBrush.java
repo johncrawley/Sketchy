@@ -50,6 +50,7 @@ public abstract class AbstractBrush implements Brush{
     public void onTouchMove(Point p, Canvas canvas, Paint paint){
     }
 
+
     public void onTouchUp(Point p, Canvas canvas, Paint paint){
     }
 

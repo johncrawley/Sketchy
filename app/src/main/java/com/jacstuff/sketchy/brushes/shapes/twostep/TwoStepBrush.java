@@ -10,4 +10,5 @@ public interface TwoStepBrush{
 
     PointF getLineMidPoint();
     PointF getShapeMidPoint();
+
 }

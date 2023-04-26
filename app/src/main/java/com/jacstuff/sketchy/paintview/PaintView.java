@@ -227,8 +227,13 @@ public class PaintView extends View {
 
 
     public void undo(){
+        if(currentBrush.isOnFirstStep()){
+            loadHistoryItem(true);
+            return;
+        }
         currentBrush.reset();
-        loadHistoryItem(true);
+        disablePreviewLayer();
+        invalidate();
     }
 
 
