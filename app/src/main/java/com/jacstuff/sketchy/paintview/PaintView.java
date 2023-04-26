@@ -227,6 +227,7 @@ public class PaintView extends View {
 
 
     public void undo(){
+        currentBrush.reset();
         loadHistoryItem(true);
     }
 
