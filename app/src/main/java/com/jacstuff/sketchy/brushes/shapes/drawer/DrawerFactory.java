@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class DrawerFactory {
 
-    public enum Type { BASIC, DRAG_LINE, DRAG_RECT, PATH, CURVE}
+    public enum Type { BASIC, DRAG_LINE, DRAG_RECT, PATH, SMOOTH_PATH, CURVE}
     private final Map<Type, Drawer> drawerMap;
 
 
@@ -18,6 +18,7 @@ public class DrawerFactory {
         drawerMap.put(Type.DRAG_LINE, new DragLineDrawer(paintView, mainViewModel));
         drawerMap.put(Type.DRAG_RECT, new DragRectDrawer(paintView, mainViewModel));
         drawerMap.put(Type.PATH, new PathDrawer(paintView, mainViewModel));
+        drawerMap.put(Type.SMOOTH_PATH, new SmoothPathDrawer(paintView, mainViewModel));
     }
 
     public void init(){

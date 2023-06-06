@@ -42,8 +42,4 @@ public class PathBrush extends AbstractBrush implements Brush {
     }
 
 
-    private void log(String msg){
-        System.out.println("PathBrush: " + msg);
-    }
-
 }

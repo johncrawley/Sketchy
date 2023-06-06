@@ -7,6 +7,7 @@ import com.jacstuff.sketchy.brushes.shapes.BananaBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.AstroidBrush;
+import com.jacstuff.sketchy.brushes.shapes.SmoothPathBrush;
 import com.jacstuff.sketchy.brushes.shapes.VariableCircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.spirals.CrazySpiralBrush;
 import com.jacstuff.sketchy.brushes.shapes.CrescentBrush;
@@ -91,7 +92,7 @@ public class BrushFactory {
         brushMap = new HashMap<>();
         add(circleBrush);
         add(new RoundedRectangleBrush());
-        add( new SquareBrush());
+        add(new SquareBrush());
         add(new TriangleBrush());
         add(new PentagonBrush());
         add(new HexagonBrush());
@@ -106,7 +107,8 @@ public class BrushFactory {
         add(new CrescentBrush());
         add(new TextOnCircleBrush());
         add(new BananaBrush());
-        add(new PathBrush());
+       // add(new PathBrush());
+        add(new SmoothPathBrush());
         add(new RectangleBrush());
         add(new XBrush());
         add(new DiamondBrush());

@@ -34,7 +34,6 @@ public class DragLineDrawer extends AbstractDrawer implements Drawer{
         paintView.enablePreviewLayer();
         brush.onTouchMove(x, y, paint);
         paintView.invalidate();
-
     }
 
 
