@@ -63,12 +63,12 @@ public abstract class AbstractDrawer implements Drawer {
 
     void updateColorGradientAndAngle(float x, float y){
         paintHelperManager.getColorHelper().assignColors();
-        updateGradient(x,y);
+        updateGradientMidpoint(x,y);
         paintHelperManager.getAngleHelper().updateAngle();
     }
 
 
-    void updateGradient(float x, float y){
+    void updateGradientMidpoint(float x, float y){
         paintHelperManager.getGradientHelper().assignGradient(x, y, viewModel.color);
     }
 

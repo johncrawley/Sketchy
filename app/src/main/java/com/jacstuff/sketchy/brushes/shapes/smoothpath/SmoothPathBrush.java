@@ -1,11 +1,14 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.smoothpath;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.AbstractBrush;
+import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
 
@@ -20,12 +23,15 @@ public class SmoothPathBrush extends AbstractBrush implements Brush {
     private boolean isSmoothPathReady;
     private Paint movePaint;
     private List<Point> tempPoints;
+    private final ImportantPoints importantPoints;
 
     public SmoothPathBrush(){
         super(BrushShape.PATH);
         brushInitializer = new LineInitializer();
         drawerType = DrawerFactory.Type.SMOOTH_PATH;
         initPointsLists();
+        importantPoints = new ImportantPoints();
+        isDrawnFromCenter = false;
     }
 
 
@@ -44,6 +50,7 @@ public class SmoothPathBrush extends AbstractBrush implements Brush {
         init(inputPoints, p);
         init(smoothPoints, p);
         isSmoothPathReady = false;
+        importantPoints.initPoints();
     }
 
 
@@ -52,9 +59,27 @@ public class SmoothPathBrush extends AbstractBrush implements Brush {
         currentStyle.onDraw();
         path.lineTo(p.x, p.y);
         inputPoints.add(p);
+        importantPoints.updatePoints(p);
         canvas.drawPath(path, movePaint);
     }
 
+
+    @Override
+    public PointF getShapeMidpoint(){
+        return importantPoints.getMidpoint();
+    }
+
+
+    @Override
+    public PointF getShapeMinPoint(){
+        return importantPoints.getMidpoint();
+    }
+
+
+    @Override
+    public PointF getShapeMaxPoint(){
+        return importantPoints.getMidpoint();
+    }
 
 
     @Override

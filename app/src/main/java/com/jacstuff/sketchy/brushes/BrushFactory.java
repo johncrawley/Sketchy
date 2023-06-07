@@ -7,7 +7,7 @@ import com.jacstuff.sketchy.brushes.shapes.BananaBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.AstroidBrush;
-import com.jacstuff.sketchy.brushes.shapes.SmoothPathBrush;
+import com.jacstuff.sketchy.brushes.shapes.smoothpath.SmoothPathBrush;
 import com.jacstuff.sketchy.brushes.shapes.VariableCircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.spirals.CrazySpiralBrush;
 import com.jacstuff.sketchy.brushes.shapes.CrescentBrush;

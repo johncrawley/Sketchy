@@ -4,15 +4,13 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.brushes.BrushStyle;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.styles.Style;
 import com.jacstuff.sketchy.paintview.PaintView;
-
-import java.util.Map;
 
 
 public interface Brush {
@@ -26,6 +24,10 @@ public interface Brush {
 
     int getBrushSize();
     int getHalfBrushSize();
+
+    PointF getShapeMidpoint();
+    PointF getShapeMinPoint();
+    PointF getShapeMaxPoint();
 
     void reset();
 

@@ -39,7 +39,7 @@ public class SmoothPathDrawer extends BasicDrawer{
         PointF adjustedPoint = placementHelper.calculatePoint(x1,y1);
         float x = adjustedPoint.x;
         float y = adjustedPoint.y;
-        updateColorGradientAndAngle(x,y);
+        paintHelperManager.getColorHelper().assignColors();
         Point pathPoint = new Point((int)x, (int)y);
         paintHelperManager.getKaleidoscopeHelper().setCenter(x,y);
         drawToCanvasOnDown(pathPoint);
@@ -63,6 +63,7 @@ public class SmoothPathDrawer extends BasicDrawer{
     public void up(float x, float y, Paint paint) {
         paintView.disablePreviewLayer();
         paintHelperManager.getColorHelper().resetCurrentIndex();
+        assignGradient();
         if(kaleidoscopeHelper.isEnabled()){
             kaleidoscopeDrawer.drawKaleidoscope(x, y, paint);
         }
@@ -75,6 +76,14 @@ public class SmoothPathDrawer extends BasicDrawer{
         }
         paintView.pushHistory();
         paintView.invalidate();
+    }
+
+
+    private void assignGradient(){
+        PointF midpoint = brush.getShapeMidpoint();
+        PointF minPoint = brush.getShapeMinPoint();
+        PointF maxPoint = brush.getShapeMaxPoint();
+        paintHelperManager.getGradientHelper().assignGradientForDragShape(minPoint, maxPoint, midpoint, true);
     }
 
 

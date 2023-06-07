@@ -134,7 +134,7 @@ public class GradientHelper {
 
 
     public void assignGradient(float x, float y, int color){
-        assignGradient(x,y, color, true);
+        assignGradient(x, y, color, true);
     }
 
 
@@ -158,7 +158,7 @@ public class GradientHelper {
     private int getLinearCoordinateForDragShape(float downCoordinate, float upCoordinate, float brushHalfDimension){
         float startCoordinate = Math.min(downCoordinate, upCoordinate);
         return  (int) startCoordinate
-               - (int)(+ viewModel.getLinearGradientNoRepeatLength)
+               - viewModel.getLinearGradientNoRepeatLength
                + (int)( (brushHalfDimension / 100f) * viewModel.gradientLinearOffsetPercentage);
     }
 
@@ -173,9 +173,9 @@ public class GradientHelper {
             paint.setShader(null);
             return;
         }
-        int start =  calculateLinearStart();
+        int start = calculateLinearStart();
         gradientColor = getGradientColor(shouldNewRandomColorBeAssigned);
-        linearStartX =start;
+        linearStartX = start;
         linearStartY = start;
         int end = (int) getLinearGradientEnd(linearStartX);
         linearEndX = end;
