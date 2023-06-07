@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -22,14 +23,14 @@ public abstract class AbstractBrush implements Brush{
     public Canvas canvas;
     protected PaintGroup paintGroup;
     protected int brushSize;
-    Style currentStyle;
+    protected Style currentStyle;
     int halfBrushSize;
     BrushShape brushShape;
     public Drawer drawer;
     public MainViewModel mainViewModel;
     MainActivity mainActivity;
     public PaintView paintView;
-    DrawerFactory.Type drawerType;
+    protected DrawerFactory.Type drawerType;
     public BrushInitializer brushInitializer;
     public boolean isDrawnFromCenter;
 
@@ -54,10 +55,30 @@ public abstract class AbstractBrush implements Brush{
     public void onTouchUp(Point p, Canvas canvas, Paint paint){
     }
 
+
     @Override
     public void recalculateDimensions(){
         //do nothing
     }
+
+
+    @Override
+    public PointF getShapeMidpoint(){
+       return new PointF(0,0);
+    }
+
+
+    @Override
+    public PointF getShapeMinPoint(){
+        return new PointF(0,0);
+    }
+
+
+    @Override
+    public PointF getShapeMaxPoint(){
+        return new PointF(0,0);
+    }
+
 
     @Override
     public void reset(){
