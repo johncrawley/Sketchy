@@ -113,6 +113,7 @@
     <item name="ovalShapeButton" type="id"/>
     <item name="crescentShapeButton" type="id"/>
     <item name="pathShapeButton" type="id"/>
+    <item name="smoothPathShapeButton" type="id"/>
     <item name="rectangleShapeButton" type="id"/>
     <item name="variableCircleShapeButton" type="id"/>
     <item name="arcShapeButton" type="id"/>

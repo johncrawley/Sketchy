@@ -26,7 +26,7 @@ public class SmoothPathBrush extends AbstractBrush implements Brush {
     private final ImportantPoints importantPoints;
 
     public SmoothPathBrush(){
-        super(BrushShape.PATH);
+        super(BrushShape.SMOOTH_PATH);
         brushInitializer = new LineInitializer();
         drawerType = DrawerFactory.Type.SMOOTH_PATH;
         initPointsLists();

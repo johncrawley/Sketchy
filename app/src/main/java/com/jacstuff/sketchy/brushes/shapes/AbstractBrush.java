@@ -109,6 +109,7 @@ public abstract class AbstractBrush implements Brush{
         // do nothing
     }
 
+
     public boolean isDrawnFromCenter(){
         return isDrawnFromCenter;
     }
@@ -137,6 +138,7 @@ public abstract class AbstractBrush implements Brush{
     public void touchPointerUp(float x, float y, Paint paint){
         //do nothing
     }
+
 
     public BrushShape getBrushShape(){
         return this.brushShape;

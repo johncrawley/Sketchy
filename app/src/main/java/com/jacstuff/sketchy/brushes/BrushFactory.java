@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.brushes;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
+import com.jacstuff.sketchy.brushes.shapes.AbstractBrush;
 import com.jacstuff.sketchy.brushes.shapes.ArcBrush;
 import com.jacstuff.sketchy.brushes.shapes.BananaBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
@@ -40,6 +41,7 @@ import com.jacstuff.sketchy.paintview.helpers.StyleHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BrushFactory {
@@ -107,7 +109,7 @@ public class BrushFactory {
         add(new CrescentBrush());
         add(new TextOnCircleBrush());
         add(new BananaBrush());
-       // add(new PathBrush());
+        add(new PathBrush());
         add(new SmoothPathBrush());
         add(new RectangleBrush());
         add(new XBrush());

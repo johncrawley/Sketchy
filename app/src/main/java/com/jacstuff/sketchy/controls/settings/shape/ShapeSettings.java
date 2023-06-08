@@ -53,6 +53,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
             buttonConfig.add(R.id.pathShapeButton,          R.drawable.button_shape_path,               BrushShape.PATH);
         }
 
+        buttonConfig.add(R.id.smoothPathShapeButton,        R.drawable.button_shape_smooth_path,        BrushShape.SMOOTH_PATH);
         buttonConfig.add(R.id.straightLineShapeButton,      R.drawable.button_shape_straight_line,      BrushShape.STRAIGHT_LINE);
         buttonConfig.add(R.id.roundedRectangleShapeButton,  R.drawable.button_shape_rounded_rect,       BrushShape.ROUNDED_RECTANGLE);
         buttonConfig.add(R.id.triangleShapeButton,          R.drawable.button_shape_triangle,           BrushShape.TRIANGLE);
