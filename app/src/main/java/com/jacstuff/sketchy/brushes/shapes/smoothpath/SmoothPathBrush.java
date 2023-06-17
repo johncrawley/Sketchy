@@ -122,10 +122,11 @@ public class SmoothPathBrush extends AbstractBrush implements Brush {
 
 
     private void calculateSmoothPoints(){
+        adjustSmoothPoints();
+        joinFirstAndLastPointsIfCloseTogether();
         for(int i = 0, numberOfRounds = 3; i < numberOfRounds; i++){
             adjustSmoothPoints();
         }
-        joinFirstAndLastPointsIfCloseTogether();
     }
 
 
