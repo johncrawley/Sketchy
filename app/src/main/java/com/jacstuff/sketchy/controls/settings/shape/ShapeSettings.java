@@ -56,11 +56,12 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         buttonConfig.add(R.id.smoothPathShapeButton,        R.drawable.button_shape_smooth_path,        BrushShape.SMOOTH_PATH);
         buttonConfig.add(R.id.straightLineShapeButton,      R.drawable.button_shape_straight_line,      BrushShape.STRAIGHT_LINE);
         buttonConfig.add(R.id.roundedRectangleShapeButton,  R.drawable.button_shape_rounded_rect,       BrushShape.ROUNDED_RECTANGLE);
+        buttonConfig.add(R.id.arcShapeButton,               R.drawable.button_shape_arc,                BrushShape.ARC);
         buttonConfig.add(R.id.triangleShapeButton,          R.drawable.button_shape_triangle,           BrushShape.TRIANGLE);
         buttonConfig.add(R.id.diamondShapeButton,           R.drawable.button_shape_diamond,            BrushShape.DIAMOND);
         buttonConfig.add(R.id.pentagonShapeButton,          R.drawable.button_shape_pentagon,           BrushShape.PENTAGON);
         buttonConfig.add(R.id.hexagonShapeButton,           R.drawable.button_shape_hexagon,            BrushShape.HEXAGON);
-        buttonConfig.add(R.id.arcShapeButton,               R.drawable.button_shape_arc,                BrushShape.ARC);
+        buttonConfig.add(R.id.semicircleShapeButton,        R.drawable.button_shape_semicircle,         BrushShape.SEMICIRCLE);
         buttonConfig.add(R.id.ovalShapeButton,              R.drawable.button_shape_oval,               BrushShape.OVAL);
         buttonConfig.add(R.id.crescentShapeButton,          R.drawable.button_shape_crescent,           BrushShape.CRESCENT);
         buttonConfig.add(R.id.trapezoidShapeButton,         R.drawable.button_shape_trapezoid,          BrushShape.TRAPEZOID);
@@ -91,6 +92,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         subPanelManager.add(R.id.crazySpiralShapeButton, R.id.settingsPanelCrazySpiralBrushInclude);
         subPanelManager.add(R.id.triangleShapeButton, R.id.settingsPanelTriangleBrushInclude);
         subPanelManager.add(R.id.lineShapeButton, R.id.settingsPanelLineBrushInclude);
+        subPanelManager.add(R.id.arcShapeButton, R.id.settingsPanelArcBrushInclude);
     }
 
 
@@ -140,6 +142,15 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
                     viewModel.crazySpiralType = progress;
                     paintView.recalculateBrush();
                 } );
+
+
+        seekBarConfigurator.configure(R.id.arcStartingAngleSeekBar,
+                R.integer.brush_arc_starting_angle_default,
+                progress -> viewModel.arcShapeStartingAngle = progress);
+
+        seekBarConfigurator.configure(R.id.arcSweepAngleSeekBar,
+                R.integer.brush_arc_sweep_angle_default,
+                progress -> viewModel.arcShapeAngleSweepAngle = progress);
     }
 
 
@@ -149,5 +160,6 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         setupSwitch(R.id.randomBrushMorphEnabledSwitch, b -> viewModel.doesRandomBrushMorph = b);
         setupSwitch(R.id.crazySpiralAltModeEnabledSwitch, b -> viewModel.isCrazySpiralAltModeEnabled = b);
         setupSwitch(R.id.connectedLineModeEnabled, b -> viewModel.isConnectedLinesModeEnabled = b);
+        setupSwitch(R.id.arcBrushDrawFromCentre, b -> viewModel.isArcShapeDrawnFromCentre = b);
     }
 }

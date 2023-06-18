@@ -2,12 +2,12 @@ package com.jacstuff.sketchy.brushes;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.brushes.shapes.AbstractBrush;
 import com.jacstuff.sketchy.brushes.shapes.ArcBrush;
 import com.jacstuff.sketchy.brushes.shapes.BananaBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.AstroidBrush;
+import com.jacstuff.sketchy.brushes.shapes.SemicircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.smoothpath.SmoothPathBrush;
 import com.jacstuff.sketchy.brushes.shapes.VariableCircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.spirals.CrazySpiralBrush;
@@ -41,7 +41,6 @@ import com.jacstuff.sketchy.paintview.helpers.StyleHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BrushFactory {
@@ -104,6 +103,7 @@ public class BrushFactory {
         add(new StraightLineBrush(getMaxBrushSize(), maxDimension));
         add(new WavyLineBrush());
         add(new ArcBrush());
+        add(new SemicircleBrush());
         add(new TextBrush());
         add(new OvalBrush());
         add(new CrescentBrush());

@@ -117,6 +117,7 @@
     <item name="rectangleShapeButton" type="id"/>
     <item name="variableCircleShapeButton" type="id"/>
     <item name="arcShapeButton" type="id"/>
+    <item name="semicircleShapeButton" type="id"/>
     <item name="xShapeButton" type="id"/>
     <item name="bananaShapeButton" type="id"/>
     <item name="astroidShapeButton" type="id"/>

@@ -120,6 +120,10 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int textSpacingSeekBarProgress = 1;
     public int angle = 0;
 
+    public int arcShapeStartingAngle = 0;
+    public int arcShapeAngleSweepAngle = 60;
+    public boolean isArcShapeDrawnFromCentre = true;
+
 
     public boolean isRectangleSnappedToEdges = true;
     public int rectangleSnapBounds = 28;

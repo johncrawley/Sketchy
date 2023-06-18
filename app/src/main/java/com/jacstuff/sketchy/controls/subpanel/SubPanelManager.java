@@ -15,8 +15,6 @@ public class SubPanelManager {
     private final Set<Integer> settingsPanelIds;
     private final Set<View> subPanels;
     private final Map<Integer, Set<Integer>> panelMap;
-    private final Map<Integer, Integer> excludeMap;
-    private int defaultLayoutId;
     private final Set<Integer> buttonIdsWithoutPanels;
     private View defaultLayout;
 
@@ -27,7 +25,6 @@ public class SubPanelManager {
         subPanels = new HashSet<>();
         buttonIdsWithoutPanels = new HashSet<>();
         panelMap = new HashMap<>();
-        excludeMap = new HashMap<>();
     }
 
 
@@ -47,11 +44,6 @@ public class SubPanelManager {
     }
 
 
-    public void addExclusion(int buttonId, int layoutId){
-        excludeMap.put(buttonId, layoutId);
-    }
-
-
     public void registerButtonWithoutPanel(int buttonId){
         buttonIdsWithoutPanels.add(buttonId);
     }
@@ -64,22 +56,24 @@ public class SubPanelManager {
 
 
     public void setDefaultLayout(int defaultLayoutId){
-        this.defaultLayoutId = defaultLayoutId;
         this.defaultLayout = activity.findViewById(defaultLayoutId);
     }
 
 
     public void select(int buttonId){
-
         showOrHideDefaultLayout(buttonId);
-
         hideAllSubPanelsIfButtonIsOffButton(buttonId);
-        Set<Integer> subPanelIds = panelMap.get(buttonId);
         for(int settingsPanelId : settingsPanelIds){
-            int visibility = subPanelIds != null && subPanelIds.contains(settingsPanelId) ? View.VISIBLE : View.GONE;
-            activity.findViewById(settingsPanelId).setVisibility(visibility);
+            setVisibilityOfSubPanel(settingsPanelId, buttonId);
         }
 
+    }
+
+
+    private void setVisibilityOfSubPanel(int settingsPanelId, int buttonId){
+        Set<Integer> subPanelIds = panelMap.get(buttonId);
+        int visibility = subPanelIds != null && subPanelIds.contains(settingsPanelId) ? View.VISIBLE : View.GONE;
+        activity.findViewById(settingsPanelId).setVisibility(visibility);
     }
 
 

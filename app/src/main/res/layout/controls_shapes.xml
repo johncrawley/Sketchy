@@ -10,74 +10,17 @@
     android:clickable="true"
     android:focusable="true">
 
+
     <include
-        android:id="@+id/settingsPanelTextShapeInclude"
+        android:id="@+id/shapeSpecificSettingsInclude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:paddingHorizontal="@dimen/settings_panel_include_horizontal_padding"
-        layout="@layout/settings_panel_text_shape" />
-
-
-    <include
-        android:id="@+id/settingsPanelAstroidShapeInclude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        layout="@layout/settings_panel_astroid_shape" />
-
-    <include
-        android:id="@+id/settingsPanelRandomBrushInclude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        layout="@layout/settings_panel_brush_random" />
-
-    <include
-        android:id="@+id/settingsPanelTriangleBrushInclude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        layout="@layout/settings_panel_brush_triangle" />
-
-    <include
-        android:id="@+id/settingsPanelLineBrushInclude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        layout="@layout/settings_panel_brush_line" />
-
-
-    <include
-        android:id="@+id/settingsPanelCrazySpiralBrushInclude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        layout="@layout/settings_panel_brush_crazy_spiral" />
+        layout="@layout/shape_specific_settings" />
 
     <LinearLayout
         android:id="@+id/settingsPanelRectangle"

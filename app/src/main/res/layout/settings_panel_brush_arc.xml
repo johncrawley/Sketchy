@@ -1,63 +1,95 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:paddingHorizontal="@dimen/settings_panel_include_horizontal_padding"
     android:layout_height="wrap_content">
 
 
+
     <LinearLayout
-        android:id="@+id/crazySpiralBrushCheckboxesLayout"
+        android:id="@+id/arcBrushCheckboxesLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/size_seq_switch_layout_h_padding"
         android:layout_marginTop="@dimen/style_spinner_margin_vertical"
-        android:layout_marginBottom="@dimen/size_sequence_spinner_layout_margin_bottom"
-        tools:ignore="UselessParent">
+        android:layout_marginBottom="@dimen/size_sequence_spinner_layout_margin_bottom">   </LinearLayout>
 
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/crazySpiralAltModeEnabledSwitch"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/arcBrushDrawFromCentre"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:checked="false"
+            android:checked="true"
             android:gravity="center_vertical"
             android:paddingHorizontal="@dimen/switch_option_random_shape_morph_padding_horizontal"
             android:paddingTop="@dimen/switch_option_padding_top"
             android:paddingBottom="@dimen/switch_option_padding_bottom"
-            android:text="@string/brush_crazy_spiral_alt_mode_switch_label" />
-    </LinearLayout>
+            android:text="@string/brush_arc_draw_from_centre_switch_label" />
 
 
     <LinearLayout
-        android:id="@+id/crazySpiralShapeTypeSeekBarLayout"
+        android:id="@+id/arcStartingAngleSeekBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:weightSum="1"
         android:paddingHorizontal="@dimen/text_controls_text_padding_horizontal"
         android:paddingVertical="@dimen/convex_square_midpoint_seekbar_padding_vertical">
 
         <TextView
-            android:id="@+id/crazySpiralShapeTypeSeekBarLabel"
+            android:id="@+id/archStartingAngleSeekBarLabel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight=".2"
+            android:layout_weight=".3"
             android:gravity="center_vertical"
-            android:text="@string/seekbar_label_shape_crazy_spiral_type"
+            android:text="@string/seekbar_label_shape_arc_staring_angle"
             />
 
         <SeekBar
-            android:id="@+id/crazySpiralShapeTypeSeekBar"
+            android:id="@+id/arcStartingAngleSeekBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
             android:indeterminate="false"
-            android:gravity="fill_horizontal"
-            android:max="@integer/brush_crazy_spiral_type_max"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:max="@integer/brush_arc_starting_angle_max"
             android:paddingBottom="@dimen/seekbar_text_controls_padding_bottom"
-            android:progress="@integer/brush_crazy_spiral_type_default" />
+            android:progress="@integer/brush_arc_starting_angle_default" />
     </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/arcSweepAngleSeekBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:paddingHorizontal="@dimen/text_controls_text_padding_horizontal"
+        android:paddingVertical="@dimen/convex_square_midpoint_seekbar_padding_vertical">
+
+        <TextView
+            android:id="@+id/arcSweepAngleSeekBarLabel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".3"
+            android:gravity="center_vertical"
+            android:text="@string/seekbar_label_shape_arc_sweeping_angle"
+            />
+
+        <SeekBar
+            android:id="@+id/arcSweepAngleSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7"
+            android:indeterminate="false"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:max="@integer/brush_arc_sweep_angle_max"
+            android:progress="@integer/brush_arc_sweep_angle_default"
+            android:paddingBottom="@dimen/seekbar_text_controls_padding_bottom" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

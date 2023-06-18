@@ -2,16 +2,12 @@ package com.jacstuff.sketchy.brushes.shapes;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.RectF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
 public class ArcBrush extends AbstractBrush implements Brush {
-
-
-    private int arcHeight;
-    private float quarterBrushSize;
 
     public ArcBrush(){
         super(BrushShape.ARC);
@@ -20,10 +16,10 @@ public class ArcBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-        Path path = new Path();
-        path.addArc(-halfBrushSize, -quarterBrushSize, halfBrushSize, arcHeight - quarterBrushSize, 200, 140);
-        path.close();
-        canvas.drawPath(path, paint);
+        RectF rect = new RectF(-halfBrushSize, -halfBrushSize, halfBrushSize, halfBrushSize);
+        int startAngle = 180 + mainViewModel.arcShapeStartingAngle;
+        int sweep = Math.min(1 + mainViewModel.arcShapeAngleSweepAngle, 359);
+        canvas.drawArc(rect, startAngle, sweep, mainViewModel.isArcShapeDrawnFromCentre, paint);
     }
 
 
@@ -36,7 +32,5 @@ public class ArcBrush extends AbstractBrush implements Brush {
     @Override
     public void setBrushSize(int brushSize){
         super.setBrushSize(brushSize);
-        arcHeight = (int)(halfBrushSize * 2.25);
-        quarterBrushSize = halfBrushSize / 2f;
     }
 }

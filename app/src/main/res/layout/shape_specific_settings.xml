@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/settingsPanelTextShapeInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:paddingHorizontal="@dimen/settings_panel_include_horizontal_padding"
+        layout="@layout/settings_panel_text_shape" />
+
+
+    <include
+        android:id="@+id/settingsPanelAstroidShapeInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        layout="@layout/settings_panel_astroid_shape" />
+
+    <include
+        android:id="@+id/settingsPanelRandomBrushInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        layout="@layout/settings_panel_brush_random" />
+
+    <include
+        android:id="@+id/settingsPanelTriangleBrushInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        layout="@layout/settings_panel_brush_triangle" />
+
+    <include
+        android:id="@+id/settingsPanelLineBrushInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        layout="@layout/settings_panel_brush_line" />
+
+
+
+    <include
+        android:id="@+id/settingsPanelArcBrushInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        layout="@layout/settings_panel_brush_arc" />
+
+
+    <include
+        android:id="@+id/settingsPanelCrazySpiralBrushInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        layout="@layout/settings_panel_brush_crazy_spiral" />
+</LinearLayout>

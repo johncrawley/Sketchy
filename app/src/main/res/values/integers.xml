@@ -31,6 +31,11 @@
     <integer name="brush_crazy_spiral_type_max">7</integer>
     <integer name="brush_crazy_spiral_type_default">0</integer>
 
+    <integer name="brush_arc_starting_angle_default">0</integer>
+    <integer name="brush_arc_starting_angle_max">359</integer>
+    <integer name="brush_arc_sweep_angle_default">60</integer>
+    <integer name="brush_arc_sweep_angle_max">359</integer>
+
     <integer name="brush_triangle_height_default">50</integer>
     <integer name="brush_triangle_height_max">200</integer>
 
