@@ -76,6 +76,11 @@ public class AngleSettings extends AbstractButtonConfigurator<AngleType> impleme
                     viewModel.useSeekBarAngle = true;
                     buttonUtils.switchSelection(R.id.angleSeekBar, buttonConfig.getButtonIds());
                 });
+
+
+        seekBarConfigurator.configure( R.id.fineAngleSeekBar,
+                R.integer.fine_angle_default,
+                progress -> paintHelperManager.getAngleHelper().setFineAngle(progress));
     }
 
 

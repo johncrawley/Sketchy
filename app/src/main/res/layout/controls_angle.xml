@@ -2,6 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
@@ -20,6 +21,44 @@
             android:layout_gravity="center_horizontal"
             layout="@layout/seek_bar_angle" />
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fineAngleSettingsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:paddingTop="@dimen/menu_seekbar_padding_top"
+        android:paddingBottom="@dimen/menu_seekbar_padding_bottom">
+
+        <TextView
+            android:id="@+id/fineAngleSeekBarLabel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".3"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/seekbar_label_horizontal_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/fine_angle_seekbar_label"
+            />
+
+        <SeekBar
+            android:id="@+id/fineAngleSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:layout_weight=".7"
+            android:max="@integer/fine_angle_max"
+            app:layout_constraintHorizontal_weight="7"
+            app:layout_constraintStart_toEndOf="@+id/fineAngleSeekBarLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingHorizontal="@dimen/seekbar_horizontal_padding"
+            android:progress="@integer/fine_angle_default" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <HorizontalScrollView
         android:id="@+id/angleControlsScrollView"

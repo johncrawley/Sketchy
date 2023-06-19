@@ -116,7 +116,7 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
         canvas.save();
         canvas.translate(x, y);
         Point p = new Point((int)x, (int)y);
-        canvas.rotate(paintHelperManager.getAngleHelper().getAngle());
+        canvas.rotate(paintHelperManager.getAngleHelper().getFineAngle());
         if(paintHelperManager.getShadowHelper().isShadowEnabled()){
             brush.onTouchDown(p, canvas, paintView.getShadowPaint());
         }

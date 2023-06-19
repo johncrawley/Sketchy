@@ -202,6 +202,7 @@
     <string name="switch_label_gradient_linear_repeat">Repeat</string>
     <string name="random_placement_max_distance_seekbar_label">Maximum distance</string>
     <string name="angle_seekbar_label">Rotation</string>
+    <string name="fine_angle_seekbar_label">Fine Rotation</string>
     <string name="kaleidoscope_fixed_position_label">Centre Kaleidoscope</string>
     <string name="kaleidoscope_infinity_mode_label">Infinity Mirror</string>
     <string name="switch_label_gradient_use_previous_colour">Use Previous Colour</string>

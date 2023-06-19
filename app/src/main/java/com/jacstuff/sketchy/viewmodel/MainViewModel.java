@@ -119,6 +119,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public int textSkewSeekBarProgress = 100;
     public int textSpacingSeekBarProgress = 1;
     public int angle = 0;
+    public int fineAngle = 0;
 
     public int arcShapeStartingAngle = 0;
     public int arcShapeAngleSweepAngle = 60;

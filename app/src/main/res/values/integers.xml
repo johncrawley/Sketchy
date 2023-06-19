@@ -71,6 +71,9 @@
     <integer name="angle_max">359</integer>
     <integer name="angle_min">0</integer>
     <integer name="angle_default">0</integer>
+    <integer name="fine_angle_max">9</integer>
+    <integer name="fine_angle_min">0</integer>
+    <integer name="fine_angle_default">0</integer>
     <integer name="text_skew_seekbar_default">100</integer>
     <integer name="text_skew_seekbar_max">200</integer>
     <integer name="text_spacing_seekbar_default">1</integer>

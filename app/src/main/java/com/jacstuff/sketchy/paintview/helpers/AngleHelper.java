@@ -9,6 +9,7 @@ import java.util.Random;
 public class AngleHelper {
 
     private int currentAngle;
+    private int currentFineAngle;
     private int increment;
     private AngleType angleType;
     private final Random random;
@@ -60,6 +61,13 @@ public class AngleHelper {
     }
 
 
+    public void setFineAngle(int fineAngle){
+        angleType = AngleType.OTHER;
+        this.currentAngle = currentFineAngle;
+        viewModel.fineAngle = fineAngle;
+    }
+
+
     public int getAngle(){
         if(angleType.isIncremental()
                 || angleType == AngleType.OTHER
@@ -68,6 +76,21 @@ public class AngleHelper {
         }
         return angleType.get();
     }
+
+
+    public float getFineAngle(){
+        if(angleType == AngleType.OTHER){
+            float angle = ((float)currentAngle) + (currentFineAngle / 10f);
+            System.out.println("fine angle: " + angle);
+            return angle;
+        }
+        if(angleType.isIncremental()
+                || angleType == AngleType.RANDOM){
+            return currentAngle;
+        }
+        return angleType.get();
+    }
+
 
     public AngleType getAngleType(){
         return angleType;
