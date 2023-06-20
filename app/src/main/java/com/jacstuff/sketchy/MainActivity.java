@@ -42,6 +42,7 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.controls.settings.menu.ConnectedLineIconModifier;
+import com.jacstuff.sketchy.fragments.ColorSettingsDialogFragment;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
@@ -507,4 +508,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.apply();
     }
 
+
+    public void startColorSettingsFragment(){
+        String tag = "colorSettings";
+        Bundle bundle = new Bundle();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        removePreviousFragmentTransaction(tag, fragmentTransaction);
+        ColorSettingsDialogFragment colorSettingsDialogFragment = ColorSettingsDialogFragment.newInstance();
+        colorSettingsDialogFragment.setArguments(bundle);
+        colorSettingsDialogFragment.show(fragmentTransaction, tag);
+    }
+
+
+    private void removePreviousFragmentTransaction(String tag, FragmentTransaction fragmentTransaction){
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(tag);
+        if (prev != null) {
+            fragmentTransaction.remove(prev);
+        }
+        fragmentTransaction.addToBackStack(null);
+    }
 }

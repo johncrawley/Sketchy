@@ -56,10 +56,13 @@ public class MenuButtonsConfigurator
         buttonConfig.add(R.id.placementButton, R.drawable.button_placement_normal,  R.id.includePlacementControls);
 
         buttonConfig.setParentLayout(activity.getColorButtonLayoutCreator().getMultiShadesLayout());
+
         buttonConfig.addFirst(R.id.colorConfigButton,
                 R.drawable.button_color_config,
                 R.id.includeColorConfigControls,
-                activity.getColorButtonLayoutParams());
+                activity.getColorButtonLayoutParams(),
+                ()-> activity.startColorSettingsFragment());
+
 
         buttonConfig.setupClickHandler();
         layoutIds = buttonConfig.getEntries();

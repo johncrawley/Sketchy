@@ -63,7 +63,7 @@ public class AngleHelper {
 
     public void setFineAngle(int fineAngle){
         angleType = AngleType.OTHER;
-        this.currentAngle = currentFineAngle;
+        this.currentFineAngle = fineAngle;
         viewModel.fineAngle = fineAngle;
     }
 
@@ -80,7 +80,7 @@ public class AngleHelper {
 
     public float getFineAngle(){
         if(angleType == AngleType.OTHER){
-            float angle = ((float)currentAngle) + (currentFineAngle / 10f);
+            float angle = ((float)currentAngle) + (((float)currentFineAngle)/ 10f);
             System.out.println("fine angle: " + angle);
             return angle;
         }

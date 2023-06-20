@@ -73,9 +73,17 @@ public class ButtonConfigHandler<T>{
     }
 
 
-    public void addFirst(int id, int drawableId,  T action, ButtonLayoutParams buttonLayoutParams ){
+    public void addFirst(int id, int drawableId,  T action, ButtonLayoutParams buttonLayoutParams, Runnable onClickRunnable){
         add(id, action);
-        LinearLayout wrappedButton = buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams, this::handleClick);
+        LinearLayout wrappedButton = buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams, (View v) -> onClickRunnable.run() );
+        linearLayout.addView(wrappedButton, 0);
+    }
+
+
+
+    public void addFirst(int id, int drawableId,  T action, ButtonLayoutParams buttonLayoutParams){
+        add(id, action);
+        LinearLayout wrappedButton = buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams, this::handleClick );
         linearLayout.addView(wrappedButton, 0);
     }
 
