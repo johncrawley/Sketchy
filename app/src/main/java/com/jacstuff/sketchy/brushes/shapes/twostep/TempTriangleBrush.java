@@ -8,31 +8,55 @@ import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
-import com.jacstuff.sketchy.brushes.shapes.drawer.TwoStepDrawer;
+import com.jacstuff.sketchy.brushes.shapes.drawer.ArbitraryTriangleDrawer;
 import com.jacstuff.sketchy.brushes.shapes.initializer.DragRectInitializer;
 import com.jacstuff.sketchy.utils.MathUtils;
 
-public class CurvedLineBrush extends AbstractTwoStepBrush implements Brush, TwoStepBrush{
+
+public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, TwoStepBrush {
 
     float downX, downY, upX, upY;
     private float lineMidpointX, lineMidpointY;
     final Path path;
+    private float thirdPointX, thirdPointY;
 
 
-    public CurvedLineBrush() {
-        super(BrushShape.CURVE);
+    public TempTriangleBrush() {
+        super(BrushShape.TRIANGLE_ARBITRARY);
         brushInitializer = new DragRectInitializer();
         path = new Path();
         isDrawnFromCenter = false;
         resetState();
+        setBrushShape(BrushShape.TRIANGLE_ARBITRARY);
     }
 
 
     @Override
     public void postInit(){
         super.postInit();
-        this.drawer = new TwoStepDrawer(paintView, mainViewModel, this);
+        this.drawer = new ArbitraryTriangleDrawer(paintView, mainViewModel, this);
         drawer.init();
+    }
+
+
+
+    void drawShape(float x, float y, float offsetX, float offsetY, Paint paint){
+        thirdPointX = x;
+        thirdPointY = y;
+        path.reset();
+        path.moveTo(downX - offsetX, downY - offsetY);
+        path.lineTo(thirdPointX -offsetX,thirdPointY - offsetY);
+        path.lineTo(upX -offsetX, upY - offsetY);
+        path.close();
+        canvas.drawPath(path, paint);
+    }
+
+
+    public PointF getShapeMidPoint(){
+        PointF point = new PointF();
+        point.x = (downX + upX + thirdPointX) /3;
+        point.y = (downY + upY + thirdPointY) / 3;
+        return point;
     }
 
 
@@ -91,38 +115,12 @@ public class CurvedLineBrush extends AbstractTwoStepBrush implements Brush, TwoS
     }
 
 
-    @Override
     public PointF getLineMidPoint() {
-       PointF p = new PointF();
-       p.x = lineMidpointX;
-       p.y = lineMidpointY;
-       return p;
+        PointF p = new PointF();
+        p.x = lineMidpointX;
+        p.y = lineMidpointY;
+        return p;
     }
 
-
-    @Override
-    public PointF getShapeMidPoint() {
-        return null;
-    }
-
-
-    void drawShape(float x, float y, float offsetX, float offsetY, Paint paint){
-        path.reset();
-        path.moveTo(downX - offsetX, downY - offsetY);
-        PointF point = getModifiedPoint(x,y);
-        path.quadTo( point.x - offsetX, point.y - offsetY, upX - offsetX, upY - offsetY);
-        canvas.drawPath(path, paint);
-    }
-
-
-    private PointF getModifiedPoint(float x, float y){
-        PointF point = new PointF();
-        float distance = MathUtils.getDistance(x,y, lineMidpointX, lineMidpointY);
-        float d = distance == 0 ? 1 : distance;
-
-        point.x = x + (d * (x - lineMidpointX))/distance;
-        point.y = y + (d * (y - lineMidpointY))/distance;
-        return point;
-    }
 
 }

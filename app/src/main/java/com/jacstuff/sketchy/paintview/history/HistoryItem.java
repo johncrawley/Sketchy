@@ -10,6 +10,8 @@ public class HistoryItem {
     private PointF connectedLinePreviousDown;
     private final int savedOrientation;
     private boolean hasFirstLineBeenDrawn;
+    private PointF connectedTrianglePoint1, connectedTrianglePoint2, connectedTrianglePoint3;
+    private boolean hasFirstTriangleBeenDrawn;
 
     public HistoryItem(Bitmap bitmap, int savedOrientation, MainViewModel viewModel){
         this.bitmap = bitmap;
@@ -34,8 +36,21 @@ public class HistoryItem {
     }
 
     public void assignSavedStateTo(MainViewModel viewModel){
+        assignLineStateToViewModel(viewModel);
+        assignTriangleStateToViewModel(viewModel);
+    }
+
+    private void assignLineStateToViewModel(MainViewModel viewModel){
         viewModel.nextLineDownX = connectedLinePreviousDown.x;
         viewModel.nextLineDownY = connectedLinePreviousDown.y;
         viewModel.hasFirstLineBeenDrawn = this.hasFirstLineBeenDrawn;
+    }
+
+
+    private void assignTriangleStateToViewModel(MainViewModel viewModel){
+        viewModel.variableTrianglePoint1 = connectedTrianglePoint1;
+        viewModel.variableTrianglePoint2 = connectedTrianglePoint2;
+        viewModel.variableTrianglePoint3 = connectedTrianglePoint3;
+        viewModel.hasFirstTriangleBeenDrawn = this.hasFirstTriangleBeenDrawn;
     }
 }

@@ -1,6 +1,8 @@
 package com.jacstuff.sketchy.viewmodel;
 
 import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 
 import com.jacstuff.sketchy.controls.ButtonCategory;
@@ -145,6 +147,11 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public boolean hasFirstLineBeenDrawn = false;
     public boolean isConnectedLinesModeEnabled = false;
     public float nextLineDownX, nextLineDownY;
+
+
+    public boolean isConnectedTrianglesModeEnabled = false;
+    public PointF variableTrianglePoint1, variableTrianglePoint2, variableTrianglePoint3;
+    public boolean hasFirstTriangleBeenDrawn = false;
 
 
     public MainViewModel(){
