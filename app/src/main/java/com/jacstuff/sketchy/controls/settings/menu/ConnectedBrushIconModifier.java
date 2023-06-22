@@ -9,19 +9,24 @@ import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.history.DrawHistory;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-public class ConnectedLineIconModifier {
+public class ConnectedBrushIconModifier  {
 
     private Button shapeButton;
     private final PaintView paintView;
     private final MainViewModel viewModel;
     private DrawHistory drawHistory;
     private final MainActivity activity;
+    private final ConnectedBrushState connectedBrushState;
+    private int normalIconResId, connectedIconResId;
+    private BrushShape currentBrushShape;
 
 
-    public ConnectedLineIconModifier(PaintView paintView, MainViewModel viewModel, MainActivity activity){
+    public ConnectedBrushIconModifier(PaintView paintView, MainViewModel viewModel, MainActivity activity, ConnectedBrushState connectedBrushState, BrushShape brushShape){
         this.paintView = paintView;
         this.viewModel = viewModel;
         this.activity = activity;
+        this.connectedBrushState = connectedBrushState;
+        this.currentBrushShape = brushShape;
     }
 
 
@@ -36,18 +41,37 @@ public class ConnectedLineIconModifier {
         }
     }
 
+    public void assignNormalIconId(int normalIconResId){
+        this.normalIconResId = normalIconResId;
+    }
+
+
+    public void assignConnectedIconResId(int connectedIconResId){
+        this.connectedIconResId = connectedIconResId;
+    }
+
 
     public void setConnectedIconAndState(){
-        if(viewModel.isConnectedLinesModeEnabled){
-            viewModel.hasFirstLineBeenDrawn = true;
-            shapeButton.setBackgroundResource(R.drawable.button_shape_line_connected);
+        if(connectedBrushState.isConnectedModeEnabled){
+            connectedBrushState.hasFirstItemBeenDrawn = true;
+            switchToConnectedIcon();
         }
+    }
+
+
+    private void switchToNormalIcon(){
+        shapeButton.setBackgroundResource(normalIconResId);
+    }
+
+
+    private void switchToConnectedIcon(){
+        shapeButton.setBackgroundResource(connectedIconResId);
     }
 
 
     public void resetIconAndState(){
         viewModel.hasFirstLineBeenDrawn = false;
-        assignDefaultLineIconToShapeButton();
+        assignDefaultIconToShapeButton();
     }
 
 
@@ -65,7 +89,7 @@ public class ConnectedLineIconModifier {
 
 
     public void updateLineIconBackground(){
-        if(!isUsingLineBrush()){
+        if(!isUsingCurrentBrush()){
             return;
         }
         if(isUsingLineShapeInConnectedMode()){
@@ -74,28 +98,28 @@ public class ConnectedLineIconModifier {
                 return;
             }
         }
-        assignDefaultLineIconToShapeButton();
+        assignDefaultIconToShapeButton();
     }
 
 
     void revertIconAndState(){
         viewModel.hasFirstLineBeenDrawn = false;
         drawHistory.updateNewestItemWithState();
-        assignDefaultLineIconToShapeButton();
+        assignDefaultIconToShapeButton();
     }
 
 
-    private void assignDefaultLineIconToShapeButton(){
-        if(isUsingLineBrush()){
-            shapeButton.setBackgroundResource(R.drawable.button_shape_line);
+    private void assignDefaultIconToShapeButton(){
+        if(isUsingCurrentBrush()){
+            switchToNormalIcon();
         }
     }
 
 
-    private boolean isUsingLineBrush(){
+    private boolean isUsingCurrentBrush(){
         return paintView != null
                 && paintView.getCurrentBrush() != null
-                && paintView.getCurrentBrush().getBrushShape() == BrushShape.LINE;
+                && paintView.getCurrentBrush().getBrushShape() == currentBrushShape;
     }
 
 

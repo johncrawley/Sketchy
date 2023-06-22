@@ -1,10 +1,18 @@
 package com.jacstuff.sketchy.utils;
 
 import android.graphics.Point;
+import android.graphics.PointF;
 
 public class MathUtils {
 
     public static float getDistance(Point p1, Point p2){
+        double ac = Math.abs(p2.y - p1.y);
+        double cb = Math.abs(p2.x - p1.x);
+        return (float)Math.hypot(ac, cb);
+    }
+
+
+    public static float getDistance(PointF p1, PointF p2){
         double ac = Math.abs(p2.y - p1.y);
         double cb = Math.abs(p2.x - p1.x);
         return (float)Math.hypot(ac, cb);

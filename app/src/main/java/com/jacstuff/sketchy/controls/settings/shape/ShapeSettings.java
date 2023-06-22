@@ -113,7 +113,6 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
                 R.integer.color_transparency_default,
                 progress -> paintHelperManager.getColorHelper().updateTransparency(progress));
 
-
         seekBarConfigurator.configure(R.id.randomShapeVerticesSeekBar,
                 R.integer.brush_random_vertices_default,
                 progress -> {
@@ -128,7 +127,6 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
                     paintView.recalculateBrush();
                 } );
 
-
         seekBarConfigurator.configure(R.id.triangleHeightSeekBar,
                 R.integer.brush_triangle_height_default,
                 progress -> {
@@ -142,7 +140,6 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
                     viewModel.crazySpiralType = progress;
                     paintView.recalculateBrush();
                 } );
-
 
         seekBarConfigurator.configure(R.id.arcStartingAngleSeekBar,
                 R.integer.brush_arc_starting_angle_default,
