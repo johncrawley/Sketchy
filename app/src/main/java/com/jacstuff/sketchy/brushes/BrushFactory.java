@@ -36,6 +36,7 @@ import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.WavyLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.XBrush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
+import com.jacstuff.sketchy.brushes.shapes.twostep.TempTriangleBrush;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.StyleHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -119,6 +120,7 @@ public class BrushFactory {
         add(new TrapezoidBrush());
         add(new ParallelogramBrush());
         add(new ArbitraryTriangleBrush());
+       // add(new TempTriangleBrush());
         add(new RandomBrush());
         add(new SpiralBrush());
         add(new CrazySpiralBrush());
