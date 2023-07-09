@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 
+import com.jacstuff.sketchy.brushes.shapes.twostep.TrianglePoints;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.colorbuttons.ShadeStore;
 import com.jacstuff.sketchy.controls.settings.placement.PlacementType;
@@ -152,6 +153,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public boolean isConnectedTrianglesModeEnabled = true; //TODO: default should be false
     public PointF variableTrianglePoint1, variableTrianglePoint2, variableTrianglePoint3;
     public boolean hasFirstTriangleBeenDrawn = false;
+    public TrianglePoints trianglePoints = new TrianglePoints();
 
 
     public MainViewModel(){

@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.paintview.history;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 
+import com.jacstuff.sketchy.brushes.shapes.twostep.TrianglePoints;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class HistoryItem {
@@ -12,6 +13,7 @@ public class HistoryItem {
     private boolean hasFirstLineBeenDrawn;
     private PointF connectedTrianglePoint1, connectedTrianglePoint2, connectedTrianglePoint3;
     private boolean hasFirstTriangleBeenDrawn;
+    private TrianglePoints trianglePoints;
 
     public HistoryItem(Bitmap bitmap, int savedOrientation, MainViewModel viewModel){
         this.bitmap = bitmap;
@@ -33,6 +35,7 @@ public class HistoryItem {
     public void updateViewModelState(MainViewModel viewModel){
         this.connectedLinePreviousDown = new PointF(viewModel.nextLineDownX, viewModel.nextLineDownY);
         this.hasFirstLineBeenDrawn = viewModel.hasFirstLineBeenDrawn;
+        this.trianglePoints = viewModel.trianglePoints;
     }
 
     public void assignSavedStateTo(MainViewModel viewModel){
@@ -52,5 +55,6 @@ public class HistoryItem {
         viewModel.variableTrianglePoint2 = connectedTrianglePoint2;
         viewModel.variableTrianglePoint3 = connectedTrianglePoint3;
         viewModel.hasFirstTriangleBeenDrawn = this.hasFirstTriangleBeenDrawn;
+        viewModel.trianglePoints = this.trianglePoints;
     }
 }

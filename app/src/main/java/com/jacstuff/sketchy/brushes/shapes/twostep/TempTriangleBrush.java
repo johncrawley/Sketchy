@@ -23,6 +23,7 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
     private float lineMidpointX, lineMidpointY;
     final Path path;
     private float thirdPointX, thirdPointY;
+    private PointF closestPoint1AtTouchDown, closestPoint2AtTouchDown;
 
 
     public TempTriangleBrush() {
@@ -43,31 +44,6 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
     }
 
 
-    void drawShape(float x, float y, float offsetX, float offsetY, Paint paint){
-        thirdPointX = x;
-        thirdPointY = y;
-        float firstPointX = downX - offsetX;
-        float firstPointY = downY - offsetY;
-
-        float secondPointX = upX - offsetX;
-        float secondPointY = upY - offsetY;
-        mainViewModel.variableTrianglePoint1 = new PointF(downX, downY);
-        mainViewModel.variableTrianglePoint2 = new PointF(upX, upY);
-        mainViewModel.variableTrianglePoint2 = new PointF(thirdPointX, thirdPointY);
-
-        path.reset();
-        path.moveTo(firstPointX, firstPointY);
-        path.lineTo(thirdPointX -offsetX,thirdPointY - offsetY);
-        path.lineTo(upX -offsetX, upY - offsetY);
-        path.close();
-        canvas.drawPath(path, paint);
-        setFirstTrianglePoint(firstPointX, firstPointY);
-        setSecondTrianglePoint(secondPointX, secondPointY);
-        setThirdTrianglePoint(thirdPointX -offsetX,thirdPointY - offsetY);
-        mainViewModel.hasFirstLineBeenDrawn = true;
-    }
-
-
     public PointF getShapeMidPoint(){
         PointF point = new PointF();
         point.x = (downX + upX + thirdPointX) /3;
@@ -83,15 +59,18 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
         upX = 0;
         upY = 0;
         resetState();
+        mainViewModel.hasFirstTriangleBeenDrawn = false;
+        mainViewModel.trianglePoints.reset();
+        closestPoint1AtTouchDown = null;
+        closestPoint2AtTouchDown = null;
     }
 
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
-     //   if(mainViewModel.isConnectedTrianglesModeEnabled && mainViewModel.hasFirstTriangleBeenDrawn){
         if(mainViewModel.hasFirstTriangleBeenDrawn){
+            assignClosestPoints(new PointF(p.x, p.y));
             setStateTo(StepState.SECOND);
-
         }
         if (stepState == StepState.FIRST) {
             downX = p.x;
@@ -104,7 +83,8 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
     public void onTouchMove(float x, float y, Paint paint) {
         if(stepState == StepState.SECOND){
             if(mainViewModel.isConnectedTrianglesModeEnabled && mainViewModel.hasFirstTriangleBeenDrawn){
-                drawShapeWithExistingPoints(getLatestTriangle(new PointF(x,y)), paint);
+                //drawShapeWithExistingPoints(getLatestTriangle(new PointF(x,y)), paint);
+                drawShapeWithClosestPoints(x,y, paint);
                 return;
             }
             drawShape(x, y, 0,0, paint);
@@ -129,19 +109,68 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
 
     @Override
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint) {
-        if(stepState == StepState.SECOND){
-            if(mainViewModel.isConnectedTrianglesModeEnabled ){
-                Triangle triangle = getLatestTriangle(new PointF(x,y));
-                drawShapeWithExistingPoints(triangle, paint);
-                saveTrianglePointsToViewModel(triangle);
-                log("onTouchUp() in second state, about to set hasFirstTriangleBeenDrawn on view model");
-                mainViewModel.hasFirstTriangleBeenDrawn = true;
-                return;
-            }
-            drawShape(x, y, offsetX, offsetY, paint);
+        if(stepState == StepState.FIRST){
+            onTouchUpForFirstState(x,y, paint);
             return;
         }
-        onTouchUpForFirstState(x,y, paint);
+        onTouchUpSecondState(x,y, offsetX, offsetY, paint);
+    }
+
+
+    private void onTouchUpForFirstState(float x, float y, Paint paint){
+        canvas.drawLine(downX, downY, x, y, paint);
+        upX = x;
+        upY = y;
+        lineMidpointX = ((upX + downX) /2);
+        lineMidpointY = ((upY + downY) /2);
+    }
+
+
+    private void onTouchUpSecondState(float x, float y, float offsetX, float offsetY, Paint paint){
+        saveTrianglePoints(x, y);
+        if(mainViewModel.isConnectedTrianglesModeEnabled && closestPoint2AtTouchDown != null){
+            Triangle triangle = getLatestTriangle(new PointF(x,y));
+            //drawShapeWithExistingPoints(triangle, paint);
+            drawShapeWithClosestPoints(x,y , paint);
+            saveTrianglePointsToViewModel(triangle);
+            mainViewModel.hasFirstTriangleBeenDrawn = true;
+            return;
+        }
+        drawShape(x, y, offsetX, offsetY, paint);
+        mainViewModel.hasFirstTriangleBeenDrawn = true;
+    }
+
+
+    private void saveTrianglePoints(float x, float y){
+        mainViewModel.trianglePoints.addPoints(new PointF(downX, downY),
+                new PointF(x, y),
+                new PointF(upX, upY));
+    }
+
+
+    private void drawShape(float x, float y, float offsetX, float offsetY, Paint paint){
+        thirdPointX = x;
+        thirdPointY = y;
+        float firstPointX = downX - offsetX;
+        float firstPointY = downY - offsetY;
+
+        float secondPointX = upX - offsetX;
+        float secondPointY = upY - offsetY;
+        mainViewModel.variableTrianglePoint1 = new PointF(downX, downY);
+        mainViewModel.variableTrianglePoint2 = new PointF(upX, upY);
+        mainViewModel.variableTrianglePoint2 = new PointF(thirdPointX, thirdPointY);
+
+        path.reset();
+        path.moveTo(firstPointX, firstPointY);
+        path.lineTo(thirdPointX -offsetX,thirdPointY - offsetY);
+        path.lineTo(upX -offsetX, upY - offsetY);
+        path.close();
+        canvas.drawPath(path, paint);
+        setFirstTrianglePoint(firstPointX, firstPointY);
+        setSecondTrianglePoint(secondPointX, secondPointY);
+        setThirdTrianglePoint(thirdPointX -offsetX,thirdPointY - offsetY);
+        mainViewModel.hasFirstLineBeenDrawn = true;
+
     }
 
 
@@ -151,7 +180,19 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
         path.lineTo(triangle.getPoint2().x, triangle.getPoint2().y);
         path.lineTo(triangle.getPoint3().x, triangle.getPoint3().y);
         path.close();
-        log("path: " + path);
+        canvas.drawPath(path, paint);
+    }
+
+
+    void drawShapeWithClosestPoints(float x, float y, Paint paint){
+        path.reset();
+        log("drawShapeWithClosestPoints() p1: " + closestPoint1AtTouchDown.x + "," + closestPoint1AtTouchDown.y
+                + " p2: " + closestPoint2AtTouchDown
+              + " p3: " + x + "," + y);
+        path.moveTo(closestPoint1AtTouchDown.x, closestPoint1AtTouchDown.y);
+        path.lineTo(closestPoint2AtTouchDown.x, closestPoint2AtTouchDown.y);
+        path.lineTo(x, y);
+        path.close();
         canvas.drawPath(path, paint);
     }
 
@@ -165,15 +206,6 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
 
     private void log(String msg){
         System.out.println("^^^ TempTriangleBrush: " +  msg);
-    }
-
-
-    private void onTouchUpForFirstState(float x, float y, Paint paint){
-        canvas.drawLine(downX, downY, x, y, paint);
-        upX = x;
-        upY = y;
-        lineMidpointX = ((upX + downX) /2);
-        lineMidpointY = ((upY + downY) /2);
     }
 
 
@@ -208,17 +240,19 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
 
 
     public Triangle getLatestTriangle(PointF latestThirdPoint){
-        boolean isLatestThirdPointNull = latestThirdPoint == null;
-        log("Entered getLatestTriangle() is latest 3rd point null: " + isLatestThirdPointNull);
-        Triangle oldTriangle = getOldTriangle();
-        boolean oldPoint1IsNull = oldTriangle.getPoint1() == null;
-        boolean oldPoint2IsNull = oldTriangle.getPoint1() == null;
-        boolean oldPoint3IsNull = oldTriangle.getPoint1() == null;
-        log("old triangle points are null: " + oldPoint2IsNull + " "  + oldPoint2IsNull + " " +  oldPoint3IsNull);
-       List<PointF> newTrianglePoints = getClosestTwoTrianglePointsToLatestPoint(getOldTriangle(), latestThirdPoint);
-       return new Triangle(latestThirdPoint,
-               newTrianglePoints.get(0),
-               newTrianglePoints.get(1));
+        List<PointF> newTrianglePoints = getClosestTwoTrianglePointsToLatestPoint(getOldTriangle(), latestThirdPoint);
+        return new Triangle(latestThirdPoint,
+                newTrianglePoints.get(0),
+                newTrianglePoints.get(1));
+    }
+
+
+    private void assignClosestPoints(PointF latestThirdPoint){
+        log("Entered assignClosestPoints");
+        List<PointF> closesTrianglePoints = mainViewModel.trianglePoints.getNearestPointsTo(latestThirdPoint);
+        closestPoint1AtTouchDown =  closesTrianglePoints.get(0);
+        closestPoint2AtTouchDown = closesTrianglePoints.get(1);
+
     }
 
 
@@ -229,6 +263,7 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
                 .limit(2)
                 .collect(Collectors.toList());
     }
+
 
 
     class Triangle {

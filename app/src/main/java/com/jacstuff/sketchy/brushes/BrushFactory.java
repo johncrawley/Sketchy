@@ -119,8 +119,8 @@ public class BrushFactory {
         add(new PointedOvalBrush());
         add(new TrapezoidBrush());
         add(new ParallelogramBrush());
-        add(new ArbitraryTriangleBrush());
-       // add(new TempTriangleBrush());
+       // add(new ArbitraryTriangleBrush());
+       add(new TempTriangleBrush());
         add(new RandomBrush());
         add(new SpiralBrush());
         add(new CrazySpiralBrush());
