@@ -18,6 +18,10 @@ public class TrianglePoints {
         recentPoints = new ArrayDeque<>(MAX_NUMBER_OF_POINTS);
     }
 
+    public TrianglePoints(TrianglePoints existingTrianglePoints){
+        recentPoints = new ArrayDeque<>(existingTrianglePoints.getAllPoints());
+    }
+
 
     public void addPoints(PointF ...points){
         if(recentPoints.size() >= MAX_NUMBER_OF_POINTS){
@@ -32,6 +36,11 @@ public class TrianglePoints {
 
     public void reset(){
         recentPoints.clear();
+    }
+
+
+    private ArrayDeque<PointF> getAllPoints(){
+        return recentPoints;
     }
 
 

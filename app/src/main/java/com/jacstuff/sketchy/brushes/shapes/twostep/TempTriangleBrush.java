@@ -10,11 +10,8 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.ArbitraryTriangleDrawer;
 import com.jacstuff.sketchy.brushes.shapes.initializer.DragRectInitializer;
-import com.jacstuff.sketchy.utils.MathUtils;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, TwoStepBrush {
@@ -94,13 +91,6 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
     }
 
 
-    private Triangle getOldTriangle(){
-        return new Triangle(mainViewModel.variableTrianglePoint1,
-                mainViewModel.variableTrianglePoint2,
-                mainViewModel.variableTrianglePoint3);
-    }
-
-
     @Override
     public void onTouchUp(float x, float y, Paint paint) {
         onTouchUp(x, y, 0,0, paint);
@@ -129,10 +119,7 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
     private void onTouchUpSecondState(float x, float y, float offsetX, float offsetY, Paint paint){
         saveTrianglePoints(x, y);
         if(mainViewModel.isConnectedTrianglesModeEnabled && closestPoint2AtTouchDown != null){
-            Triangle triangle = getLatestTriangle(new PointF(x,y));
-            //drawShapeWithExistingPoints(triangle, paint);
             drawShapeWithClosestPoints(x,y , paint);
-            saveTrianglePointsToViewModel(triangle);
             mainViewModel.hasFirstTriangleBeenDrawn = true;
             return;
         }
@@ -149,38 +136,22 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
 
 
     private void drawShape(float x, float y, float offsetX, float offsetY, Paint paint){
-        thirdPointX = x;
-        thirdPointY = y;
+        thirdPointX = x - offsetX;
+        thirdPointY = y - offsetY;
         float firstPointX = downX - offsetX;
         float firstPointY = downY - offsetY;
 
         float secondPointX = upX - offsetX;
         float secondPointY = upY - offsetY;
-        mainViewModel.variableTrianglePoint1 = new PointF(downX, downY);
-        mainViewModel.variableTrianglePoint2 = new PointF(upX, upY);
-        mainViewModel.variableTrianglePoint2 = new PointF(thirdPointX, thirdPointY);
 
         path.reset();
         path.moveTo(firstPointX, firstPointY);
         path.lineTo(thirdPointX -offsetX,thirdPointY - offsetY);
-        path.lineTo(upX -offsetX, upY - offsetY);
+        path.lineTo(secondPointX, secondPointY);
         path.close();
         canvas.drawPath(path, paint);
-        setFirstTrianglePoint(firstPointX, firstPointY);
-        setSecondTrianglePoint(secondPointX, secondPointY);
-        setThirdTrianglePoint(thirdPointX -offsetX,thirdPointY - offsetY);
         mainViewModel.hasFirstLineBeenDrawn = true;
 
-    }
-
-
-    void drawShapeWithExistingPoints(Triangle triangle, Paint paint){
-        path.reset();
-        path.moveTo(triangle.getPoint1().x, triangle.getPoint1().y);
-        path.lineTo(triangle.getPoint2().x, triangle.getPoint2().y);
-        path.lineTo(triangle.getPoint3().x, triangle.getPoint3().y);
-        path.close();
-        canvas.drawPath(path, paint);
     }
 
 
@@ -197,32 +168,9 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
     }
 
 
-    private void saveTrianglePointsToViewModel(Triangle triangle){
-        mainViewModel.variableTrianglePoint1 = triangle.getPoint1();
-        mainViewModel.variableTrianglePoint2 = triangle.getPoint2();
-        mainViewModel.variableTrianglePoint3 = triangle.getPoint3();
-    }
-
-
     private void log(String msg){
         System.out.println("^^^ TempTriangleBrush: " +  msg);
     }
-
-
-    private void setFirstTrianglePoint(float x, float y){
-        mainViewModel.variableTrianglePoint1 = new PointF(x,y);
-    }
-
-
-    private void setSecondTrianglePoint(float x, float y){
-        mainViewModel.variableTrianglePoint2 = new PointF(x,y);
-    }
-
-
-    private void setThirdTrianglePoint(float x, float y){
-        mainViewModel.variableTrianglePoint3 = new PointF(x,y);
-    }
-
 
 
     @Override
@@ -239,14 +187,6 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
     }
 
 
-    public Triangle getLatestTriangle(PointF latestThirdPoint){
-        List<PointF> newTrianglePoints = getClosestTwoTrianglePointsToLatestPoint(getOldTriangle(), latestThirdPoint);
-        return new Triangle(latestThirdPoint,
-                newTrianglePoints.get(0),
-                newTrianglePoints.get(1));
-    }
-
-
     private void assignClosestPoints(PointF latestThirdPoint){
         log("Entered assignClosestPoints");
         List<PointF> closesTrianglePoints = mainViewModel.trianglePoints.getNearestPointsTo(latestThirdPoint);
@@ -256,41 +196,5 @@ public class TempTriangleBrush extends AbstractTwoStepBrush  implements Brush, T
     }
 
 
-    private List<PointF> getClosestTwoTrianglePointsToLatestPoint(Triangle oldTriangle, PointF latestPoint){
-        return oldTriangle.getPoints()
-                .stream()
-                .sorted((p1,p2) -> Float.compare(MathUtils.getDistance(p1, latestPoint), MathUtils.getDistance(p2, latestPoint)))
-                .limit(2)
-                .collect(Collectors.toList());
-    }
-
-
-
-    class Triangle {
-
-        final PointF point1, point2, point3;
-        public Triangle(PointF point1, PointF point2, PointF point3){
-            this.point1 = point1;
-            this.point2 = point2;
-            this.point3 = point3;
-        }
-
-        public PointF getPoint1(){
-            return point1;
-        }
-
-        public PointF getPoint2(){
-            return point2;
-        }
-
-        public PointF getPoint3(){
-            return point3;
-        }
-
-        public List<PointF> getPoints(){
-            return Arrays.asList(point1, point2, point3);
-        }
-
-    }
 
 }

@@ -151,7 +151,6 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
 
 
     public boolean isConnectedTrianglesModeEnabled = true; //TODO: default should be false
-    public PointF variableTrianglePoint1, variableTrianglePoint2, variableTrianglePoint3;
     public boolean hasFirstTriangleBeenDrawn = false;
     public TrianglePoints trianglePoints = new TrianglePoints();
 
