@@ -17,6 +17,7 @@ public class TempTriangleBrush extends CurvedLineBrush {
 
     final Path path;
     private float thirdPointX, thirdPointY;
+    private boolean hasAlreadyDrawnOnce = false; // used to prevent repeated saves and calculations for each segment of a kaleidoscope
 
 
     public TempTriangleBrush() {
@@ -60,6 +61,7 @@ public class TempTriangleBrush extends CurvedLineBrush {
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
+        hasAlreadyDrawnOnce = false;
         if(mainViewModel.hasFirstTriangleBeenDrawn){
             assignClosestPointsForConnectTriangle(new PointF(p.x, p.y));
             setStateTo(StepState.SECOND);
@@ -74,7 +76,7 @@ public class TempTriangleBrush extends CurvedLineBrush {
     @Override
     public void onTouchMove(float x, float y, Paint paint) {
         if(stepState == StepState.SECOND){
-            drawShape(x, y, 0,0, paint);
+            drawTriangle(x, y, 0,0, paint);
             return;
         }
         canvas.drawLine(downX, downY, x, y, paint);
@@ -105,20 +107,30 @@ public class TempTriangleBrush extends CurvedLineBrush {
 
 
     private void onTouchUpSecondState(float x, float y, float offsetX, float offsetY, Paint paint){
-        saveTrianglePoints(x, y);
-        drawShape(x, y, offsetX, offsetY, paint);
+        if(!hasAlreadyDrawnOnce) {
+            saveTrianglePoints();
+            reassignThirdPointIfNearbyExistingPoint(x, y);
+            hasAlreadyDrawnOnce = true;
+        }
+        drawTriangle(thirdPointX, thirdPointY, offsetX, offsetY, paint);
         mainViewModel.hasFirstTriangleBeenDrawn = true;
     }
 
 
-    private void saveTrianglePoints(float x, float y){
+    private void saveTrianglePoints(){
         mainViewModel.trianglePoints.addPoints(new PointF(downX, downY),
-                new PointF(x, y),
                 new PointF(upX, upY));
     }
 
 
-    void drawShape(float x, float y, float offsetX, float offsetY, Paint paint){
+    private void reassignThirdPointIfNearbyExistingPoint(float x, float y){
+        PointF adjustedPoint = mainViewModel.trianglePoints.getClosePointOrAddToExisting(new PointF(x,y));
+        thirdPointX = adjustedPoint.x;
+        thirdPointY = adjustedPoint.y;
+    }
+
+
+    void drawTriangle(float x, float y, float offsetX, float offsetY, Paint paint){
         thirdPointX = x;
         thirdPointY = y;
         float firstPointX = downX - offsetX;

@@ -48,6 +48,7 @@ public class BitmapLoader {
         Rect src = new Rect(0,0, bitmapToDraw.getWidth(), bitmapToDraw.getHeight());
         Rect dest = createCanvasRect();
         canvas.drawBitmap(bitmapToDraw, src, dest, drawPaint);
+        System.out.println("BitmapLoader.drawBitmapToScale: history bitmap dimensions: " + bitmapToDraw.getWidth() + "," + bitmapToDraw.getHeight() + " paintView max dimensions: " + largestCanvasWidthForPortrait + ", " + largestCanvasHeightForPortrait);
     }
 
 

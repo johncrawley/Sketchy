@@ -106,7 +106,7 @@ public class CurvedLineBrush extends AbstractTwoStepBrush implements Brush, TwoS
     }
 
 
-    void drawShape(float x, float y, float offsetX, float offsetY, Paint paint){
+    private void drawShape(float x, float y, float offsetX, float offsetY, Paint paint){
         path.reset();
         path.moveTo(downX - offsetX, downY - offsetY);
         PointF point = getModifiedPoint(x,y);

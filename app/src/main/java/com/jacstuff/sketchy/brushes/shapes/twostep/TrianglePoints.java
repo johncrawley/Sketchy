@@ -7,6 +7,7 @@ import com.jacstuff.sketchy.utils.MathUtils;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class TrianglePoints {
@@ -30,7 +31,6 @@ public class TrianglePoints {
         for(PointF p : points){
            addPoint(p);
         }
-        printPoints();
     }
 
 
@@ -44,17 +44,6 @@ public class TrianglePoints {
     }
 
 
-    private void log(String msg){
-        System.out.println("^^^ TrianglePoints: " + msg);
-    }
-
-    private void printPoints(){
-        log("Entered printPoints() *******************");
-        for(PointF p: recentPoints){
-            log(" ---> " + p);
-        }
-    }
-
     private void addPoint(PointF p){
         for(PointF existingPoint : recentPoints){
             if(p.x == existingPoint.x && p.y == existingPoint.y){
@@ -62,6 +51,17 @@ public class TrianglePoints {
             }
         }
         recentPoints.addFirst(p);
+    }
+
+
+    public PointF getClosePointOrAddToExisting(PointF originalPoint){
+        final float threshold = 40f;
+        Optional<PointF> result = recentPoints.parallelStream().filter(p -> MathUtils.getDistance(p, originalPoint) < threshold).findFirst();
+        if(result.isPresent()){
+            return result.get();
+        }
+        addPoint(originalPoint);
+        return originalPoint;
     }
 
 

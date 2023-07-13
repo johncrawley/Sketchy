@@ -25,7 +25,6 @@ public class ArbitraryTriangleBrush extends CurvedLineBrush {
     }
 
 
-    @Override
     void drawShape(float x, float y, float offsetX, float offsetY, Paint paint){
         thirdPointX = x;
         thirdPointY = y;
