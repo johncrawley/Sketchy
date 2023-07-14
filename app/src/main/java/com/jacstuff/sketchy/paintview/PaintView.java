@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.jacstuff.sketchy.controls.settings.menu.ConnectedLineIconModifier;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.helpers.SensitivityHelper;
 import com.jacstuff.sketchy.paintview.history.DrawHistory;

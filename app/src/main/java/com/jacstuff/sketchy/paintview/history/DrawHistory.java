@@ -5,10 +5,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.controls.settings.menu.ConnectedLineIconModifier;
+import com.jacstuff.sketchy.controls.settings.menu.ConnectedBrushIconModifier;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.ArrayDeque;
+import java.util.List;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
@@ -18,13 +19,13 @@ public class DrawHistory {
     private final Context context;
     private ArrayDeque<HistoryItem> history;
     private final MainViewModel viewModel;
-    private final ConnectedLineIconModifier connectedLineIconModifier;
+    private final List<ConnectedBrushIconModifier> iconModifiers;
 
 
-    public DrawHistory(Context context, MainViewModel viewModel, ConnectedLineIconModifier connectedLineIconModifier){
+    public DrawHistory(Context context, MainViewModel viewModel, List<ConnectedBrushIconModifier> iconModifiers){
         this.context = context;
         this.viewModel = viewModel;
-        this.connectedLineIconModifier = connectedLineIconModifier;
+        this.iconModifiers = iconModifiers;
         history = new ArrayDeque<>(50);
     }
 
@@ -118,8 +119,15 @@ public class DrawHistory {
             return null;
         }
         historyItem.assignSavedStateTo(viewModel);
-        connectedLineIconModifier.updateLineIconBackground();
+        updateIcons();
         return historyItem;
+    }
+
+
+    private void updateIcons(){
+        for(ConnectedBrushIconModifier iconModifier:  iconModifiers){
+            iconModifier.updateIcon();
+        }
     }
 
 

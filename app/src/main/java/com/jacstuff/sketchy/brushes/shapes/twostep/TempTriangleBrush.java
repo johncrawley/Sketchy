@@ -145,7 +145,7 @@ public class TempTriangleBrush extends CurvedLineBrush {
         path.lineTo(secondPointX, secondPointY);
         path.close();
         canvas.drawPath(path, paint);
-        mainViewModel.hasFirstLineBeenDrawn = true;
+        mainViewModel.hasFirstTriangleBeenDrawn = true;
     }
 
 

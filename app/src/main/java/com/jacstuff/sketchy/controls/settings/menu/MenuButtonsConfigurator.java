@@ -12,6 +12,7 @@ import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 import com.jacstuff.sketchy.utils.ActivityUtils;
 
+import java.util.List;
 import java.util.Set;
 
 public class MenuButtonsConfigurator
@@ -20,8 +21,6 @@ public class MenuButtonsConfigurator
 
     private Set<Integer> layoutIds;
     private final SettingsPopup settingsPopup;
-    private ConnectedLineIconModifier connectedLineIconModifier;
-
 
     public MenuButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity, paintView);
@@ -67,17 +66,23 @@ public class MenuButtonsConfigurator
         buttonConfig.setupClickHandler();
         layoutIds = buttonConfig.getEntries();
         buttonConfig.setDefaultSelection(R.id.shapeButton);
-        connectedLineIconModifier = activity.getConnectLineIconModifier();
-        connectedLineIconModifier.assignShapeButton();
+
+        iconModifiers = activity.getIconModifiers();
+        for(ConnectedBrushIconModifier iconModifier : iconModifiers){
+            iconModifier.assignShapeButton();
+        }
     }
 
+    private List<ConnectedBrushIconModifier> iconModifiers;
 
     @Override
     public void handleClick(int viewId, Integer layoutId) {
         hideAllPanels();
-        if(connectedLineIconModifier.isShapeButtonAndInConnectedLineMode(viewId)){
-            connectedLineIconModifier.revertIconAndState();
-            return;
+        for(ConnectedBrushIconModifier iconModifier : iconModifiers){
+            if(iconModifier.isShapeButtonAndInConnectedMode(viewId)){
+                iconModifier.revertIconAndState();
+                return;
+            }
         }
 
         if(settingsPopup != null) {

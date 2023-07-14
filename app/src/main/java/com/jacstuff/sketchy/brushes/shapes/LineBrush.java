@@ -22,11 +22,11 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-        if(!mainViewModel.hasFirstLineBeenDrawn) {
+        if(!mainViewModel.connectedLineState.hasFirstItemBeenDrawn) {
             xDown = p.x;
             yDown = p.y;
         }
-        else if(mainViewModel.isConnectedLinesModeEnabled){
+        else if(mainViewModel.connectedLineState.isConnectedModeEnabled){
             xDown = mainViewModel.nextLineDownX;
             yDown = mainViewModel.nextLineDownY;
         }

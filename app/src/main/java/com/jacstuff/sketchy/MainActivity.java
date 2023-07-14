@@ -34,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.jacstuff.sketchy.brushes.BrushFactory;
+import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
@@ -41,7 +42,7 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonLayoutCreator;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
-import com.jacstuff.sketchy.controls.settings.menu.ConnectedLineIconModifier;
+import com.jacstuff.sketchy.controls.settings.menu.ConnectedBrushIconModifier;
 import com.jacstuff.sketchy.fragments.ColorSettingsDialogFragment;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
@@ -60,7 +61,9 @@ import com.jacstuff.sketchy.ui.SettingsPopup;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -86,8 +89,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ColorPickerSeekBarConfigurator colorPickerSeekBarConfigurator;
     private String currentPhotoPath;
     private DrawHistory drawHistory;
-    private ConnectedLineIconModifier connectedLineIconModifier;
+    private ConnectedBrushIconModifier connectedLineIconModifier;
     private Map<Integer, Runnable> menuActions;
+    private List<ConnectedBrushIconModifier> iconModifiers;
 
 
     @Override
@@ -289,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public ConnectedLineIconModifier getConnectLineIconModifier(){
+    public ConnectedBrushIconModifier getConnectLineIconModifier(){
         return connectedLineIconModifier;
     }
 
@@ -334,8 +338,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupPaintViewAndDefaultSelections(){
         paintView = findViewById(R.id.paintView);
-       connectedLineIconModifier = new ConnectedLineIconModifier(paintView, viewModel, MainActivity.this);
-        drawHistory = new DrawHistory(MainActivity.this, viewModel, connectedLineIconModifier);
+        setupIconModifiers();
+        drawHistory = new DrawHistory(MainActivity.this, viewModel, iconModifiers);
         connectedLineIconModifier.setDrawHistory(drawHistory);
         BrushFactory brushFactory = new BrushFactory(this);
         final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
@@ -350,6 +354,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         colorPickerSeekBarConfigurator.setupOnCreation(R.id.gradientColorPickerSeekBar);
         colorPickerSeekBarConfigurator.setupOnCreation(R.id.shadowColorPickerSeekBar);
+    }
+
+
+    private void setupIconModifiers(){
+        iconModifiers = new ArrayList<>();
+        connectedLineIconModifier = new ConnectedBrushIconModifier(this, viewModel.connectedLineState, BrushShape.LINE);
+        connectedLineIconModifier.assignConnectedIconResId(R.drawable.button_shape_line_connected);
+        connectedLineIconModifier.assignNormalIconId(R.drawable.button_shape_line);
+        iconModifiers.add(connectedLineIconModifier);
+    }
+
+
+    public List<ConnectedBrushIconModifier> getIconModifiers(){
+        return iconModifiers;
     }
 
 

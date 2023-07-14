@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import com.jacstuff.sketchy.brushes.shapes.twostep.TrianglePoints;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.colorbuttons.ShadeStore;
+import com.jacstuff.sketchy.controls.settings.menu.ConnectedBrushState;
 import com.jacstuff.sketchy.controls.settings.placement.PlacementType;
 import com.jacstuff.sketchy.paintview.helpers.gradient.GradientColorType;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
@@ -145,13 +146,13 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
 
     public Map<Integer, Drawable> buttonDrawableMap;
 
-    public boolean hasFirstLineBeenDrawn = false;
-    public boolean isConnectedLinesModeEnabled = false;
+    public ConnectedBrushState connectedLineState = new ConnectedBrushState();
     public float nextLineDownX, nextLineDownY;
 
 
     public boolean isConnectedTrianglesModeEnabled = true; //TODO: default should be false
     public boolean hasFirstTriangleBeenDrawn = false;
+    public ConnectedBrushState connectedTriangleState = new ConnectedBrushState();
     public TrianglePoints trianglePoints = new TrianglePoints();
 
 
