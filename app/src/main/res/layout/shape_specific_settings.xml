@@ -36,12 +36,18 @@
         layout="@layout/settings_panel_brush_triangle" />
 
     <include
+        android:id="@+id/settingsPanelArbitraryTriangleBrushInclude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        layout="@layout/settings_panel_brush_arbitrary_triangle" />
+
+    <include
         android:id="@+id/settingsPanelLineBrushInclude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
         layout="@layout/settings_panel_brush_line" />
-
 
 
     <include

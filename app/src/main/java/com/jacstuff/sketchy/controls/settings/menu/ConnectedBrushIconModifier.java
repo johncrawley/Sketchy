@@ -12,7 +12,6 @@ public class ConnectedBrushIconModifier  {
 
     private Button shapeButton;
     private final PaintView paintView;
-    private DrawHistory drawHistory;
     private final MainActivity activity;
     private final ConnectedBrushState connectedBrushState;
     private int normalIconResId, connectedIconResId;
@@ -27,17 +26,15 @@ public class ConnectedBrushIconModifier  {
     }
 
 
-    public void setDrawHistory(DrawHistory drawHistory){
-        this.drawHistory = drawHistory;
-    }
-
-
     public void assignShapeButton(){
         if(shapeButton == null) {
             shapeButton = activity.findViewById(R.id.shapeButton);
         }
     }
 
+    public BrushShape getBrushShape(){
+        return currentBrushShape;
+    }
 
     public void assignNormalIconId(int normalIconResId){
         this.normalIconResId = normalIconResId;
@@ -102,7 +99,8 @@ public class ConnectedBrushIconModifier  {
 
     void revertIconAndState(){
         connectedBrushState.hasFirstItemBeenDrawn = false;
-        drawHistory.updateNewestItemWithState();
+        paintView.getDrawHistory().updateNewestItemWithState();
+        paintView.getCurrentBrush().reset();
         assignDefaultIconToShapeButton();
     }
 

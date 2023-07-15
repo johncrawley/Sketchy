@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ColorPickerSeekBarConfigurator colorPickerSeekBarConfigurator;
     private String currentPhotoPath;
     private DrawHistory drawHistory;
-    private ConnectedBrushIconModifier connectedLineIconModifier;
+    private ConnectedBrushIconModifier connectedLineIconModifier, connectedTriangleIconModifier;
     private Map<Integer, Runnable> menuActions;
     private List<ConnectedBrushIconModifier> iconModifiers;
 
@@ -293,11 +293,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public ConnectedBrushIconModifier getConnectLineIconModifier(){
-        return connectedLineIconModifier;
-    }
-
-
     public void toast(int resId) {
         toaster.toast(resId);
     }
@@ -340,7 +335,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintView = findViewById(R.id.paintView);
         setupIconModifiers();
         drawHistory = new DrawHistory(MainActivity.this, viewModel, iconModifiers);
-        connectedLineIconModifier.setDrawHistory(drawHistory);
         BrushFactory brushFactory = new BrushFactory(this);
         final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -359,6 +353,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupIconModifiers(){
         iconModifiers = new ArrayList<>();
+        initLineIconModifier();
+        initTriangleIconModifier();
+    }
+
+    private void initLineIconModifier(){
         connectedLineIconModifier = new ConnectedBrushIconModifier(this, viewModel.connectedLineState, BrushShape.LINE);
         connectedLineIconModifier.assignConnectedIconResId(R.drawable.button_shape_line_connected);
         connectedLineIconModifier.assignNormalIconId(R.drawable.button_shape_line);
@@ -366,8 +365,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    private void initTriangleIconModifier(){
+        connectedTriangleIconModifier = new ConnectedBrushIconModifier(this, viewModel.connectedTriangleState, BrushShape.TRIANGLE_ARBITRARY);
+        connectedTriangleIconModifier.assignConnectedIconResId(R.drawable.button_shape_line_connected);
+        connectedTriangleIconModifier.assignNormalIconId(R.drawable.button_shape_triangle_arbitrary);
+        iconModifiers.add(connectedTriangleIconModifier);
+    }
+
+
     public List<ConnectedBrushIconModifier> getIconModifiers(){
         return iconModifiers;
+    }
+
+
+    public ConnectedBrushIconModifier getConnectedLineIconModifier(){
+        return connectedLineIconModifier;
+    }
+
+
+    public ConnectedBrushIconModifier getConnectedTriangleIconModifier(){
+        return connectedTriangleIconModifier;
     }
 
 

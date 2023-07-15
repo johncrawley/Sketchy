@@ -14,7 +14,7 @@ public class AbstractTwoStepBrush extends AbstractBrush {
         return stepState == StepState.FIRST;
     }
 
-    public void resetState(){
+    public void resetStepState(){
         stepState = StepState.FIRST;
     }
 

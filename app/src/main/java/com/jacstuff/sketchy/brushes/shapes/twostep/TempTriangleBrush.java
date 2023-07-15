@@ -18,6 +18,7 @@ public class TempTriangleBrush extends CurvedLineBrush {
     final Path path;
     private float thirdPointX, thirdPointY;
     private boolean hasAlreadyDrawnOnce = false; // used to prevent repeated saves and calculations for each segment of a kaleidoscope
+    private PointF adjustedThirdPoint;
 
 
     public TempTriangleBrush() {
@@ -26,7 +27,7 @@ public class TempTriangleBrush extends CurvedLineBrush {
         brushInitializer = new DragRectInitializer();
         path = new Path();
         isDrawnFromCenter = false;
-        resetState();
+        resetStepState();
         setBrushShape(BrushShape.TRIANGLE_ARBITRARY);
     }
 
@@ -53,19 +54,16 @@ public class TempTriangleBrush extends CurvedLineBrush {
         downY = 0;
         upX = 0;
         upY = 0;
-        resetState();
-        mainViewModel.hasFirstTriangleBeenDrawn = false;
+        resetStepState();
+        mainViewModel.connectedTriangleState.hasFirstItemBeenDrawn = false;
+        mainActivity.getConnectedTriangleIconModifier().resetIconAndState();
         mainViewModel.trianglePoints.reset();
     }
 
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
-        hasAlreadyDrawnOnce = false;
-        if(mainViewModel.hasFirstTriangleBeenDrawn){
-            assignClosestPointsForConnectTriangle(new PointF(p.x, p.y));
-            setStateTo(StepState.SECOND);
-        }
+        brushDownForConnectedMode(p);
         if (stepState == StepState.FIRST) {
             downX = p.x;
             downY = p.y;
@@ -73,10 +71,24 @@ public class TempTriangleBrush extends CurvedLineBrush {
     }
 
 
+    private void brushDownForConnectedMode(Point p){
+        hasAlreadyDrawnOnce = false;
+        if(isInConnectedMode() && mainViewModel.connectedTriangleState.hasFirstItemBeenDrawn){
+            assignClosestPointsForConnectTriangle(new PointF(p.x, p.y));
+            setStateTo(StepState.SECOND);
+        }
+    }
+
+
+    private boolean isInConnectedMode(){
+        return mainViewModel.connectedTriangleState.isConnectedModeEnabled;
+    }
+
+
     @Override
     public void onTouchMove(float x, float y, Paint paint) {
         if(stepState == StepState.SECOND){
-            drawTriangle(x, y, 0,0, paint);
+            drawTriangle(new PointF(x, y), 0,0, paint);
             return;
         }
         canvas.drawLine(downX, downY, x, y, paint);
@@ -95,7 +107,7 @@ public class TempTriangleBrush extends CurvedLineBrush {
             onTouchUpForFirstState(x,y, paint);
             return;
         }
-        onTouchUpSecondState(x,y, offsetX, offsetY, paint);
+        onTouchUpSecondState(new PointF(x,y), offsetX, offsetY, paint);
     }
 
 
@@ -106,14 +118,24 @@ public class TempTriangleBrush extends CurvedLineBrush {
     }
 
 
-    private void onTouchUpSecondState(float x, float y, float offsetX, float offsetY, Paint paint){
-        if(!hasAlreadyDrawnOnce) {
-            saveTrianglePoints();
-            reassignThirdPointIfNearbyExistingPoint(x, y);
-            hasAlreadyDrawnOnce = true;
+    private void onTouchUpSecondState(PointF point, float offsetX, float offsetY, Paint paint){
+        if(isInConnectedMode()){
+            onTouchUpSecondStateConnected(point, offsetX, offsetY, paint);
+            return;
         }
-        drawTriangle(thirdPointX, thirdPointY, offsetX, offsetY, paint);
-        mainViewModel.hasFirstTriangleBeenDrawn = true;
+        drawTriangle(point, offsetX, offsetY, paint);
+    }
+
+
+    private void onTouchUpSecondStateConnected(PointF originalPoint, float offsetX, float offsetY, Paint paint){
+        if(!hasAlreadyDrawnOnce){
+            mainActivity.getConnectedTriangleIconModifier().setConnectedIconAndState();
+            saveTrianglePoints();
+            hasAlreadyDrawnOnce = true;
+            adjustedThirdPoint = mainViewModel.trianglePoints.getClosePointOrAddToExisting(originalPoint);
+            mainViewModel.connectedTriangleState.hasFirstItemBeenDrawn = true;
+        }
+        drawTriangle(adjustedThirdPoint, offsetX, offsetY, paint);
     }
 
 
@@ -123,16 +145,9 @@ public class TempTriangleBrush extends CurvedLineBrush {
     }
 
 
-    private void reassignThirdPointIfNearbyExistingPoint(float x, float y){
-        PointF adjustedPoint = mainViewModel.trianglePoints.getClosePointOrAddToExisting(new PointF(x,y));
-        thirdPointX = adjustedPoint.x;
-        thirdPointY = adjustedPoint.y;
-    }
-
-
-    void drawTriangle(float x, float y, float offsetX, float offsetY, Paint paint){
-        thirdPointX = x;
-        thirdPointY = y;
+    void drawTriangle(PointF thirdPoint, float offsetX, float offsetY, Paint paint){
+        thirdPointX = thirdPoint.x;
+        thirdPointY = thirdPoint.y;
         float firstPointX = downX - offsetX;
         float firstPointY = downY - offsetY;
 
@@ -145,8 +160,8 @@ public class TempTriangleBrush extends CurvedLineBrush {
         path.lineTo(secondPointX, secondPointY);
         path.close();
         canvas.drawPath(path, paint);
-        mainViewModel.hasFirstTriangleBeenDrawn = true;
     }
+
 
 
     @Override
@@ -156,7 +171,7 @@ public class TempTriangleBrush extends CurvedLineBrush {
 
 
     private void assignClosestPointsForConnectTriangle(PointF latestThirdPoint){
-        if(!mainViewModel.isConnectedTrianglesModeEnabled){
+        if(!mainViewModel.connectedTriangleState.isConnectedModeEnabled){
             return;
         }
         List<PointF> closesTrianglePoints = mainViewModel.trianglePoints.getNearestPointsTo(latestThirdPoint);

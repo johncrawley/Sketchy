@@ -149,9 +149,6 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public ConnectedBrushState connectedLineState = new ConnectedBrushState();
     public float nextLineDownX, nextLineDownY;
 
-
-    public boolean isConnectedTrianglesModeEnabled = true; //TODO: default should be false
-    public boolean hasFirstTriangleBeenDrawn = false;
     public ConnectedBrushState connectedTriangleState = new ConnectedBrushState();
     public TrianglePoints trianglePoints = new TrianglePoints();
 

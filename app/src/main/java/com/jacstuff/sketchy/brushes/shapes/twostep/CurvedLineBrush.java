@@ -24,7 +24,8 @@ public class CurvedLineBrush extends AbstractTwoStepBrush implements Brush, TwoS
         brushInitializer = new DragRectInitializer();
         path = new Path();
         isDrawnFromCenter = false;
-        resetState();
+        resetStepState();
+
     }
 
 
@@ -42,7 +43,7 @@ public class CurvedLineBrush extends AbstractTwoStepBrush implements Brush, TwoS
         downY = 0;
         upX = 0;
         upY = 0;
-        resetState();
+        resetStepState();
     }
 
 

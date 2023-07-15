@@ -41,7 +41,7 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint) {
-        mainActivity.getConnectLineIconModifier().setConnectedIconAndState();
+        mainActivity.getConnectedLineIconModifier().setConnectedIconAndState();
         canvas.drawLine(xDown - offsetX,
                 yDown - offsetY,
                 x - offsetX,
@@ -66,6 +66,6 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void reset(){
-        mainActivity.getConnectLineIconModifier().resetIconAndState();
+        mainActivity.getConnectedLineIconModifier().resetIconAndState();
     }
 }

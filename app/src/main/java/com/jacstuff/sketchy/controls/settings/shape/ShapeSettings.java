@@ -93,6 +93,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         subPanelManager.add(R.id.triangleShapeButton, R.id.settingsPanelTriangleBrushInclude);
         subPanelManager.add(R.id.lineShapeButton, R.id.settingsPanelLineBrushInclude);
         subPanelManager.add(R.id.arcShapeButton, R.id.settingsPanelArcBrushInclude);
+        subPanelManager.add(R.id.triangleArbitraryShapeButton, R.id.settingsPanelArbitraryTriangleBrushInclude);
     }
 
 
@@ -156,7 +157,11 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         setupSwitch(R.id.rectangleSnapToEdgesSwitch, b -> viewModel.isRectangleSnappedToEdges = b);
         setupSwitch(R.id.randomBrushMorphEnabledSwitch, b -> viewModel.doesRandomBrushMorph = b);
         setupSwitch(R.id.crazySpiralAltModeEnabledSwitch, b -> viewModel.isCrazySpiralAltModeEnabled = b);
-        setupSwitch(R.id.connectedLineModeEnabled, b -> viewModel.connectedLineState.isConnectedModeEnabled = b);
+        setupSwitch(R.id.connectedLineModeEnabledSwitch, b -> viewModel.connectedLineState.isConnectedModeEnabled = b);
         setupSwitch(R.id.arcBrushDrawFromCentre, b -> viewModel.isArcShapeDrawnFromCentre = b);
+        setupSwitch(R.id.connectedTriangleModeEnabledSwitch, b ->  {
+            viewModel.connectedTriangleState.isConnectedModeEnabled = b;
+            viewModel.trianglePoints.reset();
+        });
     }
 }

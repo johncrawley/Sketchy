@@ -21,6 +21,7 @@ public class MenuButtonsConfigurator
 
     private Set<Integer> layoutIds;
     private final SettingsPopup settingsPopup;
+    private List<ConnectedBrushIconModifier> iconModifiers;
 
     public MenuButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity, paintView);
@@ -73,15 +74,16 @@ public class MenuButtonsConfigurator
         }
     }
 
-    private List<ConnectedBrushIconModifier> iconModifiers;
 
     @Override
     public void handleClick(int viewId, Integer layoutId) {
         hideAllPanels();
         for(ConnectedBrushIconModifier iconModifier : iconModifiers){
             if(iconModifier.isShapeButtonAndInConnectedMode(viewId)){
-                iconModifier.revertIconAndState();
-                return;
+                if(paintView.getCurrentBrush().getBrushShape()== iconModifier.getBrushShape()) {
+                    iconModifier.revertIconAndState();
+                    return;
+                }
             }
         }
 

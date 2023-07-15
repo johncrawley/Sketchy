@@ -11,8 +11,8 @@ public class HistoryItem {
     private final Bitmap bitmap;
     private PointF connectedLinePreviousDown;
     private final int savedOrientation;
-    private boolean hasFirstTriangleBeenDrawn;
     private ConnectedBrushState connectedLineState;
+    private ConnectedBrushState connectedTriangleState;
     private TrianglePoints trianglePoints;
 
     public HistoryItem(Bitmap bitmap, int savedOrientation, MainViewModel viewModel){
@@ -34,9 +34,9 @@ public class HistoryItem {
 
     public void updateViewModelState(MainViewModel viewModel){
         this.connectedLinePreviousDown = new PointF(viewModel.nextLineDownX, viewModel.nextLineDownY);
-        this.connectedLineState = viewModel.connectedLineState;
+        this.connectedLineState = new ConnectedBrushState(viewModel.connectedLineState);
+        this.connectedTriangleState = new ConnectedBrushState(viewModel.connectedTriangleState);
         this.trianglePoints = new TrianglePoints(viewModel.trianglePoints);
-        this.hasFirstTriangleBeenDrawn = viewModel.hasFirstTriangleBeenDrawn;
     }
 
 
@@ -49,12 +49,12 @@ public class HistoryItem {
     private void assignLineStateToViewModel(MainViewModel viewModel){
         viewModel.nextLineDownX = connectedLinePreviousDown.x;
         viewModel.nextLineDownY = connectedLinePreviousDown.y;
-        viewModel.connectedLineState = this.connectedLineState;
+        viewModel.connectedLineState = new ConnectedBrushState(this.connectedLineState);
     }
 
 
     private void assignTriangleStateToViewModel(MainViewModel viewModel){
-        viewModel.hasFirstTriangleBeenDrawn = this.hasFirstTriangleBeenDrawn;
+        viewModel.connectedTriangleState = new ConnectedBrushState(this.connectedTriangleState);
         viewModel.trianglePoints = this.trianglePoints;
     }
 }

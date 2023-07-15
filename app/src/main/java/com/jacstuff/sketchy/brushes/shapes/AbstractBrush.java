@@ -28,7 +28,7 @@ public abstract class AbstractBrush implements Brush{
     BrushShape brushShape;
     public Drawer drawer;
     public MainViewModel mainViewModel;
-    MainActivity mainActivity;
+    protected MainActivity mainActivity;
     public PaintView paintView;
     protected DrawerFactory.Type drawerType;
     public BrushInitializer brushInitializer;

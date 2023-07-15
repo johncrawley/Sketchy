@@ -213,6 +213,7 @@
     <string name="brush_crazy_spiral_alt_mode_switch_label">Alternative Mode</string>
     <string name="brush_arc_draw_from_centre_switch_label">Draw From Centre</string>
     <string name="brush_line_connected_mode_switch_label">Connect Lines</string>
+    <string name="brush_arbitrary_triangle_connected_mode_switch_label">Connect Triangles</string>
     <string name="enable_quantization_label">Enable Quantization for x and y</string>
     <string name="lock_quantization_label">Lock Spacing</string>
     <string name="quantization_include_line_width_label">Include line Width</string>
