@@ -6,6 +6,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 
 import androidx.core.util.Consumer;
@@ -53,6 +55,14 @@ public class SettingsUtils {
         };
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(itemSelectedListener);
+    }
+
+
+    public static void setupSwitch(View parentView, int switchId, Consumer<Boolean> consumer){
+        SwitchMaterial switchMaterial = parentView.findViewById(switchId);
+        switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) ->{
+            consumer.accept(isChecked);
+        });
     }
 
 }
