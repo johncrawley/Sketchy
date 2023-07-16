@@ -6,7 +6,6 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.history.DrawHistory;
 
 public class ConnectedBrushIconModifier  {
 

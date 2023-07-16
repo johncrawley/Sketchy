@@ -13,7 +13,7 @@ import com.jacstuff.sketchy.brushes.shapes.initializer.DragRectInitializer;
 import java.util.List;
 
 
-public class TempTriangleBrush extends CurvedLineBrush {
+public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
     final Path path;
     private float thirdPointX, thirdPointY;
@@ -21,7 +21,7 @@ public class TempTriangleBrush extends CurvedLineBrush {
     private PointF adjustedThirdPoint;
 
 
-    public TempTriangleBrush() {
+    public ArbitraryConnectedTriangleBrush() {
         super();
         setBrushShape(BrushShape.TRIANGLE_ARBITRARY);
         brushInitializer = new DragRectInitializer();
