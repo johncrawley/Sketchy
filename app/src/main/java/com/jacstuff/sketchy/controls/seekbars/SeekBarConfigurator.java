@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.controls.seekbars;
 
+import android.view.View;
 import android.widget.SeekBar;
 
 import com.jacstuff.sketchy.MainActivity;
@@ -30,6 +31,30 @@ public class SeekBarConfigurator {
     }
 
 
+    public void configureForFragment(View parentView,
+                                     int seekBarId,
+                                     int defaultProgress,
+                                     Consumer<Integer> progressFinishedConsumer) {
+        configureForFragment(parentView, seekBarId, defaultProgress, progressFinishedConsumer, null, null);
+    }
+
+
+    public void configureForFragment(View parentView,
+                                     int seekBarId,
+                                     int defaultProgress,
+                                     Consumer<Integer> progressFinishedConsumer,
+                                     Consumer<Integer> progressConsumer,
+                                     Consumer<Integer> progressStartedConsumer){
+
+        SeekBar seekBar = parentView.findViewById(seekBarId);
+        if(seekBar == null){
+            return;
+        }
+        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
+        seekBar.setProgress(defaultProgress);
+    }
+
+
     public void configure(int seekBarId,
                           int defaultResourceId,
                           Consumer<Integer> progressFinishedConsumer,
@@ -39,7 +64,6 @@ public class SeekBarConfigurator {
         SeekBar seekBar = activity.findViewById(seekBarId);
         viewModel = activity.getViewModel();
         if(seekBar == null){
-            System.out.println("WARNING - SEEK BAR not found!");
             return;
         }
         seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer));

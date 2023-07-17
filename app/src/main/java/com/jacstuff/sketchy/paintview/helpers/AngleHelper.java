@@ -80,9 +80,7 @@ public class AngleHelper {
 
     public float getFineAngle(){
         if(angleType == AngleType.OTHER){
-            float angle = ((float)currentAngle) + (((float)currentFineAngle)/ 10f);
-            System.out.println("fine angle: " + angle);
-            return angle;
+            return ((float)currentAngle) + (((float)currentFineAngle)/ 10f);
         }
         if(angleType.isIncremental()
                 || angleType == AngleType.RANDOM){

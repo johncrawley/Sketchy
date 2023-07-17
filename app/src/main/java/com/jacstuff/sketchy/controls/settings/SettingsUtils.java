@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.controls.settings;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,8 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 
 import androidx.core.util.Consumer;
+
+import java.util.function.BiConsumer;
 
 public class SettingsUtils {
 
@@ -34,6 +37,36 @@ public class SettingsUtils {
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(itemSelectedListener);
     }
+
+
+    public static void setupSpinner(Context context, View parentView, int spinnerId, int itemsArrayId, int selectedPosition, final BiConsumer<String, Integer> paintAction){
+        Spinner spinner = parentView.findViewById(spinnerId);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+                itemsArrayId, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        log("setupSpinner(Context...) array adapter count: " + adapter.getCount());
+        AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = (String)adapterView.getItemAtPosition(i);
+                paintAction.accept(item, i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        };
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(itemSelectedListener);
+        spinner.setSelection(selectedPosition);
+    }
+
+
+    private static void log(String msg){
+        System.out.println("^^^ SettingsUtils: " + msg);
+    }
+
 
 
     public static void setupSpinnerWithLabels(Activity activity, int spinnerId, int itemsArrayId, int valuesArrayId, final Consumer<String> paintAction){

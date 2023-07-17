@@ -15,9 +15,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
-import com.jacstuff.sketchy.controls.settings.ButtonConfigHandler;
 import com.jacstuff.sketchy.controls.settings.ButtonsConfigurator;
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.multicolor.ColorSequenceType;
@@ -53,6 +51,8 @@ public class ColorSettingsDialogFragment extends DialogFragment implements Butto
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        configure();
+        initSequenceTypeMap();
     }
 
 
@@ -65,12 +65,13 @@ public class ColorSettingsDialogFragment extends DialogFragment implements Butto
         paintHelperManager = mainActivity.getPaintHelperManager();
         viewModel = mainActivity.getViewModel();
         seekBarConfigurator = new SeekBarConfigurator(mainActivity);
-        ButtonConfigHandler<Void> buttonConfig = new ButtonConfigHandler<>(mainActivity, this, ButtonCategory.COLOR_CONFIG, R.id.colorConfigLayout);
+        //ButtonConfigHandler<Void> buttonConfig = new ButtonConfigHandler<>(mainActivity, this, ButtonCategory.COLOR_CONFIG, R.id.colorConfigLayout);
 
-        setupSeekBars();
-        setupSpinners(mainActivity);
-        setupSwitches(getView());
-        buttonConfig.setParentButton(R.id.colorMenuButton);
+        View parentView = getView();
+        setupSeekBars(parentView);
+        setupSpinners(mainActivity, parentView);
+        setupSwitches(parentView);
+       // buttonConfig.setParentButton(R.id.colorMenuButton);
     }
 
 
@@ -85,15 +86,19 @@ public class ColorSettingsDialogFragment extends DialogFragment implements Butto
     }
 
 
-    private void setupSpinners(MainActivity activity){
-        setupSpinner(activity,
+    private void setupSpinners(MainActivity activity, View parentView){
+
+        setupSpinner(getContext(), parentView,
                 R.id.colorSequenceTypeSpinner,
                 R.array.color_sequence_type_array,
-                x -> {
-                    ColorSequenceType type = sequenceTypeMap.get(x);
+                viewModel.getColorSequenceControls().colorSequenceSpinnerSavedPosition,
+                (str, i ) -> {
+                    ColorSequenceType type = sequenceTypeMap.get(str);
                     activity.getPaintHelperManager().getColorHelper().getAllColorsSequenceSelector().setSequenceType(type);
                     setVisibilityOnBlendSeekBar(activity, type);
+                    viewModel.getColorSequenceControls().colorSequenceSpinnerSavedPosition = i;
                 } );
+
     }
 
 
@@ -107,14 +112,22 @@ public class ColorSettingsDialogFragment extends DialogFragment implements Butto
         }
     }
 
+    private void log(String msg){
+        System.out.println("^^^ ColorSettingsDialogFragment: " + msg);
+    }
 
-    private void setupSeekBars(){
+
+    private void setupSeekBars(View parentView){
         SequenceColorSelector allColorsSequenceSelector = paintHelperManager.getColorHelper().getAllColorsSequenceSelector();
         ColorSelector shadeColorSelector = paintHelperManager.getColorHelper().getShadeColorSelector();
 
-        seekBarConfigurator.configure( R.id.multiShadeBrightnessSeekBar,
-                R.integer.seek_bar_multi_shade_brightness_default,
-                progress -> viewModel.getColorSequenceControls().multiShadeBrightnessPercentage = Math.max(1, progress));
+        seekBarConfigurator.configureForFragment( parentView, R.id.multiShadeBrightnessSeekBar,
+                viewModel.getColorSequenceControls().multiShadeBrightnessPercentage,
+                progress -> {
+                    viewModel.getColorSequenceControls().multiShadeBrightnessPercentage = Math.max(1, progress);
+                    log("multishadebrightness seek bar adjusted to  : " + progress);
+
+                } );
 
         seekBarConfigurator.configure(R.id.colorSequenceMaxIndexSeekBar,
                 R.integer.seek_bar_color_sequence_max_range_default,
