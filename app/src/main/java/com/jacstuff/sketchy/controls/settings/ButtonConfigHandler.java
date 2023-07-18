@@ -79,6 +79,11 @@ public class ButtonConfigHandler<T>{
         linearLayout.addView(wrappedButton, 0);
     }
 
+    public void addFirst(int id, int drawableId, ButtonLayoutParams buttonLayoutParams, Runnable onClickRunnable){
+        LinearLayout wrappedButton = buttonUtils.createWrappedButton(id, drawableId, buttonLayoutParams, (View v) -> onClickRunnable.run() );
+        linearLayout.addView(wrappedButton, 0);
+    }
+
 
 
     public void addFirst(int id, int drawableId,  T action, ButtonLayoutParams buttonLayoutParams){

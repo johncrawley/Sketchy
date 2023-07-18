@@ -8,8 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.R;
 
 import androidx.core.util.Consumer;
 
@@ -46,7 +44,6 @@ public class SettingsUtils {
                 itemsArrayId, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        log("setupSpinner(Context...) array adapter count: " + adapter.getCount());
         AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -61,12 +58,6 @@ public class SettingsUtils {
         spinner.setOnItemSelectedListener(itemSelectedListener);
         spinner.setSelection(selectedPosition);
     }
-
-
-    private static void log(String msg){
-        System.out.println("^^^ SettingsUtils: " + msg);
-    }
-
 
 
     public static void setupSpinnerWithLabels(Activity activity, int spinnerId, int itemsArrayId, int valuesArrayId, final Consumer<String> paintAction){
@@ -93,9 +84,7 @@ public class SettingsUtils {
 
     public static void setupSwitch(View parentView, int switchId, Consumer<Boolean> consumer){
         SwitchMaterial switchMaterial = parentView.findViewById(switchId);
-        switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) ->{
-            consumer.accept(isChecked);
-        });
+        switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> consumer.accept(isChecked));
     }
 
 }

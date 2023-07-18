@@ -106,6 +106,9 @@ public class SequenceColorSelector implements ColorSelector {
 
     private int calculateNextBlendTargetColor(){
         calculateNextRandomIndex();
+        if(colors == null){
+            return 0;
+        }
         return colors.get(currentIndex);
     }
 

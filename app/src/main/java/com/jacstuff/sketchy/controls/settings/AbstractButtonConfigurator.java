@@ -1,10 +1,7 @@
 package com.jacstuff.sketchy.controls.settings;
 
-import android.view.View;
-
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
@@ -58,9 +55,7 @@ public abstract class AbstractButtonConfigurator<T> implements SelectableDefault
 
     public void setupSwitch(int switchId, Consumer<Boolean> consumer){
         SwitchMaterial switchMaterial = activity.findViewById(switchId);
-        switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) ->{
-            consumer.accept(isChecked);
-        });
+        switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> consumer.accept(isChecked));
     }
 
 

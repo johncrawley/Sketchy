@@ -14,6 +14,8 @@ public class AngleSettings extends AbstractButtonConfigurator<AngleType> impleme
     private Button parentButton;
     private ButtonUtils buttonUtils;
 
+
+
     public AngleSettings(MainActivity activity, PaintView paintView){
         super(activity,paintView);
     }
@@ -60,10 +62,8 @@ public class AngleSettings extends AbstractButtonConfigurator<AngleType> impleme
 
 
     private void configureSeekBar(){
-
         buttonUtils = new ButtonUtils(activity);
         parentButton = activity.findViewById(R.id.angleButton);
-
         seekBarConfigurator.configure(R.id.angleSeekBar,
                 R.integer.angle_default,
                 null,

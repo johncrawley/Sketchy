@@ -36,8 +36,6 @@ public class ColorButtonLayoutCreator {
     private LinearLayout colorButtonGroupLayout, colorButtonParentLayout, multiShadeButtonLayout;
     private final ColorButtonClickHandler colorButtonClickHandler;
 
-
-
     public ColorButtonLayoutCreator(MainActivity mainActivity, ButtonLayoutParams buttonLayoutParams, ColorButtonClickHandler colorButtonClickHandler){
         this.context = mainActivity.getApplicationContext();
         this.activity = mainActivity;
@@ -241,14 +239,18 @@ public class ColorButtonLayoutCreator {
         String key = buttonUtils.createColorKey(color, ButtonType.COLOR);
         Button button = buttonUtils.createButton(color, ButtonType.COLOR, key);
         addLongClickEditListenerTo(button, index);
+        setTagOnButton(button, key);
+        return button;
+    }
 
+
+    private void setTagOnButton(Button button, String key){
         if(defaultColor.equals(key)){
             button.setTag(R.string.tag_button_default_color);
         }
         else{
             button.setTag(R.string.tag_button_color_button);
         }
-        return button;
     }
 
 

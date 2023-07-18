@@ -59,7 +59,6 @@ public class MenuButtonsConfigurator
 
         buttonConfig.addFirst(R.id.colorConfigButton,
                 R.drawable.button_color_config,
-                R.id.includeColorConfigControls,
                 activity.getColorButtonLayoutParams(),
                 ()-> activity.startColorSettingsFragment());
 

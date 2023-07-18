@@ -4,6 +4,7 @@ import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSpinner;
 import static com.jacstuff.sketchy.controls.settings.SettingsUtils.setupSwitch;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,15 @@ public class ColorSettingsDialogFragment extends DialogFragment implements Butto
         super.onViewCreated(view, savedInstanceState);
         configure();
         initSequenceTypeMap();
+        setTitle();
+    }
+
+
+    private void setTitle(){
+        Dialog dialog = getDialog();
+        if(dialog != null){
+            dialog.setTitle(R.string.color_options_dialog_title);
+        }
     }
 
 
@@ -112,10 +122,6 @@ public class ColorSettingsDialogFragment extends DialogFragment implements Butto
         }
     }
 
-    private void log(String msg){
-        System.out.println("^^^ ColorSettingsDialogFragment: " + msg);
-    }
-
 
     private void setupSeekBars(View parentView){
         SequenceColorSelector allColorsSequenceSelector = paintHelperManager.getColorHelper().getAllColorsSequenceSelector();
@@ -123,32 +129,29 @@ public class ColorSettingsDialogFragment extends DialogFragment implements Butto
 
         seekBarConfigurator.configureForFragment( parentView, R.id.multiShadeBrightnessSeekBar,
                 viewModel.getColorSequenceControls().multiShadeBrightnessPercentage,
-                progress -> {
-                    viewModel.getColorSequenceControls().multiShadeBrightnessPercentage = Math.max(1, progress);
-                    log("multishadebrightness seek bar adjusted to  : " + progress);
+                progress -> viewModel.getColorSequenceControls().multiShadeBrightnessPercentage = Math.max(1, progress));
 
-                } );
-
-        seekBarConfigurator.configure(R.id.colorSequenceMaxIndexSeekBar,
-                R.integer.seek_bar_color_sequence_max_range_default,
+        seekBarConfigurator.configureForFragment( parentView, R.id.colorSequenceMaxIndexSeekBar,
+                viewModel.getColorSequenceControls().colorSequenceMaxPercentage,
                 progress -> {
                     viewModel.getColorSequenceControls().colorSequenceMaxPercentage = progress;
                     shadeColorSelector.updateRangeIndexes();
-                });
+                } );
 
-        seekBarConfigurator.configure(R.id.colorSequenceMinIndexSeekBar,
-                R.integer.seek_bar_color_sequence_min_range_default,
+        seekBarConfigurator.configureForFragment( parentView, R.id.colorSequenceMinIndexSeekBar,
+                viewModel.getColorSequenceControls().colorSequenceMinPercentage,
                 progress -> {
                     viewModel.getColorSequenceControls().colorSequenceMinPercentage = progress;
                     shadeColorSelector.updateRangeIndexes();
-                });
+                } );
 
-        seekBarConfigurator.configure(R.id.colorSequenceGradationSeekBar,
-                R.integer.seek_bar_color_sequence_gradation_default,
+        seekBarConfigurator.configureForFragment( parentView, R.id.colorSequenceGradationSeekBar,
+                viewModel.getColorSequenceControls().skippedShades,
                 progress -> {
                     viewModel.getColorSequenceControls().skippedShades = 1 + progress;
                     allColorsSequenceSelector.updateRangeIndexes();
-                });
+                } );
+
     }
 
 

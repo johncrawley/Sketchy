@@ -5,6 +5,7 @@
     android:id="@+id/colorConfigLayout"
     android:orientation="vertical"
     android:layout_height="wrap_content"
+    android:background="@color/backgroundColor"
     android:paddingTop="@dimen/menu_padding_top"
     android:paddingBottom="@dimen/menu_padding_bottom"
     android:layout_width="match_parent"

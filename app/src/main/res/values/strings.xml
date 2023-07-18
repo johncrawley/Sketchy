@@ -185,7 +185,7 @@
     <string name="camera_permission_not_given_text">Cannot take a photo without permission to use the camera</string>
     <string name="unable_to_create_temporary_file_text">There was an error : could not create temporary file for holding image</string>
 
-    <string name="spinner_color_sequence_type_label">Color Sequence Type</string>
+    <string name="spinner_color_sequence_type_label">Type</string>
     <string name="spinner_item_color_sequence_forwards">Forwards</string>
     <string name="spinner_item_color_sequence_backwards">Backwards</string>
     <string name="spinner_item_color_sequence_over_and_back">Over and Back</string>
@@ -241,8 +241,10 @@
     <string name="seekbar_label_shape_crazy_spiral_type">Variation</string>
     <string name="seekbar_label_style_dashed_spacing">Spacing</string>
     <string name="seekbar_label_color_transparency">Transparency</string>
-    <string name="seekbar_label_color_multi_shade_brightness">Multi-shade brightness</string>
-    <string name="single_color_sequence_controls_label">Single Color Sequence Brightness Range</string>
+
+    <string name="color_options_dialog_title">Color Sequence Options</string>
+    <string name="seekbar_label_color_multi_shade_brightness">Brightness</string>
+    <string name="single_color_sequence_controls_label">Single Selection Brightness Range</string>
     <string name="seekbar_label_color_sequence_max_index">Maximum</string>
     <string name="seekbar_label_color_sequence_minimum_index">Minimum</string>
     <string name="seekbar_label_color_sequence_steps_index">Blend Rate</string>
