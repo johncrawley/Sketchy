@@ -42,6 +42,7 @@ public class SmoothPathBrush extends AbstractBrush implements Brush {
         tempPoints  = new ArrayList<>(initialCapacity);
     }
 
+
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         setBrushSize((int)paint.getStrokeWidth());
@@ -72,13 +73,13 @@ public class SmoothPathBrush extends AbstractBrush implements Brush {
 
     @Override
     public PointF getShapeMinPoint(){
-        return importantPoints.getMidpoint();
+        return importantPoints.getMinPoint();
     }
 
 
     @Override
     public PointF getShapeMaxPoint(){
-        return importantPoints.getMidpoint();
+        return importantPoints.getMaxPoint();
     }
 
 
