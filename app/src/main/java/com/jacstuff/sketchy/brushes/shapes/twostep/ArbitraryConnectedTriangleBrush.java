@@ -148,6 +148,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
     void drawTriangle(PointF thirdPoint, float offsetX, float offsetY, Paint paint){
         thirdPointX = thirdPoint.x;
         thirdPointY = thirdPoint.y;
+
         float firstPointX = downX - offsetX;
         float firstPointY = downY - offsetY;
 
@@ -161,7 +162,6 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
         path.close();
         canvas.drawPath(path, paint);
     }
-
 
 
     @Override

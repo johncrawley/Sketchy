@@ -59,6 +59,13 @@ public abstract class AbstractButtonConfigurator<T> implements SelectableDefault
     }
 
 
+    public void setupSwitch(int switchId, boolean initialValue, Consumer<Boolean> consumer){
+        SwitchMaterial switchMaterial = activity.findViewById(switchId);
+        switchMaterial.setEnabled(initialValue);
+        switchMaterial.setOnCheckedChangeListener((buttonView, isChecked) -> consumer.accept(isChecked));
+    }
+
+
     public void handleDefaultClick(int viewId, T actionType){
         onClick(viewId, actionType);
     }

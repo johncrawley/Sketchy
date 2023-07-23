@@ -357,6 +357,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initTriangleIconModifier();
     }
 
+
     private void initLineIconModifier(){
         connectedLineIconModifier = new ConnectedBrushIconModifier(this, viewModel.connectedLineState, BrushShape.LINE);
         connectedLineIconModifier.assignConnectedIconResId(R.drawable.button_shape_line_connected);
