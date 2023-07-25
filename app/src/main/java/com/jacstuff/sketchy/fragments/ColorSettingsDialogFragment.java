@@ -105,16 +105,15 @@ public class ColorSettingsDialogFragment extends DialogFragment implements Butto
                 (str, i ) -> {
                     ColorSequenceType type = sequenceTypeMap.get(str);
                     activity.getPaintHelperManager().getColorHelper().getAllColorsSequenceSelector().setSequenceType(type);
-                    setVisibilityOnBlendSeekBar(activity, type);
+                    setVisibilityOnBlendSeekBar(getView(), type);
                     viewModel.getColorSequenceControls().colorSequenceSpinnerSavedPosition = i;
                 } );
-
     }
 
 
-    private void setVisibilityOnBlendSeekBar(MainActivity activity, ColorSequenceType selectedColorSequenceType){
-        View blendControl = activity.findViewById(R.id.colorSequenceGradationSeekBar);
-        View blendControlLabel = activity.findViewById(R.id.colorSequenceGradationSeekBarLabel);
+    private void setVisibilityOnBlendSeekBar(View parentView, ColorSequenceType selectedColorSequenceType){
+        View blendControl = parentView.findViewById(R.id.colorSequenceGradationSeekBar);
+        View blendControlLabel = parentView.findViewById(R.id.colorSequenceGradationSeekBarLabel);
         if(blendControl != null){
             int visibility = selectedColorSequenceType == ColorSequenceType.BLEND ? View.VISIBLE : View.INVISIBLE;
             blendControl.setVisibility(visibility);
