@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class TrianglePoints {
 
-    private final int MAX_NUMBER_OF_POINTS = 42;
+    private final int MAX_NUMBER_OF_POINTS = 100;
     private final ArrayDeque<PointF> recentPoints;
 
     public TrianglePoints(){
@@ -81,7 +81,7 @@ public class TrianglePoints {
 
 
     private void removeOldestPoints(){
-        for(int i=0; i< 3; i++){
+        for(int i = 0; i < 3; i++){
             recentPoints.removeLast();
         }
     }
