@@ -267,6 +267,7 @@ public class PaintView extends View {
         paint.setAntiAlias(true);
         paint.setDither(true);
         paintGroup = new PaintGroup(paint, previewPaint, shadowPaint);
+        paintGroup.setPreviewPaint(previewPaint);
         blankPaint = new Paint();
         blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         blankPaint.setColor(DEFAULT_BG_COLOR);

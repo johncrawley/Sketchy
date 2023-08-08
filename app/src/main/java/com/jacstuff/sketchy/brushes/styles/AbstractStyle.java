@@ -4,7 +4,7 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class AbstractStyle {
 
-    boolean haveSettingsChanged = false;
+    boolean haveSettingsChanged;
     int brushSize;
 
     public void onDraw(){

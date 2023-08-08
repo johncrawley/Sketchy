@@ -12,6 +12,7 @@ public class DoubleEdgeStyle   extends AbstractStyle implements Style {
     private PaintGroup paintGroup;
 
     public DoubleEdgeStyle(PaintGroup paintGroup){
+        this.paintGroup = paintGroup;
         pathDashPathEffect = new PathDashPathEffect(createPath(20, 10), 12, 5, PathDashPathEffect.Style.ROTATE);
     }
 
@@ -21,6 +22,7 @@ public class DoubleEdgeStyle   extends AbstractStyle implements Style {
         this.paintGroup = paintGroup;
         this.brushSize = brushSize;
         paintGroup.setStyle(Paint.Style.STROKE);
+        paintGroup.forceFillForPreviewPaint();
         assignPath();
     }
 
@@ -36,7 +38,7 @@ public class DoubleEdgeStyle   extends AbstractStyle implements Style {
         float innerY = 3 * edgeDepth;
         pathDashPathEffect = new PathDashPathEffect(createPath(outerY, innerY), 12, 1, PathDashPathEffect.Style.MORPH);
         paintGroup.setPathEffect(pathDashPathEffect);
-
+        paintGroup.forceFillForPreviewPaint();
     }
 
 
@@ -44,8 +46,8 @@ public class DoubleEdgeStyle   extends AbstractStyle implements Style {
         Path p = new Path();
         float x = 6;
         p.moveTo(-x, outerY);
-        p.lineTo(x,outerY);
-        p.lineTo(x,innerY);
+        p.lineTo(x, outerY);
+        p.lineTo(x, innerY);
         p.lineTo(-x, innerY);
         p.close();
         p.moveTo(-x, -outerY);

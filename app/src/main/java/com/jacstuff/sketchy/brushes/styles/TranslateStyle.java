@@ -23,6 +23,7 @@ public class TranslateStyle extends AbstractStyle implements Style {
         this.paintGroup = paintGroup;
         this.brushSize = brushSize;
         paintGroup.setStyle(Paint.Style.STROKE);
+        paintGroup.forceFillForPreviewPaint();
         assignPath();
     }
 
@@ -38,6 +39,7 @@ public class TranslateStyle extends AbstractStyle implements Style {
         float innerY = 3 * edgeDepth;
         pathDashPathEffect = new PathDashPathEffect(createPath(outerY, innerY), 12, 5, PathDashPathEffect.Style.TRANSLATE);
         paintGroup.setPathEffect(pathDashPathEffect);
+        paintGroup.forceFillForPreviewPaint();
     }
 
 

@@ -6,11 +6,14 @@ import android.graphics.Typeface;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class PaintGroup {
 
 
     private final List<Paint> paints;
+    private Paint previewPaint;
+    private boolean isFillForcedForPreviewPaint;
 
     public PaintGroup(Paint...paintItems){
         paints = Arrays.asList(paintItems);
@@ -18,10 +21,23 @@ public class PaintGroup {
 
 
     public void setStyle(Paint.Style style){
+        isFillForcedForPreviewPaint = false;
         for(Paint p : paints){
             p.setStyle(style);
         }
     }
+
+
+    public void setPreviewPaint(Paint previewPaint){
+        this.previewPaint = previewPaint;
+    }
+
+
+    public void forceFillForPreviewPaint(){
+        isFillForcedForPreviewPaint = true;
+        previewPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+    }
+
 
     public float getLineWidth(){
        return paints.get(0).getStrokeWidth();
@@ -46,9 +62,19 @@ public class PaintGroup {
 
 
     public void setTextSkewX(float value){
+
         for(Paint p: paints){
             p.setTextSkewX(value);
         }
+    }
+
+
+    private void doActionOnPaints(float value, Consumer<Paint> consumer){
+        for(Paint p: paints){
+            if(isFillForcedForPreviewPaint && p.equals(previewPaint)){
+                continue;
+            }
+            consumer.accept(p);
     }
 
 
