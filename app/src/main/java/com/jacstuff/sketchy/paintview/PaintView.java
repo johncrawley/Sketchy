@@ -3,7 +3,6 @@ package com.jacstuff.sketchy.paintview;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -19,15 +18,11 @@ import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-import static com.jacstuff.sketchy.paintview.helpers.PaintFactory.createPaint;
-
 
 public class PaintView extends View {
 
-    public static final int DEFAULT_BG_COLOR = Color.WHITE;
-    private Paint paint, shadowPaint, previewPaint;
-    private Paint drawPaint, blankPaint;
-    private PaintGroup paintGroup;
+    private final Paint blankPaint, canvasBitmapPaint;
+    private final PaintGroup paintGroup;
     private int brushSize;
     private Bitmap bitmap, previewBitmap;
     private Canvas canvas;
@@ -54,7 +49,9 @@ public class PaintView extends View {
     public PaintView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        initPaints();
+        paintGroup = new PaintGroup();
+        blankPaint = paintGroup.getBlankPaint();
+        canvasBitmapPaint = paintGroup.getCanvasBitmapPaint();
     }
 
 
@@ -65,7 +62,7 @@ public class PaintView extends View {
 
     public void setPaintHelperManager(PaintHelperManager paintHelperManager){
         this.paintHelperManager = paintHelperManager;
-        this.paintHelperManager.init(paint, shadowPaint, previewPaint, paintGroup);
+        this.paintHelperManager.init(paintGroup);
         sensitivityHelper = paintHelperManager.getSensitivityHelper();
     }
 
@@ -76,7 +73,7 @@ public class PaintView extends View {
         this.brushFactory = brushFactory;
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
-        bitmapLoader = new BitmapLoader(this, canvas, drawPaint);
+        bitmapLoader = new BitmapLoader(this, canvas, canvasBitmapPaint);
         initBrushes();
 
         if(drawHistory.isEmpty()){
@@ -91,7 +88,7 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas viewCanvas) {
         viewCanvas.save();
-        viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, drawPaint);
+        viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, canvasBitmapPaint);
         viewCanvas.restore();
     }
 
@@ -132,11 +129,11 @@ public class PaintView extends View {
     }
 
     public Paint getShadowPaint(){
-        return shadowPaint;
+        return paintGroup.getShadowPaint();
     }
 
     public Paint getPaint(){
-        return paint;
+        return paintGroup.getDrawPaint();
     }
 
     public PaintHelperManager getPaintHelperManager(){
@@ -144,7 +141,7 @@ public class PaintView extends View {
     }
 
     public Paint getPreviewPaint(){
-        return previewPaint;
+        return paintGroup.getPreviewPaint();
     }
 
     public void pushHistory(){
@@ -213,7 +210,7 @@ public class PaintView extends View {
             return;
         }
         isTouchDownRegistered = false;
-        currentBrush.touchUp(x, y, paint);
+        currentBrush.touchUp(x, y, paintGroup.getDrawPaint());
     }
 
 
@@ -259,21 +256,6 @@ public class PaintView extends View {
     }
 
 
-    private void initPaints(){
-        paint = createPaint(Color.WHITE);
-        previewPaint = createPaint(Color.DKGRAY);
-        shadowPaint = createPaint(Color.BLACK);
-        drawPaint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setDither(true);
-        paintGroup = new PaintGroup(paint, previewPaint, shadowPaint);
-        paintGroup.setPreviewPaint(previewPaint);
-        blankPaint = new Paint();
-        blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        blankPaint.setColor(DEFAULT_BG_COLOR);
-    }
-
-
     private void initBrushes(){
         brushFactory.init(this, brushSize, getMaxDimension());
         currentBrush = brushFactory.getReinitializedBrushFor(BrushShape.CIRCLE);
@@ -312,7 +294,7 @@ public class PaintView extends View {
 
     private void onTouchDown(){
         isTouchDownRegistered = true;
-        currentBrush.touchDown(x, y, paint);
+        currentBrush.touchDown(x, y, paintGroup.getDrawPaint());
     }
 
 
@@ -323,7 +305,7 @@ public class PaintView extends View {
         if(!sensitivityHelper.shouldDraw(currentBrush)){
             return;
         }
-        currentBrush.touchMove(x, y, paint);
+        currentBrush.touchMove(x, y, paintGroup.getDrawPaint());
     }
 
 

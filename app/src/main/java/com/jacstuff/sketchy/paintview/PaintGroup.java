@@ -1,10 +1,13 @@
 package com.jacstuff.sketchy.paintview;
 
+import static com.jacstuff.sketchy.paintview.helpers.PaintFactory.createPaint;
+
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PathEffect;
 import android.graphics.Typeface;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -12,36 +15,77 @@ public class PaintGroup {
 
 
     private final List<Paint> paints;
-    private Paint previewPaint;
-    private boolean isFillForcedForPreviewPaint;
+    private Paint previewPaint, drawPaint, shadowPaint, blankPaint, canvasBitmapPaint;
+    public static final int DEFAULT_BG_COLOR = Color.WHITE;
 
-    public PaintGroup(Paint...paintItems){
-        paints = Arrays.asList(paintItems);
+    public PaintGroup(){
+        paints = new ArrayList<>();
+        initPaints();
+        paints.add(drawPaint);
+        paints.add(previewPaint);
+        paints.add(shadowPaint);
     }
 
 
     public void setStyle(Paint.Style style){
-        isFillForcedForPreviewPaint = false;
         for(Paint p : paints){
             p.setStyle(style);
         }
     }
 
 
-    public void setPreviewPaint(Paint previewPaint){
-        this.previewPaint = previewPaint;
+    private void initPaints(){
+        drawPaint = createPaint(Color.WHITE);
+        previewPaint = createPaint(Color.DKGRAY);
+        shadowPaint = createPaint(Color.BLACK);
+        initCanvasBitmapPaint();
+        initBlankPaint();
     }
 
 
-    public void forceFillForPreviewPaint(){
-        isFillForcedForPreviewPaint = true;
-        previewPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+    private void initCanvasBitmapPaint(){
+        canvasBitmapPaint = new Paint();
+        canvasBitmapPaint.setAntiAlias(true);
+        canvasBitmapPaint.setDither(true);
+    }
+
+
+    private void initBlankPaint(){
+        blankPaint = new Paint();
+        blankPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        blankPaint.setColor(DEFAULT_BG_COLOR);
+    }
+
+
+    public Paint getDrawPaint(){
+        return drawPaint;
+    }
+
+
+    public Paint getPreviewPaint(){
+        return previewPaint;
+    }
+
+
+    public Paint getShadowPaint(){
+        return shadowPaint;
+    }
+
+
+    public Paint getBlankPaint(){
+        return blankPaint;
+    }
+
+
+    public Paint getCanvasBitmapPaint(){
+        return canvasBitmapPaint;
     }
 
 
     public float getLineWidth(){
        return paints.get(0).getStrokeWidth();
     }
+
 
     public String getStyle(){
         return paints.get(0).getStyle().toString();
@@ -62,19 +106,14 @@ public class PaintGroup {
 
 
     public void setTextSkewX(float value){
-
-        for(Paint p: paints){
-            p.setTextSkewX(value);
-        }
+        doActionOnPaints(p -> p.setTextSkewX(value));
     }
 
 
-    private void doActionOnPaints(float value, Consumer<Paint> consumer){
-        for(Paint p: paints){
-            if(isFillForcedForPreviewPaint && p.equals(previewPaint)){
-                continue;
-            }
+    private void doActionOnPaints(Consumer<Paint> consumer){
+        for(Paint p: paints) {
             consumer.accept(p);
+        }
     }
 
 

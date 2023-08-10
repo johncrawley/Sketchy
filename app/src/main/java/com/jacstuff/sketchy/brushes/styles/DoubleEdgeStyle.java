@@ -8,12 +8,12 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 
 public class DoubleEdgeStyle   extends AbstractStyle implements Style {
 
-    private PathDashPathEffect pathDashPathEffect;
+    private PathDashPathEffect pathEffect;
     private PaintGroup paintGroup;
 
     public DoubleEdgeStyle(PaintGroup paintGroup){
         this.paintGroup = paintGroup;
-        pathDashPathEffect = new PathDashPathEffect(createPath(20, 10), 12, 5, PathDashPathEffect.Style.ROTATE);
+        pathEffect = new PathDashPathEffect(createPath(20, 10), 12, 5, PathDashPathEffect.Style.ROTATE);
     }
 
 
@@ -22,7 +22,6 @@ public class DoubleEdgeStyle   extends AbstractStyle implements Style {
         this.paintGroup = paintGroup;
         this.brushSize = brushSize;
         paintGroup.setStyle(Paint.Style.STROKE);
-        paintGroup.forceFillForPreviewPaint();
         assignPath();
     }
 
@@ -36,9 +35,10 @@ public class DoubleEdgeStyle   extends AbstractStyle implements Style {
         float edgeDepth = 1 + (paintGroup.getLineWidth() /8);
         float outerY = 4 * edgeDepth;
         float innerY = 3 * edgeDepth;
-        pathDashPathEffect = new PathDashPathEffect(createPath(outerY, innerY), 12, 1, PathDashPathEffect.Style.MORPH);
-        paintGroup.setPathEffect(pathDashPathEffect);
-        paintGroup.forceFillForPreviewPaint();
+        pathEffect = new PathDashPathEffect(createPath(outerY, innerY), 12, 1, PathDashPathEffect.Style.MORPH);
+        paintGroup.getDrawPaint().setPathEffect(pathEffect);
+        paintGroup.getShadowPaint().setPathEffect(pathEffect);
+        paintGroup.getPreviewPaint().setPathEffect(null);
     }
 
 
@@ -57,7 +57,5 @@ public class DoubleEdgeStyle   extends AbstractStyle implements Style {
         p.close();
         return p;
     }
-
-
 
 }
