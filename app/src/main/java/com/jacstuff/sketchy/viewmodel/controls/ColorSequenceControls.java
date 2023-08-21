@@ -6,7 +6,7 @@ public class ColorSequenceControls {
 
     public ColorSequenceType colorSequenceType = ColorSequenceType.RANDOM;
     public int colorSequenceSpinnerSavedPosition = 0;
-    public int colorSequenceMinPercentage = 80;
+    public int colorSequenceMinPercentage = 1;
     public int colorSequenceMaxPercentage = 100;
     public int multiShadeBrightnessPercentage = 50;
     public int skippedShades = 1;

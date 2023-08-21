@@ -45,7 +45,7 @@ public class ColorSettingsDialogFragment extends DialogFragment implements Butto
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.controls_color_config, container, false);
+        return inflater.inflate(R.layout.fragment_color_config, container, false);
     }
 
 
@@ -150,7 +150,6 @@ public class ColorSettingsDialogFragment extends DialogFragment implements Butto
                     viewModel.getColorSequenceControls().skippedShades = 1 + progress;
                     allColorsSequenceSelector.updateRangeIndexes();
                 } );
-
     }
 
 
