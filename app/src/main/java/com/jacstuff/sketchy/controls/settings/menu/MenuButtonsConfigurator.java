@@ -20,14 +20,23 @@ public class MenuButtonsConfigurator
         implements ButtonsConfigurator<Integer> {
 
     private Set<Integer> layoutIds;
-    private final SettingsPopup settingsPopup;
+    private SettingsPopup settingsPopup;
     private List<ConnectedBrushIconModifier> iconModifiers;
 
     public MenuButtonsConfigurator(MainActivity activity, PaintView paintView){
         super(activity, paintView);
+        setupSettingsPopup(activity);
+    }
+
+
+    private void setupSettingsPopup(MainActivity activity){
         settingsPopup = activity.getSettingsPopup();
         settingsPopup.registerParentButton(R.id.colorConfigButton);
+        if(ActivityUtils.isInLandscapeOrientation(activity)){
+            settingsPopup.registerParentButton(R.id.colorMenuButton);
+        }
     }
+
 
     @Override
     public void configure(){
@@ -38,22 +47,22 @@ public class MenuButtonsConfigurator
 
         String angleStr = "0" + activity.getString(R.string.degrees_symbol);
 
-        buttonConfig.add(R.id.shapeButton,     R.drawable.button_shape_circle,     R.id.includeShapeControls);
+        buttonConfig.add(R.id.shapeButton,     R.drawable.button_shape_circle, R.id.includeShapeControls);
         if(ActivityUtils.isInLandscapeOrientation(activity)){
-            buttonConfig.add(R.id.colorMenuButton, R.drawable.button_color,     R.id.includeColorControls);
+            buttonConfig.add(R.id.colorMenuButton, R.drawable.button_color, R.id.includeColorControls);
         }
-        buttonConfig.add(R.id.styleButton,     R.drawable.button_style_fill,       R.id.includeStyleControls);
-        buttonConfig.add(R.id.gradientButton,  R.drawable.button_gradient_off,     R.id.includeGradientControls);
+        buttonConfig.add(R.id.styleButton,     R.drawable.button_style_fill, R.id.includeStyleControls);
+        buttonConfig.add(R.id.gradientButton,  R.drawable.button_gradient_off, R.id.includeGradientControls);
 
         //buttonConfig.setParentLayout(R.id.controlPanelLayoutGroup2);
-        buttonConfig.add(R.id.angleButton,     angleStr,                           R.id.includeAngleControls);
+        buttonConfig.add(R.id.angleButton,     angleStr,                         R.id.includeAngleControls);
         buttonConfig.add(R.id.blurButton,       R.drawable.button_blur_off,      R.id.includeBlurControls);
         buttonConfig.add(R.id.shadowButton,     R.drawable.button_shadow_off,    R.id.includeShadowControls);
 
         //buttonConfig.setParentLayout(R.id.controlPanelLayoutGroup3);
         buttonConfig.add(R.id.kaleidoscopeButton,   "K: 1", R.id.includeKaleidoscopeControls);
-        buttonConfig.add(R.id.sizeSequenceButton, R.drawable.button_size_sequence_stationary,  R.id.includeSizeSequenceControls);
-        buttonConfig.add(R.id.placementButton, R.drawable.button_placement_normal,  R.id.includePlacementControls);
+        buttonConfig.add(R.id.sizeSequenceButton, R.drawable.button_size_sequence_stationary, R.id.includeSizeSequenceControls);
+        buttonConfig.add(R.id.placementButton, R.drawable.button_placement_normal, R.id.includePlacementControls);
 
         buttonConfig.setParentLayout(activity.getColorButtonLayoutCreator().getMultiShadesLayout());
 
