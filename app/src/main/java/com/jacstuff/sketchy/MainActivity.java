@@ -34,7 +34,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.jacstuff.sketchy.brushes.BrushFactory;
-import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.controls.colorbuttons.ButtonReferenceStore;
 import com.jacstuff.sketchy.controls.colorbuttons.ColorButtonClickHandler;
 import com.jacstuff.sketchy.controls.ButtonLayoutParams;
@@ -49,6 +48,7 @@ import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.history.DrawHistory;
 import com.jacstuff.sketchy.ui.ColorPickerSeekBarConfigurator;
+import com.jacstuff.sketchy.ui.ConnectedBrushIconModifierHelper;
 import com.jacstuff.sketchy.ui.EditColorFragment;
 import com.jacstuff.sketchy.ui.LoadImageDialogFragment;
 import com.jacstuff.sketchy.ui.UserColorStore;
@@ -61,7 +61,6 @@ import com.jacstuff.sketchy.ui.SettingsPopup;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,9 +88,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ColorPickerSeekBarConfigurator colorPickerSeekBarConfigurator;
     private String currentPhotoPath;
     private DrawHistory drawHistory;
-    private ConnectedBrushIconModifier connectedLineIconModifier, connectedTriangleIconModifier;
     private Map<Integer, Runnable> menuActions;
-    private List<ConnectedBrushIconModifier> iconModifiers;
+    private ConnectedBrushIconModifierHelper connectedBrushIconModifierHelper;
+
 
 
     @Override
@@ -106,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         seekBarConfigurator = new SeekBarConfigurator(this);
         SHARED_PREFS_NAME = getString(R.string.shared_prefs_name);
         setupViewModel();
+        connectedBrushIconModifierHelper = new ConnectedBrushIconModifierHelper(this);
         colorPickerSeekBarConfigurator = new ColorPickerSeekBarConfigurator(this, viewModel);
         setupPaintViewAndDefaultSelections();
         initPaintHelperManager();
@@ -333,8 +333,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupPaintViewAndDefaultSelections(){
         paintView = findViewById(R.id.paintView);
-        setupIconModifiers();
-        drawHistory = new DrawHistory(MainActivity.this, viewModel, iconModifiers);
+        drawHistory = new DrawHistory(MainActivity.this, viewModel, connectedBrushIconModifierHelper.getIconModifiers());
         BrushFactory brushFactory = new BrushFactory(this);
         final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -351,41 +350,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void setupIconModifiers(){
-        iconModifiers = new ArrayList<>();
-        initLineIconModifier();
-        initTriangleIconModifier();
-    }
-
-
-    private void initLineIconModifier(){
-        connectedLineIconModifier = new ConnectedBrushIconModifier(this, viewModel.connectedLineState, BrushShape.LINE);
-        connectedLineIconModifier.assignConnectedIconResId(R.drawable.button_shape_line_connected);
-        connectedLineIconModifier.assignNormalIconId(R.drawable.button_shape_line);
-        iconModifiers.add(connectedLineIconModifier);
-    }
-
-
-    private void initTriangleIconModifier(){
-        connectedTriangleIconModifier = new ConnectedBrushIconModifier(this, viewModel.connectedTriangleState, BrushShape.TRIANGLE_ARBITRARY);
-        connectedTriangleIconModifier.assignConnectedIconResId(R.drawable.button_shape_triangle_arbitrary_connected);
-        connectedTriangleIconModifier.assignNormalIconId(R.drawable.button_shape_triangle_arbitrary);
-        iconModifiers.add(connectedTriangleIconModifier);
-    }
-
-
     public List<ConnectedBrushIconModifier> getIconModifiers(){
-        return iconModifiers;
+        return connectedBrushIconModifierHelper.getIconModifiers();
     }
 
 
     public ConnectedBrushIconModifier getConnectedLineIconModifier(){
-        return connectedLineIconModifier;
+        return connectedBrushIconModifierHelper.getConnectedLineIconModifier();
     }
 
 
     public ConnectedBrushIconModifier getConnectedTriangleIconModifier(){
-        return connectedTriangleIconModifier;
+        return connectedBrushIconModifierHelper.getConnectedTriangleIconModifier();
     }
 
 

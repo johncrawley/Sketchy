@@ -13,6 +13,8 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import com.jacstuff.sketchy.paintview.PaintView;
 
 
@@ -237,7 +239,7 @@ public class LoadPhotoPreview extends View {
             private float previousSpan;
 
             @Override
-            public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
+            public boolean onScaleBegin(@NonNull ScaleGestureDetector scaleGestureDetector) {
                 float currentSpan = scaleGestureDetector.getCurrentSpan();
                 if(currentSpan > previousSpan){
                     zoomIn();
@@ -250,14 +252,8 @@ public class LoadPhotoPreview extends View {
                 return false;
             }
 
-            @Override
-            public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
-                return false;
-            }
-
-            @Override
-            public void onScaleEnd(ScaleGestureDetector scaleGestureDetector) {
-            }
+            @Override public boolean onScale(@NonNull ScaleGestureDetector scaleGestureDetector) {return false;}
+            @Override public void onScaleEnd(@NonNull ScaleGestureDetector scaleGestureDetector) {}
         });
     }
 }
