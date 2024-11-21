@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         seekBarConfigurator = new SeekBarConfigurator(this);
         SHARED_PREFS_NAME = getString(R.string.shared_prefs_name);
         setupViewModel();
-        connectedBrushIconModifierHelper = new ConnectedBrushIconModifierHelper(this);
         colorPickerSeekBarConfigurator = new ColorPickerSeekBarConfigurator(this, viewModel);
         setupPaintViewAndDefaultSelections();
         initPaintHelperManager();
@@ -333,6 +332,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupPaintViewAndDefaultSelections(){
         paintView = findViewById(R.id.paintView);
+        connectedBrushIconModifierHelper = new ConnectedBrushIconModifierHelper(this);
         drawHistory = new DrawHistory(MainActivity.this, viewModel, connectedBrushIconModifierHelper.getIconModifiers());
         BrushFactory brushFactory = new BrushFactory(this);
         final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
