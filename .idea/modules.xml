@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Sketchy.iml" filepath="$PROJECT_DIR$/Sketchy.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Sketchy.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Sketchy.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Sketchy.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Sketchy.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Sketchy.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Sketchy.app.main.iml" />
