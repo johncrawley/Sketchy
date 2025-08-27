@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/buttonsLayout"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="?attr/buttons_panel_background_color">
+
+
+    <ImageButton
+        android:id="@+id/colorsButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center"
+        android:src="@drawable/circles"
+        />
+
+    <ImageButton
+        android:id="@+id/editButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center"
+        android:src="?attr/edit_button_icon"
+        />
+
+    <ImageButton
+        android:id="@+id/undoButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:src="?attr/undo_button_icon"
+        />
+
+
+    <ImageButton
+        android:id="@+id/redoButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:src="?attr/redo_button_icon"
+        />
+
+    <ImageButton
+        android:id="@+id/optionsButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:src="?attr/options_button_icon"
+        />
+    
+</LinearLayout>

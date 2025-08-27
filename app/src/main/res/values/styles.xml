@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/darkToolbar</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorPrimaryVariant">@color/darkAndroidBar</item>
@@ -8,11 +8,17 @@
         <item name="colorAccent">#3949AB</item>
         <item name="android:actionBarTheme">@style/MyTheme.ActionBarStyle</item>
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <item name="android:dialogTheme">@style/CustomDialog</item>
+      <!--  <item name="android:dialogTheme">@style/CustomDialog</item> -->
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
+
+        <item name="options_button_icon">@drawable/baseline_settings_24</item>
+        <item name="edit_button_icon">@drawable/baseline_edit_24</item>
+        <item name="undo_button_icon">@drawable/outline_undo_24</item>
+        <item name="redo_button_icon">@drawable/outline_redo_24</item>
+        <item name="buttons_panel_background_color">@color/button_panel_background</item>
     </style>
 
 

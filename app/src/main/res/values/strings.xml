@@ -5,11 +5,11 @@
     <string name="confirm_wipe_activity_label">Confirm</string>
     <string name="action_save">Save</string>
     <string name="action_open">Open</string>
-    <string name="action_take_picture">Take Picture</string>
+    <string name="action_take_picture">Camera</string>
     <string name="action_share">Share</string>
     <string name="action_about">About</string>
     <string name="action_add_color">Reset Palette</string>
-    <string name="action_wipe">Wipe</string>
+    <string name="action_wipe">New</string>
     <string name="action_undo">Undo</string>
     <string name="share_to">Share To</string>
     <string name="reset_colors_dialog_title">Reset Palette To Default?</string>

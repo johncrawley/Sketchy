@@ -19,4 +19,5 @@
     <color name="color_component_label_red">#DD0000</color>
     <color name="color_component_label_green">#00BB00</color>
     <color name="color_component_label_blue">#0000DD</color>
+    <color name="button_panel_background">#FAF5CB</color>
 </resources>

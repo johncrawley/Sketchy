@@ -8,6 +8,7 @@ import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.settings.AbstractButtonConfigurator;
 import com.jacstuff.sketchy.controls.settings.ButtonConfigHandler;
 import com.jacstuff.sketchy.controls.settings.ButtonsConfigurator;
+import com.jacstuff.sketchy.fragments.FragmentHelper;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 import com.jacstuff.sketchy.utils.ActivityUtils;
@@ -69,7 +70,7 @@ public class MenuButtonsConfigurator
         buttonConfig.addFirst(R.id.colorConfigButton,
                 R.drawable.button_color_config,
                 activity.getColorButtonLayoutParams(),
-                ()-> activity.startColorSettingsFragment());
+                ()-> FragmentHelper.startColorSettingsFragment(activity));
 
 
         buttonConfig.setupClickHandler();

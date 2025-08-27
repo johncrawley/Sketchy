@@ -19,6 +19,9 @@ import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,6 +33,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -42,7 +47,7 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.controls.settings.menu.ConnectedBrushIconModifier;
-import com.jacstuff.sketchy.fragments.ColorSettingsDialogFragment;
+import com.jacstuff.sketchy.fragments.FragmentHelper;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
@@ -92,11 +97,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ConnectedBrushIconModifierHelper connectedBrushIconModifierHelper;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupLayout();
         settingsPopup = new SettingsPopup(findViewById(R.id.includedSettingsLayout), this);
         buttonReferenceStore = new ButtonReferenceStore();
         toaster = new Toaster(MainActivity.this);
@@ -113,6 +118,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewModelHelper.init(colorButtonClickHandler, paintView);
         setupColorAutoScroll();
         initActivityResultLaunchers();
+        setupImageButtons();
+    }
+
+
+    private void setupImageButtons(){
+        setupImageButton(R.id.optionsButton, ()-> FragmentHelper.startOptionsFragment(MainActivity.this) );
+    }
+
+    private void setupImageButton(int resId, Runnable onClick){
+        ImageButton button = findViewById(resId);
+        button.setOnClickListener(v -> onClick.run());
+    }
+
+
+    private void setupLayout() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
 
 
@@ -409,7 +434,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void startDialogForOpenDocument(){
+    public void startDialogForOpenDocument(){
         startLoadPhotoPreviewFragment(currentPhotoPath, true);
     }
 
@@ -440,7 +465,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void startSaveDocumentActivity(){
+    public void startSaveDocumentActivity(){
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/png");
@@ -460,7 +485,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void shareSketch(){
+    public void shareSketch(){
         Intent i = new Intent();
         i.setAction(Intent.ACTION_SEND);
         i.setType("image/*");
@@ -520,23 +545,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.apply();
     }
 
-
-    public void startColorSettingsFragment(){
-        String tag = "colorSettings";
-        Bundle bundle = new Bundle();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        removePreviousFragmentTransaction(tag, fragmentTransaction);
-        ColorSettingsDialogFragment colorSettingsDialogFragment = ColorSettingsDialogFragment.newInstance();
-        colorSettingsDialogFragment.setArguments(bundle);
-        colorSettingsDialogFragment.show(fragmentTransaction, tag);
-    }
-
-
-    private void removePreviousFragmentTransaction(String tag, FragmentTransaction fragmentTransaction){
-        Fragment prev = getSupportFragmentManager().findFragmentByTag(tag);
-        if (prev != null) {
-            fragmentTransaction.remove(prev);
-        }
-        fragmentTransaction.addToBackStack(null);
-    }
 }

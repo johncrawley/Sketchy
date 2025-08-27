@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="buttons_panel_background_color"/>
+    <attr name="options_button_icon"/>
+    <attr name="edit_button_icon"/>
+    <attr name="undo_button_icon"/>
+    <attr name="redo_button_icon"/>
+</resources>
