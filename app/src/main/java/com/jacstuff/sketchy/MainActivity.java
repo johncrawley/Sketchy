@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupImageButton(R.id.optionsButton, ()-> FragmentHelper.startOptionsFragment(MainActivity.this) );
     }
 
+
     private void setupImageButton(int resId, Runnable onClick){
         ImageButton button = findViewById(resId);
         button.setOnClickListener(v -> onClick.run());
