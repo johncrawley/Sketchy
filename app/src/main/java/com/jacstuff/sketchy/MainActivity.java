@@ -33,7 +33,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -218,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void showResetColorsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        var builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(R.string.reset_colors_dialog_title);
         builder.setMessage(R.string.reset_colors_dialog_message);
         builder.setCancelable(false);
@@ -235,17 +234,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void startEditColorFragment(int color, int index){
-        String tag = "edit_color";
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag(tag);
+        var tag = "edit_color";
+        var fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        var prev = getSupportFragmentManager().findFragmentByTag(tag);
         if (prev != null) {
             fragmentTransaction.remove(prev);
         }
         fragmentTransaction.addToBackStack(null);
-        Bundle bundle = new Bundle();
+        var bundle = new Bundle();
         bundle.putInt(EditColorFragment.ORIGINAL_COLOR_TAG, color);
         bundle.putInt(EditColorFragment.COLOR_INDEX_TAG, index);
-        EditColorFragment editColorFragment = EditColorFragment.newInstance();
+        var editColorFragment = EditColorFragment.newInstance();
         editColorFragment.setArguments(bundle);
         editColorFragment.show(fragmentTransaction, tag);
     }
@@ -257,19 +256,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void startLoadPhotoPreviewFragment(String photoFilePath, boolean isLoadingFromFile){
-        String tag = "load_photo_preview";
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        var tag = "load_photo_preview";
+        var transaction = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag(tag);
         if (prev != null) {
-            fragmentTransaction.remove(prev);
+            transaction.remove(prev);
         }
-        fragmentTransaction.addToBackStack(null);
-        Bundle bundle = new Bundle();
+        transaction.addToBackStack(null);
+        var bundle = new Bundle();
         bundle.putBoolean(LoadImageDialogFragment.IS_FROM_FILE, isLoadingFromFile);
         bundle.putString(LoadImageDialogFragment.PHOTO_FILE_PATH_TAG, photoFilePath);
-        LoadImageDialogFragment loadPhotoDialogFragment = LoadImageDialogFragment.newInstance();
+        var loadPhotoDialogFragment = LoadImageDialogFragment.newInstance();
         loadPhotoDialogFragment.setArguments(bundle);
-        loadPhotoDialogFragment.show(fragmentTransaction, tag);
+        loadPhotoDialogFragment.show(transaction, tag);
     }
 
 
@@ -360,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintView = findViewById(R.id.paintView);
         connectedBrushIconModifierHelper = new ConnectedBrushIconModifierHelper(this);
         drawHistory = new DrawHistory(MainActivity.this, viewModel, connectedBrushIconModifierHelper.getIconModifiers());
-        BrushFactory brushFactory = new BrushFactory(this);
+        var brushFactory = new BrushFactory(this);
         final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -423,13 +422,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void startTakePictureActivity(){
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photoFile = createTempImageFile();
+        var intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        var photoFile = createTempImageFile();
         if (photoFile == null) {
             Toast.makeText(MainActivity.this, R.string.unable_to_create_temporary_file_text, Toast.LENGTH_SHORT).show();
             return;
         }
-        Uri photoURI = FileProvider.getUriForFile(this, "com.jcrawley.android.fileprovider", photoFile);
+        var photoURI = FileProvider.getUriForFile(this, "com.jcrawley.android.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
         cameraActivityResultLauncher.launch(intent);
     }
@@ -458,7 +457,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(currentPhotoPath == null){
             return;
         }
-        File file = new File(currentPhotoPath);
+        var file = new File(currentPhotoPath);
         if (file.exists()) {
             boolean wasFileDeleted = file.delete();
             Log.d("removeTempPhotoFile", "wasFileDeleted: " + wasFileDeleted);
@@ -467,7 +466,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void startSaveDocumentActivity(){
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        var intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/png");
         intent.putExtra(Intent.EXTRA_TITLE, "sketch");
@@ -487,7 +486,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void shareSketch(){
-        Intent i = new Intent();
+        var i = new Intent();
         i.setAction(Intent.ACTION_SEND);
         i.setType("image/*");
         i.putExtra(Intent.EXTRA_STREAM, getImageUri(MainActivity.this, paintView.getBitmap()));
@@ -505,9 +504,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public Uri getImageUri(Context context, Bitmap bitmap) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        var bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, getString(R.string.shared_image_title), null);
+        var path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, getString(R.string.shared_image_title), null);
         return Uri.parse(path);
     }
 
@@ -520,7 +519,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void loadStoredImage(){
-        SharedPreferences prefs = getSharedPreferences(SHARED_PREFS_NAME,0);
+        var prefs = getSharedPreferences(SHARED_PREFS_NAME,0);
         boolean wasAppStoppedProperly = prefs.getBoolean(SAVED_WAS_APP_STOPPED_PROPERLY, false);
         setWasAppStoppedProperlyProperty(false);
         if(!viewModel.isFirstExecution || !wasAppStoppedProperly){
@@ -532,7 +531,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void setWasAppStoppedProperlyProperty(boolean wasSaved){
-        SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFS_NAME,0).edit();
+        var editor = getSharedPreferences(SHARED_PREFS_NAME,0).edit();
         editor.putBoolean(SAVED_WAS_APP_STOPPED_PROPERLY, wasSaved);
         boolean success = editor.commit();
         System.out.println("app stopped properly property was saved! : " + success);
@@ -540,7 +539,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void savePreferences(){
-        SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFS_NAME,0).edit();
+        var editor = getSharedPreferences(SHARED_PREFS_NAME,0).edit();
         editor.putInt(SAVED_ORIENTATION, getResources().getConfiguration().orientation);
         imageSaver.saveImageToCacheFile(paintView);
         editor.apply();

@@ -4,7 +4,7 @@ android {
     compileSdk = 36
     defaultConfig {
         applicationId "com.jacstuff.sketchy"
-        minSdkVersion 24
+        minSdkVersion 30
         targetSdkVersion 36
         versionCode 12
         versionName "4.5"
@@ -19,6 +19,8 @@ android {
     }
     namespace = 'com.jacstuff.sketchy'
     compileOptions {
+    sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 }
 
