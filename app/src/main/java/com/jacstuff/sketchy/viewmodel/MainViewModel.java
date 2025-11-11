@@ -1,8 +1,6 @@
 package com.jacstuff.sketchy.viewmodel;
 
 import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 
 import com.jacstuff.sketchy.brushes.shapes.twostep.TrianglePoints;
@@ -14,6 +12,7 @@ import com.jacstuff.sketchy.paintview.helpers.gradient.GradientColorType;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.ProximityFocalPoint;
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.ProximityType;
+import com.jacstuff.sketchy.paintview.history.DrawHistory;
 import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
@@ -161,4 +160,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
     public boolean isRandomColorDisabled(){
         return isUsingDangerousBrush && isDrawOnMoveModeEnabled;
     }
+
+
+    public DrawHistory drawHistory = new DrawHistory();
 }

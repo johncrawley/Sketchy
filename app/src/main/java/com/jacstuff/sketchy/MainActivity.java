@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -23,7 +22,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Environment;
@@ -123,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupImageButtons(){
         setupImageButton(R.id.optionsButton, ()-> FragmentHelper.startOptionsFragment(MainActivity.this) );
+        setupImageButton(R.id.undoButton, ()-> paintView.undo());
+        setupImageButton(R.id.redoButton, ()-> paintView.redo());
     }
 
 
@@ -263,9 +263,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             transaction.remove(prev);
         }
         transaction.addToBackStack(null);
+
         var bundle = new Bundle();
         bundle.putBoolean(LoadImageDialogFragment.IS_FROM_FILE, isLoadingFromFile);
         bundle.putString(LoadImageDialogFragment.PHOTO_FILE_PATH_TAG, photoFilePath);
+
         var loadPhotoDialogFragment = LoadImageDialogFragment.newInstance();
         loadPhotoDialogFragment.setArguments(bundle);
         loadPhotoDialogFragment.show(transaction, tag);

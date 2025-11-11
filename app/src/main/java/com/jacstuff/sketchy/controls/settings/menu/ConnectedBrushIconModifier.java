@@ -6,6 +6,7 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class ConnectedBrushIconModifier  {
 
@@ -15,10 +16,12 @@ public class ConnectedBrushIconModifier  {
     private final ConnectedBrushState connectedBrushState;
     private int normalIconResId, connectedIconResId;
     private final BrushShape currentBrushShape;
+    private MainViewModel viewModel;
 
 
     public ConnectedBrushIconModifier(MainActivity activity, ConnectedBrushState connectedBrushState, BrushShape brushShape){
         this.activity = activity;
+        this.viewModel = activity.getViewModel();
         this.paintView = activity.getPaintView();
         this.connectedBrushState = connectedBrushState;
         this.currentBrushShape = brushShape;
@@ -98,7 +101,7 @@ public class ConnectedBrushIconModifier  {
 
     void revertIconAndState(){
         connectedBrushState.hasFirstItemBeenDrawn = false;
-        paintView.getDrawHistory().updateNewestItemWithState();
+        viewModel.drawHistory.updateNewestItemWithState();
         paintView.getCurrentBrush().reset();
         assignDefaultIconToShapeButton();
     }

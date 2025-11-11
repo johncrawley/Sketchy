@@ -78,7 +78,7 @@ public class MenuButtonsConfigurator
         buttonConfig.setDefaultSelection(R.id.shapeButton);
 
         iconModifiers = activity.getIconModifiers();
-        for(ConnectedBrushIconModifier iconModifier : iconModifiers){
+        for(var iconModifier : iconModifiers){
             iconModifier.assignShapeButton();
         }
     }
@@ -87,9 +87,9 @@ public class MenuButtonsConfigurator
     @Override
     public void handleClick(int viewId, Integer layoutId) {
         hideAllPanels();
-        for(ConnectedBrushIconModifier iconModifier : iconModifiers){
+        for(var iconModifier : iconModifiers){
             if(iconModifier.isShapeButtonAndInConnectedMode(viewId)){
-                if(paintView.getCurrentBrush().getBrushShape()== iconModifier.getBrushShape()) {
+                if(paintView.getCurrentBrush().getBrushShape() == iconModifier.getBrushShape()) {
                     iconModifier.revertIconAndState();
                     return;
                 }

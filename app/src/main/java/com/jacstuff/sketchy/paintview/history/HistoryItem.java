@@ -15,10 +15,9 @@ public class HistoryItem {
     private ConnectedBrushState connectedTriangleState;
     private TrianglePoints trianglePoints;
 
-    public HistoryItem(Bitmap bitmap, int savedOrientation, MainViewModel viewModel){
+    public HistoryItem(Bitmap bitmap, int savedOrientation){
         this.bitmap = bitmap;
         this.savedOrientation = savedOrientation;
-        updateViewModelState(viewModel);
     }
 
 

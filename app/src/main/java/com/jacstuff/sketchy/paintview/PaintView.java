@@ -11,10 +11,10 @@ import android.view.View;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.helpers.SensitivityHelper;
 import com.jacstuff.sketchy.paintview.history.DrawHistory;
-import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
+import com.jacstuff.sketchy.paintview.history.HistoryMemoryHelper;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -32,14 +32,13 @@ public class PaintView extends View {
     private PaintHelperManager paintHelperManager;
     private boolean isPreviewLayerToBeDrawn;
     private boolean ignoreMoveAndUpActions = false;
-    private DrawHistory drawHistory;
     private SettingsPopup settingsPopup;
     private final Context context;
     private BitmapLoader bitmapLoader;
     private SensitivityHelper sensitivityHelper;
     private float x, y;
     boolean isTouchDownRegistered = false;
-
+    private MainViewModel viewModel;
 
     public PaintView(Context context) {
         this(context, null);
@@ -68,7 +67,7 @@ public class PaintView extends View {
 
 
     public void init(SettingsPopup settingsPopup, BrushFactory brushFactory, MainViewModel viewModel, DrawHistory drawHistory) {
-        this.drawHistory = drawHistory;
+        this.viewModel = viewModel;
         this.settingsPopup = settingsPopup;
         this.brushFactory = brushFactory;
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
@@ -76,7 +75,7 @@ public class PaintView extends View {
         bitmapLoader = new BitmapLoader(this, canvas, canvasBitmapPaint);
         initBrushes();
 
-        if(drawHistory.isEmpty()){
+        if(viewModel.drawHistory.isEmpty()){
             drawPlainBackgroundAndSaveToHistory();
         }
         paintHelperManager.getKaleidoscopeHelper().setCanvas(canvas);
@@ -104,7 +103,7 @@ public class PaintView extends View {
         }
         //catch(IllegalArgumentException e){
         catch (Exception e){
-            e.printStackTrace();
+            printError(e.getMessage());
             //do nothing, sometimes there's an illegalArgException related to drawing gradients
             // immediately after rotating screen
         }
@@ -112,12 +111,13 @@ public class PaintView extends View {
     }
 
 
-    public PaintGroup getPaintGroup(){
-        return this.paintGroup;
+    private void printError(String msg){
+        System.out.println("^^^ PaintView exception caught: " + msg);
     }
 
-    public DrawHistory getDrawHistory(){
-        return drawHistory;
+
+    public PaintGroup getPaintGroup(){
+        return this.paintGroup;
     }
 
     public Bitmap getBitmap(){
@@ -144,8 +144,11 @@ public class PaintView extends View {
         return paintGroup.getPreviewPaint();
     }
 
+
     public void pushHistory(){
-        drawHistory.push(bitmap);
+        boolean isLowOnMemory = HistoryMemoryHelper.isLowMemoryFor(bitmap, context, viewModel.drawHistory.size());
+        viewModel.drawHistory.push(bitmap, getScreenOrientation(), isLowOnMemory);
+
     }
 
     public void assignMostRecentBitmap(){
@@ -233,6 +236,17 @@ public class PaintView extends View {
     }
 
 
+    public void redo(){
+        if(currentBrush.isOnFirstStep()){
+            loadNextHistoryItem();
+            return;
+        }
+        currentBrush.reset();
+        disablePreviewLayer();
+        invalidate();
+    }
+
+
     public Brush getCurrentBrush(){
         return currentBrush;
     }
@@ -240,14 +254,14 @@ public class PaintView extends View {
 
     public void loadBitmap(Bitmap bm){
         bitmapLoader.drawBitmapToScale(bm);
-        drawHistory.push(bitmap);
+        pushHistory();
     }
 
 
     public void drawBitmap(Bitmap loadedBitmap, float offsetX, float offsetY){
         Paint loadedBitmapPaint = new Paint();
         canvas.drawBitmap(loadedBitmap, offsetX, offsetY, loadedBitmapPaint);
-        drawHistory.push(bitmap);
+        pushHistory();
     }
 
 
@@ -269,7 +283,7 @@ public class PaintView extends View {
 
     private void drawPlainBackgroundAndSaveToHistory(){
         canvas.drawRect(0,0, getWidth(), getHeight(), blankPaint);
-        drawHistory.push(bitmap);
+        pushHistory();
         invalidate();
     }
 
@@ -310,14 +324,25 @@ public class PaintView extends View {
 
 
     private void loadHistoryItem(boolean isCurrentDiscarded){
-        HistoryItem historyItem = isCurrentDiscarded ?  drawHistory.getPrevious() : drawHistory.getCurrent();
-        Bitmap historyBitmap = bitmapLoader.getCorrectlyOrientatedBitmapFrom(historyItem);
+        var historyItem = isCurrentDiscarded ?  viewModel.drawHistory.getPrevious() : viewModel.drawHistory.getCurrent();
+        var historyBitmap = bitmapLoader.getCorrectlyOrientatedBitmapFrom(historyItem);
         if(historyBitmap == null){
             return;
         }
         bitmapLoader.drawBitmapToScale(historyBitmap);
         disablePreviewLayer();
         invalidate();
+    }
+
+
+    private void loadNextHistoryItem(){
+        var historyItem = viewModel.drawHistory.getNext();
+        var historyBitmap = bitmapLoader.getCorrectlyOrientatedBitmapFrom(historyItem);
+        if(historyBitmap != null){
+            bitmapLoader.drawBitmapToScale(historyBitmap);
+            disablePreviewLayer();
+            invalidate();
+        }
     }
 
 
@@ -335,5 +360,12 @@ public class PaintView extends View {
         }
         return false;
     }
+
+
+
+    private int getCurrentScreenOrientation(){
+        return context.getResources().getConfiguration().orientation;
+    }
+
 
 }

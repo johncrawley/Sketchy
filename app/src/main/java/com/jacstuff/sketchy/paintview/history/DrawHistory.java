@@ -9,6 +9,7 @@ import com.jacstuff.sketchy.controls.settings.menu.ConnectedBrushIconModifier;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.ACTIVITY_SERVICE;
@@ -16,127 +17,124 @@ import static android.content.Context.ACTIVITY_SERVICE;
 
 public class DrawHistory {
 
-    private final Context context;
-    private ArrayDeque<HistoryItem> history;
-    private final MainViewModel viewModel;
-    private final List<ConnectedBrushIconModifier> iconModifiers;
+    private List<HistoryItem> history;
+    private int currentIndex;
+    //private final List<ConnectedBrushIconModifier> iconModifiers;
 
 
-    public DrawHistory(Context context, MainViewModel viewModel, List<ConnectedBrushIconModifier> iconModifiers){
-        this.context = context;
-        this.viewModel = viewModel;
-        this.iconModifiers = iconModifiers;
-        history = new ArrayDeque<>(50);
+    //List<ConnectedBrushIconModifier> iconModifiers
+
+
+    public DrawHistory() {
+        history = new ArrayList<>(50);
     }
 
 
-    private double getFreeMemoryPercentage(){
-        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-        activityManager.getMemoryInfo(mi);
-        return mi.availMem / (double)mi.totalMem * 100.0;
-    }
-
-
-    private boolean hasSpaceFor(Bitmap bitmap){
-        int bytesPerBitmap = bitmap.getAllocationByteCount();
-        return bytesPerBitmap * 3f < getAvailableMemoryBytes();
-    }
-
-
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return history.isEmpty();
     }
 
 
-    public void push(Bitmap bitmap){
-        if(isHistorySizeAtLimit() || getFreeMemoryPercentage() < 20 || !hasSpaceFor(bitmap)){
-            if(history.isEmpty()){
-                //nothing to remove and not enough memory to save the latest bitmap
-                return;
-            }
-            history.removeLast();
+    public void push(Bitmap bitmap, int screenOrientation, boolean isLowOnMemory) {
+        boolean hasEnoughSpace = removeItemIfLowOnMemory(bitmap, isLowOnMemory);
+        if (hasEnoughSpace) {
+            history.add(new HistoryItem(Bitmap.createBitmap(bitmap),
+                    screenOrientation));
+            currentIndex = history.size() - 1;
         }
-        history.addFirst(new HistoryItem(Bitmap.createBitmap(bitmap),
-                getCurrentScreenOrientation(),
-                viewModel));
     }
 
 
-    private long getAvailableMemoryBytes(){
-        final Runtime runtime = Runtime.getRuntime();
-        final long usedMemInBytes=(runtime.totalMemory() - runtime.freeMemory());
-        final long maxHeapSizeInBytes=runtime.maxMemory();
-        return (maxHeapSizeInBytes - usedMemInBytes);
+    public int size() {
+        return history == null ? 0 : history.size();
     }
 
 
-    private boolean isHistorySizeAtLimit(){
-        int limit = context.getResources().getInteger(R.integer.bitmap_history_maximum_size);
-        return history.size() > limit;
+    private boolean removeItemIfLowOnMemory(Bitmap bitmap, boolean isLowOnMemory) {
+        if (isLowOnMemory) {
+            if (history.isEmpty()) {
+                //nothing to remove and not enough memory to save the latest bitmap
+                return false;
+            }
+            history = history.subList(1, history.size());
+            currentIndex--;
+        }
+        return true;
     }
 
 
-    private int getCurrentScreenOrientation(){
-        return context.getResources().getConfiguration().orientation;
-    }
-
-
-    public HistoryItem getPrevious(){
-        if(history.size() == 0){
+    public HistoryItem getPrevious() {
+        if (history.isEmpty()) {
             return null;
         }
-        if(history.size() > 1) {
-            history.removeFirst(); // this is the bitmap of what we currently see, so just get rid of it
-        }
-        return assignPropsToViewModelAndGetLatestItem();
+        currentIndex = Math.max(0, currentIndex - 1);
+        var item = history.get(currentIndex);
+        assignToViewModel(item);
+        updateIcons(item);
+        return item;
     }
 
 
-    public HistoryItem getCurrent(){
-        if(null != history && history.size() > 0) {
-            return assignPropsToViewModelAndGetLatestItem();
+    public HistoryItem getNext() {
+        if (history.isEmpty()) {
+            return null;
+        }
+        currentIndex = Math.min(history.size() - 1, currentIndex + 1);
+        var item = history.get(currentIndex);
+        assignToViewModel(item);
+        updateIcons(item);
+        return item;
+    }
+
+
+    public HistoryItem getCurrent() {
+        if (null != history && !history.isEmpty()) {
+            return getLatestItem();
         }
         return null;
     }
 
 
-    public void updateNewestItemWithState(){
-        if(history.isEmpty()){
+    public void updateNewestItemWithState() {
+        if (history.isEmpty()) {
             return;
         }
-        HistoryItem historyItem = history.peekFirst();
-        if(historyItem == null){
+        var historyItem = getLatestItem();
+        if (historyItem == null) {
             return;
         }
         historyItem.updateViewModelState(viewModel);
     }
 
 
-    private HistoryItem assignPropsToViewModelAndGetLatestItem(){
-        HistoryItem historyItem = history.peekFirst();
-        if(historyItem == null){
-            return null;
-        }
-        historyItem.assignSavedStateTo(viewModel);
-        updateIcons();
+    private HistoryItem getLatestItem() {
+        var historyItem = getLast();
+        assignToViewModel(historyItem);
+        updateIcons(historyItem);
         return historyItem;
     }
 
 
-    private void updateIcons(){
-        for(ConnectedBrushIconModifier iconModifier:  iconModifiers){
-            iconModifier.updateIcon();
+    private HistoryItem getLast() {
+        // cannot use getLast() on minSdk < 35
+        return history.get(history.size() - 1);
+    }
+
+
+    private void assignToViewModel(HistoryItem historyItem) {
+        if (historyItem != null) {
+            historyItem.assignSavedStateTo(viewModel);
         }
     }
 
 
-    public ArrayDeque<HistoryItem> getAll(){
-        return history;
+    private void updateIcons(HistoryItem historyItem) {
+        if (historyItem != null) {
+            for (var iconModifier : iconModifiers) {
+                iconModifier.updateIcon();
+            }
+        }
     }
 
-
-    public void setAll(ArrayDeque<HistoryItem> history){
-        this.history = history;
-    }
 }
+
