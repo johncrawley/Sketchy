@@ -34,9 +34,11 @@ public class ConnectedBrushIconModifier  {
         }
     }
 
+
     public BrushShape getBrushShape(){
         return currentBrushShape;
     }
+
 
     public void assignNormalIconId(int normalIconResId){
         this.normalIconResId = normalIconResId;

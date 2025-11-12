@@ -36,12 +36,21 @@ public class DrawHistory {
 
 
     public void push(Bitmap bitmap, int screenOrientation, boolean isLowOnMemory) {
+        log("entered push()");
         boolean hasEnoughSpace = removeItemIfLowOnMemory(bitmap, isLowOnMemory);
         if (hasEnoughSpace) {
+            if(!isLatest()){
+                history = history.subList(0, currentIndex + 1);
+            }
             history.add(new HistoryItem(Bitmap.createBitmap(bitmap),
                     screenOrientation));
             currentIndex = history.size() - 1;
         }
+    }
+
+
+    private boolean isLatest(){
+        return history.isEmpty() || currentIndex == history.size() -1;
     }
 
 
@@ -64,14 +73,19 @@ public class DrawHistory {
 
 
     public HistoryItem getPrevious() {
+        log("entered getPrevious()");
         if (history.isEmpty()) {
+            log("getPrevious(): history is empty");
             return null;
         }
         currentIndex = Math.max(0, currentIndex - 1);
         var item = history.get(currentIndex);
-        assignToViewModel(item);
-        updateIcons(item);
         return item;
+    }
+
+
+    private void log(String msg){
+        System.out.println("^^^ DrawHistory: " + msg);
     }
 
 
@@ -81,8 +95,6 @@ public class DrawHistory {
         }
         currentIndex = Math.min(history.size() - 1, currentIndex + 1);
         var item = history.get(currentIndex);
-        assignToViewModel(item);
-        updateIcons(item);
         return item;
     }
 
@@ -103,14 +115,12 @@ public class DrawHistory {
         if (historyItem == null) {
             return;
         }
-        historyItem.updateViewModelState(viewModel);
+    //    historyItem.updateViewModelState(viewModel);
     }
 
 
     private HistoryItem getLatestItem() {
         var historyItem = getLast();
-        assignToViewModel(historyItem);
-        updateIcons(historyItem);
         return historyItem;
     }
 
@@ -120,7 +130,7 @@ public class DrawHistory {
         return history.get(history.size() - 1);
     }
 
-
+/*
     private void assignToViewModel(HistoryItem historyItem) {
         if (historyItem != null) {
             historyItem.assignSavedStateTo(viewModel);
@@ -135,6 +145,6 @@ public class DrawHistory {
             }
         }
     }
-
+*/
 }
 

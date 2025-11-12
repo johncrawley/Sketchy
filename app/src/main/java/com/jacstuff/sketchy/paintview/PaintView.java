@@ -10,7 +10,6 @@ import android.view.View;
 
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.helpers.SensitivityHelper;
-import com.jacstuff.sketchy.paintview.history.DrawHistory;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
@@ -66,7 +65,7 @@ public class PaintView extends View {
     }
 
 
-    public void init(SettingsPopup settingsPopup, BrushFactory brushFactory, MainViewModel viewModel, DrawHistory drawHistory) {
+    public void init(SettingsPopup settingsPopup, BrushFactory brushFactory, MainViewModel viewModel) {
         this.viewModel = viewModel;
         this.settingsPopup = settingsPopup;
         this.brushFactory = brushFactory;
@@ -148,12 +147,13 @@ public class PaintView extends View {
     public void pushHistory(){
         boolean isLowOnMemory = HistoryMemoryHelper.isLowMemoryFor(bitmap, context, viewModel.drawHistory.size());
         viewModel.drawHistory.push(bitmap, getScreenOrientation(), isLowOnMemory);
-
     }
+
 
     public void assignMostRecentBitmap(){
         loadHistoryItem(false);
     }
+
 
     public BrushFactory getBrushFactory(){
         return brushFactory;

@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ButtonLayoutParams colorButtonLayoutParams;
     private ColorPickerSeekBarConfigurator colorPickerSeekBarConfigurator;
     private String currentPhotoPath;
-    private DrawHistory drawHistory;
     private Map<Integer, Runnable> menuActions;
     private ConnectedBrushIconModifierHelper connectedBrushIconModifierHelper;
 
@@ -360,14 +359,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setupPaintViewAndDefaultSelections(){
         paintView = findViewById(R.id.paintView);
         connectedBrushIconModifierHelper = new ConnectedBrushIconModifierHelper(this);
-        drawHistory = new DrawHistory(MainActivity.this, viewModel, connectedBrushIconModifierHelper.getIconModifiers());
         var brushFactory = new BrushFactory(this);
         final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                paintView.init(settingsPopup, brushFactory, viewModel, drawHistory);
+                paintView.init(settingsPopup, brushFactory, viewModel);
                 settingsButtonsConfigurator.selectDefaults();
                 viewModelHelper.onResume();
             }
