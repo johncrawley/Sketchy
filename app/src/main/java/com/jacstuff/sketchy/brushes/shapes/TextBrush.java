@@ -18,7 +18,7 @@ public class TextBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-        String text = mainViewModel.textBrushText;
+        String text = viewModel.textBrushText;
         if(text.trim().isEmpty()){
             mainActivity.toast(R.string.toast_text_brush_is_empty);
             return;

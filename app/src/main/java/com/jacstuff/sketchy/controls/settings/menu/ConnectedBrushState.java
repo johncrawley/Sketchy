@@ -9,6 +9,14 @@ public class ConnectedBrushState {
         this.isConnectedModeEnabled = existingBrushState.isConnectedModeEnabled;
     }
 
+    public void setConnectedModeEnabled(boolean isEnabled){
+        isConnectedModeEnabled = isEnabled;
+    }
+
+    public boolean isConnectedModeEnabled(){
+        return isConnectedModeEnabled;
+    }
+
     public boolean hasFirstItemBeenDrawn = false;
     public boolean isConnectedModeEnabled = false;
 }

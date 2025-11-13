@@ -17,9 +17,9 @@ public class ArcBrush extends AbstractBrush implements Brush {
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         RectF rect = new RectF(-halfBrushSize, -halfBrushSize, halfBrushSize, halfBrushSize);
-        int startAngle = 180 + mainViewModel.arcShapeStartingAngle;
-        int sweep = Math.min(1 + mainViewModel.arcShapeAngleSweepAngle, 359);
-        canvas.drawArc(rect, startAngle, sweep, mainViewModel.isArcShapeDrawnFromCentre, paint);
+        int startAngle = 180 + viewModel.arcShapeStartingAngle;
+        int sweep = Math.min(1 + viewModel.arcShapeAngleSweepAngle, 359);
+        canvas.drawArc(rect, startAngle, sweep, viewModel.isArcShapeDrawnFromCentre, paint);
     }
 
 

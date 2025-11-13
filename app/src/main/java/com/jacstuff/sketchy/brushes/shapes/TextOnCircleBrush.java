@@ -23,7 +23,7 @@ public class TextOnCircleBrush extends AbstractBrush implements Brush {
         path.addCircle(0,0, brushSize * 2, Path.Direction.CW);
 
         paint.setLinearText(true);
-        String text = mainViewModel.textBrushText;
+        String text = viewModel.textBrushText;
         float offset = 0f;
         canvas.drawTextOnPath(text, path, offset, offset, paint);
     }

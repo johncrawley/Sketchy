@@ -27,7 +27,7 @@ public abstract class AbstractBrush implements Brush{
     int halfBrushSize;
     BrushShape brushShape;
     public Drawer drawer;
-    public MainViewModel mainViewModel;
+    public MainViewModel viewModel;
     protected MainActivity mainActivity;
     public PaintView paintView;
     protected DrawerFactory.Type drawerType;
@@ -98,9 +98,9 @@ public abstract class AbstractBrush implements Brush{
         this.paintGroup = paintView.getPaintGroup();
         this.canvas = paintView.getCanvas();
         this.mainActivity = mainActivity;
-        this.mainViewModel = mainActivity.getViewModel();
+        this.viewModel = mainActivity.getViewModel();
         drawer = drawerFactory.get(drawerType);
-        brushInitializer.init(mainActivity, mainViewModel, paintView.getPaintHelperManager());
+        brushInitializer.init(mainActivity, viewModel, paintView.getPaintHelperManager());
         postInit();
     }
 

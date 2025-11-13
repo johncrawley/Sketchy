@@ -52,7 +52,7 @@ public class TriangleBrush extends AbstractBrush implements Brush {
     @Override
     public void recalculateDimensions(){
         super.recalculateDimensions();
-        height = (int)((brushSize/ 100f) * mainViewModel.triangleHeight);
+        height = (int)((brushSize/ 100f) * viewModel.triangleHeight);
     }
 
 }

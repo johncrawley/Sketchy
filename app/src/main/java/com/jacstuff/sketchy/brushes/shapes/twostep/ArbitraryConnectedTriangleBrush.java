@@ -35,7 +35,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
     @Override
     public void postInit(){
         super.postInit();
-        this.drawer = new ArbitraryTriangleDrawer(paintView, mainViewModel, this);
+        this.drawer = new ArbitraryTriangleDrawer(paintView, viewModel, this);
         drawer.init();
     }
 
@@ -55,9 +55,9 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
         upX = 0;
         upY = 0;
         resetStepState();
-        mainViewModel.connectedTriangleState.hasFirstItemBeenDrawn = false;
+        viewModel.connectedTriangleState.hasFirstItemBeenDrawn = false;
         mainActivity.getConnectedTriangleIconModifier().resetIconAndState();
-        mainViewModel.trianglePoints.reset();
+        viewModel.trianglePoints.reset();
     }
 
 
@@ -73,7 +73,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
     private void brushDownForConnectedMode(Point p){
         hasAlreadyDrawnOnce = false;
-        if(isInConnectedMode() && mainViewModel.connectedTriangleState.hasFirstItemBeenDrawn){
+        if(isInConnectedMode() && viewModel.connectedTriangleState.hasFirstItemBeenDrawn){
             assignClosestPointsForConnectTriangle(new PointF(p.x, p.y));
             setStateTo(StepState.SECOND);
         }
@@ -81,7 +81,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
 
     private boolean isInConnectedMode(){
-        return mainViewModel.connectedTriangleState.isConnectedModeEnabled;
+        return viewModel.connectedTriangleState.isConnectedModeEnabled;
     }
 
 
@@ -132,15 +132,15 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
             mainActivity.getConnectedTriangleIconModifier().setConnectedIconAndState();
             saveTrianglePoints();
             hasAlreadyDrawnOnce = true;
-            adjustedThirdPoint = mainViewModel.trianglePoints.getClosePointOrAddToExisting(originalPoint);
-            mainViewModel.connectedTriangleState.hasFirstItemBeenDrawn = true;
+            adjustedThirdPoint = viewModel.trianglePoints.getClosePointOrAddToExisting(originalPoint);
+            viewModel.connectedTriangleState.hasFirstItemBeenDrawn = true;
         }
         drawTriangle(adjustedThirdPoint, offsetX, offsetY, paint);
     }
 
 
     private void saveTrianglePoints(){
-        mainViewModel.trianglePoints.addPoints(new PointF(downX, downY),
+        viewModel.trianglePoints.addPoints(new PointF(downX, downY),
                 new PointF(upX, upY));
     }
 
@@ -171,10 +171,10 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
 
     private void assignClosestPointsForConnectTriangle(PointF latestThirdPoint){
-        if(!mainViewModel.connectedTriangleState.isConnectedModeEnabled){
+        if(!viewModel.connectedTriangleState.isConnectedModeEnabled){
             return;
         }
-        List<PointF> closesTrianglePoints = mainViewModel.trianglePoints.getNearestPointsTo(latestThirdPoint);
+        List<PointF> closesTrianglePoints = viewModel.trianglePoints.getNearestPointsTo(latestThirdPoint);
         downX =  closesTrianglePoints.get(0).x;
         downY =  closesTrianglePoints.get(0).y;
         upX = closesTrianglePoints.get(1).x;

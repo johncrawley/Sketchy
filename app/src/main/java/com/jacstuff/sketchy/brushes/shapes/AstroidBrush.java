@@ -62,7 +62,7 @@ public class AstroidBrush extends AbstractBrush implements Brush {
             bottomLeftCorner = new Point(-halfBrushSize, halfBrushSize);
             int midPercentage = mainActivity.getResources().getInteger(R.integer.astroid_shape_curve_seek_bar_max) / 2;
             //int percentage = mainViewModel.astroid_shape_curve_rate - midPercentage;
-            int percentage = midPercentage - mainViewModel.astroidShapeCurveRate;
+            int percentage = midPercentage - viewModel.astroidShapeCurveRate;
             int  midPointLength =  (int)((quarterBrushSize/100f) * percentage);
             midCurveTop = new Point(0, -midPointLength);
             midCurveBottom = new Point(0, midPointLength);

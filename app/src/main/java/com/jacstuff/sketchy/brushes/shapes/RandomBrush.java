@@ -36,7 +36,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
         int oldQuarterSize = quarterBrushSize;
         super.setBrushSize(brushSize);
         quarterBrushSize = halfBrushSize /2;
-        if(!mainViewModel.doesRandomBrushMorph){
+        if(!viewModel.doesRandomBrushMorph){
            adjustPointsWithBrushSizeDifference(quarterBrushSize - oldQuarterSize);
         }
     }
@@ -70,7 +70,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
             assignRandomPoints();
             areNewPointsRequired = false;
         }
-        Point firstPoint = points.get(0);
+        var firstPoint = points.get(0);
         path.moveTo(firstPoint.x, firstPoint.y);
         for(int i=1; i<points.size(); i++){
             path.lineTo(points.get(i).x, points.get(i).y);
@@ -86,7 +86,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
     }
 
     private void adjustPoints(){
-        if(mainViewModel.doesRandomBrushMorph){
+        if(viewModel.doesRandomBrushMorph){
             for(int i=0; i< points.size(); i++){
                adjustPoint(i);
             }
@@ -112,7 +112,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
 
     private void addRandomPoints(List<Point> list){
         list.clear();
-        int numberOfVertices = 3 + mainViewModel.randomBrushNumberOfPoints;
+        int numberOfVertices = 3 + viewModel.randomBrushNumberOfPoints;
         for(int i=0; i < numberOfVertices; i++){
             list.add(createRandomPoint());
         }
