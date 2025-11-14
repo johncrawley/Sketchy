@@ -1,18 +1,9 @@
 package com.jacstuff.sketchy.paintview.history;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.jacstuff.sketchy.R;
-import com.jacstuff.sketchy.controls.settings.menu.ConnectedBrushIconModifier;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
-
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.Context.ACTIVITY_SERVICE;
 
 
 public class DrawHistory {
@@ -20,8 +11,6 @@ public class DrawHistory {
     private List<HistoryItem> history;
     private int currentIndex;
     //private final List<ConnectedBrushIconModifier> iconModifiers;
-
-
     //List<ConnectedBrushIconModifier> iconModifiers
 
 
@@ -36,16 +25,33 @@ public class DrawHistory {
 
 
     public void push(Bitmap bitmap, int screenOrientation, boolean isLowOnMemory) {
-        log("entered push()");
         boolean hasEnoughSpace = removeItemIfLowOnMemory(bitmap, isLowOnMemory);
         if (hasEnoughSpace) {
             if(!isLatest()){
-                history = history.subList(0, currentIndex + 1);
+                removeAllFutureItems();
             }
-            history.add(new HistoryItem(Bitmap.createBitmap(bitmap),
-                    screenOrientation));
+            var historyItem = new HistoryItem(Bitmap.createBitmap(bitmap), screenOrientation);
+            copyOldBrushStatesTo(historyItem);
+            history.add(historyItem);
             currentIndex = history.size() - 1;
         }
+    }
+
+
+    private void copyOldBrushStatesTo(HistoryItem historyItem){
+        if(history.isEmpty() || currentIndex >= history.size()){
+            return;
+        }
+        var currentItem = history.get(currentIndex);
+        if(currentItem != null){
+            var existingConnectedLineState = currentItem.getConnectedLineState();
+            historyItem.setConnectedLineState(existingConnectedLineState);
+        }
+    }
+
+
+    private void removeAllFutureItems(){
+        history = history.subList(0, currentIndex + 1);
     }
 
 
@@ -79,8 +85,7 @@ public class DrawHistory {
             return null;
         }
         currentIndex = Math.max(0, currentIndex - 1);
-        var item = history.get(currentIndex);
-        return item;
+        return history.get(currentIndex);
     }
 
 
@@ -94,8 +99,7 @@ public class DrawHistory {
             return null;
         }
         currentIndex = Math.min(history.size() - 1, currentIndex + 1);
-        var item = history.get(currentIndex);
-        return item;
+        return  history.get(currentIndex);
     }
 
 
@@ -120,14 +124,13 @@ public class DrawHistory {
 
 
     private HistoryItem getLatestItem() {
-        var historyItem = getLast();
-        return historyItem;
+        return getLast();
     }
 
 
     private HistoryItem getLast() {
-        // cannot use getLast() on minSdk < 35
-        return history.get(history.size() - 1);
+        int index = history.size() - 1;
+        return history.get(index);
     }
 
 /*

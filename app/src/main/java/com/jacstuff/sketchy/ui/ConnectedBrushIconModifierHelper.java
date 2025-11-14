@@ -4,9 +4,11 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.controls.settings.menu.ConnectedBrushIconModifier;
+import com.jacstuff.sketchy.controls.settings.menu.ConnectedBrushState;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class ConnectedBrushIconModifierHelper {
 
@@ -45,7 +47,8 @@ public class ConnectedBrushIconModifierHelper {
 
     private void initLineIconModifier(){
         var viewModel = mainActivity.getViewModel();
-        connectedLineIconModifier = new ConnectedBrushIconModifier(mainActivity, viewModel.connectedLineState, BrushShape.LINE);
+        Supplier<ConnectedBrushState> connectedBrushStateSupplier = ()-> viewModel.drawHistory.getCurrent().getConnectedLineState();
+        connectedLineIconModifier = new ConnectedBrushIconModifier(mainActivity, viewModel.connectedLineState, connectedBrushStateSupplier, BrushShape.LINE);
         connectedLineIconModifier.assignConnectedIconResId(R.drawable.button_shape_line_connected);
         connectedLineIconModifier.assignNormalIconId(R.drawable.button_shape_line);
         iconModifiers.add(connectedLineIconModifier);
@@ -54,7 +57,8 @@ public class ConnectedBrushIconModifierHelper {
 
     private void initTriangleIconModifier(){
         var viewModel = mainActivity.getViewModel();
-        connectedTriangleIconModifier = new ConnectedBrushIconModifier(mainActivity, viewModel.connectedTriangleState, BrushShape.TRIANGLE_ARBITRARY);
+        Supplier<ConnectedBrushState> connectedBrushStateSupplier = ()-> viewModel.drawHistory.getCurrent().getConnectedTriangleState();
+        connectedTriangleIconModifier = new ConnectedBrushIconModifier(mainActivity, viewModel.connectedTriangleState, connectedBrushStateSupplier,  BrushShape.TRIANGLE_ARBITRARY);
         connectedTriangleIconModifier.assignConnectedIconResId(R.drawable.button_shape_triangle_arbitrary_connected);
         connectedTriangleIconModifier.assignNormalIconId(R.drawable.button_shape_triangle_arbitrary);
         iconModifiers.add(connectedTriangleIconModifier);

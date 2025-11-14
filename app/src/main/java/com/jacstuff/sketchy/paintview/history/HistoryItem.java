@@ -31,6 +31,31 @@ public class HistoryItem {
     }
 
 
+    public void setConnectedLinePreviousDown(float x, float y){
+        this.connectedLinePreviousDown = new PointF(x, y);
+    }
+
+
+    public ConnectedBrushState getConnectedLineState(){
+        return connectedLineState;
+    }
+
+
+    public ConnectedBrushState getConnectedTriangleState(){
+        return connectedLineState;
+    }
+
+
+    public void setConnectedLineState(ConnectedBrushState cbs){
+        connectedLineState = new ConnectedBrushState(cbs);
+    }
+
+
+    public PointF getConnectedLinePreviousDown(){
+        return getConnectedLinePreviousDown();
+    }
+
+
     public void updateViewModelState(MainViewModel viewModel){
         this.connectedLinePreviousDown = new PointF(viewModel.nextLineDownX, viewModel.nextLineDownY);
         this.connectedLineState = new ConnectedBrushState(viewModel.connectedLineState);

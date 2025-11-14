@@ -166,6 +166,10 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         setupSwitch(R.id.connectedLineModeEnabledSwitch, b -> {
             viewModel.connectedLineState.setConnectedModeEnabled(b);
 
+            var historyItem = viewModel.drawHistory.getCurrent();
+            if(historyItem != null){
+                historyItem.getConnectedLineState().setConnectedModeEnabled(b);
+            }
         });
     }
 }

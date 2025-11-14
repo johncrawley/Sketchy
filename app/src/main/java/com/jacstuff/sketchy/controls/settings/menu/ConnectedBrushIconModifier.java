@@ -6,7 +6,10 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.history.DrawHistory;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
+
+import java.util.function.Supplier;
 
 public class ConnectedBrushIconModifier  {
 
@@ -17,14 +20,16 @@ public class ConnectedBrushIconModifier  {
     private int normalIconResId, connectedIconResId;
     private final BrushShape currentBrushShape;
     private MainViewModel viewModel;
+    private Supplier<ConnectedBrushState> connectedBrushStateSupplier;
 
 
-    public ConnectedBrushIconModifier(MainActivity activity, ConnectedBrushState connectedBrushState, BrushShape brushShape){
+    public ConnectedBrushIconModifier(MainActivity activity, ConnectedBrushState connectedBrushState, Supplier<ConnectedBrushState> supplier, BrushShape brushShape){
         this.activity = activity;
         this.viewModel = activity.getViewModel();
         this.paintView = activity.getPaintView();
         this.connectedBrushState = connectedBrushState;
         this.currentBrushShape = brushShape;
+        this.connectedBrushStateSupplier = supplier;
     }
 
 
