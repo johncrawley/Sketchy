@@ -11,9 +11,21 @@ import com.jacstuff.sketchy.R;
 public class HistoryMemoryHelper {
 
     public static boolean isLowMemoryFor(Bitmap bitmap, Context context, int historySize){
+        boolean isHistorySizeAtLimit = isHistorySizeAtLimit(context, historySize);
+        boolean isMemPercentageLow = getFreeMemoryPercentage(context) < 10;
+        boolean hasNotEnoughSpaceForBitmap = hasNoSpaceFor(bitmap);
+
+        log("history at limit: " + isHistorySizeAtLimit + " isMemLow: " + isMemPercentageLow + " hasNotEnoughSpaceForBitmap: " + hasNotEnoughSpaceForBitmap);
+
+
         return isHistorySizeAtLimit(context, historySize)
-                || getFreeMemoryPercentage(context) < 20
-                || !hasSpaceFor(bitmap);
+                || getFreeMemoryPercentage(context) < 10
+                || hasNoSpaceFor(bitmap);
+    }
+
+
+    private static void log(String msg){
+     //   System.out.println("^^^ HistoryMemoryHelper: " + msg);
     }
 
 
@@ -21,13 +33,15 @@ public class HistoryMemoryHelper {
         var mi = new ActivityManager.MemoryInfo();
         var activityManager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
         activityManager.getMemoryInfo(mi);
+        double percentageFree = mi.availMem / (double)mi.totalMem * 100.0;
+        log("getFreeMemoryPercentage() available: " + mi.availMem + " total: " + mi.totalMem + " percentage free: " + percentageFree);
         return mi.availMem / (double)mi.totalMem * 100.0;
     }
 
 
-    private static boolean hasSpaceFor(Bitmap bitmap){
+    private static boolean hasNoSpaceFor(Bitmap bitmap){
         int bytesPerBitmap = bitmap.getAllocationByteCount();
-        return bytesPerBitmap * 3f < getAvailableMemoryBytes();
+        return !(bytesPerBitmap * 3f < getAvailableMemoryBytes());
     }
 
 

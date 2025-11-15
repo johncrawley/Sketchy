@@ -14,12 +14,22 @@ public class HistoryItem {
     private ConnectedBrushState connectedLineState;
     private ConnectedBrushState connectedTriangleState;
     private TrianglePoints trianglePoints;
+    private final int id;
 
-    public HistoryItem(Bitmap bitmap, int savedOrientation){
+    public HistoryItem(Bitmap bitmap, int savedOrientation, int id){
         this.bitmap = bitmap;
         this.savedOrientation = savedOrientation;
+        this.connectedLineState = new ConnectedBrushState();
+        this.connectedTriangleState = new ConnectedBrushState();
+        connectedLinePreviousDown = new PointF(0,0);
+        trianglePoints = new TrianglePoints();
+        this.id = id;
     }
 
+
+    public int getId(){
+        return id;
+    }
 
     public Bitmap getBitmap(){
         return this.bitmap;
@@ -51,8 +61,8 @@ public class HistoryItem {
     }
 
 
-    public PointF getConnectedLinePreviousDown(){
-        return getConnectedLinePreviousDown();
+    public PointF getLineUpCoordinates(){
+        return connectedLinePreviousDown;
     }
 
 

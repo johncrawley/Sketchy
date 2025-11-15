@@ -5,8 +5,13 @@ public class ConnectedBrushState {
     public ConnectedBrushState(){}
 
     public ConnectedBrushState(ConnectedBrushState existingBrushState){
-        this.hasFirstItemBeenDrawn = existingBrushState.hasFirstItemBeenDrawn;
-        this.isConnectedModeEnabled = existingBrushState.isConnectedModeEnabled;
+        this.hasFirstItemBeenDrawn = existingBrushState != null && existingBrushState.isFirstItemDrawn();
+        this.isConnectedModeEnabled = existingBrushState != null && existingBrushState.isConnectedModeEnabled();
+    }
+
+
+    private void log(String msg){
+        System.out.println("ConnectedBrushState: " + msg);
     }
 
     public void setConnectedModeEnabled(boolean isEnabled){
@@ -17,6 +22,16 @@ public class ConnectedBrushState {
         return isConnectedModeEnabled;
     }
 
-    public boolean hasFirstItemBeenDrawn = false;
-    public boolean isConnectedModeEnabled = false;
+
+    public void setFirstItemDrawn(boolean isDrawn){
+        hasFirstItemBeenDrawn = isDrawn;
+    }
+
+
+    public boolean isFirstItemDrawn(){
+        return hasFirstItemBeenDrawn;
+    }
+
+    private boolean hasFirstItemBeenDrawn = false;
+    private boolean isConnectedModeEnabled = false;
 }

@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public class ConnectedBrushIconModifierHelper {
 
-    private MainActivity mainActivity;
+    private final MainActivity mainActivity;
     private ConnectedBrushIconModifier connectedLineIconModifier, connectedTriangleIconModifier;
     private List<ConnectedBrushIconModifier> iconModifiers;
 

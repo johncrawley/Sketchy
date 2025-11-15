@@ -72,18 +72,20 @@ public class RandomBrush extends AbstractBrush implements Brush {
         }
         var firstPoint = points.get(0);
         path.moveTo(firstPoint.x, firstPoint.y);
-        for(int i=1; i<points.size(); i++){
+        for(int i = 1; i < points.size(); i++){
             path.lineTo(points.get(i).x, points.get(i).y);
         }
         path.close();
         canvas.drawPath(path, paint);
     }
 
+
     @Override
     public void recalculateDimensions(){
         super.recalculateDimensions();
         assignRandomPoints();
     }
+
 
     private void adjustPoints(){
         if(viewModel.doesRandomBrushMorph){

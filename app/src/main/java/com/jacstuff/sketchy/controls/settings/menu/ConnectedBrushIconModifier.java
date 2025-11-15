@@ -6,7 +6,6 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.paintview.history.DrawHistory;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.function.Supplier;
@@ -16,18 +15,17 @@ public class ConnectedBrushIconModifier  {
     private Button shapeButton;
     private final PaintView paintView;
     private final MainActivity activity;
-    private final ConnectedBrushState connectedBrushState;
     private int normalIconResId, connectedIconResId;
     private final BrushShape currentBrushShape;
-    private MainViewModel viewModel;
-    private Supplier<ConnectedBrushState> connectedBrushStateSupplier;
+    private final MainViewModel viewModel;
+    private final Supplier<ConnectedBrushState> connectedBrushStateSupplier;
 
 
     public ConnectedBrushIconModifier(MainActivity activity, ConnectedBrushState connectedBrushState, Supplier<ConnectedBrushState> supplier, BrushShape brushShape){
         this.activity = activity;
         this.viewModel = activity.getViewModel();
         this.paintView = activity.getPaintView();
-        this.connectedBrushState = connectedBrushState;
+       // this.connectedBrushState = connectedBrushState;
         this.currentBrushShape = brushShape;
         this.connectedBrushStateSupplier = supplier;
     }
@@ -56,8 +54,9 @@ public class ConnectedBrushIconModifier  {
 
 
     public void setConnectedIconAndState(){
-        if(connectedBrushState.isConnectedModeEnabled){
-            connectedBrushState.hasFirstItemBeenDrawn = true;
+        var connectedBrushState = connectedBrushStateSupplier.get();
+        if(connectedBrushState.isConnectedModeEnabled()){
+            connectedBrushState.setFirstItemDrawn(true);
             switchToConnectedIcon();
         }
     }
@@ -74,15 +73,17 @@ public class ConnectedBrushIconModifier  {
 
 
     public void resetIconAndState(){
-        connectedBrushState.hasFirstItemBeenDrawn = false;
+        var connectedBrushState = connectedBrushStateSupplier.get();
+        connectedBrushState.setFirstItemDrawn(false);
         assignDefaultIconToShapeButton();
     }
 
 
     public boolean isShapeButtonAndInConnectedMode(int viewId){
+
         return viewId == R.id.shapeButton
                 && isUsingThisShapeInConnectedMode()
-                && connectedBrushState.hasFirstItemBeenDrawn;
+                && connectedBrushStateSupplier.get().isFirstItemDrawn();
     }
 
 
@@ -91,7 +92,7 @@ public class ConnectedBrushIconModifier  {
             return;
         }
         if(isUsingThisShapeInConnectedMode()){
-            if(connectedBrushState.hasFirstItemBeenDrawn){
+            if(connectedBrushStateSupplier.get().isFirstItemDrawn()){
                 assignConnectedIconToShapeButton();
                 return;
             }
@@ -102,12 +103,12 @@ public class ConnectedBrushIconModifier  {
 
     public boolean isUsingThisShapeInConnectedMode(){
         return  paintView.getCurrentBrush().getBrushShape() == currentBrushShape
-                && connectedBrushState.isConnectedModeEnabled;
+                && connectedBrushStateSupplier.get().isConnectedModeEnabled();
     }
 
 
     void revertIconAndState(){
-        connectedBrushState.hasFirstItemBeenDrawn = false;
+        connectedBrushStateSupplier.get().setFirstItemDrawn(false);
         viewModel.drawHistory.updateNewestItemWithState();
         paintView.getCurrentBrush().reset();
         assignDefaultIconToShapeButton();

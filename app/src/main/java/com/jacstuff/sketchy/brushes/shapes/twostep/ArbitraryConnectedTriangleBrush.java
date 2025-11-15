@@ -55,7 +55,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
         upX = 0;
         upY = 0;
         resetStepState();
-        viewModel.connectedTriangleState.hasFirstItemBeenDrawn = false;
+        viewModel.connectedTriangleState.setFirstItemDrawn(false);
         mainActivity.getConnectedTriangleIconModifier().resetIconAndState();
         viewModel.trianglePoints.reset();
     }
@@ -73,7 +73,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
     private void brushDownForConnectedMode(Point p){
         hasAlreadyDrawnOnce = false;
-        if(isInConnectedMode() && viewModel.connectedTriangleState.hasFirstItemBeenDrawn){
+        if(isInConnectedMode() && viewModel.connectedTriangleState.isFirstItemDrawn()){
             assignClosestPointsForConnectTriangle(new PointF(p.x, p.y));
             setStateTo(StepState.SECOND);
         }
@@ -81,7 +81,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
 
     private boolean isInConnectedMode(){
-        return viewModel.connectedTriangleState.isConnectedModeEnabled;
+        return viewModel.connectedTriangleState.isConnectedModeEnabled();
     }
 
 
@@ -133,7 +133,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
             saveTrianglePoints();
             hasAlreadyDrawnOnce = true;
             adjustedThirdPoint = viewModel.trianglePoints.getClosePointOrAddToExisting(originalPoint);
-            viewModel.connectedTriangleState.hasFirstItemBeenDrawn = true;
+            viewModel.connectedTriangleState.setFirstItemDrawn(true);
         }
         drawTriangle(adjustedThirdPoint, offsetX, offsetY, paint);
     }
@@ -171,7 +171,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
 
     private void assignClosestPointsForConnectTriangle(PointF latestThirdPoint){
-        if(!viewModel.connectedTriangleState.isConnectedModeEnabled){
+        if(!viewModel.connectedTriangleState.isConnectedModeEnabled()){
             return;
         }
         List<PointF> closesTrianglePoints = viewModel.trianglePoints.getNearestPointsTo(latestThirdPoint);

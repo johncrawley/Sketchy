@@ -103,6 +103,7 @@ public class PaintView extends View {
         //catch(IllegalArgumentException e){
         catch (Exception e){
             printError(e.getMessage());
+            e.printStackTrace();
             //do nothing, sometimes there's an illegalArgException related to drawing gradients
             // immediately after rotating screen
         }
@@ -324,7 +325,7 @@ public class PaintView extends View {
 
 
     private void loadHistoryItem(boolean isCurrentDiscarded){
-        var historyItem = isCurrentDiscarded ?  viewModel.drawHistory.getPrevious() : viewModel.drawHistory.getCurrent();
+        var historyItem = isCurrentDiscarded ?  viewModel.drawHistory.assignPrevious() : viewModel.drawHistory.getCurrent();
         var historyBitmap = bitmapLoader.getCorrectlyOrientatedBitmapFrom(historyItem);
         if(historyBitmap == null){
             return;

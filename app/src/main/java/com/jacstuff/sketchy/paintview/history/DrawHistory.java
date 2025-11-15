@@ -10,6 +10,7 @@ public class DrawHistory {
 
     private List<HistoryItem> history;
     private int currentIndex;
+    private int id;
     //private final List<ConnectedBrushIconModifier> iconModifiers;
     //List<ConnectedBrushIconModifier> iconModifiers
 
@@ -25,21 +26,29 @@ public class DrawHistory {
 
 
     public void push(Bitmap bitmap, int screenOrientation, boolean isLowOnMemory) {
-        boolean hasEnoughSpace = removeItemIfLowOnMemory(bitmap, isLowOnMemory);
+        log("Entered push() size: " + history.size() + " is low on memory: " + isLowOnMemory);
+        boolean hasEnoughSpace = removeItemIfLowOnMemory(isLowOnMemory);
         if (hasEnoughSpace) {
+            log("push() there is enough space to save a history");
             if(!isLatest()){
+                log("push() removing all future items");
                 removeAllFutureItems();
             }
-            var historyItem = new HistoryItem(Bitmap.createBitmap(bitmap), screenOrientation);
+            var historyItem = new HistoryItem(Bitmap.createBitmap(bitmap), screenOrientation, ++id);
             copyOldBrushStatesTo(historyItem);
             history.add(historyItem);
+            log("history item added, ID: " +  id);
             currentIndex = history.size() - 1;
+        }else{
+            log("not enough space to save history");
         }
     }
 
 
     private void copyOldBrushStatesTo(HistoryItem historyItem){
+        log("entered copyOldBrushStatesTo()");
         if(history.isEmpty() || currentIndex >= history.size()){
+            log("exiting copyOldBrushStatesTo() history is empty or current index is greater than size()");
             return;
         }
         var currentItem = history.get(currentIndex);
@@ -65,7 +74,7 @@ public class DrawHistory {
     }
 
 
-    private boolean removeItemIfLowOnMemory(Bitmap bitmap, boolean isLowOnMemory) {
+    private boolean removeItemIfLowOnMemory( boolean isLowOnMemory) {
         if (isLowOnMemory) {
             if (history.isEmpty()) {
                 //nothing to remove and not enough memory to save the latest bitmap
@@ -78,14 +87,21 @@ public class DrawHistory {
     }
 
 
-    public HistoryItem getPrevious() {
-        log("entered getPrevious()");
+    public HistoryItem assignPrevious() {
+        log("entered assignPrevious()");
         if (history.isEmpty()) {
-            log("getPrevious(): history is empty");
+            log("assignPrevious(): history is empty");
             return null;
         }
         currentIndex = Math.max(0, currentIndex - 1);
         return history.get(currentIndex);
+    }
+
+
+    public HistoryItem peekPrevious() {
+        log("entered peekPrevious()");
+        int previousIndex = Math.max(0, currentIndex - 1);
+        return history.isEmpty() ? null : history.get(previousIndex);
     }
 
 
