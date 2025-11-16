@@ -41,7 +41,7 @@ public class HistoryItem {
     }
 
 
-    public void setConnectedLinePreviousDown(float x, float y){
+    public void setConnectedLineUpCoordinates(float x, float y){
         this.connectedLinePreviousDown = new PointF(x, y);
     }
 

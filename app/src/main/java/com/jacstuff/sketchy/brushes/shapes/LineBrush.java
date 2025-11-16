@@ -26,21 +26,11 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-        /*
-        if(!viewModel.connectedLineState.isFirstItemDrawn()) {
-            xDown = p.x;
-            yDown = p.y;
-        }
-        else if(viewModel.connectedLineState.isConnectedModeEnabled()){
-            xDown = viewModel.nextLineDownX;
-            yDown = viewModel.nextLineDownY;
 
-        }
-
-         */
         log("entered onBrushTouchDown() history size: " + viewModel.drawHistory.size());
         var historyItem = viewModel.drawHistory.getCurrent();
         if(historyItem != null){
+            log("onBrushTouchDown, current Item ID: "+  historyItem.getId());
             var lineState = historyItem.getConnectedLineState();
             if(!lineState.isFirstItemDrawn()){
                 log("onBrushTouchDown() current history: first item is not drawn");
@@ -48,14 +38,9 @@ public class LineBrush extends AbstractBrush implements Brush {
                 yDown = p.y;
             }
             else if(lineState.isConnectedModeEnabled()){
-                log("onBrushTouchDown() current history: first item is drawn, and connected mode is enabled");
-                var previousItem = viewModel.drawHistory.peekPrevious();
-                if(previousItem != null){
-                    log("onBrushTouchDown() peeked history ID: "+  previousItem.getId());
-                    var coordinates = previousItem.getLineUpCoordinates();
-                    xDown = coordinates.x;
-                    yDown = coordinates.y;
-                }
+                var coordinates = historyItem.getLineUpCoordinates();
+                xDown = coordinates.x;
+                yDown = coordinates.y;
             }
             else{
                 log("onBrushTouchDown() default else");
@@ -78,14 +63,7 @@ public class LineBrush extends AbstractBrush implements Brush {
                 x - offsetX,
                 y - offsetY,
                 paint);
-        var currentHistory = viewModel.drawHistory.getCurrent();
-        log("Entered onTouchUp() line drawn, current history size() : "+  viewModel.drawHistory.size());
-        if(currentHistory != null){
-            log("onTouchUp() current history is not null, setting line coords");
-            currentHistory.setConnectedLinePreviousDown(x,y);
-            //viewModel.nextLineDownX = x;
-            //viewModel.nextLineDownY = y;
-        }
+        viewModel.drawHistory.saveLineUpCoordinates(x,y);
     }
 
 

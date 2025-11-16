@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.paintview.history;
 
 import android.graphics.Bitmap;
+import android.graphics.PointF;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ public class DrawHistory {
     private List<HistoryItem> history;
     private int currentIndex;
     private int id;
+    private PointF lineUpCoordinates = new PointF(0,0);
     //private final List<ConnectedBrushIconModifier> iconModifiers;
     //List<ConnectedBrushIconModifier> iconModifiers
 
@@ -36,10 +38,12 @@ public class DrawHistory {
             }
             var historyItem = new HistoryItem(Bitmap.createBitmap(bitmap), screenOrientation, ++id);
             copyOldBrushStatesTo(historyItem);
+            historyItem.setConnectedLineUpCoordinates(lineUpCoordinates.x, lineUpCoordinates.y);
             history.add(historyItem);
             log("history item added, ID: " +  id);
+            printItems();
             currentIndex = history.size() - 1;
-        }else{
+        } else{
             log("not enough space to save history");
         }
     }
@@ -58,6 +62,10 @@ public class DrawHistory {
         }
     }
 
+
+    public void saveLineUpCoordinates(float x, float y){
+        lineUpCoordinates = new PointF(x,y);
+    }
 
     private void removeAllFutureItems(){
         history = history.subList(0, currentIndex + 1);
@@ -98,10 +106,13 @@ public class DrawHistory {
     }
 
 
-    public HistoryItem peekPrevious() {
-        log("entered peekPrevious()");
-        int previousIndex = Math.max(0, currentIndex - 1);
-        return history.isEmpty() ? null : history.get(previousIndex);
+    public void printItems(){
+        var str = new StringBuilder("printItems() : ");
+        for(var item : history){
+            str.append(" ");
+            str.append(item.getId());
+        }
+        log(str.toString());
     }
 
 
