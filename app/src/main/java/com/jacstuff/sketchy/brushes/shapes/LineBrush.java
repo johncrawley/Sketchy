@@ -20,20 +20,13 @@ public class LineBrush extends AbstractBrush implements Brush {
         drawerType = DrawerFactory.Type.DRAG_LINE;
     }
 
-    private void log(String msg){
-        System.out.println("^^^ LineBrush: " + msg);
-    }
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-
-        log("entered onBrushTouchDown() history size: " + viewModel.drawHistory.size());
         var historyItem = viewModel.drawHistory.getCurrent();
         if(historyItem != null){
-            log("onBrushTouchDown, current Item ID: "+  historyItem.getId());
             var lineState = historyItem.getConnectedLineState();
             if(!lineState.isFirstItemDrawn()){
-                log("onBrushTouchDown() current history: first item is not drawn");
                 xDown = p.x;
                 yDown = p.y;
             }
@@ -41,9 +34,6 @@ public class LineBrush extends AbstractBrush implements Brush {
                 var coordinates = historyItem.getLineUpCoordinates();
                 xDown = coordinates.x;
                 yDown = coordinates.y;
-            }
-            else{
-                log("onBrushTouchDown() default else");
             }
         }
     }

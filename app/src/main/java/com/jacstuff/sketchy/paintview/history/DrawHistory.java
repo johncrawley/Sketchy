@@ -102,6 +102,9 @@ public class DrawHistory {
             return null;
         }
         currentIndex = Math.max(0, currentIndex - 1);
+        log("assignPrevious() UNDO");
+        printItems();
+        log("assignPrevious() currentIndex = " + currentIndex);
         return history.get(currentIndex);
     }
 
@@ -156,7 +159,7 @@ public class DrawHistory {
 
 
     private HistoryItem getLast() {
-        int index = history.size() - 1;
+        int index = currentIndex < history.size() ? currentIndex : history.size() -1;
         return history.get(index);
     }
 

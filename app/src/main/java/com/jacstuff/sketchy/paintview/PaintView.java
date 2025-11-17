@@ -327,12 +327,11 @@ public class PaintView extends View {
     private void loadHistoryItem(boolean isCurrentDiscarded){
         var historyItem = isCurrentDiscarded ?  viewModel.drawHistory.assignPrevious() : viewModel.drawHistory.getCurrent();
         var historyBitmap = bitmapLoader.getCorrectlyOrientatedBitmapFrom(historyItem);
-        if(historyBitmap == null){
-            return;
+        if(historyBitmap != null){
+            bitmapLoader.drawBitmapToScale(historyBitmap);
+            disablePreviewLayer();
+            invalidate();
         }
-        bitmapLoader.drawBitmapToScale(historyBitmap);
-        disablePreviewLayer();
-        invalidate();
     }
 
 
