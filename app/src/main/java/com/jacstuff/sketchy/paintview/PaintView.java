@@ -17,6 +17,8 @@ import com.jacstuff.sketchy.paintview.history.HistoryMemoryHelper;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
+import java.io.IOException;
+
 
 public class PaintView extends View {
 
@@ -97,6 +99,8 @@ public class PaintView extends View {
         if(isPopupBeingDismissed(event) || isCanvasLocked){
             return true;
         }
+        drawWithBrush(event);
+        /*
         try {
             drawWithBrush(event);
         }
@@ -107,6 +111,8 @@ public class PaintView extends View {
             //do nothing, sometimes there's an illegalArgException related to drawing gradients
             // immediately after rotating screen
         }
+
+         */
         return true;
     }
 

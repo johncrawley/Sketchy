@@ -9,8 +9,7 @@ import android.graphics.PointF;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.ArbitraryTriangleDrawer;
 import com.jacstuff.sketchy.brushes.shapes.initializer.DragRectInitializer;
-
-import java.util.List;
+import com.jacstuff.sketchy.paintview.history.DrawHistory;
 
 
 public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
@@ -19,6 +18,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
     private float thirdPointX, thirdPointY;
     private boolean hasAlreadyDrawnOnce = false; // used to prevent repeated saves and calculations for each segment of a kaleidoscope
     private PointF adjustedThirdPoint;
+    private DrawHistory drawHistory;
 
 
     public ArbitraryConnectedTriangleBrush() {
@@ -36,6 +36,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
     public void postInit(){
         super.postInit();
         this.drawer = new ArbitraryTriangleDrawer(paintView, viewModel, this);
+        drawHistory = viewModel.drawHistory;
         drawer.init();
     }
 
@@ -55,9 +56,12 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
         upX = 0;
         upY = 0;
         resetStepState();
-        viewModel.connectedTriangleState.setFirstItemDrawn(false);
+        var currentItem = drawHistory.getCurrent();
+        if(currentItem != null){
+            currentItem.getConnectedTriangleState().setFirstItemDrawn(false);
+            currentItem.getTrianglePoints().reset();
+        }
         mainActivity.getConnectedTriangleIconModifier().resetIconAndState();
-        viewModel.trianglePoints.reset();
     }
 
 
@@ -73,15 +77,22 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
     private void brushDownForConnectedMode(Point p){
         hasAlreadyDrawnOnce = false;
-        if(isInConnectedMode() && viewModel.connectedTriangleState.isFirstItemDrawn()){
+        if(isInConnectedMode() && isFirstItemDrawn()){
             assignClosestPointsForConnectTriangle(new PointF(p.x, p.y));
             setStateTo(StepState.SECOND);
         }
     }
 
 
+    private boolean isFirstItemDrawn(){
+        var currentItem = drawHistory.getCurrent();
+        return currentItem != null && currentItem.getConnectedTriangleState().isFirstItemDrawn();
+    }
+
+
     private boolean isInConnectedMode(){
-        return viewModel.connectedTriangleState.isConnectedModeEnabled();
+        var currentItem = drawHistory.getCurrent();
+        return currentItem != null && currentItem.getConnectedTriangleState().isConnectedModeEnabled();
     }
 
 
@@ -118,30 +129,39 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
     }
 
 
-    private void onTouchUpSecondState(PointF point, float offsetX, float offsetY, Paint paint){
+    private void onTouchUpSecondState(PointF thirdPoint, float offsetX, float offsetY, Paint paint){
         if(isInConnectedMode()){
-            onTouchUpSecondStateConnected(point, offsetX, offsetY, paint);
+            onTouchUpSecondStateConnected(thirdPoint, offsetX, offsetY, paint);
             return;
         }
-        drawTriangle(point, offsetX, offsetY, paint);
+        drawTriangle(thirdPoint, offsetX, offsetY, paint);
     }
 
 
-    private void onTouchUpSecondStateConnected(PointF originalPoint, float offsetX, float offsetY, Paint paint){
+    private void onTouchUpSecondStateConnected(PointF thirdPoint, float offsetX, float offsetY, Paint paint){
         if(!hasAlreadyDrawnOnce){
-            mainActivity.getConnectedTriangleIconModifier().setConnectedIconAndState();
+            setConnectedIconAndState();
             saveTrianglePoints();
             hasAlreadyDrawnOnce = true;
-            adjustedThirdPoint = viewModel.trianglePoints.getClosePointOrAddToExisting(originalPoint);
-            viewModel.connectedTriangleState.setFirstItemDrawn(true);
+            var currentItem = drawHistory.getCurrent();
+            if(currentItem != null){
+                adjustedThirdPoint = currentItem.getTrianglePoints()
+                        .getNearbyPointOrAdd(thirdPoint);
+                currentItem.getConnectedTriangleState().setFirstItemDrawn(true);
+            }
         }
         drawTriangle(adjustedThirdPoint, offsetX, offsetY, paint);
     }
 
 
+    private void setConnectedIconAndState(){
+        mainActivity.getConnectedTriangleIconModifier()
+                .setConnectedIconAndState();
+    }
+
+
     private void saveTrianglePoints(){
-        viewModel.trianglePoints.addPoints(new PointF(downX, downY),
-                new PointF(upX, upY));
+        drawHistory.addTrianglePoints(new PointF(downX, downY), new PointF(upX, upY));
     }
 
 
@@ -149,36 +169,36 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
         thirdPointX = thirdPoint.x;
         thirdPointY = thirdPoint.y;
 
-        float firstPointX = downX - offsetX;
-        float firstPointY = downY - offsetY;
+        var p1 = new PointF(downX - offsetX, downY - offsetY);
+        var p2 = new PointF(upX - offsetX, upY - offsetY);
+        var offset = new PointF(offsetX, offsetY);
 
-        float secondPointX = upX - offsetX;
-        float secondPointY = upY - offsetY;
+        drawTrianglePath(p1, p2, offset, paint);
+    }
 
+
+    private void drawTrianglePath(PointF firstPoint, PointF secondPoint, PointF offset, Paint paint){
         path.reset();
-        path.moveTo(firstPointX, firstPointY);
-        path.lineTo(thirdPointX -offsetX,thirdPointY - offsetY);
-        path.lineTo(secondPointX, secondPointY);
+        path.moveTo(firstPoint.x, firstPoint.y);
+        path.lineTo(thirdPointX - offset.x,thirdPointY - offset.y);
+        path.lineTo(secondPoint.x, secondPoint.y);
         path.close();
         canvas.drawPath(path, paint);
     }
 
 
-    @Override
-    public boolean isUsingPlacementHelper(){
-        return false;
-    }
-
-
     private void assignClosestPointsForConnectTriangle(PointF latestThirdPoint){
-        if(!viewModel.connectedTriangleState.isConnectedModeEnabled()){
+        if(!isInConnectedMode()){
             return;
         }
-        List<PointF> closesTrianglePoints = viewModel.trianglePoints.getNearestPointsTo(latestThirdPoint);
-        downX =  closesTrianglePoints.get(0).x;
-        downY =  closesTrianglePoints.get(0).y;
-        upX = closesTrianglePoints.get(1).x;
-        upY = closesTrianglePoints.get(1).y;
+        var currentItem = drawHistory.getCurrent();
+        if(currentItem != null){
+            var closesTrianglePoints = currentItem.getTrianglePoints().getNearestPointsTo(latestThirdPoint);
+            downX =  closesTrianglePoints.get(0).x;
+            downY =  closesTrianglePoints.get(0).y;
+            upX = closesTrianglePoints.get(1).x;
+            upY = closesTrianglePoints.get(1).y;
+        }
     }
 
 

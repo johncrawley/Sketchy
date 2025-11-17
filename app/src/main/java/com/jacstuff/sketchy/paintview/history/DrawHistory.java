@@ -13,6 +13,8 @@ public class DrawHistory {
     private int currentIndex;
     private int id;
     private PointF lineUpCoordinates = new PointF(0,0);
+    private PointF trianglePoint1 = new PointF(0,0);
+    private PointF trianglePoint2 = new PointF(0,0);
     //private final List<ConnectedBrushIconModifier> iconModifiers;
     //List<ConnectedBrushIconModifier> iconModifiers
 
@@ -28,37 +30,51 @@ public class DrawHistory {
 
 
     public void push(Bitmap bitmap, int screenOrientation, boolean isLowOnMemory) {
-        log("Entered push() size: " + history.size() + " is low on memory: " + isLowOnMemory);
         boolean hasEnoughSpace = removeItemIfLowOnMemory(isLowOnMemory);
         if (hasEnoughSpace) {
-            log("push() there is enough space to save a history");
             if(!isLatest()){
-                log("push() removing all future items");
                 removeAllFutureItems();
             }
             var historyItem = new HistoryItem(Bitmap.createBitmap(bitmap), screenOrientation, ++id);
             copyOldBrushStatesTo(historyItem);
             historyItem.setConnectedLineUpCoordinates(lineUpCoordinates.x, lineUpCoordinates.y);
+            addTrianglePointsTo(historyItem);
             history.add(historyItem);
-            log("history item added, ID: " +  id);
             printItems();
             currentIndex = history.size() - 1;
-        } else{
-            log("not enough space to save history");
+            log("&&&&&************** number of triangle points after push: ");
+            printTrianglePointsNumber(currentIndex);
         }
     }
 
 
+    private void addTrianglePointsTo(HistoryItem historyItem){
+        var currentItem = getCurrent();
+        if(currentIndex > 1 && currentItem != null){
+            var previousItem = history.get(currentIndex - 1);
+            historyItem.createTrianglePointsFrom(previousItem);
+        }
+        historyItem.addFirstPoints(trianglePoint1, trianglePoint2);
+    }
+
+
+    public void addTrianglePoints(PointF p1, PointF p2){
+        this.trianglePoint1 = p1;
+        this.trianglePoint2 = p2;
+    }
+
+
     private void copyOldBrushStatesTo(HistoryItem historyItem){
-        log("entered copyOldBrushStatesTo()");
         if(history.isEmpty() || currentIndex >= history.size()){
-            log("exiting copyOldBrushStatesTo() history is empty or current index is greater than size()");
             return;
         }
         var currentItem = history.get(currentIndex);
         if(currentItem != null){
-            var existingConnectedLineState = currentItem.getConnectedLineState();
-            historyItem.setConnectedLineState(existingConnectedLineState);
+            var lineState = currentItem.getConnectedLineState();
+            historyItem.setConnectedLineState(lineState);
+
+            var triangleState = currentItem.getConnectedTriangleState();
+            historyItem.setConnectedTriangleState(triangleState);
         }
     }
 
@@ -96,6 +112,12 @@ public class DrawHistory {
 
 
     public HistoryItem assignPrevious() {
+        log("&&&&&&&&&&&&   before UNDO &&&&&&&&&&&&&£");
+        for(int i = 0; i <history.size(); i++){
+            printTrianglePointsNumber(i);
+        }
+        log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&£");
+
         log("entered assignPrevious()");
         if (history.isEmpty()) {
             log("assignPrevious(): history is empty");
@@ -103,8 +125,14 @@ public class DrawHistory {
         }
         currentIndex = Math.max(0, currentIndex - 1);
         log("assignPrevious() UNDO");
-        printItems();
+
         log("assignPrevious() currentIndex = " + currentIndex);
+        log("                         ");
+        log("&&&&&&&&&&&&   after UNDO &&&&&&&&&&&&&£");
+        for(int i = 0; i <history.size(); i++){
+            printTrianglePointsNumber(i);
+        }
+        log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&£");
         return history.get(currentIndex);
     }
 
@@ -116,6 +144,14 @@ public class DrawHistory {
             str.append(item.getId());
         }
         log(str.toString());
+
+    }
+
+
+    private void printTrianglePointsNumber(int index){
+        log("number of Triangle Points for index: "
+                + index + ": "
+                + history.get(index).getTrianglePoints().getAllPoints().size());
     }
 
 

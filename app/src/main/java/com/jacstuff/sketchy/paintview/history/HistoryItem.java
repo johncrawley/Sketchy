@@ -5,7 +5,6 @@ import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.shapes.twostep.TrianglePoints;
 import com.jacstuff.sketchy.controls.settings.menu.ConnectedBrushState;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class HistoryItem {
     private final Bitmap bitmap;
@@ -31,6 +30,17 @@ public class HistoryItem {
         return id;
     }
 
+
+    public void createTrianglePointsFrom(HistoryItem historyItem){
+        trianglePoints = new TrianglePoints(historyItem.getTrianglePoints());
+    }
+
+
+    public TrianglePoints getTrianglePoints(){
+        return trianglePoints;
+    }
+
+
     public Bitmap getBitmap(){
         return this.bitmap;
     }
@@ -46,13 +56,20 @@ public class HistoryItem {
     }
 
 
+    public void addFirstPoints(PointF p1, PointF p2){
+        if(trianglePoints.getAllPoints().isEmpty()){
+            trianglePoints.addPoints(p1, p2);
+        }
+    }
+
+
     public ConnectedBrushState getConnectedLineState(){
         return connectedLineState;
     }
 
 
     public ConnectedBrushState getConnectedTriangleState(){
-        return connectedLineState;
+        return connectedTriangleState;
     }
 
 
@@ -61,34 +78,13 @@ public class HistoryItem {
     }
 
 
+    public void setConnectedTriangleState(ConnectedBrushState cbs){
+        connectedTriangleState = new ConnectedBrushState(cbs);
+    }
+
+
     public PointF getLineUpCoordinates(){
         return connectedLinePreviousDown;
     }
 
-
-    public void updateViewModelState(MainViewModel viewModel){
-        this.connectedLinePreviousDown = new PointF(viewModel.nextLineDownX, viewModel.nextLineDownY);
-        this.connectedLineState = new ConnectedBrushState(viewModel.connectedLineState);
-        this.connectedTriangleState = new ConnectedBrushState(viewModel.connectedTriangleState);
-        this.trianglePoints = new TrianglePoints(viewModel.trianglePoints);
-    }
-
-
-    public void assignSavedStateTo(MainViewModel viewModel){
-        assignLineStateToViewModel(viewModel);
-        assignTriangleStateToViewModel(viewModel);
-    }
-
-
-    private void assignLineStateToViewModel(MainViewModel viewModel){
-        viewModel.nextLineDownX = connectedLinePreviousDown.x;
-        viewModel.nextLineDownY = connectedLinePreviousDown.y;
-        viewModel.connectedLineState = new ConnectedBrushState(this.connectedLineState);
-    }
-
-
-    private void assignTriangleStateToViewModel(MainViewModel viewModel){
-        viewModel.connectedTriangleState = new ConnectedBrushState(this.connectedTriangleState);
-        viewModel.trianglePoints = this.trianglePoints;
-    }
 }

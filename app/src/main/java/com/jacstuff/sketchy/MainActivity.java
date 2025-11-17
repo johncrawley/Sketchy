@@ -48,7 +48,6 @@ import com.jacstuff.sketchy.fragments.FragmentHelper;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
-import com.jacstuff.sketchy.paintview.history.DrawHistory;
 import com.jacstuff.sketchy.ui.ColorPickerSeekBarConfigurator;
 import com.jacstuff.sketchy.ui.ConnectedBrushIconModifierHelper;
 import com.jacstuff.sketchy.ui.EditColorFragment;

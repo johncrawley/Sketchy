@@ -13,10 +13,8 @@ import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.ProximityFocalPoint;
 import com.jacstuff.sketchy.paintview.helpers.size.sequence.proximity.ProximityType;
 import com.jacstuff.sketchy.paintview.history.DrawHistory;
-import com.jacstuff.sketchy.paintview.history.HistoryItem;
 import com.jacstuff.sketchy.viewmodel.controls.ColorSequenceControls;
 
-import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +36,6 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
 
     public boolean isFirstExecution = true;
     public int lastClickedColorButtonId;
-    public ArrayDeque<HistoryItem> bitmapHistoryItems;
     public String mostRecentColorButtonKey;
     public String mostRecentShadeButtonKey;
     public boolean isMostRecentClickAShade;

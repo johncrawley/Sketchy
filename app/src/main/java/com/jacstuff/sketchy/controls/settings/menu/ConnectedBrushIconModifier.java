@@ -21,11 +21,10 @@ public class ConnectedBrushIconModifier  {
     private final Supplier<ConnectedBrushState> connectedBrushStateSupplier;
 
 
-    public ConnectedBrushIconModifier(MainActivity activity, ConnectedBrushState connectedBrushState, Supplier<ConnectedBrushState> supplier, BrushShape brushShape){
+    public ConnectedBrushIconModifier(MainActivity activity, Supplier<ConnectedBrushState> supplier, BrushShape brushShape){
         this.activity = activity;
         this.viewModel = activity.getViewModel();
         this.paintView = activity.getPaintView();
-       // this.connectedBrushState = connectedBrushState;
         this.currentBrushShape = brushShape;
         this.connectedBrushStateSupplier = supplier;
     }

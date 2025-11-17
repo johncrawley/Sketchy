@@ -158,14 +158,16 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         setupSwitch(R.id.randomBrushMorphEnabledSwitch, b -> viewModel.doesRandomBrushMorph = b);
         setupSwitch(R.id.crazySpiralAltModeEnabledSwitch, b -> viewModel.isCrazySpiralAltModeEnabled = b);
         setupSwitch(R.id.arcBrushDrawFromCentre, b -> viewModel.isArcShapeDrawnFromCentre = b);
-        setupSwitch(R.id.connectedTriangleModeEnabledSwitch, viewModel.connectedTriangleState.isConnectedModeEnabled(), b ->  {
-            viewModel.connectedTriangleState.setConnectedModeEnabled(b);
-            viewModel.trianglePoints.reset();
+
+        setupSwitch(R.id.connectedTriangleModeEnabledSwitch, b ->  {
+            var historyItem = viewModel.drawHistory.getCurrent();
+            if(historyItem != null){
+                historyItem.getTrianglePoints().reset();
+                historyItem.getConnectedTriangleState().setConnectedModeEnabled(b);
+            }
         });
 
         setupSwitch(R.id.connectedLineModeEnabledSwitch, b -> {
-            viewModel.connectedLineState.setConnectedModeEnabled(b);
-
             var historyItem = viewModel.drawHistory.getCurrent();
             if(historyItem != null){
                 historyItem.getConnectedLineState().setConnectedModeEnabled(b);

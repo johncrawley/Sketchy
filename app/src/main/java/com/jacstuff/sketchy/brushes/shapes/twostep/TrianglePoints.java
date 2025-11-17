@@ -4,57 +4,63 @@ import android.graphics.PointF;
 
 import com.jacstuff.sketchy.utils.MathUtils;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TrianglePoints {
 
     private final int MAX_NUMBER_OF_POINTS = 100;
-    private final ArrayDeque<PointF> recentPoints;
+    private final Set<PointF> recentPoints;
 
     public TrianglePoints(){
-        recentPoints = new ArrayDeque<>(MAX_NUMBER_OF_POINTS);
+        recentPoints = new LinkedHashSet<>(MAX_NUMBER_OF_POINTS);
     }
 
     public TrianglePoints(TrianglePoints existingTrianglePoints){
-        recentPoints = new ArrayDeque<>(existingTrianglePoints.getAllPoints());
+        recentPoints = Collections.newSetFromMap(new LinkedHashMap<>(){
+            protected boolean removeEldestEntry(Map.Entry<PointF, Boolean> eldest) {
+                return size() > MAX_NUMBER_OF_POINTS;
+            }
+        });
+        recentPoints.addAll(existingTrianglePoints.getAllPoints());
     }
 
 
     public void addPoints(PointF ...points){
-        if(recentPoints.size() >= MAX_NUMBER_OF_POINTS){
-            removeOldestPoints();
-        }
+        log("entered addPoints(... points) number of points to add: " + points.length);
+
         for(PointF p : points){
-           addPoint(p);
+            if(p != null){
+                addPoint(p);
+            }
         }
+        log("addPoints(...points) number of points now: " + recentPoints.size());
     }
 
+
+    private void log(String msg){
+        System.out.println("^^^ TrianglePoints: " + msg);
+    }
 
     public void reset(){
         recentPoints.clear();
     }
 
 
-    private ArrayDeque<PointF> getAllPoints(){
+    public Set<PointF> getAllPoints(){
         return recentPoints;
     }
 
 
-    private void addPoint(PointF p){
-        for(PointF existingPoint : recentPoints){
-            if(p.x == existingPoint.x && p.y == existingPoint.y){
-                return;
-            }
-        }
-        recentPoints.addFirst(p);
-    }
-
-
-    public PointF getClosePointOrAddToExisting(PointF originalPoint){
+    public PointF getNearbyPointOrAdd(PointF originalPoint){
+        log("entered getNearbyPointOrAdd()");
         final float threshold = 40f;
         Optional<PointF> result = recentPoints.parallelStream().filter(p -> MathUtils.getDistance(p, originalPoint) < threshold).findFirst();
         if(result.isPresent()){
@@ -62,6 +68,20 @@ public class TrianglePoints {
         }
         addPoint(originalPoint);
         return originalPoint;
+    }
+
+
+    public void addPoint(PointF p){
+        log("entered addPoint(p)");
+        /*
+        for(PointF existingPoint : recentPoints){
+            if(p.x == existingPoint.x && p.y == existingPoint.y){
+                return;
+            }
+        }
+
+         */
+        recentPoints.add(p);
     }
 
 
@@ -79,10 +99,4 @@ public class TrianglePoints {
                 .collect(Collectors.toList());
     }
 
-
-    private void removeOldestPoints(){
-        for(int i = 0; i < 3; i++){
-            recentPoints.removeLast();
-        }
-    }
 }
