@@ -89,8 +89,7 @@ public class TrianglePoints {
             return new ArrayList<>(recentPoints.values());
         }
         if(recentPoints.size() < 2){
-            return List.of(new PointF(100,100),
-                    new PointF(130, 130));
+            return null;
         }
         return recentPoints.values().stream()
                 .sorted((p1,p2) -> Float.compare(MathUtils.getDistance(p1, point), MathUtils.getDistance(p2, point)))

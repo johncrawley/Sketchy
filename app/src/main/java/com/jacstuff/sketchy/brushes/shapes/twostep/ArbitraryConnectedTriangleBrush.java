@@ -85,6 +85,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
 
     private boolean isFirstItemDrawn(){
+        return drawHistory.isFirstTriangleDrawn();
         var currentItem = drawHistory.getCurrent();
         return currentItem != null && currentItem.getConnectedTriangleState().isFirstItemDrawn();
     }
@@ -194,11 +195,14 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
         }
         var currentItem = drawHistory.getCurrent();
         if(currentItem != null){
-            var closesTrianglePoints = currentItem.getTrianglePoints().getNearestPointsTo(latestThirdPoint);
-            downX =  closesTrianglePoints.get(0).x;
-            downY =  closesTrianglePoints.get(0).y;
-            upX = closesTrianglePoints.get(1).x;
-            upY = closesTrianglePoints.get(1).y;
+            var closestTrianglePoints = currentItem.getTrianglePoints().getNearestPointsTo(latestThirdPoint);
+            if(closestTrianglePoints == null){
+                return;
+            }
+            downX =  closestTrianglePoints.get(0).x;
+            downY =  closestTrianglePoints.get(0).y;
+            upX = closestTrianglePoints.get(1).x;
+            upY = closestTrianglePoints.get(1).y;
         }
     }
 

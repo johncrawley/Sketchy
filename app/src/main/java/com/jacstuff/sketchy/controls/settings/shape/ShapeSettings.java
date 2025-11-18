@@ -1,7 +1,5 @@
 package com.jacstuff.sketchy.controls.settings.shape;
 
-import android.os.Build;
-
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -48,11 +46,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
     private void createButtons(){
         buttonConfig.add(R.id.circleShapeButton,            R.drawable.button_shape_circle,             BrushShape.CIRCLE);
         buttonConfig.add(R.id.squareShapeButton,            R.drawable.button_shape_square,             BrushShape.SQUARE);
-
-        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            buttonConfig.add(R.id.pathShapeButton,          R.drawable.button_shape_path,               BrushShape.PATH);
-        }
-
+        buttonConfig.add(R.id.pathShapeButton,              R.drawable.button_shape_path,               BrushShape.PATH);
         buttonConfig.add(R.id.smoothPathShapeButton,        R.drawable.button_shape_smooth_path,        BrushShape.SMOOTH_PATH);
         buttonConfig.add(R.id.straightLineShapeButton,      R.drawable.button_shape_straight_line,      BrushShape.STRAIGHT_LINE);
         buttonConfig.add(R.id.roundedRectangleShapeButton,  R.drawable.button_shape_rounded_rect,       BrushShape.ROUNDED_RECTANGLE);
@@ -159,19 +153,7 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
         setupSwitch(R.id.crazySpiralAltModeEnabledSwitch, b -> viewModel.isCrazySpiralAltModeEnabled = b);
         setupSwitch(R.id.arcBrushDrawFromCentre, b -> viewModel.isArcShapeDrawnFromCentre = b);
 
-        setupSwitch(R.id.connectedTriangleModeEnabledSwitch, b ->  {
-            var historyItem = viewModel.drawHistory.getCurrent();
-            if(historyItem != null){
-                historyItem.getTrianglePoints().reset();
-                historyItem.getConnectedTriangleState().setConnectedModeEnabled(b);
-            }
-        });
-
-        setupSwitch(R.id.connectedLineModeEnabledSwitch, b -> {
-            var historyItem = viewModel.drawHistory.getCurrent();
-            if(historyItem != null){
-                historyItem.getConnectedLineState().setConnectedModeEnabled(b);
-            }
-        });
+        setupSwitch(R.id.connectedTriangleModeEnabledSwitch, b ->  viewModel.drawHistory.setConnectedTriangleMode(b));
+        setupSwitch(R.id.connectedLineModeEnabledSwitch, b -> viewModel.drawHistory.setConnectedLineMode(b));
     }
 }

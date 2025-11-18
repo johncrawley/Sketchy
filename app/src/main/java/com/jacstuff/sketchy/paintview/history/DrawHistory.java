@@ -16,6 +16,9 @@ public class DrawHistory {
     private int id;
     private PointF lineUpCoordinates = new PointF(0,0);
     private PointF trianglePoint1 , trianglePoint2, trianglePoint3;
+    private boolean isConnectedLineModeEnabled, isConnectedTriangleModeEnabled;
+    private boolean hasConnectedLineBeenReset, hasConnectedTrianglesBeenReset;
+
 
 
     public DrawHistory() {
@@ -31,6 +34,32 @@ public class DrawHistory {
     }
 
 
+    public void setConnectedLineMode(boolean isEnabled){
+        isConnectedLineModeEnabled = isEnabled;
+        if(!isEnabled){
+            resetConnectedLine();
+        }
+    }
+
+
+    public void setConnectedTriangleMode(boolean isEnabled){
+        isConnectedTriangleModeEnabled = isEnabled;
+        if(!isEnabled){
+            resetConnectedTriangles();
+        }
+    }
+
+
+    public void resetConnectedLine(){
+        hasConnectedLineBeenReset = true;
+    }
+
+
+    public void resetConnectedTriangles(){
+        hasConnectedTrianglesBeenReset = true;
+    }
+
+
     public void push(Bitmap bitmap, int screenOrientation, boolean isLowOnMemory) {
         boolean hasEnoughSpace = removeItemIfLowOnMemory(isLowOnMemory);
         if (hasEnoughSpace) {
@@ -39,13 +68,21 @@ public class DrawHistory {
             }
             var historyItem = new HistoryItem(Bitmap.createBitmap(bitmap), screenOrientation, ++id);
             copyOldBrushStatesTo(historyItem);
-            historyItem.setConnectedLineUpCoordinates(lineUpCoordinates.x, lineUpCoordinates.y);
+            setConnectedLineCoordinates(historyItem);
             addTrianglePointsTo(historyItem);
             history.add(historyItem);
             printItems();
             currentIndex = history.size() - 1;
-            log("&&&&&************** number of triangle points after push: ");
-            printTrianglePointsNumber(currentIndex);
+        }
+    }
+
+
+    private void setConnectedLineCoordinates(HistoryItem item){
+        var lineState = item.getConnectedLineState();
+        lineState.setConnectedModeEnabled(isConnectedLineModeEnabled);
+        if(isConnectedLineModeEnabled){
+            lineState.setFirstItemDrawn(true);
+            item.setConnectedLineUpCoordinates(lineUpCoordinates.x, lineUpCoordinates.y);
         }
     }
 
@@ -57,7 +94,15 @@ public class DrawHistory {
 
     private void addTrianglePointsTo(HistoryItem historyItem){
         var currentItem = getCurrent();
-        if(currentIndex > 1 && currentItem != null){
+        var triangleState = historyItem.getConnectedTriangleState();
+        triangleState.setConnectedModeEnabled(isConnectedTriangleModeEnabled);
+        if(!isConnectedTriangleModeEnabled){
+            return;
+        }
+        triangleState.setFirstItemDrawn(true);
+        if(currentIndex > 1
+                && currentItem != null
+                && !hasConnectedTrianglesBeenReset){
             var previousItem = history.get(currentIndex - 1);
             historyItem.createTrianglePointsFrom(previousItem);
         }
@@ -119,28 +164,8 @@ public class DrawHistory {
 
 
     public HistoryItem assignPrevious() {
-        log("&&&&&&&&&&&&   before UNDO &&&&&&&&&&&&&£");
-        for(int i = 0; i <history.size(); i++){
-            printTrianglePointsNumber(i);
-        }
-        log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&£");
-
-        log("entered assignPrevious()");
-        if (history.isEmpty()) {
-            log("assignPrevious(): history is empty");
-            return null;
-        }
         currentIndex = Math.max(0, currentIndex - 1);
-        log("assignPrevious() UNDO");
-
-        log("assignPrevious() currentIndex = " + currentIndex);
-        log("                         ");
-        log("&&&&&&&&&&&&   after UNDO &&&&&&&&&&&&&£");
-        for(int i = 0; i <history.size(); i++){
-            printTrianglePointsNumber(i);
-        }
-        log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&£");
-        return history.get(currentIndex);
+        return history.isEmpty() ? null : history.get(currentIndex);
     }
 
 
@@ -181,6 +206,13 @@ public class DrawHistory {
             return getLatestItem();
         }
         return null;
+    }
+
+
+    public boolean isFirstTriangleDrawn(){
+        var currentItem = getCurrent();
+        return currentItem != null
+                && currentItem.getConnectedTriangleState().isFirstItemDrawn();
     }
 
 
