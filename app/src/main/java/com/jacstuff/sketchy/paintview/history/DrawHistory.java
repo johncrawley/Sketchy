@@ -3,6 +3,8 @@ package com.jacstuff.sketchy.paintview.history;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 
+import com.jacstuff.sketchy.brushes.shapes.twostep.TrianglePoints;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +15,14 @@ public class DrawHistory {
     private int currentIndex;
     private int id;
     private PointF lineUpCoordinates = new PointF(0,0);
-    private PointF trianglePoint1 = new PointF(0,0);
-    private PointF trianglePoint2 = new PointF(0,0);
-    //private final List<ConnectedBrushIconModifier> iconModifiers;
-    //List<ConnectedBrushIconModifier> iconModifiers
+    private PointF trianglePoint1 , trianglePoint2, trianglePoint3;
 
 
     public DrawHistory() {
         history = new ArrayList<>(50);
+        trianglePoint1 = TrianglePoints.getDefaultPoint();
+        trianglePoint2 = TrianglePoints.getDefaultPoint();
+        trianglePoint3 = TrianglePoints.getDefaultPoint();
     }
 
 
@@ -48,13 +50,18 @@ public class DrawHistory {
     }
 
 
+    public void saveThirdTrianglePoint(PointF p3){
+        trianglePoint3 = p3;
+    }
+
+
     private void addTrianglePointsTo(HistoryItem historyItem){
         var currentItem = getCurrent();
         if(currentIndex > 1 && currentItem != null){
             var previousItem = history.get(currentIndex - 1);
             historyItem.createTrianglePointsFrom(previousItem);
         }
-        historyItem.addFirstPoints(trianglePoint1, trianglePoint2);
+        historyItem.addFirstPoints(trianglePoint1, trianglePoint2, trianglePoint3);
     }
 
 

@@ -146,7 +146,8 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
             var currentItem = drawHistory.getCurrent();
             if(currentItem != null){
                 adjustedThirdPoint = currentItem.getTrianglePoints()
-                        .getNearbyPointOrAdd(thirdPoint);
+                        .getNearbyPointToOrUse(thirdPoint);
+                drawHistory.saveThirdTrianglePoint(adjustedThirdPoint);
                 currentItem.getConnectedTriangleState().setFirstItemDrawn(true);
             }
         }

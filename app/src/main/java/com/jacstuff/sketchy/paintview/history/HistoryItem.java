@@ -56,10 +56,8 @@ public class HistoryItem {
     }
 
 
-    public void addFirstPoints(PointF p1, PointF p2){
-        if(trianglePoints.getAllPoints().isEmpty()){
-            trianglePoints.addPoints(p1, p2);
-        }
+    public void addFirstPoints(PointF ...points){
+        trianglePoints.addPoints(points);
     }
 
 
