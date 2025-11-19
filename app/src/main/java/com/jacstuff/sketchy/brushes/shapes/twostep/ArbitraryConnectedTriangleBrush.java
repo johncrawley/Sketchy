@@ -77,23 +77,21 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
     private void brushDownForConnectedMode(Point p){
         hasAlreadyDrawnOnce = false;
-        if(isInConnectedMode() && isFirstItemDrawn()){
+        log("entered brushDownForConnectedMode() shouldDraw connected triangle: " + drawHistory.shouldDrawConnectedTriangle());
+        if(drawHistory.shouldDrawConnectedTriangle()){
             assignClosestPointsForConnectTriangle(new PointF(p.x, p.y));
             setStateTo(StepState.SECOND);
         }
     }
 
 
-    private boolean isFirstItemDrawn(){
-        return drawHistory.isFirstTriangleDrawn();
-        var currentItem = drawHistory.getCurrent();
-        return currentItem != null && currentItem.getConnectedTriangleState().isFirstItemDrawn();
+    private void log(String msg){
+        System.out.println("^^^ ArbConnectedTriangleBrush: " + msg);
     }
 
 
-    private boolean isInConnectedMode(){
-        var currentItem = drawHistory.getCurrent();
-        return currentItem != null && currentItem.getConnectedTriangleState().isConnectedModeEnabled();
+    private boolean isFirstItemDrawn(){
+        return drawHistory.isFirstTriangleDrawn();
     }
 
 
@@ -131,7 +129,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
 
     private void onTouchUpSecondState(PointF thirdPoint, float offsetX, float offsetY, Paint paint){
-        if(isInConnectedMode()){
+        if(drawHistory.isConnectedTriangleModeEnabled()){
             onTouchUpSecondStateConnected(thirdPoint, offsetX, offsetY, paint);
             return;
         }
@@ -190,7 +188,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
 
     private void assignClosestPointsForConnectTriangle(PointF latestThirdPoint){
-        if(!isInConnectedMode()){
+        if(!drawHistory.isConnectedTriangleModeEnabled()){
             return;
         }
         var currentItem = drawHistory.getCurrent();

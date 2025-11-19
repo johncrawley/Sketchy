@@ -52,6 +52,11 @@ public class TrianglePoints {
     }
 
 
+    public void clear(){
+        recentPoints.clear();
+    }
+
+
     private void log(String msg){
         System.out.println("^^^ TrianglePoints: " + msg);
     }

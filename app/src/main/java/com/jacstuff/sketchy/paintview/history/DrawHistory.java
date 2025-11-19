@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.shapes.twostep.TrianglePoints;
+import com.jacstuff.sketchy.controls.settings.menu.ConnectedBrushState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +17,32 @@ public class DrawHistory {
     private int id;
     private PointF lineUpCoordinates = new PointF(0,0);
     private PointF trianglePoint1 , trianglePoint2, trianglePoint3;
-    private boolean isConnectedLineModeEnabled, isConnectedTriangleModeEnabled;
-    private boolean hasConnectedLineBeenReset, hasConnectedTrianglesBeenReset;
 
+    private final ConnectedBrushState lineState, triangleState;
 
 
     public DrawHistory() {
         history = new ArrayList<>(50);
+        lineState = new ConnectedBrushState();
+        triangleState = new ConnectedBrushState();
         trianglePoint1 = TrianglePoints.getDefaultPoint();
         trianglePoint2 = TrianglePoints.getDefaultPoint();
         trianglePoint3 = TrianglePoints.getDefaultPoint();
+    }
+
+
+    public ConnectedBrushState getLineState(){
+        return lineState;
+    }
+
+
+    public PointF getLineUpCoordinates(){
+        return lineUpCoordinates;
+    }
+
+
+    public ConnectedBrushState getTriangleState(){
+        return triangleState;
     }
 
 
@@ -35,7 +52,7 @@ public class DrawHistory {
 
 
     public void setConnectedLineMode(boolean isEnabled){
-        isConnectedLineModeEnabled = isEnabled;
+        lineState.setConnectedModeEnabled(isEnabled);
         if(!isEnabled){
             resetConnectedLine();
         }
@@ -43,7 +60,7 @@ public class DrawHistory {
 
 
     public void setConnectedTriangleMode(boolean isEnabled){
-        isConnectedTriangleModeEnabled = isEnabled;
+        triangleState.setConnectedModeEnabled(isEnabled);
         if(!isEnabled){
             resetConnectedTriangles();
         }
@@ -51,12 +68,12 @@ public class DrawHistory {
 
 
     public void resetConnectedLine(){
-        hasConnectedLineBeenReset = true;
+        lineState.setFirstItemDrawn(false);
     }
 
 
     public void resetConnectedTriangles(){
-        hasConnectedTrianglesBeenReset = true;
+        triangleState.setFirstItemDrawn(false);
     }
 
 
@@ -67,7 +84,7 @@ public class DrawHistory {
                 removeAllFutureItems();
             }
             var historyItem = new HistoryItem(Bitmap.createBitmap(bitmap), screenOrientation, ++id);
-            copyOldBrushStatesTo(historyItem);
+           // copyOldBrushStatesTo(historyItem);
             setConnectedLineCoordinates(historyItem);
             addTrianglePointsTo(historyItem);
             history.add(historyItem);
@@ -79,10 +96,12 @@ public class DrawHistory {
 
     private void setConnectedLineCoordinates(HistoryItem item){
         var lineState = item.getConnectedLineState();
-        lineState.setConnectedModeEnabled(isConnectedLineModeEnabled);
-        if(isConnectedLineModeEnabled){
+        lineState.setConnectedModeEnabled(this.lineState.isConnectedModeEnabled());
+        if(this.lineState.isConnectedModeEnabled()){
             lineState.setFirstItemDrawn(true);
+            this.lineState.setFirstItemDrawn(true);
             item.setConnectedLineUpCoordinates(lineUpCoordinates.x, lineUpCoordinates.y);
+
         }
     }
 
@@ -95,18 +114,21 @@ public class DrawHistory {
     private void addTrianglePointsTo(HistoryItem historyItem){
         var currentItem = getCurrent();
         var triangleState = historyItem.getConnectedTriangleState();
-        triangleState.setConnectedModeEnabled(isConnectedTriangleModeEnabled);
-        if(!isConnectedTriangleModeEnabled){
+        triangleState.setConnectedModeEnabled(this.triangleState.isConnectedModeEnabled());
+        if(!this.triangleState.isConnectedModeEnabled()){
             return;
         }
-        triangleState.setFirstItemDrawn(true);
         if(currentIndex > 1
                 && currentItem != null
-                && !hasConnectedTrianglesBeenReset){
-            var previousItem = history.get(currentIndex - 1);
-            historyItem.createTrianglePointsFrom(previousItem);
+                && this.triangleState.isFirstItemDrawn()){
+            historyItem.createTrianglePointsFrom(currentItem);
+        }
+        if(!this.triangleState.isFirstItemDrawn()){
+            historyItem.clearTrianglePoints();
         }
         historyItem.addFirstPoints(trianglePoint1, trianglePoint2, trianglePoint3);
+        triangleState.setFirstItemDrawn(true);
+        this.triangleState.setFirstItemDrawn(true);
     }
 
 
@@ -134,6 +156,7 @@ public class DrawHistory {
     public void saveLineUpCoordinates(float x, float y){
         lineUpCoordinates = new PointF(x,y);
     }
+
 
     private void removeAllFutureItems(){
         history = history.subList(0, currentIndex + 1);
@@ -163,9 +186,25 @@ public class DrawHistory {
     }
 
 
+    public boolean isConnectedTriangleModeEnabled(){
+        return triangleState.isConnectedModeEnabled();
+    }
+
+
     public HistoryItem assignPrevious() {
         currentIndex = Math.max(0, currentIndex - 1);
-        return history.isEmpty() ? null : history.get(currentIndex);
+        var item = history.isEmpty() ? null : history.get(currentIndex);
+        assignStateFrom(item);
+        return item;
+    }
+
+
+    private void assignStateFrom(HistoryItem item){
+        if(item != null){
+            triangleState.updateFrom(item.getConnectedTriangleState());
+            lineState.updateFrom(item.getConnectedLineState());
+            lineUpCoordinates = item.getLineUpCoordinates();
+        }
     }
 
 
@@ -180,13 +219,6 @@ public class DrawHistory {
     }
 
 
-    private void printTrianglePointsNumber(int index){
-        log("number of Triangle Points for index: "
-                + index + ": "
-                + history.get(index).getTrianglePoints().getAllPoints().size());
-    }
-
-
     private void log(String msg){
         System.out.println("^^^ DrawHistory: " + msg);
     }
@@ -197,7 +229,9 @@ public class DrawHistory {
             return null;
         }
         currentIndex = Math.min(history.size() - 1, currentIndex + 1);
-        return  history.get(currentIndex);
+        var item =  history.get(currentIndex);
+        assignStateFrom(item);
+        return item;
     }
 
 
@@ -209,22 +243,16 @@ public class DrawHistory {
     }
 
 
+    public boolean shouldDrawConnectedTriangle(){
+        return triangleState.isConnectedModeEnabled() && isFirstTriangleDrawn();
+    }
+
+
     public boolean isFirstTriangleDrawn(){
         var currentItem = getCurrent();
         return currentItem != null
                 && currentItem.getConnectedTriangleState().isFirstItemDrawn();
-    }
 
-
-    public void updateNewestItemWithState() {
-        if (history.isEmpty()) {
-            return;
-        }
-        var historyItem = getLatestItem();
-        if (historyItem == null) {
-            return;
-        }
-    //    historyItem.updateViewModelState(viewModel);
     }
 
 
@@ -238,21 +266,5 @@ public class DrawHistory {
         return history.get(index);
     }
 
-/*
-    private void assignToViewModel(HistoryItem historyItem) {
-        if (historyItem != null) {
-            historyItem.assignSavedStateTo(viewModel);
-        }
-    }
-
-
-    private void updateIcons(HistoryItem historyItem) {
-        if (historyItem != null) {
-            for (var iconModifier : iconModifiers) {
-                iconModifier.updateIcon();
-            }
-        }
-    }
-*/
 }
 

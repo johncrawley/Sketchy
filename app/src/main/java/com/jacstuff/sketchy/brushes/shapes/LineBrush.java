@@ -23,18 +23,15 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-        var historyItem = viewModel.drawHistory.getCurrent();
-        if(historyItem != null){
-            var lineState = historyItem.getConnectedLineState();
-            if(!lineState.isFirstItemDrawn()){
-                xDown = p.x;
-                yDown = p.y;
-            }
-            else if(lineState.isConnectedModeEnabled()){
-                var coordinates = historyItem.getLineUpCoordinates();
-                xDown = coordinates.x;
-                yDown = coordinates.y;
-            }
+        var lineState = viewModel.drawHistory.getLineState();
+        if(!lineState.isFirstItemDrawn()){
+            xDown = p.x;
+            yDown = p.y;
+        }
+        else if(lineState.isConnectedModeEnabled()){
+            var coordinates = viewModel.drawHistory.getLineUpCoordinates();
+            xDown = coordinates.x;
+            yDown = coordinates.y;
         }
     }
 

@@ -60,6 +60,10 @@ public class HistoryItem {
         trianglePoints.addPoints(points);
     }
 
+    public void clearTrianglePoints(){
+        trianglePoints.clear();
+    }
+
 
     public ConnectedBrushState getConnectedLineState(){
         return connectedLineState;

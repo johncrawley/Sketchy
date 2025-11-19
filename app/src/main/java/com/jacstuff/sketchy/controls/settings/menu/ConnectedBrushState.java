@@ -2,9 +2,18 @@ package com.jacstuff.sketchy.controls.settings.menu;
 
 public class ConnectedBrushState {
 
+    private boolean hasFirstItemBeenDrawn = false;
+    private boolean isConnectedModeEnabled = false;
+
     public ConnectedBrushState(){}
 
+
     public ConnectedBrushState(ConnectedBrushState existingBrushState){
+        updateFrom(existingBrushState);
+    }
+
+
+    public void updateFrom(ConnectedBrushState existingBrushState){
         this.hasFirstItemBeenDrawn = existingBrushState != null && existingBrushState.isFirstItemDrawn();
         this.isConnectedModeEnabled = existingBrushState != null && existingBrushState.isConnectedModeEnabled();
     }
@@ -14,9 +23,11 @@ public class ConnectedBrushState {
         System.out.println("ConnectedBrushState: " + msg);
     }
 
+
     public void setConnectedModeEnabled(boolean isEnabled){
         isConnectedModeEnabled = isEnabled;
     }
+
 
     public boolean isConnectedModeEnabled(){
         return isConnectedModeEnabled;
@@ -32,6 +43,4 @@ public class ConnectedBrushState {
         return hasFirstItemBeenDrawn;
     }
 
-    private boolean hasFirstItemBeenDrawn = false;
-    private boolean isConnectedModeEnabled = false;
 }

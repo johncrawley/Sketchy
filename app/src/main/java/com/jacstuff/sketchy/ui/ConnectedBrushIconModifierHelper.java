@@ -47,7 +47,7 @@ public class ConnectedBrushIconModifierHelper {
 
     private void initLineIconModifier(){
         var viewModel = mainActivity.getViewModel();
-        Supplier<ConnectedBrushState> connectedBrushStateSupplier = ()-> viewModel.drawHistory.getCurrent().getConnectedLineState();
+        Supplier<ConnectedBrushState> connectedBrushStateSupplier = ()-> viewModel.drawHistory.getLineState();
         connectedLineIconModifier = new ConnectedBrushIconModifier(mainActivity, connectedBrushStateSupplier, BrushShape.LINE);
         connectedLineIconModifier.assignConnectedIconResId(R.drawable.button_shape_line_connected);
         connectedLineIconModifier.assignNormalIconId(R.drawable.button_shape_line);
@@ -57,7 +57,7 @@ public class ConnectedBrushIconModifierHelper {
 
     private void initTriangleIconModifier(){
         var viewModel = mainActivity.getViewModel();
-        Supplier<ConnectedBrushState> connectedBrushStateSupplier = ()-> viewModel.drawHistory.getCurrent().getConnectedTriangleState();
+        Supplier<ConnectedBrushState> connectedBrushStateSupplier = ()-> viewModel.drawHistory.getTriangleState();
         connectedTriangleIconModifier = new ConnectedBrushIconModifier(mainActivity, connectedBrushStateSupplier,  BrushShape.TRIANGLE_ARBITRARY);
         connectedTriangleIconModifier.assignConnectedIconResId(R.drawable.button_shape_triangle_arbitrary_connected);
         connectedTriangleIconModifier.assignNormalIconId(R.drawable.button_shape_triangle_arbitrary);

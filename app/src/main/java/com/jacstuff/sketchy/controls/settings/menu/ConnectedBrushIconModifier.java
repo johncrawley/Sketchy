@@ -53,9 +53,9 @@ public class ConnectedBrushIconModifier  {
 
 
     public void setConnectedIconAndState(){
-        var connectedBrushState = connectedBrushStateSupplier.get();
-        if(connectedBrushState.isConnectedModeEnabled()){
-            connectedBrushState.setFirstItemDrawn(true);
+        var brushState = connectedBrushStateSupplier.get();
+        if(brushState.isConnectedModeEnabled()){
+            //brushState.setFirstItemDrawn(true);
             switchToConnectedIcon();
         }
     }
@@ -79,7 +79,6 @@ public class ConnectedBrushIconModifier  {
 
 
     public boolean isShapeButtonAndInConnectedMode(int viewId){
-
         return viewId == R.id.shapeButton
                 && isUsingThisShapeInConnectedMode()
                 && connectedBrushStateSupplier.get().isFirstItemDrawn();
@@ -108,7 +107,6 @@ public class ConnectedBrushIconModifier  {
 
     void revertIconAndState(){
         connectedBrushStateSupplier.get().setFirstItemDrawn(false);
-        viewModel.drawHistory.updateNewestItemWithState();
         paintView.getCurrentBrush().reset();
         assignDefaultIconToShapeButton();
     }
