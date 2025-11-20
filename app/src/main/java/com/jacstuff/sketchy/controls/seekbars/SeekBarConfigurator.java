@@ -2,11 +2,12 @@ package com.jacstuff.sketchy.controls.seekbars;
 
 import android.view.View;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-import androidx.core.util.Consumer;
+import java.util.function.Consumer;
 
 public class SeekBarConfigurator {
 
@@ -19,10 +20,19 @@ public class SeekBarConfigurator {
     }
 
 
-    public void configure(int seekBarId, int defaultResourceId,
+    public void configure(int seekBarId,
+                          int defaultResourceId,
                           Consumer<Integer> progressFinishedConsumer,
                           Consumer<Integer> progressConsumer){
         configure( seekBarId, defaultResourceId,  progressFinishedConsumer,progressConsumer, null);
+    }
+
+    public void configure(int seekBarId,
+                          int amountTextId,
+                          int defaultResourceId,
+                          Consumer<Integer> progressFinishedConsumer,
+                          Consumer<Integer> progressConsumer){
+        configure( seekBarId, amountTextId, defaultResourceId,  progressFinishedConsumer,progressConsumer, null);
     }
 
 
@@ -50,8 +60,45 @@ public class SeekBarConfigurator {
         if(seekBar == null){
             return;
         }
-        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
+        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, null, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
         seekBar.setProgress(defaultProgress);
+        configureForFragment(parentView, seekBarId, -1, defaultProgress, progressFinishedConsumer, progressConsumer, progressStartedConsumer);
+    }
+
+
+    public void configureForFragment(View parentView,
+                                     int seekBarId,
+                                     int amountTextId,
+                                     int defaultProgress,
+                                     Consumer<Integer> progressFinishedConsumer,
+                                     Consumer<Integer> progressConsumer,
+                                     Consumer<Integer> progressStartedConsumer){
+
+        SeekBar seekBar = parentView.findViewById(seekBarId);
+        TextView amountTextView = activity.findViewById(amountTextId);
+        if(seekBar == null){
+            return;
+        }
+        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, amountTextView, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
+        seekBar.setProgress(defaultProgress);
+    }
+
+
+    public void configure(int seekBarId,
+                          int defaultResourceId,
+                          Consumer<Integer> progressFinishedConsumer,
+                          Consumer<Integer> progressConsumer,
+                          Consumer<Integer> progressStartedConsumer,
+                          int amountTextId){
+
+        SeekBar seekBar = activity.findViewById(seekBarId);
+        TextView amountText = activity.findViewById(amountTextId);
+        viewModel = activity.getViewModel();
+        if(seekBar == null){
+            return;
+        }
+        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, amountText, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
+        setDefaultValue(defaultResourceId, seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer);
     }
 
 
@@ -66,12 +113,31 @@ public class SeekBarConfigurator {
         if(seekBar == null){
             return;
         }
-        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
+        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, null, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
+        setDefaultValue(defaultResourceId, seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer);
+    }
+
+
+    public void configure(int seekBarId,
+                          int amountTextId,
+                          int defaultResourceId,
+                          Consumer<Integer> progressFinishedConsumer,
+                          Consumer<Integer> progressConsumer,
+                          Consumer<Integer> progressStartedConsumer){
+
+        SeekBar seekBar = activity.findViewById(seekBarId);
+        TextView textView = activity.findViewById(amountTextId);
+        viewModel = activity.getViewModel();
+        if(seekBar == null){
+            return;
+        }
+        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, textView, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
         setDefaultValue(defaultResourceId, seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer);
     }
 
 
     private SeekBar.OnSeekBarChangeListener createSeekBarChangeListener(int seekBarId,
+                                                                        TextView amountTextView,
                                                                         Consumer<Integer> progressStartedConsumer,
                                                                         Consumer<Integer> progressChangedConsumer,
                                                                         Consumer<Integer> progressFinishedConsumer){
@@ -81,6 +147,8 @@ public class SeekBarConfigurator {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if(progressChangedConsumer != null){
                     progressChangedConsumer.accept(progress);
+                    var progressStr = "" + progress;
+                    amountTextView.setText(progressStr);
                 }
             }
 

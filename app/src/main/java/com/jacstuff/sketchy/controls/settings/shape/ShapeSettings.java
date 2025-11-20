@@ -9,6 +9,8 @@ import com.jacstuff.sketchy.controls.settings.ButtonConfigHandler;
 import com.jacstuff.sketchy.controls.settings.ButtonsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
 
+import java.util.function.Consumer;
+
 
 public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implements ButtonsConfigurator<BrushShape> {
 
@@ -92,17 +94,22 @@ public class ShapeSettings extends AbstractButtonConfigurator<BrushShape> implem
 
 
     private void configureSeekBars() {
-        seekBarConfigurator.configure( R.id.brushSizeSeekBar,
+
+        Consumer<Integer> brushSizeProgressConsumer = (progress)-> {
+            if (paintView != null) {
+                viewModel.brushSize = minBrushSize + progress;
+                viewModel.brushSizeSetBySeekBar = viewModel.brushSize;
+                paintView.setBrushSize(viewModel.brushSize);
+                paintHelperManager.getGradientHelper().recalculateGradientLengthForBrushSize();
+            }
+        };
+
+        seekBarConfigurator.configure(
+                R.id.brushSizeSeekBar,
+                R.id.amountText,
                 R.integer.brush_size_default
                 , null,
-                progress -> {
-                    if (paintView != null) {
-                        viewModel.brushSize = minBrushSize + progress;
-                        viewModel.brushSizeSetBySeekBar = viewModel.brushSize;
-                        paintView.setBrushSize(viewModel.brushSize);
-                        paintHelperManager.getGradientHelper().recalculateGradientLengthForBrushSize();
-                    }
-                });
+                brushSizeProgressConsumer);
 
         seekBarConfigurator.configure(R.id.colorTransparencySeekBar,
                 R.integer.color_transparency_default,
