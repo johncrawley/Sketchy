@@ -46,7 +46,7 @@ public class HexagonBrush extends AbstractBrush implements Brush {
         topLeftPoint.set( - quarterBrushSize, -shortHeight);
         topRightPoint.set( + quarterBrushSize, -shortHeight);
 
-        Path path = new Path();
+        var path = new Path();
         path.moveTo(leftPoint.x, leftPoint.y);
         path.lineTo(topLeftPoint. x, topLeftPoint.y);
         path.lineTo(topRightPoint.x, topRightPoint.y);

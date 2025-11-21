@@ -17,6 +17,8 @@ import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
+import java.util.function.BiConsumer;
+
 
 public abstract class AbstractBrush implements Brush{
 
@@ -42,6 +44,15 @@ public abstract class AbstractBrush implements Brush{
         brushInitializer = new DefaultInitializer();
         isDrawnFromCenter = true;
     }
+
+
+    protected void drawShape(Canvas canvas, Paint paint, Paint strokePaint, BiConsumer<Canvas, Paint> consumer){
+        paint.setStyle(Paint.Style.FILL);
+        consumer.accept(canvas, paint);
+        consumer.accept(canvas, strokePaint);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+    }
+
 
     public void setBrushShape(BrushShape brushShape){
         this.brushShape = brushShape;

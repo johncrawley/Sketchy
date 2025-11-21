@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 
@@ -16,11 +17,16 @@ public class SquareBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-        float left =  - halfBrushSize;
+        float left = - halfBrushSize;
         float top = - halfBrushSize;
         float right = left + brushSize;
         float bottom = top + brushSize;
-        canvas.drawRect(left, top, right, bottom, paint);
+
+        var strokePaint = new Paint();
+        strokePaint.setStyle(Paint.Style.STROKE);
+        strokePaint.setColor(Color.BLACK);
+        drawShape(canvas, paint, strokePaint, (can,pt) -> can.drawRect(left, top, right, bottom, paint));
     }
+
 
 }

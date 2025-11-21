@@ -99,20 +99,13 @@ public class PaintView extends View {
         if(isPopupBeingDismissed(event) || isCanvasLocked){
             return true;
         }
-        drawWithBrush(event);
-        /*
+
         try {
             drawWithBrush(event);
         }
-        //catch(IllegalArgumentException e){
-        catch (Exception e){
+        catch (RuntimeException e){
             printError(e.getMessage());
-            e.printStackTrace();
-            //do nothing, sometimes there's an illegalArgException related to drawing gradients
-            // immediately after rotating screen
         }
-
-         */
         return true;
     }
 
