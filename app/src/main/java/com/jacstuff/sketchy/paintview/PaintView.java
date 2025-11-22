@@ -17,8 +17,6 @@ import com.jacstuff.sketchy.paintview.history.HistoryMemoryHelper;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-import java.io.IOException;
-
 
 public class PaintView extends View {
 

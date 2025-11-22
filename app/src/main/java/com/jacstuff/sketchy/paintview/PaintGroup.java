@@ -13,17 +13,29 @@ import java.util.function.Consumer;
 
 public class PaintGroup {
 
-
     private final List<Paint> paints;
-    private Paint previewPaint, drawPaint, shadowPaint, blankPaint, canvasBitmapPaint;
+    private Paint previewPaint, drawPaint, shadowPaint, blankPaint, canvasBitmapPaint, borderPaint;
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
+    private boolean isBorderSeparate;
 
     public PaintGroup(){
-        paints = new ArrayList<>();
         initPaints();
-        paints.add(drawPaint);
-        paints.add(previewPaint);
-        paints.add(shadowPaint);
+        paints = List.of(drawPaint, previewPaint, shadowPaint, borderPaint);
+    }
+
+
+    public void setBorderSeparate(boolean isBorderSeparate){
+        this.isBorderSeparate = isBorderSeparate;
+    }
+
+
+    public boolean isBorderSeparate(){
+        return isBorderSeparate;
+    }
+
+
+    public Paint getBorderPaint(){
+        return borderPaint;
     }
 
 
@@ -38,8 +50,15 @@ public class PaintGroup {
         drawPaint = createPaint(Color.WHITE);
         previewPaint = createPaint(Color.DKGRAY);
         shadowPaint = createPaint(Color.BLACK);
+        initBorderPaint();
         initCanvasBitmapPaint();
         initBlankPaint();
+    }
+
+
+    private void initBorderPaint(){
+        borderPaint = createPaint(Color.BLACK);
+        borderPaint.setStyle(Paint.Style.STROKE);
     }
 
 
@@ -97,6 +116,7 @@ public class PaintGroup {
             p.setPathEffect(pathEffect);
         }
     }
+
 
     public void setTypeface(Typeface typeface){
         for(Paint p: paints){
