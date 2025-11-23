@@ -50,7 +50,7 @@ public class BrushFactory {
     private PaintView paintView;
     private final MainViewModel mainViewModel;
     private DrawerFactory drawerFactory;
-    private final MainActivity mainActivity;
+   // private final MainActivity mainActivity;
     private PathBrush shadowPathBrush;
     private StyleHelper styleHelper;
 

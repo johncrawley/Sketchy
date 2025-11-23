@@ -44,6 +44,7 @@ import com.jacstuff.sketchy.controls.colorbuttons.ColorCreator;
 import com.jacstuff.sketchy.controls.seekbars.SeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.controls.settings.menu.ConnectedBrushIconModifier;
+import com.jacstuff.sketchy.fragments.DrawFragment;
 import com.jacstuff.sketchy.fragments.FragmentHelper;
 import com.jacstuff.sketchy.io.ImageSaver;
 import com.jacstuff.sketchy.paintview.PaintView;
@@ -114,6 +115,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupColorAutoScroll();
         initActivityResultLaunchers();
         setupImageButtons();
+    }
+
+
+    private void setupFragmentsIf(boolean isSavedInstanceStateNull) {
+        if (!isSavedInstanceStateNull) {
+            return;
+        }
+        var drawFragment = new DrawFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, drawFragment)
+                .commit();
     }
 
 
@@ -359,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintView = findViewById(R.id.paintView);
         connectedBrushIconModifierHelper = new ConnectedBrushIconModifierHelper(this);
         var brushFactory = new BrushFactory(this);
-        final LinearLayout linearLayout = findViewById(R.id.paintViewLayout);
+        final var linearLayout = findViewById(R.id.paintViewLayout);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
