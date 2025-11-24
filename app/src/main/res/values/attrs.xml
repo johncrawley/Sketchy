@@ -5,4 +5,7 @@
     <attr name="edit_button_icon"/>
     <attr name="undo_button_icon"/>
     <attr name="redo_button_icon"/>
+
+    <attr name="color_button_background_unselected"/>
+    <attr name="color_button_background_selected"/>
 </resources>

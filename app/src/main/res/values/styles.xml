@@ -19,6 +19,9 @@
         <item name="undo_button_icon">@drawable/outline_undo_24</item>
         <item name="redo_button_icon">@drawable/outline_redo_24</item>
         <item name="buttons_panel_background_color">@color/button_panel_background</item>
+
+        <item name="color_button_background_selected">@color/color_button_selected</item>
+        <item name="color_button_background_unselected">@color/color_button_unselected</item>
     </style>
 
 
