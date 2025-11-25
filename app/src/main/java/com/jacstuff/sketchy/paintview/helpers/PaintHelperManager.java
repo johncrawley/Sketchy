@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
+import android.content.Context;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.MainActivity;
@@ -14,32 +15,40 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class PaintHelperManager {
 
-    private final GradientHelper gradientHelper;
+    private GradientHelper gradientHelper;
     private final BlurHelper blurHelper;
     private final ShadowHelper shadowHelper;
     private final AngleHelper angleHelper;
-    private final KaleidoscopeHelper kaleidoscopeHelper;
-    private final StyleHelper styleHelper;
-    private final SizeHelper sizeHelper;
-    private final ColorHelper colorHelper;
+    private KaleidoscopeHelper kaleidoscopeHelper;
+    private StyleHelper styleHelper;
+    private SizeHelper sizeHelper;
+    private ColorHelper colorHelper;
     private final TileHelper tileHelper;
     private final BrushSizeSeekBarManager brushSizeSeekBarManager;
-    private final PlacementHelper placementHelper;
+    private PlacementHelper placementHelper;
     private final SensitivityHelper sensitivityHelper;
+    private final MainViewModel viewModel;
 
-    public PaintHelperManager(MainActivity mainActivity, PaintView paintView, MainViewModel viewModel){
+
+    public PaintHelperManager(MainActivity mainActivity, MainViewModel viewModel){
+        this.viewModel = viewModel;
         blurHelper = new BlurHelper();
         shadowHelper = new ShadowHelper(viewModel);
         angleHelper = new AngleHelper(viewModel);
+        brushSizeSeekBarManager = new BrushSizeSeekBarManager(mainActivity);
+        tileHelper = new TileHelper(viewModel, this);
+        sensitivityHelper = new SensitivityHelper(viewModel, angleHelper);
+    }
+
+
+    private void setPaintView(PaintView paintView, Context context){
+        styleHelper = new StyleHelper(context, paintView, viewModel);
         kaleidoscopeHelper = new KaleidoscopeHelper(paintView, viewModel);
         gradientHelper = new GradientHelper(viewModel, kaleidoscopeHelper);
-        styleHelper = new StyleHelper(mainActivity, paintView, viewModel);
-        brushSizeSeekBarManager = new BrushSizeSeekBarManager(mainActivity);
         sizeHelper = new SizeHelper(viewModel, paintView, brushSizeSeekBarManager);
         colorHelper = new ColorHelper(paintView, viewModel, kaleidoscopeHelper);
-        tileHelper = new TileHelper(viewModel, this);
-        placementHelper = new PlacementHelper(viewModel, mainActivity, sizeHelper);
-        sensitivityHelper = new SensitivityHelper(viewModel, angleHelper);
+        placementHelper = new PlacementHelper(viewModel, context, sizeHelper);
+
     }
 
 

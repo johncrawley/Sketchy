@@ -8,10 +8,12 @@ import android.view.ViewTreeObserver;
 
 import androidx.fragment.app.Fragment;
 
+import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
+import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.ui.ColorPickerSeekBarConfigurator;
 import com.jacstuff.sketchy.ui.ConnectedBrushIconModifierHelper;
 import com.jacstuff.sketchy.ui.SettingsPopup;
@@ -25,6 +27,7 @@ public class DrawFragment extends Fragment {
     private MainViewModel viewModel;
     private SettingsButtonsConfigurator settingsButtonsConfigurator;
     private ViewModelHelper viewModelHelper;
+    private PaintHelperManager paintHelperManager;
 
 
     public DrawFragment() {
@@ -47,8 +50,12 @@ public class DrawFragment extends Fragment {
     }
 
 
+
+
     private void setupPaintViewAndDefaultSelections(View parentView){
         paintView = parentView.findViewById(R.id.paintView);
+        var paintHelperManager = getMainActivity().getPaintHelperManager();
+        paintView.setPaintHelperManager(paintHelperManager);
       //  connectedBrushIconModifierHelper = new ConnectedBrushIconModifierHelper(this);
         //TODO: remove main activity refs from BrushFactory and all classes referenced within
       //  var brushFactory = new BrushFactory(this);
@@ -70,6 +77,12 @@ public class DrawFragment extends Fragment {
         colorPickerSeekBarConfigurator.setupOnCreation(R.id.gradientColorPickerSeekBar);
         colorPickerSeekBarConfigurator.setupOnCreation(R.id.shadowColorPickerSeekBar);
     }
+
+
+    private MainActivity getMainActivity(){
+        return (MainActivity) getActivity();
+    }
+
 
     public void setupButtons(View parent){
 

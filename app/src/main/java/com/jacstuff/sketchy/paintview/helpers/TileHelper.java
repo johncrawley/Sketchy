@@ -7,11 +7,11 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 public class TileHelper {
 
     private Paint paint, previewPaint;
-    private int columns;
-    private int spacing;
-    private boolean isColorUpdated;
-    private PaintHelperManager paintHelperManager;
-    private MainViewModel viewModel;
+    private final int columns;
+    private final int spacing;
+    private final boolean isColorUpdated;
+    private final PaintHelperManager paintHelperManager;
+    private final MainViewModel viewModel;
 
 
     public TileHelper(MainViewModel viewModel, PaintHelperManager paintHelperManager){

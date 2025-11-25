@@ -161,7 +161,7 @@ public class ViewModelHelper {
 
     private void retrieveRecentButtonSettings(){
 
-        for(ButtonCategory buttonCategory : viewModel.settingsButtonsClickMap.keySet()){
+        for(var buttonCategory : viewModel.settingsButtonsClickMap.keySet()){
             Integer buttonId = viewModel.settingsButtonsClickMap.get(buttonCategory);
             clickOn(buttonId);
         }
@@ -184,7 +184,7 @@ public class ViewModelHelper {
 
 
     private void deselectCurrentlySelectedAngleButton(){
-        Integer selectedPresetButtonId = viewModel.settingsButtonsClickMap.get(ButtonCategory.ANGLE);
+        var selectedPresetButtonId = viewModel.settingsButtonsClickMap.get(ButtonCategory.ANGLE);
         if(selectedPresetButtonId == null){
             return;
         }

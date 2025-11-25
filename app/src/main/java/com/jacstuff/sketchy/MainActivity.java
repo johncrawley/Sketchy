@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupLayout();
+
+        /*
         settingsPopup = new SettingsPopup(findViewById(R.id.includedSettingsLayout), this);
         buttonReferenceStore = new ButtonReferenceStore();
         toaster = new Toaster(MainActivity.this);
@@ -105,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imageSaver = new ImageSaver(this);
         seekBarConfigurator = new SeekBarConfigurator(this);
         SHARED_PREFS_NAME = getString(R.string.shared_prefs_name);
-        setupViewModel();
         colorPickerSeekBarConfigurator = new ColorPickerSeekBarConfigurator(this, viewModel);
         setupPaintViewAndDefaultSelections();
         initPaintHelperManager();
@@ -115,6 +116,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupColorAutoScroll();
         initActivityResultLaunchers();
         setupImageButtons();
+        */
+        setupViewModel();
+        initPaintHelperManager();
+        setupFragmentsIf(savedInstanceState == null);
     }
 
 
@@ -167,9 +172,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void initPaintHelperManager(){
-        paintHelperManager = new PaintHelperManager(this, paintView, viewModel);
+        paintHelperManager = new PaintHelperManager(this, viewModel);
         viewModelHelper.setPaintHelperManager(paintHelperManager);
-        paintView.setPaintHelperManager(paintHelperManager);
+       // paintView.setPaintHelperManager(paintHelperManager);
     }
 
 

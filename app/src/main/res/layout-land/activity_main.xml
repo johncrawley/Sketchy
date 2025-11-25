@@ -9,7 +9,17 @@
     android:id="@+id/mainLayout"
     tools:context=".MainActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
+    <!--
      <LinearLayout
          android:id="@+id/landscape_control_panel_layout"
          android:layout_width="wrap_content"
@@ -65,5 +75,5 @@
         android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@id/landscape_control_panel_layout"
         app:layout_constraintEnd_toEndOf="parent"/>
-
+-->
 </androidx.constraintlayout.widget.ConstraintLayout>
