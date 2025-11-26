@@ -98,10 +98,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupLayout();
-
+        buttonReferenceStore = new ButtonReferenceStore();
         /*
         settingsPopup = new SettingsPopup(findViewById(R.id.includedSettingsLayout), this);
-        buttonReferenceStore = new ButtonReferenceStore();
+
         toaster = new Toaster(MainActivity.this);
         colorButtonLayoutParams = new ButtonLayoutParams(MainActivity.this, R.integer.color_button_selected_border_width);
         imageSaver = new ImageSaver(this);
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void initPaintHelperManager(){
-        paintHelperManager = new PaintHelperManager(this, viewModel);
+        paintHelperManager = new PaintHelperManager(viewModel);
         viewModelHelper.setPaintHelperManager(paintHelperManager);
        // paintView.setPaintHelperManager(paintHelperManager);
     }
@@ -181,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setupViewModel(){
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModelHelper = new ViewModelHelper( viewModel, this);
+        viewModelHelper.init();
     }
 
 
@@ -381,7 +382,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onGlobalLayout() {
                 linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                paintView.init(settingsPopup, brushFactory, viewModel);
+               // paintView.init(settingsPopup, brushFactory, viewModel);
                 settingsButtonsConfigurator.selectDefaults();
                 viewModelHelper.onResume();
             }

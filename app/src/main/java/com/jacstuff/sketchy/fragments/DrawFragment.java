@@ -46,30 +46,34 @@ public class DrawFragment extends Fragment {
                              Bundle savedInstanceState) {
         View parent = inflater.inflate(R.layout.fragment_draw, container, false);
         setupButtons(parent);
+        viewModel = getMainActivity().getViewModel();
+        viewModelHelper = getMainActivity().getViewModelHelper();
+        setupPaintViewAndDefaultSelections(parent);
         return parent;
     }
-
-
 
 
     private void setupPaintViewAndDefaultSelections(View parentView){
         paintView = parentView.findViewById(R.id.paintView);
         var paintHelperManager = getMainActivity().getPaintHelperManager();
-        paintView.setPaintHelperManager(paintHelperManager);
+        paintHelperManager.initBrushSizeManager(parentView);
+        viewModelHelper.setPaintView(paintView);
+        // paintView.setPaintHelperManager(paintHelperManager);
       //  connectedBrushIconModifierHelper = new ConnectedBrushIconModifierHelper(this);
-        //TODO: remove main activity refs from BrushFactory and all classes referenced within
-      //  var brushFactory = new BrushFactory(this);
+        var brushFactory = new BrushFactory(getMainActivity());
         final var linearLayout = parentView.findViewById(R.id.paintViewLayout);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-             //   paintView.init(settingsPopup, brushFactory, viewModel);
-                settingsButtonsConfigurator.selectDefaults();
+                paintView.init(brushFactory, viewModel, paintHelperManager);
+              //  paintHelperManager.setPaintView(paintView, getContext());
+               // settingsButtonsConfigurator.selectDefaults();
                 viewModelHelper.onResume();
             }
         });
     }
+
 
     private ColorPickerSeekBarConfigurator colorPickerSeekBarConfigurator;
 

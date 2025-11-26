@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.paintview.helpers;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.view.View;
 
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.paintview.PaintGroup;
@@ -24,24 +25,28 @@ public class PaintHelperManager {
     private SizeHelper sizeHelper;
     private ColorHelper colorHelper;
     private final TileHelper tileHelper;
-    private final BrushSizeSeekBarManager brushSizeSeekBarManager;
+    private BrushSizeSeekBarManager brushSizeSeekBarManager;
     private PlacementHelper placementHelper;
     private final SensitivityHelper sensitivityHelper;
     private final MainViewModel viewModel;
 
 
-    public PaintHelperManager(MainActivity mainActivity, MainViewModel viewModel){
+    public PaintHelperManager(MainViewModel viewModel){
         this.viewModel = viewModel;
         blurHelper = new BlurHelper();
         shadowHelper = new ShadowHelper(viewModel);
         angleHelper = new AngleHelper(viewModel);
-        brushSizeSeekBarManager = new BrushSizeSeekBarManager(mainActivity);
         tileHelper = new TileHelper(viewModel, this);
         sensitivityHelper = new SensitivityHelper(viewModel, angleHelper);
     }
 
 
-    private void setPaintView(PaintView paintView, Context context){
+    public void initBrushSizeManager(View parentView){
+        brushSizeSeekBarManager = new BrushSizeSeekBarManager(parentView);
+    }
+
+
+    public void setPaintView(PaintView paintView, Context context){
         styleHelper = new StyleHelper(context, paintView, viewModel);
         kaleidoscopeHelper = new KaleidoscopeHelper(paintView, viewModel);
         gradientHelper = new GradientHelper(viewModel, kaleidoscopeHelper);

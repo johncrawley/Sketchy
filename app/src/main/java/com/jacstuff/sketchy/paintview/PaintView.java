@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.paintview;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -14,7 +15,6 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.paintview.history.HistoryMemoryHelper;
-import com.jacstuff.sketchy.ui.SettingsPopup;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 
@@ -31,7 +31,7 @@ public class PaintView extends View {
     private PaintHelperManager paintHelperManager;
     private boolean isPreviewLayerToBeDrawn;
     private boolean ignoreMoveAndUpActions = false;
-    private SettingsPopup settingsPopup;
+    //private SettingsPopup settingsPopup;
     private final Context context;
     private BitmapLoader bitmapLoader;
     private SensitivityHelper sensitivityHelper;
@@ -40,6 +40,7 @@ public class PaintView extends View {
     private MainViewModel viewModel;
 
     public PaintView(Context context) {
+
         this(context, null);
     }
 
@@ -65,12 +66,17 @@ public class PaintView extends View {
     }
 
 
-    public void init(SettingsPopup settingsPopup, BrushFactory brushFactory, MainViewModel viewModel) {
+    public void init(BrushFactory brushFactory, MainViewModel viewModel, PaintHelperManager paintHelperManager) {
+        log("entered init()");
         this.viewModel = viewModel;
-        this.settingsPopup = settingsPopup;
+       // this.settingsPopup = settingsPopup;
         this.brushFactory = brushFactory;
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        this.paintHelperManager = paintHelperManager;
         canvas = new Canvas(bitmap);
+        paintHelperManager.setPaintView(this, context);
+        paintHelperManager.init(paintGroup);
+        sensitivityHelper = paintHelperManager.getSensitivityHelper();
         bitmapLoader = new BitmapLoader(this, canvas, canvasBitmapPaint);
         initBrushes();
 
@@ -86,8 +92,15 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas viewCanvas) {
         viewCanvas.save();
-        viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, canvasBitmapPaint);
+        if(previewBitmap != null && bitmap != null){
+            viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, canvasBitmapPaint);
+        }
         viewCanvas.restore();
+    }
+
+
+    private void log(String msg){
+        System.out.println("^^^ PaintView: " + msg);
     }
 
 
@@ -98,6 +111,7 @@ public class PaintView extends View {
             return true;
         }
 
+        drawWithBrush(event);
         try {
             drawWithBrush(event);
         }
@@ -206,15 +220,6 @@ public class PaintView extends View {
     }
 
 
-    public void onTouchUp(){
-        if(!isTouchDownRegistered){
-            return;
-        }
-        isTouchDownRegistered = false;
-        currentBrush.touchUp(x, y, paintGroup.getDrawPaint());
-    }
-
-
     public void recalculateBrush(){
         if(currentBrush == null){
             return;
@@ -309,6 +314,7 @@ public class PaintView extends View {
         currentBrush.touchDown(x, y, paintGroup.getDrawPaint());
     }
 
+    Paint tempPaint = new Paint();
 
     private void onTouchMove(){
         if(!isTouchDownRegistered){
@@ -317,7 +323,25 @@ public class PaintView extends View {
         if(!sensitivityHelper.shouldDraw(currentBrush)){
             return;
         }
-        currentBrush.touchMove(x, y, paintGroup.getDrawPaint());
+        paintGroup.getDrawPaint().setColor(Color.GREEN);
+        currentBrush.setBrushSize(20);
+        tempPaint.setColor(Color.GREEN);
+        currentBrush.touchMove(x, y, tempPaint);
+        log("drawPaint color: " + paintGroup.getDrawPaint().getColor());
+
+    }
+
+
+    public void onTouchUp(){
+        if(!isTouchDownRegistered){
+            return;
+        }
+        isTouchDownRegistered = false;
+        currentBrush.touchUp(x, y, paintGroup.getDrawPaint());
+        log("exiting onTouchUp() current color: " + paintGroup.getDrawPaint().getColor());
+        if(paintGroup.getDrawPaint().getColor() == 0){
+            paintGroup.getDrawPaint().setColor(Color.GREEN);
+        }
     }
 
 
@@ -344,17 +368,6 @@ public class PaintView extends View {
 
 
     private boolean isPopupBeingDismissed(MotionEvent event){
-        if(settingsPopup.isVisible() && event.getAction() == MotionEvent.ACTION_DOWN){
-            settingsPopup.dismiss();
-            ignoreMoveAndUpActions = true;
-            return true;
-        }
-        if(ignoreMoveAndUpActions){
-            if (event.getAction() == MotionEvent.ACTION_UP){
-                ignoreMoveAndUpActions = false;
-            }
-            return true;
-        }
         return false;
     }
 

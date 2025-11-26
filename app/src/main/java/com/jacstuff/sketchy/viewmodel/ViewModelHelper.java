@@ -52,6 +52,22 @@ public class ViewModelHelper {
     }
 
 
+    public void init(){
+        initViewModelSettings();
+    }
+
+
+    public void setColorButtonClickHandler(ColorButtonClickHandler buttonClickHandler){
+        this.buttonClickHandler = buttonClickHandler;
+        initViewModelSettings();
+    }
+
+
+    public void setPaintView(PaintView paintView){
+        this.paintView = paintView;
+    }
+
+
     private void initShadesStores(){
         if(viewModel.buttonShadesStore == null){
             viewModel.buttonShadesStore = new ShadeStore();
@@ -92,10 +108,13 @@ public class ViewModelHelper {
 
 
     public void onPause(){
+        /*
         viewModel.mostRecentColorButtonKey = buttonClickHandler.getMostRecentColorButtonKey();
         viewModel.mostRecentShadeButtonKey = buttonClickHandler.getMostRecentShadeButtonKey();
         viewModel.isMostRecentClickAShade = buttonClickHandler.isMostRecentClickAShade();
         viewModel.selectedShadeButtonKeys = buttonClickHandler.getSelectedRandomShadeKeys();
+
+         */
     }
 
 
@@ -144,6 +163,7 @@ public class ViewModelHelper {
 
 
     private void retrieveColorAndShade(){
+        /*
         int mostRecentColorButtonId = buttonReferenceStore.getIdFor(viewModel.mostRecentColorButtonKey);
         buttonClickHandler.onClick(mostRecentColorButtonId);
         if(viewModel.isMostRecentClickAShade){
@@ -156,6 +176,8 @@ public class ViewModelHelper {
                 buttonClickHandler.onClick(buttonId);
             }
         }
+
+         */
     }
 
 
@@ -169,7 +191,7 @@ public class ViewModelHelper {
             setAngleBasedOnSeekBar();
             deselectCurrentlySelectedAngleButton();
         }
-        mainActivity.getSettingsPopup().dismiss();
+        //mainActivity.getSettingsPopup().dismiss();
     }
 
 

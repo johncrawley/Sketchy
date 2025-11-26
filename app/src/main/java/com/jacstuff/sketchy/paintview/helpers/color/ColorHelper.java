@@ -1,13 +1,17 @@
 package com.jacstuff.sketchy.paintview.helpers.color;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.multicolor.ColorSelector;
 import com.jacstuff.sketchy.multicolor.SequenceColorSelector;
 import com.jacstuff.sketchy.multicolor.ShadeColorSelector;
+import com.jacstuff.sketchy.multicolor.SingleColorSelector;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
+
+import java.util.List;
 
 public class ColorHelper {
 
@@ -67,19 +71,31 @@ public class ColorHelper {
 
 
     public void assignColors(){
+        log("entered assignColors()");
         if(kaleidoscopeHelper.isEnabled()
                 && viewModel.isInfinityModeEnabled
                 && paintView.getCurrentBrush().isColorChangedOnDown()){
             infinityModeColorBlender.assignNextInfinityModeColor();
+            log("kaleidoscope is enabled, returning()");
             return;
+        }
+        if(colorSelector == null){
+            colorSelector = new SingleColorSelector();
+            colorSelector.setColorList(List.of(Color.RED, Color.BLACK, Color.BLUE, Color.GREEN));
         }
         int nextColor = colorSelector.getNextColor();
         if(viewModel.color != nextColor){
             viewModel.previousColor = viewModel.color;
         }
         viewModel.color = nextColor;
+        log("assignColors() viewModel.color: " + viewModel.color);
         setColorAndAlpha(paint);
         setColorAndAlpha(shadowPaint);
+    }
+
+
+    private void log(String msg){
+        System.out.println("ColorHelper: " + msg);
     }
 
 

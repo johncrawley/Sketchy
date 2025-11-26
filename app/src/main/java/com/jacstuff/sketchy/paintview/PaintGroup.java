@@ -19,10 +19,15 @@ public class PaintGroup {
     private boolean isBorderSeparate;
 
     public PaintGroup(){
+        log("Entered PaintGroup()");
         initPaints();
         paints = List.of(drawPaint, previewPaint, shadowPaint, borderPaint);
+        log("Exiting PaintGroup() paints initialized!");
     }
 
+    private void log(String msg){
+        System.out.println("^^^ PaintGroup: " + msg);
+    }
 
     public void setBorderSeparate(boolean isBorderSeparate){
         this.isBorderSeparate = isBorderSeparate;

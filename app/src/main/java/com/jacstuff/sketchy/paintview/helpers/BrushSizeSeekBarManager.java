@@ -1,6 +1,6 @@
 package com.jacstuff.sketchy.paintview.helpers;
 
-import android.app.Activity;
+import android.view.View;
 import android.widget.SeekBar;
 
 import com.jacstuff.sketchy.R;
@@ -11,8 +11,8 @@ public class BrushSizeSeekBarManager {
     private boolean isStandardSizeModeEnabled;
     private boolean isCurrentShapeAffectedByBrushSize;
 
-    public BrushSizeSeekBarManager(Activity activity){
-        brushSizeSeekBar = activity.findViewById(R.id.brushSizeSeekBar);
+    public BrushSizeSeekBarManager(View parentView){
+        brushSizeSeekBar = parentView.findViewById(R.id.brushSizeSeekBar);
     }
 
 

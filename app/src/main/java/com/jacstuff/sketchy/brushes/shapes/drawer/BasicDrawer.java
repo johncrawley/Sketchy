@@ -30,9 +30,14 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
             return;
         }
         paintHelperManager.getSizeHelper().onTouchDown(x, y);
+
+        log("down() about to drawToCanvas x,y: " + x + "," + y);
         drawToCanvas(x,y, paint);
     }
 
+    private void log(String msg){
+        System.out.println("^^^ BasicDrawer: " + msg);
+    }
 
     @Override
     public void move(float x1, float y1, Paint paint) {
