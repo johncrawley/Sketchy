@@ -30,6 +30,8 @@ public class ColorHelper {
         this.kaleidoscopeHelper = kaleidoscopeHelper;
         allColorsSequenceSelector = new SequenceColorSelector(viewModel);
         shadeColorSelector = new ShadeColorSelector(viewModel);
+        colorSelector = new SingleColorSelector();
+        colorSelector.setColorList(Color.GREEN);
     }
 
 
@@ -81,21 +83,21 @@ public class ColorHelper {
         }
         if(colorSelector == null){
             colorSelector = new SingleColorSelector();
-            colorSelector.setColorList(List.of(Color.RED, Color.BLACK, Color.BLUE, Color.GREEN));
+            colorSelector.setColorList(Color.BLUE);
         }
         int nextColor = colorSelector.getNextColor();
+        log("assignColors() next color: " + nextColor);
         if(viewModel.color != nextColor){
             viewModel.previousColor = viewModel.color;
         }
         viewModel.color = nextColor;
-        log("assignColors() viewModel.color: " + viewModel.color);
         setColorAndAlpha(paint);
         setColorAndAlpha(shadowPaint);
     }
 
 
     private void log(String msg){
-        System.out.println("ColorHelper: " + msg);
+        System.out.println("^^^ ColorHelper: " + msg);
     }
 
 

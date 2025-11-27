@@ -1,7 +1,5 @@
 package com.jacstuff.sketchy.multicolor;
 
-import android.graphics.Color;
-
 import java.util.List;
 
 public interface ColorSelector {

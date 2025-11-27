@@ -62,9 +62,16 @@ public abstract class AbstractDrawer implements Drawer {
 
 
     void updateColorGradientAndAngle(float x, float y){
+        var isPhmNull = paintHelperManager.getColorHelper() == null;
+        log("entered updateColorGradientAndAngle() is color helper null: " + isPhmNull);
         paintHelperManager.getColorHelper().assignColors();
         updateGradientMidpoint(x,y);
         paintHelperManager.getAngleHelper().updateAngle();
+    }
+
+
+    private void log(String msg){
+        System.out.println("^^^Abstract Drawer: " + msg);
     }
 
 

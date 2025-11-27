@@ -52,6 +52,7 @@ public class PaintGroup {
 
 
     private void initPaints(){
+        log("Entered initPaints()");
         drawPaint = createPaint(Color.WHITE);
         previewPaint = createPaint(Color.DKGRAY);
         shadowPaint = createPaint(Color.BLACK);

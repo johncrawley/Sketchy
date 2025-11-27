@@ -1,11 +1,13 @@
 package com.jacstuff.sketchy.multicolor;
 
 
+import android.graphics.Color;
+
 import java.util.List;
 
 public class SingleColorSelector implements ColorSelector {
 
-    private  int color;
+    private  int color = Color.BLACK;
 
 
     @Override

@@ -112,12 +112,13 @@ public class PaintView extends View {
         }
 
         drawWithBrush(event);
+        /*
         try {
             drawWithBrush(event);
         }
         catch (RuntimeException e){
             printError(e.getMessage());
-        }
+        }*/
         return true;
     }
 
@@ -311,7 +312,7 @@ public class PaintView extends View {
 
     private void onTouchDown(){
         isTouchDownRegistered = true;
-        currentBrush.touchDown(x, y, paintGroup.getDrawPaint());
+        //currentBrush.touchDown(x, y, paintGroup.getDrawPaint());
     }
 
     Paint tempPaint = new Paint();
@@ -323,11 +324,18 @@ public class PaintView extends View {
         if(!sensitivityHelper.shouldDraw(currentBrush)){
             return;
         }
-        paintGroup.getDrawPaint().setColor(Color.GREEN);
         currentBrush.setBrushSize(20);
-        tempPaint.setColor(Color.GREEN);
-        currentBrush.touchMove(x, y, tempPaint);
-        log("drawPaint color: " + paintGroup.getDrawPaint().getColor());
+        var drawPaint = paintGroup.getDrawPaint();
+        drawPaint = new Paint();
+        drawPaint.setStyle(Paint.Style.FILL);
+        drawPaint.setStrokeWidth(20);
+        drawPaint.setColor(Color.BLUE);
+        canvas.drawCircle(x,y, 30, drawPaint);
+        invalidate();
+
+
+       currentBrush.touchMove(x, y, drawPaint);
+        log("drawPaint color: " + drawPaint.getColor() + " white color: " + Color.WHITE);
 
     }
 
@@ -337,11 +345,7 @@ public class PaintView extends View {
             return;
         }
         isTouchDownRegistered = false;
-        currentBrush.touchUp(x, y, paintGroup.getDrawPaint());
-        log("exiting onTouchUp() current color: " + paintGroup.getDrawPaint().getColor());
-        if(paintGroup.getDrawPaint().getColor() == 0){
-            paintGroup.getDrawPaint().setColor(Color.GREEN);
-        }
+       // currentBrush.touchUp(x, y, paintGroup.getDrawPaint());
     }
 
 

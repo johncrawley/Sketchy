@@ -57,14 +57,24 @@ public class PaintHelperManager {
     }
 
 
-    public void init(PaintGroup paintGroup){
-        gradientHelper.init(paintGroup.getDrawPaint());
-        blurHelper.init(paintGroup.getDrawPaint());
-        shadowHelper.init(paintGroup.getShadowPaint());
-        styleHelper.init(paintGroup);
-        colorHelper.init(paintGroup.getDrawPaint(), paintGroup.getShadowPaint());
-        tileHelper.init(paintGroup.getDrawPaint(), paintGroup.getPreviewPaint());
-        placementHelper.init(paintGroup.getDrawPaint());
+    public void init(PaintGroup pg){
+        var drawPaint = pg.getDrawPaint();
+        var shadowPaint = pg.getShadowPaint();
+        var previewPaint = pg.getPreviewPaint();
+        var isDpNull = drawPaint == null;
+        log("init() is draw paint null: " + isDpNull);
+        gradientHelper.init(drawPaint);
+        blurHelper.init(drawPaint);
+        shadowHelper.init(shadowPaint);
+        styleHelper.init(pg);
+        colorHelper.init(drawPaint, shadowPaint);
+        tileHelper.init(drawPaint, previewPaint);
+        placementHelper.init(drawPaint);
+    }
+
+
+    private void log(String msg){
+        System.out.println("^^^ PaintHelperManager: " + msg);
     }
 
 

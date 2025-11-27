@@ -49,7 +49,10 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
             drawToCanvas(x,y, paint);
             return;
         }
+
+        log("move() about to update Color Gradient and Angle paint color: " + paint.getColor());
         updateColorGradientAndAngle(x,y);
+        log("move() paint color after color update: " + paint.getColor());
         paintView.disablePreviewLayer();
         paintHelperManager.getSizeHelper().assignNextBrushSize(x,y);
         drawToCanvas(x,y, paint);
