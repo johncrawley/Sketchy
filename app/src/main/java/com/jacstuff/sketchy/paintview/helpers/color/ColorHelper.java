@@ -11,12 +11,10 @@ import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
-import java.util.List;
-
 public class ColorHelper {
 
     private final MainViewModel viewModel;
-    private ColorSelector colorSelector;
+    private ColorSelector singleColorSelector;
     private InfinityModeColorBlender infinityModeColorBlender;
     private Paint paint, shadowPaint;
     private final KaleidoscopeHelper kaleidoscopeHelper;
@@ -30,8 +28,8 @@ public class ColorHelper {
         this.kaleidoscopeHelper = kaleidoscopeHelper;
         allColorsSequenceSelector = new SequenceColorSelector(viewModel);
         shadeColorSelector = new ShadeColorSelector(viewModel);
-        colorSelector = new SingleColorSelector();
-        colorSelector.setColorList(Color.GREEN);
+        singleColorSelector = new SingleColorSelector();
+        singleColorSelector.setColorList(Color.GREEN);
     }
 
 
@@ -40,14 +38,14 @@ public class ColorHelper {
         this.shadowPaint = shadowPaint;
         paint.setColor(viewModel.color);
         this.shadowPaint.setColor(viewModel.color);
-        infinityModeColorBlender = new InfinityModeColorBlender(viewModel, colorSelector, paint);
+        infinityModeColorBlender = new InfinityModeColorBlender(viewModel, singleColorSelector, paint);
     }
 
 
-    public void setColorSelector(ColorSelector colorSelector){
-        this.colorSelector = colorSelector;
+    public void setSingleColorSelector(ColorSelector singleColorSelector){
+        this.singleColorSelector = singleColorSelector;
         if(infinityModeColorBlender != null){
-            infinityModeColorBlender.setColorSelector(colorSelector);
+            infinityModeColorBlender.setColorSelector(singleColorSelector);
         }
     }
 
@@ -68,9 +66,25 @@ public class ColorHelper {
 
 
     public void resetCurrentIndex(){
-        colorSelector.resetCurrentIndex();
+        singleColorSelector.resetCurrentIndex();
     }
 
+    public void assignColors(){
+
+        if(singleColorSelector == null){
+            log2("assignColors() color selector was null, initializing...2");
+            singleColorSelector = new SingleColorSelector();
+            singleColorSelector.setColorList(Color.YELLOW);
+        }
+        int nextColor = singleColorSelector.getNextColor();
+        viewModel.color = nextColor;
+        setColorAndAlpha(paint);
+    }
+
+    private void log2(String msg){
+        System.out.println("%%%% ColorHelper: " + msg);
+    }
+/*
 
     public void assignColors(){
         log("entered assignColors()");
@@ -94,6 +108,8 @@ public class ColorHelper {
         setColorAndAlpha(paint);
         setColorAndAlpha(shadowPaint);
     }
+
+ */
 
 
     private void log(String msg){

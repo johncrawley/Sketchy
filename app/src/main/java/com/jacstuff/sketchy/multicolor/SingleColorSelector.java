@@ -8,7 +8,8 @@ import java.util.List;
 public class SingleColorSelector implements ColorSelector {
 
     private  int color = Color.BLACK;
-
+    int counter = 0;
+    int limit = 40;
 
     @Override
     public void setColorList(int color){
@@ -18,7 +19,18 @@ public class SingleColorSelector implements ColorSelector {
 
     @Override
     public int getNextColor() {
+        counter++;
+        if(counter > limit){
+            counter = 0;
+            color = color == Color.BLACK ? Color.GREEN : Color.BLUE;
+        }
+        var colorName = color == Color.BLUE ? "BLUE" : color == Color.GREEN ? " GREEN " : "some other color";
+        log("getNextColor() " + colorName);
         return color;
+    }
+
+    private void log(String msg){
+        System.out.println("^^^ SingleColorSelector: " + msg);
     }
 
 

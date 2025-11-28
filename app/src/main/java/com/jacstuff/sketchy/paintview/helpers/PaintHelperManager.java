@@ -46,18 +46,18 @@ public class PaintHelperManager {
     }
 
 
-    public void setPaintView(PaintView paintView, Context context){
+    public void init(PaintView paintView, Context context){
         styleHelper = new StyleHelper(context, paintView, viewModel);
         kaleidoscopeHelper = new KaleidoscopeHelper(paintView, viewModel);
         gradientHelper = new GradientHelper(viewModel, kaleidoscopeHelper);
         sizeHelper = new SizeHelper(viewModel, paintView, brushSizeSeekBarManager);
         colorHelper = new ColorHelper(paintView, viewModel, kaleidoscopeHelper);
         placementHelper = new PlacementHelper(viewModel, context, sizeHelper);
-
+        init(paintView.getPaintGroup());
     }
 
 
-    public void init(PaintGroup pg){
+    private void init(PaintGroup pg){
         var drawPaint = pg.getDrawPaint();
         var shadowPaint = pg.getShadowPaint();
         var previewPaint = pg.getPreviewPaint();

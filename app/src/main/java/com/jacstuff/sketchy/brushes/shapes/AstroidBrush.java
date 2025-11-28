@@ -5,7 +5,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 
-import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 
 public class AstroidBrush extends AbstractBrush implements Brush {
@@ -14,6 +13,7 @@ public class AstroidBrush extends AbstractBrush implements Brush {
         private final Path path;
         private Point topLeftCorner, topRightCorner,bottomRightCorner,bottomLeftCorner;
         private Point midCurveTop, midCurveBottom, midCurveLeft, midCurveRight;
+        private int curveRate;
 
         public AstroidBrush(){
             super(BrushShape.ASTROID);
@@ -60,9 +60,9 @@ public class AstroidBrush extends AbstractBrush implements Brush {
             topRightCorner = new Point(halfBrushSize, -halfBrushSize);
             bottomRightCorner = new Point(halfBrushSize, halfBrushSize);
             bottomLeftCorner = new Point(-halfBrushSize, halfBrushSize);
-            int midPercentage = mainActivity.getResources().getInteger(R.integer.astroid_shape_curve_seek_bar_max) / 2;
+            int midPercentage = 530 / 2;
             //int percentage = mainViewModel.astroid_shape_curve_rate - midPercentage;
-            int percentage = midPercentage - viewModel.astroidShapeCurveRate;
+            int percentage = midPercentage - curveRate;
             int  midPointLength =  (int)((quarterBrushSize/100f) * percentage);
             midCurveTop = new Point(0, -midPointLength);
             midCurveBottom = new Point(0, midPointLength);

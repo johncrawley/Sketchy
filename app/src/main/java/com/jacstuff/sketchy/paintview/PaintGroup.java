@@ -53,7 +53,7 @@ public class PaintGroup {
 
     private void initPaints(){
         log("Entered initPaints()");
-        drawPaint = createPaint(Color.WHITE);
+        drawPaint = createPaint(Color.RED);
         previewPaint = createPaint(Color.DKGRAY);
         shadowPaint = createPaint(Color.BLACK);
         initBorderPaint();
@@ -84,6 +84,17 @@ public class PaintGroup {
 
     public Paint getDrawPaint(){
         return drawPaint;
+    }
+
+
+    private boolean isInit = false;
+
+
+    public void initDrawPaint(){
+       if(!isInit){
+           isInit = true;
+           drawPaint = new Paint();
+       }
     }
 
 

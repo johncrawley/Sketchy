@@ -166,12 +166,12 @@ public class ColorButtonClickHandler {
     private void assignColorSelectorToPaintViewFrom(Button button){
         ButtonType buttonType = (ButtonType)button.getTag(R.string.tag_button_type);
         currentColorSelector = colorSelectors.get(buttonType);
-        colorHelper.setColorSelector(currentColorSelector);
+        colorHelper.setSingleColorSelector(currentColorSelector);
     }
 
 
     private void onMainColorButtonClick(Button button){
-        colorHelper.setColorSelector(currentColorSelector);
+        colorHelper.setSingleColorSelector(currentColorSelector);
         setColorAndUpdateButtons(button);
         previouslySelectedColorButton = button;
         assignShadeLayoutFrom(button);
@@ -247,7 +247,7 @@ public class ColorButtonClickHandler {
     private void assignMultiSelector(Button button, List<Integer> colorList){
         if(button != previouslySelectedButton){
             currentColorSelector.reset();
-            colorHelper.setColorSelector(currentColorSelector);
+            colorHelper.setSingleColorSelector(currentColorSelector);
         }
         currentColorSelector.setColorList(colorList);
     }

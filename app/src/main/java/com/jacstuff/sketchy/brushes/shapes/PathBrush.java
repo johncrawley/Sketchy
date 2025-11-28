@@ -5,11 +5,9 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 
-import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
-import com.jacstuff.sketchy.paintview.PaintView;
 
 
 public class PathBrush extends AbstractBrush implements Brush {

@@ -30,7 +30,7 @@ public class PaintView extends View {
     private boolean isCanvasLocked;
     private PaintHelperManager paintHelperManager;
     private boolean isPreviewLayerToBeDrawn;
-    private boolean ignoreMoveAndUpActions = false;
+   // private boolean ignoreMoveAndUpActions = false;
     //private SettingsPopup settingsPopup;
     private final Context context;
     private BitmapLoader bitmapLoader;
@@ -59,13 +59,6 @@ public class PaintView extends View {
     }
 
 
-    public void setPaintHelperManager(PaintHelperManager paintHelperManager){
-        this.paintHelperManager = paintHelperManager;
-        this.paintHelperManager.init(paintGroup);
-        sensitivityHelper = paintHelperManager.getSensitivityHelper();
-    }
-
-
     public void init(BrushFactory brushFactory, MainViewModel viewModel, PaintHelperManager paintHelperManager) {
         log("entered init()");
         this.viewModel = viewModel;
@@ -74,8 +67,7 @@ public class PaintView extends View {
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         this.paintHelperManager = paintHelperManager;
         canvas = new Canvas(bitmap);
-        paintHelperManager.setPaintView(this, context);
-        paintHelperManager.init(paintGroup);
+        paintHelperManager.init(this, context);
         sensitivityHelper = paintHelperManager.getSensitivityHelper();
         bitmapLoader = new BitmapLoader(this, canvas, canvasBitmapPaint);
         initBrushes();
@@ -85,6 +77,7 @@ public class PaintView extends View {
         }
         paintHelperManager.getKaleidoscopeHelper().setCanvas(canvas);
         paintHelperManager.initDimensions(getWidth(), getHeight());
+        log("init() about to invalidate()");
         invalidate();
     }
 
@@ -107,10 +100,9 @@ public class PaintView extends View {
     @Override
     @SuppressWarnings("ClickableViewAccessibility")
     public boolean onTouchEvent(MotionEvent event) {
-        if(isPopupBeingDismissed(event) || isCanvasLocked){
+        if( isCanvasLocked){
             return true;
         }
-
         drawWithBrush(event);
         /*
         try {
@@ -132,25 +124,31 @@ public class PaintView extends View {
         return this.paintGroup;
     }
 
+
     public Bitmap getBitmap(){
         return bitmap;
     }
+
 
     public Canvas getCanvas(){
         return canvas;
     }
 
+
     public Paint getShadowPaint(){
         return paintGroup.getShadowPaint();
     }
+
 
     public Paint getPaint(){
         return paintGroup.getDrawPaint();
     }
 
+
     public PaintHelperManager getPaintHelperManager(){
         return paintHelperManager;
     }
+
 
     public Paint getPreviewPaint(){
         return paintGroup.getPreviewPaint();
@@ -175,7 +173,7 @@ public class PaintView extends View {
 
     public void setBrushShape(BrushShape brushShape){
         currentBrush.onDeallocate();
-        currentBrush = brushFactory.getReinitializedBrushFor(brushShape);
+        currentBrush = brushFactory.getBrushFor(brushShape);
         currentBrush.setBrushSize(brushSize);
         paintHelperManager.getGradientHelper().updateBrush(currentBrush);
     }
@@ -276,7 +274,7 @@ public class PaintView extends View {
 
     private void initBrushes(){
         brushFactory.init(this, brushSize, getMaxDimension());
-        currentBrush = brushFactory.getReinitializedBrushFor(BrushShape.CIRCLE);
+        currentBrush = brushFactory.getBrushFor(BrushShape.CIRCLE);
     }
 
 
@@ -312,7 +310,9 @@ public class PaintView extends View {
 
     private void onTouchDown(){
         isTouchDownRegistered = true;
-        //currentBrush.touchDown(x, y, paintGroup.getDrawPaint());
+        currentBrush.touchDown(x, y, paintGroup.getDrawPaint());
+
+       // paintGroup.initDrawPaint();
     }
 
     Paint tempPaint = new Paint();
@@ -326,12 +326,12 @@ public class PaintView extends View {
         }
         currentBrush.setBrushSize(20);
         var drawPaint = paintGroup.getDrawPaint();
-        drawPaint = new Paint();
+       // drawPaint = new Paint();
         drawPaint.setStyle(Paint.Style.FILL);
         drawPaint.setStrokeWidth(20);
-        drawPaint.setColor(Color.BLUE);
-        canvas.drawCircle(x,y, 30, drawPaint);
-        invalidate();
+       // drawPaint.setColor(Color.BLUE);
+       // canvas.drawCircle(x,y, 30, drawPaint);
+       // invalidate();
 
 
        currentBrush.touchMove(x, y, drawPaint);
@@ -369,12 +369,6 @@ public class PaintView extends View {
             invalidate();
         }
     }
-
-
-    private boolean isPopupBeingDismissed(MotionEvent event){
-        return false;
-    }
-
 
 
     private int getCurrentScreenOrientation(){

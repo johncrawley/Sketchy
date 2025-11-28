@@ -72,7 +72,13 @@ public class StyleHelper {
 
 
     public Style getCurrentStyle(){
+        var isN = currentStyle == null;
+        log("getCurrentStyle() is null: " + isN);
         return currentStyle;
+    }
+
+    private void log(String msg){
+        System.out.println("^^^ StyleHelper: " + msg);
     }
 
 

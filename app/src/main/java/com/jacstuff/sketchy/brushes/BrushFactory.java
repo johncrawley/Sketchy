@@ -46,7 +46,7 @@ import java.util.Map;
 public class BrushFactory {
 
     private Map<BrushShape, Brush> brushMap;
-    private Brush circleBrush;
+    private final Brush circleBrush;
     private PaintView paintView;
     private final MainViewModel mainViewModel;
     private DrawerFactory drawerFactory;
@@ -58,6 +58,7 @@ public class BrushFactory {
     public BrushFactory(MainActivity mainActivity){
         this.mainActivity = mainActivity;
         this.mainViewModel = mainActivity.getViewModel();
+        circleBrush = new CircleBrush();
     }
 
 
@@ -66,21 +67,28 @@ public class BrushFactory {
         drawerFactory = new DrawerFactory(paintView, mainViewModel);
         initShadowPathBrush();
         drawerFactory.init();
-        circleBrush = new CircleBrush();
         styleHelper = paintView.getPaintHelperManager().getStyleHelper();
         setupBrushMap(maxDimension);
         handleStyles(brushSize);
     }
 
 
-    public Brush getReinitializedBrushFor(BrushShape shape){
-        Brush brush =  brushMap.get(shape);
-        if(brush == null){
-            brush = circleBrush;
+    public Brush getBrushFor(BrushShape shape){
+        var brush = brushMap.getOrDefault(shape, circleBrush);
+        if(brush != null){
+            brush.setStyle(styleHelper.getCurrentStyle());
+            brush.reinitialize();
         }
-        brush.setStyle(styleHelper.getCurrentStyle());
-        brush.reinitialize();
+        var temp = new TriangleBrush();
+        temp.reinitialize();
+        var isSHNull = styleHelper == null;
+        log("getBrushFor() " + shape.name() + " is style helper null: " + isSHNull);
+        temp.setStyle(styleHelper.getCurrentStyle());
         return brush;
+    }
+
+    private void log(String msg){
+        System.out.println("^^^ BrushFactory: " + msg);
     }
 
 
