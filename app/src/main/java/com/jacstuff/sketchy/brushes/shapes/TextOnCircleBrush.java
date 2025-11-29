@@ -8,7 +8,8 @@ import android.graphics.Point;
 import com.jacstuff.sketchy.brushes.BrushShape;
 
 
-public class TextOnCircleBrush extends AbstractBrush implements Brush {
+public class TextOnCircleBrush extends TextBrush implements Brush {
+
 
 
     public TextOnCircleBrush(){
@@ -23,16 +24,9 @@ public class TextOnCircleBrush extends AbstractBrush implements Brush {
         path.addCircle(0,0, brushSize * 2, Path.Direction.CW);
 
         paint.setLinearText(true);
-        String text = viewModel.textBrushText;
         float offset = 0f;
         canvas.drawTextOnPath(text, path, offset, offset, paint);
     }
 
-
-    @Override
-    public void setBrushSize(int brushSize) {
-        super.setBrushSize(brushSize);
-        paintGroup.setTextSize(brushSize/4f);
-    }
 
 }

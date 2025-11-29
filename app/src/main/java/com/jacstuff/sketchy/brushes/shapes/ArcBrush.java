@@ -6,25 +6,54 @@ import android.graphics.Point;
 import android.graphics.RectF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class ArcBrush extends AbstractBrush implements Brush {
+
+    private int startingAngle;
+    private int sweepAngle;
+    private boolean isDrawnFromCentre;
 
     public ArcBrush(){
         super(BrushShape.ARC);
     }
 
-    private int arcShapeStartingAngle;
-    private int arcShapeAngleSweepAngle;
-    private boolean isArcShapeDrawnFromCentre;
+
+    public void setStartingAngle(int startingAngle) {
+        this.startingAngle = startingAngle;
+    }
+
+
+    public int getStartingAngle(){
+        return startingAngle;
+    }
+
+
+    public int getSweepAngle() {
+        return sweepAngle;
+    }
+
+
+    public void setSweepAngle(int sweepAngle) {
+        this.sweepAngle = sweepAngle;
+    }
+
+
+    public boolean isDrawnFromCentre() {
+        return isDrawnFromCentre;
+    }
+
+
+    public void setDrawnFromCentre(boolean drawnFromCentre) {
+        isDrawnFromCentre = drawnFromCentre;
+    }
 
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         RectF rect = new RectF(-halfBrushSize, -halfBrushSize, halfBrushSize, halfBrushSize);
-        int startAngle = 180 + arcShapeStartingAngle;
-        int sweep = Math.min(1 + arcShapeAngleSweepAngle, 359);
-        canvas.drawArc(rect, startAngle, sweep, isArcShapeDrawnFromCentre, paint);
+        int startAngle = 180 + startingAngle;
+        int sweep = Math.min(1 + sweepAngle, 359);
+        canvas.drawArc(rect, startAngle, sweep, isDrawnFromCentre, paint);
     }
 
 

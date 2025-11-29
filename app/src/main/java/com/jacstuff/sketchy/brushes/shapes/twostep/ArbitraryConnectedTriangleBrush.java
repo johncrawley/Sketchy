@@ -1,5 +1,7 @@
 package com.jacstuff.sketchy.brushes.shapes.twostep;
 
+import static com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType.USE_SET_VALUE;
+
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -8,7 +10,6 @@ import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.ArbitraryTriangleDrawer;
-import com.jacstuff.sketchy.brushes.shapes.initializer.DragRectInitializer;
 import com.jacstuff.sketchy.paintview.history.DrawHistory;
 
 
@@ -24,19 +25,20 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
     public ArbitraryConnectedTriangleBrush() {
         super();
         setBrushShape(BrushShape.TRIANGLE_ARBITRARY);
-        brushInitializer = new DragRectInitializer();
         path = new Path();
         isDrawnFromCenter = false;
+        usesBrushSizeControl = false;
         resetStepState();
         setBrushShape(BrushShape.TRIANGLE_ARBITRARY);
+        shadowOffsetType = USE_SET_VALUE;
     }
 
 
     @Override
     public void postInit(){
         super.postInit();
-        this.drawer = new ArbitraryTriangleDrawer(paintView, viewModel, this);
-        drawHistory = viewModel.drawHistory;
+        this.drawer = new ArbitraryTriangleDrawer(paintView, this);
+       // drawHistory = viewModel.drawHistory;
         drawer.init();
     }
 
@@ -61,7 +63,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
             currentItem.getConnectedTriangleState().setFirstItemDrawn(false);
             currentItem.getTrianglePoints().reset();
         }
-        mainActivity.getConnectedTriangleIconModifier().resetIconAndState();
+       // mainActivity.getConnectedTriangleIconModifier().resetIconAndState();
     }
 
 
@@ -155,8 +157,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
 
 
     private void setConnectedIconAndState(){
-        mainActivity.getConnectedTriangleIconModifier()
-                .setConnectedIconAndState();
+      //  mainActivity.getConnectedTriangleIconModifier().setConnectedIconAndState();
     }
 
 

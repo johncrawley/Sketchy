@@ -1,13 +1,14 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
 
+import static com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType.USE_SET_VALUE;
+
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
-import com.jacstuff.sketchy.brushes.shapes.initializer.DragRectInitializer;
 
 public class RectangleBrush extends AbstractBrush implements Brush {
 
@@ -16,9 +17,10 @@ public class RectangleBrush extends AbstractBrush implements Brush {
 
     public RectangleBrush() {
         super(BrushShape.DRAG_RECTANGLE);
-        brushInitializer = new DragRectInitializer();
         drawerType = DrawerFactory.Type.DRAG_RECT;
         isDrawnFromCenter = false;
+        usesBrushSizeControl = false;
+        shadowOffsetType = USE_SET_VALUE;
     }
 
 

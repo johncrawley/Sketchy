@@ -8,7 +8,6 @@ import android.graphics.Point;
 import com.jacstuff.sketchy.brushes.BrushShape;
 
 
-
 public class TrapezoidBrush extends AbstractBrush implements Brush {
 
     private final Point topRight, topLeft, bottomRight, bottomLeft;
@@ -22,6 +21,7 @@ public class TrapezoidBrush extends AbstractBrush implements Brush {
         bottomRight = new Point();
         bottomLeft = new Point();
     }
+
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){

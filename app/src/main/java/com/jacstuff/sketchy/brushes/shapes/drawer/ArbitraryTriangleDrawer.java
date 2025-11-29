@@ -8,8 +8,8 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class ArbitraryTriangleDrawer extends TwoStepDrawer implements Drawer{
 
-    public ArbitraryTriangleDrawer(PaintView paintView, MainViewModel viewModel, TwoStepBrush twoStepBrush){
-        super(paintView, viewModel, twoStepBrush);
+    public ArbitraryTriangleDrawer(PaintView paintView, TwoStepBrush twoStepBrush){
+        super(paintView, twoStepBrush);
     }
 
     @Override

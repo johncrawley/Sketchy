@@ -7,7 +7,7 @@ import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
-import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
+import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 
 
 public class LineBrush extends AbstractBrush implements Brush {
@@ -16,13 +16,17 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     public LineBrush() {
         super(BrushShape.LINE);
-        brushInitializer = new LineInitializer();
         drawerType = DrawerFactory.Type.DRAG_LINE;
+        shadowOffsetType = ShadowOffsetType.USE_STROKE_WIDTH;
+        usesBrushSizeControl = false;
     }
 
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+        xDown = p.x;
+        yDown = p.y;
+        /*
         var lineState = viewModel.drawHistory.getLineState();
         if(!lineState.isFirstItemDrawn()){
             xDown = p.x;
@@ -33,6 +37,8 @@ public class LineBrush extends AbstractBrush implements Brush {
             xDown = coordinates.x;
             yDown = coordinates.y;
         }
+
+         */
     }
 
 
@@ -44,13 +50,13 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint) {
-        mainActivity.getConnectedLineIconModifier().setConnectedIconAndState();
+      //  mainActivity.getConnectedLineIconModifier().setConnectedIconAndState();
         canvas.drawLine(xDown - offsetX,
                 yDown - offsetY,
                 x - offsetX,
                 y - offsetY,
                 paint);
-        viewModel.drawHistory.saveLineUpCoordinates(x,y);
+       // viewModel.drawHistory.saveLineUpCoordinates(x,y);
     }
 
 
@@ -68,6 +74,6 @@ public class LineBrush extends AbstractBrush implements Brush {
 
     @Override
     public void reset(){
-        mainActivity.getConnectedLineIconModifier().resetIconAndState();
+        //mainActivity.getConnectedLineIconModifier().resetIconAndState();
     }
 }

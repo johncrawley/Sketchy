@@ -9,18 +9,33 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 
 public class TextBrush extends AbstractBrush implements Brush {
 
-    private float textSize;
+    float textSize;
+    String text;
 
     public TextBrush(){
-        super(BrushShape.TEXT);
+        this(BrushShape.TEXT);
+    }
+
+
+    TextBrush(BrushShape brushShape){
+        super(brushShape);
+    }
+
+
+    public String getText(){
+        return text;
+    }
+
+
+    public void setText(String text){
+        this.text = text;
     }
 
 
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-        String text = viewModel.textBrushText;
         if(text.trim().isEmpty()){
-            mainActivity.toast(R.string.toast_text_brush_is_empty);
+           // mainActivity.toast(R.string.toast_text_brush_is_empty);
             return;
         }
         canvas.drawText(text, getCentreX(text, paint), textSize /3f, paint);

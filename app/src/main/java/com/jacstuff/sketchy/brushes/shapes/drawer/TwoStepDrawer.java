@@ -7,7 +7,6 @@ import android.graphics.PointF;
 import com.jacstuff.sketchy.brushes.shapes.twostep.StepState;
 import com.jacstuff.sketchy.brushes.shapes.twostep.TwoStepBrush;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class TwoStepDrawer extends AbstractDrawer implements Drawer{
 
@@ -15,8 +14,8 @@ public class TwoStepDrawer extends AbstractDrawer implements Drawer{
     final TwoStepBrush twoStepBrush;
     private PointF lineMidPoint;
 
-    public TwoStepDrawer(PaintView paintView, MainViewModel viewModel, TwoStepBrush twoStepBrush){
-        super(paintView, viewModel);
+    public TwoStepDrawer(PaintView paintView, TwoStepBrush twoStepBrush){
+        super(paintView);
         isColorChangedOnDown = false;
         this.twoStepBrush = twoStepBrush;
     }

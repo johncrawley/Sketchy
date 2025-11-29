@@ -1,12 +1,13 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
+import static com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType.USE_SET_VALUE;
+
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
-import com.jacstuff.sketchy.brushes.shapes.initializer.DragRectInitializer;
 import com.jacstuff.sketchy.utils.MathUtils;
 
 public class VariableCircleBrush extends AbstractBrush implements Brush {
@@ -16,9 +17,10 @@ public class VariableCircleBrush extends AbstractBrush implements Brush {
 
     public VariableCircleBrush() {
         super(BrushShape.VARIABLE_CIRCLE);
-        brushInitializer = new DragRectInitializer();
         drawerType = DrawerFactory.Type.DRAG_RECT;
         isDrawnFromCenter = true;
+        usesBrushSizeControl = false;
+        shadowOffsetType = USE_SET_VALUE;
     }
 
 

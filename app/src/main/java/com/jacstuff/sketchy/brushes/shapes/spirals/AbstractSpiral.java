@@ -13,6 +13,7 @@ public abstract class AbstractSpiral extends AbstractBrush {
 
     public AbstractSpiral(BrushShape brushShape){
         super(brushShape);
+        isBrushDangerous = true;
     }
 
 
@@ -32,13 +33,6 @@ public abstract class AbstractSpiral extends AbstractBrush {
     @Override
     public void reinitialize(){
         super.reinitialize();
-        viewModel.isUsingDangerousBrush = true;
     }
 
-
-    @Override
-    public void onDeallocate(){
-        super.onDeallocate();
-        viewModel.isUsingDangerousBrush = false;
-    }
 }

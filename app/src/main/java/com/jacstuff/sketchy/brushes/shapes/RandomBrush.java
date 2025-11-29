@@ -20,6 +20,8 @@ public class RandomBrush extends AbstractBrush implements Brush {
     private int ySign = 1;
     private boolean wasXSignAdjustedLast;
     private boolean areNewPointsRequired;
+    private boolean isMorphEnabled;
+    private int numberOfPoints = 7;
 
 
     public RandomBrush() {
@@ -31,12 +33,32 @@ public class RandomBrush extends AbstractBrush implements Brush {
     }
 
 
+    public void setNumberOfPoints(int number){
+        numberOfPoints = number;
+    }
+
+
+    public int getNumberOfPoints(){
+        return numberOfPoints;
+    }
+
+
+    public void setMorphEnabled(boolean isEnabled){
+        isMorphEnabled = isEnabled;
+    }
+
+
+    public boolean isMorphEnabled(){
+        return isMorphEnabled;
+    }
+
+
     @Override
     public void setBrushSize(int brushSize) {
         int oldQuarterSize = quarterBrushSize;
         super.setBrushSize(brushSize);
         quarterBrushSize = halfBrushSize /2;
-        if(!viewModel.doesRandomBrushMorph){
+        if(!isMorphEnabled){
            adjustPointsWithBrushSizeDifference(quarterBrushSize - oldQuarterSize);
         }
     }
@@ -88,7 +110,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
 
 
     private void adjustPoints(){
-        if(viewModel.doesRandomBrushMorph){
+        if(isMorphEnabled){
             for(int i=0; i< points.size(); i++){
                adjustPoint(i);
             }
@@ -114,7 +136,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
 
     private void addRandomPoints(List<Point> list){
         list.clear();
-        int numberOfVertices = 3 + viewModel.randomBrushNumberOfPoints;
+        int numberOfVertices = 3 + numberOfPoints;
         for(int i=0; i < numberOfVertices; i++){
             list.add(createRandomPoint());
         }

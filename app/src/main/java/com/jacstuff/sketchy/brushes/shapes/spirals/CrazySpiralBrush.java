@@ -43,8 +43,9 @@ public class CrazySpiralBrush extends AbstractSpiral implements Brush {
 
 
     private void updateMultipliers(){
-        normalMultiplier = 0.2f * normalProgressionArray[viewModel.crazySpiralType];
-        altMultiplier = 0.1f + altProgressionArray[viewModel.crazySpiralType];
+      //  normalMultiplier = 0.2f * normalProgressionArray[viewModel.crazySpiralType];
+        normalMultiplier = 0.2f * 3;
+      //  altMultiplier = 0.1f + altProgressionArray[viewModel.crazySpiralType];
     }
 
 
@@ -60,12 +61,12 @@ public class CrazySpiralBrush extends AbstractSpiral implements Brush {
 
 
     private int getNumberOfSections(){
-        return viewModel.isCrazySpiralAltModeEnabled ? quarterBrushSize / 4 : quarterBrushSize;
+        return  quarterBrushSize; //viewModel.isCrazySpiralAltModeEnabled ? quarterBrushSize / 4 : quarterBrushSize;
     }
 
 
     private float getMultiplier(){
-        return viewModel.isCrazySpiralAltModeEnabled ? altMultiplier : normalMultiplier;
+        return normalMultiplier; //viewModel.isCrazySpiralAltModeEnabled ? altMultiplier : normalMultiplier;
     }
 
 

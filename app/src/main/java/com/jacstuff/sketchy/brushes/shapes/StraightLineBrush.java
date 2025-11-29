@@ -5,7 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.brushes.shapes.initializer.StraightLineInitializer;
+import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 
 
 public class StraightLineBrush extends AbstractBrush implements Brush {
@@ -20,7 +20,7 @@ public class StraightLineBrush extends AbstractBrush implements Brush {
         this.adjustedBrushFactor = 100f/ maxBrushSize;
         this.maxDimensionFactor = maxDimension / 170f; // dividing by 200 would cover half the max dimension
                                                         // but dividing by a little less to cover diagonal
-        brushInitializer = new StraightLineInitializer();
+        shadowOffsetType = ShadowOffsetType.USE_STROKE_WIDTH;
     }
 
 

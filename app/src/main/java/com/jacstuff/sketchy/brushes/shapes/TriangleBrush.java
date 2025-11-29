@@ -13,6 +13,7 @@ public class TriangleBrush extends AbstractBrush implements Brush {
 
     private final Point leftPoint, rightPoint, topPoint;
     private int height;
+    private int triangleHeight = 1;
 
     public TriangleBrush(){
         super(BrushShape.TRIANGLE);
@@ -20,6 +21,17 @@ public class TriangleBrush extends AbstractBrush implements Brush {
         rightPoint = new Point();
         topPoint = new Point();
     }
+
+
+    public void setTriangleHeight(int height){
+        this.triangleHeight = height;
+    }
+
+
+    public int getTriangleHeight(){
+        return triangleHeight;
+    }
+
 
     @Override
     public void reinitialize(){
@@ -52,7 +64,7 @@ public class TriangleBrush extends AbstractBrush implements Brush {
     @Override
     public void recalculateDimensions(){
         super.recalculateDimensions();
-        height = (int)((brushSize/ 100f) * viewModel.triangleHeight);
+        height = (int)((brushSize/ 100f) * triangleHeight);
     }
 
 }

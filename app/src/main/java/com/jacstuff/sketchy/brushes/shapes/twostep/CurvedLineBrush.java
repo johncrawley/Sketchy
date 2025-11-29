@@ -1,5 +1,7 @@
 package com.jacstuff.sketchy.brushes.shapes.twostep;
 
+import static com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType.USE_SET_VALUE;
+
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -9,7 +11,6 @@ import android.graphics.PointF;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.TwoStepDrawer;
-import com.jacstuff.sketchy.brushes.shapes.initializer.DragRectInitializer;
 import com.jacstuff.sketchy.utils.MathUtils;
 
 public class CurvedLineBrush extends AbstractTwoStepBrush implements Brush, TwoStepBrush{
@@ -21,18 +22,18 @@ public class CurvedLineBrush extends AbstractTwoStepBrush implements Brush, TwoS
 
     public CurvedLineBrush() {
         super(BrushShape.CURVE);
-        brushInitializer = new DragRectInitializer();
         path = new Path();
+        usesBrushSizeControl = false;
         isDrawnFromCenter = false;
         resetStepState();
-
+        shadowOffsetType = USE_SET_VALUE;
     }
 
 
     @Override
     public void postInit(){
         super.postInit();
-        this.drawer = new TwoStepDrawer(paintView, viewModel, this);
+        this.drawer = new TwoStepDrawer(paintView, this);
         drawer.init();
     }
 

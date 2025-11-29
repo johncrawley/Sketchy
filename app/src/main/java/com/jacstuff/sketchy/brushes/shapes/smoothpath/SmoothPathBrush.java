@@ -10,7 +10,7 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.AbstractBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
-import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
+import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +27,12 @@ public class SmoothPathBrush extends AbstractBrush implements Brush {
 
     public SmoothPathBrush(){
         super(BrushShape.SMOOTH_PATH);
-        brushInitializer = new LineInitializer();
         drawerType = DrawerFactory.Type.SMOOTH_PATH;
         initPointsLists();
         importantPoints = new ImportantPoints();
         isDrawnFromCenter = false;
+        shadowOffsetType = ShadowOffsetType.USE_STROKE_WIDTH;
+        usesBrushSizeControl = false;
     }
 
 

@@ -7,7 +7,7 @@ import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
-import com.jacstuff.sketchy.brushes.shapes.initializer.LineInitializer;
+import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 
 
 public class PathBrush extends AbstractBrush implements Brush {
@@ -16,8 +16,9 @@ public class PathBrush extends AbstractBrush implements Brush {
 
     public PathBrush(){
         super(BrushShape.PATH);
-        brushInitializer = new LineInitializer();
         drawerType = DrawerFactory.Type.PATH;
+        shadowOffsetType = ShadowOffsetType.USE_STROKE_WIDTH;
+        usesBrushSizeControl = false;
     }
 
 

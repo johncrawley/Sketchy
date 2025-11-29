@@ -9,13 +9,11 @@ import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
-import com.jacstuff.sketchy.brushes.shapes.initializer.BrushInitializer;
-import com.jacstuff.sketchy.brushes.shapes.initializer.DefaultInitializer;
 import com.jacstuff.sketchy.brushes.styles.FillStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
 import com.jacstuff.sketchy.paintview.PaintGroup;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
+import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 
 import java.util.function.BiConsumer;
 
@@ -33,16 +31,30 @@ public abstract class AbstractBrush implements Brush{
    // protected MainActivity mainActivity;
     public PaintView paintView;
     protected DrawerFactory.Type drawerType;
-    public BrushInitializer brushInitializer;
     public boolean isDrawnFromCenter;
+    protected boolean usesBrushSizeControl = true;
+    protected ShadowOffsetType shadowOffsetType = ShadowOffsetType.USE_SHAPE_WIDTH;
+    protected boolean isBrushDangerous = false; // for flashes
 
 
     public AbstractBrush(BrushShape brushShape){
         currentStyle = new FillStyle();
         this.brushShape = brushShape;
         this.drawerType = DrawerFactory.Type.BASIC;
-        brushInitializer = new DefaultInitializer();
         isDrawnFromCenter = true;
+    }
+
+
+    public boolean usesBrushSizeControl(){
+        return usesBrushSizeControl;
+    }
+
+    public boolean isBrushDangerous(){
+        return isBrushDangerous;
+    }
+
+    public ShadowOffsetType getShadowOffsetType(){
+        return shadowOffsetType;
     }
 
 
@@ -108,9 +120,7 @@ public abstract class AbstractBrush implements Brush{
         this.paintView = paintView;
         this.paintGroup = paintView.getPaintGroup();
         this.canvas = paintView.getCanvas();
-        this.viewModel = mainActivity.getViewModel();
         drawer = drawerFactory.get(drawerType);
-        brushInitializer.init(mainActivity, viewModel, paintView.getPaintHelperManager());
         postInit();
     }
 
@@ -164,7 +174,6 @@ public abstract class AbstractBrush implements Brush{
 
 
     public void reinitialize(){
-        brushInitializer.initialize();
         drawer.setBrush(this);
     }
 
@@ -194,7 +203,6 @@ public abstract class AbstractBrush implements Brush{
 
     @Override
     public void onDeallocate(){
-        brushInitializer.deInitialize();
     }
 
 
