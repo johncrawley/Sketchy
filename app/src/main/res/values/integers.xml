@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <integer name="amount_default">30</integer>
+    <integer name="seek_bar_amount_default">50</integer>
 
     <integer name="color_sequences_shade_number">160</integer>
     <integer name="color_sequences_step_size">1</integer>

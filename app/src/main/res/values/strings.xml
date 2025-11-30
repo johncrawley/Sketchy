@@ -1,5 +1,10 @@
 <resources>
+
+    <string name="seekbar_label_default" translatable="false">Label</string>
+
     <string name="app_name">Sketchty</string>
+
+
     <string name="save_sketch_activity_label">Save Sketch</string>
     <string name="about_activity_label">About</string>
     <string name="confirm_wipe_activity_label">Confirm</string>

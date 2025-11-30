@@ -3,7 +3,8 @@
     android:id="@+id/brushSizeBarLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/seekbar_layout_vertical_margin"
+    android:layout_marginVertical="@dimen/_12sdp"
+    android:layout_marginHorizontal="@dimen/_8sdp"
     android:orientation="horizontal"
     android:paddingTop="@dimen/brush_size_seekbar_padding_top_portrait"
     android:paddingBottom="@dimen/brush_size_seekbar_padding_bottom_portrait"
@@ -12,20 +13,20 @@
 
 
     <TextView
-        android:id="@+id/amountText"
+        android:id="@+id/seekBarCurrentValueText"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:paddingStart="@dimen/seekbar_brush_size_padding_start"
         android:paddingEnd="@dimen/seekbar_brush_size_padding_end"
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/brushSizeSeekBar"
-        app:layout_constraintStart_toStartOf="@id/brushSizeSeekBar"
+        app:layout_constraintEnd_toEndOf="@id/seekBar"
+        app:layout_constraintStart_toStartOf="@id/seekBar"
         app:layout_constraintHorizontal_bias="0.5"
         android:text="@integer/seek_bar_amount_default"
         />
     <TextView
-        android:id="@+id/brushSizeSeekBarLabel"
+        android:id="@+id/seekBarLabel"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
@@ -33,21 +34,21 @@
         android:paddingEnd="@dimen/seekbar_brush_size_padding_end"
         app:layout_constraintHorizontal_weight="3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/amountText"
+        app:layout_constraintTop_toBottomOf="@id/seekBarCurrentValueText"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/brush_size_seekbar_label"
+        android:text="@string/seekbar_label_default"
         />
     <SeekBar
-        android:id="@+id/brushSizeSeekBar"
+        android:id="@+id/seekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:indeterminate="false"
         android:max="@integer/brush_size_max"
         android:progress="@integer/brush_size_default"
         app:layout_constraintHorizontal_weight="7"
-        app:layout_constraintStart_toEndOf="@+id/brushSizeSeekBarLabel"
+        app:layout_constraintStart_toEndOf="@+id/seekBarLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/amountText"
+        app:layout_constraintTop_toBottomOf="@id/seekBarCurrentValueText"
         app:layout_constraintBottom_toBottomOf="parent"
         android:paddingHorizontal="@dimen/seekbar_horizontal_padding" />
 </androidx.constraintlayout.widget.ConstraintLayout>
