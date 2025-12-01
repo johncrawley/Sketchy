@@ -31,12 +31,18 @@ public class GradientHelper {
     private int linearStartX, linearStartY, linearEndX, linearEndY;
     private final InfinityModeRandomGradientBlender gradientBlender;
     private final KaleidoscopeHelper kaleidoscopeHelper;
+    private int color = Color.BLACK;
 
     public GradientHelper(MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
         this.viewModel = viewModel;
         this.kaleidoscopeHelper = kaleidoscopeHelper;
         random = new Random(System.currentTimeMillis());
         gradientBlender = new InfinityModeRandomGradientBlender(random);
+    }
+
+
+    public void setMainColor(int color){
+        this.color = color;
     }
 
 
@@ -133,8 +139,8 @@ public class GradientHelper {
     }
 
 
-    public void assignGradient(float x, float y, int color){
-        assignGradient(x, y, color, true);
+    public void assignGradient(float x, float y){
+        assignGradient(x, y, true);
     }
 
 
@@ -151,7 +157,7 @@ public class GradientHelper {
         linearStartY = getLinearCoordinateForDragShape(down.y, up.y, fullDimensionY);
         linearEndX = calculateLinearEndForDragShape(linearStartX);
         linearEndY = calculateLinearEndForDragShape(linearStartY);
-        setGradient(mid.x, mid.y, viewModel.color);
+        setGradient(mid.x, mid.y);
     }
 
 
@@ -168,7 +174,7 @@ public class GradientHelper {
     }
 
 
-    public void assignGradient(float x, float y, int color, boolean shouldNewRandomColorBeAssigned){
+    public void assignGradient(float x, float y, boolean shouldNewRandomColorBeAssigned){
         if(gradientType == GradientType.NONE){
             paint.setShader(null);
             return;
@@ -180,11 +186,11 @@ public class GradientHelper {
         int end = (int) getLinearGradientEnd(linearStartX);
         linearEndX = end;
         linearEndY = end;
-        setGradient(x, y, color);
+        setGradient(x, y);
     }
 
 
-    private void setGradient(float x, float y, int color){
+    private void setGradient(float x, float y){
         Shader.TileMode tileMode = viewModel.isLinearGradientRepeated ?
                 Shader.TileMode.MIRROR :
                 Shader.TileMode.CLAMP;
@@ -225,7 +231,7 @@ public class GradientHelper {
                 paint.setShader(new RadialGradient(getRadialGradientOffsetX(x),
                         getRadialGradientOffsetY(y),
                         viewModel.clampRadialGradientRadius,
-                        new int []{color,gradientColor},
+                        new int []{color, gradientColor},
                         null,
                         Shader.TileMode.CLAMP ));
                 break;
@@ -234,7 +240,7 @@ public class GradientHelper {
                 paint.setShader(new RadialGradient(getRadialGradientOffsetX(x),
                         getRadialGradientOffsetY(y),
                         viewModel.radialGradientRadius,
-                        new int []{color,gradientColor},
+                        new int []{color, gradientColor},
                         null,
                         Shader.TileMode.REPEAT ));
                 break;
@@ -243,7 +249,7 @@ public class GradientHelper {
                 paint.setShader(new RadialGradient(getRadialGradientOffsetX(x),
                         getRadialGradientOffsetY(y),
                         viewModel.radialGradientRadius,
-                        new int []{color,gradientColor},
+                        new int []{color, gradientColor},
                         null,
                         Shader.TileMode.MIRROR ));
         }
@@ -284,19 +290,13 @@ public class GradientHelper {
 
 
     private int getGradientColor(boolean shouldNewRandomColorBeAssigned){
-        switch(viewModel.gradientColorType) {
-            case SELECTED:
-                return viewModel.secondaryColor;
-
-            case PREVIOUS:
-                return viewModel.previousColor;
-
-            case RANDOM:
-                return getRandomColor(shouldNewRandomColorBeAssigned);
-            case RANDOM_BLEND:
-                return getNextRandomBlend(shouldNewRandomColorBeAssigned);
-        }
-        return Color.TRANSPARENT;
+        return switch (viewModel.gradientColorType) {
+            case SELECTED -> viewModel.secondaryColor;
+            case PREVIOUS -> viewModel.previousColor;
+            case RANDOM -> getRandomColor(shouldNewRandomColorBeAssigned);
+            case RANDOM_BLEND -> getNextRandomBlend(shouldNewRandomColorBeAssigned);
+            default -> Color.TRANSPARENT;
+        };
     }
 
 

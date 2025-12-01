@@ -14,8 +14,8 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 public class DragLineDrawer extends AbstractDrawer implements Drawer{
 
 
-    public DragLineDrawer(PaintView paintView, MainViewModel viewModel){
-        super(paintView, viewModel);
+    public DragLineDrawer(PaintView paintView){
+        super(paintView);
         isColorChangedOnDown = false;
     }
 

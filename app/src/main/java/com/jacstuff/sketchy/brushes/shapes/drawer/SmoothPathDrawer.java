@@ -4,7 +4,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class SmoothPathDrawer extends BasicDrawer{
 
@@ -12,9 +11,9 @@ public class SmoothPathDrawer extends BasicDrawer{
     private Paint flickerGuardPaint;
 
 
-    public SmoothPathDrawer(PaintView paintView, MainViewModel viewModel){
-        super(paintView, viewModel);
-        kaleidoscopePathDrawer = new KaleidoscopePathDrawer(paintView, viewModel, kaleidoscopeHelper);
+    public SmoothPathDrawer(PaintView paintView){
+        super(paintView);
+        kaleidoscopePathDrawer = new KaleidoscopePathDrawer(paintView, kaleidoscopeHelper);
         setupFlickerGuardPaint();
     }
 

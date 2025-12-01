@@ -16,10 +16,13 @@ public class DragRectDrawer extends BasicDrawer{
     private int angleOnTouchDown;
     private final RectCalc rectCalc;
     private float kaleidoscopeTranslationX, kaleidoscopeTranslationY;
+    private boolean isRectangleSnappedToEdges = true;
+    private int rectangleSnapLimit = 28;
 
 
-    public DragRectDrawer(PaintView paintView, MainViewModel viewModel) {
-        super(paintView, viewModel);
+
+    public DragRectDrawer(PaintView paintView) {
+        super(paintView);
         isColorChangedOnDown = false;
         rectCalc = new RectCalc();
     }
@@ -123,15 +126,30 @@ public class DragRectDrawer extends BasicDrawer{
     }
 
 
+    public boolean isRectangleSnappedToEdges(){
+        return isRectangleSnappedToEdges;
+    }
+
+
+    public void setRectangleSnappedToEdges(boolean isSnappedToEdges){
+        isRectangleSnappedToEdges = isSnappedToEdges;
+    }
+
+
+    public void setRectangleSnapLimit(int limit){
+        rectangleSnapLimit = limit;
+    }
+
+
     private float snapToUpperBounds(float coordinate, float bound){
-        return viewModel.isRectangleSnappedToEdges
-                && coordinate > bound - viewModel.rectangleSnapBounds
+        return isRectangleSnappedToEdges
+                && coordinate > bound - rectangleSnapLimit
                 && brush.getBrushShape() == BrushShape.DRAG_RECTANGLE ? bound : coordinate;
     }
 
 
     private float snapToLowerBounds(float coordinate){
-        return viewModel.isRectangleSnappedToEdges && coordinate < viewModel.rectangleSnapBounds? 0 : coordinate;
+        return isRectangleSnappedToEdges && coordinate < rectangleSnapLimit? 0 : coordinate;
     }
 
 

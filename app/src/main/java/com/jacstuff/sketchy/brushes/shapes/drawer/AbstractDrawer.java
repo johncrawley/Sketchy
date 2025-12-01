@@ -21,25 +21,35 @@ public abstract class AbstractDrawer implements Drawer {
     final Canvas canvas;
     Brush brush;
     PaintView paintView;
-    MainViewModel viewModel;
     boolean isColorChangedOnDown = true;
     final Paint shadowPaint;
     final Paint paint;
     final PlacementHelper placementHelper;
+    protected boolean isDrawOnMoveModeEnabled;
 
 
-    AbstractDrawer(PaintView paintView, MainViewModel viewModel){
+    AbstractDrawer(PaintView paintView){
         this.paintView = paintView;
         this.canvas =  paintView.getCanvas();
-        this.viewModel = viewModel;
         this.paintHelperManager = paintView.getPaintHelperManager();
         kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
         placementHelper = paintHelperManager.getPlacementHelper();
         tileHelper = paintHelperManager.getTileHelper();
-        kaleidoscopeDrawer = new KaleidoscopeDrawer(paintView, viewModel, kaleidoscopeHelper);
+        kaleidoscopeDrawer = new KaleidoscopeDrawer(paintView, kaleidoscopeHelper);
         shadowPaint = paintView.getShadowPaint();
         paint = paintView.getPaint();
     }
+
+
+    public boolean isDrawOnMoveModeEnabled(){
+        return isDrawOnMoveModeEnabled;
+    }
+
+
+    public void setIsDrawOnMoveModeEnabled(boolean isEnabled){
+        this.isDrawOnMoveModeEnabled = isEnabled;
+    }
+
 
     public void setBrush(Brush brush){
         this.brush = brush;
@@ -53,11 +63,6 @@ public abstract class AbstractDrawer implements Drawer {
 
     public void setPaintView(PaintView paintView){
         this.paintView = paintView;
-    }
-
-
-    public void setViewModel(MainViewModel viewModel){
-        this.viewModel = viewModel;
     }
 
 
@@ -76,7 +81,7 @@ public abstract class AbstractDrawer implements Drawer {
 
 
     void updateGradientMidpoint(float x, float y){
-        paintHelperManager.getGradientHelper().assignGradient(x, y, viewModel.color);
+        paintHelperManager.getGradientHelper().assignGradient(x, y);
     }
 
 

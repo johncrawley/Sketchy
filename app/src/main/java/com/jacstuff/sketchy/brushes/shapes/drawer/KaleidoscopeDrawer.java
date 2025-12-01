@@ -14,20 +14,28 @@ import com.jacstuff.sketchy.viewmodel.MainViewModel;
 public class KaleidoscopeDrawer {
 
     Canvas canvas;
-    final MainViewModel viewModel;
     final KaleidoscopeHelper kaleidoscopeHelper;
     final public PaintView paintView;
     final Paint infinityPaint;
     Bitmap infinityImage;
     Drawer parentDrawer;
     private int segmentLength;
+    private boolean isInfinityModeEnabled;
 
-    public KaleidoscopeDrawer(PaintView paintView, MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
+    public KaleidoscopeDrawer(PaintView paintView, KaleidoscopeHelper kaleidoscopeHelper){
         this.paintView = paintView;
         this.canvas = paintView.getCanvas();
-        this.viewModel = viewModel;
         infinityPaint = new Paint();
         this.kaleidoscopeHelper = kaleidoscopeHelper;
+    }
+
+    public boolean isInfinityModeEnabled(){
+        return isInfinityModeEnabled;
+    }
+
+
+    public void setInfinityModeEnabled(boolean isEnabled){
+        isInfinityModeEnabled = isEnabled;
     }
 
 
@@ -52,7 +60,7 @@ public class KaleidoscopeDrawer {
 
 
     void createInfinityBitmap(){
-        if(viewModel.isInfinityModeEnabled) {
+        if(isInfinityModeEnabled) {
             segmentLength = (int)(Math.max(canvas.getWidth(), canvas.getHeight()) / 2f);
             infinityImage = Bitmap.createScaledBitmap(paintView.getBitmap(), segmentLength, segmentLength, false);
         }
@@ -71,10 +79,10 @@ public class KaleidoscopeDrawer {
 
 
     void drawInfinityModeSegments(float x, float y){
-        if(!viewModel.isInfinityModeEnabled){
+        if(!isInfinityModeEnabled){
             return;
         }
-        BitmapShader bitmapShader = new BitmapShader(infinityImage, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+        var bitmapShader = new BitmapShader(infinityImage, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
         infinityPaint.setStyle(Paint.Style.FILL);
         infinityPaint.setShader(bitmapShader);
         for(float angle = 0; angle < kaleidoscopeHelper.getMaxDegrees(); angle += kaleidoscopeHelper.getDegreeIncrement()) {

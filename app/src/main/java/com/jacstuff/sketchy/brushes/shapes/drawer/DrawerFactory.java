@@ -12,13 +12,13 @@ public class DrawerFactory {
     private final Map<Type, Drawer> drawerMap;
 
 
-    public DrawerFactory(PaintView paintView, MainViewModel mainViewModel){
+    public DrawerFactory(PaintView paintView){
         drawerMap = new HashMap<>();
-        drawerMap.put(Type.BASIC, new BasicDrawer( paintView, mainViewModel));
-        drawerMap.put(Type.DRAG_LINE, new DragLineDrawer(paintView, mainViewModel));
-        drawerMap.put(Type.DRAG_RECT, new DragRectDrawer(paintView, mainViewModel));
-        drawerMap.put(Type.PATH, new PathDrawer(paintView, mainViewModel));
-        drawerMap.put(Type.SMOOTH_PATH, new SmoothPathDrawer(paintView, mainViewModel));
+        drawerMap.put(Type.BASIC, new BasicDrawer( paintView));
+        drawerMap.put(Type.DRAG_LINE, new DragLineDrawer(paintView));
+        drawerMap.put(Type.DRAG_RECT, new DragRectDrawer(paintView));
+        drawerMap.put(Type.PATH, new PathDrawer(paintView));
+        drawerMap.put(Type.SMOOTH_PATH, new SmoothPathDrawer(paintView));
     }
 
     public void init(){

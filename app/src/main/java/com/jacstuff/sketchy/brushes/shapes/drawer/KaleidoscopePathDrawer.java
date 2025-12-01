@@ -25,8 +25,8 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
     private ShadowHelper shadowHelper;
 
 
-    public KaleidoscopePathDrawer(PaintView paintView, MainViewModel viewModel, KaleidoscopeHelper kaleidoscopeHelper){
-        super(paintView, viewModel, kaleidoscopeHelper);
+    public KaleidoscopePathDrawer(PaintView paintView, KaleidoscopeHelper kaleidoscopeHelper){
+        super(paintView, kaleidoscopeHelper);
         kaleidoscopeCanvas = new Canvas(Bitmap.createBitmap(15,15, Bitmap.Config.ARGB_8888));
         paint = paintView.getPaint();
     }
@@ -151,7 +151,7 @@ public class KaleidoscopePathDrawer extends KaleidoscopeDrawer {
 
 
     private void configureSegmentBitmapAndCanvas(int segmentLength){
-        int bitmapSide = 100 + segmentLength + (int)viewModel.shadowOffsetX;
+        int bitmapSide = 100 + segmentLength; // + (int)viewModel.shadowOffsetX;
         segmentBitmap = Bitmap.createBitmap(bitmapSide, bitmapSide, Bitmap.Config.ARGB_8888);
         segmentBitmap.eraseColor(Color.TRANSPARENT);
         kaleidoscopeCanvas.setBitmap(segmentBitmap);
