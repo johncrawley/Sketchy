@@ -29,7 +29,6 @@ public abstract class AbstractDrawer implements Drawer {
 
 
     AbstractDrawer(PaintView paintView){
-        this.paintView = paintView;
         this.canvas =  paintView.getCanvas();
         this.paintHelperManager = paintView.getPaintHelperManager();
         kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();

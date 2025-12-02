@@ -33,8 +33,8 @@ public class CurvedLineBrush extends AbstractTwoStepBrush implements Brush, TwoS
     @Override
     public void postInit(){
         super.postInit();
-        this.drawer = new TwoStepDrawer(paintView, this);
-        drawer.init();
+        //this.drawer = new TwoStepDrawer(paintView, this);
+        //drawer.init();
     }
 
 

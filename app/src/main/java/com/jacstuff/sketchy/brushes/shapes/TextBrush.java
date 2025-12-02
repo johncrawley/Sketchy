@@ -4,13 +4,14 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 
-import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushShape;
 
 public class TextBrush extends AbstractBrush implements Brush {
 
     float textSize;
     String text;
+    boolean wasTextSizeChanged;
+
 
     public TextBrush(){
         this(BrushShape.TEXT);
@@ -38,7 +39,15 @@ public class TextBrush extends AbstractBrush implements Brush {
            // mainActivity.toast(R.string.toast_text_brush_is_empty);
             return;
         }
+        updateTextSizeOn(paint);
         canvas.drawText(text, getCentreX(text, paint), textSize /3f, paint);
+    }
+
+    private void updateTextSizeOn(Paint paint){
+        if(wasTextSizeChanged){
+            paint.setTextSize(textSize);
+            wasTextSizeChanged = false;
+        }
     }
 
 
@@ -46,7 +55,7 @@ public class TextBrush extends AbstractBrush implements Brush {
     public void setBrushSize(int brushSize) {
         super.setBrushSize(brushSize);
         textSize = brushSize * 1.2f;
-        paintGroup.setTextSize(textSize);
+        wasTextSizeChanged = true;
     }
 
 

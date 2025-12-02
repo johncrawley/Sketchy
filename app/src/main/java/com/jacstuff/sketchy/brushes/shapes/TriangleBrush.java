@@ -39,6 +39,7 @@ public class TriangleBrush extends AbstractBrush implements Brush {
         recalculateDimensions();
     }
 
+
     @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         leftPoint.set(-halfBrushSize, height);

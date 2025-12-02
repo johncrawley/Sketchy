@@ -16,6 +16,7 @@ public class CrescentBrush extends AbstractBrush implements Brush {
     private  int quarterBrushSize;
     private float previousStrokeWidth;
     private float crescentStrokeAdjustment;
+    private float previousLineWidth;
 
     public CrescentBrush(){
         super(BrushShape.CRESCENT);
@@ -32,6 +33,7 @@ public class CrescentBrush extends AbstractBrush implements Brush {
         path.addArc( innerLeft, top, innerRight, bottom, 90, -180);
         canvas.drawPath(path, paint);
         restoreStrokeWidth(paint);
+        previousLineWidth = paint.getStrokeWidth();
     }
 
 
@@ -86,7 +88,6 @@ public class CrescentBrush extends AbstractBrush implements Brush {
     @Override
     public void notifyStrokeWidthChanged(){
         super.notifyStrokeWidthChanged();
-        previousStrokeWidth = paintGroup.getLineWidth();
         crescentStrokeAdjustment = previousStrokeWidth / 1.7f;
         readjustPoints();
     }

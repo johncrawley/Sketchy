@@ -5,14 +5,12 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 
-import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.styles.FillStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
 import com.jacstuff.sketchy.paintview.PaintGroup;
-import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 
 import java.util.function.BiConsumer;
@@ -21,15 +19,11 @@ import java.util.function.BiConsumer;
 public abstract class AbstractBrush implements Brush{
 
     public Canvas canvas;
-    protected PaintGroup paintGroup;
     protected int brushSize;
     protected Style currentStyle;
     int halfBrushSize;
     BrushShape brushShape;
     public Drawer drawer;
-  //  public MainViewModel viewModel;
-   // protected MainActivity mainActivity;
-    public PaintView paintView;
     protected DrawerFactory.Type drawerType;
     public boolean isDrawnFromCenter;
     protected boolean usesBrushSizeControl = true;
@@ -116,10 +110,7 @@ public abstract class AbstractBrush implements Brush{
 
 
     @Override
-    public void init(PaintView paintView, MainActivity mainActivity, DrawerFactory drawerFactory){
-        this.paintView = paintView;
-        this.paintGroup = paintView.getPaintGroup();
-        this.canvas = paintView.getCanvas();
+    public void init(DrawerFactory drawerFactory){
         drawer = drawerFactory.get(drawerType);
         postInit();
     }
@@ -168,7 +159,7 @@ public abstract class AbstractBrush implements Brush{
     public void setBrushSize(int brushSize) {
         this.brushSize = brushSize;
         this.halfBrushSize = brushSize / 2;
-        currentStyle.setBrushSize(paintGroup, brushSize);
+        //currentStyle.setBrushSize(brushSize);
         currentStyle.notifyStyleChange();
     }
 
@@ -181,7 +172,7 @@ public abstract class AbstractBrush implements Brush{
     @Override
     public void setStyle(Style style){
         currentStyle = style;
-        currentStyle.init(paintGroup, brushSize);
+       // currentStyle.init(brushSize);
     }
 
 

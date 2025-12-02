@@ -18,7 +18,7 @@ public class KaleidoscopeHelper {
 
     public KaleidoscopeHelper(PaintView paintView, MainViewModel viewModel){
         this.viewModel = viewModel;
-        kaleidoscopeDrawer = new KaleidoscopeDrawer(paintView, viewModel, this);
+        kaleidoscopeDrawer = new KaleidoscopeDrawer(paintView, this);
     }
 
 

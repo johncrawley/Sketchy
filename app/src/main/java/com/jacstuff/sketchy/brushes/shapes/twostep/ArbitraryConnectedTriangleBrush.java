@@ -37,7 +37,7 @@ public class ArbitraryConnectedTriangleBrush extends CurvedLineBrush {
     @Override
     public void postInit(){
         super.postInit();
-        this.drawer = new ArbitraryTriangleDrawer(paintView, this);
+       // this.drawer = new ArbitraryTriangleDrawer(paintView, this);
        // drawHistory = viewModel.drawHistory;
         drawer.init();
     }

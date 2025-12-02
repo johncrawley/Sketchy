@@ -64,7 +64,7 @@ public class BrushFactory {
 
     public void init(PaintView paintView, int brushSize, int maxDimension){
         this.paintView = paintView;
-        drawerFactory = new DrawerFactory(paintView, mainViewModel);
+        drawerFactory = new DrawerFactory(paintView);
         initShadowPathBrush();
         drawerFactory.init();
         styleHelper = paintView.getPaintHelperManager().getStyleHelper();
@@ -80,6 +80,7 @@ public class BrushFactory {
             brush.reinitialize();
         }
         var temp = new TriangleBrush();
+       // temp.init();
         temp.reinitialize();
         var isSHNull = styleHelper == null;
         log("getBrushFor() " + shape.name() + " is style helper null: " + isSHNull);
@@ -136,13 +137,13 @@ public class BrushFactory {
 
     private void initShadowPathBrush(){
         shadowPathBrush = new PathBrush();
-        shadowPathBrush.init(paintView, mainActivity, drawerFactory);
+        shadowPathBrush.init(drawerFactory);
     }
 
 
 
     private void add(Brush brush){
-        brush.init(paintView, mainActivity, drawerFactory);
+        brush.init(drawerFactory);
         brushMap.put(brush.getBrushShape(), brush);
     }
 

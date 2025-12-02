@@ -6,16 +6,14 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 
-import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.brushes.styles.Style;
-import com.jacstuff.sketchy.paintview.PaintView;
 
 
 public interface Brush {
 
-    void init(PaintView paintView, MainActivity mainActivity, DrawerFactory drawerFactory);
+    void init(DrawerFactory drawerFactory);
 
     void onTouchDown(float x, float y, Paint paint);
     void onTouchMove(float x, float y, Paint paint);
