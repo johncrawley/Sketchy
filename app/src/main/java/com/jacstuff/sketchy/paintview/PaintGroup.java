@@ -1,7 +1,5 @@
 package com.jacstuff.sketchy.paintview;
 
-import static com.jacstuff.sketchy.paintview.helpers.PaintFactory.createPaint;
-
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PathEffect;
@@ -59,6 +57,17 @@ public class PaintGroup {
         initBorderPaint();
         initCanvasBitmapPaint();
         initBlankPaint();
+    }
+
+
+    public Paint createPaint(int color){
+        var paint = new Paint();
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setStrokeJoin(Paint.Join.MITER);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setElegantTextHeight(true);
+        paint.setColor(color);
+        return paint;
     }
 
 
