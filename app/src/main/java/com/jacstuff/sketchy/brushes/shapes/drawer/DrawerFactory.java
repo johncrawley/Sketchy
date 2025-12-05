@@ -17,8 +17,8 @@ public class DrawerFactory {
         drawerMap.put(Type.BASIC, new BasicDrawer( paintView));
         drawerMap.put(Type.DRAG_LINE, new DragLineDrawer(paintView));
         drawerMap.put(Type.DRAG_RECT, new DragRectDrawer(paintView));
-        drawerMap.put(Type.PATH, new PathDrawer(paintView));
-        drawerMap.put(Type.SMOOTH_PATH, new SmoothPathDrawer(paintView));
+       // drawerMap.put(Type.PATH, new PathDrawer(paintView));
+       // drawerMap.put(Type.SMOOTH_PATH, new SmoothPathDrawer(paintView));
     }
 
     public void init(){

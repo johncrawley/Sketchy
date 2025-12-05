@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
 import com.jacstuff.sketchy.brushes.shapes.Brush;
+import com.jacstuff.sketchy.brushes.shapes.Brushable;
 import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.twostep.TrianglePoints;
 import com.jacstuff.sketchy.controls.ButtonCategory;
@@ -36,7 +37,7 @@ public class MainViewModel extends ViewModel implements ControlsHolder {
         this.colorSequenceControls = colorSequenceControls;
     }
 
-    public Brush currentBrush = new TriangleBrush();
+    public Brushable currentBrush = new TriangleBrush();
 
     public boolean isFirstExecution = true;
     public int lastClickedColorButtonId;

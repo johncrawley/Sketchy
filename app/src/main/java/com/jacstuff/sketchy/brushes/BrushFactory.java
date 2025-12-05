@@ -79,12 +79,12 @@ public class BrushFactory {
             brush.setStyle(styleHelper.getCurrentStyle());
             brush.reinitialize();
         }
-        var temp = new TriangleBrush();
+        //var temp = new TriangleBrush();
        // temp.init();
-        temp.reinitialize();
+        //temp.reinitialize();
         var isSHNull = styleHelper == null;
         log("getBrushFor() " + shape.name() + " is style helper null: " + isSHNull);
-        temp.setStyle(styleHelper.getCurrentStyle());
+      //  temp.setStyle(styleHelper.getCurrentStyle());
         return brush;
     }
 
@@ -103,7 +103,7 @@ public class BrushFactory {
         add(circleBrush);
         add(new RoundedRectangleBrush());
         add(new SquareBrush());
-        add(new TriangleBrush());
+      //  add(new TriangleBrush());
         add(new PentagonBrush());
         add(new HexagonBrush());
         add(new StarBrush());

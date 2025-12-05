@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -293,10 +294,11 @@ public class PaintView extends View {
     private void drawWithBrush(MotionEvent event){
         x = event.getX();
         y = event.getY();
+        var point = new PointF(x,y);
 
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN :
-                onTouchDown();
+                onTouchDown(point);
                 break;
             case MotionEvent.ACTION_MOVE :
                 onTouchMove();
@@ -308,11 +310,20 @@ public class PaintView extends View {
     }
 
 
-    private void onTouchDown(){
+    private void onTouchDown(PointF point){
         isTouchDownRegistered = true;
+        viewModel.currentBrush.onTouchDown(point);
         currentBrush.touchDown(x, y, paintGroup.getDrawPaint());
 
-       // paintGroup.initDrawPaint();
+        // paintGroup.initDrawPaint();
+    }
+
+    private void onTouchDown(){
+        isTouchDownRegistered = true;
+        viewModel.currentBrush.onTouchDown(x,y);
+        currentBrush.touchDown(x, y, paintGroup.getDrawPaint());
+
+        // paintGroup.initDrawPaint();
     }
 
     Paint tempPaint = new Paint();

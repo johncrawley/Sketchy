@@ -4,10 +4,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.Easel;
-import com.jacstuff.sketchy.paintview.PaintGroup;
 
 
 public class TriangleBrush extends AbstractShape implements Brushable {
@@ -26,19 +26,19 @@ public class TriangleBrush extends AbstractShape implements Brushable {
 
 
     @Override
-    public void onTouchDown(float x, float y, Easel easel){
+    public void onTouchDown(PointF p, Easel easel){
 
     }
 
 
     @Override
-    public void onTouchMove(float x, float y, Easel easel){
+    public void onTouchMove(PointF p, Easel easel){
 
     }
 
 
     @Override
-    public void onTouchUp(float x, float y, Easel easel){
+    public void onTouchUp(PointF p, Easel easel){
 
     }
 
@@ -53,14 +53,11 @@ public class TriangleBrush extends AbstractShape implements Brushable {
     }
 
 
-    @Override
     public void reinitialize(){
-        super.reinitialize();
         recalculateDimensions();
     }
 
 
-    @Override
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         leftPoint.set(-halfBrushSize, height);
         rightPoint.set(halfBrushSize, height);
