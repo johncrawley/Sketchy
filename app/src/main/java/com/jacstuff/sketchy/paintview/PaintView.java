@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.jacstuff.sketchy.brushes.Easel;
+import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.helpers.SensitivityHelper;
 import com.jacstuff.sketchy.brushes.BrushShape;
@@ -39,6 +41,7 @@ public class PaintView extends View {
     private float x, y;
     boolean isTouchDownRegistered = false;
     private MainViewModel viewModel;
+    private Easel easel;
 
     public PaintView(Context context) {
 
@@ -79,7 +82,16 @@ public class PaintView extends View {
         paintHelperManager.getKaleidoscopeHelper().setCanvas(canvas);
         paintHelperManager.initDimensions(getWidth(), getHeight());
         log("init() about to invalidate()");
+        initEasel();
+        var drawerFactory = new DrawerFactory(this);
+        drawerFactory.init();
+        currentBrush.init(drawerFactory);
         invalidate();
+    }
+
+    private void initEasel(){
+        easel = new Easel();
+        easel.setCanvas(canvas);
     }
 
 
@@ -301,10 +313,10 @@ public class PaintView extends View {
                 onTouchDown(point);
                 break;
             case MotionEvent.ACTION_MOVE :
-                onTouchMove();
+                onTouchMove(point);
                 break;
             case MotionEvent.ACTION_UP :
-                onTouchUp();
+                onTouchUp(point);
                 break;
         }
     }
@@ -312,15 +324,12 @@ public class PaintView extends View {
 
     private void onTouchDown(PointF point){
         isTouchDownRegistered = true;
-        viewModel.currentBrush.onTouchDown(point);
-        currentBrush.touchDown(x, y, paintGroup.getDrawPaint());
-
-        // paintGroup.initDrawPaint();
+        viewModel.currentBrush.onTouchDown(point, easel);
     }
+
 
     private void onTouchDown(){
         isTouchDownRegistered = true;
-        viewModel.currentBrush.onTouchDown(x,y);
         currentBrush.touchDown(x, y, paintGroup.getDrawPaint());
 
         // paintGroup.initDrawPaint();
@@ -337,19 +346,35 @@ public class PaintView extends View {
         }
         currentBrush.setBrushSize(20);
         var drawPaint = paintGroup.getDrawPaint();
-       // drawPaint = new Paint();
+        // drawPaint = new Paint();
         drawPaint.setStyle(Paint.Style.FILL);
         drawPaint.setStrokeWidth(20);
-       // drawPaint.setColor(Color.BLUE);
-       // canvas.drawCircle(x,y, 30, drawPaint);
-       // invalidate();
-
-
-       currentBrush.touchMove(x, y, drawPaint);
+        // drawPaint.setColor(Color.BLUE);
+        // canvas.drawCircle(x,y, 30, drawPaint);
+        // invalidate();
+        currentBrush.touchMove(x, y, drawPaint);
         log("drawPaint color: " + drawPaint.getColor() + " white color: " + Color.WHITE);
 
     }
 
+    private void onTouchMove(PointF p){
+        if(!isTouchDownRegistered){
+            return;
+        }
+        if(!sensitivityHelper.shouldDraw(currentBrush)){
+            return;
+        }
+        viewModel.currentBrush.onTouchMove(p, easel);
+    }
+
+
+    public void onTouchUp(PointF p){
+        if(!isTouchDownRegistered){
+            return;
+        }
+        isTouchDownRegistered = false;
+        viewModel.currentBrush.onTouchUp(p, easel);
+    }
 
     public void onTouchUp(){
         if(!isTouchDownRegistered){

@@ -1,11 +1,11 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
+import android.graphics.PointF;
+
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.Easel;
 import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
-
-import java.util.List;
 
 public abstract class AbstractShape implements Brushable{
 
@@ -16,6 +16,7 @@ public abstract class AbstractShape implements Brushable{
 
     public AbstractShape(BrushShape brushShape){
         this.brushShape = brushShape;
+        this.drawerType = DrawerFactory.Type.BASIC;
     }
 
 
@@ -30,19 +31,23 @@ public abstract class AbstractShape implements Brushable{
     }
 
 
-    public void onTouchDown(float x, float y, Easel easel){
-
+    @Override
+    public void onTouchDown(PointF p, Easel easel){
+        drawer.down(p.x, p.y, easel.getFillPaint());
     }
 
 
-    public void onTouchMove(float x, float y, Easel easel){
-
+    @Override
+    public void onTouchMove(PointF p, Easel easel){
+        drawer.move(p.x, p.y, easel.getFillPaint());
     }
 
 
-    public void onTouchUp(float x, float y, Easel easel){
-
+    @Override
+    public void onTouchUp(PointF p, Easel easel){
+        drawer.up(p.x, p.y, easel.getFillPaint());
     }
+
 
     @Override
     public void setBrushSize(int brushSize){
