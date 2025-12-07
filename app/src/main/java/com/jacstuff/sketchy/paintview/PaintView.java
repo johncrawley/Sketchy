@@ -324,6 +324,7 @@ public class PaintView extends View {
 
     private void onTouchDown(PointF point){
         isTouchDownRegistered = true;
+        log("entered onTouchDown(PointF)");
         viewModel.currentBrush.onTouchDown(point, easel);
     }
 
@@ -335,7 +336,6 @@ public class PaintView extends View {
         // paintGroup.initDrawPaint();
     }
 
-    Paint tempPaint = new Paint();
 
     private void onTouchMove(){
         if(!isTouchDownRegistered){
@@ -356,6 +356,7 @@ public class PaintView extends View {
         log("drawPaint color: " + drawPaint.getColor() + " white color: " + Color.WHITE);
 
     }
+
 
     private void onTouchMove(PointF p){
         if(!isTouchDownRegistered){

@@ -35,9 +35,11 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
         drawToCanvas(x,y, paint);
     }
 
+
     private void log(String msg){
         System.out.println("^^^ BasicDrawer: " + msg);
     }
+
 
     @Override
     public void move(float x1, float y1, Paint paint) {
