@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.shapes.Brush;
+import com.jacstuff.sketchy.brushes.shapes.Brushable;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
@@ -12,7 +13,6 @@ import com.jacstuff.sketchy.paintview.helpers.TileHelper;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public abstract class AbstractDrawer implements Drawer {
-
 
     final PaintHelperManager paintHelperManager;
     final KaleidoscopeHelper kaleidoscopeHelper;
@@ -26,6 +26,7 @@ public abstract class AbstractDrawer implements Drawer {
     final Paint paint;
     final PlacementHelper placementHelper;
     protected boolean isDrawOnMoveModeEnabled;
+    Brushable brushShape;
 
 
     AbstractDrawer(PaintView paintView){
@@ -37,6 +38,11 @@ public abstract class AbstractDrawer implements Drawer {
         kaleidoscopeDrawer = new KaleidoscopeDrawer(paintView, kaleidoscopeHelper);
         shadowPaint = paintView.getShadowPaint();
         paint = paintView.getPaint();
+    }
+
+
+    public void setBrushShape(Brushable brushShape){
+        this.brushShape = brushShape;
     }
 
 

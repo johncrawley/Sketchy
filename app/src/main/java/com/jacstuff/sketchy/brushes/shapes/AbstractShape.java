@@ -26,6 +26,12 @@ public abstract class AbstractShape implements Brushable{
     }
 
 
+    @Override
+    public DrawerFactory.Type getDrawerType(){
+        return drawerType;
+    }
+
+
     public void init(DrawerFactory drawerFactory){
         drawer = drawerFactory.get(drawerType);
     }

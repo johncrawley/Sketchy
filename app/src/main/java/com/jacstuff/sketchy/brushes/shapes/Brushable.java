@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.Easel;
+import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 
 public interface Brushable {
 
@@ -12,4 +13,6 @@ public interface Brushable {
     void onTouchUp(PointF point, Easel easel);
 
     void setBrushSize(int brushSize);
+
+    DrawerFactory.Type getDrawerType();
 }

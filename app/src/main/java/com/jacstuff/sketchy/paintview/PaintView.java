@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.jacstuff.sketchy.brushes.Easel;
+import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.paintview.helpers.SensitivityHelper;
@@ -42,6 +43,8 @@ public class PaintView extends View {
     boolean isTouchDownRegistered = false;
     private MainViewModel viewModel;
     private Easel easel;
+    private DrawerFactory drawerFactory;
+    private Drawer drawer;
 
     public PaintView(Context context) {
 
@@ -83,9 +86,15 @@ public class PaintView extends View {
         paintHelperManager.initDimensions(getWidth(), getHeight());
         log("init() about to invalidate()");
         initEasel();
-        var drawerFactory = new DrawerFactory(this);
+        drawerFactory = new DrawerFactory(this);
         drawerFactory.init();
-        currentBrush.init(drawerFactory);
+
+        var drawerType = viewModel.currentBrush.getDrawerType();
+        drawer = drawerFactory.get(drawerType);
+        drawer.setBrushShape(viewModel.currentBrush);
+        //currentBrush.init(drawerFactory);
+
+
         invalidate();
     }
 

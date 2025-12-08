@@ -5,7 +5,6 @@ import android.graphics.Point;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.paintview.PaintView;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 
 public class BasicDrawer extends AbstractDrawer implements Drawer {
@@ -18,20 +17,24 @@ public class BasicDrawer extends AbstractDrawer implements Drawer {
     }
 
 
+    public void init(PaintView paintView){
+        this.paintView = paintView;
+    }
+
+
     @Override
     public void down(float x1, float y1, Paint paint) {
         placementHelper.registerTouchDown(x1, y1);
         calculateXYFrom(x1, y1);
         updateColorGradientAndAngle(x,y);
         kaleidoscopeHelper.setCenter(x,y);
+        log("down() about to drawToCanvas x,y: " + x + "," + y);
         if(isDrawOnMoveModeEnabled){
             paintView.enablePreviewLayer();
             drawToCanvas(x,y, paint);
             return;
         }
         paintHelperManager.getSizeHelper().onTouchDown(x, y);
-
-        log("down() about to drawToCanvas x,y: " + x + "," + y);
         drawToCanvas(x,y, paint);
     }
 
