@@ -8,4 +8,7 @@
 
     <attr name="color_button_background_unselected"/>
     <attr name="color_button_background_selected"/>
+
+    <attr name="app_icon_background_top"/>
+    <attr name="app_icon_background_bottom"/>
 </resources>

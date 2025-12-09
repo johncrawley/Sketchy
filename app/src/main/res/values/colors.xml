@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="appIconBackgroundTop">#58A0E7</color>
+    <color name="appIconBackgroundBottom">#15406A</color>
     <color name="colorPrimary">#008577</color>
     <color name="statusBarColor">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>

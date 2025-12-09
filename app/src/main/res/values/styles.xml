@@ -8,6 +8,11 @@
         <item name="colorAccent">#3949AB</item>
         <item name="android:actionBarTheme">@style/MyTheme.ActionBarStyle</item>
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
+        <item name="app_icon_background_top">@color/appIconBackgroundTop</item>
+        <item name="app_icon_background_bottom">@color/appIconBackgroundBottom</item>
+
+
       <!--  <item name="android:dialogTheme">@style/CustomDialog</item> -->
 
         <item name="windowNoTitle">true</item>
