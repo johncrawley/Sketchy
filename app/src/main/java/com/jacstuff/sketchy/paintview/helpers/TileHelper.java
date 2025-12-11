@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.paintview.helpers;
 
 import android.graphics.Paint;
 import com.jacstuff.sketchy.brushes.shapes.drawer.BasicDrawer;
+import com.jacstuff.sketchy.brushes.shapes.drawer.SimpleShapeDrawer;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class TileHelper {
@@ -34,11 +35,23 @@ public class TileHelper {
         int columnOffset = currentBrushSize + spacing;
         for (int i = 0; i < columns; i++) {
             if(isColorUpdated){
-                int color = paint.getColor();
                 paintHelperManager.getColorHelper().assignColors();
             }
             float offsetX = (columnOffset * i) + x;
             basicDrawer.rotateAndDraw(offsetX, y, paint);
+        }
+    }
+
+
+    public void draw(float x, float y, SimpleShapeDrawer simpleShapeDrawer) {
+        int currentBrushSize = paintHelperManager.getSizeHelper().getCurrentBrushSize(x,y);
+        int columnOffset = currentBrushSize + spacing;
+        for (int i = 0; i < columns; i++) {
+            if(isColorUpdated){
+                paintHelperManager.getColorHelper().assignColors();
+            }
+            float offsetX = (columnOffset * i) + x;
+            simpleShapeDrawer.rotateAndDraw(offsetX, y, paint);
         }
     }
 

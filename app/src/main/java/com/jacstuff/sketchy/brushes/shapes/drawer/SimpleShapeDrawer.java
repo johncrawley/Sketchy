@@ -5,13 +5,19 @@ import android.graphics.Point;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.shapes.Brushable;
+import com.jacstuff.sketchy.paintview.PaintView;
 
 public class SimpleShapeDrawer extends AbstractShapeDrawer{
 
 
+    public SimpleShapeDrawer(PaintView paintView){
+        super(paintView);
+    }
+
+
     @Override
     public void down(PointF point, Paint paint) {
-        drawToCanvas(x,y, paint);
+        drawToCanvas(point.x, point.y, paint);
     }
 
 
