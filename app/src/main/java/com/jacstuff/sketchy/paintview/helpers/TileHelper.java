@@ -43,19 +43,6 @@ public class TileHelper {
     }
 
 
-    public void draw(float x, float y, SimpleShapeDrawer simpleShapeDrawer) {
-        int currentBrushSize = paintHelperManager.getSizeHelper().getCurrentBrushSize(x,y);
-        int columnOffset = currentBrushSize + spacing;
-        for (int i = 0; i < columns; i++) {
-            if(isColorUpdated){
-                paintHelperManager.getColorHelper().assignColors();
-            }
-            float offsetX = (columnOffset * i) + x;
-            simpleShapeDrawer.rotateAndDraw(offsetX, y, paint);
-        }
-    }
-
-
     public void drawPreview(float x, float y, BasicDrawer basicDrawer) {
         int currentBrushSize = paintHelperManager.getSizeHelper().getCurrentBrushSize(x, y);
         int columnOffset = currentBrushSize + spacing;

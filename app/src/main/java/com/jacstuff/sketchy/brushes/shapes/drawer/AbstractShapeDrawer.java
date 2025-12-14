@@ -6,6 +6,7 @@ import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.Brushable;
+import com.jacstuff.sketchy.easel.Easel;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.KaleidoscopeHelper;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
@@ -30,7 +31,7 @@ public class AbstractShapeDrawer implements ShapeDrawer {
 
 
     AbstractShapeDrawer(PaintView paintView){
-        this.canvas =  paintView.getCanvas();
+        this.canvas = paintView.getCanvas();
         this.paintHelperManager = paintView.getPaintHelperManager();
         kaleidoscopeHelper = paintHelperManager.getKaleidoscopeHelper();
         placementHelper = paintHelperManager.getPlacementHelper();
@@ -102,19 +103,19 @@ public class AbstractShapeDrawer implements ShapeDrawer {
 
 
     @Override
-    public void down(PointF point, Paint paint) {
+    public void down(PointF point, Easel easel) {
         //do nothing
     }
 
 
     @Override
-    public void move(PointF point, Paint paint) {
+    public void move(PointF point, Easel easel) {
         //do nothing
     }
 
 
     @Override
-    public void up(PointF point, Paint paint) {
+    public void up(PointF point, Easel easel) {
         //do nothing
     }
 

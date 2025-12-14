@@ -1,9 +1,9 @@
 package com.jacstuff.sketchy.brushes.shapes.drawer;
 
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PointF;
 
+import com.jacstuff.sketchy.easel.Easel;
 import com.jacstuff.sketchy.brushes.shapes.Brushable;
 import com.jacstuff.sketchy.paintview.PaintView;
 
@@ -16,20 +16,14 @@ public class SimpleShapeDrawer extends AbstractShapeDrawer{
 
 
     @Override
-    public void down(PointF point, Paint paint) {
-        drawToCanvas(point.x, point.y, paint);
+    public void down(PointF p, Easel easel) {
+        drawToCanvas(p, easel);
     }
 
 
     @Override
-    public void move(PointF point, Paint paint) {
-
-    }
-
-
-    @Override
-    public void up(PointF point, Paint paint) {
-
+    public void move(PointF p, Easel easel) {
+        drawToCanvas(p, easel);
     }
 
 
@@ -39,34 +33,33 @@ public class SimpleShapeDrawer extends AbstractShapeDrawer{
     }
 
 
-    void drawToCanvas(float x, float y, Paint paint){
+    void drawToCanvas(PointF p, Easel easel){
+        brushShape.generatePath(p);
         if(kaleidoscopeHelper.isEnabled()){
-            kaleidoscopeDrawer.drawKaleidoscope(x,y, paint);
-        }
-        else if(paintHelperManager.getTileHelper().isEnabled()){
-            paintHelperManager.getTileHelper().draw(x,y, this);
+            kaleidoscopeDrawer.drawKaleidoscope(p.x, p.y, paint);
         }
         else{
-            rotateAndDraw(x,y, paint);
+            rotateAndDraw(p, easel);
         }
         paintView.invalidate();
     }
 
 
-    public void rotateAndDraw(float x, float y, Paint paint){
+    public void rotateAndDraw(PointF p, Easel easel){
         canvas.save();
-        canvas.translate(x, y);
-        Point p = new Point((int)x, (int)y);
+        canvas.translate(p.x, p.y);
+
         canvas.rotate(paintHelperManager.getAngleHelper().getFineAngle());
-        if(paintHelperManager.getShadowHelper().isShadowEnabled()){
-            brush.onTouchDown(p, canvas, paintView.getShadowPaint());
+
+        for(var paint : easel.getActivePaints()){
+            brushShape.draw(p, canvas, paint);
         }
-        brush.onTouchDown(p, canvas, paint);
         canvas.restore();
     }
 
 
     public void drawKaleidoscopeSegment(float x, float y, Paint paint){
-        rotateAndDraw(x - kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY(), paint);
+        var p = new PointF(x - kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY());
+        //rotateAndDraw(p, paint);
     }
 }

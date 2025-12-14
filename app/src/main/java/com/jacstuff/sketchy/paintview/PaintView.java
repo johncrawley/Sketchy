@@ -10,7 +10,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.jacstuff.sketchy.brushes.Easel;
+import com.jacstuff.sketchy.brushes.shapes.drawer.ShapeDrawer;
+import com.jacstuff.sketchy.brushes.shapes.drawer.SimpleShapeDrawer;
+import com.jacstuff.sketchy.easel.Easel;
 import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
@@ -45,6 +47,7 @@ public class PaintView extends View {
     private Easel easel;
     private DrawerFactory drawerFactory;
     private Drawer drawer;
+    private ShapeDrawer shapeDrawer;
 
     public PaintView(Context context) {
 
@@ -94,6 +97,8 @@ public class PaintView extends View {
         drawer.setBrushShape(viewModel.currentBrush);
         //currentBrush.init(drawerFactory);
 
+        shapeDrawer = new SimpleShapeDrawer(this);
+        shapeDrawer.setBrushShape(viewModel.currentBrush);
 
         invalidate();
     }
@@ -334,7 +339,8 @@ public class PaintView extends View {
     private void onTouchDown(PointF point){
         isTouchDownRegistered = true;
         log("entered onTouchDown(PointF)");
-        viewModel.currentBrush.onTouchDown(point, easel);
+
+        shapeDrawer.down(point, easel);
     }
 
 
@@ -374,7 +380,7 @@ public class PaintView extends View {
         if(!sensitivityHelper.shouldDraw(currentBrush)){
             return;
         }
-        viewModel.currentBrush.onTouchMove(p, easel);
+        shapeDrawer.move(p, easel);
     }
 
 
@@ -383,7 +389,7 @@ public class PaintView extends View {
             return;
         }
         isTouchDownRegistered = false;
-        viewModel.currentBrush.onTouchUp(p, easel);
+        shapeDrawer.up(p, easel);
     }
 
     public void onTouchUp(){
