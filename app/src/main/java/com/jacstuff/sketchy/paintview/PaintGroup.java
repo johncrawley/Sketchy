@@ -65,7 +65,6 @@ public class PaintGroup {
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeJoin(Paint.Join.MITER);
         paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setElegantTextHeight(true);
         paint.setColor(color);
         return paint;
     }

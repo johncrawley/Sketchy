@@ -46,19 +46,6 @@ public class TriangleBrush extends AbstractShape implements Brushable {
     }
 
 
-
-    @Override
-    public void onTouchMove(PointF p, Easel easel){
-
-    }
-
-
-    @Override
-    public void onTouchUp(PointF p, Easel easel){
-
-    }
-
-
     public void setTriangleHeight(int height){
         this.triangleHeight = height;
     }
