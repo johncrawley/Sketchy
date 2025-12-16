@@ -15,7 +15,7 @@ public class TriangleBrush extends AbstractShape implements Brushable {
 
     private final Point leftPoint, rightPoint, topPoint;
     private int height;
-    private int triangleHeight = 1;
+    private int triangleHeight = 30;
     private Path path;
 
     public TriangleBrush(){

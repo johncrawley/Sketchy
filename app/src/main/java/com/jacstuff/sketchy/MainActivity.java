@@ -1,6 +1,7 @@
 package com.jacstuff.sketchy;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 
@@ -63,6 +64,7 @@ import com.jacstuff.sketchy.ui.SettingsPopup;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -523,8 +525,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public Uri getImageUri(Context context, Bitmap bitmap) {
         var bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        var path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, getString(R.string.shared_image_title), null);
-        return Uri.parse(path);
+        var values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, getString(R.string.shared_image_title));
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        return getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
     }
 
 

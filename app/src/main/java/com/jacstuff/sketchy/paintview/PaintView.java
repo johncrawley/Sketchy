@@ -69,6 +69,25 @@ public class PaintView extends View {
     }
 
 
+    public void init(MainViewModel viewModel){
+        log("entered new init() width, height: " + getWidth() + "," + getHeight());
+        this.viewModel = viewModel;
+        bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(bitmap);
+        initEasel();
+        shapeDrawer = new SimpleShapeDrawer(this);
+        shapeDrawer.setBrushShape(viewModel.currentBrush);
+        viewModel.currentBrush.setBrushSize(30);
+        var tempPaint = new Paint();
+        tempPaint.setStyle(Paint.Style.FILL);
+        tempPaint.setColor(Color.WHITE);
+        canvas.drawRect(0,0,getWidth(), getHeight(), tempPaint);
+        tempPaint.setColor(Color.RED);
+        canvas.drawCircle(100,100,100, tempPaint);
+        enablePreviewLayer();
+        invalidate();
+    }
+
     public void init(BrushFactory brushFactory, MainViewModel viewModel, PaintHelperManager paintHelperManager) {
         log("entered init()");
         this.viewModel = viewModel;
@@ -103,6 +122,7 @@ public class PaintView extends View {
         invalidate();
     }
 
+
     private void initEasel(){
         easel = new Easel();
         easel.setCanvas(canvas);
@@ -112,6 +132,9 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas viewCanvas) {
         viewCanvas.save();
+        var isPreviewNull = previewBitmap == null;
+        var isBitmapNull = bitmap == null;
+        log("onDraw() isPreviewBitmapNull: "+  isPreviewNull + " isBitmapNull: " + isBitmapNull);
         if(previewBitmap != null && bitmap != null){
             viewCanvas.drawBitmap(isPreviewLayerToBeDrawn ? previewBitmap : bitmap, 0, 0, canvasBitmapPaint);
         }
@@ -189,7 +212,7 @@ public class PaintView extends View {
 
 
     public void assignMostRecentBitmap(){
-        loadHistoryItem(false);
+       // loadHistoryItem(false);
     }
 
 
@@ -256,7 +279,7 @@ public class PaintView extends View {
 
     public void undo(){
         if(currentBrush.isOnFirstStep()){
-            loadHistoryItem(true);
+           // loadHistoryItem(true);
             return;
         }
         currentBrush.reset();
@@ -374,12 +397,18 @@ public class PaintView extends View {
 
 
     private void onTouchMove(PointF p){
+        /*
         if(!isTouchDownRegistered){
             return;
         }
+
+         */
+        /*
         if(!sensitivityHelper.shouldDraw(currentBrush)){
             return;
         }
+
+         */
         shapeDrawer.move(p, easel);
     }
 

@@ -1,5 +1,6 @@
 package com.jacstuff.sketchy.easel;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 
 public class PaintHolder {
@@ -11,6 +12,7 @@ public class PaintHolder {
     public PaintHolder(Paint.Style style){
         paint = new Paint();
         paint.setStyle(style);
+        paint.setColor(Color.BLACK);
     }
 
     public Paint getPaint(){

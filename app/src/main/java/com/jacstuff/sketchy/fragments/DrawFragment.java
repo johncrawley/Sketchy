@@ -66,7 +66,8 @@ public class DrawFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
                 linearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                paintView.init(brushFactory, viewModel, paintHelperManager);
+              //  paintView.init(brushFactory, viewModel, paintHelperManager);
+                paintView.init(viewModel);
               //  paintHelperManager.setPaintView(paintView, getContext());
                // settingsButtonsConfigurator.selectDefaults();
                 viewModelHelper.onResume();
