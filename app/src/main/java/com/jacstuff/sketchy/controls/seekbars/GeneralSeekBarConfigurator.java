@@ -26,23 +26,19 @@ public class GeneralSeekBarConfigurator {
                       Consumer<Integer> progressFinishedConsumer){
 
         ViewGroup layout = parentView.findViewById(seekBarLayoutId);
-
         SeekBar seekBar = layout.findViewById(R.id.seekBar);
-
-        TextView seekBarLabel = layout.findViewById(R.id.seekBarLabel);
-        setupLabel(context, seekBarLabel, labelStrId);
+        setupLabel(context, layout, labelStrId);
 
         TextView progressText = layout.findViewById(R.id.seekBarCurrentValueText);
 
         seekBar.setProgress(defaultValue);
         progressText.setText("" + defaultValue);
 
-        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, textView, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
+        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(progressText, p -> {}, pogressConsumer, progressFinishedConsumer));
     }
 
 
-    private SeekBar.OnSeekBarChangeListener createSeekBarChangeListener(int seekBarId,
-                                                                        TextView amountTextView,
+    private SeekBar.OnSeekBarChangeListener createSeekBarChangeListener(TextView amountTextView,
                                                                         Consumer<Integer> progressStartedConsumer,
                                                                         Consumer<Integer> progressChangedConsumer,
                                                                         Consumer<Integer> progressFinishedConsumer){
@@ -75,7 +71,9 @@ public class GeneralSeekBarConfigurator {
         };
     }
 
-    private void setupLabel(Context context, TextView seekBarLabel, int strId){
+
+    private void setupLabel(Context context, View parentView, int strId){
+        TextView seekBarLabel = parentView.findViewById(R.id.seekBarLabel);
         var label = context.getString(strId);
         seekBarLabel.setText(label);
     }

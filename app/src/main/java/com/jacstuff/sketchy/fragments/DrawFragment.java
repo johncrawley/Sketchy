@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment;
 import com.jacstuff.sketchy.MainActivity;
 import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.BrushFactory;
+import com.jacstuff.sketchy.controls.seekbars.GeneralSeekBarConfigurator;
 import com.jacstuff.sketchy.controls.settings.SettingsButtonsConfigurator;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.PaintHelperManager;
 import com.jacstuff.sketchy.ui.ColorPickerSeekBarConfigurator;
-import com.jacstuff.sketchy.ui.ConnectedBrushIconModifierHelper;
 import com.jacstuff.sketchy.ui.SettingsPopup;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 import com.jacstuff.sketchy.viewmodel.ViewModelHelper;
@@ -49,6 +49,7 @@ public class DrawFragment extends Fragment {
         viewModel = getMainActivity().getViewModel();
         viewModelHelper = getMainActivity().getViewModelHelper();
         setupPaintViewAndDefaultSelections(parent);
+        setupBrushSizeSeekBar(parent);
         return parent;
     }
 
@@ -78,6 +79,7 @@ public class DrawFragment extends Fragment {
 
     private ColorPickerSeekBarConfigurator colorPickerSeekBarConfigurator;
 
+
     private void setupColorPickerSeekBars(){
         colorPickerSeekBarConfigurator.setupOnCreation(R.id.gradientColorPickerSeekBar);
         colorPickerSeekBarConfigurator.setupOnCreation(R.id.shadowColorPickerSeekBar);
@@ -91,6 +93,24 @@ public class DrawFragment extends Fragment {
 
     public void setupButtons(View parent){
 
+    }
+
+    private void setupBrushSizeSeekBar(View parentView){
+        var generalSeekBarConfigurator = new GeneralSeekBarConfigurator();
+        generalSeekBarConfigurator.setup(parentView,
+                getContext(),
+                R.id.brushSizeSeekBarInclude,
+                R.string.brush_size_seekbar_label,
+                viewModel.brushSize,
+                this::changeBrushSizeSeekBar,
+                this::changeBrushSizeSeekBar
+                );
+
+    }
+
+    private void changeBrushSizeSeekBar(int value){
+        viewModel.brushSize = value;
+        viewModel.currentBrush.setBrushSize(value);
     }
 
 }

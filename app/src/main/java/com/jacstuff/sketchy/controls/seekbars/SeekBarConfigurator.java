@@ -19,24 +19,6 @@ public class SeekBarConfigurator {
         viewModel = activity.getViewModel();
     }
 
-    public SeekBarConfigurator(){
-
-    }
-
-
-    public void setup(int parentId, int labelId, int defaultValue, Consumer<Integer> pogressConsumer, Consumer<Integer> progressFinishedConsumer){
-        var seekBar = activity.findViewById(seekBarId);
-        TextView textView = activity.findViewById(amountTextId);
-        viewModel = activity.getViewModel();
-        if(seekBar == null){
-            return;
-        }
-        seekBar.setOnSeekBarChangeListener( createSeekBarChangeListener(seekBarId, textView, progressStartedConsumer, progressConsumer, progressFinishedConsumer));
-        setDefaultValue(defaultResourceId, seekBarId, progressStartedConsumer, progressConsumer, progressFinishedConsumer);
-
-
-    }
-
 
     public void configure(int seekBarId,
                           int defaultResourceId,
