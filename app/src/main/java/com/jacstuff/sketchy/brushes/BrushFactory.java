@@ -5,7 +5,6 @@ import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.shapes.ArcBrush;
 import com.jacstuff.sketchy.brushes.shapes.BananaBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
-import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.AstroidBrush;
 import com.jacstuff.sketchy.brushes.shapes.SemicircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.smoothpath.SmoothPathBrush;
@@ -32,7 +31,6 @@ import com.jacstuff.sketchy.brushes.shapes.StraightLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextOnCircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.TrapezoidBrush;
-import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.WavyLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.XBrush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
@@ -46,7 +44,7 @@ import java.util.Map;
 public class BrushFactory {
 
     private Map<BrushShape, Brush> brushMap;
-    private final Brush circleBrush;
+    private final Brush bananaBrush;
     private PaintView paintView;
     private final MainViewModel mainViewModel;
     private DrawerFactory drawerFactory;
@@ -58,7 +56,7 @@ public class BrushFactory {
     public BrushFactory(MainActivity mainActivity){
         this.mainActivity = mainActivity;
         this.mainViewModel = mainActivity.getViewModel();
-        circleBrush = new CircleBrush();
+        bananaBrush = new BananaBrush();
     }
 
 
@@ -74,7 +72,7 @@ public class BrushFactory {
 
 
     public Brush getBrushFor(BrushShape shape){
-        var brush = brushMap.getOrDefault(shape, circleBrush);
+        var brush = brushMap.getOrDefault(shape, bananaBrush);
         if(brush != null){
             brush.setStyle(styleHelper.getCurrentStyle());
             brush.reinitialize();
@@ -100,13 +98,12 @@ public class BrushFactory {
 
     private void setupBrushMap(int maxDimension){
         brushMap = new HashMap<>();
-        add(circleBrush);
+        add(bananaBrush);
         add(new RoundedRectangleBrush());
-        add(new SquareBrush());
+       // add(new SquareBrush());
       //  add(new TriangleBrush());
         add(new PentagonBrush());
         add(new HexagonBrush());
-        add(new StarBrush());
         add(new LineBrush());
         add(new CurvedLineBrush());
         add(new StraightLineBrush(getMaxBrushSize(), maxDimension));
