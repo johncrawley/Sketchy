@@ -61,7 +61,6 @@ public class DrawFragment extends Fragment {
         viewModelHelper.setPaintView(paintView);
         // paintView.setPaintHelperManager(paintHelperManager);
       //  connectedBrushIconModifierHelper = new ConnectedBrushIconModifierHelper(this);
-        var brushFactory = new BrushFactory(getMainActivity());
         final var linearLayout = parentView.findViewById(R.id.paintViewLayout);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override

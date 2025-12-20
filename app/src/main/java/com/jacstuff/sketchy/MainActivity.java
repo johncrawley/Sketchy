@@ -378,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setupPaintViewAndDefaultSelections(){
         paintView = findViewById(R.id.paintView);
         connectedBrushIconModifierHelper = new ConnectedBrushIconModifierHelper(this);
-        var brushFactory = new BrushFactory(this);
+        var brushFactory = new BrushFactory();
         final var linearLayout = findViewById(R.id.paintViewLayout);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override

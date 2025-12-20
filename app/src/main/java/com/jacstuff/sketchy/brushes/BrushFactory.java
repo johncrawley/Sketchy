@@ -1,11 +1,10 @@
 package com.jacstuff.sketchy.brushes;
 
-import com.jacstuff.sketchy.MainActivity;
-import com.jacstuff.sketchy.R;
 import com.jacstuff.sketchy.brushes.shapes.ArcBrush;
 import com.jacstuff.sketchy.brushes.shapes.BananaBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.AstroidBrush;
+import com.jacstuff.sketchy.brushes.shapes.Brushable;
 import com.jacstuff.sketchy.brushes.shapes.SemicircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.smoothpath.SmoothPathBrush;
 import com.jacstuff.sketchy.brushes.shapes.VariableCircleBrush;
@@ -25,8 +24,6 @@ import com.jacstuff.sketchy.brushes.shapes.PathBrush;
 import com.jacstuff.sketchy.brushes.shapes.PentagonBrush;
 import com.jacstuff.sketchy.brushes.shapes.RectangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.RoundedRectangleBrush;
-import com.jacstuff.sketchy.brushes.shapes.SquareBrush;
-import com.jacstuff.sketchy.brushes.shapes.StarBrush;
 import com.jacstuff.sketchy.brushes.shapes.StraightLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextBrush;
 import com.jacstuff.sketchy.brushes.shapes.TextOnCircleBrush;
@@ -36,7 +33,6 @@ import com.jacstuff.sketchy.brushes.shapes.XBrush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.paintview.helpers.StyleHelper;
-import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,24 +40,20 @@ import java.util.Map;
 public class BrushFactory {
 
     private Map<BrushShape, Brush> brushMap;
+    private Map<BrushShape, Brushable> brushShapeMap;
     private final Brush bananaBrush;
-    private PaintView paintView;
-    private final MainViewModel mainViewModel;
     private DrawerFactory drawerFactory;
-    private final MainActivity mainActivity;
     private PathBrush shadowPathBrush;
     private StyleHelper styleHelper;
+    private Brushable currentBrushShape;
 
 
-    public BrushFactory(MainActivity mainActivity){
-        this.mainActivity = mainActivity;
-        this.mainViewModel = mainActivity.getViewModel();
+    public BrushFactory(){
         bananaBrush = new BananaBrush();
     }
 
 
     public void init(PaintView paintView, int brushSize, int maxDimension){
-        this.paintView = paintView;
         drawerFactory = new DrawerFactory(paintView);
         initShadowPathBrush();
         drawerFactory.init();
@@ -77,14 +69,9 @@ public class BrushFactory {
             brush.setStyle(styleHelper.getCurrentStyle());
             brush.reinitialize();
         }
-        //var temp = new TriangleBrush();
-       // temp.init();
-        //temp.reinitialize();
-        var isSHNull = styleHelper == null;
-        log("getBrushFor() " + shape.name() + " is style helper null: " + isSHNull);
-      //  temp.setStyle(styleHelper.getCurrentStyle());
         return brush;
     }
+
 
     private void log(String msg){
         System.out.println("^^^ BrushFactory: " + msg);
@@ -106,7 +93,7 @@ public class BrushFactory {
         add(new HexagonBrush());
         add(new LineBrush());
         add(new CurvedLineBrush());
-        add(new StraightLineBrush(getMaxBrushSize(), maxDimension));
+        add(new StraightLineBrush(380, maxDimension));
         add(new WavyLineBrush());
         add(new ArcBrush());
         add(new SemicircleBrush());
@@ -151,10 +138,5 @@ public class BrushFactory {
         }
     }
 
-
-
-    private int getMaxBrushSize(){
-        return mainActivity.getResources().getInteger(R.integer.brush_size_max);
-    }
 
 }

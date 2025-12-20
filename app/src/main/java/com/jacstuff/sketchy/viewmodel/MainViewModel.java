@@ -3,6 +3,7 @@ package com.jacstuff.sketchy.viewmodel;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
+import com.jacstuff.sketchy.brushes.BrushFactory;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.Brushable;
 import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
@@ -27,6 +28,7 @@ import androidx.lifecycle.ViewModel;
 public class MainViewModel extends ViewModel implements ControlsHolder {
 
 
+    public BrushFactory brushFactory = new BrushFactory();
     private ColorSequenceControls colorSequenceControls;
 
     public ColorSequenceControls getColorSequenceControls(){
