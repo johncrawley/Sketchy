@@ -7,10 +7,10 @@ import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
-public class starBrush extends AbstractShape implements Brushable{
+public class CircleBrush extends AbstractShape implements Brushable{
 
 
-    public starBrush(){
+    public CircleBrush(){
        super(BrushShape.CIRCLE);
     }
 

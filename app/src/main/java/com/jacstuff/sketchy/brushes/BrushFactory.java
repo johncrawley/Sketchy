@@ -5,7 +5,10 @@ import com.jacstuff.sketchy.brushes.shapes.BananaBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.AstroidBrush;
 import com.jacstuff.sketchy.brushes.shapes.Brushable;
+import com.jacstuff.sketchy.brushes.shapes.CircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.SemicircleBrush;
+import com.jacstuff.sketchy.brushes.shapes.SquareBrush;
+import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.smoothpath.SmoothPathBrush;
 import com.jacstuff.sketchy.brushes.shapes.VariableCircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.spirals.CrazySpiralBrush;
@@ -82,40 +85,49 @@ public class BrushFactory {
         return shadowPathBrush;
     }
 
+    private void setupBrushShapeMap(){
+        brushShapeMap = new HashMap<>(40);
+        add(new TriangleBrush());
+        add(new SquareBrush());
+        add(new CircleBrush());
+        add(new PentagonBrush());
+        add(new HexagonBrush());
+        add(new ArcBrush());
+    }
 
     private void setupBrushMap(int maxDimension){
         brushMap = new HashMap<>();
-        add(bananaBrush);
-        add(new RoundedRectangleBrush());
+        addBrush(bananaBrush);
+        addBrush(new RoundedRectangleBrush());
        // add(new SquareBrush());
       //  add(new TriangleBrush());
-        add(new PentagonBrush());
-        add(new HexagonBrush());
-        add(new LineBrush());
-        add(new CurvedLineBrush());
-        add(new StraightLineBrush(380, maxDimension));
-        add(new WavyLineBrush());
-        add(new ArcBrush());
-        add(new SemicircleBrush());
-        add(new TextBrush());
-        add(new OvalBrush());
-        add(new CrescentBrush());
-        add(new TextOnCircleBrush());
-        add(new BananaBrush());
-        add(new PathBrush());
-        add(new SmoothPathBrush());
-        add(new RectangleBrush());
-        add(new XBrush());
-        add(new DiamondBrush());
-        add(new AstroidBrush());
-        add(new PointedOvalBrush());
-        add(new TrapezoidBrush());
-        add(new ParallelogramBrush());
-        add(new ArbitraryConnectedTriangleBrush());
-        add(new RandomBrush());
-        add(new SpiralBrush());
-        add(new CrazySpiralBrush());
-        add(new VariableCircleBrush());
+       // add(new PentagonBrush());
+       // addBrush(new HexagonBrush());
+        addBrush(new LineBrush());
+        addBrush(new CurvedLineBrush());
+        addBrush(new StraightLineBrush(380, maxDimension));
+        addBrush(new WavyLineBrush());
+       // addBrush(new ArcBrush());
+        addBrush(new SemicircleBrush());
+        addBrush(new TextBrush());
+        addBrush(new OvalBrush());
+        addBrush(new CrescentBrush());
+        addBrush(new TextOnCircleBrush());
+        addBrush(new BananaBrush());
+        addBrush(new PathBrush());
+        addBrush(new SmoothPathBrush());
+        addBrush(new RectangleBrush());
+        addBrush(new XBrush());
+        addBrush(new DiamondBrush());
+        addBrush(new AstroidBrush());
+        addBrush(new PointedOvalBrush());
+        addBrush(new TrapezoidBrush());
+        addBrush(new ParallelogramBrush());
+        addBrush(new ArbitraryConnectedTriangleBrush());
+        addBrush(new RandomBrush());
+        addBrush(new SpiralBrush());
+        addBrush(new CrazySpiralBrush());
+        addBrush(new VariableCircleBrush());
     }
 
 
@@ -126,9 +138,15 @@ public class BrushFactory {
 
 
 
-    private void add(Brush brush){
+    private void addBrush(Brush brush){
         brush.init(drawerFactory);
         brushMap.put(brush.getBrushShape(), brush);
+    }
+
+
+
+    private void add(Brushable brushable){
+        brushShapeMap.put(brushable.getBrushShape(), brushable);
     }
 
 

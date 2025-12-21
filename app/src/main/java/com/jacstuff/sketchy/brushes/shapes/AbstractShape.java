@@ -39,7 +39,8 @@ public abstract class AbstractShape implements Brushable{
 
     }
 
-    public BrushShape getShape(){
+    @Override
+    public BrushShape getBrushShape(){
         return brushShape;
     }
 }

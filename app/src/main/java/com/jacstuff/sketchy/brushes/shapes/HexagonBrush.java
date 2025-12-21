@@ -4,15 +4,17 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
-public class HexagonBrush extends AbstractBrush implements Brush {
+public class HexagonBrush extends AbstractShape{
 
     private final Point leftPoint, rightPoint, bottomLeftPoint, bottomRightPoint, topLeftPoint, topRightPoint;
     private final double edgeDistanceRatio;
     private int shortHeight;
     private int quarterBrushSize;
+    private Path path;
 
 
     public HexagonBrush(){
@@ -28,15 +30,7 @@ public class HexagonBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void setBrushSize(int brushSize){
-        super.setBrushSize(brushSize);
-        shortHeight = (int)(halfBrushSize * edgeDistanceRatio);
-        quarterBrushSize = halfBrushSize / 2;
-    }
-
-
-    @Override
-    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+    public void generatePath(PointF point) {
         leftPoint.set( - halfBrushSize, 0);
         rightPoint.set(halfBrushSize, 0);
 
@@ -46,7 +40,7 @@ public class HexagonBrush extends AbstractBrush implements Brush {
         topLeftPoint.set( - quarterBrushSize, -shortHeight);
         topRightPoint.set( + quarterBrushSize, -shortHeight);
 
-        var path = new Path();
+        path = new Path();
         path.moveTo(leftPoint.x, leftPoint.y);
         path.lineTo(topLeftPoint. x, topLeftPoint.y);
         path.lineTo(topRightPoint.x, topRightPoint.y);
@@ -56,8 +50,20 @@ public class HexagonBrush extends AbstractBrush implements Brush {
         path.lineTo(leftPoint.x, leftPoint.y);
 
         path.close();
+    }
 
+    @Override
+    public void draw(PointF point, Canvas canvas, Paint paint) {
         canvas.drawPath(path, paint);
     }
+
+
+    @Override
+    public void setBrushSize(int brushSize){
+        super.setBrushSize(brushSize);
+        shortHeight = (int)(halfBrushSize * edgeDistanceRatio);
+        quarterBrushSize = halfBrushSize / 2;
+    }
+
 
 }
