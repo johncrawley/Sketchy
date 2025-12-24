@@ -93,6 +93,10 @@ public class BrushFactory {
         add(new PentagonBrush());
         add(new HexagonBrush());
         add(new ArcBrush());
+        add(new OvalBrush());
+        add(new XBrush());
+        add(new DiamondBrush());
+        add(new AstroidBrush());
     }
 
     private void setupBrushMap(int maxDimension){
@@ -110,16 +114,13 @@ public class BrushFactory {
        // addBrush(new ArcBrush());
         addBrush(new SemicircleBrush());
         addBrush(new TextBrush());
-        addBrush(new OvalBrush());
+        //addBrush(new OvalBrush());
         addBrush(new CrescentBrush());
         addBrush(new TextOnCircleBrush());
         addBrush(new BananaBrush());
         addBrush(new PathBrush());
         addBrush(new SmoothPathBrush());
         addBrush(new RectangleBrush());
-        addBrush(new XBrush());
-        addBrush(new DiamondBrush());
-        addBrush(new AstroidBrush());
         addBrush(new PointedOvalBrush());
         addBrush(new TrapezoidBrush());
         addBrush(new ParallelogramBrush());

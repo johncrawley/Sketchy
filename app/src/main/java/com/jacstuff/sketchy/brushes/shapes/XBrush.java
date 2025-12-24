@@ -4,10 +4,11 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
-public class XBrush extends AbstractBrush implements Brush {
+public class XBrush extends AbstractShape {
 
     private float halfLength;
 
@@ -17,13 +18,18 @@ public class XBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
-        Path path = new Path();
+    public void generatePath(PointF p){
+        path = new Path();
         path.moveTo(-halfLength, -halfLength);
         path.lineTo(halfLength, halfLength);
 
         path.moveTo(halfLength, -halfLength);
         path.lineTo(-halfLength, halfLength);
+    }
+
+
+    @Override
+    public void draw(PointF point, Canvas canvas, Paint paint) {
         canvas.drawPath(path, paint);
     }
 

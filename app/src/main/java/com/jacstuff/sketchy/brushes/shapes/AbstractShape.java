@@ -1,5 +1,8 @@
 package com.jacstuff.sketchy.brushes.shapes;
 
+import android.graphics.Path;
+import android.graphics.PointF;
+
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 
@@ -8,6 +11,7 @@ public abstract class AbstractShape implements Brushable{
     final BrushShape brushShape;
     private final DrawerFactory.Type drawerType;
     int brushSize, halfBrushSize;
+    Path path;
 
     public AbstractShape(BrushShape brushShape){
         this.brushShape = brushShape;
@@ -42,5 +46,11 @@ public abstract class AbstractShape implements Brushable{
     @Override
     public BrushShape getBrushShape(){
         return brushShape;
+    }
+
+
+    @Override
+    public void generatePath(PointF point) {
+        //do nothing
     }
 }
