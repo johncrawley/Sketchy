@@ -4,11 +4,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
 
-public class TrapezoidBrush extends AbstractBrush implements Brush {
+public class TrapezoidBrush extends AbstractPathShape {
 
     private final Point topRight, topLeft, bottomRight, bottomLeft;
     private final Path path;
@@ -23,17 +24,7 @@ public class TrapezoidBrush extends AbstractBrush implements Brush {
     }
 
 
-    @Override
-    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
-        canvas.drawPath(path, paint);
-    }
-
-
-    @Override
-    public void setBrushSize(int brushSize){
-        super.setBrushSize(brushSize);
-        int quarterBrushSize = Math.max(2, halfBrushSize/2);
-
+    public void generatePath(PointF p){
         bottomLeft.x = -halfBrushSize;
         bottomLeft.y = halfBrushSize;
         bottomRight.x = halfBrushSize;
@@ -49,4 +40,5 @@ public class TrapezoidBrush extends AbstractBrush implements Brush {
         path.lineTo(bottomRight.x, bottomRight.y);
         path.close();
     }
+
 }

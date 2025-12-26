@@ -4,13 +4,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
-public class AstroidBrush extends AbstractBrush implements Brush {
+public class AstroidBrush extends AbstractPathShape{
 
         private float quarterBrushSize;
-        private final Path path;
         private Point topLeftCorner, topRightCorner,bottomRightCorner,bottomLeftCorner;
         private Point midCurveTop, midCurveBottom, midCurveLeft, midCurveRight;
         private int curveRate;
@@ -21,14 +21,13 @@ public class AstroidBrush extends AbstractBrush implements Brush {
         }
 
 
-        @Override
         public void postInit(){
             recalculateDimensions();
         }
 
 
         @Override
-        public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+        public void generatePath(PointF p){
             path.reset();
             path.moveTo( topLeftCorner.x, topLeftCorner.y);
             path.quadTo(midCurveTop.x, midCurveTop.y, topRightCorner.x, topRightCorner.y);
@@ -36,13 +35,6 @@ public class AstroidBrush extends AbstractBrush implements Brush {
             path.quadTo(midCurveBottom.x, midCurveBottom.y, bottomLeftCorner.x, bottomLeftCorner.y);
             path.quadTo(midCurveLeft.x, midCurveLeft.y, topLeftCorner.x, topLeftCorner.y);
             path.close();
-            canvas.drawPath(path, paint);
-        }
-
-
-        @Override
-        public void onTouchMove(float x, float y, Paint paint){
-            onTouchDown(x, y, paint);
         }
 
 

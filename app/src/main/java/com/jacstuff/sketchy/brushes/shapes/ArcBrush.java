@@ -55,7 +55,7 @@ public class ArcBrush extends AbstractShape {
 
     @Override
     public void draw(PointF point, Canvas canvas, Paint paint) {
-        RectF rect = new RectF(-halfBrushSize, -halfBrushSize, halfBrushSize, halfBrushSize);
+        var rect = new RectF(-halfBrushSize, -halfBrushSize, halfBrushSize, halfBrushSize);
         int startAngle = 180 + startingAngle;
         int sweep = Math.min(1 + sweepAngle, 359);
         canvas.drawArc(rect, startAngle, sweep, isDrawnFromCentre, paint);

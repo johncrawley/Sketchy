@@ -52,6 +52,7 @@ public class HexagonBrush extends AbstractShape{
         path.close();
     }
 
+
     @Override
     public void draw(PointF point, Canvas canvas, Paint paint) {
         canvas.drawPath(path, paint);

@@ -4,10 +4,11 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
-public class DiamondBrush extends AbstractBrush implements Brush {
+public class DiamondBrush extends AbstractPathShape {
 
     private float width;
 
@@ -17,14 +18,13 @@ public class DiamondBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
+    public void generatePath(PointF p) {
         Path path = new Path();
         path.moveTo(0, -halfBrushSize);
         path.lineTo(width, 0);
         path.lineTo(0, halfBrushSize);
         path.lineTo(-width, 0);
         path.close();
-        canvas.drawPath(path, paint);
     }
 
 

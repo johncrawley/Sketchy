@@ -4,21 +4,19 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
-public class WavyLineBrush extends AbstractBrush implements Brush {
-
-    private final Path path;
+public class WavyLineBrush extends AbstractPathShape{
 
     public WavyLineBrush(){
         super(BrushShape.WAVY_LINE);
-        path = new Path();
     }
 
 
     @Override
-    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+    public void generatePath(PointF p){
         path.reset();
         path.moveTo( - halfBrushSize, 0);
         path.cubicTo(0, -halfBrushSize, 0, halfBrushSize, halfBrushSize, 0);
@@ -28,7 +26,6 @@ public class WavyLineBrush extends AbstractBrush implements Brush {
         float y2 = - halfBrushSize + y0;
         path.cubicTo(0, y1, 0, y2, - halfBrushSize, y0);
         path.close();
-        canvas.drawPath(path, paint);
     }
 
 }

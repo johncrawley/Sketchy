@@ -10,13 +10,12 @@ import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.easel.Easel;
 
 
-public class TriangleBrush extends AbstractShape implements Brushable {
+public class TriangleBrush extends AbstractPathShape {
 
 
     private final Point leftPoint, rightPoint, topPoint;
     private int height;
     private int triangleHeight = 30;
-    private Path path;
 
     public TriangleBrush(){
         super(BrushShape.TRIANGLE);
@@ -39,11 +38,6 @@ public class TriangleBrush extends AbstractShape implements Brushable {
         path.close();
     }
 
-
-    @Override
-    public void draw(PointF p, Canvas canvas, Paint paint){
-        canvas.drawPath(path, paint);
-    }
 
 
     public void setTriangleHeight(int height){

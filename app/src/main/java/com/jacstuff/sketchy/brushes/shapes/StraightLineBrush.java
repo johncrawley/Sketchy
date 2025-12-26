@@ -3,12 +3,13 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 
 
-public class StraightLineBrush extends AbstractBrush implements Brush {
+public class StraightLineBrush extends AbstractShape {
 
     private int adjustedHalfLength;
     private final float maxDimensionFactor;
@@ -25,7 +26,7 @@ public class StraightLineBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+    public void draw(PointF p, Canvas canvas, Paint paint){
         canvas.drawLine(-adjustedHalfLength, 0, adjustedHalfLength, 0, paint);
     }
 

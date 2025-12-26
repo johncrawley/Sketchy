@@ -4,11 +4,12 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.RectF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
-public class RoundedRectangleBrush extends AbstractBrush implements Brush {
+public class RoundedRectangleBrush extends AbstractShape {
 
     private final RectF rect;
     private int rounding;
@@ -27,7 +28,7 @@ public class RoundedRectangleBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+    public void draw(PointF point, Canvas canvas, Paint paint) {
         int left =  - halfBrushSize;
         int top =   - halfBrushSize;
 

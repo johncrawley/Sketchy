@@ -8,7 +8,7 @@ import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
-public class XBrush extends AbstractShape {
+public class XBrush extends AbstractPathShape {
 
     private float halfLength;
 
@@ -25,12 +25,6 @@ public class XBrush extends AbstractShape {
 
         path.moveTo(halfLength, -halfLength);
         path.lineTo(-halfLength, halfLength);
-    }
-
-
-    @Override
-    public void draw(PointF point, Canvas canvas, Paint paint) {
-        canvas.drawPath(path, paint);
     }
 
 

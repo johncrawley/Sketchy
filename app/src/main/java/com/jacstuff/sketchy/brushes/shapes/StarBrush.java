@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
@@ -22,10 +23,10 @@ public class StarBrush extends PentagonBrush {
 
 
     @Override
-    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+    public void generatePath(PointF point){
         deriveOutsidePoints();
         deriveInsidePoints();
-        Path path = new Path();
+        path = new Path();
         path.moveTo(topPoint.x, topPoint.y);
         path.lineTo(insideTopRight.x, insideTopRight.y);
         path.lineTo(rightX, rightY);
@@ -36,9 +37,7 @@ public class StarBrush extends PentagonBrush {
         path.lineTo(insideBottomLeft.x, insideBottomLeft.y);
         path.lineTo(leftX, leftY);
         path.lineTo(insideTopLeft.x, insideTopLeft.y);
-
         path.close();
-        canvas.drawPath(path, paint);
     }
 
 

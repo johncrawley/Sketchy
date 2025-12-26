@@ -5,13 +5,15 @@ import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
+import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 
 public abstract class AbstractShape implements Brushable{
 
-    final BrushShape brushShape;
-    private final DrawerFactory.Type drawerType;
-    int brushSize, halfBrushSize;
+    BrushShape brushShape;
+    DrawerFactory.Type drawerType;
+    int brushSize, halfBrushSize, quarterBrushSize;
     Path path;
+    ShadowOffsetType shadowOffsetType;
 
     public AbstractShape(BrushShape brushShape){
         this.brushShape = brushShape;
@@ -35,6 +37,7 @@ public abstract class AbstractShape implements Brushable{
     public void setBrushSize(int brushSize){
         this.brushSize = brushSize;
         halfBrushSize = this.brushSize / 2;
+        quarterBrushSize = Math.max(2, halfBrushSize / 2);
         recalculateDimensions();
     }
 

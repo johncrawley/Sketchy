@@ -72,7 +72,7 @@ import com.jacstuff.sketchy.brushes.BrushShape;
                https://www.instructables.com/Figuring-Measurements-of-a-5-pointed-Symmetrical-L/
 */
 
-public class PentagonBrush extends AbstractShape{
+public class PentagonBrush extends AbstractPathShape{
 
     Path path;
     Point topPoint;
@@ -134,12 +134,6 @@ public class PentagonBrush extends AbstractShape{
 
         leftX = bottomRightX + xFromBottomRightPointToLeft;
         leftY = bottomRightY + yFromBottomRightPointToLeft;
-    }
-
-
-    @Override
-    public void draw(PointF point, Canvas canvas, Paint paint) {
-        canvas.drawPath(path, paint);
     }
 
 

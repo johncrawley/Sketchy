@@ -85,7 +85,7 @@ public class BrushFactory {
         return shadowPathBrush;
     }
 
-    private void setupBrushShapeMap(){
+    private void setupBrushShapeMap(int maxScreenDimension){
         brushShapeMap = new HashMap<>(40);
         add(new TriangleBrush());
         add(new SquareBrush());
@@ -96,34 +96,28 @@ public class BrushFactory {
         add(new OvalBrush());
         add(new XBrush());
         add(new DiamondBrush());
+        add(new RoundedRectangleBrush());
         add(new AstroidBrush());
+        add(new PointedOvalBrush());
+        add(new CrescentBrush());
+        add(new TrapezoidBrush());
+        add(new ParallelogramBrush());
+        add(new StraightLineBrush(380, maxScreenDimension));
+        add(new WavyLineBrush());
+        add(new SemicircleBrush());
     }
 
     private void setupBrushMap(int maxDimension){
         brushMap = new HashMap<>();
         addBrush(bananaBrush);
-        addBrush(new RoundedRectangleBrush());
-       // add(new SquareBrush());
-      //  add(new TriangleBrush());
-       // add(new PentagonBrush());
-       // addBrush(new HexagonBrush());
         addBrush(new LineBrush());
         addBrush(new CurvedLineBrush());
-        addBrush(new StraightLineBrush(380, maxDimension));
-        addBrush(new WavyLineBrush());
-       // addBrush(new ArcBrush());
-        addBrush(new SemicircleBrush());
         addBrush(new TextBrush());
-        //addBrush(new OvalBrush());
-        addBrush(new CrescentBrush());
         addBrush(new TextOnCircleBrush());
         addBrush(new BananaBrush());
         addBrush(new PathBrush());
         addBrush(new SmoothPathBrush());
         addBrush(new RectangleBrush());
-        addBrush(new PointedOvalBrush());
-        addBrush(new TrapezoidBrush());
-        addBrush(new ParallelogramBrush());
         addBrush(new ArbitraryConnectedTriangleBrush());
         addBrush(new RandomBrush());
         addBrush(new SpiralBrush());
