@@ -92,7 +92,7 @@ public class RandomBrush extends AbstractBrush implements Brush {
             assignRandomPoints();
             areNewPointsRequired = false;
         }
-        var firstPoint = points.getFirst();
+        var firstPoint = points.get(0);
         path.moveTo(firstPoint.x, firstPoint.y);
         for(int i = 1; i < points.size(); i++){
             path.lineTo(points.get(i).x, points.get(i).y);

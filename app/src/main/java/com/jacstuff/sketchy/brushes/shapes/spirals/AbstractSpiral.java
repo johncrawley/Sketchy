@@ -4,8 +4,10 @@ import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.AbstractBrush;
+import com.jacstuff.sketchy.brushes.shapes.AbstractPathShape;
+import com.jacstuff.sketchy.brushes.shapes.AbstractShape;
 
-public abstract class AbstractSpiral extends AbstractBrush {
+public abstract class AbstractSpiral extends AbstractPathShape {
 
     Paint.Style savedStyle;
     private float savedStrokeWidth;
@@ -13,7 +15,7 @@ public abstract class AbstractSpiral extends AbstractBrush {
 
     public AbstractSpiral(BrushShape brushShape){
         super(brushShape);
-        isBrushDangerous = true;
+        isBrushLiableToFlicker = true;
     }
 
 
@@ -30,9 +32,9 @@ public abstract class AbstractSpiral extends AbstractBrush {
         paint.setStrokeWidth(savedStrokeWidth);
     }
 
-    @Override
     public void reinitialize(){
-        super.reinitialize();
+
+        // maybe have a reinitialize method in AbstractShape??
     }
 
 }

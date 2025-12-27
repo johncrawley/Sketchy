@@ -105,23 +105,23 @@ public class BrushFactory {
         add(new StraightLineBrush(380, maxScreenDimension));
         add(new WavyLineBrush());
         add(new SemicircleBrush());
+        add(new TextBrush());
+        add(new SpiralBrush());
+        add(new CrazySpiralBrush());
+
+
+        addBrush(new RandomBrush());
     }
+
 
     private void setupBrushMap(int maxDimension){
         brushMap = new HashMap<>();
-        addBrush(bananaBrush);
         addBrush(new LineBrush());
         addBrush(new CurvedLineBrush());
-        addBrush(new TextBrush());
-        addBrush(new TextOnCircleBrush());
-        addBrush(new BananaBrush());
         addBrush(new PathBrush());
         addBrush(new SmoothPathBrush());
         addBrush(new RectangleBrush());
         addBrush(new ArbitraryConnectedTriangleBrush());
-        addBrush(new RandomBrush());
-        addBrush(new SpiralBrush());
-        addBrush(new CrazySpiralBrush());
         addBrush(new VariableCircleBrush());
     }
 

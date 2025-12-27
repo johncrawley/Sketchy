@@ -3,10 +3,11 @@ package com.jacstuff.sketchy.brushes.shapes;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
-public class TextBrush extends AbstractBrush implements Brush {
+public class TextBrush extends AbstractShape{
 
     float textSize;
     String text;
@@ -34,7 +35,7 @@ public class TextBrush extends AbstractBrush implements Brush {
 
 
     @Override
-    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
+    public void draw(PointF p, Canvas canvas, Paint paint){
         if(text.trim().isEmpty()){
            // mainActivity.toast(R.string.toast_text_brush_is_empty);
             return;
@@ -65,10 +66,5 @@ public class TextBrush extends AbstractBrush implements Brush {
         return - (measuredWidth[0] /2);
     }
 
-
-    @Override
-    public void onTouchMove(float x, float y, Paint paint){
-        onTouchDown(x, y, paint);
-    }
 
 }

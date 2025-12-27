@@ -11,9 +11,10 @@ public abstract class AbstractShape implements Brushable{
 
     BrushShape brushShape;
     DrawerFactory.Type drawerType;
-    int brushSize, halfBrushSize, quarterBrushSize;
+    protected int brushSize, halfBrushSize, quarterBrushSize;
     Path path;
     ShadowOffsetType shadowOffsetType;
+    protected boolean isBrushLiableToFlicker = false;
 
     public AbstractShape(BrushShape brushShape){
         this.brushShape = brushShape;

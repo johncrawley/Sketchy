@@ -4,11 +4,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 
-public class SpiralBrush extends AbstractSpiral implements Brush {
+public class SpiralBrush extends AbstractSpiral {
 
     private final Path path;
 
@@ -24,15 +25,12 @@ public class SpiralBrush extends AbstractSpiral implements Brush {
 
 
     @Override
-    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
-        drawSpiral(canvas, paint,  1 + (brushSize / 30));
-    }
-
-
-    private void drawSpiral(Canvas canvas, Paint paint, int numberOfTwists) {
+    public void generatePath(PointF p) {
         path.reset();
-        saveSettings(paint);
-        int spacing = (int) paint.getStrokeWidth() + 10; //viewModel.spiralExtraSpacing;
+       // saveSettings(paint);
+       // int spacing = (int) paint.getStrokeWidth() + 10; //viewModel.spiralExtraSpacing;
+        int spacing = 10;
+        int numberOfTwists = brushSize / 20;
         int left = -spacing;
         int right = spacing;
         int top = -spacing;
@@ -53,8 +51,10 @@ public class SpiralBrush extends AbstractSpiral implements Brush {
             }
             startAngle = startAngle + arcAngle;
         }
-        canvas.drawPath(path, paint);
-        recallSettings(paint);
+        //recallSettings(paint);
     }
+
+
+
 
 }
