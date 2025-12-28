@@ -1,22 +1,21 @@
-package com.jacstuff.sketchy.brushes.shapes.drawer;
+package com.jacstuff.sketchy.brushes.shapes.threestep;
 
-import android.graphics.Paint;
 import android.graphics.PointF;
 
+import com.jacstuff.sketchy.brushes.shapes.drawer.AbstractShapeDrawer;
 import com.jacstuff.sketchy.easel.Easel;
 import com.jacstuff.sketchy.paintview.PaintView;
 
-public class SimpleShapeDrawer extends AbstractShapeDrawer{
+public class ThreeStepDrawer extends AbstractShapeDrawer {
 
 
-    public SimpleShapeDrawer(PaintView paintView){
+    public ThreeStepDrawer(PaintView paintView){
         super(paintView);
     }
 
-
     @Override
     public void down(PointF p, Easel easel) {
-       // paintView.enablePreviewLayer();
+        // paintView.enablePreviewLayer();
         drawToCanvas(p, easel);
     }
 
@@ -65,7 +64,7 @@ public class SimpleShapeDrawer extends AbstractShapeDrawer{
         canvas.save();
         canvas.translate(p.x, p.y);
 
-       // canvas.rotate(paintHelperManager.getAngleHelper().getFineAngle());
+        // canvas.rotate(paintHelperManager.getAngleHelper().getFineAngle());
 
         for(var paint : easel.getActivePaints()){
             brushShape.draw(p, canvas, paint);
@@ -76,12 +75,4 @@ public class SimpleShapeDrawer extends AbstractShapeDrawer{
 
 
 
-
-
-
-
-    public void drawKaleidoscopeSegment(float x, float y, Paint paint){
-       // var p = new PointF(x - kaleidoscopeHelper.getCenterX(), y - kaleidoscopeHelper.getCenterY());
-        //rotateAndDraw(p, paint);
-    }
 }

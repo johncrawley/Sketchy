@@ -18,16 +18,16 @@ public class AbstractShapeDrawer implements ShapeDrawer {
    // final KaleidoscopeHelper kaleidoscopeHelper;
    // final KaleidoscopeDrawer kaleidoscopeDrawer;
    // final TileHelper tileHelper;
-    Canvas canvas;
-    PaintView paintView;
+    protected Canvas canvas;
+    protected PaintView paintView;
     boolean isColorChangedOnDown = true;
-    final Paint paint;
+    protected final Paint paint;
    // final PlacementHelper placementHelper;
     protected boolean isDrawOnMoveModeEnabled;
-    Brushable brushShape;
+    protected Brushable brushShape;
 
 
-    AbstractShapeDrawer(PaintView paintView){
+    protected AbstractShapeDrawer(PaintView paintView){
         this.paintView = paintView;
         this.canvas = paintView.getCanvas();
         this.paintHelperManager = paintView.getPaintHelperManager();
