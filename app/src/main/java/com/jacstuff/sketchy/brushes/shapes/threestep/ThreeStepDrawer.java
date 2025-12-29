@@ -8,16 +8,38 @@ import com.jacstuff.sketchy.paintview.PaintView;
 
 public class ThreeStepDrawer extends AbstractShapeDrawer {
 
+    private enum Mode {PLACE, ADJUST, DRAW }
+
+    private Mode mode = Mode.PLACE;
+    private ThreeStepShape threeStepShape;
+
 
     public ThreeStepDrawer(PaintView paintView){
         super(paintView);
     }
 
+    public void setShape(ThreeStepShape threeStepShape){
+        this.threeStepShape = threeStepShape;
+    }
+
+
     @Override
     public void down(PointF p, Easel easel) {
         // paintView.enablePreviewLayer();
+        if(mode == Mode.PLACE){
+            threeStepShape.place(p);
+        }
+        else{
+            releaseAndDraw(p, easel);
+        }
         drawToCanvas(p, easel);
     }
+
+    @Override
+    public void up(PointF p, Easel easel) {
+
+    }
+
 
     /*
     public void down(float x1, float y1, Paint paint) {
@@ -40,6 +62,20 @@ public class ThreeStepDrawer extends AbstractShapeDrawer {
     @Override
     public void move(PointF p, Easel easel) {
         drawToCanvas(p, easel);
+    }
+
+
+    private void releaseAndDraw(PointF p, Easel easel){
+        canvas = easel.getCanvas();
+        canvas.save();
+        canvas.translate(p.x, p.y);
+
+        // canvas.rotate(paintHelperManager.getAngleHelper().getFineAngle());
+
+        for(var paint : easel.getActivePaints()){
+            threeStepShape.releaseAndDraw(p, canvas, paint);
+        }
+        canvas.restore();
     }
 
 
