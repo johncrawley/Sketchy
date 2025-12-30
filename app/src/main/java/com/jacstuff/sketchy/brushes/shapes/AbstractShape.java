@@ -10,11 +10,12 @@ import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 public abstract class AbstractShape implements Brushable{
 
     BrushShape brushShape;
-    DrawerFactory.Type drawerType;
+    protected DrawerFactory.Type drawerType;
     protected int brushSize, halfBrushSize, quarterBrushSize;
-    Path path;
-    ShadowOffsetType shadowOffsetType;
+    protected Path path;
+    protected ShadowOffsetType shadowOffsetType;
     protected boolean isBrushLiableToFlicker = false;
+    protected boolean usesBrushSizeControl = true;
 
     public AbstractShape(BrushShape brushShape){
         this.brushShape = brushShape;

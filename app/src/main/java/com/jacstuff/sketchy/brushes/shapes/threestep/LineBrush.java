@@ -1,16 +1,20 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.threestep;
 
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.AbstractBrush;
+import com.jacstuff.sketchy.brushes.shapes.AbstractShape;
+import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 
 
-public class LineBrush extends AbstractBrush implements Brush {
+public class LineBrush extends AbstractShape implements ThreeStepShape {
 
     private float xDown, yDown;
 
@@ -21,8 +25,22 @@ public class LineBrush extends AbstractBrush implements Brush {
         usesBrushSizeControl = false;
     }
 
+    @Override
+    public void place(PointF p){
+
+    }
 
     @Override
+    public void adjust(PointF p){
+
+    }
+
+
+    @Override
+    public void releaseAndDraw(PointF p, Canvas canvas, Paint paint){
+
+    }
+
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         xDown = p.x;
         yDown = p.y;
@@ -42,38 +60,41 @@ public class LineBrush extends AbstractBrush implements Brush {
     }
 
 
-    @Override
     public void onTouchMove(float x, float y, Paint paint) {
-        canvas.drawLine(xDown, yDown, x, y, paint);
+        //canvas.drawLine(xDown, yDown, x, y, paint);
     }
 
 
-    @Override
     public void onTouchUp(float x, float y, float offsetX, float offsetY, Paint paint) {
       //  mainActivity.getConnectedLineIconModifier().setConnectedIconAndState();
+        /*
         canvas.drawLine(xDown - offsetX,
                 yDown - offsetY,
                 x - offsetX,
                 y - offsetY,
                 paint);
+
+         */
        // viewModel.drawHistory.saveLineUpCoordinates(x,y);
     }
 
 
-    @Override
     public void onTouchUp(float x, float y, Paint paint) {
-        canvas.drawLine(xDown, yDown, x, y, paint);
+      //  canvas.drawLine(xDown, yDown, x, y, paint);
     }
 
 
-    @Override
     public boolean isUsingPlacementHelper(){
         return false;
     }
 
 
-    @Override
     public void reset(){
         //mainActivity.getConnectedLineIconModifier().resetIconAndState();
+    }
+
+    @Override
+    public void draw(PointF point, Canvas canvas, Paint paint) {
+
     }
 }

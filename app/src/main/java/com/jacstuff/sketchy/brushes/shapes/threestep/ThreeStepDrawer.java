@@ -1,5 +1,7 @@
 package com.jacstuff.sketchy.brushes.shapes.threestep;
 
+
+
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.shapes.drawer.AbstractShapeDrawer;
@@ -26,42 +28,22 @@ public class ThreeStepDrawer extends AbstractShapeDrawer {
     @Override
     public void down(PointF p, Easel easel) {
         // paintView.enablePreviewLayer();
-        if(mode == Mode.PLACE){
-            threeStepShape.place(p);
-        }
-        else{
-            releaseAndDraw(p, easel);
-        }
-        drawToCanvas(p, easel);
+        threeStepShape.place(p);
     }
-
-    @Override
-    public void up(PointF p, Easel easel) {
-
-    }
-
-
-    /*
-    public void down(float x1, float y1, Paint paint) {
-        placementHelper.registerTouchDown(x1, y1);
-        calculateXYFrom(x1, y1);
-        updateColorGradientAndAngle(x,y);
-        kaleidoscopeHelper.setCenter(x,y);
-        log("down() about to drawToCanvas x,y: " + x + "," + y);
-        if(isDrawOnMoveModeEnabled){
-            paintView.enablePreviewLayer();
-            drawToCanvas(x,y, paint);
-            return;
-        }
-        paintHelperManager.getSizeHelper().onTouchDown(x, y);
-        drawToCanvas(x,y, paint);
-    }
-*/
 
 
     @Override
     public void move(PointF p, Easel easel) {
+        paintView.enablePreviewLayer();
+        threeStepShape.adjust(p);
         drawToCanvas(p, easel);
+    }
+
+
+    @Override
+    public void up(PointF p, Easel easel) {
+        paintView.disablePreviewLayer();
+        releaseAndDraw(p, easel);
     }
 
 
@@ -81,15 +63,6 @@ public class ThreeStepDrawer extends AbstractShapeDrawer {
 
     void drawToCanvas(PointF p, Easel easel){
         brushShape.generatePath(p);
-        /*
-        if(kaleidoscopeHelper.isEnabled()){
-            kaleidoscopeDrawer.drawKaleidoscope(p.x, p.y, paint);
-        }
-        else{
-            rotateAndDraw(p, easel);
-        }
-
-         */
         rotateAndDraw(p,easel);
         paintView.invalidate();
     }
