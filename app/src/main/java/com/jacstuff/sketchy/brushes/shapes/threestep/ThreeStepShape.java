@@ -8,7 +8,7 @@ import android.graphics.PointF;
 public interface ThreeStepShape {
 
     void place(PointF p);
-    void adjust(PointF p);
-    void releaseAndDraw(PointF p, Canvas canvas, Paint paint);
+    void adjust(PointF p, Canvas canvas, Paint paint);
+    void draw(PointF p, Canvas canvas, Paint paint);
 
 }

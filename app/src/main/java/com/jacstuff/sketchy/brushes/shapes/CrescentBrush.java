@@ -85,9 +85,8 @@ public class CrescentBrush extends AbstractPathShape {
     }
 
 
-    @Override
     public void notifyStrokeWidthChanged(){
-        super.notifyStrokeWidthChanged();
+       // super.notifyStrokeWidthChanged();
         crescentStrokeAdjustment = previousStrokeWidth / 1.7f;
         readjustPoints();
     }

@@ -27,19 +27,21 @@ public class LineBrush extends AbstractShape implements ThreeStepShape {
 
     @Override
     public void place(PointF p){
-
+        xDown = p.x;
+        yDown = p.y;
     }
 
     @Override
-    public void adjust(PointF p){
-
+    public void adjust(PointF p, Canvas canvas, Paint paint){
+        canvas.drawLine(xDown, yDown, p.x, p.y, paint);
     }
 
 
     @Override
-    public void releaseAndDraw(PointF p, Canvas canvas, Paint paint){
-
+    public void draw(PointF p, Canvas canvas, Paint paint){
+        canvas.drawLine(xDown, yDown, p.x, p.y, paint);
     }
+
 
     public void onBrushTouchDown(Point p, Canvas canvas, Paint paint){
         xDown = p.x;
@@ -93,8 +95,4 @@ public class LineBrush extends AbstractShape implements ThreeStepShape {
         //mainActivity.getConnectedLineIconModifier().resetIconAndState();
     }
 
-    @Override
-    public void draw(PointF point, Canvas canvas, Paint paint) {
-
-    }
 }

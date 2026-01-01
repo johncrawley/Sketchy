@@ -71,7 +71,7 @@ public class MultiShadeButtonIconDrawer {
 
             @Override
             public int getOpacity() {
-                return 0;
+                return PixelFormat.OPAQUE;
             }
 
             @Override

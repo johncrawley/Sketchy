@@ -4,11 +4,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
 
-public class TextOnCircleBrush extends TextBrush implements Brush {
+public class TextOnCircleBrush extends TextBrush {
 
 
 
@@ -18,8 +19,8 @@ public class TextOnCircleBrush extends TextBrush implements Brush {
 
 
     @Override
-    public void onBrushTouchDown(Point p, Canvas canvas, Paint paint) {
-        Path path = new Path();
+    public void draw(PointF p, Canvas canvas, Paint paint) {
+        path = new Path();
         path.moveTo(0,0);
         path.addCircle(0,0, brushSize * 2, Path.Direction.CW);
 

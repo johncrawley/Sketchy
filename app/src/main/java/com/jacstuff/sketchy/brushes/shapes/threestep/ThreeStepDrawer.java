@@ -35,8 +35,7 @@ public class ThreeStepDrawer extends AbstractShapeDrawer {
     @Override
     public void move(PointF p, Easel easel) {
         paintView.enablePreviewLayer();
-        threeStepShape.adjust(p);
-        drawToCanvas(p, easel);
+        releaseAndDraw(p, easel);
     }
 
 
@@ -55,7 +54,7 @@ public class ThreeStepDrawer extends AbstractShapeDrawer {
         // canvas.rotate(paintHelperManager.getAngleHelper().getFineAngle());
 
         for(var paint : easel.getActivePaints()){
-            threeStepShape.releaseAndDraw(p, canvas, paint);
+            threeStepShape.draw(p, canvas, paint);
         }
         canvas.restore();
     }

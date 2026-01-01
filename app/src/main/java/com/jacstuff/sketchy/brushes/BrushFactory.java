@@ -115,7 +115,7 @@ public class BrushFactory {
 
     private void setupBrushMap(int maxDimension){
         brushMap = new HashMap<>();
-        addBrush(new LineBrush());
+        //addBrush(new LineBrush());
         addBrush(new CurvedLineBrush());
         addBrush(new PathBrush());
         addBrush(new SmoothPathBrush());
