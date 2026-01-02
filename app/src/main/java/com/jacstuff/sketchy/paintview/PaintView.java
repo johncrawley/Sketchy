@@ -11,7 +11,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.jacstuff.sketchy.brushes.shapes.drawer.ShapeDrawer;
-import com.jacstuff.sketchy.brushes.shapes.drawer.SimpleShapeDrawer;
+import com.jacstuff.sketchy.brushes.shapes.onestep.SimpleShapeDrawer;
+import com.jacstuff.sketchy.brushes.shapes.threestep.LineBrush;
+import com.jacstuff.sketchy.brushes.shapes.threestep.ThreeStepDrawer;
 import com.jacstuff.sketchy.easel.Easel;
 import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
@@ -49,6 +51,7 @@ public class PaintView extends View {
     private Drawer drawer;
     private ShapeDrawer shapeDrawer;
 
+
     public PaintView(Context context) {
 
         this(context, null);
@@ -75,8 +78,12 @@ public class PaintView extends View {
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         initEasel();
-        shapeDrawer = new SimpleShapeDrawer(this);
-        shapeDrawer.setBrushShape(viewModel.currentBrush);
+       // shapeDrawer = new SimpleShapeDrawer(this);
+        shapeDrawer = new ThreeStepDrawer(this);
+        //shapeDrawer.setBrushShape(viewModel.currentBrush);
+        var threeStepShapeDrawer = (ThreeStepDrawer)shapeDrawer;
+        threeStepShapeDrawer.setShape(new LineBrush());
+        shapeDrawer.setBrushShape(new LineBrush());
         viewModel.currentBrush.setBrushSize(30);
         var tempPaint = new Paint();
         tempPaint.setStyle(Paint.Style.FILL);

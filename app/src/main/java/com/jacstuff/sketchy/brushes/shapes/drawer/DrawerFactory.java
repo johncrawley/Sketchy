@@ -1,5 +1,9 @@
 package com.jacstuff.sketchy.brushes.shapes.drawer;
 
+import static com.jacstuff.sketchy.brushes.shapes.drawer.DrawerType.BASIC;
+import static com.jacstuff.sketchy.brushes.shapes.drawer.DrawerType.DRAG_LINE;
+import static com.jacstuff.sketchy.brushes.shapes.drawer.DrawerType.DRAG_RECT;
+
 import com.jacstuff.sketchy.paintview.PaintView;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
@@ -8,15 +12,14 @@ import java.util.Map;
 
 public class DrawerFactory {
 
-    public enum Type { BASIC, DRAG_LINE, DRAG_RECT, PATH, SMOOTH_PATH, CURVE}
-    private final Map<Type, Drawer> drawerMap;
+    private final Map<DrawerType, Drawer> drawerMap;
 
 
     public DrawerFactory(PaintView paintView){
         drawerMap = new HashMap<>();
-        drawerMap.put(Type.BASIC, new BasicDrawer(paintView));
-        drawerMap.put(Type.DRAG_LINE, new DragLineDrawer(paintView));
-        drawerMap.put(Type.DRAG_RECT, new DragRectDrawer(paintView));
+        drawerMap.put(BASIC, new BasicDrawer(paintView));
+        drawerMap.put(DRAG_LINE, new DragLineDrawer(paintView));
+        drawerMap.put(DRAG_RECT, new DragRectDrawer(paintView));
        // drawerMap.put(Type.PATH, new PathDrawer(paintView));
        // drawerMap.put(Type.SMOOTH_PATH, new SmoothPathDrawer(paintView));
     }
@@ -30,7 +33,7 @@ public class DrawerFactory {
 
 
 
-    public Drawer get(Type type){
+    public Drawer get(DrawerType type){
         return drawerMap.get(type);
     }
 

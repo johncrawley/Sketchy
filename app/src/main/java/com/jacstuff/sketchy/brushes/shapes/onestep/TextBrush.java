@@ -1,16 +1,16 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.onestep;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.AbstractShape;
 
-public class TextBrush extends AbstractShape{
+public class TextBrush extends AbstractShape {
 
-    float textSize;
-    String text;
+    protected float textSize;
+    protected String text;
     boolean wasTextSizeChanged;
 
 
@@ -19,7 +19,7 @@ public class TextBrush extends AbstractShape{
     }
 
 
-    TextBrush(BrushShape brushShape){
+    public TextBrush(BrushShape brushShape){
         super(brushShape);
     }
 

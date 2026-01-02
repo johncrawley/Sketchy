@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.onestep.pathshape;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -7,8 +7,9 @@ import android.graphics.Point;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.AbstractShape;
 
-public class HexagonBrush extends AbstractShape{
+public class HexagonBrush extends AbstractShape {
 
     private final Point leftPoint, rightPoint, bottomLeftPoint, bottomRightPoint, topLeftPoint, topRightPoint;
     private final double edgeDistanceRatio;

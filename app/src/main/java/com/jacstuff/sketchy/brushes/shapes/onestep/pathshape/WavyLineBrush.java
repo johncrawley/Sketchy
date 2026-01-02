@@ -1,14 +1,10 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.onestep.pathshape;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 
-public class WavyLineBrush extends AbstractPathShape{
+public class WavyLineBrush extends AbstractPathShape {
 
     public WavyLineBrush(){
         super(BrushShape.WAVY_LINE);

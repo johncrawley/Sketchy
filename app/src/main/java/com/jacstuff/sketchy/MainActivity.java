@@ -33,7 +33,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.jacstuff.sketchy.brushes.BrushFactory;
@@ -64,7 +63,6 @@ import com.jacstuff.sketchy.ui.SettingsPopup;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -497,10 +495,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         File photoFile = null;
         try {
             photoFile = createImageFile();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException e) {
+            printError(e.getMessage());
         }
         return photoFile;
+    }
+
+
+    private void printError(String str){
+
     }
 
 

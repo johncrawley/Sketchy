@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.onestep;
 
 
 import android.graphics.Canvas;
@@ -6,18 +6,13 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.AbstractShape;
 
-public class CircleBrush extends AbstractShape implements Brushable{
+public class CircleBrush extends AbstractShape{
 
 
     public CircleBrush(){
        super(BrushShape.CIRCLE);
-    }
-
-
-    @Override
-    public void generatePath(PointF p){
-        //do nothing
     }
 
 

@@ -1,13 +1,9 @@
-package com.jacstuff.sketchy.brushes.shapes.spirals;
+package com.jacstuff.sketchy.brushes.shapes.onestep.spirals;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.brushes.shapes.Brush;
 
 public class SpiralBrush extends AbstractSpiral {
 

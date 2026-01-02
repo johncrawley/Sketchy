@@ -1,8 +1,6 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.onestep.pathshape;
 
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -72,9 +70,8 @@ import com.jacstuff.sketchy.brushes.BrushShape;
                https://www.instructables.com/Figuring-Measurements-of-a-5-pointed-Symmetrical-L/
 */
 
-public class PentagonBrush extends AbstractPathShape{
+public class PentagonBrush extends AbstractPathShape {
 
-    Path path;
     Point topPoint;
     float bottomRightX, bottomRightY, bottomLeftX, bottomLeftY, leftX, leftY, rightX, rightY;
     float heightToOppositePointRatio = 1.051414f;

@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.onestep;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -6,6 +6,8 @@ import android.graphics.Path;
 import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.AbstractBrush;
+import com.jacstuff.sketchy.brushes.shapes.Brush;
 
 import java.util.ArrayList;
 import java.util.List;

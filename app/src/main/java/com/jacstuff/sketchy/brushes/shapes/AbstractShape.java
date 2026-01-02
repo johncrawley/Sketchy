@@ -5,12 +5,13 @@ import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
+import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerType;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 
 public abstract class AbstractShape implements Brushable{
 
-    BrushShape brushShape;
-    protected DrawerFactory.Type drawerType;
+    protected BrushShape brushShape;
+    protected DrawerType drawerType;
     protected int brushSize, halfBrushSize, quarterBrushSize;
     protected Path path;
     protected ShadowOffsetType shadowOffsetType;
@@ -19,18 +20,18 @@ public abstract class AbstractShape implements Brushable{
 
     public AbstractShape(BrushShape brushShape){
         this.brushShape = brushShape;
-        this.drawerType = DrawerFactory.Type.BASIC;
+        this.drawerType = DrawerType.BASIC;
     }
 
 
-    public AbstractShape(BrushShape brushShape, DrawerFactory.Type drawerType){
+    public AbstractShape(BrushShape brushShape, DrawerType drawerType){
         this.brushShape = brushShape;
         this.drawerType = drawerType;
     }
 
 
     @Override
-    public DrawerFactory.Type getDrawerType(){
+    public DrawerType getDrawerType(){
         return drawerType;
     }
 
@@ -44,9 +45,10 @@ public abstract class AbstractShape implements Brushable{
     }
 
 
-    void recalculateDimensions(){
+    public void recalculateDimensions(){
 
     }
+
 
     @Override
     public BrushShape getBrushShape(){

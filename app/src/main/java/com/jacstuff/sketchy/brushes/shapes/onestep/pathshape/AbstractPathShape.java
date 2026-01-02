@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.onestep.pathshape;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -6,10 +6,11 @@ import android.graphics.Path;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.AbstractShape;
 
-public abstract class AbstractPathShape extends AbstractShape{
+public abstract class AbstractPathShape extends AbstractShape {
 
-    Path path;
+    protected Path path;
 
     public AbstractPathShape(BrushShape brushShape){
         super(brushShape);

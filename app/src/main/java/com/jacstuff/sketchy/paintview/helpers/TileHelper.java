@@ -2,7 +2,6 @@ package com.jacstuff.sketchy.paintview.helpers;
 
 import android.graphics.Paint;
 import com.jacstuff.sketchy.brushes.shapes.drawer.BasicDrawer;
-import com.jacstuff.sketchy.brushes.shapes.drawer.SimpleShapeDrawer;
 import com.jacstuff.sketchy.viewmodel.MainViewModel;
 
 public class TileHelper {

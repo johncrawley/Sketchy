@@ -1,11 +1,9 @@
-package com.jacstuff.sketchy.brushes.shapes.spirals;
+package com.jacstuff.sketchy.brushes.shapes.onestep.spirals;
 
 import android.graphics.Paint;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
-import com.jacstuff.sketchy.brushes.shapes.AbstractBrush;
-import com.jacstuff.sketchy.brushes.shapes.AbstractPathShape;
-import com.jacstuff.sketchy.brushes.shapes.AbstractShape;
+import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.AbstractPathShape;
 
 public abstract class AbstractSpiral extends AbstractPathShape {
 

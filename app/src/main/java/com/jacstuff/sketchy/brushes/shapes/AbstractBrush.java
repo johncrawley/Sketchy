@@ -8,6 +8,7 @@ import android.graphics.PointF;
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
+import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerType;
 import com.jacstuff.sketchy.brushes.styles.FillStyle;
 import com.jacstuff.sketchy.brushes.styles.Style;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
@@ -19,11 +20,11 @@ public abstract class AbstractBrush implements Brush{
 
     public Canvas canvas;
     protected int brushSize;
+    protected int halfBrushSize;
     protected Style currentStyle;
-    int halfBrushSize;
     BrushShape brushShape;
     public Drawer drawer;
-    protected DrawerFactory.Type drawerType;
+    protected DrawerType drawerType;
     public boolean isDrawnFromCenter;
     protected boolean usesBrushSizeControl = true;
     protected ShadowOffsetType shadowOffsetType = ShadowOffsetType.USE_SHAPE_WIDTH;
@@ -33,7 +34,7 @@ public abstract class AbstractBrush implements Brush{
     public AbstractBrush(BrushShape brushShape){
         currentStyle = new FillStyle();
         this.brushShape = brushShape;
-        this.drawerType = DrawerFactory.Type.BASIC;
+        this.drawerType = DrawerType.BASIC;
         isDrawnFromCenter = true;
     }
 

@@ -1,15 +1,15 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.onestep;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.AbstractShape;
 
-public class SquareBrush extends AbstractShape implements Brushable{
+public class SquareBrush extends AbstractShape{
 
 
    public SquareBrush(){
@@ -26,13 +26,6 @@ public class SquareBrush extends AbstractShape implements Brushable{
         strokePaint.setStyle(Paint.Style.STROKE);
         strokePaint.setColor(Color.BLACK);
       //  drawShape(canvas, paint, strokePaint, (can,pt) -> can.drawRect(left, top, right, bottom, paint));
-    }
-
-
-
-    @Override
-    public void generatePath(PointF p){
-       //do nothing
     }
 
 

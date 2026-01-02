@@ -1,7 +1,5 @@
 package com.jacstuff.sketchy.brushes.shapes.threestep;
 
-
-
 import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.shapes.drawer.AbstractShapeDrawer;
@@ -10,9 +8,6 @@ import com.jacstuff.sketchy.paintview.PaintView;
 
 public class ThreeStepDrawer extends AbstractShapeDrawer {
 
-    private enum Mode {PLACE, ADJUST, DRAW }
-
-    private Mode mode = Mode.PLACE;
     private ThreeStepShape threeStepShape;
 
 

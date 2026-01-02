@@ -6,6 +6,7 @@ import android.graphics.PointF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
+import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerType;
 
 public interface Brushable {
 
@@ -13,5 +14,5 @@ public interface Brushable {
     void generatePath(PointF point);
     void draw(PointF point, Canvas canvas, Paint paint);
     void setBrushSize(int brushSize);
-    DrawerFactory.Type getDrawerType();
+    DrawerType getDrawerType();
 }

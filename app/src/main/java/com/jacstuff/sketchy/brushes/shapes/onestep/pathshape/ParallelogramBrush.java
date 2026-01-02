@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.onestep.pathshape;
 
 import android.graphics.Path;
 import android.graphics.Point;

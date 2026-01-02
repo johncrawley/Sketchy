@@ -8,6 +8,7 @@ import android.graphics.Point;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
+import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerType;
 import com.jacstuff.sketchy.utils.MathUtils;
 
 public class VariableCircleBrush extends AbstractBrush implements Brush {
@@ -17,7 +18,7 @@ public class VariableCircleBrush extends AbstractBrush implements Brush {
 
     public VariableCircleBrush() {
         super(BrushShape.VARIABLE_CIRCLE);
-        drawerType = DrawerFactory.Type.DRAG_RECT;
+        drawerType = DrawerType.DRAG_RECT;
         isDrawnFromCenter = true;
         usesBrushSizeControl = false;
         shadowOffsetType = USE_SET_VALUE;

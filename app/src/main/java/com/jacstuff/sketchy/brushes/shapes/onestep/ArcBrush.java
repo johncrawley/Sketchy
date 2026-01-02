@@ -1,12 +1,12 @@
-package com.jacstuff.sketchy.brushes.shapes;
+package com.jacstuff.sketchy.brushes.shapes.onestep;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
 import com.jacstuff.sketchy.brushes.BrushShape;
+import com.jacstuff.sketchy.brushes.shapes.AbstractShape;
 
 public class ArcBrush extends AbstractShape {
 
@@ -48,10 +48,6 @@ public class ArcBrush extends AbstractShape {
         isDrawnFromCentre = drawnFromCentre;
     }
 
-    @Override
-    public void generatePath(PointF point) {
-        //do nothing
-    }
 
     @Override
     public void draw(PointF point, Canvas canvas, Paint paint) {
@@ -60,6 +56,7 @@ public class ArcBrush extends AbstractShape {
         int sweep = Math.min(1 + sweepAngle, 359);
         canvas.drawArc(rect, startAngle, sweep, isDrawnFromCentre, paint);
     }
+
 
     @Override
     public void setBrushSize(int brushSize){

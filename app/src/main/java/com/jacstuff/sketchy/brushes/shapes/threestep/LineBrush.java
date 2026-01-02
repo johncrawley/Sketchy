@@ -11,6 +11,7 @@ import com.jacstuff.sketchy.brushes.shapes.AbstractBrush;
 import com.jacstuff.sketchy.brushes.shapes.AbstractShape;
 import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
+import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerType;
 import com.jacstuff.sketchy.paintview.helpers.shadow.ShadowOffsetType;
 
 
@@ -20,16 +21,18 @@ public class LineBrush extends AbstractShape implements ThreeStepShape {
 
     public LineBrush() {
         super(BrushShape.LINE);
-        drawerType = DrawerFactory.Type.DRAG_LINE;
+        drawerType = DrawerType.DRAG_LINE;
         shadowOffsetType = ShadowOffsetType.USE_STROKE_WIDTH;
         usesBrushSizeControl = false;
     }
+
 
     @Override
     public void place(PointF p){
         xDown = p.x;
         yDown = p.y;
     }
+
 
     @Override
     public void adjust(PointF p, Canvas canvas, Paint paint){

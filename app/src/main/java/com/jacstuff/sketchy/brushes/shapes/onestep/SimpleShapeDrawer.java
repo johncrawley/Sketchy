@@ -1,12 +1,13 @@
-package com.jacstuff.sketchy.brushes.shapes.drawer;
+package com.jacstuff.sketchy.brushes.shapes.onestep;
 
 import android.graphics.Paint;
 import android.graphics.PointF;
 
+import com.jacstuff.sketchy.brushes.shapes.drawer.AbstractShapeDrawer;
 import com.jacstuff.sketchy.easel.Easel;
 import com.jacstuff.sketchy.paintview.PaintView;
 
-public class SimpleShapeDrawer extends AbstractShapeDrawer{
+public class SimpleShapeDrawer extends AbstractShapeDrawer {
 
 
     public SimpleShapeDrawer(PaintView paintView){
@@ -72,12 +73,6 @@ public class SimpleShapeDrawer extends AbstractShapeDrawer{
         }
         canvas.restore();
     }
-
-
-
-
-
-
 
 
     public void drawKaleidoscopeSegment(float x, float y, Paint paint){

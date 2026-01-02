@@ -4,9 +4,8 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
 import com.jacstuff.sketchy.brushes.BrushFactory;
-import com.jacstuff.sketchy.brushes.shapes.Brush;
 import com.jacstuff.sketchy.brushes.shapes.Brushable;
-import com.jacstuff.sketchy.brushes.shapes.TriangleBrush;
+import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.TriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.twostep.TrianglePoints;
 import com.jacstuff.sketchy.controls.ButtonCategory;
 import com.jacstuff.sketchy.controls.colorbuttons.ShadeStore;
