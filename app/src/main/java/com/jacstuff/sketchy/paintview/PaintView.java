@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.jacstuff.sketchy.brushes.shapes.drawer.ShapeDrawer;
 import com.jacstuff.sketchy.brushes.shapes.onestep.SimpleShapeDrawer;
+import com.jacstuff.sketchy.brushes.shapes.onestep.SquareBrush;
 import com.jacstuff.sketchy.brushes.shapes.threestep.LineBrush;
 import com.jacstuff.sketchy.brushes.shapes.threestep.ThreeStepDrawer;
 import com.jacstuff.sketchy.easel.Easel;
@@ -39,7 +40,6 @@ public class PaintView extends View {
     private PaintHelperManager paintHelperManager;
     private boolean isPreviewLayerToBeDrawn;
    // private boolean ignoreMoveAndUpActions = false;
-    //private SettingsPopup settingsPopup;
     private final Context context;
     private BitmapLoader bitmapLoader;
     private SensitivityHelper sensitivityHelper;
@@ -78,12 +78,13 @@ public class PaintView extends View {
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         initEasel();
-       // shapeDrawer = new SimpleShapeDrawer(this);
-        shapeDrawer = new ThreeStepDrawer(this);
-        //shapeDrawer.setBrushShape(viewModel.currentBrush);
-        var threeStepShapeDrawer = (ThreeStepDrawer)shapeDrawer;
-        threeStepShapeDrawer.setShape(new LineBrush());
-        shapeDrawer.setBrushShape(new LineBrush());
+        shapeDrawer = new SimpleShapeDrawer(this);
+       // shapeDrawer = new ThreeStepDrawer(this);
+       // shapeDrawer.setBrushShape(viewModel.currentBrush);
+        var square = new SquareBrush();
+        square.setBrushSize(30);
+        shapeDrawer.setBrushShape(square);
+        initLineBrush();
         viewModel.currentBrush.setBrushSize(30);
         var tempPaint = new Paint();
         tempPaint.setStyle(Paint.Style.FILL);
@@ -93,6 +94,13 @@ public class PaintView extends View {
         canvas.drawCircle(100,100,100, tempPaint);
         enablePreviewLayer();
         invalidate();
+    }
+
+
+    private void initLineBrush(){
+        shapeDrawer = new ThreeStepDrawer(this);
+        var threeStepShapeDrawer = (ThreeStepDrawer)shapeDrawer;
+        threeStepShapeDrawer.setShape(new LineBrush());
     }
 
     public void init(BrushFactory brushFactory, MainViewModel viewModel, PaintHelperManager paintHelperManager) {

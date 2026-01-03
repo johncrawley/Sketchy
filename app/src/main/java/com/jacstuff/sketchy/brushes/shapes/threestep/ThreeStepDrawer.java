@@ -44,15 +44,24 @@ public class ThreeStepDrawer extends AbstractShapeDrawer {
     private void releaseAndDraw(PointF p, Easel easel){
         canvas = easel.getCanvas();
         canvas.save();
-        canvas.translate(p.x, p.y);
+       // canvas.translate(p.x, p.y);
 
         // canvas.rotate(paintHelperManager.getAngleHelper().getFineAngle());
-
+        log("entered releaseAndDraw()");
         for(var paint : easel.getActivePaints()){
+            log("***$$$$****");
             threeStepShape.draw(p, canvas, paint);
         }
+        log("********");
         canvas.restore();
+        paintView.invalidate();
     }
+
+
+    private void log(String msg){
+        System.out.println("^^^ ThreeStepDrawer: " + msg);
+    }
+
 
 
     void drawToCanvas(PointF p, Easel easel){
@@ -73,6 +82,7 @@ public class ThreeStepDrawer extends AbstractShapeDrawer {
             brushShape.draw(p, canvas, paint);
         }
         canvas.restore();
+        paintView.invalidate();
     }
 
 

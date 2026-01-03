@@ -2,6 +2,7 @@ package com.jacstuff.sketchy.brushes.shapes.threestep;
 
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -31,18 +32,26 @@ public class LineBrush extends AbstractShape implements ThreeStepShape {
     public void place(PointF p){
         xDown = p.x;
         yDown = p.y;
+        log("entered place() x,y: " + p.x + "," + p.y);
+    }
+
+    private void log(String msg){
+        System.out.println("^^^ LineBrush: " + msg);
     }
 
 
     @Override
     public void adjust(PointF p, Canvas canvas, Paint paint){
         canvas.drawLine(xDown, yDown, p.x, p.y, paint);
+
+        log("entered adjust() x,y: " + p.x + "," + p.y);
     }
 
 
     @Override
     public void draw(PointF p, Canvas canvas, Paint paint){
         canvas.drawLine(xDown, yDown, p.x, p.y, paint);
+        log("entered draw() x,y: " + p.x + "," + p.y);
     }
 
 
