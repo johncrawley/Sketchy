@@ -10,7 +10,7 @@ import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.SemicircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.SquareBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.TriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.smoothpath.SmoothPathBrush;
-import com.jacstuff.sketchy.brushes.shapes.VariableCircleBrush;
+import com.jacstuff.sketchy.brushes.shapes.threestep.VariableCircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.spirals.CrazySpiralBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.CrescentBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.RandomBrush;
@@ -83,6 +83,7 @@ public class BrushFactory {
         return shadowPathBrush;
     }
 
+
     private void setupBrushShapeMap(int maxScreenDimension){
         brushShapeMap = new HashMap<>(40);
         add(new TriangleBrush());
@@ -107,7 +108,6 @@ public class BrushFactory {
         add(new SpiralBrush());
         add(new CrazySpiralBrush());
 
-
         addBrush(new RandomBrush());
     }
 
@@ -115,12 +115,12 @@ public class BrushFactory {
     private void setupBrushMap(int maxDimension){
         brushMap = new HashMap<>();
         //addBrush(new LineBrush());
+        //addBrush(new VariableCircleBrush());
         addBrush(new CurvedLineBrush());
         addBrush(new PathBrush());
         addBrush(new SmoothPathBrush());
         addBrush(new RectangleBrush());
         addBrush(new ArbitraryConnectedTriangleBrush());
-        addBrush(new VariableCircleBrush());
     }
 
 

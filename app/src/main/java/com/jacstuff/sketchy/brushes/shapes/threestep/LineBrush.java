@@ -35,6 +35,7 @@ public class LineBrush extends AbstractShape implements ThreeStepShape {
         log("entered place() x,y: " + p.x + "," + p.y);
     }
 
+
     private void log(String msg){
         System.out.println("^^^ LineBrush: " + msg);
     }
