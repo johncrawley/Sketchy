@@ -21,7 +21,7 @@ public class VariableCircleBrush extends AbstractShape implements ThreeStepShape
     public VariableCircleBrush() {
         super(BrushShape.VARIABLE_CIRCLE);
         drawerType = DrawerType.DRAG_RECT;
-        //isDrawnFromCenter = true;
+        isDrawnFromCenter = true;
         usesBrushSizeControl = false;
         shadowOffsetType = USE_SET_VALUE;
     }
@@ -29,21 +29,30 @@ public class VariableCircleBrush extends AbstractShape implements ThreeStepShape
 
     @Override
     public void place(PointF p) {
-        this.touchDownPoint = p;
+        log("Entered place() p: " + p.x + "," + p.y);
+        this.touchDownPoint = new PointF(p.x, p.y);
     }
 
 
     @Override
     public void adjust(PointF p, Canvas canvas, Paint paint) {
         radius = MathUtils.getDistance(touchDownPoint.x, touchDownPoint.y, p.x, p.y);
+        log("entered adjust() touchDownPoint: " + touchDownPoint + " p: " + p);
         canvas.drawCircle(0, 0, radius, paint);
-        float calculatedSize = ((touchDownPoint.x - p.x) + (touchDownPoint.y - p.y)) * 2;
-        setBrushSize( (int)calculatedSize);
+        //float calculatedSize = ((touchDownPoint.x - p.x) + (touchDownPoint.y - p.y)) * 2;
+        //setBrushSize( (int)calculatedSize);
+    }
+
+
+    private void log(String msg){
+        System.out.println("^^^ VariableCircleBrush: " +  msg);
     }
 
 
     @Override
     public void draw(PointF point, Canvas canvas, Paint paint) {
+
+        System.out.println("^^^ VariableCircleBrush: entered draw() radius: " +  radius);
         canvas.drawCircle(0, 0, radius, paint);
     }
 

@@ -15,6 +15,7 @@ import com.jacstuff.sketchy.brushes.shapes.onestep.SimpleShapeDrawer;
 import com.jacstuff.sketchy.brushes.shapes.onestep.SquareBrush;
 import com.jacstuff.sketchy.brushes.shapes.threestep.LineBrush;
 import com.jacstuff.sketchy.brushes.shapes.threestep.ThreeStepDrawer;
+import com.jacstuff.sketchy.brushes.shapes.threestep.VariableCircleBrush;
 import com.jacstuff.sketchy.easel.Easel;
 import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
@@ -100,7 +101,7 @@ public class PaintView extends View {
     private void initLineBrush(){
         shapeDrawer = new ThreeStepDrawer(this);
         var threeStepShapeDrawer = (ThreeStepDrawer)shapeDrawer;
-        threeStepShapeDrawer.setShape(new LineBrush());
+        threeStepShapeDrawer.setShape(new VariableCircleBrush());
     }
 
     public void init(BrushFactory brushFactory, MainViewModel viewModel, PaintHelperManager paintHelperManager) {

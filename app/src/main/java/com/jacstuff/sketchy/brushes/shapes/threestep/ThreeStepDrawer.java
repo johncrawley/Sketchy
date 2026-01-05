@@ -30,7 +30,8 @@ public class ThreeStepDrawer extends AbstractShapeDrawer {
     @Override
     public void move(PointF p, Easel easel) {
         paintView.enablePreviewLayer();
-        releaseAndDraw(p, easel);
+        threeStepShape.adjust(p, canvas, paint);
+        //releaseAndDraw(p, easel);
     }
 
 

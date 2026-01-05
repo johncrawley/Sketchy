@@ -17,6 +17,7 @@ public abstract class AbstractShape implements Brushable{
     protected ShadowOffsetType shadowOffsetType;
     protected boolean isBrushLiableToFlicker = false;
     protected boolean usesBrushSizeControl = true;
+    protected boolean isDrawnFromCenter;
 
     public AbstractShape(BrushShape brushShape){
         this.brushShape = brushShape;
