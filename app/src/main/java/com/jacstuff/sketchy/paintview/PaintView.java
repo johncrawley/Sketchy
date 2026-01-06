@@ -403,9 +403,6 @@ public class PaintView extends View {
         // drawPaint = new Paint();
         drawPaint.setStyle(Paint.Style.FILL);
         drawPaint.setStrokeWidth(20);
-        // drawPaint.setColor(Color.BLUE);
-        // canvas.drawCircle(x,y, 30, drawPaint);
-        // invalidate();
         currentBrush.touchMove(x, y, drawPaint);
         log("drawPaint color: " + drawPaint.getColor() + " white color: " + Color.WHITE);
 

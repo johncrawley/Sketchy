@@ -9,7 +9,7 @@ import com.jacstuff.sketchy.paintview.PaintView;
 public class ThreeStepDrawer extends AbstractShapeDrawer {
 
     private ThreeStepShape threeStepShape;
-
+    private PointF pDown;
 
     public ThreeStepDrawer(PaintView paintView){
         super(paintView);
@@ -22,7 +22,7 @@ public class ThreeStepDrawer extends AbstractShapeDrawer {
 
     @Override
     public void down(PointF p, Easel easel) {
-        // paintView.enablePreviewLayer();
+        pDown = new PointF(p);
         threeStepShape.place(p);
     }
 
@@ -31,7 +31,7 @@ public class ThreeStepDrawer extends AbstractShapeDrawer {
     public void move(PointF p, Easel easel) {
         paintView.enablePreviewLayer();
         threeStepShape.adjust(p, canvas, paint);
-        //releaseAndDraw(p, easel);
+        releaseAndDraw(p, easel);
     }
 
 
@@ -45,17 +45,13 @@ public class ThreeStepDrawer extends AbstractShapeDrawer {
     private void releaseAndDraw(PointF p, Easel easel){
         canvas = easel.getCanvas();
         canvas.save();
-       // canvas.translate(p.x, p.y);
-
+        canvas.translate(pDown.x, pDown.y);
         // canvas.rotate(paintHelperManager.getAngleHelper().getFineAngle());
-        log("entered releaseAndDraw()");
         for(var paint : easel.getActivePaints()){
-            log("***$$$$****");
             threeStepShape.draw(p, canvas, paint);
         }
-        log("********");
-        canvas.restore();
         paintView.invalidate();
+        canvas.restore();
     }
 
 
@@ -74,15 +70,15 @@ public class ThreeStepDrawer extends AbstractShapeDrawer {
 
     public void rotateAndDraw(PointF p, Easel easel){
         canvas = easel.getCanvas();
-        canvas.save();
-        canvas.translate(p.x, p.y);
+       // canvas.save();
+       // canvas.translate(p.x, p.y);
 
         // canvas.rotate(paintHelperManager.getAngleHelper().getFineAngle());
 
         for(var paint : easel.getActivePaints()){
             brushShape.draw(p, canvas, paint);
         }
-        canvas.restore();
+        //canvas.restore();
         paintView.invalidate();
     }
 
