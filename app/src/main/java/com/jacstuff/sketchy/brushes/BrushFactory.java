@@ -10,11 +10,10 @@ import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.SemicircleBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.SquareBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.TriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.smoothpath.SmoothPathBrush;
-import com.jacstuff.sketchy.brushes.shapes.threestep.VariableCircleBrush;
-import com.jacstuff.sketchy.brushes.shapes.onestep.spirals.CrazySpiralBrush;
+import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.spirals.CrazySpiralBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.CrescentBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.RandomBrush;
-import com.jacstuff.sketchy.brushes.shapes.onestep.spirals.SpiralBrush;
+import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.spirals.SpiralBrush;
 import com.jacstuff.sketchy.brushes.shapes.twostep.ArbitraryConnectedTriangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.twostep.CurvedLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.DiamondBrush;
@@ -24,7 +23,7 @@ import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.PointedOvalBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.OvalBrush;
 import com.jacstuff.sketchy.brushes.shapes.PathBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.PentagonBrush;
-import com.jacstuff.sketchy.brushes.shapes.RectangleBrush;
+import com.jacstuff.sketchy.brushes.shapes.threestep.VariableRectangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.RoundedRectangleBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.StraightLineBrush;
 import com.jacstuff.sketchy.brushes.shapes.onestep.TextBrush;
@@ -119,7 +118,7 @@ public class BrushFactory {
         addBrush(new CurvedLineBrush());
         addBrush(new PathBrush());
         addBrush(new SmoothPathBrush());
-        addBrush(new RectangleBrush());
+       // addBrush(new VariableRectangleBrush());
         addBrush(new ArbitraryConnectedTriangleBrush());
     }
 

@@ -1,4 +1,4 @@
-package com.jacstuff.sketchy.brushes.shapes.onestep.spirals;
+package com.jacstuff.sketchy.brushes.shapes.onestep.pathshape.spirals;
 
 import android.graphics.Path;
 import android.graphics.PointF;

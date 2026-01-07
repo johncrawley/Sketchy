@@ -16,7 +16,6 @@ public class SquareBrush extends AbstractShape{
 
     @Override
     public void draw(PointF p, Canvas canvas, Paint paint){
-       System.out.println("halfbrushsize: " + halfBrushSize);
        canvas.drawRect(-halfBrushSize, -halfBrushSize, halfBrushSize, halfBrushSize, paint);
     }
 }

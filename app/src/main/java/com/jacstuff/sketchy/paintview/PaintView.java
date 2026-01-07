@@ -13,9 +13,9 @@ import android.view.View;
 import com.jacstuff.sketchy.brushes.shapes.drawer.ShapeDrawer;
 import com.jacstuff.sketchy.brushes.shapes.onestep.SimpleShapeDrawer;
 import com.jacstuff.sketchy.brushes.shapes.onestep.SquareBrush;
-import com.jacstuff.sketchy.brushes.shapes.threestep.LineBrush;
 import com.jacstuff.sketchy.brushes.shapes.threestep.ThreeStepDrawer;
 import com.jacstuff.sketchy.brushes.shapes.threestep.VariableCircleBrush;
+import com.jacstuff.sketchy.brushes.shapes.threestep.VariableRectangleBrush;
 import com.jacstuff.sketchy.easel.Easel;
 import com.jacstuff.sketchy.brushes.shapes.drawer.Drawer;
 import com.jacstuff.sketchy.brushes.shapes.drawer.DrawerFactory;
@@ -85,23 +85,21 @@ public class PaintView extends View {
         var square = new SquareBrush();
         square.setBrushSize(30);
         shapeDrawer.setBrushShape(square);
-        initLineBrush();
+        initThreeStepBrush();
         viewModel.currentBrush.setBrushSize(30);
         var tempPaint = new Paint();
         tempPaint.setStyle(Paint.Style.FILL);
         tempPaint.setColor(Color.WHITE);
         canvas.drawRect(0,0,getWidth(), getHeight(), tempPaint);
-        tempPaint.setColor(Color.RED);
-        canvas.drawCircle(100,100,100, tempPaint);
         enablePreviewLayer();
         invalidate();
     }
 
 
-    private void initLineBrush(){
+    private void initThreeStepBrush(){
         shapeDrawer = new ThreeStepDrawer(this);
         var threeStepShapeDrawer = (ThreeStepDrawer)shapeDrawer;
-        threeStepShapeDrawer.setShape(new VariableCircleBrush());
+        threeStepShapeDrawer.setShape(new VariableRectangleBrush());
     }
 
     public void init(BrushFactory brushFactory, MainViewModel viewModel, PaintHelperManager paintHelperManager) {

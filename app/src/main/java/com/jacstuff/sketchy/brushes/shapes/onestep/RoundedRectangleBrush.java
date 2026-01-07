@@ -19,6 +19,7 @@ public class RoundedRectangleBrush extends AbstractShape {
         rect = new RectF(1,1,1,1);
     }
 
+
     @Override
     public void setBrushSize(int brushSize){
         final int ROUNDING_FACTOR = 5;

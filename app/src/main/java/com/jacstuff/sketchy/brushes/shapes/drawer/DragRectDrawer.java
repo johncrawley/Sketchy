@@ -20,7 +20,6 @@ public class DragRectDrawer extends BasicDrawer{
     private int rectangleSnapLimit = 28;
 
 
-
     public DragRectDrawer(PaintView paintView) {
         super(paintView);
         isColorChangedOnDown = false;
